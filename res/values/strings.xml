@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- Application name -->
+    <string name="app_name">MyLiveTracker</string>
+        	    
+    <!-- commons -->
+    <string name="btSave">Save</string>
+    <string name="btBack">Back</string>
+    <string name="btCancel">Cancel</string>
+    <string name="btOk">Ok</string>
+    <string name="btYes">Yes</string>    	
+    <string name="btNo">No</string>
+    <string name="btContinue">Continue</string>
+    <string name="btSend">Send</string>
+        
+    <!-- common error messages -->
+    <string name="txErr_NoDataConnection">No data connection could be established!</string>
+    
+    <!-- status bar notifications -->
+    <string name="nfAppWaiting">waiting...</string>
+    <string name="nfTrackRunning">Track is running.</string>
+    <string name="nfListenerRunning">Location Listener and/or ANT+ Listener is running.</string>
+    
+    <!-- menu items -->
+    <string name="mnPrefsLocalization">Localization</string>
+    <string name="mnPrefsServer">Server</string>
+    <string name="mnPrefsAccount">Account</string>
+    <string name="mnPrefsOther">Other</string>
+    <string name="mnLinkSender">Linking</string>    
+    <string name="mnInfo">Info</string>
+    <string name="mnExit">Exit</string>
+        
+    <!-- antPlus -->
+    <string name="antPlus_NotSupported">ANT+ not supported!</string>
+    <string name="antPlus_InstallInfo">You must install the ANT+ radio service to interface to the ANT+ hardware!</string>
+    <string name="antPlus_InitError">ANT+ initialization error!</string>
+    <string name="antPlus_InUse">ANT+ radio service in use!</string>
+    <string name="antPlus_Disabled">ANT+ radio service disabled!</string>
+    <string name="antPlus_NotInstalled">ANT+ radio service not installed!</string>
+    <string name="antPlus_Suspended">ANT+ connection suspended!</string>
+    <string name="antPlus_ConnStateIdle">idle</string>
+    <string name="antPlus_ConnStateConnecting">connecting</string>
+    <string name="antPlus_ConnStateConnected">connected</string>
+    <string name="antPlus_ConnStateDisconnecting">disconnecting</string>
+    <string name="antPlus_ConnStateSearching">searching</string>     
+    <string name="antPlus_CountSensorListeners">%d listeners</string>
+    
+    <!-- location listener -->
+    <string name="locListener_Listening">searching</string>
+    <string name="locListener_ProviderNotAvailable">N.A.</string>
+    
+    <!-- upload results -->
+    <string name="txMain_UploadResultOk">OK</string>
+    <string name="txMain_UploadResultFailed">FLD</string>
+    <string name="txMain_UploadResultInvalid">INV</string>
+    <string name="txMain_UploadResultError">ERR</string>
+    <string name="txMain_UploadResultMltError">MRR</string>
+    
+    <!-- main -->
+    <string name="tiMain">Track</string>    
+    <string name="btMain_LocationListener">Localization</string>
+    <string name="btMain_Tracking">Tracking</string>    
+    <string name="btMain_ResetTrack">Reset Track</string>
+    <string name="btMain_AntPlus">ANT+</string>
+    <string name="tvMain_Runtime">Runtime</string>
+    <string name="tvMain_Distance">Distance</string>
+    <string name="tvMain_Heartrate">Heartrate</string>
+    <string name="tvMain_Location">Location</string>
+    <string name="tvMain_Uploader">Uploader</string>
+    <string name="txMain_QuestionStartLocalization">Do you really want to start localization?</string>
+    <string name="txMain_QuestionStopLocalization">Do you really want to stop localization?</string>
+    <string name="txMain_QuestionStartTrack">Do you really want to start the track?</string>
+    <string name="txMain_QuestionStopTrack">Do you really want to stop the track?</string>
+    <string name="txMain_InfoStartingTracking">Starting the track...</string>
+    <string name="txMain_InfoStoppingTracking">Stopping the track...</string>
+    <string name="txMain_QuestionStartAntPlus">Do you really want to activate Ant+?</string>
+    <string name="txMain_QuestionStopAntPlus">Do you really want to deactivate Ant+?</string>
+    <string name="txMain_QuestionResetTrack">Do you really want to reset the track?</string>
+    <string name="txMain_InfoResetTrackDone">Reset track done!</string>               
+    <string name="txMain_QuestionSendSosSignal">Do you really want to send a SOS signal?</string>    
+    <string name="txMain_InfoSendSosSignalDone">Send SOS signal done!</string>    
+    <string name="txMain_QuestionExit">Do you really want to exit?</string>    
+    
+    <!-- main details -->
+    <string name="tiMainDetails">Details</string>
+    <string name="btMainDetails_SendSos">SOS</string>
+    <string name="btMainDetails_SendMessage">Message</string>
+    <string name="tvMainDetails_Uploader">Upl</string>
+    <string name="tvMainDetails_UploaderLastResultCode">Status</string>
+    <string name="tvMainDetails_UploaderCountUploaded">Count</string>
+    <string name="tvMainDetails_UploaderAverageUploadTime">Utime</string>
+    <string name="tvMainDetails_UploaderPositionsInBuffer">Buffer</string>    
+    <string name="tvMainDetails_Battery">Batt</string>
+    <string name="tvMainDetails_BatteryStatus">Status</string>
+    <string name="tvMainDetails_BatteryCharged">Charged</string>
+    <string name="tvMainDetails_BatteryPower">Power</string>
+    <string name="tvMainDetails_BatteryTemperature">Temp</string>
+    <string name="tvMainDetails_MobileNetwork">MNw</string>
+    <string name="tvMainDetails_MobileNetworkMCC">MCC</string>
+    <string name="tvMainDetails_MobileNetworkMNC">MNC</string>
+    <string name="tvMainDetails_MobileNetworkLAC">LAC</string>
+    <string name="tvMainDetails_MobileNetworkCellId">Cell</string>
+    <string name="tvMainDetails_Location">Loc</string>
+    <string name="tvMainDetails_LocationSatCount">Sat</string>
+    <string name="tvMainDetails_LocationAccuracy">Acc</string>
+    <string name="tvMainDetails_LocationLatitude">Lat</string>
+    <string name="tvMainDetails_LocationLongitude">Lon</string>
+    <string name="tvMainDetails_Heartrate">HR</string>
+    <string name="tvMainDetails_HeartrateCurrent">Curr</string>
+    <string name="tvMainDetails_HeartrateMinimum">Min</string>
+    <string name="tvMainDetails_HeartrateAverage">Avg</string>
+    <string name="tvMainDetails_HeartrateMaximum">Max</string>
+    <string name="tvMainDetails_Message">Msg</string>
+    <string name="tvMainDetails_Emergency">SOS</string>
+    <string name="txMainDetails_SendMessageNotSupportedByTransferProtocol">Send messages is not supported by selected transfer protocol (%1$s).</string>
+    <string name="txMainDetails_SendEmergencySignalNotSupportedByTransferProtocol">Send SOS signals is not supported by selected transfer protocol (%1$s).</string>
+    
+    <!-- message -->
+    <string name="tiMsg">Send message</string>
+    <string name="lbMsg_Message">Enter your message</string>
+   	<string name="fdMsg_Message">Message</string>
+   	<string name="txMsg_QuestionSendMessage">Do you really want to send the message?</string>
+    <string name="txMsg_InfoSendMessageDone">Send message done!</string>    
+    
+    <!-- preferences mylivetracker configuration details -->
+    <string name="txPrefs_Def_MyLiveTracker_Server">mylivetracker.de</string>
+    <string name="txPrefs_Def_MyLiveTracker_PortHttp">80</string>
+    <string name="txPrefs_Def_MyLiveTracker_PortTcp">51395</string>
+    <string name="txPrefs_Def_MyLiveTracker_PathHttp">upl_mlt.sec</string>
+    <string name="txPrefs_Def_MyLiveTracker_PathTcp"></string>
+    <string name="txPrefs_Def_TrackName">My Track</string>
+    
+    <!-- preferences commons -->
+    <string name="txPrefs_WarningChangePrefsDuringRunningTrack">Changing the preferences during a running track can lead to an unexpected behavior!</string>
+    
+    <!-- preferences server -->
+    <string name="tiPrefsServer">Server preferences</string>
+    <string name="lbPrefsServer_TransferProtocol">Transfer protocol</string>
+    <string name="fdPrefsServer_ServerAddress">Server address</string>
+    <string name="lbPrefsServer_ServerAddressAndPort">Server address (dns or ip) and port</string>
+    <string name="fdPrefsServer_ServerPort">Server port</string>
+    <string name="fdPrefsServer_ServerPath">Server path</string>    
+    <string name="lbPrefsServer_ServerPath">Server path (only for http protocols needed)</string>
+    <string name="fdPrefsServer_TimeTriggerInSecs">Time trigger</string>
+    <string name="lbPrefsServer_TimeTriggerInSecs">Time trigger in secs.</string>
+    <string name="fdPrefsServer_DistanceTriggerInMtr">Distance trigger</string>
+    <string name="lbPrefsServer_DistanceTriggerInMtr">Distance trigger in mtr.</string>       
+    <string name="lbPrefsServer_CloseConnectionAfterEveryUpload">Close connection after every upload</string>
+    <string name="lbPrefsServer_FinishEveryUploadWithALinefeed">Finish every upload with a linefeed</string>
+      
+    <!-- preferences account -->
+    <string name="tiPrefsAccount">Account preferences</string>
+	<string name="lbPrefsAccount_DeviceId">Device Id (default is IMEI of device)</string>
+	<string name="fdPrefsAccount_DeviceId">Device Id</string>
+    <string name="lbPrefsAccount_Username">Username</string>
+    <string name="fdPrefsAccount_Username">Username</string>
+    <string name="lbPrefsAccount_Password">Password</string>
+    <string name="fdPrefsAccount_Password">Password</string>
+    <string name="lbPrefsAccount_TrackName">Trackname</string>
+    <string name="fdPrefsAccount_TrackName">Trackname</string>
+    
+	<!-- preferences localization -->
+	<string name="tiPrefsLocalization">Localization preferences</string>
+	<string name="lbPrefsLocalization_Provider">Location provider (how is localization done)</string>
+    <string name="rbPrefsLocalization_ProviderGps">GPS</string>
+    <string name="rbPrefsLocalization_ProviderNetwork">Network (via mobile cells, wlan access points)</string>
+    <string name="lbPrefsLocalization_TimeTriggerInSecs">Time trigger in secs.</string>
+    <string name="fdPrefsLocalization_TimeTriggerInSecs">Time trigger</string>
+    <string name="lbPrefsLocalization_DistanceTriggerInMtr">Distance trigger in mtr.</string>    
+    <string name="fdPrefsLocalization_DistanceTriggerInMtr">Distance trigger</string>
+    <string name="fdPrefsLocalization_LocationAccuracyRequiredInMtr">Required accuracy</string>
+    <string name="lbPrefsLocalization_LocationAccuracyRequiredInMtr">Req. minimum\naccuracy in mtr.\nfor location validation</string>
+    <string name="fdPrefsLocalization_DistBtwTwoLocsForDistCalcRequiredInCMtr">Required distance</string>
+    <string name="lbPrefsLocalization_DistBtwTwoLocsForDistCalcRequiredInCMtr">Req. distance between\ntwo locations in cm\nfor distance calculation</string>
+    <string name="lbPrefsLocalization_TriggerInfo">Note: if both triggers are set to 0, localization is done all the time.</string>
+    <string name="lbPrefsLocalization_RequiredAccuracyAndDistanceInfo">Note: if values are set to 0, checks are disabled.</string>
+    
+    <!-- preferences other -->
+    <string name="tiPrefsOther">Other preferences</string>
+    <string name="fdPrefsOther_MaxPositionBufferSize">Buffer size</string>
+    <string name="lbPrefsOther_MaxPositionBufferSize">Buffer size to bridge data connection timeouts (if set to 0, buffering is disabled)</string>
+    <string name="fdPrefsOther_PhoneNumber">Phone number</string>
+    <string name="lbPrefsOther_PhoneNumber">Your phone number where track followers can reach you</string>
+    <string name="lbPrefsOther_ConfirmLevel">Confirmation level to prevent unintended actions</string>        
+    <string name="btPrefsOther_ResetToFactoryDefaults">Reset to factory defaults</string>
+    <string name="btPrefsOther_ResetOverallMileage">Reset overall mileage</string>
+    <string name="txPrefsOther_QuestionResetToFactoryDefaults">Do you really want to reset to factory defaults?</string>
+    <string name="txPrefsOther_QuestionResetOverallMileage">Do you really want to reset overall mileage?</string>
+    <string name="txPrefsOther_InfoResetToFactoryDefaultsDone">Reset to factory defaults done!</string>
+    <string name="txPrefsOther_InfoResetOverallMileageDone">Reset overall mileage done!</string>
+    
+    <!-- link sender -->
+    <string name="tiLinkSender">Link sender</string>
+    <string name="lbLinkSender_LinkInfo">
+    	Please note:
+    	\n* Linking this device to MyLiveTracker portal will override the server and account preferences.
+    	\n* Linking this device to MyLiveTracker portal requires a valid MyLiveTracker portal account. 
+		An account can be applied at support@mylivetracker.de.
+    </string>          
+	<string name="lbLinkSender_PortalUsername">Portal username</string>
+    <string name="fdLinkSender_PortalUsername">Portal username</string>
+    <string name="lbLinkSender_PortalPassword">Portal password</string>
+    <string name="fdLinkSender_PortalPassword">Portal password</string>
+    <string name="lbLinkSender_ProgressDialog">Linking sender...</string>  
+    <string name="txLinkSender_InfoLinkSenderDone">Link this sender to MyLiveTracker portal done!</string>  
+    
+    <!-- info -->
+    <string name="tiInfo">Info</string>
+    <string name="tvInfo_Mileage">Overall mileage</string>
+    
+    <!-- validators -->
+    <string name="validator.locationProviderNotSupported">Location provider %1$s is not supported on this device!</string>
+    <string name="validator.valueMustNotBeEmpty">%1$s must not be empty!</string>
+    <string name="validator.valueMustBeANumber">%1$s must be a number!</string>    
+    <string name="validator.valueMustBeInRange">%1$s must be in range of %2$s-%3$s digits!</string>
+</resources>

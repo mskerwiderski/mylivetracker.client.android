@@ -1,0 +1,25 @@
+<resources>
+
+    <string-array name="transferProtocols">
+    	<item>Datentransfer aus</item>
+        <item>MLT HTTP (Klartext)</item>
+        <item>MLT TCP (verschlüsselt)</item>
+        <item>Franson GpsGate HTTP</item>
+        <item>Tk102 Emulator</item>
+        <item>Tk5000 Emulator</item>        
+    </string-array>
+    
+    <string-array name="bufferSizes">
+    	<item>deaktiviert</item>
+        <item>3 Positionen</item>
+        <item>5 Positionen</item>               
+        <item>10 Positionen</item>
+    </string-array>
+    
+    <string-array name="confirmLevels">
+    	<item>niedrig</item>
+        <item>normal</item>
+        <item>hoch</item>               
+    </string-array>
+    
+</resources>

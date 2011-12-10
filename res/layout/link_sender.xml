@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" android:orientation="vertical" >
+    <LinearLayout android:layout_height="10dip" android:id="@+id/linearLayout4" android:layout_width="fill_parent">       
+    </LinearLayout>
+    <TextView android:id="@+id/textView2" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/lbLinkSender_LinkInfo"></TextView>
+    <LinearLayout android:layout_height="10dip" android:id="@+id/linearLayout4" android:layout_width="fill_parent">       
+    </LinearLayout>
+    <TextView android:id="@+id/textView2" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/lbLinkSender_PortalUsername"></TextView>
+    <EditText android:layout_width="fill_parent" android:layout_height="40dip" android:text="" android:id="@+id/etLinkSender_PortalUsername" android:inputType="text"></EditText>
+    <TextView android:layout_width="wrap_content" android:id="@+id/textView5" android:layout_height="wrap_content" android:text="@string/lbLinkSender_PortalPassword"></TextView>
+    <EditText android:layout_width="fill_parent" android:text="EditText" android:layout_height="40dip" android:id="@+id/etLinkSender_PortalPassword" android:inputType="textPassword"></EditText>
+    <LinearLayout android:id="@+id/linearLayout1" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <Button android:layout_gravity="bottom" android:layout_width="fill_parent" android:layout_weight="1" android:layout_height="50dip" android:text="@string/btOk" android:id="@+id/btLinkSender_Ok"></Button>
+        <Button android:layout_width="fill_parent" android:layout_gravity="bottom" android:layout_weight="1" android:layout_height="50dip" android:text="@string/btCancel" android:id="@+id/btLinkSender_Cancel"></Button>
+    </LinearLayout>   
+</LinearLayout>

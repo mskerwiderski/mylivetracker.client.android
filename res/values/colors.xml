@@ -1,0 +1,20 @@
+
+<resources>
+	<!-- colors for ant plus status -->
+	<color name="colorAntPlListOff">#f0f0f0</color>
+	<color name="colorAntPlListConnecting">#e2302f</color>
+	<color name="colorAntPlListConnected">#f6c910</color>
+	<color name="colorAntPlListValueValid">#4bb648</color>
+	
+	<!-- colors for location listener status -->
+	<color name="colorLocListOff">#f0f0f0</color>
+	<color name="colorLocListNoPosition">#e2302f</color>
+	<color name="colorLocListPosFoundNotAcc">#f6c910</color>
+	<color name="colorLocListPosFoundAcc">#4bb648</color>
+	
+	<!-- colors for uploader status -->
+	<color name="colorUploaderOff">#f0f0f0</color>
+	<color name="colorUploaderLastUplFailed">#e2302f</color>
+	<color name="colorUploaderNoUploadDone">#f6c910</color>
+	<color name="colorUploaderLastUplSuccessful">#4bb648</color>
+</resources>

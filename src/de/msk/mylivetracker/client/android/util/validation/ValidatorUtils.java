@@ -1,0 +1,138 @@
+package de.msk.mylivetracker.client.android.util.validation;
+
+import org.apache.commons.lang.StringUtils;
+
+import android.content.Context;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.mainview.MainActivity;
+import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
+ 
+/**
+ * ValidatorUtils.
+ * 
+ * @author michael skerwiderski, (c)2011
+ * 
+ * @version 000
+ * 
+ * history
+ * 000 initial 2011-08-11
+ * 
+ */
+public class ValidatorUtils {
+
+	public static boolean validateIfLocationProviderIsSupported(
+		Context ctx, RadioButton radioButton, String providerName) {
+		if (!radioButton.isChecked()) return true;
+		if (MainActivity.get().getLocationManager().getProvider(providerName) == null) {
+			String message = 
+				ctx.getString(R.string.validator_locationProviderNotSupported, 
+				providerName);
+			new SimpleInfoDialog(ctx, message).show();
+			return false;
+		}
+		return true;
+	}
+	
+	public static boolean validateEditTextString(
+		Context ctx, int label, EditText editText,
+		int minLength, int maxLength, boolean setFocusIfInvalid) {
+		if (ctx == null) {
+			throw new IllegalArgumentException("ctx must not be null.");
+		}
+		if (editText == null) {
+			throw new IllegalArgumentException("editText must not be null.");
+		}
+		boolean valid = validateEditTextString(ctx, label, editText, minLength, maxLength);
+		if (!valid && setFocusIfInvalid) {
+			editText.requestFocus();
+		}
+		return valid;
+	}
+	
+	private static boolean validateEditTextString(
+		Context ctx, int label, EditText editText,
+		int minLength, int maxLength) {		
+		if (minLength < 0) {
+			minLength = 0;
+		}
+		String valueStr = editText.getText().toString();
+		if ((minLength == 0) && StringUtils.isEmpty(valueStr)) {
+			return true;
+		}
+		if ((minLength > 0) && StringUtils.isEmpty(valueStr)) {
+			String message = 
+				ctx.getString(R.string.validator_valueMustNotBeEmpty, 
+				ctx.getString(label));
+			new SimpleInfoDialog(ctx, message).show();
+			return false;
+		}
+		if ((valueStr.length() < minLength) || 
+			((maxLength >= minLength) && (valueStr.length() > maxLength))) {
+			String message = 
+				ctx.getString(R.string.validator_valueMustBeInRange, 
+				ctx.getString(label), minLength, 
+				(maxLength >= minLength ? maxLength : "..."));
+			new SimpleInfoDialog(ctx, message).show();
+			return false;
+		}
+		return true;
+	}
+	
+	public static boolean validateEditTextNumber(
+		Context ctx, int label, EditText editText,
+		boolean required, int minDigit, int maxDigit, boolean setFocusIfInvalid) {
+		if (ctx == null) {
+			throw new IllegalArgumentException("ctx must not be null.");
+		}
+		if (editText == null) {
+			throw new IllegalArgumentException("editText must not be null.");
+		}
+		boolean valid = validateEditTextNumber(ctx, label, editText, required, minDigit, maxDigit);
+				
+		if (!valid && setFocusIfInvalid) {
+			editText.requestFocus();
+		}
+		return valid;
+	}
+	
+	private static boolean validateEditTextNumber(
+		Context ctx, int label, EditText editText,
+		boolean required,  
+		int minDigit, int maxDigit) {
+		if (editText == null) {
+			throw new IllegalArgumentException("editText must not be null.");
+		}
+		String valueStr = editText.getText().toString();
+		if (!required && StringUtils.isEmpty(valueStr)) {
+			return true;
+		}
+		if (required && StringUtils.isEmpty(valueStr)) {
+			String message = 
+				ctx.getString(R.string.validator_valueMustNotBeEmpty, 
+				ctx.getString(label));
+			new SimpleInfoDialog(ctx, message).show();
+			return false;
+		}
+		long value = -1;
+		try {
+			value = Long.parseLong(valueStr);
+		} catch (NumberFormatException e) {
+			String message =
+				ctx.getString(R.string.validator_valueMustBeANumber,
+				ctx.getString(label));
+			new SimpleInfoDialog(ctx, message).show();
+			return false;
+		}
+		if ((value < minDigit) || (value > maxDigit)) {
+			String message = 
+				ctx.getString(R.string.validator_valueMustBeInRange, 
+				ctx.getString(label), minDigit, maxDigit);
+			new SimpleInfoDialog(ctx, message).show();
+			return false;
+		}
+		return true;
+	}
+	
+}

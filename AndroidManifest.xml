@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="de.msk.mylivetracker.client.android" 
+      android:versionName="1.2.3" android:versionCode="123">       
+    
+    <uses-sdk android:minSdkVersion="7" />
+
+    <application android:icon="@drawable/icon" android:label="@string/app_name">
+        <activity android:name=".mainview.MainActivity"
+                  android:label="@string/app_name"
+                  android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity> 
+        <activity android:name=".mainview.MainDetailsActivity" 
+			android:screenOrientation="portrait" />
+        <activity android:name=".message.MessageActivity" 
+			android:screenOrientation="portrait" />
+		<activity android:name=".preferences.PrefsServerActivity" 
+			android:screenOrientation="portrait" />
+		<activity android:name=".preferences.PrefsAccountActivity" 
+			android:screenOrientation="portrait" />
+		<activity android:name=".preferences.PrefsLocalizationActivity" 
+			android:screenOrientation="portrait" />
+		<activity android:name=".preferences.PrefsOtherActivity" 
+			android:screenOrientation="portrait" />	
+		<activity android:name=".preferences.linksender.LinkSenderActivity" 
+			android:screenOrientation="portrait" />	
+		<activity android:name=".InfoActivity" 
+			android:screenOrientation="portrait" />
+    </application>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+	<uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+	<uses-permission android:name="android.permission.CONTROL_LOCATION_UPDATES" />
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+	<uses-permission android:name="com.dsi.ant.permission.ANT" />
+	<uses-permission android:name="com.dsi.ant.permission.ANT_ADMIN" />
+</manifest>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" android:orientation="vertical" >
+    <LinearLayout android:layout_height="20dip" android:id="@+id/linearLayout4" android:layout_width="fill_parent">       
+    </LinearLayout>
+    <TextView android:id="@+id/textView1" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/lbMsg_Message"></TextView>
+    <EditText android:layout_width="fill_parent" android:layout_height="40dip" android:text="" android:inputType="text" android:id="@+id/etMsg_Message"></EditText>
+    <LinearLayout android:id="@+id/linearLayout1" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <Button android:layout_gravity="bottom" android:layout_weight="1" android:layout_height="50dip" android:id="@+id/btMsg_Send" android:text="@string/btSend" android:layout_width="fill_parent"></Button>
+        <Button android:layout_height="50dip" android:layout_weight="1" android:layout_gravity="bottom" android:id="@+id/btMsg_Cancel" android:text="@string/btCancel" android:layout_width="fill_parent"></Button>
+    </LinearLayout>   
+</LinearLayout>

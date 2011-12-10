@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" 
+    android:layout_width="fill_parent" android:layout_height="fill_parent">  
+    <LinearLayout android:layout_height="2dip" android:layout_width="fill_parent" />  
+    <LinearLayout android:gravity="center_vertical|center_horizontal" android:layout_width="fill_parent"  android:layout_height="wrap_content">
+    	<Button
+    		android:id="@+id/btMain_ResetTrack" 
+    		android:text="@string/btMain_ResetTrack"
+    		android:textSize="7pt" 
+    		android:layout_height="60dip"
+    		android:layout_width="0dp" 
+    		android:layout_weight="1"     		 
+    	/>    	
+        <ToggleButton
+        	android:id="@+id/btMain_StartStopTrack"
+        	android:text="ToggleButton" 
+        	android:textSize="7pt"
+        	android:textOn="@string/btMain_Tracking" 
+        	android:textOff="@string/btMain_Tracking"         	 
+        	android:layout_height="60dip" 
+        	android:layout_width="0dp"
+        	android:layout_weight="1"
+        />
+    </LinearLayout>    
+    <LinearLayout android:layout_height="2dip" android:layout_width="fill_parent" />           
+    <LinearLayout     	 
+    	android:layout_height="wrap_content" 
+    	android:layout_width="fill_parent" 
+		android:layout_gravity="bottom" 
+		android:gravity="center_vertical|center_horizontal" >
+    	<TableRow android:layout_height="fill_parent" android:layout_width="fill_parent" android:layout_gravity="bottom" >
+        	<TextView
+        		android:id="@+id/tvMain_TrackName" 
+        		android:text=""
+        		android:textSize="9pt"
+        		android:textColor="#000000"
+        		android:background="#fff4bc"
+        		android:layout_gravity="center"
+				android:layout_marginLeft="4dip"
+				android:layout_marginRight="4dip"
+				android:layout_height="37dip"
+				android:layout_width="0dp"
+				android:layout_weight="1"
+	            android:gravity="center_vertical|center_horizontal"   	                              		 
+        	/>
+		</TableRow>        
+    </LinearLayout>
+    <LinearLayout android:layout_height="8dip" android:layout_width="fill_parent" />      	
+    <LinearLayout     	
+    	android:layout_height="wrap_content" 
+    	android:layout_width="fill_parent" 
+		android:layout_gravity="bottom" 
+		android:gravity="center_vertical|center_horizontal" >
+		<TableRow android:layout_height="fill_parent" android:layout_width="fill_parent" android:layout_gravity="bottom" >		
+			<TextView
+				android:text="@string/tvMain_Runtime"
+				android:textSize="9pt"
+				android:textColor="#000000"
+				android:background="#d4d0c8"
+				android:layout_gravity="center"
+				android:layout_marginLeft="4dip"
+				android:layout_marginRight="4dip"
+				android:layout_height="37dip" 
+				android:layout_width="0dp"
+	            android:layout_weight="1"	  
+	            android:gravity="center_vertical|center_horizontal"                       
+            />
+	        <Chronometer
+	        	android:id="@+id/tvMain_Runtime" 
+	        	android:text=""
+	        	android:textSize="9pt"
+	        	android:textColor="#000000"
+	        	android:background="#d4d0c8"
+	        	android:layout_gravity="center"
+	        	android:layout_marginLeft="4dip"
+				android:layout_marginRight="4dip"
+				android:layout_height="37dip" 
+				android:layout_width="0dp"
+	            android:layout_weight="1"    
+	        	android:gravity="center_vertical|center_horizontal" 
+	        />	 	 	        	              
+		</TableRow>
+	</LinearLayout>
+	<LinearLayout android:layout_height="3dip" android:layout_width="fill_parent" />
+    <LinearLayout     	
+    	android:layout_height="wrap_content" 
+    	android:layout_width="fill_parent" 
+		android:layout_gravity="bottom" 
+		android:gravity="center_vertical|center_horizontal" >
+		<TableRow android:layout_height="fill_parent" android:layout_width="fill_parent" android:layout_gravity="bottom" >
+			<TextView
+				android:text="@string/tvMain_Distance"
+				android:textSize="9pt"
+				android:textColor="#000000"
+				android:background="#d4d0c8"
+				android:layout_gravity="center"
+				android:layout_marginLeft="4dip"
+				android:layout_marginRight="4dip"
+				android:layout_height="37dip" 
+				android:layout_width="0dp"
+	            android:layout_weight="1"	  
+	            android:gravity="center_vertical|center_horizontal"                       
+            />
+			<TextView
+	        	android:id="@+id/tvMain_Distance"
+	        	android:text=""
+	        	android:textSize="9pt"
+	        	android:textColor="#000000"
+	        	android:background="#d4d0c8" 
+	        	android:layout_gravity="center"
+	        	android:layout_marginLeft="4dip"
+				android:layout_marginRight="4dip"
+	        	android:layout_height="37dip" 
+				android:layout_width="0dp"	            
+	            android:layout_weight="1"	 
+	            android:gravity="center_vertical|center_horizontal"	             
+	        />	 	               
+		</TableRow>
+	</LinearLayout>
+	<LinearLayout android:layout_height="3dip" android:layout_width="fill_parent" />
+    <LinearLayout     	
+    	android:layout_height="wrap_content" 
+    	android:layout_width="fill_parent" 
+		android:layout_gravity="bottom" 
+		android:gravity="center_vertical|center_horizontal" >
+		<TableRow android:layout_height="fill_parent" android:layout_width="fill_parent" android:layout_gravity="bottom" >
+			<TextView
+				android:text="@string/tvMain_Heartrate"
+				android:textSize="9pt"
+				android:textColor="#000000"
+				android:background="#d4d0c8"
+				android:layout_gravity="center"
+				android:layout_marginLeft="4dip"
+				android:layout_marginRight="4dip"
+				android:layout_height="37dip" 
+				android:layout_width="0dp"
+	            android:layout_weight="1"	  
+	            android:gravity="center_vertical|center_horizontal"                       
+            />			
+            <TextView
+	        	android:id="@+id/tvMain_Heartrate"
+	        	android:text=""
+	        	android:textSize="9pt"
+	        	android:textColor="#000000"
+	        	android:background="#d4d0c8" 
+	        	android:layout_gravity="center"
+	        	android:layout_marginLeft="4dip"
+				android:layout_marginRight="4dip"
+	        	android:layout_height="37dip" 
+				android:layout_width="0dp"	            
+	            android:layout_weight="1"	 
+	            android:gravity="center_vertical|center_horizontal"	             
+	        />		       	              
+		</TableRow>
+	</LinearLayout>
+	<LinearLayout android:layout_height="3dip" android:layout_width="fill_parent" />
+    <LinearLayout     	
+    	android:layout_height="wrap_content" 
+    	android:layout_width="fill_parent" 
+		android:layout_gravity="bottom" 
+		android:gravity="center_vertical|center_horizontal" >
+		<TableRow android:layout_height="fill_parent" android:layout_width="fill_parent" android:layout_gravity="bottom" >
+			<TextView
+				android:text="@string/tvMain_Location"
+				android:textSize="9pt"
+				android:textColor="#000000"
+				android:background="#d4d0c8"
+				android:layout_gravity="center"
+				android:layout_marginLeft="4dip"
+				android:layout_marginRight="4dip"
+				android:layout_height="37dip" 
+				android:layout_width="0dp"
+	            android:layout_weight="1"	  
+	            android:gravity="center_vertical|center_horizontal"                       
+            />
+            <TextView
+	        	android:id="@+id/tvMain_Location"
+	        	android:text=""
+	        	android:textSize="9pt"
+	        	android:textColor="#000000"
+	        	android:background="#fff4bc"	        	
+	        	android:layout_gravity="center"
+	        	android:layout_marginLeft="4dip"
+				android:layout_marginRight="4dip"
+	        	android:layout_height="37dip" 
+				android:layout_width="0dp"	            
+	            android:layout_weight="1"	 
+	            android:gravity="center_vertical|center_horizontal"	     
+	            android:clickable="true"      	              
+	        />			
+	                               
+		</TableRow>
+	</LinearLayout>	
+	<LinearLayout android:layout_height="3dip" android:layout_width="fill_parent" />
+    <LinearLayout     	
+    	android:layout_height="wrap_content" 
+    	android:layout_width="fill_parent" 
+		android:layout_gravity="bottom" 
+		android:gravity="center_vertical|center_horizontal" >
+		<TableRow android:layout_height="fill_parent" android:layout_width="fill_parent" android:layout_gravity="bottom" >
+			<TextView
+				android:text="@string/tvMain_Uploader"
+				android:textSize="9pt"
+				android:textColor="#000000"
+				android:background="#d4d0c8"
+				android:layout_gravity="center"
+				android:layout_marginLeft="4dip"
+				android:layout_marginRight="4dip"
+				android:layout_height="37dip" 
+				android:layout_width="0dp"
+	            android:layout_weight="1"	  
+	            android:gravity="center_vertical|center_horizontal"                       
+            />	
+            <TextView
+	        	android:id="@+id/tvMain_Uploader"
+	        	android:text=""
+	        	android:textSize="9pt"
+	        	android:textColor="#000000"
+	        	android:background="#fff4bc" 
+	        	android:layout_gravity="center"
+	        	android:layout_marginLeft="4dip"
+				android:layout_marginRight="4dip"
+	        	android:layout_height="37dip" 
+				android:layout_width="0dp"	            
+	            android:layout_weight="1"	 
+	            android:gravity="center_vertical|center_horizontal"	             
+	        />				        	 	              
+		</TableRow>
+	</LinearLayout>
+	<LinearLayout 		
+		android:layout_height="fill_parent" 
+		android:layout_width="fill_parent" 
+		android:gravity="center_vertical|center_horizontal" >
+        <ToggleButton
+        	android:id="@+id/btMain_ConnectDisconnectAnt"
+        	android:text="ToggleButton"
+        	android:textSize="7pt"
+        	android:textOn="@string/btMain_AntPlus" 
+        	android:textOff="@string/btMain_AntPlus"
+        	android:layout_height="60dip" 
+        	android:layout_width="0dp"
+        	android:layout_weight="1"
+        	android:layout_gravity="bottom"
+        />
+        <ToggleButton
+        	android:id="@+id/btMain_LocationListenerOnOff"
+        	android:text="ToggleButton"
+        	android:textSize="7pt"
+        	android:textOn="@string/btMain_LocationListener" 
+        	android:textOff="@string/btMain_LocationListener" 
+        	android:layout_height="60dip" 
+        	android:layout_width="0dp"
+        	android:layout_weight="1"
+        	android:layout_gravity="bottom" 
+        />        
+    </LinearLayout>   
+</LinearLayout>

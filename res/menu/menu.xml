@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/mnPrefsLocalization" android:title="@string/mnPrefsLocalization" />
+	<item android:id="@+id/mnPrefsServer" android:title="@string/mnPrefsServer" />
+    <item android:id="@+id/mnPrefsAccount" android:title="@string/mnPrefsAccount" />
+    <item android:id="@+id/mnLinkSender" android:title="@string/mnLinkSender" />
+    <item android:id="@+id/mnPrefsOther" android:title="@string/mnPrefsOther" />    
+    <item android:id="@+id/mnInfo" android:title="@string/mnInfo" />
+    <item android:id="@+id/mnExit" android:title="@string/mnExit" />    
+</menu>
