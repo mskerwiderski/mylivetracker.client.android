@@ -12,6 +12,8 @@
     <string name="btNo">No</string>
     <string name="btContinue">Continue</string>
     <string name="btSend">Send</string>
+    <string name="tvOn">On</string>
+    <string name="tvOff">Off</string>
         
     <!-- common error messages -->
     <string name="txErr_NoDataConnection">No data connection could be established!</string>
@@ -26,6 +28,7 @@
     <string name="mnPrefsServer">Server</string>
     <string name="mnPrefsAccount">Account</string>
     <string name="mnPrefsOther">Other</string>
+    <string name="mnPrefsAuto">Auto</string>
     <string name="mnLinkSender">Linking</string>    
     <string name="mnInfo">Info</string>
     <string name="mnExit">Exit</string>
@@ -58,6 +61,10 @@
     
     <!-- main -->
     <string name="tiMain">Track</string>    
+    <string name="tvMain_AutoModeIndicator">Auto</string>
+    <string name="tvMain_LocalizationIndicator">Pos</string>
+    <string name="tvMain_WirelessLanIndicator">WLAN</string>
+    <string name="tvMain_MobileNetworkIndicator">Data</string>
     <string name="btMain_LocationListener">Localization</string>
     <string name="btMain_Tracking">Tracking</string>    
     <string name="btMain_ResetTrack">Reset Track</string>
@@ -131,6 +138,7 @@
     <string name="txPrefs_Def_TrackName">My Track</string>
     
     <!-- preferences commons -->
+    <string name="txPrefs_InfoAutoModeEnabled">Manual resetting, starting/stopping of tracking, localization or hr-measuring is not possible in auto mode!</string>
     <string name="txPrefs_WarningChangePrefsDuringRunningTrack">Changing the preferences during a running track can lead to an unexpected behavior!</string>
     
     <!-- preferences server -->
@@ -142,15 +150,16 @@
     <string name="fdPrefsServer_ServerPath">Server path</string>    
     <string name="lbPrefsServer_ServerPath">Server path (only for http protocols needed)</string>
     <string name="fdPrefsServer_TimeTriggerInSecs">Time trigger</string>
-    <string name="lbPrefsServer_TimeTriggerInSecs">Time trigger in secs.</string>
+    <string name="lbPrefsServer_TimeTriggerInSecs">Time trigger</string>
     <string name="fdPrefsServer_DistanceTriggerInMtr">Distance trigger</string>
-    <string name="lbPrefsServer_DistanceTriggerInMtr">Distance trigger in mtr.</string>       
+    <string name="lbPrefsServer_DistanceTriggerInMtr">Distance trigger</string>
+    <string name="lbPrefsServer_TriggerLogic">Trigger Logic</string>       
     <string name="lbPrefsServer_CloseConnectionAfterEveryUpload">Close connection after every upload</string>
     <string name="lbPrefsServer_FinishEveryUploadWithALinefeed">Finish every upload with a linefeed</string>
       
     <!-- preferences account -->
     <string name="tiPrefsAccount">Account preferences</string>
-	<string name="lbPrefsAccount_DeviceId">Device Id (default is IMEI of device)</string>
+	<string name="lbPrefsAccount_DeviceId">Device Id (IMEI)</string>
 	<string name="fdPrefsAccount_DeviceId">Device Id</string>
     <string name="lbPrefsAccount_Username">Username</string>
     <string name="fdPrefsAccount_Username">Username</string>
@@ -158,12 +167,12 @@
     <string name="fdPrefsAccount_Password">Password</string>
     <string name="lbPrefsAccount_TrackName">Trackname</string>
     <string name="fdPrefsAccount_TrackName">Trackname</string>
+    <string name="fdPrefsAccount_PhoneNumber">Phone number</string>
+    <string name="lbPrefsAccount_PhoneNumber">Phone number</string>
     
 	<!-- preferences localization -->
 	<string name="tiPrefsLocalization">Localization preferences</string>
-	<string name="lbPrefsLocalization_Provider">Location provider (how is localization done)</string>
-    <string name="rbPrefsLocalization_ProviderGps">GPS</string>
-    <string name="rbPrefsLocalization_ProviderNetwork">Network (via mobile cells, wlan access points)</string>
+	<string name="lbPrefsLocalization_Provider">Localization mode</string>
     <string name="lbPrefsLocalization_TimeTriggerInSecs">Time trigger in secs.</string>
     <string name="fdPrefsLocalization_TimeTriggerInSecs">Time trigger</string>
     <string name="lbPrefsLocalization_DistanceTriggerInMtr">Distance trigger in mtr.</string>    
@@ -179,9 +188,8 @@
     <string name="tiPrefsOther">Other preferences</string>
     <string name="fdPrefsOther_MaxPositionBufferSize">Buffer size</string>
     <string name="lbPrefsOther_MaxPositionBufferSize">Buffer size to bridge data connection timeouts (if set to 0, buffering is disabled)</string>
-    <string name="fdPrefsOther_PhoneNumber">Phone number</string>
-    <string name="lbPrefsOther_PhoneNumber">Your phone number where track followers can reach you</string>
-    <string name="lbPrefsOther_ConfirmLevel">Confirmation level to prevent unintended actions</string>        
+    <string name="lbPrefsOther_ConfirmLevel">Confirmation level to prevent unintended actions</string>  
+    <string name="lbPrefsOther_TrackingOneTouch">Tracking one-touch mode</string>
     <string name="btPrefsOther_ResetToFactoryDefaults">Reset to factory defaults</string>
     <string name="btPrefsOther_ResetOverallMileage">Reset overall mileage</string>
     <string name="txPrefsOther_QuestionResetToFactoryDefaults">Do you really want to reset to factory defaults?</string>
@@ -189,6 +197,13 @@
     <string name="txPrefsOther_InfoResetToFactoryDefaultsDone">Reset to factory defaults done!</string>
     <string name="txPrefsOther_InfoResetOverallMileageDone">Reset overall mileage done!</string>
     
+    <!-- preferences auto -->
+    <string name="tiPrefsAuto">Automatic preferences</string>
+    <string name="fdPrefsAuto_AutoMode">Automatic Modus</string>
+    <string name="lbPrefsAuto_AutoMode">If battery changes in charging mode (leaves charging mode), tracking will be started (stopped) automatically.</string>
+   	<string name="fdPrefsAuto_ResetTrackMode">Reset-track mode</string>
+	<string name="txPrefsAuto_ResetTrackMode">Reset-track mode.</string>
+	
     <!-- link sender -->
     <string name="tiLinkSender">Link sender</string>
     <string name="lbLinkSender_LinkInfo">

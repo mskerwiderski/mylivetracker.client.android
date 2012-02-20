@@ -1,5 +1,10 @@
 <resources>
-
+    <string-array name="localizationModes">
+    	<item>GPS</item>
+        <item>Netzwerk</item>
+        <item>GPS und Netzwerk als Fallback</item>
+    </string-array>
+        
     <string-array name="transferProtocols">
     	<item>Datentransfer aus</item>
         <item>MLT HTTP (Klartext)</item>
@@ -9,6 +14,46 @@
         <item>Tk5000 Emulator</item>        
     </string-array>
     
+    <string-array name="trackingOneTouchModes">
+    	<item>nur Tracking</item>
+        <item>Tracking, Lokalisierung</item>
+        <item>Tracking, Lokalisierung, Puls</item>
+    </string-array>
+    
+    <string-array name="uploadTimeTrigger">
+    	<item>aus</item>
+        <item>5 Sekunden</item>
+        <item>10 Sekunden</item>
+        <item>20 Sekunden</item>
+        <item>30 Sekunden</item>
+        <item>1 Minute</item>
+        <item>3 Minuten</item>
+        <item>5 Minuten</item>
+        <item>10 Minuten</item>
+        <item>20 Minuten</item>
+        <item>30 Minuten</item>
+        <item>1 Sunde</item>
+    </string-array>
+    
+    <string-array name="uploadDistanceTrigger">
+    	<item>aus</item>
+        <item>50 Meter</item>
+        <item>100 Meter</item>
+        <item>200 Meter</item>
+        <item>300 Meter</item>
+        <item>500 Meter</item>
+        <item>1 Kilometer</item>
+        <item>2 Kilometer</item>
+        <item>5 Kilometer</item>
+        <item>10 Kilometer</item>
+        <item>50 Kilometer</item>
+    </string-array>
+    
+    <string-array name="uploadTriggerLogic">
+        <item>ODER</item>
+    	<item>UND</item>
+    </string-array>
+        
     <string-array name="bufferSizes">
     	<item>deaktiviert</item>
         <item>3 Positionen</item>
@@ -22,4 +67,13 @@
         <item>hoch</item>               
     </string-array>
     
+    <string-array name="autoModeResetTrackMode">
+    	<item>nie</item>
+    	<item>am nächsten Tag</item>
+        <item>nach 1 Stunde Pause</item>
+        <item>nach 2 Stunden Pause</item>
+        <item>nach 4 Stunden Pause</item>
+        <item>nach 8 Stunden Pause</item>
+        <item>nach 24 Stunden Pause</item>
+    </string-array>
 </resources>

@@ -12,7 +12,7 @@ import de.msk.mylivetracker.client.android.status.NmeaInfo;
  * @version 000
  * 
  * history
- * 000 initial 2011-08-11
+ * 000 	2011-08-11 initial.
  * 
  */
 public class NmeaListener implements android.location.GpsStatus.NmeaListener {

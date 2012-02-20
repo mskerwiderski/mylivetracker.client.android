@@ -31,7 +31,7 @@ import de.msk.mylivetracker.client.android.preferences.Preferences;
  */
 public class TrackStatus implements Serializable {
 	
-	private static final long serialVersionUID = -5872064876234898446L;
+	private static final long serialVersionUID = 1705600083488798901L;
 	
 	private String trackId = null;
 	private Float trackDistanceInMtr = 0.0f;
@@ -41,6 +41,7 @@ public class TrackStatus implements Serializable {
 	private String antPlusStatus = null;
 	private String antPlusHeartrateStatus = null;
 	private Float mileageInMtr = 0.0f;		
+	private Long lastAutoModeStopSignalReceived = null;
 	
 	private static TrackStatus trackStatus;
 		
@@ -224,5 +225,13 @@ public class TrackStatus implements Serializable {
 
 	public void setMileageInMtr(Float mileageInMtr) {
 		this.mileageInMtr = mileageInMtr;
+	}
+
+	public Long getLastAutoModeStopSignalReceived() {
+		return lastAutoModeStopSignalReceived;
+	}
+
+	public void updateLastAutoModeStopSignalReceived() {
+		this.lastAutoModeStopSignalReceived = getElapsedTimeInMSecs();
 	}
 }

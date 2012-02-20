@@ -18,7 +18,7 @@ import de.msk.mylivetracker.client.android.status.TrackStatus;
  * @version 000
  * 
  * history
- * 000 initial 2011-09-05
+ * 000 	2011-09-05 initial.
  * 
  */
 public class StatusBarUpdater {

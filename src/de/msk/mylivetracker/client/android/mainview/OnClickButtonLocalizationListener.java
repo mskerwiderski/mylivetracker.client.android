@@ -1,7 +1,5 @@
 package de.msk.mylivetracker.client.android.mainview;
 
-import android.content.Intent;
-import android.provider.Settings;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -10,10 +8,11 @@ import android.view.View.OnClickListener;
  * 
  * @author michael skerwiderski, (c)2011
  * 
- * @version 000
+ * @version 001
  * 
  * history
- * 000 initial 2011-09-02
+ * 001  2012-02-20 call localization prefences page.
+ * 000 	2011-09-02 initial.
  * 
  */
 public class OnClickButtonLocalizationListener implements OnClickListener {
@@ -22,8 +21,6 @@ public class OnClickButtonLocalizationListener implements OnClickListener {
 	 */
 	@Override
 	public void onClick(View v) {			
-		final MainActivity mainActivity = MainActivity.get();
-		Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-		mainActivity.startActivity(intent);		
+		MainActivity.get().startActivityPrefsLocalization();
 	}
 }

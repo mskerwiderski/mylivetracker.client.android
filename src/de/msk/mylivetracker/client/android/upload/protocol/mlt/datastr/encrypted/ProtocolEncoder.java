@@ -28,10 +28,11 @@ import de.msk.mylivetracker.commons.protocol.UploadDataPacket;
  * 
  * @author michael skerwiderski, (c)2011
  * 
- * @version 000
+ * @version 001
  * 
  * history
- * 000 initial 2011-08-11
+ * 001 	2012-02-20 default value for getNetworkTypeAsStr is 'unknown'.
+ * 000 	2011-08-11 initial.
  * 
  */
 public class ProtocolEncoder extends EncDecoder implements IProtocol {
@@ -147,7 +148,7 @@ public class ProtocolEncoder extends EncDecoder implements IProtocol {
 					data.setMobileNetworkName(mnn);
 				}				
 			}
-			data.setMobileNetworkType(phoneStateInfo.getNetworkTypeAsStr());
+			data.setMobileNetworkType(phoneStateInfo.getNetworkTypeAsStr("unknown"));
 				
 			GsmCellLocation gsmCellLocation = phoneStateInfo.getGsmCellLocation();
 			if (gsmCellLocation != null) {				

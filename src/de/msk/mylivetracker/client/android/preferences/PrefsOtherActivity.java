@@ -6,27 +6,29 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences.BufferSize;
 import de.msk.mylivetracker.client.android.preferences.Preferences.ConfirmLevel;
+import de.msk.mylivetracker.client.android.preferences.Preferences.TrackingOneTouchMode;
 import de.msk.mylivetracker.client.android.status.PositionBuffer;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
-import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
 
 /**
  * PrefsOtherActivity.
  * 
  * @author michael skerwiderski, (c)2011
  * 
- * @version 000
+ * @version 001
  * 
  * history
- * 000 initial 2011-08-11
+ * 001  2011-02-18
+ * 		o phoneNumber removed.
+ * 		o trackinOneTouch added.
+ * 000 	2011-08-11 initial.
  * 
  */
 public class PrefsOtherActivity extends AbstractActivity {
@@ -35,19 +37,19 @@ public class PrefsOtherActivity extends AbstractActivity {
 		private PrefsOtherActivity activity;
 		private Preferences preferences;
 		private Spinner spPrefsOther_MaxPositionBufferSize;
-		private EditText etPrefsOther_PhoneNumber;
+		private Spinner spPrefsOther_TrackingOneTouch;
 		private Spinner spPrefsOther_ConfirmLevel;
 		
 		public OnClickButtonSaveListener(
 			PrefsOtherActivity activity,
 			Preferences preferences,
 			Spinner spPrefsOther_MaxPositionBufferSize,
-			EditText etPrefsOther_PhoneNumber,
+			Spinner spPrefsOther_TrackingOneTouch,
 			Spinner spPrefsOther_ConfirmLevel) {
 			this.activity = activity;
 			this.preferences = preferences;
 			this.spPrefsOther_MaxPositionBufferSize = spPrefsOther_MaxPositionBufferSize;
-			this.etPrefsOther_PhoneNumber = etPrefsOther_PhoneNumber;
+			this.spPrefsOther_TrackingOneTouch = spPrefsOther_TrackingOneTouch;
 			this.spPrefsOther_ConfirmLevel = spPrefsOther_ConfirmLevel;
 		}
 
@@ -56,18 +58,14 @@ public class PrefsOtherActivity extends AbstractActivity {
 		 */
 		@Override
 		public void onClick(View v) {
-			boolean valid = 
-				ValidatorUtils.validateEditTextString(
-					this.activity, 
-					R.string.fdPrefsOther_PhoneNumber, 
-					etPrefsOther_PhoneNumber, 					
-					0, 25, true);
+			boolean valid = true;
+				
 			if (valid) {
 				preferences.setUplPositionBufferSize(BufferSize.values()[spPrefsOther_MaxPositionBufferSize.getSelectedItemPosition()]);
 				if (preferences.getUplPositionBufferSize().isDisabled()) {
 					PositionBuffer.reset();
 				}
-				preferences.setPhoneNumber(etPrefsOther_PhoneNumber.getText().toString());
+				preferences.setTrackingOneTouchMode(TrackingOneTouchMode.values()[spPrefsOther_TrackingOneTouch.getSelectedItemPosition()]);
 				preferences.setConfirmLevel(ConfirmLevel.values()[spPrefsOther_ConfirmLevel.getSelectedItemPosition()]);
 				Preferences.save();
 				this.activity.finish();
@@ -179,15 +177,19 @@ public class PrefsOtherActivity extends AbstractActivity {
         spPrefsOther_MaxPositionBufferSize.setAdapter(adapter);
         spPrefsOther_MaxPositionBufferSize.setSelection(prefs.getUplPositionBufferSize().ordinal());
         
-        EditText etPrefsOther_PhoneNumber = (EditText)findViewById(R.id.etPrefsOther_PhoneNumber);
-        etPrefsOther_PhoneNumber.setText(String.valueOf(prefs.getPhoneNumber()));
-        
         Spinner spPrefsOther_ConfirmLevel = (Spinner)findViewById(R.id.spPrefsOther_ConfirmLevel);
         adapter = ArrayAdapter.createFromResource(
             this, R.array.confirmLevels, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spPrefsOther_ConfirmLevel.setAdapter(adapter);
         spPrefsOther_ConfirmLevel.setSelection(prefs.getConfirmLevel().ordinal());
+        
+        Spinner spPrefsOther_TrackingOneTouch = (Spinner)findViewById(R.id.spPrefsOther_TrackingOneTouch);
+        adapter = ArrayAdapter.createFromResource(
+            this, R.array.trackingOneTouchModes, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spPrefsOther_TrackingOneTouch.setAdapter(adapter);
+        spPrefsOther_TrackingOneTouch.setSelection(prefs.getTrackingOneTouchMode().ordinal());
         
         Button btPrefsOther_ResetToFactoryDefaults = (Button)findViewById(R.id.btPrefsOther_ResetToFactoryDefaults);
         Button btPrefsOther_ResetOverallMileage = (Button)findViewById(R.id.btPrefsOther_ResetOverallMileage);      
@@ -201,7 +203,7 @@ public class PrefsOtherActivity extends AbstractActivity {
         btnPrefsOther_Save.setOnClickListener(
 			new OnClickButtonSaveListener(this, prefs,
 				spPrefsOther_MaxPositionBufferSize,
-				etPrefsOther_PhoneNumber,
+				spPrefsOther_TrackingOneTouch,
 				spPrefsOther_ConfirmLevel));		
         btnPrefsOther_Cancel.setOnClickListener(
 			new OnClickButtonCancelListener(this));

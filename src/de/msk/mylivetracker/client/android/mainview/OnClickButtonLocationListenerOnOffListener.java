@@ -13,10 +13,13 @@ import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
  * 
  * @author michael skerwiderski, (c)2011
  * 
- * @version 000
+ * @version 001
  * 
  * history
- * 000 initial 2011-08-11
+ * 001	2012-02-18 
+ *     	o startStopLocationListener adapted, that it can be used by OnClickButtonStartStopListener::startStopTrack.
+ *     	o If in auto mode, startStopLocationListener is rejected.
+ * 000 	2011-08-11 initial.
  * 
  */
 public class OnClickButtonLocationListenerOnOffListener implements OnClickListener {
@@ -35,7 +38,7 @@ public class OnClickButtonLocationListenerOnOffListener implements OnClickListen
 
 		@Override
 		public void onYes() {		
-			startStopLocationListener(activity);							
+			startStopLocationListener(activity, !LocationListener.get().isActive());							
 		}	
 		
 		/* (non-Javadoc)
@@ -52,22 +55,30 @@ public class OnClickButtonLocationListenerOnOffListener implements OnClickListen
 	 * @see android.view.View.OnClickListener#onClick(android.view.View)
 	 */
 	@Override 
-	public void onClick(View v) {			
+	public void onClick(View v) {	
 		MainActivity activity = MainActivity.get();
+		if (MainActivity.showStartStopInfoDialogIfInAutoMode()) {
+			activity.getUiBtLocationListenerOnOff().setChecked(
+				LocationListener.get().isActive());
+			return;
+		}
+		
 		if (Preferences.get().getConfirmLevel().isHigh()) {
 			StartStopLocationListenerDialog dlg = new StartStopLocationListenerDialog(activity);
 			dlg.show();
 		} else {
-			startStopLocationListener(activity);
+			startStopLocationListener(activity, !LocationListener.get().isActive());
 		}
 	}
 	
-	private static void startStopLocationListener(MainActivity activity) {
-		if (LocationListener.get().isActive()) {
+	public static void startStopLocationListener(MainActivity activity, boolean start) {
+		if (!start && LocationListener.get().isActive()) {
 			activity.stopLocationListener();						
-		} else {
+		} else if (start && !LocationListener.get().isActive()){
 			activity.startLocationListener();						
 		}
+		activity.getUiBtLocationListenerOnOff().setChecked(
+			LocationListener.get().isActive());
 		StatusBarUpdater.updateAppStatus();
 		activity.updateView();
 	}

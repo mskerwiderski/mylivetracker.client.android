@@ -11,24 +11,14 @@
         />
     </LinearLayout>
     <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" >
-    	<RadioGroup
-    	    android:layout_height="wrap_content" 
-    	    android:layout_width="fill_parent"
-      		android:orientation="horizontal">    
-    		<RadioButton 
-    		    android:id="@+id/rbPrefsLocalization_ProviderGps" 
-    		    android:text="@string/rbPrefsLocalization_ProviderGps" 
-    		    android:layout_height="fill_parent"
-    		    android:layout_width="wrap_content" 
-    		/>
-    		<RadioButton 
-    		    android:id="@+id/rbPrefsLocalization_ProviderNetwork" 
-    		    android:text="@string/rbPrefsLocalization_ProviderNetwork" 
-    		    android:layout_height="fill_parent"
-    		    android:layout_width="wrap_content" 
-    		/>
-    	</RadioGroup>
+    	<Spinner
+	    	android:id="@+id/spPrefsLocalization_LocalizationMode"
+	    	android:layout_height="40dip" 
+	    	android:layout_width="fill_parent"
+	    	android:nextFocusDown="@+id/etPrefsLocalization_TimeTriggerInSecs" 
+	    />
     </LinearLayout>
+    <LinearLayout android:layout_height="5dip" android:layout_width="fill_parent" />
     <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent">
         <TextView 
             android:text="@string/lbPrefsLocalization_TimeTriggerInSecs" 

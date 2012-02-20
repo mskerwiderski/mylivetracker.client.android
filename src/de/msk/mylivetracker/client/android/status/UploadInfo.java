@@ -13,16 +13,19 @@ import de.msk.mylivetracker.client.android.preferences.Preferences;
  * @version 000
  * 
  * history
- * 000 initial 2011-08-26
+ * 001 2012-02-04 lastUsedLocationProvider added.
+ * 000 2011-08-26 initial.
  * 
  */
 public class UploadInfo extends AbstractInfo {
 
 	private static UploadInfo uploadInfo = null;
 	public static void update(Boolean status, String resultCode,	
-		Integer positionsUploaded, Long uploadTimeInMSecs) {
+		Integer positionsUploaded, Long uploadTimeInMSecs,
+		String lastUsedLocationProvider) {
 		uploadInfo = createNewUploadInfo(uploadInfo, 
-			status, resultCode, positionsUploaded, uploadTimeInMSecs);
+			status, resultCode, positionsUploaded, 
+			uploadTimeInMSecs, lastUsedLocationProvider);
 	}
 	public static UploadInfo get() {
 		return uploadInfo;
@@ -35,19 +38,22 @@ public class UploadInfo extends AbstractInfo {
 	private String resultCode = null;	
 	private Integer countUploaded = null;
 	private Long avgUploadTimeInMSecs = null;
+	private String lastUsedLocationProvider = null;
 	
 	private UploadInfo(Boolean status, String resultCode, Integer countUploaded,
-		Long avgUploadTimeInMSecs) {
+		Long avgUploadTimeInMSecs, String lastUsedLocationProvider) {
 		this.status = status;
 		this.resultCode = resultCode;
 		this.countUploaded = countUploaded;
 		this.avgUploadTimeInMSecs = avgUploadTimeInMSecs;
+		this.lastUsedLocationProvider = lastUsedLocationProvider;
 	}
 	
-	public static UploadInfo createNewUploadInfo(
+	private static UploadInfo createNewUploadInfo(
 		UploadInfo currUploadInfo,	
 		Boolean status, String resultCode,	
-		Integer positionsUploaded, Long uploadTimeInMSecs) {		
+		Integer positionsUploaded, Long uploadTimeInMSecs,
+		String lastUsedLocationProvider) {		
 			
 		Integer countUploaded = positionsUploaded;
 		if ((currUploadInfo != null) && (currUploadInfo.countUploaded != null)) {
@@ -66,12 +72,13 @@ public class UploadInfo extends AbstractInfo {
 			avgUploadTimeInMSecs = currUploadInfo.avgUploadTimeInMSecs;
 		}
 		
-		return new UploadInfo(status, resultCode, countUploaded, avgUploadTimeInMSecs);
+		return new UploadInfo(status, resultCode, countUploaded,
+			avgUploadTimeInMSecs, lastUsedLocationProvider);
 	}
 	
 	public boolean isSuccess() {
 		if ((this.status == null) || !this.status || (this.getTimestamp() == null)) return false;
-		int periodOfRestInSecs = Preferences.get().getUplTimeTriggerInSeconds();
+		int periodOfRestInSecs = Preferences.get().getUplTimeTrigger().getSecs();
 		if (periodOfRestInSecs == 0) {
 			periodOfRestInSecs = 5;
 		} else {
@@ -108,5 +115,11 @@ public class UploadInfo extends AbstractInfo {
 	 */
 	public Long getAvgUploadTimeInMSecs() {
 		return avgUploadTimeInMSecs;
+	}
+	/**
+	 * @return the lastUsedLocationProvider
+	 */
+	public String getLastUsedLocationProvider() {
+		return lastUsedLocationProvider;
 	}
 }

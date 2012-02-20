@@ -12,6 +12,8 @@
     <string name="btNo">Nein</string>
     <string name="btContinue">Weiter</string>
     <string name="btSend">Senden</string>
+    <string name="tvOn">An</string>
+    <string name="tvOff">Aus</string>
     
     <!-- common error messages -->
     <string name="txErr_NoDataConnection">Es konnte keine Datenverbindung hergestellt werden!</string>
@@ -26,6 +28,7 @@
     <string name="mnPrefsServer">Server</string>
     <string name="mnPrefsAccount">Zugang</string>
     <string name="mnPrefsOther">Sonstige</string>
+    <string name="mnPrefsAuto">Auto</string>
     <string name="mnLinkSender">Koppeln</string>    
     <string name="mnInfo">Info</string>
     <string name="mnExit">Beenden</string>
@@ -58,6 +61,10 @@
     
     <!-- main -->
     <string name="tiMain">Track</string>    
+    <string name="tvMain_AutoModeIndicator">Auto</string>
+    <string name="tvMain_LocalizationIndicator">Pos</string>
+    <string name="tvMain_WirelessLanIndicator">WLAN</string>
+    <string name="tvMain_MobileNetworkIndicator">Daten</string>
     <string name="btMain_LocationListener">Lokalisierung</string>
     <string name="btMain_Tracking">Tracking</string>    
     <string name="btMain_ResetTrack">Zurücksetzen</string>
@@ -126,6 +133,7 @@
     <string name="txPrefs_Def_TrackName">Mein Track</string>
     
     <!-- preferences commons -->
+    <string name="txPrefs_InfoAutoModeEnabled">Das manuelle Zurücksetzen, Starten/Stoppen des Tracks, der Lokalisierung oder HF-Messung ist im Auto Modus nicht möglich!</string>
     <string name="txPrefs_WarningChangePrefsDuringRunningTrack">Das Verändern der Einstellungen während eines laufenden Tracks kann zu unerwartetem Verhalten führen!</string>
     
     <!-- preferences server -->
@@ -137,15 +145,16 @@
     <string name="fdPrefsServer_ServerPath">Server Pfad</string>    
     <string name="lbPrefsServer_ServerPath">Server Pfad (nur bei Übertragung via HTTP)</string>
     <string name="fdPrefsServer_TimeTriggerInSecs">Zeit Trigger</string>
-    <string name="lbPrefsServer_TimeTriggerInSecs">Zeit Trigger in Sek.</string>
+    <string name="lbPrefsServer_TimeTriggerInSecs">Zeit Trigger</string>
     <string name="fdPrefsServer_DistanceTriggerInMtr">Distanz Trigger</string>
-    <string name="lbPrefsServer_DistanceTriggerInMtr">Distanz Trigger in Mtr.</string>       
+    <string name="lbPrefsServer_DistanceTriggerInMtr">Distanz Trigger</string>
+    <string name="lbPrefsServer_TriggerLogic">Trigger Logik</string>       
     <string name="lbPrefsServer_CloseConnectionAfterEveryUpload">Verbindung nach jeder Übertragung schliessen</string>
     <string name="lbPrefsServer_FinishEveryUploadWithALinefeed">Jede Übertragung mit einem Zeilenumbruch beenden</string>
     
     <!-- preferences account -->
     <string name="tiPrefsAccount">Einstellungen Zugang</string>
-	<string name="lbPrefsAccount_DeviceId">Geräte-Id (standardmässig die IMEI)</string>
+	<string name="lbPrefsAccount_DeviceId">Geräte-Id (IMEI)</string>
 	<string name="fdPrefsAccount_DeviceId">Geräte-Id</string>
     <string name="lbPrefsAccount_Username">Benutzername</string>
     <string name="fdPrefsAccount_Username">Benutzername</string>
@@ -153,12 +162,12 @@
     <string name="fdPrefsAccount_Password">Passwort</string>
     <string name="lbPrefsAccount_TrackName">Trackname</string>
     <string name="fdPrefsAccount_TrackName">Trackname</string>
+    <string name="fdPrefsAccount_PhoneNumber">Telefonnummer</string>
+    <string name="lbPrefsAccount_PhoneNumber">Telefonnummer</string>
     
 	<!-- preferences localization -->
 	<string name="tiPrefsLocalization">Einstellungen Lokalisierung</string>
 	<string name="lbPrefsLocalization_Provider">Art der Positionsbestimmuung</string>
-    <string name="rbPrefsLocalization_ProviderGps">GPS</string>
-    <string name="rbPrefsLocalization_ProviderNetwork">Netzwerk\n(Mobilfunk, WLAN-Netze)</string>
     <string name="lbPrefsLocalization_TimeTriggerInSecs">Zeit Trigger in Sek.</string>
     <string name="fdPrefsLocalization_TimeTriggerInSecs">Zeit Trigger</string>
     <string name="lbPrefsLocalization_DistanceTriggerInMtr">Distanz Trigger in Mtr.</string>    
@@ -174,9 +183,8 @@
     <string name="tiPrefsOther">Einstellungen Sonstige</string>
     <string name="fdPrefsOther_MaxPositionBufferSize">Puffer Größe</string>
     <string name="lbPrefsOther_MaxPositionBufferSize">Puffergröße um Funklöcher zu überbrücken (mit 0 wird der Puffer deaktiviert)</string>
-    <string name="fdPrefsOther_PhoneNumber">Telefonnummer</string>
-    <string name="lbPrefsOther_PhoneNumber">Die Telefonnr. unter der Sie erreichbar sind</string>
-    <string name="lbPrefsOther_ConfirmLevel">Sicherheitsabfragen um ungewollte Aktionen zu verhindern</string>        
+    <string name="lbPrefsOther_ConfirmLevel">Sicherheitsabfragen um ungewollte Aktionen zu verhindern</string>       
+    <string name="lbPrefsOther_TrackingOneTouch">Tracking One-Touch Modus</string> 
     <string name="btPrefsOther_ResetToFactoryDefaults">Auf Werkseinstellungen zurücksetzen</string>
     <string name="btPrefsOther_ResetOverallMileage">Kilometerzähler zurücksetzen</string>
     <string name="txPrefsOther_QuestionResetToFactoryDefaults">Wollen Sie wirklich auf die Werkseinstellungen zurücksetzen?</string>
@@ -184,6 +192,13 @@
     <string name="txPrefsOther_InfoResetToFactoryDefaultsDone">Es wurde auf die Werkseinstellungen zurückgesetzt!</string>
     <string name="txPrefsOther_InfoResetOverallMileageDone">Der Kilometerzähler wurde zurückgesetzt!</string>
     
+    <!-- preferences auto -->
+    <string name="tiPrefsAuto">Einstellungen Automatik</string>
+    <string name="fdPrefsAuto_AutoMode">Automatik Modus</string>
+    <string name="lbPrefsAuto_AutoMode">Wenn der Akku in den Ladestatus wechselt (den Ladestatus verlässt), wird der Track automatisch gestartet (gestoppt).</string>
+   	<string name="fdPrefsAuto_ResetTrackMode">Track-zurücksetzen Modus</string>
+	<string name="txPrefsAuto_ResetTrackMode">Track-zurücksetzen Modus.</string>
+	
     <!-- link sender to server -->
     <string name="tiLinkSender">Sender koppeln</string>
     <string name="lbLinkSender_LinkInfo">

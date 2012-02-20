@@ -12,10 +12,13 @@ import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
  * 
  * @author michael skerwiderski, (c)2011
  * 
- * @version 000
+ * @version 001
  * 
  * history
- * 000 initial 2011-08-11
+ * 001	2012-02-20 
+ *     	o startStopAntPlus adapted, that it can be used by OnClickButtonStartStopListener::startStopTrack.
+ *      o If in auto mode, startStopAntPlus is rejected.
+ * 000 	2011-08-11 initial.
  * 
  */
 public class OnClickButtonAntPlusListener implements OnClickListener {
@@ -34,7 +37,7 @@ public class OnClickButtonAntPlusListener implements OnClickListener {
 
 		@Override
 		public void onYes() {		
-			startStopAntPlus(activity);							
+			startStopAntPlus(activity, !activity.getAntPlusManager().hasSensorListeners());
 		}
 
 		/* (non-Javadoc)
@@ -53,20 +56,27 @@ public class OnClickButtonAntPlusListener implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		MainActivity activity = MainActivity.get();
+		if (MainActivity.showStartStopInfoDialogIfInAutoMode()) {
+			activity.getUiBtConnectDisconnectAnt().setChecked(
+				activity.getAntPlusManager().hasSensorListeners());
+			return;
+		}
 		if (Preferences.get().getConfirmLevel().isHigh()) {
 			StartStopAntPlusDialog dlg = new StartStopAntPlusDialog(activity);
 			dlg.show();
 		} else {
-			startStopAntPlus(activity);
+			startStopAntPlus(activity, !activity.getAntPlusManager().hasSensorListeners());
 		}
 	}
 	
-	private static void startStopAntPlus(MainActivity activity) {
-		if (activity.getAntPlusManager().hasSensorListeners()) {
+	public static void startStopAntPlus(MainActivity activity, boolean start) {
+		if (!start && activity.getAntPlusManager().hasSensorListeners()) {
 			activity.stopAntPlusHeartrateListener();
-		} else {
+		} else if (start && !activity.getAntPlusManager().hasSensorListeners()) {
 			activity.startAntPlusHeartrateListener();
-		}				
+		}			
+		activity.getUiBtConnectDisconnectAnt().setChecked(
+			activity.getAntPlusManager().hasSensorListeners());
 		StatusBarUpdater.updateAppStatus();
 		activity.updateView();
 	}

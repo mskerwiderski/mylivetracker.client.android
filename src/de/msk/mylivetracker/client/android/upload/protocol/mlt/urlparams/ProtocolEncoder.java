@@ -10,6 +10,7 @@ import android.location.Location;
 import android.telephony.ServiceState;
 import android.telephony.gsm.GsmCellLocation;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
+import de.msk.mylivetracker.client.android.mainview.updater.UpdaterUtils;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
 import de.msk.mylivetracker.client.android.status.EmergencySignalInfo;
@@ -28,10 +29,11 @@ import de.msk.mylivetracker.client.android.upload.protocol.IProtocol;
  * 
  * @author michael skerwiderski, (c)2011
  * 
- * @version 000
+ * @version 001
  * 
  * history
- * 000 initial 2011-08-11
+ * 001 	2012-02-20 default value for getNetworkTypeAsStr is 'unknown'.
+ * 000	2011-08-11 initial.
  * 
  */
 public class ProtocolEncoder implements IProtocol {
@@ -138,7 +140,7 @@ public class ProtocolEncoder implements IProtocol {
 					paramsStr = HttpProtocolUtils.addParam(paramsStr, "mnn", mnn);
 				}
 			}
-			paramsStr = HttpProtocolUtils.addParam(paramsStr, "nwt", phoneStateInfo.getNetworkTypeAsStr());
+			paramsStr = HttpProtocolUtils.addParam(paramsStr, "nwt", phoneStateInfo.getNetworkTypeAsStr(UpdaterUtils.getNoValue()));
 			
 			GsmCellLocation gsmCellLocation = phoneStateInfo.getGsmCellLocation();
 			if (gsmCellLocation != null) {				

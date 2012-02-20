@@ -13,10 +13,11 @@ import de.msk.mylivetracker.client.android.mainview.MainActivity;
  * 
  * @author michael skerwiderski, (c)2011
  * 
- * @version 000
+ * @version 001
  * 
  * history
- * 000 initial 2011-08-11
+ * 001 	2012-02-20 default value for getNetworkTypeAsStr added.
+ * 000	2011-08-11 initial.
  * 
  */
 public class PhoneStateInfo extends AbstractInfo {
@@ -96,7 +97,7 @@ public class PhoneStateInfo extends AbstractInfo {
 		return MainActivity.get().isPhoneTypeGsm() ? "GSM" : "CDMA";
 	}
 	
-	public String getNetworkTypeAsStr() {
+	public String getNetworkTypeAsStr(String defValue) {
 		String networkTypeAsStr = null;
 		if (this.networkType != null) {			
 			switch (networkType) {
@@ -119,7 +120,7 @@ public class PhoneStateInfo extends AbstractInfo {
 				networkTypeAsStr = "HSUPA";
 				break;	
 			default:
-				networkTypeAsStr = "unknown";
+				networkTypeAsStr = defValue;
 				break;
 			}
 		}

@@ -23,30 +23,136 @@
         	android:layout_weight="1"
         />
     </LinearLayout>    
-    <LinearLayout android:layout_height="2dip" android:layout_width="fill_parent" />           
     <LinearLayout     	 
     	android:layout_height="wrap_content" 
     	android:layout_width="fill_parent" 
 		android:layout_gravity="bottom" 
 		android:gravity="center_vertical|center_horizontal" >
     	<TableRow android:layout_height="fill_parent" android:layout_width="fill_parent" android:layout_gravity="bottom" >
-        	<TextView
-        		android:id="@+id/tvMain_TrackName" 
-        		android:text=""
-        		android:textSize="9pt"
+    	    <TextView
+    	        android:id="@+id/tvMain_HeadAutoModeIndicator"
+        		android:text="@string/tvMain_AutoModeIndicator"
+        		android:textSize="5pt"
         		android:textColor="#000000"
-        		android:background="#fff4bc"
+        		android:background="#d4d0c8"
         		android:layout_gravity="center"
 				android:layout_marginLeft="4dip"
 				android:layout_marginRight="4dip"
-				android:layout_height="37dip"
+				android:layout_height="22dip"
+				android:layout_width="0dp"
+				android:layout_weight="1"
+	            android:gravity="center_vertical|center_horizontal"   	                              		 
+        	/>
+        	<TextView
+        	    android:id="@+id/tvMain_HeadLocalizationIndicator"
+        		android:text="@string/tvMain_LocalizationIndicator"
+        		android:textSize="5pt"
+        		android:textColor="#000000"
+        		android:background="#d4d0c8"
+        		android:layout_gravity="center"
+				android:layout_marginLeft="4dip"
+				android:layout_marginRight="4dip"
+				android:layout_height="22dip"
+				android:layout_width="0dp"
+				android:layout_weight="1"
+	            android:gravity="center_vertical|center_horizontal"   	                              		 
+        	/>
+        	<TextView
+        	    android:id="@+id/tvMain_HeadWirelessLanIndicator"
+        		android:text="@string/tvMain_WirelessLanIndicator"
+        		android:textSize="5pt"
+        		android:textColor="#000000"
+        		android:background="#d4d0c8"
+        		android:layout_gravity="center"
+				android:layout_marginLeft="4dip"
+				android:layout_marginRight="4dip"
+				android:layout_height="22dip"
+				android:layout_width="0dp"
+				android:layout_weight="1"
+	            android:gravity="center_vertical|center_horizontal"   	                              		 
+        	/>
+        	<TextView
+        	    android:id="@+id/tvMain_HeadMobileNetworkIndicator"
+        		android:text="@string/tvMain_MobileNetworkIndicator"
+        		android:textSize="5pt"
+        		android:textColor="#000000"
+        		android:background="#d4d0c8"
+        		android:layout_gravity="center"
+				android:layout_marginLeft="4dip"
+				android:layout_marginRight="4dip"
+				android:layout_height="22dip"
+				android:layout_width="0dp"
+				android:layout_weight="1"
+	            android:gravity="center_vertical|center_horizontal"   	                              		 
+        	/>
+		</TableRow>        
+    </LinearLayout>           
+    <LinearLayout android:layout_height="2dip" android:layout_width="fill_parent" />
+    <LinearLayout     	 
+    	android:layout_height="wrap_content" 
+    	android:layout_width="fill_parent" 
+		android:layout_gravity="bottom" 
+		android:gravity="center_vertical|center_horizontal" >
+    	<TableRow android:layout_height="fill_parent" android:layout_width="fill_parent" android:layout_gravity="bottom" >
+    	    <TextView
+        		android:id="@+id/tvMain_AutoModeIndicator" 
+        		android:text=""
+        		android:textSize="5pt"
+        		android:textColor="#000000"
+        		android:background="#d4d0c8"
+        		android:layout_gravity="center"
+				android:layout_marginLeft="4dip"
+				android:layout_marginRight="4dip"
+				android:layout_height="22dip"
+				android:layout_width="0dp"
+				android:layout_weight="1"
+	            android:gravity="center_vertical|center_horizontal"   	                              		 
+        	/>
+        	<TextView
+        		android:id="@+id/tvMain_LocalizationIndicator" 
+        		android:text=""
+        		android:textSize="5pt"
+        		android:textColor="#000000"
+        		android:background="#d4d0c8"
+        		android:layout_gravity="center"
+				android:layout_marginLeft="4dip"
+				android:layout_marginRight="4dip"
+				android:layout_height="22dip"
+				android:layout_width="0dp"
+				android:layout_weight="1"
+	            android:gravity="center_vertical|center_horizontal"   	                              		 
+        	/>
+        	<TextView
+        		android:id="@+id/tvMain_WirelessLanIndicator" 
+        		android:text=""
+        		android:textSize="5pt"
+        		android:textColor="#000000"
+        		android:background="#d4d0c8"
+        		android:layout_gravity="center"
+				android:layout_marginLeft="4dip"
+				android:layout_marginRight="4dip"
+				android:layout_height="22dip"
+				android:layout_width="0dp"
+				android:layout_weight="1"
+	            android:gravity="center_vertical|center_horizontal"   	                              		 
+        	/>
+        	<TextView
+        		android:id="@+id/tvMain_MobileNetworkIndicator" 
+        		android:text=""
+        		android:textSize="5pt"
+        		android:textColor="#000000"
+        		android:background="#d4d0c8"
+        		android:layout_gravity="center"
+				android:layout_marginLeft="4dip"
+				android:layout_marginRight="4dip"
+				android:layout_height="22dip"
 				android:layout_width="0dp"
 				android:layout_weight="1"
 	            android:gravity="center_vertical|center_horizontal"   	                              		 
         	/>
 		</TableRow>        
     </LinearLayout>
-    <LinearLayout android:layout_height="8dip" android:layout_width="fill_parent" />      	
+    <LinearLayout android:layout_height="2dip" android:layout_width="fill_parent" />
     <LinearLayout     	
     	android:layout_height="wrap_content" 
     	android:layout_width="fill_parent" 
@@ -179,7 +285,7 @@
 	        	android:text=""
 	        	android:textSize="9pt"
 	        	android:textColor="#000000"
-	        	android:background="#fff4bc"	        	
+	        	android:background="#d4d0c8"	        	
 	        	android:layout_gravity="center"
 	        	android:layout_marginLeft="4dip"
 				android:layout_marginRight="4dip"
@@ -217,7 +323,7 @@
 	        	android:text=""
 	        	android:textSize="9pt"
 	        	android:textColor="#000000"
-	        	android:background="#fff4bc" 
+	        	android:background="#d4d0c8" 
 	        	android:layout_gravity="center"
 	        	android:layout_marginLeft="4dip"
 				android:layout_marginRight="4dip"

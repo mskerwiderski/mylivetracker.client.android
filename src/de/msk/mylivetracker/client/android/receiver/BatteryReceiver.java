@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.BatteryManager;
+import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
 
 /**
@@ -13,11 +14,11 @@ import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
  * 
  * @author michael skerwiderski, (c)2011
  * 
- * @version 000
+ * @version 001
  * 
  * history
- * 001 2011-11-27 bugfix: expected battery voltage must be 4 digits long.
- * 000 2011-08-11 initial.
+ * 001 	2011-11-27 bugfix: expected battery voltage must be 4 digits long.
+ * 000 	2011-08-11 initial.
  * 
  */
 public class BatteryReceiver extends BroadcastReceiver {
@@ -32,6 +33,8 @@ public class BatteryReceiver extends BroadcastReceiver {
 		return batteryReceiver;
 	}
 	
+	private boolean batteryCharging = false;
+	
 	/* (non-Javadoc)
 	 * @see android.content.BroadcastReceiver#onReceive(android.content.Context, android.content.Intent)
 	 */
@@ -44,14 +47,19 @@ public class BatteryReceiver extends BroadcastReceiver {
         BatteryStateInfo.State state = BatteryStateInfo.State.Unknown;
         if (istate == BatteryManager.BATTERY_STATUS_CHARGING){
         	state = BatteryStateInfo.State.Charging;
+        	batteryCharging = true;
         } else if (istate == BatteryManager.BATTERY_STATUS_DISCHARGING){
         	state = BatteryStateInfo.State.Discharging;
+        	batteryCharging = false;
         } else if (istate == BatteryManager.BATTERY_STATUS_NOT_CHARGING){
         	state = BatteryStateInfo.State.NotCharging;
+        	batteryCharging = false;
         } else if (istate == BatteryManager.BATTERY_STATUS_FULL){
         	state = BatteryStateInfo.State.Full;
+        	batteryCharging = true;
         } else {
         	state = BatteryStateInfo.State.Unknown;
+        	batteryCharging = false;
         }
         Integer percent = null;
         if ((ilevel != -1) && (iscale != -1)) {
@@ -74,6 +82,7 @@ public class BatteryReceiver extends BroadcastReceiver {
         	voltage = Math.round(ivolt / 1000.0d * 100.0d) / 100d;
         }        
         BatteryStateInfo.update(state, percent, temperature, voltage);
+        MainActivity.logInfo("BatteryReceiver: battery charging=" + isBatteryCharging());
 	}
 
 	public boolean isActive() {
@@ -82,5 +91,9 @@ public class BatteryReceiver extends BroadcastReceiver {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public boolean isBatteryCharging() {
+		return batteryCharging;
 	}	
 }

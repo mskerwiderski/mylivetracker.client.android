@@ -33,7 +33,7 @@ import de.msk.mylivetracker.commons.util.md5.MD5;
  * @version 000
  * 
  * history
- * 000 initial 2011-08-16
+ * 000 	2011-08-16 initial.
  * 
  */
 public class LinkSenderActivity extends AbstractActivity {	

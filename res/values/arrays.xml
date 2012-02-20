@@ -1,5 +1,10 @@
 <resources>
-
+    <string-array name="localizationModes">
+    	<item>GPS</item>
+        <item>Network</item>
+        <item>GPS and Network as fallback</item>
+    </string-array>
+    
     <string-array name="transferProtocols">
     	<item>Upload disabled</item>
         <item>MLT HTTP (plain)</item>
@@ -9,6 +14,12 @@
         <item>Tk5000 Emulator</item>        
     </string-array>
     
+    <string-array name="trackingOneTouchModes">
+    	<item>Tracking only</item>
+        <item>Tracking, Localization</item>
+        <item>Tracking, Localization, Heartrate</item>
+    </string-array>
+    
     <string-array name="bufferSizes">
     	<item>disabled</item>
         <item>3 positions</item>
@@ -16,9 +27,53 @@
         <item>10 positions</item>
     </string-array>
     
+    <string-array name="uploadTimeTrigger">
+    	<item>off</item>
+        <item>5 seconds</item>
+        <item>10 seconds</item>
+        <item>20 seconds</item>
+        <item>30 seconds</item>
+        <item>1 minute</item>
+        <item>3 minutes</item>
+        <item>5 minutes</item>
+        <item>10 minutes</item>
+        <item>20 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+    </string-array>
+    
+    <string-array name="uploadDistanceTrigger">
+    	<item>off</item>
+        <item>50 meters</item>
+        <item>100 meters</item>
+        <item>200 meters</item>
+        <item>300 meters</item>
+        <item>500 meters</item>
+        <item>1 kilometer</item>
+        <item>2 kilometers</item>
+        <item>5 kilometers</item>
+        <item>10 kilometers</item>
+        <item>50 kilometers</item>
+    </string-array>
+    
+    <string-array name="uploadTriggerLogic">
+        <item>OR</item>
+    	<item>AND</item>
+    </string-array>
+    
     <string-array name="confirmLevels">
     	<item>low</item>
         <item>medium</item>
         <item>high</item>               
+    </string-array>
+    
+   	<string-array name="autoModeResetTrackMode">
+    	<item>never</item>
+    	<item>the next day</item>
+        <item>after 1 hour pause</item>
+        <item>after 2 hours pause</item>
+        <item>after 4 hours pause</item>
+        <item>after 8 hours pause</item>
+        <item>after 24 hours pause</item>
     </string-array>
 </resources>

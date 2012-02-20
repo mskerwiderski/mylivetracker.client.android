@@ -13,6 +13,9 @@ import android.widget.Spinner;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences.TransferProtocol;
+import de.msk.mylivetracker.client.android.preferences.Preferences.UploadDistanceTrigger;
+import de.msk.mylivetracker.client.android.preferences.Preferences.UploadTimeTrigger;
+import de.msk.mylivetracker.client.android.preferences.Preferences.UploadTriggerLogic;
 import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
 
 /**
@@ -23,7 +26,7 @@ import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
  * @version 000
  * 
  * history
- * 000 initial 2011-08-11
+ * 000 	2011-08-11 initial.
  * 
  */
 public class PrefsServerActivity extends AbstractActivity {
@@ -35,8 +38,9 @@ public class PrefsServerActivity extends AbstractActivity {
 		private EditText etPrefsServer_ServerAddress;
 		private EditText etPrefsServer_ServerPort;
 		private EditText etPrefsServer_ServerPath;
-		private EditText etPrefsServer_TimeTriggerInSecs;
-		private EditText etPrefsServer_DistanceTriggerInMtr;	
+		private Spinner spPrefsServer_TimeTriggerInSecs;
+		private Spinner spPrefsServer_TriggerLogic;
+		private Spinner spPrefsServer_DistanceTriggerInMtr;	
 		private CheckBox cbPrefsServer_CloseConnectionAfterEveryUpload;
 		private CheckBox cbPrefsServer_FinishEveryUploadWithALinefeed;
 		
@@ -47,8 +51,9 @@ public class PrefsServerActivity extends AbstractActivity {
 			EditText etPrefsServer_ServerAddress,
 			EditText etPrefsServer_ServerPort, 
 			EditText etPrefsServer_ServerPath,
-			EditText etPrefsServer_TimeTriggerInSecs,
-			EditText etPrefsServer_DistanceTriggerInMtr,
+			Spinner spPrefsServer_TimeTriggerInSecs,
+			Spinner spPrefsServer_TriggerLogic,
+			Spinner spPrefsServer_DistanceTriggerInMtr,
 			CheckBox cbPrefsServer_CloseConnectionAfterEveryUpload,
 			CheckBox cbPrefsServer_FinishEveryUploadWithALinefeed) {
 			super();
@@ -57,8 +62,9 @@ public class PrefsServerActivity extends AbstractActivity {
 			this.spPrefsServer_TransferProtocol = spPrefsServer_TransferProtocol;
 			this.etPrefsServer_ServerAddress = etPrefsServer_ServerAddress;
 			this.etPrefsServer_ServerPort = etPrefsServer_ServerPort;
-			this.etPrefsServer_TimeTriggerInSecs = etPrefsServer_TimeTriggerInSecs;
-			this.etPrefsServer_DistanceTriggerInMtr = etPrefsServer_DistanceTriggerInMtr;			
+			this.spPrefsServer_TimeTriggerInSecs = spPrefsServer_TimeTriggerInSecs;
+			this.spPrefsServer_TriggerLogic = spPrefsServer_TriggerLogic;
+			this.spPrefsServer_DistanceTriggerInMtr =spPrefsServer_DistanceTriggerInMtr;
 			this.etPrefsServer_ServerPath = etPrefsServer_ServerPath;
 			this.cbPrefsServer_CloseConnectionAfterEveryUpload = cbPrefsServer_CloseConnectionAfterEveryUpload;
 			this.cbPrefsServer_FinishEveryUploadWithALinefeed = cbPrefsServer_FinishEveryUploadWithALinefeed;
@@ -85,27 +91,16 @@ public class PrefsServerActivity extends AbstractActivity {
 				ValidatorUtils.validateEditTextString(
 					this.activity, 
 					R.string.fdPrefsServer_ServerPath, 
-					etPrefsServer_ServerPath, 0, 50, true) &&
-				ValidatorUtils.validateEditTextNumber(
-					this.activity, 
-					R.string.fdPrefsServer_TimeTriggerInSecs, 
-					etPrefsServer_TimeTriggerInSecs, 
-					true, 
-					3, 3600, true) &&
-				ValidatorUtils.validateEditTextNumber(
-					this.activity, 
-					R.string.fdPrefsServer_DistanceTriggerInMtr, 
-					etPrefsServer_DistanceTriggerInMtr, 
-					true, 
-					0, 10000, true);			
+					etPrefsServer_ServerPath, 0, 50, true);			
 			
 			if (valid) {
 				preferences.setTransferProtocol(TransferProtocol.values()[spPrefsServer_TransferProtocol.getSelectedItemPosition()]);
 				preferences.setServer(etPrefsServer_ServerAddress.getText().toString());
 				preferences.setPort(Integer.parseInt(etPrefsServer_ServerPort.getText().toString()));
 				preferences.setPath(etPrefsServer_ServerPath.getText().toString());
-				preferences.setUplTimeTriggerInSeconds(Integer.parseInt(etPrefsServer_TimeTriggerInSecs.getText().toString()));
-				preferences.setUplDistanceTriggerInMeter(Integer.parseInt(etPrefsServer_DistanceTriggerInMtr.getText().toString()));
+				preferences.setUplTimeTrigger(UploadTimeTrigger.values()[spPrefsServer_TimeTriggerInSecs.getSelectedItemPosition()]);
+				preferences.setUplTriggerLogic(UploadTriggerLogic.values()[spPrefsServer_TriggerLogic.getSelectedItemPosition()]);
+				preferences.setUplDistanceTrigger(UploadDistanceTrigger.values()[spPrefsServer_DistanceTriggerInMtr.getSelectedItemPosition()]);
 				preferences.setCloseConnectionAfterEveryUpload(cbPrefsServer_CloseConnectionAfterEveryUpload.isChecked());
 				preferences.setFinishEveryUploadWithALinefeed(cbPrefsServer_FinishEveryUploadWithALinefeed.isChecked());
 				Preferences.save();
@@ -184,7 +179,7 @@ public class PrefsServerActivity extends AbstractActivity {
         
         Spinner spPrefsServer_TransferProtocol = (Spinner) findViewById(R.id.spPrefsServer_TransferProtocol);
         ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(
-                this, R.array.transferProtocols, android.R.layout.simple_spinner_item);
+            this, R.array.transferProtocols, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spPrefsServer_TransferProtocol.setAdapter(adapter);
         spPrefsServer_TransferProtocol.setSelection(prefs.getTransferProtocol().ordinal());        
@@ -195,11 +190,28 @@ public class PrefsServerActivity extends AbstractActivity {
         etPrefsServer_ServerPort.setText(String.valueOf(prefs.getPort()));
         EditText etPrefsServer_ServerPath = (EditText)findViewById(R.id.etPrefsServer_ServerPath);
         etPrefsServer_ServerPath.setText(prefs.getPath());
-        EditText etPrefsServer_TimeTriggerInSecs = (EditText)findViewById(R.id.etPrefsServer_TimeTriggerInSecs);
-        etPrefsServer_TimeTriggerInSecs.setText(String.valueOf(prefs.getUplTimeTriggerInSeconds()));
-        EditText etPrefsServer_DistanceTriggerInMtr = (EditText)findViewById(R.id.etPrefsServer_DistanceTriggerInMtr);
-        etPrefsServer_DistanceTriggerInMtr.setText(String.valueOf(prefs.getUplDistanceTriggerInMeter()));                
-                  
+        
+        Spinner spPrefsServer_TimeTriggerInSecs = (Spinner) findViewById(R.id.spPrefsServer_TimeTriggerInSecs);
+        adapter = ArrayAdapter.createFromResource(
+            this, R.array.uploadTimeTrigger, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spPrefsServer_TimeTriggerInSecs.setAdapter(adapter);
+        spPrefsServer_TimeTriggerInSecs.setSelection(prefs.getUplTimeTrigger().ordinal());        
+        
+        Spinner spPrefsServer_TriggerLogic = (Spinner) findViewById(R.id.spPrefsServer_TriggerLogic);
+        adapter = ArrayAdapter.createFromResource(
+            this, R.array.uploadTriggerLogic, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spPrefsServer_TriggerLogic.setAdapter(adapter);
+        spPrefsServer_TriggerLogic.setSelection(prefs.getUplTriggerLogic().ordinal());        
+        
+        Spinner spPrefsServer_DistanceTriggerInMtr = (Spinner) findViewById(R.id.spPrefsServer_DistanceTriggerInMtr);
+        adapter = ArrayAdapter.createFromResource(
+            this, R.array.uploadDistanceTrigger, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spPrefsServer_DistanceTriggerInMtr.setAdapter(adapter);
+        spPrefsServer_DistanceTriggerInMtr.setSelection(prefs.getUplDistanceTrigger().ordinal());        
+                       
         CheckBox cbPrefsServer_CloseConnectionAfterEveryUpload = (CheckBox)findViewById(R.id.cbPrefsServer_CloseConnectionAfterEveryUpload);
         cbPrefsServer_CloseConnectionAfterEveryUpload.setChecked(prefs.isCloseConnectionAfterEveryUpload());
 		CheckBox cbPrefsServer_FinishEveryUploadWithALinefeed = (CheckBox)findViewById(R.id.cbPrefsServer_FinishEveryUploadWithALinefeed);
@@ -221,8 +233,9 @@ public class PrefsServerActivity extends AbstractActivity {
 				etPrefsServer_ServerAddress,
 				etPrefsServer_ServerPort,
 				etPrefsServer_ServerPath,
-				etPrefsServer_TimeTriggerInSecs,
-				etPrefsServer_DistanceTriggerInMtr,
+				spPrefsServer_TimeTriggerInSecs,
+				spPrefsServer_TriggerLogic,
+				spPrefsServer_DistanceTriggerInMtr,
 				cbPrefsServer_CloseConnectionAfterEveryUpload,
 				cbPrefsServer_FinishEveryUploadWithALinefeed));
 		

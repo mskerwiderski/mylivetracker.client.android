@@ -1,5 +1,13 @@
 
 <resources>
+    <color name="colorBlack">#000000</color>
+    <color name="colorWhite">#ffffff</color>
+    
+    <!-- colors for auto mode indicator -->
+    <color name="colorIndicatorOk">#4bb648</color>
+    <color name="colorIndicatorOff">#f0f0f0</color>
+	<color name="colorIndicatorNotOk">#e2302f</color>
+	
 	<!-- colors for ant plus status -->
 	<color name="colorAntPlListOff">#f0f0f0</color>
 	<color name="colorAntPlListConnecting">#e2302f</color>

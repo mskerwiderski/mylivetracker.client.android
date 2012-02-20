@@ -4,9 +4,8 @@ import org.apache.commons.lang.StringUtils;
 
 import android.content.Context;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import de.msk.mylivetracker.client.android.R;
-import de.msk.mylivetracker.client.android.mainview.MainActivity;
+import de.msk.mylivetracker.client.android.preferences.Preferences.LocalizationMode;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
  
 /**
@@ -17,18 +16,18 @@ import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
  * @version 000
  * 
  * history
- * 000 initial 2011-08-11
+ * 001 2012-02-04 localizationModes implemented (gps, network, gpsAndNetwork).
+ * 000 2011-08-11 initial.
  * 
  */
 public class ValidatorUtils {
 
-	public static boolean validateIfLocationProviderIsSupported(
-		Context ctx, RadioButton radioButton, String providerName) {
-		if (!radioButton.isChecked()) return true;
-		if (MainActivity.get().getLocationManager().getProvider(providerName) == null) {
+	public static boolean validateIfLocalizationModeIsSupported(
+		Context ctx, LocalizationMode localizationMode, String localizationModeDisplayName) {
+		if (!localizationMode.supported()) {
 			String message = 
 				ctx.getString(R.string.validator_locationProviderNotSupported, 
-				providerName);
+				localizationModeDisplayName);
 			new SimpleInfoDialog(ctx, message).show();
 			return false;
 		}

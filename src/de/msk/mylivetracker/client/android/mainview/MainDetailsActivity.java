@@ -12,7 +12,7 @@ import de.msk.mylivetracker.client.android.R;
  * @version 000
  * 
  * history
- * 000 initial 2011-08-18
+ * 000 	2011-08-18 initial.
  * 
  */
 public class MainDetailsActivity extends AbstractMainActivity {

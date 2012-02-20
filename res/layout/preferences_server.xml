@@ -61,6 +61,13 @@
 			android:gravity="center" 
 		/>
     	<TextView
+    		android:text="@string/lbPrefsServer_TriggerLogic"
+    		android:layout_height="wrap_content"
+    		android:layout_width="fill_parent" 
+    		android:layout_weight="1" 
+			android:gravity="center" 
+		/>
+    	<TextView
     		android:text="@string/lbPrefsServer_DistanceTriggerInMtr"
     		android:layout_height="wrap_content"
     		android:layout_width="fill_parent" 
@@ -69,23 +76,27 @@
     	/>    	
     </LinearLayout>
     <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent">
-        <EditText
-        	android:id="@+id/etPrefsServer_TimeTriggerInSecs"
-        	android:text=""
-        	android:inputType="number" 
-        	android:layout_height="40dip" 
-        	android:layout_width="fill_parent" 
-        	android:layout_weight="1"
-        	android:nextFocusDown="@+id/etPrefsServer_DistanceTriggerInMtr"
-        />
-        <EditText
-        	android:id="@+id/etPrefsServer_DistanceTriggerInMtr"
-        	android:text=""
-        	android:inputType="number"
-        	android:layout_height="40dip"
-        	android:layout_width="fill_parent" 
-        	android:layout_weight="1"
-        />        
+        <Spinner
+	    	android:id="@+id/spPrefsServer_TimeTriggerInSecs"
+	    	android:layout_height="40dip" 
+	    	android:layout_width="fill_parent"
+	    	android:layout_weight="1" 
+	    	android:nextFocusDown="@+id/spPrefsServer_TriggerLogic" 
+    	/>
+        <Spinner
+	    	android:id="@+id/spPrefsServer_TriggerLogic"
+	    	android:layout_height="40dip" 
+	    	android:layout_width="fill_parent"
+	    	android:layout_weight="1" 
+	    	android:nextFocusDown="@+id/spPrefsServer_DistanceTriggerInMtr" 
+    	/>
+        <Spinner
+	    	android:id="@+id/spPrefsServer_DistanceTriggerInMtr"
+	    	android:layout_height="40dip" 
+	    	android:layout_width="fill_parent"
+	    	android:layout_weight="1" 
+	    	android:nextFocusDown="@+id/cbPrefsServer_CloseConnectionAfterEveryUpload" 
+    	/>
     </LinearLayout>
     <CheckBox
     	android:id="@+id/cbPrefsServer_CloseConnectionAfterEveryUpload"

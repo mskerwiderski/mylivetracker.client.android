@@ -15,7 +15,7 @@ import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
  * @version 000
  * 
  * history
- * 000 initial 2011-08-11
+ * 000 	2011-08-11 initial.
  * 
  */
 public class PhoneStateListener extends android.telephony.PhoneStateListener {
@@ -49,6 +49,14 @@ public class PhoneStateListener extends android.telephony.PhoneStateListener {
 	}
 
 	/* (non-Javadoc)
+	 * @see android.telephony.PhoneStateListener#onDataConnectionStateChanged(int)
+	 */
+	@Override
+	public void onDataConnectionStateChanged(int state) {
+		MainActivity.get().updateView();
+	}
+	
+	/* (non-Javadoc)
 	 * @see android.telephony.PhoneStateListener#onServiceStateChanged(android.telephony.ServiceState)
 	 */
 	@Override
@@ -64,5 +72,5 @@ public class PhoneStateListener extends android.telephony.PhoneStateListener {
 	public void onSignalStrengthsChanged(SignalStrength signalStrength) {
 		PhoneStateInfo.update(null, null, null, signalStrength);
 		MainActivity.get().updateView();
-	}		
+	}
 }

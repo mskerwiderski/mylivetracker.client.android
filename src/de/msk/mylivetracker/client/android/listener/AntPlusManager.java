@@ -23,7 +23,7 @@ import de.msk.mylivetracker.client.android.mainview.MainActivity;
  * @version 000
  * 
  * history
- * 000 initial 2011-08-11
+ * 000 	2011-08-11 initial.
  * 
  */
 public class AntPlusManager implements Callback {

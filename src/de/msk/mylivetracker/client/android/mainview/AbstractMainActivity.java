@@ -6,38 +6,46 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.LocationManager;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.widget.Chronometer;
 import de.msk.mylivetracker.client.android.InfoActivity;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.listener.GpsStateListener;
 import de.msk.mylivetracker.client.android.listener.LocationListener;
 import de.msk.mylivetracker.client.android.listener.NmeaListener;
-import de.msk.mylivetracker.client.android.mainview.updater.StatusBarUpdater;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.preferences.PrefsAccountActivity;
+import de.msk.mylivetracker.client.android.preferences.PrefsAutoActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsLocalizationActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsOtherActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsServerActivity;
 import de.msk.mylivetracker.client.android.preferences.linksender.LinkSenderActivity;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
-import de.msk.mylivetracker.client.android.upload.UploadManager;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
+import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
 
 /**
  * AbstractMainActivity.
  * 
  * @author michael skerwiderski, (c)2011
  * 
- * @version 000
+ * @version 001
  * 
- * history 000 initial 2011-08-18
+ * history 
+ * 001	2012-02-20 
+ * 		o startActivityPrefsAuto implemented.
+ * 		o startActivityPrefsLocalization implemented.
+ * 		o startActivityPrefsServer implemented.
+ * 		o isGpsEnabled implemented.
+ * 		o isLocalizationByNetworkEnabled implemented.
+ * 		o getWifiManager implemented.
+ * 		o isWifiEnabled implemented.
+ * 000 	2011-08-18 initial.
  * 
  */
 public abstract class AbstractMainActivity extends AbstractActivity {
@@ -52,6 +60,8 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		android.os.Process.setThreadPriority(-20);
+		
 	    gestureDetector = 
         	new GestureDetector(this, 
         		new GestureDetector.SimpleOnGestureListener() {
@@ -115,7 +125,17 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 				this.activityClassToStart));
 		}
 	}
-
+	
+	public static boolean showStartStopInfoDialogIfInAutoMode() {
+		if (Preferences.get().isAutoModeEnabled()) {
+			SimpleInfoDialog dlg = new SimpleInfoDialog(
+				MainActivity.get(), R.string.txPrefs_InfoAutoModeEnabled);
+			dlg.show();
+			return true;
+		}
+		return false;
+	}
+	
 	private void showPrefsWarningDialogIfIsTrackRunning(
 		Class<? extends Activity> activityClassToStart) {
 		if (Preferences.get().getConfirmLevel().isMedium()) {
@@ -138,6 +158,31 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 		return this.locationManager;
 	}
 
+	private WifiManager wifiManager;
+	
+	public WifiManager getWifiManager() {
+		if (this.wifiManager == null) {
+			this.wifiManager = (WifiManager) this
+					.getSystemService(Context.WIFI_SERVICE);
+		}
+		return this.wifiManager;
+	}
+	
+	public static boolean isLocalizationByGpsEnabled() {
+		LocationManager locationManager = MainActivity.get().getLocationManager();
+		return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+	}
+	
+	public static boolean isLocalizationByNetworkEnabled() {
+		LocationManager locationManager = MainActivity.get().getLocationManager();
+		return locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+	}
+	
+	public static boolean isWifiEnabled() {
+		WifiManager wifiManager = MainActivity.get().getWifiManager();
+		return wifiManager.isWifiEnabled();
+	}
+	
 	public void stopLocationListener() {
 		this.getLocationManager().removeUpdates(LocationListener.get());
 		this.getLocationManager().removeNmeaListener(NmeaListener.get());
@@ -146,11 +191,35 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 		LocationListener.get().setActive(false);
 	}	
 	
+	public void startActivityPrefsLocalization() {
+		if (TrackStatus.get().trackIsRunning()) {
+			showPrefsWarningDialogIfIsTrackRunning(PrefsLocalizationActivity.class);
+		} else {
+			startActivity(new Intent(this, PrefsLocalizationActivity.class));
+		}
+	}
+	
+	public void startActivityPrefsServer() {
+		if (TrackStatus.get().trackIsRunning()) {
+			showPrefsWarningDialogIfIsTrackRunning(PrefsServerActivity.class);
+		} else {
+			startActivity(new Intent(this, PrefsServerActivity.class));
+		}
+	}
+	
 	public void startActivityPrefsAccount() {
 		if (TrackStatus.get().trackIsRunning()) {
 			showPrefsWarningDialogIfIsTrackRunning(PrefsAccountActivity.class);
 		} else {
 			startActivity(new Intent(this, PrefsAccountActivity.class));
+		}
+	}
+	
+	public void startActivityPrefsAuto() {
+		if (TrackStatus.get().trackIsRunning()) {
+			showPrefsWarningDialogIfIsTrackRunning(PrefsAutoActivity.class);
+		} else {
+			startActivity(new Intent(this, PrefsAutoActivity.class));
 		}
 	}
 	
@@ -186,6 +255,13 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 				startActivity(new Intent(this, PrefsOtherActivity.class));
 			}
 			return true;
+		case R.id.mnPrefsAuto:
+			if (TrackStatus.get().trackIsRunning()) {
+				showPrefsWarningDialogIfIsTrackRunning(PrefsAutoActivity.class);
+			} else {
+				startActivity(new Intent(this, PrefsAutoActivity.class));
+			}
+			return true;	
 		case R.id.mnLinkSender:
 			if (TrackStatus.get().trackIsRunning()) {
 				showPrefsWarningDialogIfIsTrackRunning(LinkSenderActivity.class);
@@ -201,17 +277,7 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 							new DialogInterface.OnClickListener() {
 								public void onClick(
 									DialogInterface dialog, int id) {
-									UploadManager.stopUploadManager();									
-									MainActivity.get().stopLocationListener();
-									MainActivity.get().stopAntPlusHeartrateListener();
-									MainActivity.get().stopBatteryReceiver();
-									MainActivity.get().stopPhoneStateListener();
-									Chronometer chronometer = MainActivity.get().getUiChronometer();
-									chronometer.stop();			
-									chronometer.setBase(SystemClock.elapsedRealtime());
-									TrackStatus.saveTrackStatus();
-									//finish();
-									StatusBarUpdater.cancelAppStatus();
+									MainActivity.get().onDestroy();
 									System.exit(0);
 								}
 							})

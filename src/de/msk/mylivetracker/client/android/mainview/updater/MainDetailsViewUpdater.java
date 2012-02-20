@@ -23,7 +23,7 @@ import de.msk.mylivetracker.client.android.status.UploadInfo;
  * @version 000
  * 
  * history
- * 000 initial 2011-08-28
+ * 000 	2011-08-28 initial.
  * 
  */
 public class MainDetailsViewUpdater implements Runnable {

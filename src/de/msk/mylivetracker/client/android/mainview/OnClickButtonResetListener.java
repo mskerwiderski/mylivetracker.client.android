@@ -17,10 +17,11 @@ import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
  * 
  * @author michael skerwiderski, (c)2011
  * 
- * @version 000
+ * @version 001
  * 
  * history
- * 000 initial 2011-08-11
+ * 001	2011-02-20 If in auto mode, resetTrack is rejected.
+ * 000 	2011-08-11 initial.
  * 
  */
 public class OnClickButtonResetListener implements OnClickListener {
@@ -45,6 +46,7 @@ public class OnClickButtonResetListener implements OnClickListener {
 	 */
 	@Override
 	public void onClick(View v) {
+		if (MainActivity.showStartStopInfoDialogIfInAutoMode()) return;
 		final MainActivity activity = MainActivity.get();
 		if (Preferences.get().getConfirmLevel().isMedium()) {
 			ResetTrackDialog dlg = new ResetTrackDialog(activity);
@@ -54,7 +56,7 @@ public class OnClickButtonResetListener implements OnClickListener {
 		}
 	}	
 	
-	private static void resetTrack(MainActivity activity) {		
+	public static void resetTrack(MainActivity activity) {		
 		UploadManager.stopUploadManager();			
 		activity.stopLocationListener();
 		Chronometer chronometer = activity.getUiChronometer();

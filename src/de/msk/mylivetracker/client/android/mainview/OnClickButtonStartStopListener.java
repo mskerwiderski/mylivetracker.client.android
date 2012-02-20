@@ -10,6 +10,7 @@ import android.widget.Chronometer;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.updater.StatusBarUpdater;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.preferences.Preferences.TrackingOneTouchMode;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.upload.UploadManager;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
@@ -19,10 +20,14 @@ import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
  * 
  * @author michael skerwiderski, (c)2011
  * 
- * @version 000
+ * @version 001
  * 
  * history
- * 000 initial 2011-08-11
+ * 001	2012-02-20 
+ *     	o TrackingOneTouch mode implemented.
+ *      o startStopTrack adapted, that it can be used by AutoModeManager.
+ *      o If in auto mode, startStopTrack is rejected.
+ * 000 	2011-08-11 initial.
  * 
  */
 public class OnClickButtonStartStopListener implements OnClickListener {
@@ -41,7 +46,7 @@ public class OnClickButtonStartStopListener implements OnClickListener {
 
 		@Override
 		public void onYes() {		
-			startStopTrack(activity);							
+			startStopTrack(activity, !TrackStatus.get().trackIsRunning(), true);							
 		}	
 		
 		/* (non-Javadoc)
@@ -58,18 +63,24 @@ public class OnClickButtonStartStopListener implements OnClickListener {
 	 * @see android.view.View.OnClickListener#onClick(android.view.View)
 	 */
 	@Override
-	public void onClick(View v) {				
+	public void onClick(View v) {
 		MainActivity activity = MainActivity.get();
+		if (MainActivity.showStartStopInfoDialogIfInAutoMode()) {
+			activity.getUiBtStartStop().setChecked(
+				TrackStatus.get().trackIsRunning());
+			return;
+		}
+		
 		if (Preferences.get().getConfirmLevel().isHigh()) {
 			StartStopTrackDialog dlg = new StartStopTrackDialog(activity);
 			dlg.show();
 		} else {
-			startStopTrack(activity);
+			startStopTrack(activity, !TrackStatus.get().trackIsRunning(), true);
 		}
 	}
 	
-	private static void startStopTrack(final MainActivity activity) {
-		final boolean stopTrack = TrackStatus.get().trackIsRunning();
+	public static void startStopTrack(final MainActivity activity, boolean start, boolean oneTouchMode) {
+		final boolean stopTrack = !start;
 		
 		String message = stopTrack ?
 			activity.getText(R.string.txMain_InfoStoppingTracking).toString() :
@@ -89,7 +100,8 @@ public class OnClickButtonStartStopListener implements OnClickListener {
 						TrackStatus.get().getRuntimeInMSecs(false));
 					chronometer.start();			
 				}
-				
+				activity.getUiBtStartStop().setChecked(
+					TrackStatus.get().trackIsRunning());
 				StatusBarUpdater.updateAppStatus();
 				activity.updateView();
 				dialog.dismiss();
@@ -106,6 +118,21 @@ public class OnClickButtonStartStopListener implements OnClickListener {
 				handler.sendEmptyMessage(0);
 		     }
 		};
+		
+		if (oneTouchMode) {
+			TrackingOneTouchMode mode = Preferences.get().getTrackingOneTouchMode();
+			switch (mode) {
+				case TrackingLocalizationHeartrate:
+					OnClickButtonAntPlusListener.
+						startStopAntPlus(activity, !stopTrack);
+				case TrackingLocalization:
+					OnClickButtonLocationListenerOnOffListener.
+						startStopLocationListener(activity, !stopTrack);
+				case TrackingOnly:
+				default:
+					break;
+			}
+		}
 		
 		startStopThread.start();				
 	}

@@ -1,14 +1,15 @@
 package de.msk.mylivetracker.client.android.preferences;
 
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
+import android.widget.Spinner;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
+import de.msk.mylivetracker.client.android.preferences.Preferences.LocalizationMode;
 import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
 
 /**
@@ -16,10 +17,11 @@ import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
  * 
  * @author michael skerwiderski, (c)2011
  * 
- * @version 000
+ * @version 001
  * 
  * history
- * 000 initial 2011-08-11
+ * 001 	2012-02-04 localizationModes implemented (gps, network, gpsAndNetwork).
+ * 000 	2011-08-11 initial.
  * 
  */
 public class PrefsLocalizationActivity extends AbstractActivity {
@@ -27,8 +29,7 @@ public class PrefsLocalizationActivity extends AbstractActivity {
 	private static final class OnClickButtonSaveListener implements OnClickListener {
 		private PrefsLocalizationActivity activity;
 		private Preferences preferences;
-		private RadioButton rbPrefsLocalization_ProviderGps;
-		private RadioButton rbPrefsLocalization_ProviderNetwork;
+		private Spinner spPrefsLocalization_LocalizationMode;
 		private EditText etPrefsLocalization_TimeTriggerInSecs;
 		private EditText etPrefsLocalization_DistanceTriggerInMtr;
 		private EditText etPrefsLocalization_LocationAccuracyRequiredInMtr;
@@ -37,16 +38,14 @@ public class PrefsLocalizationActivity extends AbstractActivity {
 		public OnClickButtonSaveListener(
 			PrefsLocalizationActivity activity,
 			Preferences preferences,
-			RadioButton rbPrefsLocalization_ProviderGps,
-			RadioButton rbPrefsLocalization_ProviderNetwork,
+			Spinner spPrefsLocalization_LocalizationMode,
 			EditText etPrefsLocalization_TimeTriggerInSecs,
 			EditText etPrefsLocalization_DistanceTriggerInMtr,
 			EditText etPrefsLocalization_LocationAccuracyRequiredInMtr,
 			EditText etPrefsLocalization_DistBtwTwoLocsForDistCalcRequiredInCMtr) {
 			this.activity = activity;
 			this.preferences = preferences;
-			this.rbPrefsLocalization_ProviderGps = rbPrefsLocalization_ProviderGps;
-			this.rbPrefsLocalization_ProviderNetwork = rbPrefsLocalization_ProviderNetwork;
+			this.spPrefsLocalization_LocalizationMode = spPrefsLocalization_LocalizationMode;
 			this.etPrefsLocalization_TimeTriggerInSecs = etPrefsLocalization_TimeTriggerInSecs;
 			this.etPrefsLocalization_DistanceTriggerInMtr = etPrefsLocalization_DistanceTriggerInMtr;
 			this.etPrefsLocalization_LocationAccuracyRequiredInMtr = etPrefsLocalization_LocationAccuracyRequiredInMtr;
@@ -60,15 +59,15 @@ public class PrefsLocalizationActivity extends AbstractActivity {
 		public void onClick(View v) {
 			boolean valid = true;
 			
+			LocalizationMode localizationMode =
+				LocalizationMode.values()[spPrefsLocalization_LocalizationMode.getSelectedItemPosition()];
+			String localizationModeDisplayName = 
+				this.activity.getResources().getStringArray(R.array.localizationModes)[spPrefsLocalization_LocalizationMode.getSelectedItemPosition()];
 			valid = valid && 
-				ValidatorUtils.validateIfLocationProviderIsSupported(
+				ValidatorUtils.validateIfLocalizationModeIsSupported(
 					this.activity,
-					rbPrefsLocalization_ProviderGps,
-					LocationManager.GPS_PROVIDER) &&	
-				ValidatorUtils.validateIfLocationProviderIsSupported(
-					this.activity,
-					rbPrefsLocalization_ProviderNetwork,
-					LocationManager.NETWORK_PROVIDER) &&	
+					localizationMode,
+					localizationModeDisplayName) &&	
 				ValidatorUtils.validateEditTextNumber(
 					this.activity, 
 					R.string.fdPrefsLocalization_TimeTriggerInSecs, 
@@ -95,13 +94,7 @@ public class PrefsLocalizationActivity extends AbstractActivity {
 					0, 10000, true);			
 			
 			if (valid) {
-				if (rbPrefsLocalization_ProviderGps.isChecked()) {
-					this.preferences.setLocationProvider(LocationManager.GPS_PROVIDER);
-				} else if (rbPrefsLocalization_ProviderNetwork.isChecked()) {
-					this.preferences.setLocationProvider(LocationManager.NETWORK_PROVIDER);
-				} else {
-					// error.
-				}
+				preferences.setLocalizationMode(localizationMode);
 				preferences.setLocTimeTriggerInSeconds(
 					Integer.parseInt(etPrefsLocalization_TimeTriggerInSecs.getText().toString()));
 				preferences.setLocDistanceTriggerInMeter(
@@ -143,8 +136,13 @@ public class PrefsLocalizationActivity extends AbstractActivity {
         
         Preferences prefs = Preferences.get();
         
-        RadioButton rbPrefsLocalization_ProviderGps = (RadioButton) findViewById(R.id.rbPrefsLocalization_ProviderGps);
-        RadioButton rbPrefsLocalization_ProviderNetwork = (RadioButton) findViewById(R.id.rbPrefsLocalization_ProviderNetwork);
+        Spinner spPrefsLocalization_LocalizationMode = (Spinner) findViewById(R.id.spPrefsLocalization_LocalizationMode);
+        ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(
+                this, R.array.localizationModes, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spPrefsLocalization_LocalizationMode.setAdapter(adapter);
+        spPrefsLocalization_LocalizationMode.setSelection(prefs.getLocalizationMode().ordinal());     
+        
         EditText etPrefsLocalization_TimeTriggerInSecs = (EditText)findViewById(R.id.etPrefsLocalization_TimeTriggerInSecs);
         etPrefsLocalization_TimeTriggerInSecs.setText(String.valueOf(prefs.getLocTimeTriggerInSeconds()));
         EditText etPrefsLocalization_DistanceTriggerInMtr = (EditText)findViewById(R.id.etPrefsLocalization_DistanceTriggerInMtr);
@@ -154,18 +152,12 @@ public class PrefsLocalizationActivity extends AbstractActivity {
         EditText etPrefsLocalization_DistBtwTwoLocsForDistCalcRequiredInCMtr = (EditText)findViewById(R.id.etPrefsLocalization_DistBtwTwoLocsForDistCalcRequiredInCMtr);
         etPrefsLocalization_DistBtwTwoLocsForDistCalcRequiredInCMtr.setText(String.valueOf(prefs.getLocDistBtwTwoLocsForDistCalcRequiredInCMtr()));
         
-        rbPrefsLocalization_ProviderGps.setChecked(
-        	prefs.getLocationProvider().equals(LocationManager.GPS_PROVIDER));
-        rbPrefsLocalization_ProviderNetwork.setChecked(
-        	prefs.getLocationProvider().equals(LocationManager.NETWORK_PROVIDER));
-        
     	Button btPrefsLocalization_Save = (Button) findViewById(R.id.btPrefsLocalization_Save);
         Button btPrefsLocalization_Cancel = (Button) findViewById(R.id.btPrefsLocalization_Cancel);
                 
         btPrefsLocalization_Save.setOnClickListener(
 			new OnClickButtonSaveListener(this, prefs,
-				rbPrefsLocalization_ProviderGps,
-				rbPrefsLocalization_ProviderNetwork,
+				spPrefsLocalization_LocalizationMode,
 				etPrefsLocalization_TimeTriggerInSecs,
 				etPrefsLocalization_DistanceTriggerInMtr,
 				etPrefsLocalization_LocationAccuracyRequiredInMtr,

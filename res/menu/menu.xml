@@ -5,6 +5,7 @@
     <item android:id="@+id/mnPrefsAccount" android:title="@string/mnPrefsAccount" />
     <item android:id="@+id/mnLinkSender" android:title="@string/mnLinkSender" />
     <item android:id="@+id/mnPrefsOther" android:title="@string/mnPrefsOther" />    
+    <item android:id="@+id/mnPrefsAuto" android:title="@string/mnPrefsAuto" />
     <item android:id="@+id/mnInfo" android:title="@string/mnInfo" />
     <item android:id="@+id/mnExit" android:title="@string/mnExit" />    
 </menu>

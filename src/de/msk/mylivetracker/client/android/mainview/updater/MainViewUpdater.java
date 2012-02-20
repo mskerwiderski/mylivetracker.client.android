@@ -12,6 +12,7 @@ import de.msk.mylivetracker.client.android.mainview.updater.UpdaterUtils.Unit;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.status.HeartrateInfo;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
+import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.status.UploadInfo;
 
@@ -20,10 +21,13 @@ import de.msk.mylivetracker.client.android.status.UploadInfo;
  * 
  * @author michael skerwiderski, (c)2011
  * 
- * @version 000
+ * @version 001
  * 
  * history
- * 000 initial 2011-08-11
+ * 001 	2012-02-04 
+ *     	o additional localizationMode implemented (gpsAndNetwork).
+ *     	o lastUsedLocationProvider added.
+ * 000 	2011-08-11 initial.
  * 
  */
 public class MainViewUpdater implements Runnable {
@@ -40,7 +44,8 @@ public class MainViewUpdater implements Runnable {
 	
 	private static String getUploaderCountUploaded(UploadInfo uploadInfo) {
 		if (uploadInfo == null) return UpdaterUtils.getNoValue();
-		return UpdaterUtils.getIntStr(uploadInfo.getCountUploaded());
+		return UpdaterUtils.getIntStr(uploadInfo.getCountUploaded()) + 
+			" " + uploadInfo.getLastUsedLocationProvider();
 	}
 	
 	public static String getLocationAccuracyStr(LocationInfo locationInfo) {
@@ -48,6 +53,27 @@ public class MainViewUpdater implements Runnable {
 		Location location = locationInfo.getLocation();
 		if ((location == null) || (!location.hasAccuracy())) return UpdaterUtils.getNoValue(); 
 		return UpdaterUtils.getFltStr(location.getAccuracy(), 0, Unit.Meter);
+	}
+	
+	private enum IndicatorState {
+		Ok(R.color.colorIndicatorOk), 
+		Off(R.color.colorIndicatorOff), 
+		NotOk(R.color.colorIndicatorNotOk);
+		private int color;
+		private IndicatorState(int color) {
+			this.color = color;
+		}
+		public int getColor() {
+			return color;
+		}
+	}
+	
+	public static void setIndicatorTextAndColors(TextView tv, String text, IndicatorState state) {
+		MainActivity mainActivity = MainActivity.get();					
+		Resources res = mainActivity.getResources();
+		tv.setText(text);
+		tv.setBackgroundColor(
+			res.getColor(state.getColor()));
 	}
 	
 	/* (non-Javadoc)
@@ -65,9 +91,44 @@ public class MainViewUpdater implements Runnable {
 		HeartrateInfo heartrateInfo = HeartrateInfo.get();
 		UploadInfo uploadInfo = UploadInfo.get();
 		
-		// track name			
-		TextView tvTrackName = UpdaterUtils.tv(mainActivity, R.id.tvMain_TrackName);
-		tvTrackName.setText(preferences.getTrackName());
+		// auto mode indicator
+		TextView tvAutoModeIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_AutoModeIndicator);
+		setIndicatorTextAndColors(tvAutoModeIndicator, 
+			(preferences.isAutoModeEnabled() ? 
+				res.getText(R.string.tvOn).toString() : 
+				res.getText(R.string.tvOff).toString()), 
+			preferences.isAutoModeEnabled() ? IndicatorState.Ok : IndicatorState.Off);
+		
+		// gps indicator			
+		TextView tvLocalizationIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_LocalizationIndicator);
+		boolean gpsOn = MainActivity.isLocalizationByGpsEnabled();
+		boolean nwOn = MainActivity.isLocalizationByNetworkEnabled();
+		String locIndStr = UpdaterUtils.getNoValue();
+		if (gpsOn && !nwOn) {
+			locIndStr = "GPS";
+		} else if (!gpsOn && nwOn) {
+			locIndStr = "Nw";
+		} else if (gpsOn && nwOn) {
+			locIndStr = "GPS/Nw";
+		}
+		setIndicatorTextAndColors(tvLocalizationIndicator, locIndStr, 
+			!(!gpsOn && !nwOn) ? IndicatorState.Ok : IndicatorState.NotOk);
+		
+		// wireless lan indicator			
+		TextView tvWirelessLanIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_WirelessLanIndicator);
+		setIndicatorTextAndColors(tvWirelessLanIndicator,
+			(MainActivity.isWifiEnabled() ? 
+				res.getText(R.string.tvOn).toString() : 
+				res.getText(R.string.tvOff).toString()),
+				MainActivity.isWifiEnabled() ? IndicatorState.Ok : IndicatorState.Off);
+		
+		// mobile network indicator			
+		TextView tvMobileNetworkIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_MobileNetworkIndicator);
+		PhoneStateInfo phoneStateInfo = PhoneStateInfo.get();
+		String mobNwStr = (phoneStateInfo != null ? 
+			phoneStateInfo.getNetworkTypeAsStr(UpdaterUtils.getNoValue()) : UpdaterUtils.getNoValue());
+		setIndicatorTextAndColors(tvMobileNetworkIndicator, mobNwStr, 
+			MainActivity.get().isDataConnectionAvailable() ? IndicatorState.Ok : IndicatorState.NotOk);
 		
 		// track distance
 		TextView tvDistance = UpdaterUtils.tv(mainActivity, R.id.tvMain_Distance);

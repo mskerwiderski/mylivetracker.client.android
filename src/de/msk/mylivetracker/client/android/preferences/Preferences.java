@@ -2,7 +2,10 @@ package de.msk.mylivetracker.client.android.preferences;
 
 import org.apache.commons.lang.StringUtils;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.LocationManager;
+import android.telephony.TelephonyManager;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
@@ -15,10 +18,11 @@ import de.msk.mylivetracker.commons.protocol.ProtocolUtils;
  * 
  * @author michael skerwiderski, (c)2011
  * 
- * @version 000
+ * @version 001
  * 
  * history
- * 000 initial 2011-08-11
+ * 001 	2012-02-19 preferences version 300 implemented.
+ * 000 	2011-08-11 initial. 
  * 
  */
 public class Preferences {
@@ -33,7 +37,12 @@ public class Preferences {
 	protected String lineSeperator;
 	protected int locAccuracyRequiredInMeter;
 	protected int locDistBtwTwoLocsForDistCalcRequiredInCMtr;
+	protected UploadTimeTrigger uplTimeTrigger;
+	@Deprecated
 	protected int uplTimeTriggerInSeconds;
+	protected UploadTriggerLogic uplTriggerLogic;
+	protected UploadDistanceTrigger uplDistanceTrigger;
+	@Deprecated
 	protected int uplDistanceTriggerInMeter;
 	protected BufferSize uplPositionBufferSize;
 	protected String phoneNumber;
@@ -42,9 +51,16 @@ public class Preferences {
 	protected String username;
 	protected String password;	
 	protected String seed;
-	protected String locationProvider;	
+	protected LocalizationMode localizationMode;
+	@Deprecated
+	protected String locationProvider;
 	protected ConfirmLevel confirmLevel;
+	protected TrackingOneTouchMode trackingOneTouchMode;
 	protected Boolean logging; 
+	
+	// auto mode
+	protected boolean autoModeEnabled;
+	protected AutoModeResetTrackMode autoModeResetTrackMode;
 	
 	public enum ConfirmLevel {
 		low("low"), medium("medium"), high("high");
@@ -110,18 +126,211 @@ public class Preferences {
 		}
 	};
 	
+	public enum LocalizationMode {
+		gps("GPS", true, false),
+		network("Network", false, true),
+		gpsAndNetwork("GPS and Network", true, true);
+		
+		private String dsc;
+		private boolean gpsProviderEnabled;
+		private boolean networkProviderEnabled;
+		
+		private LocalizationMode(String dsc,
+			boolean gpsProviderEnabled,
+			boolean networkProviderEnabled) {
+			this.dsc = dsc;
+			this.gpsProviderEnabled = gpsProviderEnabled;
+			this.networkProviderEnabled = networkProviderEnabled;
+		}
+		public String getDsc() {
+			return dsc;
+		}
+		public boolean supported() {
+			boolean res = true;
+			if (this.gpsProviderEnabled) {
+				res = res && (MainActivity.get().getLocationManager().getProvider(LocationManager.GPS_PROVIDER) != null);
+			}
+			if (this.networkProviderEnabled) {
+				res = res && (MainActivity.get().getLocationManager().getProvider(LocationManager.NETWORK_PROVIDER) != null);
+			}
+			return res;
+		}
+		public boolean neededProvidersEnabled() {
+			boolean res = true;
+			if (this.gpsProviderEnabled) {
+				res = res && MainActivity.get().getLocationManager().isProviderEnabled(LocationManager.GPS_PROVIDER);
+			}
+			if (this.networkProviderEnabled) {
+				res = res && MainActivity.get().getLocationManager().isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+			}
+			return res;
+		}
+		public boolean gpsProviderEnabled() {
+			return this.gpsProviderEnabled;
+		}
+		public boolean networkProviderEnabled() {
+			return this.networkProviderEnabled;
+		}
+	};
+	
+	public enum UploadTimeTrigger {
+		Off("off", 0),
+		Secs5("5 secs", 5),
+		Secs10("10 secs", 10),
+		Secs20("20 secs", 20),
+		Secs30("30 secs", 30),
+		Min1("1 min", 60),
+		Min3("3 mins", 180),
+		Min5("5 mins", 300),
+		Min10("10 mins", 600),
+		Min20("20 mins", 1200),
+		Min30("30 mins", 1800),
+		Hr1("1 hr", 3600);
+        
+		private String dsc;
+		private int secs;
+		
+		private UploadTimeTrigger(String dsc, int secs) {
+			this.dsc = dsc;
+			this.secs = secs;
+		}
+		public String getDsc() {
+			return dsc;
+		}
+		public int getSecs() {
+			return secs;
+		}
+		public static UploadTimeTrigger findSuitable(int secs) {
+			if (secs == 0) return Off;
+			if (secs <= 5) return Secs5;
+			if (secs <= 10) return Secs10;
+			if (secs <= 20) return Secs20;
+			if (secs <= 30) return Secs30;
+			if (secs <= 60) return Min1;
+			if (secs <= 180) return Min3;
+			if (secs <= 300) return Min5;
+			if (secs <= 600) return Min10;
+			if (secs <= 1200) return Min20;
+			if (secs <= 1800) return Min30;
+			return Hr1;
+		}
+	};
+	
+	public enum UploadTriggerLogic {
+		OR("OR", false),
+		AND("AND", true);
+        
+		private String dsc;
+		private boolean logic;
+		
+		private UploadTriggerLogic(String dsc, boolean logic) {
+			this.dsc = dsc;
+			this.logic = logic;
+		}
+		public String getDsc() {
+			return dsc;
+		}
+		public boolean OR() {
+			return logic == false;
+		}
+		public boolean AND() {
+			return logic == true;
+		}
+	};
+	
+	public enum UploadDistanceTrigger {
+		Off("off", 0),
+		Mtr50("50 mtrs", 50),
+		Mtr100("100 mtrs", 100),
+		Mtr200("200 mtrs", 200),
+		Mtr300("300 mtrs", 300),
+		Mtr500("500 mtrs", 500),
+		Km1("1 km", 1000),
+		Km2("2 kms", 2000),
+		Km5("5 kms", 5000),
+		Km10("10 kms", 10000),
+		Km50("50 kms", 50000);
+        
+		private String dsc;
+		private int mtrs;
+		
+		private UploadDistanceTrigger(String dsc, int mtrs) {
+			this.dsc = dsc;
+			this.mtrs = mtrs;
+		}
+		public String getDsc() {
+			return dsc;
+		}
+		public int getMtrs() {
+			return mtrs;
+		}
+		public static UploadDistanceTrigger findSuitable(int mtrs) {
+			if (mtrs == 0) return Off;
+			if (mtrs <= 50) return Mtr50;
+			if (mtrs <= 100) return Mtr100;
+			if (mtrs <= 200) return Mtr200;
+			if (mtrs <= 300) return Mtr300;
+			if (mtrs <= 500) return Mtr500;
+			if (mtrs <= 1000) return Km1;
+			if (mtrs <= 2000) return Km2;
+			if (mtrs <= 5000) return Km5;
+			if (mtrs <= 50000) return Km10;
+			return Km50;
+		}
+	};
+	
+	public enum AutoModeResetTrackMode {
+		Never("never", 0),
+		NextDay("next day", -1),
+		Hour1("1 hour", 1),
+		Hours2("2 hours", 2),
+		Hours4("4 hours", 4),
+		Hours8("8 hours", 8),
+		Hours24("24 hours", 24);
+        
+		private String dsc;
+		private int val;
+		
+		private AutoModeResetTrackMode(String dsc, int val) {
+			this.dsc = dsc;
+			this.val = val;
+		}
+		public String getDsc() {
+			return dsc;
+		}
+		public int getVal() {
+			return val;
+		}
+	};
+
+	public enum TrackingOneTouchMode {
+		TrackingOnly, 
+		TrackingLocalization, 
+		TrackingLocalizationHeartrate;
+	};
+
 	public static final String DB_NAME = "MyLiveTracker.DB";
 	
 	//
-	// version < 200: reset is needed.
-	// version 200: started
+	// version 300:
+	// o property 'localizationMode' added and 'locationProvider' removed.
+	// o property 'uplTimeTrigger' added and 'uplTimeTriggerInSeconds' removed.
+	// o property 'uplDistanceTrigger' added and 'uplDistanceTriggerInMeter' removed.
+	// o property 'uplTriggerLogic' added.
+	// o property 'autoModeEnabled' added.
+	// o property 'autoModeResetTrackMode' added.
+	// o property 'trackingOneTouchMode' added.
+	//	
 	// version 201: 
 	// o property 'closeConnectionAfterEveryUpload' added.
 	// o property 'finishEveryUploadWithALinefeed' added.
 	// o property 'lineSeperator' added.
-	//
-	private static final int PREFERENCES_VERSION_MIN = 200;
-	private static final int PREFERENCES_VERSION_VAL = 201;
+	// 
+	// version 200: started
+	// version < 200: reset is needed.
+	// 
+	private static final int PREFERENCES_VERSION_MIN = 201;
+	private static final int PREFERENCES_VERSION_CURRENT = 300;
 	
 	private static final String PREFERENCES_VERSION_VAR = "preferencesVersion";
 	private static final String PREFERENCES_VAR = "preferences";
@@ -151,7 +360,29 @@ public class Preferences {
 			if (!StringUtils.isEmpty(preferencesStr)) {
 				try {
 					Gson gson = new Gson();
-					preferences = gson.fromJson(preferencesStr, Preferences.class);				
+					preferences = gson.fromJson(preferencesStr, Preferences.class);
+					if (preferencesVersion < PREFERENCES_VERSION_CURRENT) {
+						// device id is read only.
+						preferences.deviceId =  
+							((TelephonyManager)MainActivity.get().getSystemService(
+								Context.TELEPHONY_SERVICE)).getDeviceId();
+						// locationProvider is deprecated --> localizationMode is used instead.
+						if (StringUtils.equals(preferences.locationProvider, LocationManager.GPS_PROVIDER)) {
+							preferences.localizationMode = LocalizationMode.gps;
+						} else if (StringUtils.equals(preferences.locationProvider, LocationManager.NETWORK_PROVIDER)) {
+							preferences.localizationMode = LocalizationMode.network;
+						}
+						// uplTimeTriggerInSeconds is deprecated --> uplTimeTrigger is used instead.
+						preferences.uplTimeTrigger = UploadTimeTrigger.findSuitable(preferences.uplTimeTriggerInSeconds);
+						// uplTriggerLogic is new --> default value is OR (same behaviour as hardwired before).
+						preferences.uplTriggerLogic = UploadTriggerLogic.OR;
+						// uplDistanceTriggerInMeter is deprecated --> uplDistanceTrigger is used instead.
+						preferences.uplDistanceTrigger = UploadDistanceTrigger.findSuitable(preferences.uplDistanceTriggerInMeter);
+						preferences.autoModeEnabled = false;
+						preferences.autoModeResetTrackMode = AutoModeResetTrackMode.NextDay;
+						preferences.trackingOneTouchMode = TrackingOneTouchMode.TrackingOnly;
+						save();
+					}
 				} catch (JsonParseException e) {
 					Preferences.reset();
 				}
@@ -175,7 +406,7 @@ public class Preferences {
 		Gson gson = new Gson();			
 		editor.putInt(
 			PREFERENCES_VERSION_VAR, 
-			PREFERENCES_VERSION_VAL);
+			PREFERENCES_VERSION_CURRENT);
 		editor.putString(PREFERENCES_VAR, 
 			gson.toJson(preferences));		
 		editor.commit();	
@@ -313,30 +544,49 @@ public class Preferences {
 			int locDistBtwTwoLocsForDistCalcRequiredInCMtr) {
 		this.locDistBtwTwoLocsForDistCalcRequiredInCMtr = locDistBtwTwoLocsForDistCalcRequiredInCMtr;
 	}
+	
 	/**
-	 * @return the uplTimeTriggerInSeconds
+	 * @return the uplTimeTrigger
 	 */
-	public int getUplTimeTriggerInSeconds() {
-		return uplTimeTriggerInSeconds;
+	public UploadTimeTrigger getUplTimeTrigger() {
+		return uplTimeTrigger;
 	}
+
 	/**
-	 * @param uplTimeTriggerInSeconds the uplTimeTriggerInSeconds to set
+	 * @param uplTimeTrigger the uplTimeTrigger to set
 	 */
-	public void setUplTimeTriggerInSeconds(int uplTimeTriggerInSeconds) {
-		this.uplTimeTriggerInSeconds = uplTimeTriggerInSeconds;
+	public void setUplTimeTrigger(UploadTimeTrigger uplTimeTrigger) {
+		this.uplTimeTrigger = uplTimeTrigger;
 	}
+
 	/**
-	 * @return the uplDistanceTriggerInMeter
+	 * @return the uplTriggerLogic
 	 */
-	public int getUplDistanceTriggerInMeter() {
-		return uplDistanceTriggerInMeter;
+	public UploadTriggerLogic getUplTriggerLogic() {
+		return uplTriggerLogic;
 	}
+
 	/**
-	 * @param uplDistanceTriggerInMeter the uplDistanceTriggerInMeter to set
+	 * @param uplTriggerLogic the uplTriggerLogic to set
 	 */
-	public void setUplDistanceTriggerInMeter(int uplDistanceTriggerInMeter) {
-		this.uplDistanceTriggerInMeter = uplDistanceTriggerInMeter;
+	public void setUplTriggerLogic(UploadTriggerLogic uplTriggerLogic) {
+		this.uplTriggerLogic = uplTriggerLogic;
 	}
+
+	/**
+	 * @return the uplDistanceTrigger
+	 */
+	public UploadDistanceTrigger getUplDistanceTrigger() {
+		return uplDistanceTrigger;
+	}
+
+	/**
+	 * @param uplDistanceTrigger the uplDistanceTrigger to set
+	 */
+	public void setUplDistanceTrigger(UploadDistanceTrigger uplDistanceTrigger) {
+		this.uplDistanceTrigger = uplDistanceTrigger;
+	}
+
 	/**
 	 * @return the uplPositionBufferSize
 	 */
@@ -415,16 +665,17 @@ public class Preferences {
 		this.password = password;
 	}
 	/**
-	 * @return the locationProvider
+	 * @return the localizationMode
 	 */
-	public String getLocationProvider() {
-		return locationProvider;
+	public LocalizationMode getLocalizationMode() {
+		return localizationMode;
 	}
+
 	/**
-	 * @param locationProvider the locationProvider to set
+	 * @param localizationMode the localizationMode to set
 	 */
-	public void setLocationProvider(String locationProvider) {
-		this.locationProvider = locationProvider;
+	public void setLocalizationMode(LocalizationMode localizationMode) {
+		this.localizationMode = localizationMode;
 	}
 	/**
 	 * @return the confirmLevel
@@ -451,5 +702,36 @@ public class Preferences {
 	 */
 	public void setLogging(Boolean logging) {
 		this.logging = logging;
+	}
+
+	/**
+	 * @return the autoModeEnabled
+	 */
+	public boolean isAutoModeEnabled() {
+		return autoModeEnabled;
+	}
+
+	/**
+	 * @param autoModeEnabled the autoModeEnabled to set
+	 */
+	public void setAutoModeEnabled(boolean autoModeEnabled) {
+		this.autoModeEnabled = autoModeEnabled;
+	}
+
+	public AutoModeResetTrackMode getAutoModeResetTrackMode() {
+		return autoModeResetTrackMode;
+	}
+
+	public void setAutoModeResetTrackMode(
+			AutoModeResetTrackMode autoModeResetTrackMode) {
+		this.autoModeResetTrackMode = autoModeResetTrackMode;
+	}
+
+	public TrackingOneTouchMode getTrackingOneTouchMode() {
+		return trackingOneTouchMode;
+	}
+
+	public void setTrackingOneTouchMode(TrackingOneTouchMode trackingOneTouchMode) {
+		this.trackingOneTouchMode = trackingOneTouchMode;
 	}
 }

@@ -5,20 +5,26 @@ import android.location.LocationManager;
 import android.telephony.TelephonyManager;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
+import de.msk.mylivetracker.client.android.preferences.Preferences.AutoModeResetTrackMode;
 import de.msk.mylivetracker.client.android.preferences.Preferences.BufferSize;
 import de.msk.mylivetracker.client.android.preferences.Preferences.ConfirmLevel;
+import de.msk.mylivetracker.client.android.preferences.Preferences.LocalizationMode;
+import de.msk.mylivetracker.client.android.preferences.Preferences.TrackingOneTouchMode;
 import de.msk.mylivetracker.client.android.preferences.Preferences.TransferProtocol;
+import de.msk.mylivetracker.client.android.preferences.Preferences.UploadDistanceTrigger;
+import de.msk.mylivetracker.client.android.preferences.Preferences.UploadTimeTrigger;
+import de.msk.mylivetracker.client.android.preferences.Preferences.UploadTriggerLogic;
 
 /**
  * PreferencesCreator.
  * 
  * @author michael skerwiderski, (c)2011
  * 
- * @version 000
+ * @version 001
  * 
  * history
- * 000 initial 2011-11-08
- * 
+ * 001 	2012-02-04 preferences version 300 implemented.
+ * 000 	2011-08-11 initial.
  */
 public class PreferencesCreator {
 
@@ -34,9 +40,9 @@ public class PreferencesCreator {
 		prefs.path = MainActivity.get().getResources().getString(R.string.txPrefs_Def_MyLiveTracker_PathTcp);
 		prefs.trackName = MainActivity.get().getResources().getString(R.string.txPrefs_Def_TrackName);		
 		if (MainActivity.get().getLocationManager().getProvider(LocationManager.GPS_PROVIDER) == null) {
-			prefs.locationProvider = LocationManager.NETWORK_PROVIDER;
+			prefs.localizationMode = LocalizationMode.network;
 		} else {
-			prefs.locationProvider = LocationManager.GPS_PROVIDER;
+			prefs.localizationMode = LocalizationMode.gps;
 		}
 		prefs.locTimeTriggerInSeconds = 0;
 		prefs.locDistanceTriggerInMeter = 0;	
@@ -45,8 +51,9 @@ public class PreferencesCreator {
 		prefs.lineSeperator = "\r\n";
 		prefs.locAccuracyRequiredInMeter = 100;
 		prefs.locDistBtwTwoLocsForDistCalcRequiredInCMtr = 1650;
-		prefs.uplTimeTriggerInSeconds = 10;
-		prefs.uplDistanceTriggerInMeter = 0;
+		prefs.uplTimeTrigger = UploadTimeTrigger.Secs10;
+		prefs.uplTriggerLogic = UploadTriggerLogic.OR;
+		prefs.uplDistanceTrigger = UploadDistanceTrigger.Off;
 		prefs.uplPositionBufferSize = BufferSize.disabled;
 		prefs.phoneNumber = "";
 		prefs.deviceId = 
@@ -56,41 +63,10 @@ public class PreferencesCreator {
 		prefs.password = "";	
 		prefs.seed = null;
 		prefs.confirmLevel = ConfirmLevel.medium;
+		prefs.autoModeEnabled = false;
+		prefs.autoModeResetTrackMode = AutoModeResetTrackMode.NextDay;
+		prefs.trackingOneTouchMode = TrackingOneTouchMode.TrackingOnly;
 		prefs.logging = false;
 		return prefs;
 	}
-	
-//	private static Preferences createSeltmann() {
-//		Preferences prefs = new Preferences();
-//		prefs.transferProtocol = TransferProtocol.tk102Emulator;
-//		prefs.server = "87.139.224.116";
-//		prefs.port = 31272;
-//		prefs.path = "";
-//		prefs.trackName = "not used";		
-//		if (MainActivity.get().getLocationManager().getProvider(LocationManager.GPS_PROVIDER) == null) {
-//			prefs.locationProvider = LocationManager.NETWORK_PROVIDER;
-//		} else {
-//			prefs.locationProvider = LocationManager.GPS_PROVIDER;
-//		}
-//		prefs.locTimeTriggerInSeconds = 0;
-//		prefs.locDistanceTriggerInMeter = 0;	
-//		prefs.closeConnectionAfterEveryUpload = true;
-//		prefs.finishEveryUploadWithALinefeed = true;
-//		prefs.lineSeperator = "\r\n";
-//		prefs.locAccuracyRequiredInMeter = 0;
-//		prefs.locDistBtwTwoLocsForDistCalcRequiredInCMtr = 0;
-//		prefs.uplTimeTriggerInSeconds = 10;
-//		prefs.uplDistanceTriggerInMeter = 0;
-//		prefs.uplPositionBufferSize = BufferSize.disabled;
-//		prefs.phoneNumber = "not used";
-//		prefs.deviceId = 
-//			((TelephonyManager)MainActivity.get().getSystemService(
-//			Context.TELEPHONY_SERVICE)).getDeviceId();
-//		prefs.username = "";
-//		prefs.password = "";	
-//		prefs.seed = null;
-//		prefs.confirmLevel = ConfirmLevel.medium;
-//		prefs.logging = false;
-//		return prefs;
-//	}
 }

@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import com.wahoofitness.api.WFDisplaySettings;
 import com.wahoofitness.api.WFHardwareConnector;
 
 import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.automode.AutoModeManager;
 import de.msk.mylivetracker.client.android.listener.AntPlusHeartrateListener;
 import de.msk.mylivetracker.client.android.listener.AntPlusListener;
 import de.msk.mylivetracker.client.android.listener.AntPlusManager;
@@ -41,16 +43,21 @@ import de.msk.mylivetracker.client.android.mainview.updater.UpdaterUtils;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.receiver.BatteryReceiver;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
+import de.msk.mylivetracker.client.android.upload.UploadManager;
 
 /**
  * MainActivity.
  * 
  * @author michael skerwiderski, (c)2011
  * 
- * @version 000
+ * @version 001
  * 
  * history
- * 000 initial 2011-08-11
+ * 001 	2012-02-20
+ * 		o property localizationMode implemented (gps, network, gpsAndNetwork).
+ * 		o listener to autoModeIndicator added.
+ *      o isDataConnectionAvailable implemented.
+ * 000 	2011-08-11 initial.
  * 
  */
 public class MainActivity extends AbstractMainActivity {
@@ -70,6 +77,8 @@ public class MainActivity extends AbstractMainActivity {
         this.setTitle(R.string.tiMain);
         
         TrackStatus.loadTrackStatus();
+        
+        AutoModeManager.get();
         
 		Context context = this.getApplicationContext();
 		AntPlusManager antPlusListener = AntPlusManager.get();
@@ -165,9 +174,37 @@ public class MainActivity extends AbstractMainActivity {
 		this.getUiBtConnectDisconnectAnt().setOnClickListener(
 			new OnClickButtonAntPlusListener());
 		
-		TextView tvTrackName = UpdaterUtils.tv(mainActivity, R.id.tvMain_TrackName);
-		tvTrackName.setOnClickListener(
-			new OnClickButtonTrackNameListener());
+		TextView tvAutoModeIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_AutoModeIndicator);
+		tvAutoModeIndicator.setOnClickListener(
+			new OnClickButtonAutoModeIndicatorListener());
+		
+		TextView tvHeadAutoModeIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_HeadAutoModeIndicator);
+		tvHeadAutoModeIndicator.setOnClickListener(
+			new OnClickButtonAutoModeIndicatorListener());
+		
+		TextView tvLocalizationIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_LocalizationIndicator);
+		tvLocalizationIndicator.setOnClickListener(
+			new OnClickButtonLocalizationIndicatorListener());
+		
+		TextView tvHeadLocalizationIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_HeadLocalizationIndicator);
+		tvHeadLocalizationIndicator.setOnClickListener(
+			new OnClickButtonLocalizationIndicatorListener());
+		
+		TextView tvWirelessLanIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_WirelessLanIndicator);
+		tvWirelessLanIndicator.setOnClickListener(
+			new OnClickButtonWirelessLanIndicatorListener());
+		
+		TextView tvHeadWirelessLanIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_HeadWirelessLanIndicator);
+		tvHeadWirelessLanIndicator.setOnClickListener(
+			new OnClickButtonWirelessLanIndicatorListener());
+		
+		TextView tvMobileNetworkIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_MobileNetworkIndicator);
+		tvMobileNetworkIndicator.setOnClickListener(
+			new OnClickButtonMobileNetworkIndicatorListener());
+		
+		TextView tvHeadMobileNetworkIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_HeadMobileNetworkIndicator);
+		tvHeadMobileNetworkIndicator.setOnClickListener(
+			new OnClickButtonMobileNetworkIndicatorListener());
 		
 		TextView tvLocation = UpdaterUtils.tv(mainActivity, R.id.tvMain_Location);
 		tvLocation.setOnClickListener(
@@ -184,8 +221,17 @@ public class MainActivity extends AbstractMainActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		this.stopBatteryReceiver();
-		this.stopPhoneStateListener();		
+		AutoModeManager.shutdown();
+		UploadManager.stopUploadManager();									
+		MainActivity.get().stopLocationListener();
+		MainActivity.get().stopAntPlusHeartrateListener();
+		MainActivity.get().stopBatteryReceiver();
+		MainActivity.get().stopPhoneStateListener();
+		Chronometer chronometer = MainActivity.get().getUiChronometer();
+		chronometer.stop();			
+		chronometer.setBase(SystemClock.elapsedRealtime());
+		TrackStatus.saveTrackStatus();
+		StatusBarUpdater.cancelAppStatus();
 	}
 	
 	/* (non-Javadoc)
@@ -250,6 +296,18 @@ public class MainActivity extends AbstractMainActivity {
 		if (connectivityManager != null) {
 			NetworkInfo nwInfo = connectivityManager.getActiveNetworkInfo();
 			if ((nwInfo != null) && nwInfo.isConnected()) {
+				res = true;
+			}
+		}
+		return res;
+	}
+	
+	public boolean isDataConnectionAvailable() {
+		boolean res = false;
+		ConnectivityManager connectivityManager = getConnectivityManager();
+		if (connectivityManager != null) {
+			NetworkInfo nwInfo = connectivityManager.getActiveNetworkInfo();
+			if ((nwInfo != null) && nwInfo.isAvailable()) {
 				res = true;
 			}
 		}
@@ -331,8 +389,7 @@ public class MainActivity extends AbstractMainActivity {
 	}
 
 	public boolean localizationEnabled() {
-		return this.getLocationManager().isProviderEnabled(
-			Preferences.get().getLocationProvider());
+		return Preferences.get().getLocalizationMode().neededProvidersEnabled();
 	}
 	
 	public void startLocationListener() {
@@ -341,11 +398,20 @@ public class MainActivity extends AbstractMainActivity {
 			addGpsStatusListener(GpsStateListener.get());
 		this.getLocationManager().
 			addNmeaListener(NmeaListener.get());
-		this.getLocationManager().requestLocationUpdates(
-			preferences.getLocationProvider(), 
-			preferences.getLocTimeTriggerInSeconds() * 1000, 
-			preferences.getLocDistanceTriggerInMeter(), 
-			LocationListener.get());
+		if (preferences.getLocalizationMode().gpsProviderEnabled()) {
+			this.getLocationManager().requestLocationUpdates(
+				LocationManager.GPS_PROVIDER, 
+				preferences.getLocTimeTriggerInSeconds() * 1000, 
+				preferences.getLocDistanceTriggerInMeter(), 
+				LocationListener.get());
+		}
+		if (preferences.getLocalizationMode().networkProviderEnabled()) {
+			this.getLocationManager().requestLocationUpdates(
+				LocationManager.NETWORK_PROVIDER, 
+				preferences.getLocTimeTriggerInSeconds() * 1000, 
+				preferences.getLocDistanceTriggerInMeter(), 
+				LocationListener.get());
+		}
 		LocationListener.get().setActive(true);		
 	}
 	

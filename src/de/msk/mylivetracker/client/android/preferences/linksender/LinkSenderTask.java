@@ -21,7 +21,7 @@ import de.msk.mylivetracker.commons.rpc.RpcResponse.ResultCode;
  * @version 000
  * 
  * history
- * 000 initial 2011-08-16
+ * 000 	2011-08-16 initial.
  * 
  */
 public class LinkSenderTask extends

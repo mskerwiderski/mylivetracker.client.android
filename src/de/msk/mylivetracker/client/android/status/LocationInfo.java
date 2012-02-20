@@ -9,6 +9,8 @@ import java.util.TimeZone;
 import org.apache.commons.lang.StringUtils;
 
 import android.location.Location;
+import android.location.LocationManager;
+import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;
 
@@ -20,12 +22,17 @@ import de.msk.mylivetracker.commons.util.datetime.DateTime;
  * @version 000
  * 
  * history
- * 000 initial 2011-08-11
+ * 001 2012-02-04 additional localizationMode implemented (gpsAndNetwork).
+ * 000 2011-08-11 initial.
  * 
  */
 public class LocationInfo extends AbstractInfo {
 	private static LocationInfo locationInfo = null;
 	public static void update(Location location) {
+		MainActivity.logInfo("update locationInfo");
+		if (LocationInfo.skip(locationInfo, location)) {
+			return;
+		}
 		locationInfo = 
 			LocationInfo.createNewLocationInfo(locationInfo, location);
 	}
@@ -50,7 +57,7 @@ public class LocationInfo extends AbstractInfo {
 		this.mileageInMtr = mileageInMtr;
 	}
 	
-	public static LocationInfo createNewLocationInfo(
+	private static LocationInfo createNewLocationInfo(
 		LocationInfo currLocationInfo, Location locationNew) {
 		TrackStatus trackStatus = TrackStatus.get();
 		float newTrackDistanceInMtr = trackStatus.getTrackDistanceInMtr();
@@ -64,6 +71,7 @@ public class LocationInfo extends AbstractInfo {
 			if ((currLocationInfo == null) || 
 				(currLocationInfo.getLastLocationUsedForDistCalc() == null)) { 
 				newLastLocationUsedForDistCalc = locationNew;
+				MainActivity.logInfo("first accurate position received for distance calculation");
 			} else if ((currLocationInfo != null) && 
 				(currLocationInfo.getLastLocationUsedForDistCalc() != null)) {			
 				float newDistanceInMtr = 
@@ -79,6 +87,7 @@ public class LocationInfo extends AbstractInfo {
 					newMileageInMtr = trackStatus.getMileageInMtr();
 					newLastLocationUsedForDistCalc = locationNew;
 				}
+				MainActivity.logInfo("position used for distance calculation: " + String.valueOf(newDistanceInMtr));
 			}
 		}
 		return new LocationInfo(locationNew, 
@@ -100,6 +109,22 @@ public class LocationInfo extends AbstractInfo {
 			getLocDistBtwTwoLocsForDistCalcRequiredInCMtr();
 		if (distReqInCMtr == 0) return true;
 		else return ((distanceInMtr * 100f) >= (float)distReqInCMtr);
+	}
+	
+	private static boolean skip(LocationInfo currLocationInfo, Location location) {
+		MainActivity.logInfo("check if position can be skipped.");
+		boolean res = false;
+		if (location.getProvider().equals(LocationManager.NETWORK_PROVIDER)) {
+			// positions from network provider are only used,
+			// if there is no valid position from gps provider.
+			if ((currLocationInfo != null) && (currLocationInfo.location != null) && 
+				currLocationInfo.location.getProvider().equals(LocationManager.GPS_PROVIDER) && 
+				currLocationInfo.isUpToDate()) {
+				res = true;
+			}
+		}		
+		MainActivity.logInfo("skip position = " + res);
+		return res;
 	}
 	
 	public boolean isUpToDate() {
@@ -126,10 +151,14 @@ public class LocationInfo extends AbstractInfo {
 		if ((location == null) || !location.hasAccuracy()) {
 			return false;
 		}
+		MainActivity.logInfo(location.getProvider());
+		MainActivity.logInfo(String.valueOf(location.getAccuracy()));
+		
 		return accReq >= location.getAccuracy();
 	}
 	
 	public boolean isAccurate() {
+		
 		return isAccurate(this.location);
 	}
 	

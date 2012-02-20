@@ -20,7 +20,7 @@ import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
  * @version 000
  * 
  * history
- * 000 initial 2011-08-11
+ * 000 	2011-08-11 initial.
  * 
  */
 public class OnClickButtonSosListener implements OnClickListener {

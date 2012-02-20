@@ -2,6 +2,9 @@ package de.msk.mylivetracker.client.android.upload;
 
 import java.util.Date;
 
+import org.apache.commons.lang.StringUtils;
+
+import android.location.LocationManager;
 import android.os.SystemClock;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
@@ -28,7 +31,8 @@ import de.msk.mylivetracker.client.android.upload.protocol.Protocols;
  * @version 000
  * 
  * history
- * 000 initial 2011-08-11
+ * 001 2012-02-04 lastUsedLocationProvider added.
+ * 000 2011-08-26 initial.
  * 
  */
 public class UploadManager extends Thread {
@@ -74,7 +78,8 @@ public class UploadManager extends Thread {
 			} catch (InterruptedException e) {
 				MainActivity.logInfo("stopUploadManager: uploadManagerForTracking wait... interrupted.");
 			}			
-			if (!uploadManagerForTracking.isAlive()) {
+			if ((uploadManagerForTracking != null) && 
+				!uploadManagerForTracking.isAlive()) {
 				uploadManagerForTracking = null;
 				MainActivity.logInfo("stopUploadManager: uploadManagerForTracking NOT alived - done.");
 			}
@@ -209,10 +214,20 @@ public class UploadManager extends Thread {
 		
 		long stop = SystemClock.elapsedRealtime();	
 		
+		String lastUsedLocationProvider = "?";
+		if ((locationInfo != null) && (locationInfo.getLocation() != null)) {
+			if (StringUtils.equals(locationInfo.getLocation().getProvider(), LocationManager.GPS_PROVIDER)) {
+				lastUsedLocationProvider = "gps";
+			} else if (StringUtils.equals(locationInfo.getLocation().getProvider(), LocationManager.NETWORK_PROVIDER)) {
+				lastUsedLocationProvider = "nw";
+			} 
+		}
+		
 		UploadInfo.update(uploadResult.isProcessed(), 
 			uploadResult.getResultCode(), 
 			uploadResult.getCountPositions(), 
-			stop - start);
+			stop - start,
+			lastUsedLocationProvider);
 		
 		MainActivity.get().updateView();
 	}
@@ -258,23 +273,36 @@ public class UploadManager extends Thread {
 					// do upload in every case, if first position was received.
 					doUpload = true;
 				}
-				long timeTrigger = prefs.getUplTimeTriggerInSeconds();
-				long distanceTrigger = prefs.getUplDistanceTriggerInMeter();
+				int timeTrigger = prefs.getUplTimeTrigger().getSecs();
+				int distanceTrigger = prefs.getUplDistanceTrigger().getMtrs();
 				if (!doUpload && (timeTrigger == 0) && (distanceTrigger == 0)) {
 					doUpload = true;
 				}
-				if (!doUpload && (timeTrigger > 0)) {
-					if ((lastUploaded + (timeTrigger * 1000)) <=
-						SystemClock.elapsedRealtime()) {
-						doUpload = true;
-					}
-				}
-				if (!doUpload && (distanceTrigger > 0)) {					
-					if ((locationInfo != null) && (lastLocationInfo != null)) {
-						if (distanceTrigger <=
-							locationInfo.getLocation().distanceTo(lastLocationInfo.getLocation())) {
-							doUpload = true;
+				if (!doUpload) {
+					boolean timeConditionFulfilled = false;
+					if (timeTrigger > 0) {
+						if ((lastUploaded + (timeTrigger * 1000)) <=
+							SystemClock.elapsedRealtime()) {
+							timeConditionFulfilled = true;
 						}
+					}
+					boolean distanceConditionFulfilled = false;
+					if (distanceTrigger > 0) {					
+						if ((locationInfo != null) && (lastLocationInfo != null)) {
+							if (distanceTrigger <=
+								locationInfo.getLocation().distanceTo(lastLocationInfo.getLocation())) {
+								distanceConditionFulfilled = true;
+							}
+						}
+					}
+					boolean triggerLogicIsAND = prefs.getUplTriggerLogic().AND();
+					if ((timeTrigger == 0) || (distanceTrigger == 0)) {
+						triggerLogicIsAND = false;
+					}
+					if (triggerLogicIsAND) {
+						doUpload = timeConditionFulfilled && distanceConditionFulfilled;
+					} else {
+						doUpload = timeConditionFulfilled || distanceConditionFulfilled;
 					}
 				}
 				if (doUpload || this.sendImmediately) {

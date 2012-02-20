@@ -14,10 +14,11 @@ import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
  * 
  * @author michael skerwiderski, (c)2011
  * 
- * @version 000
+ * @version 001
  * 
  * history
- * 000 initial 2011-08-11
+ * 001  2012-02-18 phoneNumber added.
+ * 000 	2011-08-11 initial.
  * 
  */
 public class PrefsAccountActivity extends AbstractActivity {
@@ -29,6 +30,7 @@ public class PrefsAccountActivity extends AbstractActivity {
 		private EditText etPrefsAccount_Username;
 		private EditText etPrefsAccount_Password;
 		private EditText etPrefsAccount_TrackName;
+		private EditText etPrefsAccount_PhoneNumber;
 		
 		public OnClickButtonSaveListener(
 			PrefsAccountActivity activity,
@@ -36,13 +38,15 @@ public class PrefsAccountActivity extends AbstractActivity {
 			EditText etPrefsAccount_DeviceId,
 			EditText etPrefsAccount_Username, 
 			EditText etPrefsAccount_Password,
-			EditText etPrefsAccount_TrackName) {
+			EditText etPrefsAccount_TrackName,
+			EditText etPrefsAccount_PhoneNumber) {
 			this.activity = activity;
 			this.preferences = preferences;
 			this.etPrefsAccount_DeviceId = etPrefsAccount_DeviceId;
 			this.etPrefsAccount_Username = etPrefsAccount_Username;
 			this.etPrefsAccount_Password = etPrefsAccount_Password;
 			this.etPrefsAccount_TrackName = etPrefsAccount_TrackName;
+			this.etPrefsAccount_PhoneNumber = etPrefsAccount_PhoneNumber;
 		}
 
 		/* (non-Javadoc)
@@ -71,13 +75,19 @@ public class PrefsAccountActivity extends AbstractActivity {
 					this.activity, 
 					R.string.fdPrefsAccount_TrackName, 
 					etPrefsAccount_TrackName, 
-					1, 20, true);			
+					1, 20, true) &&			
+				ValidatorUtils.validateEditTextString(
+					this.activity, 
+					R.string.fdPrefsAccount_PhoneNumber, 
+					etPrefsAccount_PhoneNumber, 					
+					0, 25, true);
 			
 			if (valid) {
 				preferences.setDeviceId(etPrefsAccount_DeviceId.getText().toString());
 				preferences.setUsername(etPrefsAccount_Username.getText().toString());
 				preferences.setPassword(etPrefsAccount_Password.getText().toString());
 				preferences.setTrackName(etPrefsAccount_TrackName.getText().toString());
+				preferences.setPhoneNumber(etPrefsAccount_PhoneNumber.getText().toString());
 				Preferences.save();
 				this.activity.finish();
 			}
@@ -113,12 +123,17 @@ public class PrefsAccountActivity extends AbstractActivity {
         
         EditText etPrefsAccount_DeviceId = (EditText) findViewById(R.id.etPrefsAccount_DeviceId);
         etPrefsAccount_DeviceId.setText(prefs.getDeviceId());
+        etPrefsAccount_DeviceId.setEnabled(false);
+        etPrefsAccount_DeviceId.setFocusable(false);
+        etPrefsAccount_DeviceId.setClickable(false);
         EditText etPrefsAccount_Username = (EditText) findViewById(R.id.etPrefsAccount_Username);
         etPrefsAccount_Username.setText(String.valueOf(prefs.getUsername()));
         EditText etPrefsAccount_Password = (EditText) findViewById(R.id.etPrefsAccount_Password);
         etPrefsAccount_Password.setText(String.valueOf(prefs.getPassword()));
         EditText etPrefsAccount_TrackName = (EditText) findViewById(R.id.etPrefsAccount_TrackName);
         etPrefsAccount_TrackName.setText(String.valueOf(prefs.getTrackName()));
+        EditText etPrefsAccount_PhoneNumber = (EditText) findViewById(R.id.etPrefsAccount_PhoneNumber);
+        etPrefsAccount_PhoneNumber.setText(String.valueOf(prefs.getPhoneNumber()));
         
         Button btnPrefsAccount_Save = (Button) findViewById(R.id.btPrefsAccount_Save);
         Button btnPrefsAccount_Cancel = (Button) findViewById(R.id.btPrefsAccount_Cancel);
@@ -128,7 +143,8 @@ public class PrefsAccountActivity extends AbstractActivity {
 				etPrefsAccount_DeviceId,
 				etPrefsAccount_Username,
 				etPrefsAccount_Password,
-				etPrefsAccount_TrackName));
+				etPrefsAccount_TrackName,
+				etPrefsAccount_PhoneNumber));
 		
         btnPrefsAccount_Cancel.setOnClickListener(
 			new OnClickButtonCancelListener(this));

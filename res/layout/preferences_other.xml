@@ -21,25 +21,6 @@
     </LinearLayout>
     <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent">
         <TextView
-        	android:text="@string/lbPrefsOther_PhoneNumber" 
-        	android:layout_weight="1" 
-        	android:layout_height="wrap_content" 
-        	android:layout_width="fill_parent" 
-        	android:gravity="left"
-        />
-    </LinearLayout>
-    <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent">
-		<EditText 
-			android:id="@+id/etPrefsOther_PhoneNumber"
-			android:text=""
-			android:inputType="phone"
-			android:layout_weight="1" 						
-			android:layout_height="40dip" 
-			android:layout_width="fill_parent" 
-		/>
-    </LinearLayout>
-    <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent">
-        <TextView
         	android:text="@string/lbPrefsOther_ConfirmLevel" 
         	android:layout_weight="1" 
         	android:layout_height="wrap_content" 
@@ -54,7 +35,23 @@
         	android:layout_width="fill_parent" 
         />    	    	        
     </LinearLayout>
-    <LinearLayout android:layout_height="20dip" android:layout_width="fill_parent" />
+     <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent">
+        <TextView
+        	android:text="@string/lbPrefsOther_TrackingOneTouch" 
+        	android:layout_weight="1" 
+        	android:layout_height="wrap_content" 
+        	android:layout_width="fill_parent" 
+        	android:gravity="left"
+        />
+    </LinearLayout>
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <Spinner
+        	android:id="@+id/spPrefsOther_TrackingOneTouch"         	 
+        	android:layout_height="40dip"
+        	android:layout_width="fill_parent" 
+        />    	    	        
+    </LinearLayout>
+    <LinearLayout android:layout_height="10dip" android:layout_width="fill_parent" />
     <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
     	<Button 
     		android:id="@+id/btPrefsOther_ResetOverallMileage"

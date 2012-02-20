@@ -12,7 +12,7 @@ import com.wahoofitness.api.comm.WFSensorConnection.WFSensorConnectionStatus;
  * @version 000
  * 
  * history
- * 000 initial 2011-08-11
+ * 000 	2011-08-11 initial.
  * 
  */
 public interface IAntPlusSensorListener extends Callback {
