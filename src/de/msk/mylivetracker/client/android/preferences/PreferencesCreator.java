@@ -65,6 +65,7 @@ public class PreferencesCreator {
 		prefs.confirmLevel = ConfirmLevel.medium;
 		prefs.autoModeEnabled = false;
 		prefs.autoModeResetTrackMode = AutoModeResetTrackMode.NextDay;
+		prefs.autoStartEnabled = false;
 		prefs.trackingOneTouchMode = TrackingOneTouchMode.TrackingOnly;
 		prefs.logging = false;
 		return prefs;

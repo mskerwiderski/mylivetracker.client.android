@@ -62,7 +62,7 @@ public class MessageActivity extends AbstractActivity {
 				ValidatorUtils.validateEditTextString(
 					this.activity, 
 					R.string.fdMsg_Message, 
-					etMsgMessage, 1, 30, true);
+					etMsgMessage, 1, 80, true);
 					
 			if (valid) {
 				if (Preferences.get().getConfirmLevel().isMedium()) {

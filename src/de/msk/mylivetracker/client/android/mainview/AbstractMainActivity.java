@@ -1,13 +1,12 @@
 package de.msk.mylivetracker.client.android.mainview;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -223,6 +222,22 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 		}
 	}
 	
+	private static class ExitYesNoDialog extends AbstractYesNoDialog {
+		
+		private Handler handler;
+		
+		protected ExitYesNoDialog(Context ctx, int question, Handler handler) {
+			super(ctx, question);
+			this.handler = handler;
+		}
+
+		@Override
+		public void onYes() {
+			MainActivity.logInfo("Exit: onYes.");
+			handler.sendEmptyMessage(0);
+		}
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -269,30 +284,13 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 				startActivity(new Intent(this, LinkSenderActivity.class));
 			}
 			return true;	
-		case R.id.mnExit:
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage(this.getString(R.string.txMain_QuestionExit))
-					.setCancelable(false)
-					.setPositiveButton(this.getString(R.string.btYes),
-							new DialogInterface.OnClickListener() {
-								public void onClick(
-									DialogInterface dialog, int id) {
-									MainActivity.get().onDestroy();
-									System.exit(0);
-								}
-							})
-					.setNegativeButton(this.getString(R.string.btNo),
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int id) {
-									dialog.cancel();
-								}
-							});
-			builder.create().show();
-			return true;
 		case R.id.mnInfo:
 			startActivity(new Intent(this, InfoActivity.class));
 			return true;
+		case R.id.mnExit:
+			ExitYesNoDialog dlg = new ExitYesNoDialog(this,
+				R.string.txMain_QuestionExit, MainActivity.exitHandler);
+			dlg.show();
 		default:
 			return super.onOptionsItemSelected(item);
 		}

@@ -12,9 +12,10 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.SystemClock;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
@@ -28,7 +29,7 @@ import com.wahoofitness.api.WFDisplaySettings;
 import com.wahoofitness.api.WFHardwareConnector;
 
 import de.msk.mylivetracker.client.android.R;
-import de.msk.mylivetracker.client.android.automode.AutoModeManager;
+import de.msk.mylivetracker.client.android.automode.AutoManager;
 import de.msk.mylivetracker.client.android.listener.AntPlusHeartrateListener;
 import de.msk.mylivetracker.client.android.listener.AntPlusListener;
 import de.msk.mylivetracker.client.android.listener.AntPlusManager;
@@ -53,10 +54,13 @@ import de.msk.mylivetracker.client.android.upload.UploadManager;
  * @version 001
  * 
  * history
- * 001 	2012-02-20
- * 		o property localizationMode implemented (gps, network, gpsAndNetwork).
+ * 001 	2012-02-21
+ * 		o property 'localizationMode' implemented (gps, network, gpsAndNetwork).
  * 		o listener to autoModeIndicator added.
  *      o isDataConnectionAvailable implemented.
+ *      o 'onBackPressed' implemented.
+ *      o 'exit' implemented.
+ *      o 'exitHandler' implemented.
  * 000 	2011-08-11 initial.
  * 
  */
@@ -66,6 +70,15 @@ public class MainActivity extends AbstractMainActivity {
 	
 	public static MainActivity get() {
 		return mainActivity;
+	}
+	
+	public static void exit() {
+		if (mainActivity != null) {
+			mainActivity.onDestroy();
+			MainActivity.logInfo("Exit: main window closed.");
+		}
+		MainActivity.logInfo("Exit: exit app.");
+		System.exit(0);	
 	}
 	
 	@Override
@@ -78,7 +91,7 @@ public class MainActivity extends AbstractMainActivity {
         
         TrackStatus.loadTrackStatus();
         
-        AutoModeManager.get();
+        AutoManager.get();
         
 		Context context = this.getApplicationContext();
 		AntPlusManager antPlusListener = AntPlusManager.get();
@@ -174,13 +187,21 @@ public class MainActivity extends AbstractMainActivity {
 		this.getUiBtConnectDisconnectAnt().setOnClickListener(
 			new OnClickButtonAntPlusListener());
 		
+		TextView tvAutoStartIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_AutoStartIndicator);
+		tvAutoStartIndicator.setOnClickListener(
+			new OnClickButtonAutoIndicatorListener());
+		
+		TextView tvHeadAutoStartIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_HeadAutoStartIndicator);
+		tvHeadAutoStartIndicator.setOnClickListener(
+			new OnClickButtonAutoIndicatorListener());
+		
 		TextView tvAutoModeIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_AutoModeIndicator);
 		tvAutoModeIndicator.setOnClickListener(
-			new OnClickButtonAutoModeIndicatorListener());
+			new OnClickButtonAutoIndicatorListener());
 		
 		TextView tvHeadAutoModeIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_HeadAutoModeIndicator);
 		tvHeadAutoModeIndicator.setOnClickListener(
-			new OnClickButtonAutoModeIndicatorListener());
+			new OnClickButtonAutoIndicatorListener());
 		
 		TextView tvLocalizationIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_LocalizationIndicator);
 		tvLocalizationIndicator.setOnClickListener(
@@ -221,7 +242,7 @@ public class MainActivity extends AbstractMainActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		AutoModeManager.shutdown();
+		AutoManager.shutdown();
 		UploadManager.stopUploadManager();									
 		MainActivity.get().stopLocationListener();
 		MainActivity.get().stopAntPlusHeartrateListener();
@@ -285,6 +306,26 @@ public class MainActivity extends AbstractMainActivity {
 	public void onSwitchToView(boolean next) {
 		startActivity(new Intent(this, MainDetailsActivity.class));	
 	}
+	
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onBackPressed()
+	 */
+	@Override
+	public void onBackPressed() {
+		startActivity(new Intent(this, MainDetailsActivity.class));
+	}
+
+	public static Handler exitHandler = new Handler() {
+		public void handleMessage(Message msg) {
+			if (MainDetailsActivity.isActive()) {
+				MainActivity.logInfo("Exit: close details window.");
+				MainDetailsActivity.close();
+				try { Thread.sleep(1000); } catch(Exception e) {};
+			}
+			MainActivity.logInfo("Exit: exit main window.");
+			MainActivity.exit();
+	    }
+	};
 	
 	private ConnectivityManager connectivityManager = null;
 	private TelephonyManager telephonyManager = null;	
@@ -433,9 +474,19 @@ public class MainActivity extends AbstractMainActivity {
 		}
 	}
 		
-	private static final String LOG_TAG_GLOBAL = "MLT";
+	//private static final String LOG_TAG_GLOBAL = "MLT";
 	public static void logInfo(String logStr) {
-		Log.i(LOG_TAG_GLOBAL, logStr);
+		return;
+		//Log.i(LOG_TAG_GLOBAL, logStr);
+	}
+	public static void logInfo(Class<?> clazz, String logStr) {
+		return;
+//		String className = "unknown";
+//		if ((clazz != null) && !StringUtils.isEmpty(clazz.getSimpleName())) {
+//			className = clazz.getSimpleName();
+//		}
+//		String info =  className + ": " + logStr;
+//		Log.i(LOG_TAG_GLOBAL, info);
 	}
 	
 	public static class VersionDsc {

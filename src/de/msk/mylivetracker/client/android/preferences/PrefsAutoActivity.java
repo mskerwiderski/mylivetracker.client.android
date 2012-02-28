@@ -29,16 +29,19 @@ public class PrefsAutoActivity extends AbstractActivity {
 		private Preferences preferences;
 		private CheckBox cbPrefsAuto_AutoMode;
 		private Spinner spPrefsAuto_ResetTrackMode;
+		private CheckBox cbPrefsAuto_AutoStart;
 		
 		public OnClickButtonSaveListener(
 			PrefsAutoActivity activity,
 			Preferences preferences,
 			CheckBox cbPrefsAuto_AutoMode,
-			Spinner spPrefsAuto_ResetTrackMode) {
+			Spinner spPrefsAuto_ResetTrackMode,
+			CheckBox cbPrefsAuto_AutoStart) {
 			this.activity = activity;
 			this.preferences = preferences;
 			this.cbPrefsAuto_AutoMode = cbPrefsAuto_AutoMode;
 			this.spPrefsAuto_ResetTrackMode = spPrefsAuto_ResetTrackMode;
+			this.cbPrefsAuto_AutoStart = cbPrefsAuto_AutoStart;
 		}
 
 		/* (non-Javadoc)
@@ -51,6 +54,7 @@ public class PrefsAutoActivity extends AbstractActivity {
 			if (valid) {
 				preferences.setAutoModeEnabled(cbPrefsAuto_AutoMode.isChecked());
 				preferences.setAutoModeResetTrackMode(AutoModeResetTrackMode.values()[spPrefsAuto_ResetTrackMode.getSelectedItemPosition()]);
+				preferences.setAutoStartEnabled(cbPrefsAuto_AutoStart.isChecked());
 				Preferences.save();
 				this.activity.finish();
 			}			
@@ -94,13 +98,17 @@ public class PrefsAutoActivity extends AbstractActivity {
         spPrefsAuto_ResetTrackMode.setAdapter(adapter);
         spPrefsAuto_ResetTrackMode.setSelection(prefs.getAutoModeResetTrackMode().ordinal());
         
+        CheckBox cbPrefsAuto_AutoStart = (CheckBox)findViewById(R.id.cbPrefsAuto_AutoStart);
+        cbPrefsAuto_AutoStart.setChecked(prefs.isAutoStartEnabled());
+        
         Button btnPrefsOther_Save = (Button) findViewById(R.id.btPrefsAuto_Save);
         Button btnPrefsOther_Cancel = (Button) findViewById(R.id.btPrefsAuto_Cancel);
                 
         btnPrefsOther_Save.setOnClickListener(
 			new OnClickButtonSaveListener(this, prefs,
 				cbPrefsAuto_AutoMode,
-				spPrefsAuto_ResetTrackMode));		
+				spPrefsAuto_ResetTrackMode,
+				cbPrefsAuto_AutoStart));		
         btnPrefsOther_Cancel.setOnClickListener(
 			new OnClickButtonCancelListener(this));
     }

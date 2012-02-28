@@ -29,8 +29,17 @@
         	android:layout_width="fill_parent" 
         />    	    	        
     </LinearLayout>
+    <LinearLayout android:layout_height="15dip" android:layout_width="fill_parent" />
+    <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent">
+    	<CheckBox
+		    android:id="@+id/cbPrefsAuto_AutoStart"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1"
+		    android:text="@string/lbPrefsAuto_AutoStart" 
+		/>	
+    </LinearLayout>
     <LinearLayout android:layout_height="20dip" android:layout_width="fill_parent" />
-       
 	<LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent">        
         <Button
         	android:id="@+id/btPrefsAuto_Save" 

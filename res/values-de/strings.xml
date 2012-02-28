@@ -61,7 +61,8 @@
     
     <!-- main -->
     <string name="tiMain">Track</string>    
-    <string name="tvMain_AutoModeIndicator">Auto</string>
+    <string name="tvMain_AutoStartIndicator">A.Start</string>
+    <string name="tvMain_AutoModeIndicator">A.Mode</string>
     <string name="tvMain_LocalizationIndicator">Pos</string>
     <string name="tvMain_WirelessLanIndicator">WLAN</string>
     <string name="tvMain_MobileNetworkIndicator">Daten</string>
@@ -124,7 +125,7 @@
     
     <!-- message -->
     <string name="tiMsg">Nachrichtenversand</string>
-    <string name="lbMsg_Message">Nachrichtentext</string>
+    <string name="lbMsg_Message">Nachrichtentext (maximal 80 Zeichen lang)</string>
    	<string name="fdMsg_Message">Nachricht</string>
    	<string name="txMsg_QuestionSendMessage">Wollen Sie die Nachricht wirklich senden?</string>
     <string name="txMsg_InfoSendMessageDone">Die Nachricht wurde versendet!</string>    
@@ -198,6 +199,8 @@
     <string name="lbPrefsAuto_AutoMode">Wenn der Akku in den Ladestatus wechselt (den Ladestatus verlässt), wird der Track automatisch gestartet (gestoppt).</string>
    	<string name="fdPrefsAuto_ResetTrackMode">Track-zurücksetzen Modus</string>
 	<string name="txPrefsAuto_ResetTrackMode">Track-zurücksetzen Modus.</string>
+	<string name="fdPrefsAuto_AutoStart">Auto Start</string>
+    <string name="lbPrefsAuto_AutoStart">Nach einem Reboot des Smartphones wird das Tracking automatisch gestartet.</string>
 	
     <!-- link sender to server -->
     <string name="tiLinkSender">Sender koppeln</string>

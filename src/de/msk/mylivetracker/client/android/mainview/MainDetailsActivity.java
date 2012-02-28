@@ -9,9 +9,14 @@ import de.msk.mylivetracker.client.android.R;
  * 
  * @author michael skerwiderski, (c)2011
  * 
- * @version 000
+ * @version 001
  * 
  * history
+ * 001  2012-02-21 
+ * 		o 'close' implemented.
+ * 		o 'isActive' implemented-
+ * 		o 'onBackPressed' implemented.
+ * 		o 'onSwitchToView' and 'onBackPressed' call 'close'.
  * 000 	2011-08-18 initial.
  * 
  */
@@ -22,7 +27,18 @@ public class MainDetailsActivity extends AbstractMainActivity {
 	public static MainDetailsActivity get() {
 		return mainDetailsActivity;
 	}
-		
+	
+	public static boolean isActive() {
+		return mainDetailsActivity != null;
+	}
+	
+	public static void close() {
+		if (mainDetailsActivity != null) {
+			mainDetailsActivity.finish();
+			mainDetailsActivity = null;
+		}
+	}
+	
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
@@ -54,7 +70,14 @@ public class MainDetailsActivity extends AbstractMainActivity {
 	 */
 	@Override
 	public void onSwitchToView(boolean next) {
-		this.finish();
-		mainDetailsActivity = null;	
+		close();
 	}	
+	
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onBackPressed()
+	 */
+	@Override
+	public void onBackPressed() {
+		close();
+	}
 }

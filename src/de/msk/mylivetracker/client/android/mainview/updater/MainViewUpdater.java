@@ -91,6 +91,14 @@ public class MainViewUpdater implements Runnable {
 		HeartrateInfo heartrateInfo = HeartrateInfo.get();
 		UploadInfo uploadInfo = UploadInfo.get();
 		
+		// auto start indicator
+		TextView tvAutoStartIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_AutoStartIndicator);
+		setIndicatorTextAndColors(tvAutoStartIndicator, 
+			(preferences.isAutoStartEnabled() ? 
+				res.getText(R.string.tvOn).toString() : 
+				res.getText(R.string.tvOff).toString()), 
+			preferences.isAutoStartEnabled() ? IndicatorState.Ok : IndicatorState.Off);
+				
 		// auto mode indicator
 		TextView tvAutoModeIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_AutoModeIndicator);
 		setIndicatorTextAndColors(tvAutoModeIndicator, 

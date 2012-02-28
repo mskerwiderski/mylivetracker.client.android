@@ -57,10 +57,9 @@ public class Preferences {
 	protected ConfirmLevel confirmLevel;
 	protected TrackingOneTouchMode trackingOneTouchMode;
 	protected Boolean logging; 
-	
-	// auto mode
 	protected boolean autoModeEnabled;
 	protected AutoModeResetTrackMode autoModeResetTrackMode;
+	protected boolean autoStartEnabled;
 	
 	public enum ConfirmLevel {
 		low("low"), medium("medium"), high("high");
@@ -319,6 +318,7 @@ public class Preferences {
 	// o property 'uplTriggerLogic' added.
 	// o property 'autoModeEnabled' added.
 	// o property 'autoModeResetTrackMode' added.
+	// o property 'autoStartEnabled' added.
 	// o property 'trackingOneTouchMode' added.
 	//	
 	// version 201: 
@@ -343,7 +343,14 @@ public class Preferences {
 		} 
 		return preferences;
 	}
-		
+	
+	public static Preferences get(Context context) {
+		if (preferences == null) {			
+			Preferences.load(context, DB_NAME);
+		} 
+		return preferences;
+	}
+	
 	public static void reset() {
 		preferences = PreferencesCreator.create();
 		save();
@@ -351,7 +358,11 @@ public class Preferences {
 	
 	private static void load() {
 		MainActivity mainActivity = MainActivity.get();
-		SharedPreferences prefs = mainActivity.getSharedPreferences(DB_NAME, 0);				
+		load(mainActivity, DB_NAME);
+	}
+	
+	private static void load(Context context, String name) {
+		SharedPreferences prefs = context.getSharedPreferences(name, 0);				
 		int preferencesVersion = prefs.getInt(PREFERENCES_VERSION_VAR, -1);
 		if (preferencesVersion < PREFERENCES_VERSION_MIN) {
 			Preferences.reset();
@@ -380,6 +391,7 @@ public class Preferences {
 						preferences.uplDistanceTrigger = UploadDistanceTrigger.findSuitable(preferences.uplDistanceTriggerInMeter);
 						preferences.autoModeEnabled = false;
 						preferences.autoModeResetTrackMode = AutoModeResetTrackMode.NextDay;
+						preferences.autoStartEnabled = false;
 						preferences.trackingOneTouchMode = TrackingOneTouchMode.TrackingOnly;
 						save();
 					}
@@ -725,6 +737,20 @@ public class Preferences {
 	public void setAutoModeResetTrackMode(
 			AutoModeResetTrackMode autoModeResetTrackMode) {
 		this.autoModeResetTrackMode = autoModeResetTrackMode;
+	}
+
+	/**
+	 * @return the autoStartEnabled
+	 */
+	public boolean isAutoStartEnabled() {
+		return autoStartEnabled;
+	}
+
+	/**
+	 * @param autoStartEnabled the autoStartEnabled to set
+	 */
+	public void setAutoStartEnabled(boolean autoStartEnabled) {
+		this.autoStartEnabled = autoStartEnabled;
 	}
 
 	public TrackingOneTouchMode getTrackingOneTouchMode() {
