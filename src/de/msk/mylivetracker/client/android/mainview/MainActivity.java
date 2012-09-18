@@ -16,6 +16,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
@@ -243,7 +244,7 @@ public class MainActivity extends AbstractMainActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 		AutoManager.shutdown();
-		UploadManager.stopUploadManager();									
+		UploadManager.stopUploadManager();
 		MainActivity.get().stopLocationListener();
 		MainActivity.get().stopAntPlusHeartrateListener();
 		MainActivity.get().stopBatteryReceiver();
@@ -474,19 +475,19 @@ public class MainActivity extends AbstractMainActivity {
 		}
 	}
 		
-	//private static final String LOG_TAG_GLOBAL = "MLT";
+	private static final String LOG_TAG_GLOBAL = "MLT";
 	public static void logInfo(String logStr) {
-		return;
-		//Log.i(LOG_TAG_GLOBAL, logStr);
+		//return;
+		Log.i(LOG_TAG_GLOBAL, logStr);
 	}
 	public static void logInfo(Class<?> clazz, String logStr) {
-		return;
-//		String className = "unknown";
-//		if ((clazz != null) && !StringUtils.isEmpty(clazz.getSimpleName())) {
-//			className = clazz.getSimpleName();
-//		}
-//		String info =  className + ": " + logStr;
-//		Log.i(LOG_TAG_GLOBAL, info);
+		//return;
+		String className = "unknown";
+		if ((clazz != null) && !StringUtils.isEmpty(clazz.getSimpleName())) {
+			className = clazz.getSimpleName();
+		}
+		String info =  className + ": " + logStr;
+		Log.i(LOG_TAG_GLOBAL, info);
 	}
 	
 	public static class VersionDsc {

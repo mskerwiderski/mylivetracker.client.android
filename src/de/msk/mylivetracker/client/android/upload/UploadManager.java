@@ -4,7 +4,9 @@ import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
 
+import android.content.Context;
 import android.location.LocationManager;
+import android.os.PowerManager;
 import android.os.SystemClock;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
@@ -240,6 +242,11 @@ public class UploadManager extends Thread {
 		if (this.onlyOneUpload) {
 			this.runOnlyOneUpload();
 		} else {
+			int tid = android.os.Process.myTid();
+			MainActivity.logInfo("tid=" + tid);
+	        MainActivity.logInfo("priority before change = "+ Thread.currentThread().getPriority());
+	        android.os.Process.setThreadPriority(tid, Preferences.get().getUploadThreadPriorityLevel().getLevel());
+	        MainActivity.logInfo("priority after change = " + Thread.currentThread().getPriority());
 			this.runInfinite();
 		}
 		
@@ -260,6 +267,10 @@ public class UploadManager extends Thread {
 	}
 	
 	private void runInfinite() {
+		PowerManager pm = (PowerManager)MainActivity.get().getSystemService(Context.POWER_SERVICE);
+		PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyLiveTracker");
+		wl.acquire();
+		   
 		Preferences prefs = Preferences.get();
 		boolean run = true;
 		// do upload at start up in every case, even there is no info.
@@ -325,6 +336,7 @@ public class UploadManager extends Thread {
 				}
 			}
 		}
+		wl.release();
 	}
 
 	/* (non-Javadoc)
