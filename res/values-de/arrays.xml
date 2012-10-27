@@ -9,7 +9,6 @@
     	<item>Datentransfer aus</item>
         <item>MLT HTTP (Klartext)</item>
         <item>MLT TCP (verschlüsselt)</item>
-        <item>Franson GpsGate HTTP</item>
         <item>Tk102 Emulator</item>
         <item>Tk5000 Emulator</item>        
     </string-array>
@@ -22,6 +21,8 @@
     
     <string-array name="uploadTimeTrigger">
     	<item>aus</item>
+    	<item>1 Sekunde</item>
+    	<item>3 Sekunden</item>
         <item>5 Sekunden</item>
         <item>10 Sekunden</item>
         <item>20 Sekunden</item>

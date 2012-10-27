@@ -99,7 +99,6 @@ public class Preferences {
 		uploadDisabled("Upload disabled", false, false),
 		mltHttpPlain("MLT HTTP (plain)", true, true),
 		mltTcpEncrypted("MLT TCP (encrypted)", true, true),
-		fransonGpsGateHttp("Franson GpsGate HTTP", false, false),
 		tk102Emulator("Tk102 Emulator", false, true),
 		tk5000Emulator("Tk5000 Emulator", false, true);
 		
@@ -174,6 +173,8 @@ public class Preferences {
 	
 	public enum UploadTimeTrigger {
 		Off("off", 0),
+		Sec1("1 sec", 1),
+		Secs3("3 secs", 3),
 		Secs5("5 secs", 5),
 		Secs10("10 secs", 10),
 		Secs20("20 secs", 20),
@@ -201,6 +202,8 @@ public class Preferences {
 		}
 		public static UploadTimeTrigger findSuitable(int secs) {
 			if (secs == 0) return Off;
+			if (secs <= 1) return Sec1;
+			if (secs <= 3) return Secs3;
 			if (secs <= 5) return Secs5;
 			if (secs <= 10) return Secs10;
 			if (secs <= 20) return Secs20;

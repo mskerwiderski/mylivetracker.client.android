@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="de.msk.mylivetracker.client.android" 
-      android:versionName="1.4.0" android:versionCode="140">       
+      android:versionName="1.4.0 beta 1" android:versionCode="1401">       
     
     <uses-sdk android:minSdkVersion="7" />
 
@@ -38,6 +38,7 @@
 			android:screenOrientation="portrait" />	
 		<activity android:name=".InfoActivity" 
 			android:screenOrientation="portrait" />
+		<service android:enabled="true" android:name=".upload.UploadService" />
     </application>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

@@ -19,9 +19,6 @@ public class Protocols {
 	public static IProtocol createProtocolMltDatastrEncrypted() {
 		return new de.msk.mylivetracker.client.android.upload.protocol.mlt.datastr.encrypted.ProtocolEncoder();
 	}
-	public static IProtocol createProtocolFransonGpsGateHttp() {
-		return new de.msk.mylivetracker.client.android.upload.protocol.franson.gpsgate.http.ProtocolEncoder();
-	}
 	public static IProtocol createProtocolXexunTk102() {
 		return new de.msk.mylivetracker.client.android.upload.protocol.xexun.tk102.ProtocolEncoder();
 	}

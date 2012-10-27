@@ -1,6 +1,7 @@
 package de.msk.mylivetracker.client.android.mainview;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
@@ -12,7 +13,7 @@ import de.msk.mylivetracker.client.android.mainview.updater.StatusBarUpdater;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.preferences.Preferences.TrackingOneTouchMode;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
-import de.msk.mylivetracker.client.android.upload.UploadManager;
+import de.msk.mylivetracker.client.android.upload.UploadService;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 
 /**
@@ -111,9 +112,11 @@ public class OnClickButtonStartStopListener implements OnClickListener {
 		Thread startStopThread = new Thread() {  
 			public void run() {
 				if (stopTrack) {
-					UploadManager.stopUploadManager();
+					//UploadManager.stopUploadManager();
+					activity.stopService(new Intent(activity, UploadService.class));
 				} else {
-					UploadManager.startUploadManager();
+					activity.startService(new Intent(activity, UploadService.class));
+					//UploadManager.startUploadManager();
 				}
 				handler.sendEmptyMessage(0);
 		     }
