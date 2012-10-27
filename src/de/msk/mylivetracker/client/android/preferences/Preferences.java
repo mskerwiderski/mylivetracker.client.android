@@ -60,7 +60,6 @@ public class Preferences {
 	protected boolean autoModeEnabled;
 	protected AutoModeResetTrackMode autoModeResetTrackMode;
 	protected boolean autoStartEnabled;
-	protected UploadThreadPriorityLevel uploadThreadPriorityLevel;
 	
 	public enum ConfirmLevel {
 		low("low"), medium("medium"), high("high");
@@ -309,26 +308,8 @@ public class Preferences {
 		TrackingLocalizationHeartrate;
 	};
 
-	public enum UploadThreadPriorityLevel {
-		Audio(android.os.Process.THREAD_PRIORITY_AUDIO), 
-		Display(android.os.Process.THREAD_PRIORITY_DISPLAY), 
-		Foreground(android.os.Process.THREAD_PRIORITY_FOREGROUND),
-		MoreFavorable(android.os.Process.THREAD_PRIORITY_MORE_FAVORABLE),
-		Default(android.os.Process.THREAD_PRIORITY_DEFAULT);
-		private int level;				
-		private UploadThreadPriorityLevel(int level) {
-			this.level = level;
-		}
-		public int getLevel() {
-			return level;
-		}
-	}
-	
 	public static final String DB_NAME = "MyLiveTracker.DB";
 	
-	//
-	// version 301:
-	// o property 'uploadThreadPriorityLevel' added.
 	//
 	// version 300:
 	// o property 'localizationMode' added and 'locationProvider' removed.
@@ -349,8 +330,7 @@ public class Preferences {
 	// version < 200: reset is needed.
 	// 
 	private static final int PREFERENCES_VERSION_MIN = 201;
-	private static final int PREFERENCES_VERSION_300 = 301;
-	private static final int PREFERENCES_VERSION_CURRENT = 301;
+	private static final int PREFERENCES_VERSION_CURRENT = 300;
 	
 	private static final String PREFERENCES_VERSION_VAR = "preferencesVersion";
 	private static final String PREFERENCES_VAR = "preferences";
@@ -392,8 +372,7 @@ public class Preferences {
 				try {
 					Gson gson = new Gson();
 					preferences = gson.fromJson(preferencesStr, Preferences.class);
-					boolean doSave = false;
-					if (preferencesVersion < PREFERENCES_VERSION_300) {
+					if (preferencesVersion < PREFERENCES_VERSION_CURRENT) {
 						// device id is read only.
 						preferences.deviceId =  
 							((TelephonyManager)MainActivity.get().getSystemService(
@@ -414,13 +393,6 @@ public class Preferences {
 						preferences.autoModeResetTrackMode = AutoModeResetTrackMode.NextDay;
 						preferences.autoStartEnabled = false;
 						preferences.trackingOneTouchMode = TrackingOneTouchMode.TrackingOnly;
-						doSave = true;
-					} 
-					if (preferencesVersion < PREFERENCES_VERSION_CURRENT) {
-						preferences.uploadThreadPriorityLevel = UploadThreadPriorityLevel.Default;
-						doSave = true;
-					}
-					if (doSave) {
 						save();
 					}
 				} catch (JsonParseException e) {
@@ -787,20 +759,5 @@ public class Preferences {
 
 	public void setTrackingOneTouchMode(TrackingOneTouchMode trackingOneTouchMode) {
 		this.trackingOneTouchMode = trackingOneTouchMode;
-	}
-
-	/**
-	 * @return the uploadThreadPriorityLevel
-	 */
-	public UploadThreadPriorityLevel getUploadThreadPriorityLevel() {
-		return uploadThreadPriorityLevel;
-	}
-
-	/**
-	 * @param uploadThreadPriorityLevel the uploadThreadPriorityLevel to set
-	 */
-	public void setUploadThreadPriorityLevel(
-			UploadThreadPriorityLevel uploadThreadPriorityLevel) {
-		this.uploadThreadPriorityLevel = uploadThreadPriorityLevel;
 	}
 }

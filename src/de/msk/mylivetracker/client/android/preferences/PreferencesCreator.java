@@ -12,7 +12,6 @@ import de.msk.mylivetracker.client.android.preferences.Preferences.LocalizationM
 import de.msk.mylivetracker.client.android.preferences.Preferences.TrackingOneTouchMode;
 import de.msk.mylivetracker.client.android.preferences.Preferences.TransferProtocol;
 import de.msk.mylivetracker.client.android.preferences.Preferences.UploadDistanceTrigger;
-import de.msk.mylivetracker.client.android.preferences.Preferences.UploadThreadPriorityLevel;
 import de.msk.mylivetracker.client.android.preferences.Preferences.UploadTimeTrigger;
 import de.msk.mylivetracker.client.android.preferences.Preferences.UploadTriggerLogic;
 
@@ -69,7 +68,6 @@ public class PreferencesCreator {
 		prefs.autoStartEnabled = false;
 		prefs.trackingOneTouchMode = TrackingOneTouchMode.TrackingOnly;
 		prefs.logging = false;
-		prefs.uploadThreadPriorityLevel = UploadThreadPriorityLevel.Default;
 		return prefs;
 	}
 }

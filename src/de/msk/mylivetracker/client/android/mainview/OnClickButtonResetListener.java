@@ -57,7 +57,7 @@ public class OnClickButtonResetListener implements OnClickListener {
 	}	
 	
 	public static void resetTrack(MainActivity activity) {		
-		UploadManager.stopUploadManager();
+		UploadManager.stopUploadManager();			
 		activity.stopLocationListener();
 		Chronometer chronometer = activity.getUiChronometer();
 		chronometer.stop();			

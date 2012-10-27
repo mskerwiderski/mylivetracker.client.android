@@ -59,7 +59,8 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        
+		android.os.Process.setThreadPriority(-20);
+		
 	    gestureDetector = 
         	new GestureDetector(this, 
         		new GestureDetector.SimpleOnGestureListener() {
