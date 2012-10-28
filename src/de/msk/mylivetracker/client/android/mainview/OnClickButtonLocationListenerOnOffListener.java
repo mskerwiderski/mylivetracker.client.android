@@ -4,7 +4,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.listener.LocationListener;
-import de.msk.mylivetracker.client.android.mainview.updater.StatusBarUpdater;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 
@@ -79,7 +78,6 @@ public class OnClickButtonLocationListenerOnOffListener implements OnClickListen
 		}
 		activity.getUiBtLocationListenerOnOff().setChecked(
 			LocationListener.get().isActive());
-		StatusBarUpdater.updateAppStatus();
 		activity.updateView();
 	}
 }

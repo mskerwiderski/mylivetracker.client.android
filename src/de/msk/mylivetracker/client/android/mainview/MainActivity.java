@@ -16,6 +16,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
@@ -39,12 +40,11 @@ import de.msk.mylivetracker.client.android.listener.NmeaListener;
 import de.msk.mylivetracker.client.android.listener.PhoneStateListener;
 import de.msk.mylivetracker.client.android.mainview.updater.MainDetailsViewUpdater;
 import de.msk.mylivetracker.client.android.mainview.updater.MainViewUpdater;
-import de.msk.mylivetracker.client.android.mainview.updater.StatusBarUpdater;
 import de.msk.mylivetracker.client.android.mainview.updater.UpdaterUtils;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.receiver.BatteryReceiver;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
-import de.msk.mylivetracker.client.android.upload.UploadManager;
+import de.msk.mylivetracker.client.android.upload.UploadService;
 
 /**
  * MainActivity.
@@ -243,7 +243,7 @@ public class MainActivity extends AbstractMainActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 		AutoManager.shutdown();
-		UploadManager.stopUploadManager();									
+		UploadService.stop();									
 		MainActivity.get().stopLocationListener();
 		MainActivity.get().stopAntPlusHeartrateListener();
 		MainActivity.get().stopBatteryReceiver();
@@ -252,7 +252,6 @@ public class MainActivity extends AbstractMainActivity {
 		chronometer.stop();			
 		chronometer.setBase(SystemClock.elapsedRealtime());
 		TrackStatus.saveTrackStatus();
-		StatusBarUpdater.cancelAppStatus();
 	}
 	
 	/* (non-Javadoc)
@@ -294,8 +293,6 @@ public class MainActivity extends AbstractMainActivity {
 		this.getUiBtLocationListenerOnOff().setChecked(LocationListener.get().isActive());
 		this.getUiBtConnectDisconnectAnt().setChecked(AntPlusManager.get().hasSensorListeners());
 			
-		StatusBarUpdater.updateAppStatus();
-		
 		this.updateView();				
 	}
 	
@@ -474,19 +471,17 @@ public class MainActivity extends AbstractMainActivity {
 		}
 	}
 		
-	//private static final String LOG_TAG_GLOBAL = "MLT";
+	private static final String LOG_TAG_GLOBAL = "MLT";
 	public static void logInfo(String logStr) {
-		return;
-		//Log.i(LOG_TAG_GLOBAL, logStr);
+		Log.i(LOG_TAG_GLOBAL, logStr);
 	}
 	public static void logInfo(Class<?> clazz, String logStr) {
-		return;
-//		String className = "unknown";
-//		if ((clazz != null) && !StringUtils.isEmpty(clazz.getSimpleName())) {
-//			className = clazz.getSimpleName();
-//		}
-//		String info =  className + ": " + logStr;
-//		Log.i(LOG_TAG_GLOBAL, info);
+		String className = "unknown";
+		if ((clazz != null) && !StringUtils.isEmpty(clazz.getSimpleName())) {
+			className = clazz.getSimpleName();
+		}
+		String info =  className + ": " + logStr;
+		Log.i(LOG_TAG_GLOBAL, info);
 	}
 	
 	public static class VersionDsc {

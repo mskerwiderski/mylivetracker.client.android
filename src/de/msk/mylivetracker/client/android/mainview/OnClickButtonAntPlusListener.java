@@ -3,7 +3,6 @@ package de.msk.mylivetracker.client.android.mainview;
 import android.view.View;
 import android.view.View.OnClickListener;
 import de.msk.mylivetracker.client.android.R;
-import de.msk.mylivetracker.client.android.mainview.updater.StatusBarUpdater;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 
@@ -77,7 +76,6 @@ public class OnClickButtonAntPlusListener implements OnClickListener {
 		}			
 		activity.getUiBtConnectDisconnectAnt().setChecked(
 			activity.getAntPlusManager().hasSensorListeners());
-		StatusBarUpdater.updateAppStatus();
 		activity.updateView();
 	}
 }

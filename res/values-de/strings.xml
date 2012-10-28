@@ -84,6 +84,7 @@
     <string name="txMain_QuestionStartAntPlus">Wollen Sie Ant+ wirklich aktivieren?</string>
     <string name="txMain_QuestionStopAntPlus">Wollen Sie Ant+ wirklich deaktivieren?</string>
     <string name="txMain_QuestionResetTrack">Wollen Sie den Track wirklich zurücksetzen?</string>
+    <string name="txMain_InfoResettingTracking">Der Track wird zurückgesetzt...</string>
     <string name="txMain_InfoResetTrackDone">Der Track wurde zurückgesetzt!</string>               
     <string name="txMain_QuestionSendSosSignal">Wollen Sie wirklich ein SOS Signal senden?</string>    
     <string name="txMain_InfoSendSosSignalDone">Ein SOS Signal wurde gesendet!</string>    
