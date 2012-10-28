@@ -29,6 +29,7 @@
     <string name="mnPrefsAccount">Zugang</string>
     <string name="mnPrefsOther">Sonstige</string>
     <string name="mnPrefsAuto">Auto</string>
+    <string name="mnPrefsInternal">Intern</string>
     <string name="mnLinkSender">Koppeln</string>    
     <string name="mnInfo">Info</string>
     <string name="mnExit">Beenden</string>
@@ -203,6 +204,10 @@
 	<string name="fdPrefsAuto_AutoStart">Auto Start</string>
     <string name="lbPrefsAuto_AutoStart">Nach einem Reboot des Smartphones wird das Tracking automatisch gestartet.</string>
 	
+    <!-- preferences internal -->    
+    <string name="tiPrefsInternal">Einstellungen Intern</string>
+    <string name="lbPrefsInternal_UploadThreadPriorityLevel">Prioritätsstufe des Threads, der für das Hochladen der Positionsdaten verantwortlich ist</string>
+        
     <!-- link sender to server -->
     <string name="tiLinkSender">Sender koppeln</string>
     <string name="lbLinkSender_LinkInfo">

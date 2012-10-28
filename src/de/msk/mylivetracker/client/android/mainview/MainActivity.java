@@ -472,9 +472,11 @@ public class MainActivity extends AbstractMainActivity {
 	}
 		
 	private static final String LOG_TAG_GLOBAL = "MLT";
+	
 	public static void logInfo(String logStr) {
 		Log.i(LOG_TAG_GLOBAL, logStr);
 	}
+
 	public static void logInfo(Class<?> clazz, String logStr) {
 		String className = "unknown";
 		if ((clazz != null) && !StringUtils.isEmpty(clazz.getSimpleName())) {
