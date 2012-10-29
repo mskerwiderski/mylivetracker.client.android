@@ -1,8 +1,5 @@
 package de.msk.mylivetracker.client.android.mainview;
 
-import android.app.ProgressDialog;
-import android.os.Handler;
-import android.os.Message;
 import android.os.SystemClock;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,6 +9,7 @@ import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.preferences.Preferences.TrackingOneTouchMode;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.upload.UploadService;
+import de.msk.mylivetracker.client.android.util.dialog.AbstractProgressDialog;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 
 /**
@@ -78,66 +76,98 @@ public class OnClickButtonStartStopListener implements OnClickListener {
 		}
 	}
 	
-	public static void startStopTrack(final MainActivity activity, boolean start, boolean oneTouchMode) {
-		final boolean stopTrack = !start;
-		
-		String message = stopTrack ?
-			activity.getText(R.string.txMain_InfoStoppingTracking).toString() :
-			activity.getText(R.string.txMain_InfoStartingTracking).toString();
-			
-		final ProgressDialog dialog = 
-			ProgressDialog.show(activity, "", message, true);
-		
-		final Handler handler = new Handler() {
-			public void handleMessage(Message msg) {
-				Chronometer chronometer = activity.getUiChronometer();
-				if (stopTrack) { 										
-					chronometer.stop();
-				} else {
-					chronometer.setBase(
-						SystemClock.elapsedRealtime() -
-						TrackStatus.get().getRuntimeInMSecs(false));
-					chronometer.start();			
+	private static class StartTrackProgressDialog extends AbstractProgressDialog<MainActivity> {
+		private boolean oneTouchMode;
+		@Override
+		public void beforeTask(MainActivity activity) {
+			if (this.oneTouchMode) {
+				TrackingOneTouchMode mode = Preferences.get().getTrackingOneTouchMode();
+				switch (mode) {
+					case TrackingLocalizationHeartrate:
+						OnClickButtonAntPlusListener.
+							startStopAntPlus(activity, true);
+					case TrackingLocalization:
+						OnClickButtonLocationListenerOnOffListener.
+							startStopLocationListener(activity, true);
+					case TrackingOnly:
+					default:
+						break;
 				}
-				activity.getUiBtStartStop().setChecked(
-					TrackStatus.get().trackIsRunning());
-				activity.updateView();
-				dialog.dismiss();
-		    }
-		};
-				
-		Thread startStopThread = new Thread() {  
-			public void run() {
-				try {
-					Thread.sleep(200);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				if (stopTrack) {
-					UploadService.stop();
-				} else {
-					UploadService.start();
-				}
-				handler.sendEmptyMessage(0);
-		     }
-		};
-		
-		if (oneTouchMode) {
-			TrackingOneTouchMode mode = Preferences.get().getTrackingOneTouchMode();
-			switch (mode) {
-				case TrackingLocalizationHeartrate:
-					OnClickButtonAntPlusListener.
-						startStopAntPlus(activity, !stopTrack);
-				case TrackingLocalization:
-					OnClickButtonLocationListenerOnOffListener.
-						startStopLocationListener(activity, !stopTrack);
-				case TrackingOnly:
-				default:
-					break;
 			}
+			Chronometer chronometer = 
+				activity.getUiChronometer();
+			chronometer.setBase(
+				SystemClock.elapsedRealtime() -
+				TrackStatus.get().getRuntimeInMSecs(false));
+			chronometer.start();
 		}
-		
-		startStopThread.start();				
+		@Override
+		public void doTask(MainActivity activity) {
+			UploadService.start();
+		}
+		@Override
+		public void cleanUp(MainActivity activity) {
+			activity.getUiBtStartStop().setChecked(true);
+			activity.updateView();			
+		}
+		public void run(MainActivity activity, 
+			int progressMsgId, int doneMsgId,
+			boolean oneTouchMode) {
+			this.oneTouchMode = oneTouchMode;
+			super.run(activity, progressMsgId, doneMsgId);
+		}
+	}
+	
+	private static class StopTrackProgressDialog extends AbstractProgressDialog<MainActivity> {
+		private boolean oneTouchMode;
+		@Override
+		public void beforeTask(MainActivity activity) {
+		}
+		@Override
+		public void doTask(MainActivity activity) {
+			UploadService.stop();
+		}
+		@Override
+		public void cleanUp(MainActivity activity) {
+			activity.getUiChronometer().stop();
+			if (this.oneTouchMode) {
+				TrackingOneTouchMode mode = Preferences.get().getTrackingOneTouchMode();
+				switch (mode) {
+					case TrackingLocalizationHeartrate:
+						OnClickButtonAntPlusListener.
+							startStopAntPlus(activity, false);
+					case TrackingLocalization:
+						OnClickButtonLocationListenerOnOffListener.
+							startStopLocationListener(activity, false);
+					case TrackingOnly:
+					default:
+						break;
+				}
+			}
+			activity.getUiBtStartStop().setChecked(false);
+			activity.updateView();			
+		}
+		public void run(MainActivity activity, 
+			int progressMsgId, int doneMsgId,
+			boolean oneTouchMode) {
+			this.oneTouchMode = oneTouchMode;
+			super.run(activity, progressMsgId, doneMsgId);
+		}
+	}
+	
+	public static void startStopTrack(final MainActivity activity, boolean start, boolean oneTouchMode) {
+		if (start) {
+			StartTrackProgressDialog startTrackDialog = new StartTrackProgressDialog();
+			startTrackDialog.run(activity, 
+			R.string.txMain_InfoStartingTracking, 
+			R.string.txMain_InfoStartTrackDone,
+			oneTouchMode);
+		} else {
+			StopTrackProgressDialog stopTrackDialog = new StopTrackProgressDialog();
+			stopTrackDialog.run(activity, 
+			R.string.txMain_InfoStoppingTracking, 
+			R.string.txMain_InfoStopTrackDone,
+			oneTouchMode);
+		}
 	}
 }

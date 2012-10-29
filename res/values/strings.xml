@@ -29,7 +29,6 @@
     <string name="mnPrefsAccount">Account</string>
     <string name="mnPrefsOther">Other</string>
     <string name="mnPrefsAuto">Auto</string>
-    <string name="mnPrefsInternal">Internal</string>
     <string name="mnLinkSender">Linking</string>    
     <string name="mnInfo">Info</string>
     <string name="mnExit">Exit</string>
@@ -81,7 +80,9 @@
     <string name="txMain_QuestionStartTrack">Do you really want to start the track?</string>
     <string name="txMain_QuestionStopTrack">Do you really want to stop the track?</string>
     <string name="txMain_InfoStartingTracking">Starting the track...</string>
+    <string name="txMain_InfoStartTrackDone">Start track done!</string>
     <string name="txMain_InfoStoppingTracking">Stopping the track...</string>
+    <string name="txMain_InfoStopTrackDone">Stop track done!</string>
     <string name="txMain_QuestionStartAntPlus">Do you really want to activate Ant+?</string>
     <string name="txMain_QuestionStopAntPlus">Do you really want to deactivate Ant+?</string>
     <string name="txMain_QuestionResetTrack">Do you really want to reset the track?</string>
@@ -89,7 +90,8 @@
     <string name="txMain_InfoResetTrackDone">Reset track done!</string>               
     <string name="txMain_QuestionSendSosSignal">Do you really want to send a SOS signal?</string>    
     <string name="txMain_InfoSendSosSignalDone">Send SOS signal done!</string>    
-    <string name="txMain_QuestionExit">Do you really want to exit?</string>    
+    <string name="txMain_QuestionExit">Do you really want to exit MyLiveTracker?</string>   
+    <string name="txMain_InfoExitApp">MyLiveTracker is terminated...</string> 
     
     <!-- main details -->
     <string name="tiMainDetails">Details</string>

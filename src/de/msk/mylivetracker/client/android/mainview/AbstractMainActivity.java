@@ -7,6 +7,7 @@ import android.location.LocationManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +26,8 @@ import de.msk.mylivetracker.client.android.preferences.PrefsOtherActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsServerActivity;
 import de.msk.mylivetracker.client.android.preferences.linksender.LinkSenderActivity;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
+import de.msk.mylivetracker.client.android.upload.UploadService;
+import de.msk.mylivetracker.client.android.util.dialog.AbstractProgressDialog;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
 
@@ -237,6 +240,37 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 		}
 	}
 
+	private static class ExitProgressDialog extends AbstractProgressDialog<AbstractMainActivity> {
+		@Override
+		public void beforeTask(AbstractMainActivity activity) {
+		}
+		@Override
+		public void doTask(AbstractMainActivity activity) {
+			UploadService.stop();
+			if (MainDetailsActivity.isActive()) {
+				MainActivity.logInfo("Exit: close details window.");
+				MainDetailsActivity.close();
+				while (MainDetailsActivity.isActive()) {
+					try { Thread.sleep(50); } catch(Exception e) {};
+				}
+			}
+		}
+		@Override
+		public void cleanUp(AbstractMainActivity activity) {
+			MainActivity.exit();
+		}
+	}
+	
+	public static Handler exitHandler = new Handler() {
+		public void handleMessage(Message msg) {
+			ExitProgressDialog exitDialog = new ExitProgressDialog();
+			exitDialog.run(
+				MainDetailsActivity.isActive() ? 
+					MainDetailsActivity.get() : MainActivity.get(), 
+				R.string.txMain_InfoExitApp);
+	    }
+	};
+	
 	/*
 	 * (non-Javadoc)
 	 * 

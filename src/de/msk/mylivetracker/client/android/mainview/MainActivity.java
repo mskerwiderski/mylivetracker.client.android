@@ -12,8 +12,6 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.os.SystemClock;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -241,17 +239,23 @@ public class MainActivity extends AbstractMainActivity {
 	 */
 	@Override
 	protected void onDestroy() {
-		super.onDestroy();
+		MainActivity.logInfo("onDestroy main window");
 		AutoManager.shutdown();
-		UploadService.stop();									
+		MainActivity.logInfo("onDestroy main window: AutoManager stopped.");
+		UploadService.stop();
+		MainActivity.logInfo("onDestroy main window: UploadService stopped.");
 		MainActivity.get().stopLocationListener();
 		MainActivity.get().stopAntPlusHeartrateListener();
 		MainActivity.get().stopBatteryReceiver();
 		MainActivity.get().stopPhoneStateListener();
+		MainActivity.logInfo("onDestroy main window: All listeners stopped.");
 		Chronometer chronometer = MainActivity.get().getUiChronometer();
 		chronometer.stop();			
 		chronometer.setBase(SystemClock.elapsedRealtime());
+		MainActivity.logInfo("onDestroy main window: Chronometer stopped.");
 		TrackStatus.saveTrackStatus();
+		MainActivity.logInfo("onDestroy main window: TrackStatus saved.");
+		super.onDestroy();
 	}
 	
 	/* (non-Javadoc)
@@ -311,18 +315,6 @@ public class MainActivity extends AbstractMainActivity {
 	public void onBackPressed() {
 		startActivity(new Intent(this, MainDetailsActivity.class));
 	}
-
-	public static Handler exitHandler = new Handler() {
-		public void handleMessage(Message msg) {
-			if (MainDetailsActivity.isActive()) {
-				MainActivity.logInfo("Exit: close details window.");
-				MainDetailsActivity.close();
-				try { Thread.sleep(1000); } catch(Exception e) {};
-			}
-			MainActivity.logInfo("Exit: exit main window.");
-			MainActivity.exit();
-	    }
-	};
 	
 	private ConnectivityManager connectivityManager = null;
 	private TelephonyManager telephonyManager = null;	

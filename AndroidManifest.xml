@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="de.msk.mylivetracker.client.android" 
-      android:versionName="1.4.0 beta 2" android:versionCode="1402">       
+      android:versionName="1.4.0 beta 3" android:versionCode="1403">       
     <uses-sdk android:minSdkVersion="7" />
     <application android:icon="@drawable/icon" android:label="@string/app_name">
         <activity android:name=".mainview.MainActivity"
@@ -32,8 +32,6 @@
 			android:screenOrientation="portrait" />
 		<activity android:name=".preferences.PrefsAutoActivity" 
 			android:screenOrientation="portrait" />
-		<activity android:name=".preferences.PrefsInternalActivity" 
-			android:screenOrientation="portrait" />	
 		<activity android:name=".preferences.linksender.LinkSenderActivity" 
 			android:screenOrientation="portrait" />	
 		<activity android:name=".InfoActivity" 
@@ -43,7 +41,6 @@
 		    android:exported="false" />
     </application>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />

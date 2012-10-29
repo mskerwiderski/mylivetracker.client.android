@@ -4,9 +4,7 @@ import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
 
-import android.content.Context;
 import android.location.LocationManager;
-import android.os.PowerManager;
 import android.os.SystemClock;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
@@ -282,10 +280,6 @@ public class UploadManager extends Thread {
 	}
 	
 	private void runInfinite() {
-		PowerManager pm = (PowerManager)MainActivity.get().getSystemService(Context.POWER_SERVICE);
-		PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyLiveTracker");
-		wl.acquire();
-		   
 		Preferences prefs = Preferences.get();
 		this.setRunning(true);
 		// do upload at start up in every case, even there is no info.

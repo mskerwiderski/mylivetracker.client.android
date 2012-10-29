@@ -35,7 +35,6 @@ public class MainDetailsActivity extends AbstractMainActivity {
 	public static void close() {
 		if (mainDetailsActivity != null) {
 			mainDetailsActivity.finish();
-			mainDetailsActivity = null;
 		}
 	}
 	
@@ -65,6 +64,12 @@ public class MainDetailsActivity extends AbstractMainActivity {
 		MainActivity.get().updateView();		
 	}	
 	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		mainDetailsActivity = null;
+	}
+
 	/* (non-Javadoc)
 	 * @see de.msk.mylivetracker.client.android.mainview.AbstractMainActivity#onSwitchToView(boolean)
 	 */

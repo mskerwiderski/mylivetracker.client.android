@@ -29,7 +29,6 @@
     <string name="mnPrefsAccount">Zugang</string>
     <string name="mnPrefsOther">Sonstige</string>
     <string name="mnPrefsAuto">Auto</string>
-    <string name="mnPrefsInternal">Intern</string>
     <string name="mnLinkSender">Koppeln</string>    
     <string name="mnInfo">Info</string>
     <string name="mnExit">Beenden</string>
@@ -81,7 +80,9 @@
     <string name="txMain_QuestionStartTrack">Wollen Sie den Track wirklich starten?</string>
     <string name="txMain_QuestionStopTrack">Wollen Sie den Track wirklich stoppen?</string>
     <string name="txMain_InfoStartingTracking">Der Track wird gestartet...</string>
+    <string name="txMain_InfoStartTrackDone">Der Track wurde gestartet!</string>
     <string name="txMain_InfoStoppingTracking">Der Track wird gestoppt...</string>
+    <string name="txMain_InfoStopTrackDone">Der Track wurde gestoppt!</string>
     <string name="txMain_QuestionStartAntPlus">Wollen Sie Ant+ wirklich aktivieren?</string>
     <string name="txMain_QuestionStopAntPlus">Wollen Sie Ant+ wirklich deaktivieren?</string>
     <string name="txMain_QuestionResetTrack">Wollen Sie den Track wirklich zurücksetzen?</string>
@@ -89,7 +90,8 @@
     <string name="txMain_InfoResetTrackDone">Der Track wurde zurückgesetzt!</string>               
     <string name="txMain_QuestionSendSosSignal">Wollen Sie wirklich ein SOS Signal senden?</string>    
     <string name="txMain_InfoSendSosSignalDone">Ein SOS Signal wurde gesendet!</string>    
-    <string name="txMain_QuestionExit">Wollen Sie die Anwendung wirklich beenden?</string>    
+    <string name="txMain_QuestionExit">Wollen Sie MyLiveTracker wirklich beenden?</string>    
+    <string name="txMain_InfoExitApp">MyLiveTracker wird beendet...</string>
     
     <!-- main details -->
     <string name="tiMainDetails">Details</string>
