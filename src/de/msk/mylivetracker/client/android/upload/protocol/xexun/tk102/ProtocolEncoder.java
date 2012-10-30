@@ -52,9 +52,13 @@ public class ProtocolEncoder implements IProtocol {
 		SimpleDateFormat datetimef = new SimpleDateFormat("yyMMddHHmmss");
 		dataStr += datetimef.format(lastInfoTimestamp) + SEPERATOR;		
 		dataStr += (StringUtils.isEmpty(prefs.getPhoneNumber()) ? "" : prefs.getPhoneNumber()) + SEPERATOR;
-		if ((nmeaInfo != null) && (!StringUtils.isEmpty(nmeaInfo.getGprmc()))) {
-			MainActivity.logInfo("nmea info found.");
-			dataStr += StringUtils.substring(nmeaInfo.getGprmc(), 1) + SEPERATOR;
+		String nmeaGprmc = null;
+		if (nmeaInfo != null) {
+			nmeaGprmc = nmeaInfo.getGprmc();
+		}
+		if (!StringUtils.isEmpty(nmeaGprmc)) {
+			MainActivity.logInfo("nmea info found: " + nmeaGprmc);
+			dataStr += StringUtils.substring(nmeaGprmc, 1) + SEPERATOR;
 		} else if ((locationInfo != null) && (locationInfo.getLocation() != null)) {
 			MainActivity.logInfo("no nmea info found, take location info.");
 			dataStr += LocationInfo.getLocationAsGprmcRecord(locationInfo) + SEPERATOR;

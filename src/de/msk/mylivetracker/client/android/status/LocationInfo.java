@@ -170,8 +170,8 @@ public class LocationInfo extends AbstractInfo {
 	}
 
 	public static String getLocationAsGprmcRecord(LocationInfo locationInfo) {
+		MainActivity.logInfo("-->getLocationAsGprmcRecord()");
 		String record = "GPRMC,";		
-		
 		DateTime dateTime = new DateTime(locationInfo.getTimestamp().getTime());
 		String time = StringUtils.left(dateTime.getAsStr(TimeZone.getTimeZone(DateTime.TIME_ZONE_UTC), "HHmmss.S"), 8);
 		String date = dateTime.getAsStr(TimeZone.getTimeZone(DateTime.TIME_ZONE_UTC), "ddMMyy");
@@ -191,22 +191,31 @@ public class LocationInfo extends AbstractInfo {
 		String calcChecksumStr = Integer.toHexString(calcChecksum);
 		calcChecksumStr = StringUtils.leftPad(calcChecksumStr, 2, '0');
 		calcChecksumStr = StringUtils.upperCase(calcChecksumStr);
-		
-		return record + "*" + calcChecksumStr;
+		record += "*" + calcChecksumStr;
+		MainActivity.logInfo(record);
+		MainActivity.logInfo("<--getLocationAsGprmcRecord()");
+		return record;
 	}
 	
 	private static String decimal2degrees(double decimal, int digits, String pos, String neg) {
-		// [+|-]48:6:20,79932
+		MainActivity.logInfo("-->decimal2degrees()");
+		// [+|-]48:6:20,79932 --> german
+		// [+|-]48:6:20.79932 --> english
 		String degrees = Location.convert(decimal, Location.FORMAT_SECONDS);
+		MainActivity.logInfo("degress=" + degrees);
 		String direction = (StringUtils.startsWith(degrees, "-") ? neg : pos);
 		degrees = StringUtils.remove(degrees, "+");
 		degrees = StringUtils.remove(degrees, "-");
 		String[] parts = StringUtils.split(degrees, ":");
+		String lastPart = StringUtils.remove(parts[2], ",");
+		lastPart = StringUtils.remove(lastPart, ".");
 		degrees = 
 			StringUtils.leftPad(parts[0], digits, '0') + 
 			StringUtils.leftPad(parts[1], 2, '0') + "." + 
-			StringUtils.left(StringUtils.remove(parts[2], ","), 4);
+			StringUtils.left(lastPart, 4);
 		degrees += "," + direction;
+		MainActivity.logInfo("degress=" + degrees);
+		MainActivity.logInfo("<--decimal2degrees()");
 		return degrees;
 	}
 	
