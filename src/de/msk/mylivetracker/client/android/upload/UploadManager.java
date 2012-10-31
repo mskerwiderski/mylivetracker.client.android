@@ -45,7 +45,7 @@ public class UploadManager extends Thread {
 		AbstractUploader uploader = null;
 		Preferences prefs = Preferences.get();		
 		if (prefs.getTransferProtocol().equals(TransferProtocol.uploadDisabled)) {
-			uploader = null;
+			uploader = new DummyUploader(Protocols.createProtocolDummy());
 		} else if (prefs.getTransferProtocol().equals(TransferProtocol.mltHttpPlain)) {
 			uploader = new HttpUploader(Protocols.createProtocolMltUrlparams());
 		} else if (prefs.getTransferProtocol().equals(TransferProtocol.mltTcpEncrypted)) {

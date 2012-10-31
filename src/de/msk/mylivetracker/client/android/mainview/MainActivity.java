@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
@@ -182,8 +183,13 @@ public class MainActivity extends AbstractMainActivity {
 			new OnClickButtonLocationListenerOnOffListener());
 		this.getUiBtReset().setOnClickListener(
 			new OnClickButtonResetListener());
-		this.getUiBtConnectDisconnectAnt().setOnClickListener(
-			new OnClickButtonAntPlusListener());
+		
+		if (this.isAntPlusSupported()) {
+			this.getUiBtConnectDisconnectAnt().setOnClickListener(
+				new OnClickButtonAntPlusListener());
+		} else {
+			this.getUiBtConnectDisconnectAnt().setVisibility(View.GONE);
+		}
 		
 		TextView tvAutoStartIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_AutoStartIndicator);
 		tvAutoStartIndicator.setOnClickListener(

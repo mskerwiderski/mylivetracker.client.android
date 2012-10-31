@@ -54,7 +54,8 @@ public class ProtocolEncoder implements IProtocol {
 		dataStr += (StringUtils.isEmpty(prefs.getPhoneNumber()) ? "" : prefs.getPhoneNumber()) + SEPERATOR;
 		String nmeaGprmc = null;
 		if (nmeaInfo != null) {
-			nmeaGprmc = nmeaInfo.getGprmc();
+			// disable nmea sentences from os.
+			//nmeaGprmc = nmeaInfo.getGprmc();
 		}
 		if (!StringUtils.isEmpty(nmeaGprmc)) {
 			MainActivity.logInfo("nmea info found: " + nmeaGprmc);
