@@ -80,7 +80,7 @@ public class MessageActivity extends AbstractActivity {
 		UploadManager.uploadOnlyOneTime();
 		Toast.makeText(activity.getApplicationContext(), 
 			activity.getString(R.string.txMsg_InfoSendMessageDone),
-			Toast.LENGTH_LONG).show();	
+			Toast.LENGTH_SHORT).show();	
 	}
 	
 	private static final class OnClickButtonCancelListener implements OnClickListener {

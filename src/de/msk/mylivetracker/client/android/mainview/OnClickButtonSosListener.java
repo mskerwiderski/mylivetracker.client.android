@@ -50,7 +50,7 @@ public class OnClickButtonSosListener implements OnClickListener {
 						dialog.cancel();
 						Toast.makeText(activity.getApplicationContext(), 
 								activity.getString(R.string.txMain_InfoSendSosSignalDone),
-							Toast.LENGTH_LONG).show();	
+							Toast.LENGTH_SHORT).show();	
 					}
 				})
 				.setNegativeButton(activity.getString(R.string.btNo), 

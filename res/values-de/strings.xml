@@ -3,6 +3,13 @@
 	<!-- Application name -->
     <string name="app_name">MyLiveTracker</string>
         	    
+    <!-- Welcome message -->
+    <string name="welcomeMessage">Willkommen bei MyLiveTracker. Wenn Sie Fragen haben oder Unterstützung benötigen, besuchen Sie uns doch im Forum unter http://forum.mylivetracker.info!</string>
+       
+    <!-- preferences: update message / create message -->
+    <string name="prefsUpdated">Bitte überprüfen Sie Ihre Einstellungen, da diese auf die Version %1$s aktualisiert wurden.</string>  
+    <string name="prefsReset">Ihre Einstellungen wurden zurückgesetzt, da eine Aktualisierung auf die Version %1$s nicht möglich war.</string> 
+        
     <!-- commons -->
     <string name="btSave">Speichern</string>
     <string name="btBack">Zurück</string>
@@ -152,7 +159,7 @@
     <string name="fdPrefsServer_TimeTriggerInSecs">Zeit Trigger</string>
     <string name="lbPrefsServer_TimeTriggerInSecs">Zeit Trigger</string>
     <string name="fdPrefsServer_DistanceTriggerInMtr">Distanz Trigger</string>
-    <string name="lbPrefsServer_DistanceTriggerInMtr">Distanz Trigger</string>
+    <string name="lbPrefsServer_DistanceTriggerInMtr">Dist. Trigger</string>
     <string name="lbPrefsServer_TriggerLogic">Trigger Logik</string>       
     <string name="lbPrefsServer_CloseConnectionAfterEveryUpload">Verbindung nach jeder Übertragung schliessen</string>
     <string name="lbPrefsServer_FinishEveryUploadWithALinefeed">Jede Übertragung mit einem Zeilenumbruch beenden</string>
@@ -173,9 +180,9 @@
 	<!-- preferences localization -->
 	<string name="tiPrefsLocalization">Einstellungen Lokalisierung</string>
 	<string name="lbPrefsLocalization_Provider">Art der Positionsbestimmuung</string>
-    <string name="lbPrefsLocalization_TimeTriggerInSecs">Zeit Trigger in Sek.</string>
+    <string name="lbPrefsLocalization_TimeTriggerInSecs">Zeit Trigger (Sek)</string>
     <string name="fdPrefsLocalization_TimeTriggerInSecs">Zeit Trigger</string>
-    <string name="lbPrefsLocalization_DistanceTriggerInMtr">Distanz Trigger in Mtr.</string>    
+    <string name="lbPrefsLocalization_DistanceTriggerInMtr">Distanz Trigger (Mtr)</string>    
     <string name="fdPrefsLocalization_DistanceTriggerInMtr">Distanz Trigger</string>
     <string name="fdPrefsLocalization_LocationAccuracyRequiredInMtr">Min. Genauigkeit</string>
     <string name="lbPrefsLocalization_LocationAccuracyRequiredInMtr">Min. Genauigkeit für\ndie Positions-\nvalidierung in Mtr.</string>
@@ -194,7 +201,7 @@
     <string name="btPrefsOther_ResetOverallMileage">Kilometerzähler zurücksetzen</string>
     <string name="txPrefsOther_QuestionResetToFactoryDefaults">Wollen Sie wirklich auf die Werkseinstellungen zurücksetzen?</string>
     <string name="txPrefsOther_QuestionResetOverallMileage">Wollen Sie den Kilometerzähler wirklich zurücksetzen?</string>
-    <string name="txPrefsOther_InfoResetToFactoryDefaultsDone">Es wurde auf die Werkseinstellungen zurückgesetzt!</string>
+    <string name="txPrefsOther_InfoResetToFactoryDefaultsDone">MyLiveTracker wurde auf die Werkseinstellungen zurückgesetzt und wird jetzt neu gestartet!</string>
     <string name="txPrefsOther_InfoResetOverallMileageDone">Der Kilometerzähler wurde zurückgesetzt!</string>
     
     <!-- preferences auto -->
@@ -202,7 +209,7 @@
     <string name="fdPrefsAuto_AutoMode">Automatik Modus</string>
     <string name="lbPrefsAuto_AutoMode">Wenn der Akku in den Ladestatus wechselt (den Ladestatus verlässt), wird der Track automatisch gestartet (gestoppt).</string>
    	<string name="fdPrefsAuto_ResetTrackMode">Track-zurücksetzen Modus</string>
-	<string name="txPrefsAuto_ResetTrackMode">Track-zurücksetzen Modus.</string>
+	<string name="txPrefsAuto_ResetTrackMode">Track-zurücksetzen Modus</string>
 	<string name="fdPrefsAuto_AutoStart">Auto Start</string>
     <string name="lbPrefsAuto_AutoStart">Nach einem Reboot des Smartphones wird das Tracking automatisch gestartet.</string>
 	

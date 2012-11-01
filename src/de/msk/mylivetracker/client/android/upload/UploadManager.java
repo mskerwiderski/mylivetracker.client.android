@@ -255,11 +255,6 @@ public class UploadManager extends Thread {
 		if (this.onlyOneUpload) {
 			this.runOnlyOneUpload();
 		} else {
-			int tid = android.os.Process.myTid();
-			MainActivity.logInfo("tid=" + tid);
-	        MainActivity.logInfo("priority before change = "+ Thread.currentThread().getPriority());
-	        android.os.Process.setThreadPriority(tid, Preferences.get().getUploadThreadPriorityLevel().getLevel());
-	        MainActivity.logInfo("priority after change = " + Thread.currentThread().getPriority());
 			this.runInfinite();
 		}
 		

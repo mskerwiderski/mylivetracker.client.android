@@ -44,6 +44,7 @@ import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.receiver.BatteryReceiver;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.upload.UploadService;
+import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
 
 /**
  * MainActivity.
@@ -238,6 +239,12 @@ public class MainActivity extends AbstractMainActivity {
 		TextView tvUploader = UpdaterUtils.tv(mainActivity, R.id.tvMain_Uploader);
 		tvUploader.setOnClickListener(
 			new OnClickButtonNetworkListener());
+		
+		if (Preferences.firstStartOfApp()) {
+			SimpleInfoDialog welcomeDlg = 
+				new SimpleInfoDialog(this, R.string.welcomeMessage);
+			welcomeDlg.show();
+		}
     }	
 	
 	/* (non-Javadoc)
@@ -487,6 +494,8 @@ public class MainActivity extends AbstractMainActivity {
 	public static class VersionDsc {
 		private int code;
 		private String name;
+		public VersionDsc() {
+		}
 		public VersionDsc(int code, String name) {
 			this.code = code;
 			this.name = name;
@@ -502,6 +511,12 @@ public class MainActivity extends AbstractMainActivity {
 			return "v" + this.name;
 		}		
 	}
+	
+	public static boolean isCurrentVersion(VersionDsc versionDsc) {
+		if (versionDsc == null) return false;
+		return (getVersion().getCode() == versionDsc.getCode());
+	}
+	
 	public static VersionDsc getVersion() {
 		MainActivity mainActivity = MainActivity.get();
 		VersionDsc versionDsc = new VersionDsc(1, "INVALID");
@@ -536,7 +551,7 @@ public class MainActivity extends AbstractMainActivity {
 	}	
 	
 	private String myLiveTrackerRealm = "SKERWIDERSKI";
-	private String myLiveTrackerRpcServiceUrl = "http://mylivetracker.de/rpc.json";
+	private String myLiveTrackerRpcServiceUrl = "http://portal.mylivetracker.de/rpc.json";
 	
 	public String getMyLiveTrackerRealm() {
 		return myLiveTrackerRealm;

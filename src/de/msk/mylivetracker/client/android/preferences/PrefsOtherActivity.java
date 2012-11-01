@@ -1,6 +1,7 @@
 package de.msk.mylivetracker.client.android.preferences;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -10,12 +11,15 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
+import de.msk.mylivetracker.client.android.mainview.AppRestart;
+import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences.BufferSize;
 import de.msk.mylivetracker.client.android.preferences.Preferences.ConfirmLevel;
 import de.msk.mylivetracker.client.android.preferences.Preferences.TrackingOneTouchMode;
 import de.msk.mylivetracker.client.android.status.PositionBuffer;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
+import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
 
 /**
  * PrefsOtherActivity.
@@ -103,10 +107,20 @@ public class PrefsOtherActivity extends AbstractActivity {
 		@Override
 		public void onYes() {			
 			Preferences.reset();
-			Toast.makeText(activity.getApplicationContext(), 
-				activity.getString(R.string.txPrefsOther_InfoResetToFactoryDefaultsDone), 
-				Toast.LENGTH_SHORT).show();										
+			ResetAndRestartDialog dlg = new ResetAndRestartDialog(
+				activity, R.string.txPrefsOther_InfoResetToFactoryDefaultsDone);
+			dlg.show();
 		}	
+	}
+	
+	private static final class ResetAndRestartDialog extends SimpleInfoDialog {
+		public ResetAndRestartDialog(Context ctx, int message) {
+			super(ctx, message);
+		}
+		@Override
+		public void onOk() {
+			AppRestart.doRestart(MainActivity.get());
+		}
 	}
 	
 	private static final class OnClickButtonAppReset implements OnClickListener {

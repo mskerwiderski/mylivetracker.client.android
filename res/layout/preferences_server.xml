@@ -5,24 +5,45 @@
     android:orientation="vertical" 
     android:background="@color/colorBackground"
 >
-    <LinearLayout android:layout_height="4dip" android:layout_width="fill_parent" />            
+    <LinearLayout 
+        android:layout_height="4dip" 
+        android:layout_width="fill_parent" 
+    />            
     <TextView 
     	android:text="@string/lbPrefsServer_TransferProtocol"
+    	android:textColor="@color/colorText"
     	android:layout_height="wrap_content" 
-    	android:layout_width="wrap_content"     	
+    	android:layout_width="wrap_content"
+    	android:paddingLeft="5dip"
+       	android:paddingRight="5dip"      	
     />
-    <Spinner
-    	android:id="@+id/spPrefsServer_TransferProtocol"
-    	android:layout_height="40dip" 
-    	android:layout_width="fill_parent"
-    	android:nextFocusDown="@+id/etPrefsServer_ServerAddress" 
-    />
+    <LinearLayout 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingLeft="5dip"
+       	android:paddingRight="5dip" 
+    >
+	    <Spinner
+	    	android:id="@+id/spPrefsServer_TransferProtocol"
+	    	android:layout_height="40dip" 
+	    	android:layout_width="fill_parent"
+	    	android:nextFocusDown="@+id/etPrefsServer_ServerAddress" 
+	    />
+    </LinearLayout>
     <TextView
     	android:text="@string/lbPrefsServer_ServerAddressAndPort" 
+    	android:textColor="@color/colorText"
     	android:layout_height="wrap_content" 
-    	android:layout_width="wrap_content" 
+    	android:layout_width="wrap_content"
+    	android:paddingLeft="5dip"
+       	android:paddingRight="5dip"  
     />
-    <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent">
+    <LinearLayout 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingLeft="5dip"
+       	android:paddingRight="5dip" 
+    >
     	<EditText
     		android:id="@+id/etPrefsServer_ServerAddress"
     		android:text="" 
@@ -44,20 +65,31 @@
     </LinearLayout>
     <TextView
     	android:text="@string/lbPrefsServer_ServerPath"
+    	android:textColor="@color/colorText"
     	android:layout_height="wrap_content" 
     	android:layout_width="wrap_content" 
+    	android:paddingLeft="5dip"
+       	android:paddingRight="5dip" 
     />
-    <EditText
-    	android:id="@+id/etPrefsServer_ServerPath"
-    	android:text=""
-    	android:inputType="text"
-    	android:layout_height="40dip" 
-    	android:layout_width="fill_parent" 
-    	android:nextFocusDown="@+id/etPrefsServer_TimeTriggerInSecs"
-    />
+    <LinearLayout 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingLeft="5dip"
+       	android:paddingRight="5dip" 
+    >
+	    <EditText
+	    	android:id="@+id/etPrefsServer_ServerPath"
+	    	android:text=""
+	    	android:inputType="text"
+	    	android:layout_height="40dip" 
+	    	android:layout_width="fill_parent" 
+	    	android:nextFocusDown="@+id/etPrefsServer_TimeTriggerInSecs"
+	    />
+	</LinearLayout>    
     <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent">
     	<TextView
     		android:text="@string/lbPrefsServer_TimeTriggerInSecs"
+    		android:textColor="@color/colorText"
     		android:layout_height="wrap_content"
     		android:layout_width="fill_parent" 
     		android:layout_weight="1" 
@@ -65,6 +97,7 @@
 		/>
     	<TextView
     		android:text="@string/lbPrefsServer_TriggerLogic"
+    		android:textColor="@color/colorText"
     		android:layout_height="wrap_content"
     		android:layout_width="fill_parent" 
     		android:layout_weight="1" 
@@ -72,13 +105,19 @@
 		/>
     	<TextView
     		android:text="@string/lbPrefsServer_DistanceTriggerInMtr"
+    		android:textColor="@color/colorText"
     		android:layout_height="wrap_content"
     		android:layout_width="fill_parent" 
     		android:layout_weight="1" 
     		android:gravity="center" 
     	/>    	
     </LinearLayout>
-    <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent">
+    <LinearLayout 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingLeft="5dip"
+       	android:paddingRight="5dip" 
+    >
         <Spinner
 	    	android:id="@+id/spPrefsServer_TimeTriggerInSecs"
 	    	android:layout_height="40dip" 
@@ -101,18 +140,38 @@
 	    	android:nextFocusDown="@+id/cbPrefsServer_CloseConnectionAfterEveryUpload" 
     	/>
     </LinearLayout>
-    <CheckBox
-    	android:id="@+id/cbPrefsServer_CloseConnectionAfterEveryUpload"
-    	android:text="@string/lbPrefsServer_CloseConnectionAfterEveryUpload"
-    	android:layout_height="40dip" 
-    	android:layout_width="fill_parent"
-    />
-    <CheckBox
-    	android:id="@+id/cbPrefsServer_FinishEveryUploadWithALinefeed"
-    	android:text="@string/lbPrefsServer_FinishEveryUploadWithALinefeed"    	
-    	android:layout_height="40dip" 
-    	android:layout_width="fill_parent"
-    />
+    <LinearLayout 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingLeft="5dip"
+       	android:paddingRight="5dip" 
+    >
+	    <CheckBox
+	    	android:id="@+id/cbPrefsServer_CloseConnectionAfterEveryUpload"
+	    	android:text="@string/lbPrefsServer_CloseConnectionAfterEveryUpload"
+	    	android:textColor="@color/colorText"
+	    	android:layout_height="40dip" 
+	    	android:layout_width="wrap_content"
+	    	android:paddingLeft="42dip"
+	       	android:paddingRight="5dip" 
+	    />
+	</LinearLayout>
+	<LinearLayout 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingLeft="5dip"
+       	android:paddingRight="5dip" 
+    >    
+	    <CheckBox
+	    	android:id="@+id/cbPrefsServer_FinishEveryUploadWithALinefeed"
+	    	android:text="@string/lbPrefsServer_FinishEveryUploadWithALinefeed"   
+	    	android:textColor="@color/colorText" 	
+	    	android:layout_height="40dip" 
+	    	android:layout_width="wrap_content"
+	    	android:paddingLeft="42dip"
+	       	android:paddingRight="5dip" 
+	    />
+	</LinearLayout>    
     <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent">        
         <Button
         	android:id="@+id/btPrefsServer_Save" 

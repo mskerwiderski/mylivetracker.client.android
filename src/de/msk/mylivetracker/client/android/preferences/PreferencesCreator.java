@@ -12,7 +12,6 @@ import de.msk.mylivetracker.client.android.preferences.Preferences.LocalizationM
 import de.msk.mylivetracker.client.android.preferences.Preferences.TrackingOneTouchMode;
 import de.msk.mylivetracker.client.android.preferences.Preferences.TransferProtocol;
 import de.msk.mylivetracker.client.android.preferences.Preferences.UploadDistanceTrigger;
-import de.msk.mylivetracker.client.android.preferences.Preferences.UploadThreadPriorityLevel;
 import de.msk.mylivetracker.client.android.preferences.Preferences.UploadTimeTrigger;
 import de.msk.mylivetracker.client.android.preferences.Preferences.UploadTriggerLogic;
 
@@ -35,6 +34,8 @@ public class PreferencesCreator {
 	
 	private static Preferences createDefault() {
 		Preferences prefs = new Preferences();
+		prefs.versionApp = MainActivity.getVersion();
+		prefs.firstStartOfApp = true;
 		prefs.transferProtocol = TransferProtocol.mltTcpEncrypted;
 		prefs.server = MainActivity.get().getResources().getString(R.string.txPrefs_Def_MyLiveTracker_Server);
 		prefs.port = Integer.valueOf(MainActivity.get().getResources().getString(R.string.txPrefs_Def_MyLiveTracker_PortTcp));
@@ -69,7 +70,6 @@ public class PreferencesCreator {
 		prefs.autoStartEnabled = false;
 		prefs.trackingOneTouchMode = TrackingOneTouchMode.TrackingOnly;
 		prefs.logging = false;
-		prefs.uploadThreadPriorityLevel = UploadThreadPriorityLevel.Default;
 		return prefs;
 	}
 }

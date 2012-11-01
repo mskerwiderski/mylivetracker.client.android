@@ -2,7 +2,14 @@
 <resources>
 	<!-- Application name -->
     <string name="app_name">MyLiveTracker</string>
-        	    
+        	
+    <!-- Welcome message -->
+    <string name="welcomeMessage">Welcome to MyLiveTracker. If you have questions or need support, please visit our forum at http://forum.mylivetracker.info!</string>
+        
+    <!-- preferences: update message / create message -->
+    <string name="prefsUpdated">Please verify your preferences, because they have been updated to version %1$s.</string>  
+    <string name="prefsReset">Your preferences have been reset, because they could not be updated to version %1$s.</string>      
+        
     <!-- commons -->
     <string name="btSave">Save</string>
     <string name="btBack">Back</string>
@@ -135,7 +142,7 @@
     <string name="txMsg_InfoSendMessageDone">Send message done!</string>    
     
     <!-- preferences mylivetracker configuration details -->
-    <string name="txPrefs_Def_MyLiveTracker_Server">mylivetracker.de</string>
+    <string name="txPrefs_Def_MyLiveTracker_Server">portal.mylivetracker.de</string>
     <string name="txPrefs_Def_MyLiveTracker_PortHttp">80</string>
     <string name="txPrefs_Def_MyLiveTracker_PortTcp">51395</string>
     <string name="txPrefs_Def_MyLiveTracker_PathHttp">upl_mlt.sec</string>
@@ -157,7 +164,7 @@
     <string name="fdPrefsServer_TimeTriggerInSecs">Time trigger</string>
     <string name="lbPrefsServer_TimeTriggerInSecs">Time trigger</string>
     <string name="fdPrefsServer_DistanceTriggerInMtr">Distance trigger</string>
-    <string name="lbPrefsServer_DistanceTriggerInMtr">Distance trigger</string>
+    <string name="lbPrefsServer_DistanceTriggerInMtr">Dist. trigger</string>
     <string name="lbPrefsServer_TriggerLogic">Trigger Logic</string>       
     <string name="lbPrefsServer_CloseConnectionAfterEveryUpload">Close connection after every upload</string>
     <string name="lbPrefsServer_FinishEveryUploadWithALinefeed">Finish every upload with a linefeed</string>
@@ -178,9 +185,9 @@
 	<!-- preferences localization -->
 	<string name="tiPrefsLocalization">Localization preferences</string>
 	<string name="lbPrefsLocalization_Provider">Localization mode</string>
-    <string name="lbPrefsLocalization_TimeTriggerInSecs">Time trigger in secs.</string>
+    <string name="lbPrefsLocalization_TimeTriggerInSecs">Time trigger (secs)</string>
     <string name="fdPrefsLocalization_TimeTriggerInSecs">Time trigger</string>
-    <string name="lbPrefsLocalization_DistanceTriggerInMtr">Distance trigger in mtr.</string>    
+    <string name="lbPrefsLocalization_DistanceTriggerInMtr">Distance trigger (mtr)</string>    
     <string name="fdPrefsLocalization_DistanceTriggerInMtr">Distance trigger</string>
     <string name="fdPrefsLocalization_LocationAccuracyRequiredInMtr">Required accuracy</string>
     <string name="lbPrefsLocalization_LocationAccuracyRequiredInMtr">Req. minimum\naccuracy in mtr.\nfor location validation</string>
@@ -199,7 +206,7 @@
     <string name="btPrefsOther_ResetOverallMileage">Reset overall mileage</string>
     <string name="txPrefsOther_QuestionResetToFactoryDefaults">Do you really want to reset to factory defaults?</string>
     <string name="txPrefsOther_QuestionResetOverallMileage">Do you really want to reset overall mileage?</string>
-    <string name="txPrefsOther_InfoResetToFactoryDefaultsDone">Reset to factory defaults done!</string>
+    <string name="txPrefsOther_InfoResetToFactoryDefaultsDone">MyLiveTracker has been reset to factory defaults and will be now restarted!</string>
     <string name="txPrefsOther_InfoResetOverallMileageDone">Reset overall mileage done!</string>
     
     <!-- preferences auto -->
@@ -207,7 +214,7 @@
     <string name="fdPrefsAuto_AutoMode">Automatic Modus</string>
     <string name="lbPrefsAuto_AutoMode">If battery changes in charging mode (leaves charging mode), tracking will be started (stopped) automatically.</string>
    	<string name="fdPrefsAuto_ResetTrackMode">Reset-track mode</string>
-	<string name="txPrefsAuto_ResetTrackMode">Reset-track mode.</string>
+	<string name="txPrefsAuto_ResetTrackMode">Reset-track mode</string>
 	<string name="fdPrefsAuto_AutoStart">Auto Start</string>
     <string name="lbPrefsAuto_AutoStart">After a reboot of the smartphone, tracking will be started automatically.</string>
 	

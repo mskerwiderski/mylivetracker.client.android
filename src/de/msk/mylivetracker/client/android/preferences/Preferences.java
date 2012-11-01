@@ -10,7 +10,10 @@ import android.telephony.TelephonyManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
+import de.msk.mylivetracker.client.android.mainview.MainActivity.VersionDsc;
+import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
 import de.msk.mylivetracker.commons.protocol.ProtocolUtils;
 
 /**
@@ -26,6 +29,8 @@ import de.msk.mylivetracker.commons.protocol.ProtocolUtils;
  * 
  */
 public class Preferences {
+	protected VersionDsc versionApp;
+	protected boolean firstStartOfApp;
 	protected TransferProtocol transferProtocol;
 	protected String server;
 	protected int port;
@@ -60,7 +65,7 @@ public class Preferences {
 	protected boolean autoModeEnabled;
 	protected AutoModeResetTrackMode autoModeResetTrackMode;
 	protected boolean autoStartEnabled;
-	protected UploadThreadPriorityLevel uploadThreadPriorityLevel;
+	//protected UploadThreadPriorityLevel uploadThreadPriorityLevel;
 	
 	public enum ConfirmLevel {
 		low("low"), medium("medium"), high("high");
@@ -101,7 +106,8 @@ public class Preferences {
 		mltHttpPlain("MLT HTTP (plain)", true, true),
 		mltTcpEncrypted("MLT TCP (encrypted)", true, true),
 		tk102Emulator("Tk102 Emulator", false, true),
-		tk5000Emulator("Tk5000 Emulator", false, true);
+		tk5000Emulator("Tk5000 Emulator", false, true),
+		fransonGpsGateHttp("Franson GpsGate HTTP", false, false); // not supported since version 1400
 		
 		private String dsc;
 		private boolean supportsSendMessage;
@@ -312,26 +318,14 @@ public class Preferences {
 		TrackingLocalizationHeartrate;
 	};
 
-	public enum UploadThreadPriorityLevel {
-		Audio(android.os.Process.THREAD_PRIORITY_AUDIO), 
-		Display(android.os.Process.THREAD_PRIORITY_DISPLAY), 
-		Foreground(android.os.Process.THREAD_PRIORITY_FOREGROUND),
-		MoreFavorable(android.os.Process.THREAD_PRIORITY_MORE_FAVORABLE),
-		Default(android.os.Process.THREAD_PRIORITY_DEFAULT);
-		private int level;				
-		private UploadThreadPriorityLevel(int level) {
-			this.level = level;
-		}
-		public int getLevel() {
-			return level;
-		}
-	}
-	
 	public static final String DB_NAME = "MyLiveTracker.DB";
 	
 	//
-	// version 301:
-	// o property 'uploadThreadPriorityLevel' added.
+	// version 1400:
+	// o property 'versionApp' added.
+	// o transferProtocol 'fransonGpsGateHttp' is not supported anymore.
+	// o property 'firstStartOfApp' added.
+	// o two new values for UploadTimeTrigger added ('Sec1' and 'Secs3').
 	//
 	// version 300:
 	// o property 'localizationMode' added and 'locationProvider' removed.
@@ -352,8 +346,9 @@ public class Preferences {
 	// version < 200: reset is needed.
 	// 
 	private static final int PREFERENCES_VERSION_MIN = 201;
-	private static final int PREFERENCES_VERSION_300 = 301;
-	private static final int PREFERENCES_VERSION_CURRENT = 301;
+	private static final int PREFERENCES_VERSION_300 = 300;
+	private static final int PREFERENCES_VERSION_1400 = 1400;
+	private static final int PREFERENCES_VERSION_CURRENT = PREFERENCES_VERSION_1400;
 	
 	private static final String PREFERENCES_VERSION_VAR = "preferencesVersion";
 	private static final String PREFERENCES_VAR = "preferences";
@@ -385,10 +380,13 @@ public class Preferences {
 	}
 	
 	private static void load(Context context, String name) {
+		String infoMessage = null;
 		SharedPreferences prefs = context.getSharedPreferences(name, 0);				
 		int preferencesVersion = prefs.getInt(PREFERENCES_VERSION_VAR, -1);
 		if (preferencesVersion < PREFERENCES_VERSION_MIN) {
 			Preferences.reset();
+			infoMessage = context.getString(R.string.prefsReset, 
+				MainActivity.getVersion().toString());
 		} else {
 			String preferencesStr = prefs.getString(PREFERENCES_VAR, null);
 			if (!StringUtils.isEmpty(preferencesStr)) {
@@ -396,6 +394,7 @@ public class Preferences {
 					Gson gson = new Gson();
 					preferences = gson.fromJson(preferencesStr, Preferences.class);
 					boolean doSave = false;
+					MainActivity.logInfo("preferences-version: " + preferencesVersion);
 					if (preferencesVersion < PREFERENCES_VERSION_300) {
 						// device id is read only.
 						preferences.deviceId =  
@@ -419,12 +418,27 @@ public class Preferences {
 						preferences.trackingOneTouchMode = TrackingOneTouchMode.TrackingOnly;
 						doSave = true;
 					} 
-					if (preferencesVersion < PREFERENCES_VERSION_CURRENT) {
-						preferences.uploadThreadPriorityLevel = UploadThreadPriorityLevel.Default;
+					if (preferencesVersion < PREFERENCES_VERSION_1400) {
+						preferences.firstStartOfApp = true;
+						//preferences.uplTimeTrigger = UploadTimeTrigger.findSuitable(preferences.uplTimeTrigger.getSecs());
+						if (preferences.transferProtocol.equals(TransferProtocol.fransonGpsGateHttp)) {
+							preferences.transferProtocol = TransferProtocol.uploadDisabled;
+						} else if (preferences.transferProtocol.equals(TransferProtocol.mltTcpEncrypted)) {
+							preferences.server = MainActivity.get().getString(R.string.txPrefs_Def_MyLiveTracker_Server);
+						}
 						doSave = true;
+					}
+					if (!MainActivity.isCurrentVersion(preferences.versionApp)) {
+						preferences.firstStartOfApp = true;
+						preferences.versionApp = MainActivity.getVersion();
 					}
 					if (doSave) {
 						save();
+						infoMessage = context.getString(R.string.prefsUpdated, 
+							MainActivity.getVersion().toString());
+						SimpleInfoDialog infoDlg = new SimpleInfoDialog(
+							MainActivity.get(), infoMessage);
+						infoDlg.show();
 					}
 				} catch (JsonParseException e) {
 					Preferences.reset();
@@ -454,6 +468,16 @@ public class Preferences {
 			gson.toJson(preferences));		
 		editor.commit();	
 	}	
+
+	public static boolean firstStartOfApp() {
+		boolean res =
+			preferences.firstStartOfApp;
+		if (preferences.firstStartOfApp) {
+			preferences.firstStartOfApp = false;
+			save();
+		}
+		return res;
+	}
 	
 	public TransferProtocol getTransferProtocol() {
 		return transferProtocol;
@@ -790,20 +814,5 @@ public class Preferences {
 
 	public void setTrackingOneTouchMode(TrackingOneTouchMode trackingOneTouchMode) {
 		this.trackingOneTouchMode = trackingOneTouchMode;
-	}
-
-	/**
-	 * @return the uploadThreadPriorityLevel
-	 */
-	public UploadThreadPriorityLevel getUploadThreadPriorityLevel() {
-		return uploadThreadPriorityLevel;
-	}
-
-	/**
-	 * @param uploadThreadPriorityLevel the uploadThreadPriorityLevel to set
-	 */
-	public void setUploadThreadPriorityLevel(
-			UploadThreadPriorityLevel uploadThreadPriorityLevel) {
-		this.uploadThreadPriorityLevel = uploadThreadPriorityLevel;
 	}
 }
