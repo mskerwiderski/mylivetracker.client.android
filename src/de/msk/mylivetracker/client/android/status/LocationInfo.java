@@ -176,13 +176,16 @@ public class LocationInfo extends AbstractInfo {
 		String time = StringUtils.left(dateTime.getAsStr(TimeZone.getTimeZone(DateTime.TIME_ZONE_UTC), "HHmmss.S"), 8);
 		String date = dateTime.getAsStr(TimeZone.getTimeZone(DateTime.TIME_ZONE_UTC), "ddMMyy");
 		
-		DecimalFormat decimalFmt = new DecimalFormat("0.0", new DecimalFormatSymbols(Locale.ENGLISH));
-		String speedInKnoten = decimalFmt.format(locationInfo.getLocation().getSpeed() / 1.852);
+		DecimalFormat decimalFmtSpeed = new DecimalFormat("0.0", new DecimalFormatSymbols(Locale.ENGLISH));
+		String speedInKnoten = decimalFmtSpeed.format(locationInfo.getLocation().getSpeed() / 1.852);
+		
+		DecimalFormat decimalFmtBearing = new DecimalFormat("0.00", new DecimalFormatSymbols(Locale.ENGLISH));
+		String bearingInDegrees = decimalFmtBearing.format(locationInfo.getLocation().getBearing());
 		
 		record += time + ",A," + 
 			decimal2degrees(locationInfo.getLocation().getLatitude(), 2, "N", "S") + "," +
 			decimal2degrees(locationInfo.getLocation().getLongitude(), 3, "E", "W") + "," +
-			speedInKnoten + ",0.0," + date + ",0.0,E,A";
+			speedInKnoten + "," + bearingInDegrees + "," + date + ",0.0,E,A";
 		
 		int calcChecksum = 0;
 		for (int idx=0; idx < record.length(); idx++) {

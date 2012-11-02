@@ -18,6 +18,7 @@ import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.util.MyLiveTrackerUtils;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractInfoDialog;
 import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
 import de.msk.mylivetracker.commons.rpc.LinkSenderRequest;
@@ -75,8 +76,6 @@ public class LinkSenderActivity extends AbstractActivity {
 					3, 30, true);	
 							
 			if (valid) {				
-				MainActivity mainActivity = MainActivity.get();
-				
 				ProgressDialogHandler.openProgressDialog(
 					this.progressDialogHandler); 
 		        
@@ -88,7 +87,7 @@ public class LinkSenderActivity extends AbstractActivity {
 					MD5 md5 = new MD5();
 					md5.Update(
 						etLinkSender_PortalUsername.getText().toString() + ":" +
-						mainActivity.getMyLiveTrackerRealm() + ":" +
+						MyLiveTrackerUtils.getRealm() + ":" +
 						etLinkSender_PortalPassword.getText().toString(), null);
 					hashedPassword = md5.asHex();
 				} catch (UnsupportedEncodingException e) {

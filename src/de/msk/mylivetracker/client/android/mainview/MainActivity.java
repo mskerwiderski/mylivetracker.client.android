@@ -14,7 +14,6 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
@@ -476,19 +475,19 @@ public class MainActivity extends AbstractMainActivity {
 		}
 	}
 		
-	private static final String LOG_TAG_GLOBAL = "MLT";
+	//private static final String LOG_TAG_GLOBAL = "MLT";
 	
 	public static void logInfo(String logStr) {
-		Log.i(LOG_TAG_GLOBAL, logStr);
+		//Log.i(LOG_TAG_GLOBAL, logStr);
 	}
 
 	public static void logInfo(Class<?> clazz, String logStr) {
-		String className = "unknown";
-		if ((clazz != null) && !StringUtils.isEmpty(clazz.getSimpleName())) {
-			className = clazz.getSimpleName();
-		}
-		String info =  className + ": " + logStr;
-		Log.i(LOG_TAG_GLOBAL, info);
+//		String className = "unknown";
+//		if ((clazz != null) && !StringUtils.isEmpty(clazz.getSimpleName())) {
+//			className = clazz.getSimpleName();
+//		}
+//		String info =  className + ": " + logStr;
+//		Log.i(LOG_TAG_GLOBAL, info);
 	}
 	
 	public static class VersionDsc {
@@ -548,15 +547,5 @@ public class MainActivity extends AbstractMainActivity {
 	}
 	public ToggleButton getUiBtConnectDisconnectAnt() {
 		return (ToggleButton)findViewById(R.id.btMain_ConnectDisconnectAnt);
-	}	
-	
-	private String myLiveTrackerRealm = "SKERWIDERSKI";
-	private String myLiveTrackerRpcServiceUrl = "http://portal.mylivetracker.de/rpc.json";
-	
-	public String getMyLiveTrackerRealm() {
-		return myLiveTrackerRealm;
-	}
-	public String getMyLiveTrackerRpcServiceUrl() {
-		return myLiveTrackerRpcServiceUrl;
 	}	
 }

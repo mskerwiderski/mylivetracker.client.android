@@ -26,6 +26,7 @@ import de.msk.mylivetracker.client.android.preferences.PrefsOtherActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsServerActivity;
 import de.msk.mylivetracker.client.android.preferences.linksender.LinkSenderActivity;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
+import de.msk.mylivetracker.client.android.trackview.TrackViewActivity;
 import de.msk.mylivetracker.client.android.upload.UploadService;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractProgressDialog;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
@@ -279,6 +280,9 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		case R.id.mnTrackView:
+			startActivity(new Intent(this, TrackViewActivity.class));
+			return true;
 		case R.id.mnPrefsServer:
 			if (TrackStatus.get().trackIsRunning()) {
 				showPrefsWarningDialogIfIsTrackRunning(PrefsServerActivity.class);

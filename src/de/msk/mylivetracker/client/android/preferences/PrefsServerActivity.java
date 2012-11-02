@@ -16,6 +16,7 @@ import de.msk.mylivetracker.client.android.preferences.Preferences.TransferProto
 import de.msk.mylivetracker.client.android.preferences.Preferences.UploadDistanceTrigger;
 import de.msk.mylivetracker.client.android.preferences.Preferences.UploadTimeTrigger;
 import de.msk.mylivetracker.client.android.preferences.Preferences.UploadTriggerLogic;
+import de.msk.mylivetracker.client.android.util.MyLiveTrackerUtils;
 import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
 
 /**
@@ -150,13 +151,13 @@ public class PrefsServerActivity extends AbstractActivity {
 			View view, int position, long id) {
 			if (this.currentItemId != id) {
 				if (TransferProtocol.mltHttpPlain.ordinal() == id) {
-					this.etPrefsServer_ServerAddress.setText(R.string.txPrefs_Def_MyLiveTracker_Server);
-					this.etPrefsServer_ServerPort.setText(R.string.txPrefs_Def_MyLiveTracker_PortHttp);
-					this.etPrefsServer_ServerPath.setText(R.string.txPrefs_Def_MyLiveTracker_PathHttp);
+					this.etPrefsServer_ServerAddress.setText(MyLiveTrackerUtils.getServerDns());
+					this.etPrefsServer_ServerPort.setText(String.valueOf(MyLiveTrackerUtils.getServerPortHttp()));
+					this.etPrefsServer_ServerPath.setText(MyLiveTrackerUtils.getServerPathHttp());
 				} else if (TransferProtocol.mltTcpEncrypted.ordinal() == id) {
-					this.etPrefsServer_ServerAddress.setText(R.string.txPrefs_Def_MyLiveTracker_Server);
-					this.etPrefsServer_ServerPort.setText(R.string.txPrefs_Def_MyLiveTracker_PortTcp);
-					this.etPrefsServer_ServerPath.setText(R.string.txPrefs_Def_MyLiveTracker_PathTcp);
+					this.etPrefsServer_ServerAddress.setText(MyLiveTrackerUtils.getServerDns());
+					this.etPrefsServer_ServerPort.setText(String.valueOf(MyLiveTrackerUtils.getServerPortTcp()));
+					this.etPrefsServer_ServerPath.setText("");
 				}
 				this.currentItemId = id;
 			}

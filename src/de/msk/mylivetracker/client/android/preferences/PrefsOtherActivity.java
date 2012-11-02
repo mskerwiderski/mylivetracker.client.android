@@ -1,7 +1,6 @@
 package de.msk.mylivetracker.client.android.preferences;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,8 +10,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
-import de.msk.mylivetracker.client.android.mainview.AppRestart;
-import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences.BufferSize;
 import de.msk.mylivetracker.client.android.preferences.Preferences.ConfirmLevel;
 import de.msk.mylivetracker.client.android.preferences.Preferences.TrackingOneTouchMode;
@@ -107,20 +104,10 @@ public class PrefsOtherActivity extends AbstractActivity {
 		@Override
 		public void onYes() {			
 			Preferences.reset();
-			ResetAndRestartDialog dlg = new ResetAndRestartDialog(
-				activity, R.string.txPrefsOther_InfoResetToFactoryDefaultsDone);
+			SimpleInfoDialog dlg = new SimpleInfoDialog(
+				this.activity, R.string.txPrefsOther_InfoResetToFactoryDefaultsDone);
 			dlg.show();
 		}	
-	}
-	
-	private static final class ResetAndRestartDialog extends SimpleInfoDialog {
-		public ResetAndRestartDialog(Context ctx, int message) {
-			super(ctx, message);
-		}
-		@Override
-		public void onOk() {
-			AppRestart.doRestart(MainActivity.get());
-		}
 	}
 	
 	private static final class OnClickButtonAppReset implements OnClickListener {

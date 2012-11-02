@@ -77,12 +77,4 @@
         <item>nach 8 Stunden Pause</item>
         <item>nach 24 Stunden Pause</item>
     </string-array>
-    
-    <string-array name="uploadThreadPriorityLevel">
-    	<item>THREAD_PRIORITY_AUDIO</item>
-    	<item>THREAD_PRIORITY_DISPLAY</item>
-        <item>THREAD_PRIORITY_FOREGROUND</item>
-        <item>THREAD_PRIORITY_MORE_FAVORABLE</item>
-        <item>THREAD_PRIORITY_DEFAULT</item>
-    </string-array>
 </resources>

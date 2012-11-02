@@ -14,6 +14,7 @@ import de.msk.mylivetracker.client.android.preferences.Preferences.TransferProto
 import de.msk.mylivetracker.client.android.preferences.Preferences.UploadDistanceTrigger;
 import de.msk.mylivetracker.client.android.preferences.Preferences.UploadTimeTrigger;
 import de.msk.mylivetracker.client.android.preferences.Preferences.UploadTriggerLogic;
+import de.msk.mylivetracker.client.android.util.MyLiveTrackerUtils;
 
 /**
  * PreferencesCreator.
@@ -37,9 +38,10 @@ public class PreferencesCreator {
 		prefs.versionApp = MainActivity.getVersion();
 		prefs.firstStartOfApp = true;
 		prefs.transferProtocol = TransferProtocol.mltTcpEncrypted;
-		prefs.server = MainActivity.get().getResources().getString(R.string.txPrefs_Def_MyLiveTracker_Server);
-		prefs.port = Integer.valueOf(MainActivity.get().getResources().getString(R.string.txPrefs_Def_MyLiveTracker_PortTcp));
-		prefs.path = MainActivity.get().getResources().getString(R.string.txPrefs_Def_MyLiveTracker_PathTcp);
+		prefs.statusParamsId = null;
+		prefs.server = MyLiveTrackerUtils.getServerDns();
+		prefs.port = MyLiveTrackerUtils.getServerPortTcp();
+		prefs.path = "";
 		prefs.trackName = MainActivity.get().getResources().getString(R.string.txPrefs_Def_TrackName);		
 		if (MainActivity.get().getLocationManager().getProvider(LocationManager.GPS_PROVIDER) == null) {
 			prefs.localizationMode = LocalizationMode.network;

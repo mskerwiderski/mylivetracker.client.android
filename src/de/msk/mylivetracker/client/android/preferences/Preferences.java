@@ -13,6 +13,7 @@ import com.google.gson.JsonParseException;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.mainview.MainActivity.VersionDsc;
+import de.msk.mylivetracker.client.android.util.MyLiveTrackerUtils;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
 import de.msk.mylivetracker.commons.protocol.ProtocolUtils;
 
@@ -32,6 +33,7 @@ public class Preferences {
 	protected VersionDsc versionApp;
 	protected boolean firstStartOfApp;
 	protected TransferProtocol transferProtocol;
+	protected String statusParamsId;
 	protected String server;
 	protected int port;
 	protected String path;
@@ -326,6 +328,7 @@ public class Preferences {
 	// o transferProtocol 'fransonGpsGateHttp' is not supported anymore.
 	// o property 'firstStartOfApp' added.
 	// o two new values for UploadTimeTrigger added ('Sec1' and 'Secs3').
+	// o property 'statusParamsId' added.
 	//
 	// version 300:
 	// o property 'localizationMode' added and 'locationProvider' removed.
@@ -420,11 +423,11 @@ public class Preferences {
 					} 
 					if (preferencesVersion < PREFERENCES_VERSION_1400) {
 						preferences.firstStartOfApp = true;
-						//preferences.uplTimeTrigger = UploadTimeTrigger.findSuitable(preferences.uplTimeTrigger.getSecs());
+						preferences.statusParamsId = null;
 						if (preferences.transferProtocol.equals(TransferProtocol.fransonGpsGateHttp)) {
 							preferences.transferProtocol = TransferProtocol.uploadDisabled;
 						} else if (preferences.transferProtocol.equals(TransferProtocol.mltTcpEncrypted)) {
-							preferences.server = MainActivity.get().getString(R.string.txPrefs_Def_MyLiveTracker_Server);
+							preferences.server = MyLiveTrackerUtils.getServerDns();
 						}
 						doSave = true;
 					}
@@ -482,9 +485,14 @@ public class Preferences {
 	public TransferProtocol getTransferProtocol() {
 		return transferProtocol;
 	}
-
 	public void setTransferProtocol(TransferProtocol transferProtocol) {
 		this.transferProtocol = transferProtocol;
+	}
+	public String getStatusParamsId() {
+		return statusParamsId;
+	}
+	public void setStatusParamsId(String statusParamsId) {
+		this.statusParamsId = statusParamsId;
 	}
 
 	/**

@@ -31,6 +31,8 @@
     <string name="nfListenerRunning">Lokalisierung und/oder ANT+ Emfänger ist aktiv.</string>
     
     <!-- menu items -->
+    <string name="mnCatPreferences">Einstellungen</string>
+    <string name="mnTrackView">Karte</string>
     <string name="mnPrefsLocalization">Lokalisierung</string>
     <string name="mnPrefsServer">Server</string>
     <string name="mnPrefsAccount">Zugang</string>
@@ -148,6 +150,11 @@
     <string name="txPrefs_InfoAutoModeEnabled">Das manuelle Zurücksetzen, Starten/Stoppen des Tracks, der Lokalisierung oder HF-Messung ist im Auto Modus nicht möglich!</string>
     <string name="txPrefs_WarningChangePrefsDuringRunningTrack">Das Verändern der Einstellungen während eines laufenden Tracks kann zu unerwartetem Verhalten führen!</string>
     
+    <!-- track view -->
+    <string name="tiTrackView">Karte</string>
+    <string name="wvInfoTrackView_NotLinkedToMyLiveTrackerPortal">Die aktuelle Version der Anwendung wurde noch nicht mit dem MyLiveTracker-Portal gekoppelt. Eine Kartenanzeige des aktuellen Tracks ist deshalb nicht möglich!</string>
+    <string name="wvInfoTrackView_NotSupportedBySmartphone">Die Kartenanzeige des aktuellen Tracks wird von Ihrem Gerät leider nicht unterstützt!</string>
+    
     <!-- preferences server -->
     <string name="tiPrefsServer">Einstellungen Server</string>
     <string name="lbPrefsServer_TransferProtocol">Transfer Protokoll</string>
@@ -201,7 +208,7 @@
     <string name="btPrefsOther_ResetOverallMileage">Kilometerzähler zurücksetzen</string>
     <string name="txPrefsOther_QuestionResetToFactoryDefaults">Wollen Sie wirklich auf die Werkseinstellungen zurücksetzen?</string>
     <string name="txPrefsOther_QuestionResetOverallMileage">Wollen Sie den Kilometerzähler wirklich zurücksetzen?</string>
-    <string name="txPrefsOther_InfoResetToFactoryDefaultsDone">MyLiveTracker wurde auf die Werkseinstellungen zurückgesetzt und wird jetzt neu gestartet!</string>
+    <string name="txPrefsOther_InfoResetToFactoryDefaultsDone">MyLiveTracker wurde auf die Werkseinstellungen zurückgesetzt! Bitte starten Sie die Anwendung neu!</string>
     <string name="txPrefsOther_InfoResetOverallMileageDone">Der Kilometerzähler wurde zurückgesetzt!</string>
     
     <!-- preferences auto -->

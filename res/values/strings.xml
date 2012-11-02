@@ -31,6 +31,8 @@
     <string name="nfListenerRunning">Location Listener and/or ANT+ Listener is running.</string>
     
     <!-- menu items -->
+    <string name="mnCatPreferences">Preferences</string>
+    <string name="mnTrackView">Map</string>
     <string name="mnPrefsLocalization">Localization</string>
     <string name="mnPrefsServer">Server</string>
     <string name="mnPrefsAccount">Account</string>
@@ -142,16 +144,16 @@
     <string name="txMsg_InfoSendMessageDone">Send message done!</string>    
     
     <!-- preferences mylivetracker configuration details -->
-    <string name="txPrefs_Def_MyLiveTracker_Server">portal.mylivetracker.de</string>
-    <string name="txPrefs_Def_MyLiveTracker_PortHttp">80</string>
-    <string name="txPrefs_Def_MyLiveTracker_PortTcp">51395</string>
-    <string name="txPrefs_Def_MyLiveTracker_PathHttp">upl_mlt.sec</string>
-    <string name="txPrefs_Def_MyLiveTracker_PathTcp"></string>
     <string name="txPrefs_Def_TrackName">My Track</string>
     
     <!-- preferences commons -->
     <string name="txPrefs_InfoAutoModeEnabled">Manual resetting, starting/stopping of tracking, localization or hr-measuring is not possible in auto mode!</string>
     <string name="txPrefs_WarningChangePrefsDuringRunningTrack">Changing the preferences during a running track can lead to an unexpected behavior!</string>
+    
+    <!-- track view -->
+    <string name="tiTrackView">Map</string>
+    <string name="wvInfoTrackView_NotLinkedToMyLiveTrackerPortal">The current app version is not linked to the MyLiveTracker-Portal. A view of the current track is therefore not possible!</string>
+    <string name="wvInfoTrackView_NotSupportedBySmartphone">Unfortunately a view of the current track is not supported by your device!</string>
     
     <!-- preferences server -->
     <string name="tiPrefsServer">Server preferences</string>
@@ -206,7 +208,7 @@
     <string name="btPrefsOther_ResetOverallMileage">Reset overall mileage</string>
     <string name="txPrefsOther_QuestionResetToFactoryDefaults">Do you really want to reset to factory defaults?</string>
     <string name="txPrefsOther_QuestionResetOverallMileage">Do you really want to reset overall mileage?</string>
-    <string name="txPrefsOther_InfoResetToFactoryDefaultsDone">MyLiveTracker has been reset to factory defaults and will be now restarted!</string>
+    <string name="txPrefsOther_InfoResetToFactoryDefaultsDone">MyLiveTracker has been reset to factory defaults! Please restart the application!</string>
     <string name="txPrefsOther_InfoResetOverallMileageDone">Reset overall mileage done!</string>
     
     <!-- preferences auto -->

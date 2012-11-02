@@ -76,8 +76,10 @@ public class ProtocolEncoder implements IProtocol {
 				Math.round(locationInfo.getLocation().getAltitude() * 100d) / 100d);
 		}
 		dataStr += (locValid ? "F" : "L") + SEPERATOR;
-		if ((messageInfo != null) && (!StringUtils.isEmpty(messageInfo.getMessage()))) {
-			dataStr += messageInfo.getMessage() + SEPERATOR;
+		if ((emergencySignalInfo != null) && emergencySignalInfo.isActivated()) {
+			dataStr += "help me" + SEPERATOR;
+		} else if ((batteryStateInfo != null) && batteryStateInfo.isBatteryLow()) {
+			dataStr += "low battery" + SEPERATOR;
 		}		
 		dataStr += "imei:" + prefs.getDeviceId() + SEPERATOR;
 		dataStr += ((gpsStateInfo != null) ? 
