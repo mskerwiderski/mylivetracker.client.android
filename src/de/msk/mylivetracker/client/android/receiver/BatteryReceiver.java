@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.BatteryManager;
-import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
 
 /**
@@ -82,7 +81,6 @@ public class BatteryReceiver extends BroadcastReceiver {
         	voltage = Math.round(ivolt / 1000.0d * 100.0d) / 100d;
         }        
         BatteryStateInfo.update(state, percent, temperature, voltage);
-        MainActivity.logInfo("BatteryReceiver: battery charging=" + isBatteryCharging());
 	}
 
 	public boolean isActive() {

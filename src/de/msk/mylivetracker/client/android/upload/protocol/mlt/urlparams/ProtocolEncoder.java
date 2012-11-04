@@ -23,6 +23,7 @@ import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.upload.protocol.HttpProtocolUtils;
 import de.msk.mylivetracker.client.android.upload.protocol.IProtocol;
+import de.msk.mylivetracker.client.android.util.VersionUtils;
 
 /**
  * ProtocolEncoder.
@@ -52,8 +53,8 @@ public class ProtocolEncoder implements IProtocol {
 		TrackStatus trackStatus = TrackStatus.get();
 				
 		String paramsStr = null;
-		paramsStr = HttpProtocolUtils.addParam(paramsStr, "vco", String.valueOf(MainActivity.getVersion().getCode()));
-		paramsStr = HttpProtocolUtils.addParam(paramsStr, "vna", MainActivity.getVersion().getName());
+		paramsStr = HttpProtocolUtils.addParam(paramsStr, "vco", String.valueOf(VersionUtils.get(MainActivity.get()).getCode()));
+		paramsStr = HttpProtocolUtils.addParam(paramsStr, "vna", VersionUtils.get(MainActivity.get()).getName());
 		paramsStr = HttpProtocolUtils.addParam(paramsStr, "did", preferences.getDeviceId());
 		paramsStr = HttpProtocolUtils.addParam(paramsStr, "tid", trackStatus.getTrackId());
 		paramsStr = HttpProtocolUtils.addParam(paramsStr, "trn", preferences.getTrackName());

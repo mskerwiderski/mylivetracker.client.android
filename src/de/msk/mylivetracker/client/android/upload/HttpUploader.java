@@ -44,7 +44,6 @@ public class HttpUploader extends AbstractUploader {
 		urlStr += "/" + preferences.getPath();
 		
 		try {			
-			MainActivity.logInfo(urlStr);
 			this.checkConnection();
 			URL url = new URL("http://" + urlStr + dataStr); 
 			bufferedReader = new BufferedReader(

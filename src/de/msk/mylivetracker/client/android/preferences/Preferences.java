@@ -8,12 +8,12 @@ import android.location.LocationManager;
 import android.telephony.TelephonyManager;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonParseException;
 
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
-import de.msk.mylivetracker.client.android.mainview.MainActivity.VersionDsc;
 import de.msk.mylivetracker.client.android.util.MyLiveTrackerUtils;
+import de.msk.mylivetracker.client.android.util.VersionUtils;
+import de.msk.mylivetracker.client.android.util.VersionUtils.VersionDsc;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
 import de.msk.mylivetracker.commons.protocol.ProtocolUtils;
 
@@ -350,8 +350,8 @@ public class Preferences {
 	// 
 	private static final int PREFERENCES_VERSION_MIN = 201;
 	private static final int PREFERENCES_VERSION_300 = 300;
-	private static final int PREFERENCES_VERSION_1400 = 1400;
-	private static final int PREFERENCES_VERSION_CURRENT = PREFERENCES_VERSION_1400;
+	private static final int PREFERENCES_VERSION_1410 = 1410;
+	private static final int PREFERENCES_VERSION_CURRENT = PREFERENCES_VERSION_1410;
 	
 	private static final String PREFERENCES_VERSION_VAR = "preferencesVersion";
 	private static final String PREFERENCES_VAR = "preferences";
@@ -372,8 +372,8 @@ public class Preferences {
 		return preferences;
 	}
 	
-	public static void reset() {
-		preferences = PreferencesCreator.create();
+	public static void reset(Context context) {
+		preferences = PreferencesCreator.create(context);
 		save();
 	}
 	
@@ -386,10 +386,13 @@ public class Preferences {
 		String infoMessage = null;
 		SharedPreferences prefs = context.getSharedPreferences(name, 0);				
 		int preferencesVersion = prefs.getInt(PREFERENCES_VERSION_VAR, -1);
-		if (preferencesVersion < PREFERENCES_VERSION_MIN) {
-			Preferences.reset();
+		if (preferencesVersion == -1) {
+			// first time of using the app.
+			Preferences.reset(context);
+		} else if (preferencesVersion < PREFERENCES_VERSION_MIN) {
+			Preferences.reset(context);
 			infoMessage = context.getString(R.string.prefsReset, 
-				MainActivity.getVersion().toString());
+				VersionUtils.get(context).toString());
 		} else {
 			String preferencesStr = prefs.getString(PREFERENCES_VAR, null);
 			if (!StringUtils.isEmpty(preferencesStr)) {
@@ -397,7 +400,6 @@ public class Preferences {
 					Gson gson = new Gson();
 					preferences = gson.fromJson(preferencesStr, Preferences.class);
 					boolean doSave = false;
-					MainActivity.logInfo("preferences-version: " + preferencesVersion);
 					if (preferencesVersion < PREFERENCES_VERSION_300) {
 						// device id is read only.
 						preferences.deviceId =  
@@ -421,7 +423,7 @@ public class Preferences {
 						preferences.trackingOneTouchMode = TrackingOneTouchMode.TrackingOnly;
 						doSave = true;
 					} 
-					if (preferencesVersion < PREFERENCES_VERSION_1400) {
+					if (preferencesVersion < PREFERENCES_VERSION_1410) {
 						preferences.firstStartOfApp = true;
 						preferences.statusParamsId = null;
 						if (preferences.transferProtocol.equals(TransferProtocol.fransonGpsGateHttp)) {
@@ -431,24 +433,30 @@ public class Preferences {
 						}
 						doSave = true;
 					}
-					if (!MainActivity.isCurrentVersion(preferences.versionApp)) {
+					if (!VersionUtils.isCurrent(context, preferences.versionApp)) {
 						preferences.firstStartOfApp = true;
-						preferences.versionApp = MainActivity.getVersion();
+						preferences.versionApp = VersionUtils.get(context);
 					}
 					if (doSave) {
 						save();
 						infoMessage = context.getString(R.string.prefsUpdated, 
-							MainActivity.getVersion().toString());
-						SimpleInfoDialog infoDlg = new SimpleInfoDialog(
-							MainActivity.get(), infoMessage);
-						infoDlg.show();
+							VersionUtils.get(context).toString());
 					}
-				} catch (JsonParseException e) {
-					Preferences.reset();
+				} catch (Exception e) {
+					Preferences.reset(context);
+					infoMessage = context.getString(R.string.prefsReset, 
+						VersionUtils.get(context).toString());
 				}
 			} else {			
-				Preferences.reset();			
+				Preferences.reset(context);			
+				infoMessage = context.getString(R.string.prefsReset, 
+					VersionUtils.get(context).toString());
 			}
+		}
+		if (!StringUtils.isEmpty(infoMessage) && MainActivity.exists()) {
+			SimpleInfoDialog infoDlg = new SimpleInfoDialog(
+				MainActivity.get(), infoMessage);
+			infoDlg.show();
 		}
 	}
 	

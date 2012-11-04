@@ -69,8 +69,6 @@ public class LinkSenderTask extends
 	        	Preferences.save();
 			}
 		} catch (Throwable e) {
-			e.printStackTrace();
-			MainActivity.logInfo(e.getMessage());
 			response = new LinkSenderResponse(MainActivity.getLocale().getLanguage(),
 				ResultCode.InternalServerError, e.getMessage());
 		}

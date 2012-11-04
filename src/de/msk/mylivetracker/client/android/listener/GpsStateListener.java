@@ -35,8 +35,6 @@ public class GpsStateListener implements Listener {
 	 */
 	@Override
 	public void onGpsStatusChanged(int event) {
-		
-		MainActivity.logInfo(String.valueOf(event));
 		int countSatellites = 0;
 		GpsStatus gpsStatus = MainActivity.get().getLocationManager().getGpsStatus(null);
 		Iterator<GpsSatellite> iterator = gpsStatus.getSatellites().iterator();

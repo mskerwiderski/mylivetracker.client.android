@@ -84,19 +84,15 @@ public class UploadManager extends Thread {
 	
 	protected static void stopUploadManager() {
 		while (uploadManagerForTracking != null) {
-			MainActivity.logInfo("stopUploadManager: uploadManagerForTracking is running.");
 			uploadManagerForTracking.setRunning(false);
-			MainActivity.logInfo("stopUploadManager: uploadManagerForTracking:interrupt called.");
 			try {
-				MainActivity.logInfo("stopUploadManager: uploadManagerForTracking wait...");
 				Thread.sleep(200);
 			} catch (InterruptedException e) {
-				MainActivity.logInfo("stopUploadManager: uploadManagerForTracking wait... interrupted.");
+				// noop.
 			}			
 			if ((uploadManagerForTracking != null) && 
 				!uploadManagerForTracking.isAlive()) {
 				uploadManagerForTracking = null;
-				MainActivity.logInfo("stopUploadManager: uploadManagerForTracking NOT alived - done.");
 			}
 		}
 		TrackStatus.get().markAsStopped();
@@ -106,16 +102,13 @@ public class UploadManager extends Thread {
 		if ((uploadManagerForTracking != null) && 
 			uploadManagerForTracking.isAlive()) {			
 			uploadManagerForTracking.setSendImmediately();
-			MainActivity.logInfo("uploadOnlyOneTime: used running UploaderThread.");
 		} else {
 			runUploadThread(true);
-			MainActivity.logInfo("uploadOnlyOneTime: started UploaderThread for only a single upload.");
 		}
 	}
 	
 	private static void runUploadThread(boolean onlyOneUpload) {
 		AbstractUploader uploader = createUploader();
-		MainActivity.logInfo("runUploadThread: " + onlyOneUpload);
 		if (uploader != null) {
 			UploadManager uploadManager = new UploadManager(uploader, onlyOneUpload);
 			uploadManager.start();
@@ -124,7 +117,6 @@ public class UploadManager extends Thread {
 			} else {
 				uploadManagerForTracking = uploadManager;
 			}				
-			MainActivity.logInfo("runUploadThread: thread started");
 		} else {
 			// data transfer disabled.
 		}
@@ -325,7 +317,7 @@ public class UploadManager extends Thread {
 					this.upload(this.uploader);
 				}
 			} catch (Exception e) {
-				MainActivity.logInfo("UploadManagerThread Exception: " + e);
+				// noop.
 			} finally {
 				if (doUpload) {
 					lastUploaded = SystemClock.elapsedRealtime();
@@ -336,13 +328,11 @@ public class UploadManager extends Thread {
 				} catch (InterruptedException e) {					
 					this.upload(this.uploader);
 					this.setRunning(false);
-					MainActivity.logInfo("UploadManagerThread interrupted.");
 				}
 			}
 		}
 		if (!this.isRunning()) {
 			this.upload(this.uploader);
-			MainActivity.logInfo("UploadManagerThread stopped.");
 		}
 	}
 

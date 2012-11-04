@@ -160,9 +160,6 @@ public class TrackStatus implements Serializable {
 					this.markerLastStarted;
 			}
 		}
-		MainActivity.logInfo("marked as started.");
-		MainActivity.logInfo("markerFirstStarted=" + this.markerFirstStarted);
-		MainActivity.logInfo("markerLastStarted=" + this.markerLastStarted);
 	}
 	
 	public void markAsStopped() {

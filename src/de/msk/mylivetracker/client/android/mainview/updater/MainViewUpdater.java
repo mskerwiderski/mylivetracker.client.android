@@ -209,7 +209,5 @@ public class MainViewUpdater implements Runnable {
 			tvUploader.setBackgroundColor(res.getColor(R.color.colorUploaderOff));
 			tvUploader.setText(getUploaderCountUploaded(uploadInfo));
 		}
-		
-		MainActivity.logInfo("main view updated.");
 	}	
 }

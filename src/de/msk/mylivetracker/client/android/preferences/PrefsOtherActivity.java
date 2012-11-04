@@ -103,7 +103,7 @@ public class PrefsOtherActivity extends AbstractActivity {
 
 		@Override
 		public void onYes() {			
-			Preferences.reset();
+			Preferences.reset(this.activity);
 			SimpleInfoDialog dlg = new SimpleInfoDialog(
 				this.activity, R.string.txPrefsOther_InfoResetToFactoryDefaultsDone);
 			dlg.show();

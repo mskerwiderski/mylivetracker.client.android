@@ -2,8 +2,6 @@ package de.msk.mylivetracker.client.android.status;
 
 import org.apache.commons.lang.StringUtils;
 
-import de.msk.mylivetracker.client.android.mainview.MainActivity;
-
 /**
  * NmeaInfo.
  * 
@@ -23,7 +21,6 @@ public class NmeaInfo extends AbstractInfo {
 	private static NmeaInfo nmeaInfo = null;
 	
 	private static boolean isValidGprmcSentence(String gprmc) {
-		MainActivity.logInfo("isValidGprmcSentence(" + gprmc + ")");
 		boolean res = false;
 		if (!StringUtils.isEmpty(gprmc) && 
 			StringUtils.startsWith(gprmc, GPRMC_IDENTIFIER) &&	
@@ -32,7 +29,6 @@ public class NmeaInfo extends AbstractInfo {
 			StringUtils.contains(gprmc, GPRMC_MARKER_CHECKSUM)) {
 			res = true;
 		}
-		MainActivity.logInfo("isValidGprmcSentence()=" + res);
 		return res;
 	}
 	
@@ -40,7 +36,6 @@ public class NmeaInfo extends AbstractInfo {
 		if (isValidGprmcSentence(gprmc)) {
 			int idx =StringUtils.indexOf(gprmc, GPRMC_MARKER_CHECKSUM);
 			gprmc = StringUtils.substring(gprmc, 0, idx);
-			MainActivity.logInfo("GPRMC (len=" + gprmc.length() + "):'" + gprmc + "'");
 			nmeaInfo = 
 				NmeaInfo.createNewImeaInfo(
 					nmeaInfo, gprmc);

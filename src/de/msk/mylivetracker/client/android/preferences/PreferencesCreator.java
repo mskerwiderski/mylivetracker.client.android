@@ -15,6 +15,7 @@ import de.msk.mylivetracker.client.android.preferences.Preferences.UploadDistanc
 import de.msk.mylivetracker.client.android.preferences.Preferences.UploadTimeTrigger;
 import de.msk.mylivetracker.client.android.preferences.Preferences.UploadTriggerLogic;
 import de.msk.mylivetracker.client.android.util.MyLiveTrackerUtils;
+import de.msk.mylivetracker.client.android.util.VersionUtils;
 
 /**
  * PreferencesCreator.
@@ -29,13 +30,13 @@ import de.msk.mylivetracker.client.android.util.MyLiveTrackerUtils;
  */
 public class PreferencesCreator {
 
-	public static Preferences create() {
-		return createDefault();
+	public static Preferences create(Context context) {
+		return createDefault(context);
 	}
 	
-	private static Preferences createDefault() {
+	private static Preferences createDefault(Context context) {
 		Preferences prefs = new Preferences();
-		prefs.versionApp = MainActivity.getVersion();
+		prefs.versionApp = VersionUtils.get(context);
 		prefs.firstStartOfApp = true;
 		prefs.transferProtocol = TransferProtocol.mltTcpEncrypted;
 		prefs.statusParamsId = null;

@@ -100,7 +100,6 @@ public abstract class AbstractUploader {
 	
 	public void checkConnection() throws Exception {
 		if (!MainActivity.get().isDataConnectionActive()) {
-			MainActivity.logInfo("no data connection");
 			throw new IOException("no data connection.");			
 		}		
 	}

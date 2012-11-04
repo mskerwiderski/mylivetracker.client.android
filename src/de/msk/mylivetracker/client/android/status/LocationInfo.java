@@ -10,7 +10,6 @@ import org.apache.commons.lang.StringUtils;
 
 import android.location.Location;
 import android.location.LocationManager;
-import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;
 
@@ -29,7 +28,6 @@ import de.msk.mylivetracker.commons.util.datetime.DateTime;
 public class LocationInfo extends AbstractInfo {
 	private static LocationInfo locationInfo = null;
 	public static void update(Location location) {
-		MainActivity.logInfo("update locationInfo");
 		if (LocationInfo.skip(locationInfo, location)) {
 			return;
 		}
@@ -71,7 +69,6 @@ public class LocationInfo extends AbstractInfo {
 			if ((currLocationInfo == null) || 
 				(currLocationInfo.getLastLocationUsedForDistCalc() == null)) { 
 				newLastLocationUsedForDistCalc = locationNew;
-				MainActivity.logInfo("first accurate position received for distance calculation");
 			} else if ((currLocationInfo != null) && 
 				(currLocationInfo.getLastLocationUsedForDistCalc() != null)) {			
 				float newDistanceInMtr = 
@@ -87,7 +84,6 @@ public class LocationInfo extends AbstractInfo {
 					newMileageInMtr = trackStatus.getMileageInMtr();
 					newLastLocationUsedForDistCalc = locationNew;
 				}
-				MainActivity.logInfo("position used for distance calculation: " + String.valueOf(newDistanceInMtr));
 			}
 		}
 		return new LocationInfo(locationNew, 
@@ -112,7 +108,6 @@ public class LocationInfo extends AbstractInfo {
 	}
 	
 	private static boolean skip(LocationInfo currLocationInfo, Location location) {
-		MainActivity.logInfo("check if position can be skipped.");
 		boolean res = false;
 		if (location.getProvider().equals(LocationManager.NETWORK_PROVIDER)) {
 			// positions from network provider are only used,
@@ -123,7 +118,6 @@ public class LocationInfo extends AbstractInfo {
 				res = true;
 			}
 		}		
-		MainActivity.logInfo("skip position = " + res);
 		return res;
 	}
 	
@@ -151,9 +145,6 @@ public class LocationInfo extends AbstractInfo {
 		if ((location == null) || !location.hasAccuracy()) {
 			return false;
 		}
-		MainActivity.logInfo(location.getProvider());
-		MainActivity.logInfo(String.valueOf(location.getAccuracy()));
-		
 		return accReq >= location.getAccuracy();
 	}
 	
@@ -170,7 +161,6 @@ public class LocationInfo extends AbstractInfo {
 	}
 
 	public static String getLocationAsGprmcRecord(LocationInfo locationInfo) {
-		MainActivity.logInfo("-->getLocationAsGprmcRecord()");
 		String record = "GPRMC,";		
 		DateTime dateTime = new DateTime(locationInfo.getTimestamp().getTime());
 		String time = StringUtils.left(dateTime.getAsStr(TimeZone.getTimeZone(DateTime.TIME_ZONE_UTC), "HHmmss.S"), 8);
@@ -195,17 +185,13 @@ public class LocationInfo extends AbstractInfo {
 		calcChecksumStr = StringUtils.leftPad(calcChecksumStr, 2, '0');
 		calcChecksumStr = StringUtils.upperCase(calcChecksumStr);
 		record += "*" + calcChecksumStr;
-		MainActivity.logInfo(record);
-		MainActivity.logInfo("<--getLocationAsGprmcRecord()");
 		return record;
 	}
 	
 	private static String decimal2degrees(double decimal, int digits, String pos, String neg) {
-		MainActivity.logInfo("-->decimal2degrees()");
 		// [+|-]48:6:20,79932 --> german
 		// [+|-]48:6:20.79932 --> english
 		String degrees = Location.convert(decimal, Location.FORMAT_SECONDS);
-		MainActivity.logInfo("degress=" + degrees);
 		String direction = (StringUtils.startsWith(degrees, "-") ? neg : pos);
 		degrees = StringUtils.remove(degrees, "+");
 		degrees = StringUtils.remove(degrees, "-");
@@ -217,8 +203,6 @@ public class LocationInfo extends AbstractInfo {
 			StringUtils.leftPad(parts[1], 2, '0') + "." + 
 			StringUtils.left(lastPart, 4);
 		degrees += "," + direction;
-		MainActivity.logInfo("degress=" + degrees);
-		MainActivity.logInfo("<--decimal2degrees()");
 		return degrees;
 	}
 	

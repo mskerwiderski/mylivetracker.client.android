@@ -7,7 +7,6 @@ import org.apache.commons.lang.StringUtils;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -70,13 +69,15 @@ public class MainActivity extends AbstractMainActivity {
 	public static MainActivity get() {
 		return mainActivity;
 	}
+
+	public static boolean exists() {
+		return mainActivity != null;
+	}
 	
 	public static void exit() {
 		if (mainActivity != null) {
 			mainActivity.onDestroy();
-			MainActivity.logInfo("Exit: main window closed.");
 		}
-		MainActivity.logInfo("Exit: exit app.");
 		System.exit(0);	
 	}
 	
@@ -251,22 +252,16 @@ public class MainActivity extends AbstractMainActivity {
 	 */
 	@Override
 	protected void onDestroy() {
-		MainActivity.logInfo("onDestroy main window");
 		AutoManager.shutdown();
-		MainActivity.logInfo("onDestroy main window: AutoManager stopped.");
 		UploadService.stop();
-		MainActivity.logInfo("onDestroy main window: UploadService stopped.");
 		MainActivity.get().stopLocationListener();
 		MainActivity.get().stopAntPlusHeartrateListener();
 		MainActivity.get().stopBatteryReceiver();
 		MainActivity.get().stopPhoneStateListener();
-		MainActivity.logInfo("onDestroy main window: All listeners stopped.");
 		Chronometer chronometer = MainActivity.get().getUiChronometer();
 		chronometer.stop();			
 		chronometer.setBase(SystemClock.elapsedRealtime());
-		MainActivity.logInfo("onDestroy main window: Chronometer stopped.");
 		TrackStatus.saveTrackStatus();
-		MainActivity.logInfo("onDestroy main window: TrackStatus saved.");
 		super.onDestroy();
 	}
 	
@@ -474,60 +469,6 @@ public class MainActivity extends AbstractMainActivity {
 			this.runOnUiThread(new MainDetailsViewUpdater());
 		}
 	}
-		
-	//private static final String LOG_TAG_GLOBAL = "MLT";
-	
-	public static void logInfo(String logStr) {
-		//Log.i(LOG_TAG_GLOBAL, logStr);
-	}
-
-	public static void logInfo(Class<?> clazz, String logStr) {
-//		String className = "unknown";
-//		if ((clazz != null) && !StringUtils.isEmpty(clazz.getSimpleName())) {
-//			className = clazz.getSimpleName();
-//		}
-//		String info =  className + ": " + logStr;
-//		Log.i(LOG_TAG_GLOBAL, info);
-	}
-	
-	public static class VersionDsc {
-		private int code;
-		private String name;
-		public VersionDsc() {
-		}
-		public VersionDsc(int code, String name) {
-			this.code = code;
-			this.name = name;
-		}
-		public int getCode() {
-			return code;
-		}
-		public String getName() {
-			return name;
-		}
-		@Override
-		public String toString() {
-			return "v" + this.name;
-		}		
-	}
-	
-	public static boolean isCurrentVersion(VersionDsc versionDsc) {
-		if (versionDsc == null) return false;
-		return (getVersion().getCode() == versionDsc.getCode());
-	}
-	
-	public static VersionDsc getVersion() {
-		MainActivity mainActivity = MainActivity.get();
-		VersionDsc versionDsc = new VersionDsc(1, "INVALID");
-		try {
-			versionDsc = new VersionDsc(
-				mainActivity.getPackageManager().getPackageInfo(mainActivity.getPackageName(), 0).versionCode,	
-				mainActivity.getPackageManager().getPackageInfo(mainActivity.getPackageName(), 0).versionName);
-		} catch (NameNotFoundException e) {
-			logInfo("version info not found: " + e.getMessage());
-		}
-		return versionDsc;
-	}	
 		
 	public static Locale getLocale() {
 		return MainActivity.get().getResources().getConfiguration().locale;

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.util.LogUtils;
 
 /**
  * LaunchAppBroadcast.
@@ -20,14 +21,14 @@ public class LaunchAppBroadcast extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent unused) {
-		MainActivity.logInfo(LaunchAppBroadcast.class, "onReceive called.");
+		LogUtils.info(LaunchAppBroadcast.class, "onReceive called.");
 		Preferences prefs = Preferences.get(context);
 		if (prefs.isAutoStartEnabled()) {
 			// start MainActivity.
 			Intent intent = new Intent(context, MainActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			context.startActivity(intent);
-			MainActivity.logInfo(LaunchAppBroadcast.class, "MainActivity started.");
+			LogUtils.info(LaunchAppBroadcast.class, "MainActivity started.");
 		}
 	}
 }

@@ -32,7 +32,6 @@ public class AutoManager extends Thread {
 		if (autoManager == null) {
 			autoManager = new AutoManager();	
 			autoManager.start();
-			MainActivity.logInfo(AutoManager.class, "started.");
 		} 
 		return autoManager;
 	}
@@ -41,7 +40,6 @@ public class AutoManager extends Thread {
 		if (autoManager == null) return;
 		autoManager.interrupt();
 		autoManager = null;
-		MainActivity.logInfo(AutoManager.class, "stopped.");
 	}
 	
 	private static class ResetTrackTask implements Runnable {
@@ -118,7 +116,6 @@ public class AutoManager extends Thread {
 				Preferences prefs = Preferences.get();
 				TrackStatus status = TrackStatus.get();
 				if (prefs.isAutoModeEnabled()) {
-					MainActivity.logInfo(AutoManager.class, "auto mode enabled.");
 					if (BatteryReceiver.get().isBatteryCharging() && 
 						!status.trackIsRunning()) {
 						if (trackIsExpired()) {
@@ -126,26 +123,21 @@ public class AutoManager extends Thread {
 						}
 						MainActivity.get().runOnUiThread(new LocalizationTask(true));
 						MainActivity.get().runOnUiThread(new TrackingTask(true));
-						MainActivity.logInfo(AutoManager.class, "tracking started.");
 					} else if (!BatteryReceiver.get().isBatteryCharging() && 
 						status.trackIsRunning()) {
 						MainActivity.get().runOnUiThread(new TrackingTask(false));
 						MainActivity.get().runOnUiThread(new LocalizationTask(false));
 						status.updateLastAutoModeStopSignalReceived();
-						MainActivity.logInfo(AutoManager.class, "tracking stopped.");
 					}
 				} else if (prefs.isAutoStartEnabled() && !status.trackIsRunning()) {
-					MainActivity.logInfo(AutoManager.class, "auto start enabled and track not running.");
 					MainActivity.get().runOnUiThread(new LocalizationTask(true));
 					MainActivity.get().runOnUiThread(new TrackingTask(true));
-					MainActivity.logInfo(AutoManager.class, "tracking started.");
 				}
 				Thread.sleep(3000);
 			} catch (InterruptedException e) {
 				run = false;
-				MainActivity.logInfo(AutoManager.class, "interrupted.");
 			} catch (Exception e) {
-				MainActivity.logInfo(AutoManager.class, "unexpected exception occurred: " + e);
+				// noop.
 			}
 		}
 	}

@@ -48,10 +48,8 @@ public class TcpUploader extends AbstractUploader {
 	@Override
 	public void checkConnection() throws Exception {
 		super.checkConnection();
-		MainActivity.logInfo("data connection exists");
 		Preferences prefs = Preferences.get();
 		if (socket == null) {
-			MainActivity.logInfo("socket is null, establish new data connection.");
 			int port = prefs.getPort();
 			SocketAddress serverAddress = new InetSocketAddress(
 				InetAddress.getByName(prefs.getServer()), port);
@@ -70,7 +68,6 @@ public class TcpUploader extends AbstractUploader {
 					new InputStreamReader(socket.getInputStream()), 512);
 			}			
 		} 
-		MainActivity.logInfo("data connection established.");
 	}
 	
 	/* (non-Javadoc)
@@ -93,16 +90,12 @@ public class TcpUploader extends AbstractUploader {
 		}
 		try {
 			this.checkConnection();
-			MainActivity.logInfo("send data: " + 
-				StringUtils.length(dataStr) + " bytes");
-			MainActivity.logInfo("data: " + dataStr);
 			writer.print(dataStr);
 	        writer.flush();	        
 	        if (expectServerResult) {
 	        	char[] buffer = new char[256];
 	        	int cntChars = reader.read(buffer, 0, buffer.length); 
 	        	resultCode = new String(buffer, 0, cntChars);
-	        	MainActivity.logInfo("resultCode: " + resultCode);	        
 	        } else {
 	        	resultCode = 
 	        		MainActivity.get().getString(R.string.txMain_UploadResultOk);
@@ -114,12 +107,10 @@ public class TcpUploader extends AbstractUploader {
 	        if (prefs.isCloseConnectionAfterEveryUpload()) {
 	        	this.finish();
 	        }
-	        MainActivity.logInfo("data successfully sent");
 		} catch (Exception e) {
 			e.printStackTrace();
 			resultCode = MainActivity.get().getString(R.string.txMain_UploadResultFailed);		
 			this.finish();
-			MainActivity.logInfo("exception occured: finish data connection");
 		} 
 		
 		if (!StringUtils.equals(resultCode, 
@@ -144,15 +135,13 @@ public class TcpUploader extends AbstractUploader {
 	public void finish() {
 		if (socket != null) {
 			try {
-				MainActivity.logInfo("finish data connection ...");
 				socket.shutdownOutput();
 				socket.shutdownInput();
 				socket.close();						
-				MainActivity.logInfo("finish data connection ... done.");
 			} catch (IOException e) {
 				// noop.
-			} finally {				
-				MainActivity.logInfo("data connection closed.");
+			} finally {
+				// noop.
 			}
 		}
 		socket = null;

@@ -236,7 +236,6 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 
 		@Override
 		public void onYes() {
-			MainActivity.logInfo("Exit: onYes.");
 			handler.sendEmptyMessage(0);
 		}
 	}
@@ -249,7 +248,6 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 		public void doTask(AbstractMainActivity activity) {
 			UploadService.stop();
 			if (MainDetailsActivity.isActive()) {
-				MainActivity.logInfo("Exit: close details window.");
 				MainDetailsActivity.close();
 				while (MainDetailsActivity.isActive()) {
 					try { Thread.sleep(50); } catch(Exception e) {};
