@@ -50,6 +50,8 @@ public class UploadManager extends Thread {
 			uploader = new HttpUploader(Protocols.createProtocolMltUrlparams());
 		} else if (prefs.getTransferProtocol().equals(TransferProtocol.mltTcpEncrypted)) {
 			uploader = new TcpUploader(Protocols.createProtocolMltDatastrEncrypted(), true);
+		} else if (prefs.getTransferProtocol().equals(TransferProtocol.mltRpcEncrypted)) {
+			uploader = new RpcUploader(Protocols.createProtocolMltDatastrEncrypted());
 		} else if (prefs.getTransferProtocol().equals(TransferProtocol.tk102Emulator)) {
 			uploader = new TcpUploader(Protocols.createProtocolXexunTk102(), false);
 		} else if (prefs.getTransferProtocol().equals(TransferProtocol.tk5000Emulator)) {

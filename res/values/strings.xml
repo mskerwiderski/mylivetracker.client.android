@@ -201,7 +201,7 @@
     <!-- preferences other -->
     <string name="tiPrefsOther">Other preferences</string>
     <string name="fdPrefsOther_MaxPositionBufferSize">Buffer size</string>
-    <string name="lbPrefsOther_MaxPositionBufferSize">Buffer size to bridge data connection timeouts (if set to 0, buffering is disabled)</string>
+    <string name="lbPrefsOther_MaxPositionBufferSize">Buffer size to bridge data connection timeouts</string>
     <string name="lbPrefsOther_ConfirmLevel">Confirmation level to prevent unintended actions</string>  
     <string name="lbPrefsOther_TrackingOneTouch">Tracking one-touch mode</string>
     <string name="btPrefsOther_ResetToFactoryDefaults">Reset to factory defaults</string>

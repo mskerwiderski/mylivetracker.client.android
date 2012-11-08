@@ -11,10 +11,11 @@ import de.msk.mylivetracker.client.android.util.LogUtils;
  * LaunchAppBroadcast.
  * 
  * @author michael skerwiderski, (c)2012
- * @since 1.3.0 (22.02.2012)
  * 
- * This class handles the auto start of this app, means: 
- * start MainActivity if auto start is enabled in preferences.
+ * @version 000
+ * 
+ * history
+ * 000 2012-02-22 initial.
  * 
  */
 public class LaunchAppBroadcast extends BroadcastReceiver {

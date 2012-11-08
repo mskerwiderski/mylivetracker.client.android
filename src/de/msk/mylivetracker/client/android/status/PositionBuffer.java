@@ -1,5 +1,7 @@
 package de.msk.mylivetracker.client.android.status;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -77,6 +79,10 @@ public class PositionBuffer {
 		return this.internalBuffer.size();
 	}
 		
+	public List<String> getAsList() {
+		return new ArrayList<String>(this.internalBuffer);
+	}
+	
 	public String getAll(String lineSep) {
 		if (this.internalBuffer.isEmpty()) return "";
 		if (StringUtils.isEmpty(lineSep)) {

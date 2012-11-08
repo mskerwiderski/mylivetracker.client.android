@@ -201,7 +201,7 @@
     <!-- preferences other -->
     <string name="tiPrefsOther">Einstellungen Sonstige</string>
     <string name="fdPrefsOther_MaxPositionBufferSize">Puffer Größe</string>
-    <string name="lbPrefsOther_MaxPositionBufferSize">Puffergröße um Funklöcher zu überbrücken (mit 0 wird der Puffer deaktiviert)</string>
+    <string name="lbPrefsOther_MaxPositionBufferSize">Puffergröße um Funklöcher zu überbrücken</string>
     <string name="lbPrefsOther_ConfirmLevel">Sicherheitsabfragen um ungewollte Aktionen zu verhindern</string>       
     <string name="lbPrefsOther_TrackingOneTouch">Tracking One-Touch Modus</string> 
     <string name="btPrefsOther_ResetToFactoryDefaults">Auf Werkseinstellungen zurücksetzen</string>

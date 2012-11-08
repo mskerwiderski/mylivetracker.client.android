@@ -107,6 +107,7 @@ public class Preferences {
 		uploadDisabled("Upload disabled", false, false),
 		mltHttpPlain("MLT HTTP (plain)", true, true),
 		mltTcpEncrypted("MLT TCP (encrypted)", true, true),
+		mltRpcEncrypted("MLT RPC (encrypted)", true, true),
 		tk102Emulator("Tk102 Emulator", false, true),
 		tk5000Emulator("Tk5000 Emulator", false, true),
 		fransonGpsGateHttp("Franson GpsGate HTTP", false, false); // not supported since version 1400

@@ -2,6 +2,8 @@ package de.msk.mylivetracker.client.android.util;
 
 import org.apache.commons.lang.StringUtils;
 
+import de.msk.mylivetracker.client.android.App;
+
 /**
  * MyLiveTrackerUtils.
  * 
@@ -14,46 +16,62 @@ import org.apache.commons.lang.StringUtils;
  * 
  */
 public class MyLiveTrackerUtils {
-	private static final String REALM = "SKERWIDERSKI";
 	
-	// production.
-	private static final String SERVER_DNS = "portal.mylivetracker.de";
-	private static final int SERVER_PORT_HTTP = 80;
-	private static final int SERVER_PORT_TCP = 51395;
-	private static final String SERVER_PATH_HTTP = "upl_mlt.sec";
-	private static final String PORTAL_URL = "http://" + SERVER_DNS + ":" + SERVER_PORT_HTTP + "/";
-	private static final String PORTAL_RPC_URL = PORTAL_URL + "rpc.json";
-	private static final String PORTAL_STATUS_URL_PREFIX = PORTAL_URL + "track_as_map.sec?pid=";
+	private enum Param {
+		Realm,
+		ServerDnsName,
+		ServerPortHttp,
+		ServerPortTcp,
+		ServerPathHttp,
+		PortalRpcUrl,
+		PortalStatusUrlPrefix
+	}
 	
-	// test
-//	private static final String SERVER_DNS = "skerwiderski.homedns.org";
-//	private static final int SERVER_PORT_HTTP = 8080;
-//	private static final int SERVER_PORT_TCP = 51395;
-//	private static final String SERVER_PATH_HTTP = "mylivetracker.server/upl_mlt.sec";
-//	private static final String PORTAL_URL = "http://" + SERVER_DNS + ":" + SERVER_PORT_HTTP + "/";
-//	private static final String PORTAL_RPC_URL = PORTAL_URL + "mylivetracker.server/rpc.json";
-//	private static final String PORTAL_STATUS_URL_PREFIX = PORTAL_URL + "mylivetracker.server/track_as_map.sec?pid=";
+	private static final String[] PARAMS_PRODUCTION = new String[] {
+		"SKERWIDERSKI",
+		"portal.mylivetracker.de",
+		"80",
+		"51395",
+		"upl_mlt.sec",
+		"http://portal.mylivetracker.de/rpc.json",
+		"http://portal.mylivetracker.de/track_as_map.sec?pid"
+	};
 	
+	private static final String[] PARAMS_LOCALE = new String[] {
+		"SKERWIDERSKI",
+		"skerwiderski.homedns.org",
+		"8080",
+		"51395",
+		"mylivetracker.server/upl_mlt.sec",
+		"http://skerwiderski.homedns.org:8080/mylivetracker.server/rpc.json",
+		"http://skerwiderski.homedns.org:8080/mylivetracker.server/track_as_map.sec?pid"
+	};
+	
+	private static String getValue(Param param) {
+		return VersionUtils.get(App.getCtx()).isTest() ? 
+			PARAMS_LOCALE[param.ordinal()] : 
+			PARAMS_PRODUCTION[param.ordinal()];
+	}
 	public static String getRealm() {
-		return REALM;
+		return getValue(Param.Realm);
 	}
 	public static String getServerDns() {
-		return SERVER_DNS;
+		return getValue(Param.ServerDnsName);
 	}
 	public static int getServerPortHttp() {
-		return SERVER_PORT_HTTP;
+		return Integer.valueOf(getValue(Param.ServerPortHttp));
 	}
 	public static int getServerPortTcp() {
-		return SERVER_PORT_TCP;
+		return Integer.valueOf(getValue(Param.ServerPortTcp));
 	}
 	public static String getServerPathHttp() {
-		return SERVER_PATH_HTTP;
+		return getValue(Param.ServerPathHttp);
 	}
 	public static String getPortalRpcUrl() {
-		return PORTAL_RPC_URL;
+		return getValue(Param.PortalRpcUrl);
 	}	
 	public static String getPortalStatusUrl(String statusParamsId) {
 		if (StringUtils.isEmpty(statusParamsId)) return null;
-		return PORTAL_STATUS_URL_PREFIX + statusParamsId;
+		return getValue(Param.PortalStatusUrlPrefix) + statusParamsId;
 	}
 }

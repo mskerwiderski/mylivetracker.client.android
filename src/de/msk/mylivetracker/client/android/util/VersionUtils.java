@@ -1,5 +1,7 @@
 package de.msk.mylivetracker.client.android.util;
 
+import org.apache.commons.lang.StringUtils;
+
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
 
@@ -19,11 +21,15 @@ public class VersionUtils {
 	public static class VersionDsc {
 		private int code;
 		private String name;
+		boolean test;
 		public VersionDsc() {
 		}
 		public VersionDsc(int code, String name) {
 			this.code = code;
 			this.name = name;
+			this.test = 
+				StringUtils.contains(this.name, "test") ||
+				StringUtils.contains(this.name, "beta");
 		}
 		public int getCode() {
 			return code;
@@ -31,10 +37,20 @@ public class VersionUtils {
 		public String getName() {
 			return name;
 		}
+		public boolean isTest() {
+			return test;
+		}
 		@Override
 		public String toString() {
 			return "v" + this.name;
 		}		
+	}
+	
+	private static VersionDsc versionDsc = null;
+	
+	public static boolean isTest(Context context) {
+		VersionDsc versionDsc = get(context);
+		return versionDsc.isTest();
 	}
 	
 	public static boolean isCurrent(Context context, VersionDsc versionDsc) {
@@ -43,13 +59,13 @@ public class VersionUtils {
 	}
 	
 	public static VersionDsc get(Context context) {
-		VersionDsc versionDsc = new VersionDsc(1, "INVALID");
+		if (versionDsc != null) return versionDsc;
 		try {
 			versionDsc = new VersionDsc(
 				context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionCode,	
 				context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName);
 		} catch (NameNotFoundException e) {
-			LogUtils.info("version info not found: " + e.getMessage());
+			throw new RuntimeException(e);
 		}
 		return versionDsc;
 	}	
