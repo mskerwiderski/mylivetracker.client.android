@@ -11,6 +11,9 @@ import org.apache.commons.lang.StringUtils;
 import android.location.Location;
 import android.location.LocationManager;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.util.LatLonUtils;
+import de.msk.mylivetracker.client.android.util.LatLonUtils.PosType;
+import de.msk.mylivetracker.client.android.util.LatLonUtils.Wgs84Dsc;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;
 
 /**
@@ -172,9 +175,12 @@ public class LocationInfo extends AbstractInfo {
 		DecimalFormat decimalFmtBearing = new DecimalFormat("0.00", new DecimalFormatSymbols(Locale.ENGLISH));
 		String bearingInDegrees = decimalFmtBearing.format(locationInfo.getLocation().getBearing());
 		
+		Wgs84Dsc wgs84Lat = LatLonUtils.decToWgs84(locationInfo.location.getLatitude(), PosType.Latitude);
+		Wgs84Dsc wgs84Lon = LatLonUtils.decToWgs84(locationInfo.location.getLongitude(), PosType.Longitude);
+		
 		record += time + ",A," + 
-			decimal2degrees(locationInfo.getLocation().getLatitude(), 2, "N", "S") + "," +
-			decimal2degrees(locationInfo.getLocation().getLongitude(), 3, "E", "W") + "," +
+			wgs84Lat.toNmea0183String() + "," +
+			wgs84Lon.toNmea0183String() + "," +
 			speedInKnoten + "," + bearingInDegrees + "," + date + ",0.0,E,A";
 		
 		int calcChecksum = 0;
@@ -186,24 +192,6 @@ public class LocationInfo extends AbstractInfo {
 		calcChecksumStr = StringUtils.upperCase(calcChecksumStr);
 		record += "*" + calcChecksumStr;
 		return record;
-	}
-	
-	private static String decimal2degrees(double decimal, int digits, String pos, String neg) {
-		// [+|-]48:6:20,79932 --> german
-		// [+|-]48:6:20.79932 --> english
-		String degrees = Location.convert(decimal, Location.FORMAT_SECONDS);
-		String direction = (StringUtils.startsWith(degrees, "-") ? neg : pos);
-		degrees = StringUtils.remove(degrees, "+");
-		degrees = StringUtils.remove(degrees, "-");
-		String[] parts = StringUtils.split(degrees, ":");
-		String lastPart = StringUtils.remove(parts[2], ",");
-		lastPart = StringUtils.remove(lastPart, ".");
-		degrees = 
-			StringUtils.leftPad(parts[0], digits, '0') + 
-			StringUtils.leftPad(parts[1], 2, '0') + "." + 
-			StringUtils.left(lastPart, 4);
-		degrees += "," + direction;
-		return degrees;
 	}
 	
 	/**
