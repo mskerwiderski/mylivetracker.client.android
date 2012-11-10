@@ -11,6 +11,7 @@ import de.msk.mylivetracker.client.android.mainview.OnClickButtonStartStopListen
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.receiver.BatteryReceiver;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
+import de.msk.mylivetracker.client.android.util.LogUtils;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;
 
 /**
@@ -28,18 +29,47 @@ public class AutoManager extends Thread {
 
 	private static AutoManager autoManager = null;
 	
-	public static AutoManager get() {
-		if (autoManager == null) {
-			autoManager = new AutoManager();	
-			autoManager.start();
-		} 
-		return autoManager;
+	private boolean running = false;
+	
+	private boolean isRunning() {
+		return this.running;
 	}
-
-	public static void shutdown() {
-		if (autoManager == null) return;
-		autoManager.interrupt();
-		autoManager = null;
+	private synchronized void setRunning(boolean running) {
+		this.running = running;
+	}
+	
+	protected static void startAutoManager() {
+		if (autoManager == null) {
+			LogUtils.info("startAutoManager...");
+			autoManager = new AutoManager();
+			autoManager.start();
+			LogUtils.info("startAutoManager...started.");
+		}
+	}
+	
+	protected static void stopAutoManager() {
+		while (autoManager != null) {
+			LogUtils.info("stopAutoManager...");
+			autoManager.setRunning(false);
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				// noop.
+			}			
+			if ((autoManager != null) && 
+				!autoManager.isAlive()) {
+				autoManager = null;
+			}
+		}
+		LogUtils.info("stopAutoManager...stopped.");
+	}
+	
+	protected static boolean isAutoManagerRunning() {
+		boolean res = false;
+		if (autoManager != null) {
+			res = autoManager.isRunning();
+		}
+		return res;
 	}
 	
 	private static class ResetTrackTask implements Runnable {
@@ -110,8 +140,8 @@ public class AutoManager extends Thread {
 	 */
 	@Override
 	public void run() {
-		boolean run = true;
-		while (run) {
+		this.setRunning(true);
+		while (this.isRunning()) {
 			try {
 				Preferences prefs = Preferences.get();
 				TrackStatus status = TrackStatus.get();
@@ -135,7 +165,7 @@ public class AutoManager extends Thread {
 				}
 				Thread.sleep(3000);
 			} catch (InterruptedException e) {
-				run = false;
+				this.setRunning(false);
 			} catch (Exception e) {
 				// noop.
 			}

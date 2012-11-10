@@ -27,7 +27,7 @@ import com.wahoofitness.api.WFDisplaySettings;
 import com.wahoofitness.api.WFHardwareConnector;
 
 import de.msk.mylivetracker.client.android.R;
-import de.msk.mylivetracker.client.android.automode.AutoManager;
+import de.msk.mylivetracker.client.android.automode.AutoService;
 import de.msk.mylivetracker.client.android.listener.AntPlusHeartrateListener;
 import de.msk.mylivetracker.client.android.listener.AntPlusListener;
 import de.msk.mylivetracker.client.android.listener.AntPlusManager;
@@ -86,13 +86,8 @@ public class MainActivity extends AbstractMainActivity {
         super.onCreate(savedInstanceState);        
         setContentView(R.layout.main);
         mainActivity = this;         
-                
         this.setTitle(R.string.tiMain);
-        
         TrackStatus.loadTrackStatus();
-        
-        AutoManager.get();
-        
 		Context context = this.getApplicationContext();
 		AntPlusManager antPlusListener = AntPlusManager.get();
 		
@@ -245,6 +240,8 @@ public class MainActivity extends AbstractMainActivity {
 				new SimpleInfoDialog(this, R.string.welcomeMessage);
 			welcomeDlg.show();
 		}
+		
+		AutoService.start();
     }	
 	
 	/* (non-Javadoc)
@@ -252,7 +249,7 @@ public class MainActivity extends AbstractMainActivity {
 	 */
 	@Override
 	protected void onDestroy() {
-		AutoManager.shutdown();
+		AutoService.stop();		
 		UploadService.stop();
 		MainActivity.get().stopLocationListener();
 		MainActivity.get().stopAntPlusHeartrateListener();

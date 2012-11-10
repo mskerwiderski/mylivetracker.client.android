@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="de.msk.mylivetracker.client.android" 
-      android:versionName="1.5.0 (beta)" 
-      android:versionCode="150">       
+      android:versionName="1.4.3 beta" 
+      android:versionCode="143">       
     <uses-sdk android:minSdkVersion="7" />
     <application 
         android:icon="@drawable/icon" 
@@ -43,6 +43,9 @@
 			android:screenOrientation="portrait" />	
 		<activity android:name=".InfoActivity" 
 			android:screenOrientation="portrait" />
+		<service android:name=".automode.AutoService"
+		    android:enabled="true"
+		    android:exported="false" />
 		<service android:name=".upload.UploadService"
 		    android:enabled="true"
 		    android:exported="false" />

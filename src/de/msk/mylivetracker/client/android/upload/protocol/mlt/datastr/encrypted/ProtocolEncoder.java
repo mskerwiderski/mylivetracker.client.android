@@ -7,7 +7,6 @@ import org.apache.commons.lang.StringUtils;
 import android.location.Location;
 import android.telephony.ServiceState;
 import android.telephony.gsm.GsmCellLocation;
-import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
 import de.msk.mylivetracker.client.android.status.EmergencySignalInfo;
@@ -76,8 +75,8 @@ public class ProtocolEncoder extends EncDecoder implements IProtocol {
 			
 		UploadDataPacket data = new UploadDataPacket();
 		data.setTimestamp(lastInfoTimestamp.getTime());
-		data.setVersionCode(VersionUtils.get(MainActivity.get()).getCode());
-		data.setVersionName(VersionUtils.get(MainActivity.get()).getName());
+		data.setVersionCode(VersionUtils.get().getCode());
+		data.setVersionName(VersionUtils.get().getName());
 		data.setUsername(prefs.getUsername());
 		data.setSeed(prefs.getSeed());
 		data.setDeviceId(prefs.getDeviceId());

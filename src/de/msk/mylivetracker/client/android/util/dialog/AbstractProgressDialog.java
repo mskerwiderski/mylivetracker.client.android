@@ -19,35 +19,58 @@ import android.widget.Toast;
  */
 public abstract class AbstractProgressDialog<T extends Activity> {
 
-	public abstract void beforeTask(final T activity);
-	public abstract void doTask(final T activity);
-	public abstract void cleanUp(final T activity);
+	public void beforeTask(final T activity) {}
+	public void doTask(final T activity) {}
+	public void cleanUp(final T activity) {}
 	
-	private static final int NO_PROGRESS_MSG_ID = -1;
+	public void beforeTask() {}
+	public void doTask() {}
+	public void cleanUp() {}
+	
+	private static final int NO_MESSAGE_ID = -1;
 	private static final int SLEEP_BEFORE_RUN_TASK_IN_MSECS = 50;
 	
+	public void run() {
+		this.run(null, NO_MESSAGE_ID, NO_MESSAGE_ID);
+	}
+	
+	public void run(final T activity) {
+		this.run(activity, NO_MESSAGE_ID, NO_MESSAGE_ID);
+	}
+	
 	public void run(final T activity, final int progressMsgId) {
-		this.run(activity, progressMsgId, NO_PROGRESS_MSG_ID);
+		this.run(activity, progressMsgId, NO_MESSAGE_ID);
 	}
 	
 	public void run(final T activity, final int progressMsgId, final int doneMsgId) {
-		String message = activity.getText(progressMsgId).toString();
+				
+		String progressMessage = 
+			((activity != null) && (progressMsgId != NO_MESSAGE_ID)) ?
+			activity.getText(progressMsgId).toString() : null;		
 				
 		final ProgressDialog dialog = 
-			ProgressDialog.show(activity, "", message, true);
+			((activity != null) && (progressMessage != null)) ?
+			ProgressDialog.show(activity, "", 
+				activity.getText(progressMsgId).toString(), true) : 
+			null;
 		
 		final Handler handler = new Handler() {
 			public void handleMessage(Message msg) {
-				cleanUp(activity);
-				dialog.dismiss();
-				if (doneMsgId != NO_PROGRESS_MSG_ID) {
+				if (activity != null) {
+					cleanUp(activity);
+				} else {
+					cleanUp();
+				}
+				if (dialog != null) {
+					dialog.dismiss();
+				}
+				if ((activity != null) && (doneMsgId != NO_MESSAGE_ID)) {
 					Toast.makeText(activity.getApplicationContext(), 
 						activity.getString(doneMsgId),
 						Toast.LENGTH_SHORT).show();
 				}
 		    }
 		};
-				
 		Thread taskThread = new Thread() {  
 			public void run() {
 				try {
@@ -55,11 +78,19 @@ public abstract class AbstractProgressDialog<T extends Activity> {
 				} catch (InterruptedException e) {
 					// noop.
 				}
-				doTask(activity);
+				if (activity != null) {
+					doTask(activity);
+				} else {
+					doTask();
+				}
 				handler.sendEmptyMessage(0);
 		    }
 		};
-		this.beforeTask(activity);
+		if (activity != null) {
+			this.beforeTask(activity);
+		} else {
+			this.beforeTask();
+		}
 		taskThread.start();	
 	}
 }

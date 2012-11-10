@@ -351,8 +351,8 @@ public class Preferences {
 	// 
 	private static final int PREFERENCES_VERSION_MIN = 201;
 	private static final int PREFERENCES_VERSION_300 = 300;
-	private static final int PREFERENCES_VERSION_1420 = 1420;
-	private static final int PREFERENCES_VERSION_CURRENT = PREFERENCES_VERSION_1420;
+	private static final int PREFERENCES_VERSION_1430 = 1430;
+	private static final int PREFERENCES_VERSION_CURRENT = PREFERENCES_VERSION_1430;
 	
 	private static final String PREFERENCES_VERSION_VAR = "preferencesVersion";
 	private static final String PREFERENCES_VAR = "preferences";
@@ -393,7 +393,7 @@ public class Preferences {
 		} else if (preferencesVersion < PREFERENCES_VERSION_MIN) {
 			Preferences.reset(context);
 			infoMessage = context.getString(R.string.prefsReset, 
-				VersionUtils.get(context).toString());
+				VersionUtils.get().toString());
 		} else {
 			String preferencesStr = prefs.getString(PREFERENCES_VAR, null);
 			if (!StringUtils.isEmpty(preferencesStr)) {
@@ -424,7 +424,7 @@ public class Preferences {
 						preferences.trackingOneTouchMode = TrackingOneTouchMode.TrackingOnly;
 						doSave = true;
 					} 
-					if (preferencesVersion < PREFERENCES_VERSION_1420) {
+					if (preferencesVersion < PREFERENCES_VERSION_1430) {
 						preferences.firstStartOfApp = true;
 						preferences.statusParamsId = null;
 						if (preferences.transferProtocol.equals(TransferProtocol.fransonGpsGateHttp)) {
@@ -436,22 +436,22 @@ public class Preferences {
 					}
 					if (!VersionUtils.isCurrent(context, preferences.versionApp)) {
 						preferences.firstStartOfApp = true;
-						preferences.versionApp = VersionUtils.get(context);
+						preferences.versionApp = VersionUtils.get();
 					}
 					if (doSave) {
 						save();
 						infoMessage = context.getString(R.string.prefsUpdated, 
-							VersionUtils.get(context).toString());
+							VersionUtils.get().toString());
 					}
 				} catch (Exception e) {
 					Preferences.reset(context);
 					infoMessage = context.getString(R.string.prefsReset, 
-						VersionUtils.get(context).toString());
+						VersionUtils.get().toString());
 				}
 			} else {			
 				Preferences.reset(context);			
 				infoMessage = context.getString(R.string.prefsReset, 
-					VersionUtils.get(context).toString());
+					VersionUtils.get().toString());
 			}
 		}
 		if (!StringUtils.isEmpty(infoMessage) && MainActivity.exists()) {

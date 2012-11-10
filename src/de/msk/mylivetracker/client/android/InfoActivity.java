@@ -52,7 +52,7 @@ public class InfoActivity extends AbstractActivity {
         TextView tvInfo_Version = (TextView)findViewById(R.id.tvInfo_Version);
         TextView tvInfo_Mileage = (TextView)findViewById(R.id.tvInfo_Mileage);
         
-        tvInfo_Version.setText(VersionUtils.get(this).toString());
+        tvInfo_Version.setText(VersionUtils.get().toString());
         tvInfo_Mileage.setText(UpdaterUtils.getFltStr(TrackStatus.get().getMileageInMtr() / 1000f, 2, Unit.Kilometer));
         
         btnInfo_Back.setOnClickListener(

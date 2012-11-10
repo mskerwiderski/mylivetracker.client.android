@@ -2,6 +2,8 @@ package de.msk.mylivetracker.client.android.util;
 
 import org.apache.commons.lang.StringUtils;
 
+import de.msk.mylivetracker.client.android.App;
+
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
 
@@ -21,21 +23,24 @@ public class VersionUtils {
 	public static class VersionDsc {
 		private int code;
 		private String name;
+		boolean beta;
 		boolean test;
 		public VersionDsc() {
 		}
 		public VersionDsc(int code, String name) {
 			this.code = code;
 			this.name = name;
-			this.test = 
-				StringUtils.contains(this.name, "test") ||
-				StringUtils.contains(this.name, "beta");
+			this.beta = StringUtils.contains(this.name, "beta");
+			this.test = StringUtils.contains(this.name, "test");
 		}
 		public int getCode() {
 			return code;
 		}
 		public String getName() {
 			return name;
+		}
+		public boolean isBeta() {
+			return beta;
 		}
 		public boolean isTest() {
 			return test;
@@ -48,19 +53,25 @@ public class VersionUtils {
 	
 	private static VersionDsc versionDsc = null;
 	
-	public static boolean isTest(Context context) {
-		VersionDsc versionDsc = get(context);
+	public static boolean isBeta() {
+		VersionDsc versionDsc = get();
+		return versionDsc.isBeta();
+	}
+	
+	public static boolean isTest() {
+		VersionDsc versionDsc = get();
 		return versionDsc.isTest();
 	}
 	
 	public static boolean isCurrent(Context context, VersionDsc versionDsc) {
 		if (versionDsc == null) return false;
-		return (get(context).getCode() == versionDsc.getCode());
+		return (get().getCode() == versionDsc.getCode());
 	}
 	
-	public static VersionDsc get(Context context) {
+	public static VersionDsc get() {
 		if (versionDsc != null) return versionDsc;
 		try {
+			Context context = App.getCtx();
 			versionDsc = new VersionDsc(
 				context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionCode,	
 				context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName);

@@ -2,8 +2,6 @@ package de.msk.mylivetracker.client.android.util;
 
 import org.apache.commons.lang.StringUtils;
 
-import de.msk.mylivetracker.client.android.App;
-
 /**
  * MyLiveTrackerUtils.
  * 
@@ -48,7 +46,7 @@ public class MyLiveTrackerUtils {
 	};
 	
 	private static String getValue(Param param) {
-		return VersionUtils.get(App.getCtx()).isTest() ? 
+		return VersionUtils.get().isTest() ? 
 			PARAMS_LOCALE[param.ordinal()] : 
 			PARAMS_PRODUCTION[param.ordinal()];
 	}

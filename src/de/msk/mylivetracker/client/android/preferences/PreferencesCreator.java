@@ -36,7 +36,7 @@ public class PreferencesCreator {
 	
 	private static Preferences createDefault(Context context) {
 		Preferences prefs = new Preferences();
-		prefs.versionApp = VersionUtils.get(context);
+		prefs.versionApp = VersionUtils.get();
 		prefs.firstStartOfApp = true;
 		prefs.transferProtocol = TransferProtocol.mltTcpEncrypted;
 		prefs.statusParamsId = null;

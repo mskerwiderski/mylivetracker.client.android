@@ -100,7 +100,7 @@
     <string name="txMain_QuestionSendSosSignal">Do you really want to send a SOS signal?</string>    
     <string name="txMain_InfoSendSosSignalDone">Send SOS signal done!</string>    
     <string name="txMain_QuestionExit">Do you really want to exit MyLiveTracker?</string>   
-    <string name="txMain_InfoExitApp">MyLiveTracker is terminated...</string> 
+    <string name="txMain_InfoExitApp">MyLiveTracker is terminated...</string>
     
     <!-- main details -->
     <string name="tiMainDetails">Details</string>

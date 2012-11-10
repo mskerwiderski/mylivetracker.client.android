@@ -15,14 +15,23 @@ import android.content.Context;
  * 
  */
 public class App extends Application {
+	private static App app = null;
 	private static Context context;
-
     public void onCreate(){
         super.onCreate();
-        App.context = getApplicationContext();
+        app = this;
+        context = getApplicationContext();
     }
-
-    public static Context getCtx() {
-        return App.context;
+    @Override
+	public void onTerminate() {
+		context = null;
+		app = null;
+		super.onTerminate();
+	}
+    public static App get() {
+        return app;
+    }
+	public static Context getCtx() {
+        return context;
     }
 }
