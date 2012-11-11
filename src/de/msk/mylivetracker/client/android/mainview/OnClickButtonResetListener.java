@@ -6,9 +6,10 @@ import android.view.View.OnClickListener;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
-import de.msk.mylivetracker.client.android.upload.UploadService;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractProgressDialog;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
+import de.msk.mylivetracker.client.android.util.service.ServiceUtils;
+import de.msk.mylivetracker.client.android.util.service.ServiceUtils.ServiceName;
 
 /**
  * OnClickButtonResetListener.
@@ -61,7 +62,7 @@ public class OnClickButtonResetListener implements OnClickListener {
 		}
 		@Override
 		public void doTask(MainActivity activity) {
-			UploadService.stop();
+			ServiceUtils.stopService(ServiceName.UploadService);
 		}
 		@Override
 		public void cleanUp(MainActivity activity) {

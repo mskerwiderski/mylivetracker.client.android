@@ -24,7 +24,7 @@ import de.msk.mylivetracker.client.android.upload.AbstractUploader.UploadResult;
 import de.msk.mylivetracker.client.android.upload.protocol.Protocols;
 
 /**
- * UploadManager.
+ * UploadServiceThread.
  * 
  * @author michael skerwiderski, (c)2011
  * 
@@ -35,11 +35,11 @@ import de.msk.mylivetracker.client.android.upload.protocol.Protocols;
  * 000 2011-08-26 initial.
  * 
  */
-public class UploadManager extends Thread {
+public class UploadServiceThread extends Thread {
 
-	private static UploadManager uploadManagerForTracking = null;
+	private static UploadServiceThread uploadManagerForTracking = null;
 	@SuppressWarnings("unused")
-	private static UploadManager uploadManagerOnlyOneTime = null;
+	private static UploadServiceThread uploadManagerOnlyOneTime = null;
 	
 	private static AbstractUploader createUploader() {
 		AbstractUploader uploader = null;
@@ -64,7 +64,7 @@ public class UploadManager extends Thread {
 	
 	private boolean running = false;
 	
-	private boolean isRunning() {
+	public boolean isRunning() {
 		return this.running;
 	}
 	private synchronized void setRunning(boolean running) {
@@ -112,7 +112,7 @@ public class UploadManager extends Thread {
 	private static void runUploadThread(boolean onlyOneUpload) {
 		AbstractUploader uploader = createUploader();
 		if (uploader != null) {
-			UploadManager uploadManager = new UploadManager(uploader, onlyOneUpload);
+			UploadServiceThread uploadManager = new UploadServiceThread(uploader, onlyOneUpload);
 			uploadManager.start();
 			if (onlyOneUpload) {
 				uploadManagerOnlyOneTime = uploadManager;
@@ -131,7 +131,7 @@ public class UploadManager extends Thread {
 	private static EmergencySignalInfo lastEmergencySignalInfo = null;
 	private static MessageInfo lastMessageInfo = null;
 	
-	private UploadManager(AbstractUploader uploader, boolean onlyOneUpload) {
+	private UploadServiceThread(AbstractUploader uploader, boolean onlyOneUpload) {
 		this.uploader = uploader;
 		this.onlyOneUpload = onlyOneUpload;
 	}	

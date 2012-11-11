@@ -9,7 +9,7 @@ import android.widget.Toast;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.status.EmergencySignalInfo;
-import de.msk.mylivetracker.client.android.upload.UploadManager;
+import de.msk.mylivetracker.client.android.upload.UploadServiceThread;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
 
 /**
@@ -45,7 +45,7 @@ public class OnClickButtonSosListener implements OnClickListener {
 					new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						EmergencySignalInfo.update(true);					
-						UploadManager.uploadOnlyOneTime();
+						UploadServiceThread.uploadOnlyOneTime();
 						mainActivity.updateView();
 						dialog.cancel();
 						Toast.makeText(activity.getApplicationContext(), 

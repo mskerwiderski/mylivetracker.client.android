@@ -27,10 +27,11 @@ import de.msk.mylivetracker.client.android.preferences.PrefsServerActivity;
 import de.msk.mylivetracker.client.android.preferences.linksender.LinkSenderActivity;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.trackview.TrackViewActivity;
-import de.msk.mylivetracker.client.android.upload.UploadService;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractProgressDialog;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
+import de.msk.mylivetracker.client.android.util.service.ServiceUtils;
+import de.msk.mylivetracker.client.android.util.service.ServiceUtils.ServiceName;
 
 /**
  * AbstractMainActivity.
@@ -246,7 +247,7 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 		}
 		@Override
 		public void doTask(AbstractMainActivity activity) {
-			UploadService.stop();
+			ServiceUtils.stopService(ServiceName.UploadService);
 			if (MainDetailsActivity.isActive()) {
 				MainDetailsActivity.close();
 				while (MainDetailsActivity.isActive()) {

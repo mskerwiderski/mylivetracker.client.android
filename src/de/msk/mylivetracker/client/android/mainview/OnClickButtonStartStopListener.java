@@ -8,9 +8,10 @@ import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.preferences.Preferences.TrackingOneTouchMode;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
-import de.msk.mylivetracker.client.android.upload.UploadService;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractProgressDialog;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
+import de.msk.mylivetracker.client.android.util.service.ServiceUtils;
+import de.msk.mylivetracker.client.android.util.service.ServiceUtils.ServiceName;
 
 /**
  * OnClickButtonStartStopListener.
@@ -103,7 +104,7 @@ public class OnClickButtonStartStopListener implements OnClickListener {
 		}
 		@Override
 		public void doTask(MainActivity activity) {
-			UploadService.start();
+			ServiceUtils.startService(ServiceName.UploadService);
 		}
 		@Override
 		public void cleanUp(MainActivity activity) {
@@ -125,7 +126,7 @@ public class OnClickButtonStartStopListener implements OnClickListener {
 		}
 		@Override
 		public void doTask(MainActivity activity) {
-			UploadService.stop();
+			ServiceUtils.stopService(ServiceName.UploadService);
 		}
 		@Override
 		public void cleanUp(MainActivity activity) {

@@ -27,7 +27,6 @@ import com.wahoofitness.api.WFDisplaySettings;
 import com.wahoofitness.api.WFHardwareConnector;
 
 import de.msk.mylivetracker.client.android.R;
-import de.msk.mylivetracker.client.android.automode.AutoService;
 import de.msk.mylivetracker.client.android.listener.AntPlusHeartrateListener;
 import de.msk.mylivetracker.client.android.listener.AntPlusListener;
 import de.msk.mylivetracker.client.android.listener.AntPlusManager;
@@ -41,8 +40,9 @@ import de.msk.mylivetracker.client.android.mainview.updater.UpdaterUtils;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.receiver.BatteryReceiver;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
-import de.msk.mylivetracker.client.android.upload.UploadService;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
+import de.msk.mylivetracker.client.android.util.service.ServiceUtils;
+import de.msk.mylivetracker.client.android.util.service.ServiceUtils.ServiceName;
 
 /**
  * MainActivity.
@@ -241,7 +241,7 @@ public class MainActivity extends AbstractMainActivity {
 			welcomeDlg.show();
 		}
 		
-		AutoService.start();
+		ServiceUtils.startService(ServiceName.AutoService);
     }	
 	
 	/* (non-Javadoc)
@@ -249,8 +249,8 @@ public class MainActivity extends AbstractMainActivity {
 	 */
 	@Override
 	protected void onDestroy() {
-		AutoService.stop();		
-		UploadService.stop();
+		ServiceUtils.stopService(ServiceName.AutoService);		
+		ServiceUtils.stopService(ServiceName.UploadService);
 		MainActivity.get().stopLocationListener();
 		MainActivity.get().stopAntPlusHeartrateListener();
 		MainActivity.get().stopBatteryReceiver();

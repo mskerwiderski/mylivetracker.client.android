@@ -15,7 +15,7 @@ import de.msk.mylivetracker.client.android.util.LogUtils;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;
 
 /**
- * AutoManager.
+ * AutoServiceThread.
  * 
  * @author michael skerwiderski, (c)2012
  * @since 1.3.0 (18.02.2012)
@@ -25,9 +25,9 @@ import de.msk.mylivetracker.commons.util.datetime.DateTime;
  * o handles auto start if enabled.
  * 
  */
-public class AutoManager extends Thread {
+public class AutoServiceThread extends Thread {
 
-	private static AutoManager autoManager = null;
+	private static AutoServiceThread autoManager = null;
 	
 	private boolean running = false;
 	
@@ -41,7 +41,7 @@ public class AutoManager extends Thread {
 	protected static void startAutoManager() {
 		if (autoManager == null) {
 			LogUtils.info("startAutoManager...");
-			autoManager = new AutoManager();
+			autoManager = new AutoServiceThread();
 			autoManager.start();
 			LogUtils.info("startAutoManager...started.");
 		}
