@@ -62,40 +62,15 @@ public class UploadServiceThread extends Thread {
 		return uploader;
 	}
 	
-	private boolean running = false;
-	
-	public boolean isRunning() {
-		return this.running;
-	}
-	private synchronized void setRunning(boolean running) {
-		this.running = running;
-	}
-	
 	protected static void startUploadManager() {
 		TrackStatus.get().markAsStarted();
 		runUploadThread(false);
 	}
 	
-	protected static boolean isUploadManagerRunning() {
-		boolean res = false;
-		if (uploadManagerForTracking != null) {
-			res = uploadManagerForTracking.isRunning();
-		}
-		return res;
-	}
-	
 	protected static void stopUploadManager() {
-		while (uploadManagerForTracking != null) {
-			uploadManagerForTracking.setRunning(false);
-			try {
-				Thread.sleep(200);
-			} catch (InterruptedException e) {
-				// noop.
-			}			
-			if ((uploadManagerForTracking != null) && 
-				!uploadManagerForTracking.isAlive()) {
-				uploadManagerForTracking = null;
-			}
+		if (uploadManagerForTracking != null) {
+			uploadManagerForTracking.interrupt();
+			uploadManagerForTracking = null;
 		}
 		TrackStatus.get().markAsStopped();
 	}
@@ -270,12 +245,11 @@ public class UploadServiceThread extends Thread {
 	
 	private void runInfinite() {
 		Preferences prefs = Preferences.get();
-		this.setRunning(true);
 		// do upload at start up in every case, even there is no info.
 		boolean doUpload = true;
 		long lastUploaded = SystemClock.elapsedRealtime();
-		
-		while (this.isRunning()) {
+		boolean run = true;
+		while (run) {
 			try {
 				LocationInfo locationInfo = LocationInfo.get();
 				if (!doUpload && (lastLocationInfo == null) && (locationInfo != null)) {
@@ -329,11 +303,11 @@ public class UploadServiceThread extends Thread {
 					Thread.sleep(50);
 				} catch (InterruptedException e) {					
 					this.upload(this.uploader);
-					this.setRunning(false);
+					run = false;
 				}
 			}
 		}
-		if (!this.isRunning()) {
+		if (!run) {
 			this.upload(this.uploader);
 		}
 	}

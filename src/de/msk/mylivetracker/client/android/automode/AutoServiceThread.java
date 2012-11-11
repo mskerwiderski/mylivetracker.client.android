@@ -29,15 +29,6 @@ public class AutoServiceThread extends Thread {
 
 	private static AutoServiceThread autoManager = null;
 	
-	private boolean running = false;
-	
-	private boolean isRunning() {
-		return this.running;
-	}
-	private synchronized void setRunning(boolean running) {
-		this.running = running;
-	}
-	
 	protected static void startAutoManager() {
 		if (autoManager == null) {
 			LogUtils.info("startAutoManager...");
@@ -48,30 +39,14 @@ public class AutoServiceThread extends Thread {
 	}
 	
 	protected static void stopAutoManager() {
-		while (autoManager != null) {
-			LogUtils.info("stopAutoManager...");
-			autoManager.setRunning(false);
-			try {
-				Thread.sleep(200);
-			} catch (InterruptedException e) {
-				// noop.
-			}			
-			if ((autoManager != null) && 
-				!autoManager.isAlive()) {
-				autoManager = null;
-			}
-		}
-		LogUtils.info("stopAutoManager...stopped.");
-	}
-	
-	protected static boolean isAutoManagerRunning() {
-		boolean res = false;
 		if (autoManager != null) {
-			res = autoManager.isRunning();
+			LogUtils.info("stopAutoManager...");
+			autoManager.interrupt();
+			autoManager = null;
+			LogUtils.info("stopAutoManager...stopped.");
 		}
-		return res;
 	}
-	
+		
 	private static class ResetTrackTask implements Runnable {
 		@Override
 		public void run() {
@@ -140,8 +115,8 @@ public class AutoServiceThread extends Thread {
 	 */
 	@Override
 	public void run() {
-		this.setRunning(true);
-		while (this.isRunning()) {
+		boolean run = true;
+		while (run) {
 			try {
 				Preferences prefs = Preferences.get();
 				TrackStatus status = TrackStatus.get();
@@ -165,7 +140,7 @@ public class AutoServiceThread extends Thread {
 				}
 				Thread.sleep(3000);
 			} catch (InterruptedException e) {
-				this.setRunning(false);
+				run = false;
 			} catch (Exception e) {
 				// noop.
 			}
