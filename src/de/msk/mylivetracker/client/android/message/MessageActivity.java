@@ -10,7 +10,7 @@ import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.status.MessageInfo;
-import de.msk.mylivetracker.client.android.upload.UploadServiceThread;
+import de.msk.mylivetracker.client.android.upload.Uploader;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
 
@@ -77,7 +77,7 @@ public class MessageActivity extends AbstractActivity {
 	
 	private static void sendMessage(MessageActivity activity, String message) {
 		MessageInfo.update(message);					
-		UploadServiceThread.uploadOnlyOneTime();
+		Uploader.uploadOneTime();
 		Toast.makeText(activity.getApplicationContext(), 
 			activity.getString(R.string.txMsg_InfoSendMessageDone),
 			Toast.LENGTH_SHORT).show();	

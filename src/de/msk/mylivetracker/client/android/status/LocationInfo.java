@@ -156,13 +156,23 @@ public class LocationInfo extends AbstractInfo {
 		return isAccurate(this.location);
 	}
 	
-	/**
-	 * @return the location
-	 */
 	public Location getLocation() {
 		return location;
 	}
 
+	public static String getProviderAbbr(LocationInfo locationInfo) {
+		String providerAbbr = "?";
+		if (locationInfo != null) {
+			String provider = locationInfo.location.getProvider();
+			if (StringUtils.equals(provider, LocationManager.GPS_PROVIDER)) {
+				providerAbbr = "gps";
+			} else if (StringUtils.equals(provider, LocationManager.NETWORK_PROVIDER)) {
+				providerAbbr = "nw";
+			}
+		}
+		return providerAbbr;
+	}
+	
 	public static String getLocationAsGprmcRecord(LocationInfo locationInfo) {
 		String record = "GPRMC,";		
 		DateTime dateTime = new DateTime(locationInfo.getTimestamp().getTime());

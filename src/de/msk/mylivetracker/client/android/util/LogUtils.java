@@ -25,7 +25,7 @@ public class LogUtils {
 	}
 
 	public static void info(Class<?> clazz, String logStr) {
-		if (!VersionUtils.isTest()) return;
+		if (!VersionUtils.isBeta()) return;
 		String className = "unknown";
 		if ((clazz != null) && !StringUtils.isEmpty(clazz.getSimpleName())) {
 			className = clazz.getSimpleName();

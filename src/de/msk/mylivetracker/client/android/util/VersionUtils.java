@@ -30,7 +30,9 @@ public class VersionUtils {
 		public VersionDsc(int code, String name) {
 			this.code = code;
 			this.name = name;
-			this.beta = StringUtils.contains(this.name, "beta");
+			this.beta = 
+				StringUtils.contains(this.name, "alpha") || 
+				StringUtils.contains(this.name, "beta");
 			this.test = StringUtils.contains(this.name, "test");
 		}
 		public int getCode() {

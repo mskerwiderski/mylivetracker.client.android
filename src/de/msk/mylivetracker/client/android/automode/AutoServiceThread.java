@@ -11,7 +11,7 @@ import de.msk.mylivetracker.client.android.mainview.OnClickButtonStartStopListen
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.receiver.BatteryReceiver;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
-import de.msk.mylivetracker.client.android.util.LogUtils;
+import de.msk.mylivetracker.client.android.util.service.AbstractServiceThread;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;
 
 /**
@@ -25,28 +25,47 @@ import de.msk.mylivetracker.commons.util.datetime.DateTime;
  * o handles auto start if enabled.
  * 
  */
-public class AutoServiceThread extends Thread {
+public class AutoServiceThread extends AbstractServiceThread {
 
-	private static AutoServiceThread autoManager = null;
-	
-	protected static void startAutoManager() {
-		if (autoManager == null) {
-			LogUtils.info("startAutoManager...");
-			autoManager = new AutoServiceThread();
-			autoManager.start();
-			LogUtils.info("startAutoManager...started.");
+	@Override
+	public void init() throws InterruptedException {
+		// noop.
+	}
+
+	@Override
+	public void runSinglePass() throws InterruptedException {
+		Preferences prefs = Preferences.get();
+		TrackStatus status = TrackStatus.get();
+		if (prefs.isAutoModeEnabled()) {
+			if (BatteryReceiver.get().isBatteryCharging() &&
+				!status.trackIsRunning()) {
+				if (trackIsExpired()) {
+					MainActivity.get().runOnUiThread(new ResetTrackTask());
+				}
+				MainActivity.get().runOnUiThread(new LocalizationTask(true));
+				MainActivity.get().runOnUiThread(new TrackingTask(true));
+			} else if (!BatteryReceiver.get().isBatteryCharging() && 
+				status.trackIsRunning()) {
+				MainActivity.get().runOnUiThread(new TrackingTask(false));
+				MainActivity.get().runOnUiThread(new LocalizationTask(false));
+				status.updateLastAutoModeStopSignalReceived();
+			}
+		} else if (prefs.isAutoStartEnabled() && !status.trackIsRunning()) {
+			MainActivity.get().runOnUiThread(new LocalizationTask(true));
+			MainActivity.get().runOnUiThread(new TrackingTask(true));
 		}
 	}
-	
-	protected static void stopAutoManager() {
-		if (autoManager != null) {
-			LogUtils.info("stopAutoManager...");
-			autoManager.interrupt();
-			autoManager = null;
-			LogUtils.info("stopAutoManager...stopped.");
-		}
+
+	@Override
+	public long getSleepAfterRunSinglePassInMSecs() {
+		return 5000;
 	}
-		
+
+	@Override
+	public void cleanUp() {
+		// noop.
+	}
+
 	private static class ResetTrackTask implements Runnable {
 		@Override
 		public void run() {
@@ -108,42 +127,5 @@ public class AutoServiceThread extends Thread {
 			}
 		}
 		return res;
-	}
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Thread#run()
-	 */
-	@Override
-	public void run() {
-		boolean run = true;
-		while (run) {
-			try {
-				Preferences prefs = Preferences.get();
-				TrackStatus status = TrackStatus.get();
-				if (prefs.isAutoModeEnabled()) {
-					if (BatteryReceiver.get().isBatteryCharging() && 
-						!status.trackIsRunning()) {
-						if (trackIsExpired()) {
-							MainActivity.get().runOnUiThread(new ResetTrackTask());
-						}
-						MainActivity.get().runOnUiThread(new LocalizationTask(true));
-						MainActivity.get().runOnUiThread(new TrackingTask(true));
-					} else if (!BatteryReceiver.get().isBatteryCharging() && 
-						status.trackIsRunning()) {
-						MainActivity.get().runOnUiThread(new TrackingTask(false));
-						MainActivity.get().runOnUiThread(new LocalizationTask(false));
-						status.updateLastAutoModeStopSignalReceived();
-					}
-				} else if (prefs.isAutoStartEnabled() && !status.trackIsRunning()) {
-					MainActivity.get().runOnUiThread(new LocalizationTask(true));
-					MainActivity.get().runOnUiThread(new TrackingTask(true));
-				}
-				Thread.sleep(3000);
-			} catch (InterruptedException e) {
-				run = false;
-			} catch (Exception e) {
-				// noop.
-			}
-		}
 	}
 }

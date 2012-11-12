@@ -54,7 +54,7 @@ public class TcpUploader extends AbstractUploader {
 			SocketAddress serverAddress = new InetSocketAddress(
 				InetAddress.getByName(prefs.getServer()), port);
 			socket = new Socket();
-			socket.connect(serverAddress, 3000);
+			socket.connect(serverAddress, 5000);
 			socket.setSoTimeout(3000);
 			if (PositionBuffer.isEnabled()) {
 				socket.setSendBufferSize(prefs.getUplPositionBufferSize().getSize() * 1024);

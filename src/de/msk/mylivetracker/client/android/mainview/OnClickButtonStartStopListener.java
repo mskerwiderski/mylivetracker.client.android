@@ -8,10 +8,11 @@ import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.preferences.Preferences.TrackingOneTouchMode;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
+import de.msk.mylivetracker.client.android.upload.UploadService;
+import de.msk.mylivetracker.client.android.util.LogUtils;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractProgressDialog;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
-import de.msk.mylivetracker.client.android.util.service.ServiceUtils;
-import de.msk.mylivetracker.client.android.util.service.ServiceUtils.ServiceName;
+import de.msk.mylivetracker.client.android.util.service.AbstractService;
 
 /**
  * OnClickButtonStartStopListener.
@@ -104,7 +105,7 @@ public class OnClickButtonStartStopListener implements OnClickListener {
 		}
 		@Override
 		public void doTask(MainActivity activity) {
-			ServiceUtils.startService(ServiceName.UploadService);
+			AbstractService.startService(UploadService.class);
 		}
 		@Override
 		public void cleanUp(MainActivity activity) {
@@ -126,7 +127,7 @@ public class OnClickButtonStartStopListener implements OnClickListener {
 		}
 		@Override
 		public void doTask(MainActivity activity) {
-			ServiceUtils.stopService(ServiceName.UploadService);
+			AbstractService.stopService(UploadService.class);
 		}
 		@Override
 		public void cleanUp(MainActivity activity) {
@@ -158,12 +159,14 @@ public class OnClickButtonStartStopListener implements OnClickListener {
 	
 	public static void startStopTrack(final MainActivity activity, boolean start, boolean oneTouchMode) {
 		if (start) {
+			LogUtils.info(OnClickButtonStartStopListener.class, "start button pressed.");
 			StartTrackProgressDialog startTrackDialog = new StartTrackProgressDialog();
 			startTrackDialog.run(activity, 
 			R.string.txMain_InfoStartingTracking, 
 			R.string.txMain_InfoStartTrackDone,
 			oneTouchMode);
 		} else {
+			LogUtils.info(OnClickButtonStartStopListener.class, "stop button pressed.");
 			StopTrackProgressDialog stopTrackDialog = new StopTrackProgressDialog();
 			stopTrackDialog.run(activity, 
 			R.string.txMain_InfoStoppingTracking, 

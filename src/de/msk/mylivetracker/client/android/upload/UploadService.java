@@ -2,7 +2,7 @@ package de.msk.mylivetracker.client.android.upload;
 
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.util.service.AbstractService;
-import de.msk.mylivetracker.client.android.util.service.ServiceUtils.ServiceName;
+import de.msk.mylivetracker.client.android.util.service.AbstractServiceThread;
 
 /**
  * UploadService.
@@ -16,20 +16,19 @@ import de.msk.mylivetracker.client.android.util.service.ServiceUtils.ServiceName
  * 
  */
 public class UploadService extends AbstractService {
-	@Override
-	public void startServiceThread() {
-		UploadServiceThread.startUploadManager();
-	}
-	@Override
-	public void stopServiceThread() {
-		UploadServiceThread.stopUploadManager();
-	}
+	
+	
 	@Override
 	public NotificationDsc getNotificationDsc() {
 		return new NotificationDsc(
-			ServiceName.UploadService.getId(), 
+			100, 
 			R.drawable.icon_notification_red,
 			R.string.app_name,
 			R.string.nfTrackRunning);
+	}
+
+	@Override
+	public Class<? extends AbstractServiceThread> getServiceThreadClass() {
+		return UploadServiceThread.class;
 	}
 }

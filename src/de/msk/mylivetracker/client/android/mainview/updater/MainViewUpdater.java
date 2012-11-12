@@ -44,15 +44,18 @@ public class MainViewUpdater implements Runnable {
 	
 	private static String getUploaderCountUploaded(UploadInfo uploadInfo) {
 		if (uploadInfo == null) return UpdaterUtils.getNoValue();
-		return UpdaterUtils.getIntStr(uploadInfo.getCountUploaded()) + 
-			" " + uploadInfo.getLastUsedLocationProvider();
+		return 
+			UpdaterUtils.getIntStr(uploadInfo.getCountUploaded()) + 
+			"p (" + uploadInfo.getLastUsedLocationProvider() + ")";
 	}
 	
 	public static String getLocationAccuracyStr(LocationInfo locationInfo) {
 		if (locationInfo == null) return UpdaterUtils.getNoValue();
 		Location location = locationInfo.getLocation();
 		if ((location == null) || (!location.hasAccuracy())) return UpdaterUtils.getNoValue(); 
-		return UpdaterUtils.getFltStr(location.getAccuracy(), 0, Unit.Meter);
+		return 
+			UpdaterUtils.getFltStr(location.getAccuracy(), 0, Unit.Meter) + " (" +
+			LocationInfo.getProviderAbbr(locationInfo) + ")";
 	}
 	
 	private enum IndicatorState {

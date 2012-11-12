@@ -1,6 +1,7 @@
 package de.msk.mylivetracker.client.android.automode;
 
 import de.msk.mylivetracker.client.android.util.service.AbstractService;
+import de.msk.mylivetracker.client.android.util.service.AbstractServiceThread;
 
 /**
  * AutoService.
@@ -16,19 +17,12 @@ import de.msk.mylivetracker.client.android.util.service.AbstractService;
 public class AutoService extends AbstractService {
 
 	@Override
-	public void startServiceThread() {
-		AutoServiceThread.startAutoManager();		
-	}
-
-
-	@Override
-	public void stopServiceThread() {
-		AutoServiceThread.stopAutoManager();		
-	}
-
-
-	@Override
 	public NotificationDsc getNotificationDsc() {
 		return null;
+	}
+
+	@Override
+	public Class<? extends AbstractServiceThread> getServiceThreadClass() {
+		return AutoServiceThread.class;
 	}
 }
