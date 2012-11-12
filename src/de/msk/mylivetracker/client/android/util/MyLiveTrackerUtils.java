@@ -32,7 +32,7 @@ public class MyLiveTrackerUtils {
 		"51395",
 		"upl_mlt.sec",
 		"http://portal.mylivetracker.de/rpc.json",
-		"http://portal.mylivetracker.de/track_as_map.sec?pid"
+		"http://portal.mylivetracker.de/track_as_map.sec?pid="
 	};
 	
 	private static final String[] PARAMS_LOCALE = new String[] {
@@ -42,7 +42,7 @@ public class MyLiveTrackerUtils {
 		"51395",
 		"mylivetracker.server/upl_mlt.sec",
 		"http://skerwiderski.homedns.org:8080/mylivetracker.server/rpc.json",
-		"http://skerwiderski.homedns.org:8080/mylivetracker.server/track_as_map.sec?pid"
+		"http://skerwiderski.homedns.org:8080/mylivetracker.server/track_as_map.sec?pid="
 	};
 	
 	private static String getValue(Param param) {

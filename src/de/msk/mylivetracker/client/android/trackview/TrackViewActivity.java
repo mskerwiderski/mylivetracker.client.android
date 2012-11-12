@@ -9,6 +9,7 @@ import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.util.LogUtils;
 import de.msk.mylivetracker.client.android.util.MyLiveTrackerUtils;
 
 /**
@@ -36,7 +37,9 @@ public class TrackViewActivity extends AbstractActivity {
         
         String statusParamsId = Preferences.get().getStatusParamsId();
         if (!StringUtils.isEmpty(statusParamsId)) {
-        	webView.loadUrl(MyLiveTrackerUtils.getPortalStatusUrl(statusParamsId));
+        	String url = MyLiveTrackerUtils.getPortalStatusUrl(statusParamsId);
+        	webView.loadUrl(url);
+        	LogUtils.info(this.getClass(), url);
         } else {
         	String notLinkedToMyLiveTrackerPortal = 
         		"<html><body>" + 
