@@ -23,6 +23,7 @@ public class VersionUtils {
 	public static class VersionDsc {
 		private int code;
 		private String name;
+		boolean alpha;
 		boolean beta;
 		boolean test;
 		public VersionDsc() {
@@ -30,9 +31,8 @@ public class VersionUtils {
 		public VersionDsc(int code, String name) {
 			this.code = code;
 			this.name = name;
-			this.beta = 
-				StringUtils.contains(this.name, "alpha") || 
-				StringUtils.contains(this.name, "beta");
+			this.alpha = StringUtils.contains(this.name, "alpha"); 
+			this.beta = StringUtils.contains(this.name, "beta");
 			this.test = StringUtils.contains(this.name, "test");
 		}
 		public int getCode() {
@@ -40,6 +40,9 @@ public class VersionUtils {
 		}
 		public String getName() {
 			return name;
+		}
+		public boolean isAlpha() {
+			return alpha;
 		}
 		public boolean isBeta() {
 			return beta;
@@ -54,6 +57,11 @@ public class VersionUtils {
 	}
 	
 	private static VersionDsc versionDsc = null;
+	
+	public static boolean isAlpha() {
+		VersionDsc versionDsc = get();
+		return versionDsc.isAlpha();
+	}
 	
 	public static boolean isBeta() {
 		VersionDsc versionDsc = get();
