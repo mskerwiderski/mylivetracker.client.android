@@ -180,7 +180,7 @@ public class LocationInfo extends AbstractInfo {
 		String date = dateTime.getAsStr(TimeZone.getTimeZone(DateTime.TIME_ZONE_UTC), "ddMMyy");
 		
 		DecimalFormat decimalFmtSpeed = new DecimalFormat("0.0", new DecimalFormatSymbols(Locale.ENGLISH));
-		String speedInKnoten = decimalFmtSpeed.format(locationInfo.getLocation().getSpeed() / 1.852);
+		String speedInKnoten = decimalFmtSpeed.format(locationInfo.getLocation().getSpeed() * 3.6f / 1.852f);
 		
 		DecimalFormat decimalFmtBearing = new DecimalFormat("0.00", new DecimalFormatSymbols(Locale.ENGLISH));
 		String bearingInDegrees = decimalFmtBearing.format(locationInfo.getLocation().getBearing());
