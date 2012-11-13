@@ -351,8 +351,8 @@ public class Preferences {
 	// 
 	private static final int PREFERENCES_VERSION_MIN = 201;
 	private static final int PREFERENCES_VERSION_300 = 300;
-	private static final int PREFERENCES_VERSION_1430 = 1430;
-	private static final int PREFERENCES_VERSION_CURRENT = PREFERENCES_VERSION_1430;
+	private static final int PREFERENCES_VERSION_1400 = 1400;
+	private static final int PREFERENCES_VERSION_CURRENT = 1500;
 	
 	private static final String PREFERENCES_VERSION_VAR = "preferencesVersion";
 	private static final String PREFERENCES_VAR = "preferences";
@@ -424,7 +424,7 @@ public class Preferences {
 						preferences.trackingOneTouchMode = TrackingOneTouchMode.TrackingOnly;
 						doSave = true;
 					} 
-					if (preferencesVersion < PREFERENCES_VERSION_1430) {
+					if (preferencesVersion < PREFERENCES_VERSION_1400) {
 						preferences.firstStartOfApp = true;
 						preferences.statusParamsId = null;
 						if (preferences.transferProtocol.equals(TransferProtocol.fransonGpsGateHttp)) {
