@@ -32,6 +32,8 @@ import de.msk.mylivetracker.commons.protocol.ProtocolUtils;
 public class Preferences {
 	protected VersionDsc versionApp;
 	protected boolean firstStartOfApp;
+	protected String pinCode = "1234";
+	protected boolean pinCodeQuery;
 	protected TransferProtocol transferProtocol;
 	protected String statusParamsId;
 	protected String server;
@@ -352,7 +354,8 @@ public class Preferences {
 	private static final int PREFERENCES_VERSION_MIN = 201;
 	private static final int PREFERENCES_VERSION_300 = 300;
 	private static final int PREFERENCES_VERSION_1400 = 1400;
-	private static final int PREFERENCES_VERSION_CURRENT = 1500;
+	private static final int PREFERENCES_VERSION_1500 = 1500;
+	private static final int PREFERENCES_VERSION_CURRENT = PREFERENCES_VERSION_1500;
 	
 	private static final String PREFERENCES_VERSION_VAR = "preferencesVersion";
 	private static final String PREFERENCES_VAR = "preferences";
@@ -434,6 +437,10 @@ public class Preferences {
 						}
 						doSave = true;
 					}
+					if (preferencesVersion < PREFERENCES_VERSION_1500) {
+						preferences.pinCode = null;
+						preferences.pinCodeQuery = false;
+					}
 					if (!VersionUtils.isCurrent(context, preferences.versionApp)) {
 						preferences.firstStartOfApp = true;
 						preferences.versionApp = VersionUtils.get();
@@ -490,7 +497,18 @@ public class Preferences {
 		}
 		return res;
 	}
-	
+	public String getPinCode() {
+		return pinCode;
+	}
+	public void setPinCode(String pinCode) {
+		this.pinCode = pinCode;
+	}
+	public boolean isPinCodeQuery() {
+		return pinCodeQuery;
+	}
+	public void setPinCodeQuery(boolean pinCodeQuery) {
+		this.pinCodeQuery = pinCodeQuery;
+	}
 	public TransferProtocol getTransferProtocol() {
 		return transferProtocol;
 	}
@@ -503,332 +521,166 @@ public class Preferences {
 	public void setStatusParamsId(String statusParamsId) {
 		this.statusParamsId = statusParamsId;
 	}
-
-	/**
-	 * @return the server
-	 */
 	public String getServer() {
 		return server;
 	}
-	/**
-	 * @param server the server to set
-	 */
 	public void setServer(String server) {
 		this.server = server;
 	}
-	/**
-	 * @return the port
-	 */
 	public int getPort() {
 		return port;
 	}
-	/**
-	 * @param port the port to set
-	 */
 	public void setPort(int port) {
 		this.port = port;
 	}
-	/**
-	 * @return the path
-	 */
 	public String getPath() {
 		return path;
 	}
-
-	/**
-	 * @param path the path to set
-	 */
 	public void setPath(String path) {
 		this.path = path;
 	}
-	/**
-	 * @return the locTimeTriggerInSeconds
-	 */
 	public int getLocTimeTriggerInSeconds() {
 		return locTimeTriggerInSeconds;
 	}
-	/**
-	 * @param locTimeTriggerInSeconds the locTimeTriggerInSeconds to set
-	 */
 	public void setLocTimeTriggerInSeconds(int locTimeTriggerInSeconds) {
 		this.locTimeTriggerInSeconds = locTimeTriggerInSeconds;
 	}
-	/**
-	 * @return the locDistanceTriggerInMeter
-	 */
 	public int getLocDistanceTriggerInMeter() {
 		return locDistanceTriggerInMeter;
 	}
-	/**
-	 * @param locDistanceTriggerInMeter the locDistanceTriggerInMeter to set
-	 */
 	public void setLocDistanceTriggerInMeter(int locDistanceTriggerInMeter) {
 		this.locDistanceTriggerInMeter = locDistanceTriggerInMeter;
 	}
-	/**
-	 * @return the closeConnectionAfterEveryUpload
-	 */
 	public boolean isCloseConnectionAfterEveryUpload() {
 		return closeConnectionAfterEveryUpload;
 	}
-	/**
-	 * @param closeConnectionAfterEveryUpload the closeConnectionAfterEveryUpload to set
-	 */
 	public void setCloseConnectionAfterEveryUpload(
 			boolean closeConnectionAfterEveryUpload) {
 		this.closeConnectionAfterEveryUpload = closeConnectionAfterEveryUpload;
 	}
-	/**
-	 * @return the finishEveryUploadWithALinefeed
-	 */
 	public boolean isFinishEveryUploadWithALinefeed() {
 		return finishEveryUploadWithALinefeed;
 	}
-	/**
-	 * @param finishEveryUploadWithALinefeed the finishEveryUploadWithALinefeed to set
-	 */
 	public void setFinishEveryUploadWithALinefeed(
 			boolean finishEveryUploadWithALinefeed) {
 		this.finishEveryUploadWithALinefeed = finishEveryUploadWithALinefeed;
 	}
-	/**
-	 * @return the lineSeperator
-	 */
 	public String getLineSeperator() {
 		return lineSeperator;
 	}
-	/**
-	 * @param lineSeperator the lineSeperator to set
-	 */
 	public void setLineSeperator(String lineSeperator) {
 		this.lineSeperator = lineSeperator;
 	}
-	/**
-	 * @return the locAccuracyRequiredInMeter
-	 */
 	public int getLocAccuracyRequiredInMeter() {
 		return locAccuracyRequiredInMeter;
 	}
-	/**
-	 * @param locAccuracyRequiredInMeter the locAccuracyRequiredInMeter to set
-	 */
 	public void setLocAccuracyRequiredInMeter(int locAccuracyRequiredInMeter) {
 		this.locAccuracyRequiredInMeter = locAccuracyRequiredInMeter;
 	}
-	/**
-	 * @return the locDistBtwTwoLocsForDistCalcRequiredInCMtr
-	 */
 	public int getLocDistBtwTwoLocsForDistCalcRequiredInCMtr() {
 		return locDistBtwTwoLocsForDistCalcRequiredInCMtr;
 	}
-	/**
-	 * @param locDistBtwTwoLocsForDistCalcRequiredInCMtr the locDistBtwTwoLocsForDistCalcRequiredInCMtr to set
-	 */
 	public void setLocDistBtwTwoLocsForDistCalcRequiredInCMtr(
 			int locDistBtwTwoLocsForDistCalcRequiredInCMtr) {
 		this.locDistBtwTwoLocsForDistCalcRequiredInCMtr = locDistBtwTwoLocsForDistCalcRequiredInCMtr;
 	}
-	
-	/**
-	 * @return the uplTimeTrigger
-	 */
 	public UploadTimeTrigger getUplTimeTrigger() {
 		return uplTimeTrigger;
 	}
-
-	/**
-	 * @param uplTimeTrigger the uplTimeTrigger to set
-	 */
 	public void setUplTimeTrigger(UploadTimeTrigger uplTimeTrigger) {
 		this.uplTimeTrigger = uplTimeTrigger;
 	}
-
-	/**
-	 * @return the uplTriggerLogic
-	 */
 	public UploadTriggerLogic getUplTriggerLogic() {
 		return uplTriggerLogic;
 	}
-
-	/**
-	 * @param uplTriggerLogic the uplTriggerLogic to set
-	 */
 	public void setUplTriggerLogic(UploadTriggerLogic uplTriggerLogic) {
 		this.uplTriggerLogic = uplTriggerLogic;
 	}
-
-	/**
-	 * @return the uplDistanceTrigger
-	 */
 	public UploadDistanceTrigger getUplDistanceTrigger() {
 		return uplDistanceTrigger;
 	}
-
-	/**
-	 * @param uplDistanceTrigger the uplDistanceTrigger to set
-	 */
 	public void setUplDistanceTrigger(UploadDistanceTrigger uplDistanceTrigger) {
 		this.uplDistanceTrigger = uplDistanceTrigger;
 	}
-
-	/**
-	 * @return the uplPositionBufferSize
-	 */
 	public BufferSize getUplPositionBufferSize() {
 		return uplPositionBufferSize;
 	}
-	/**
-	 * @param uplPositionBufferSize the uplPositionBufferSize to set
-	 */
 	public void setUplPositionBufferSize(BufferSize uplPositionBufferSize) {
 		this.uplPositionBufferSize = uplPositionBufferSize;
 	}
-	/**
-	 * @return the phoneNumber
-	 */
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
-	/**
-	 * @param phoneNumber the phoneNumber to set
-	 */
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	/**
-	 * @return the deviceId
-	 */
 	public String getDeviceId() {
 		return deviceId;
 	}
-	/**
-	 * @param deviceId the deviceId to set
-	 */
 	public void setDeviceId(String deviceId) {
 		this.deviceId = deviceId;
 	}
-	/**
-	 * @return the trackName
-	 */
 	public String getTrackName() {
 		return trackName;
 	}
-	/**
-	 * @param trackName the trackName to set
-	 */
 	public void setTrackName(String trackName) {
 		this.trackName = trackName;
 	}
-	/**
-	 * @return the username
-	 */
 	public String getUsername() {
 		return username;
 	}
-	/**
-	 * @param username the username to set
-	 */
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
 	public String getSeed() {
 		return seed;
 	}
-
-	/**
-	 * @return the password
-	 */
 	public String getPassword() {
 		return password;
 	}
-	/**
-	 * @param password the password to set
-	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	/**
-	 * @return the localizationMode
-	 */
 	public LocalizationMode getLocalizationMode() {
 		return localizationMode;
 	}
-
-	/**
-	 * @param localizationMode the localizationMode to set
-	 */
 	public void setLocalizationMode(LocalizationMode localizationMode) {
 		this.localizationMode = localizationMode;
 	}
-	/**
-	 * @return the confirmLevel
-	 */
 	public ConfirmLevel getConfirmLevel() {
 		return confirmLevel;
 	}
-
-	/**
-	 * @param confirmLevel the confirmLevel to set
-	 */
 	public void setConfirmLevel(ConfirmLevel confirmLevel) {
 		this.confirmLevel = confirmLevel;
 	}
-
-	/**
-	 * @return the logging
-	 */
 	public Boolean getLogging() {
 		return logging;
 	}
-	/**
-	 * @param logging the logging to set
-	 */
 	public void setLogging(Boolean logging) {
 		this.logging = logging;
 	}
-
-	/**
-	 * @return the autoModeEnabled
-	 */
 	public boolean isAutoModeEnabled() {
 		return autoModeEnabled;
 	}
-
-	/**
-	 * @param autoModeEnabled the autoModeEnabled to set
-	 */
 	public void setAutoModeEnabled(boolean autoModeEnabled) {
 		this.autoModeEnabled = autoModeEnabled;
 	}
-
 	public AutoModeResetTrackMode getAutoModeResetTrackMode() {
 		return autoModeResetTrackMode;
 	}
-
 	public void setAutoModeResetTrackMode(
-			AutoModeResetTrackMode autoModeResetTrackMode) {
+		AutoModeResetTrackMode autoModeResetTrackMode) {
 		this.autoModeResetTrackMode = autoModeResetTrackMode;
 	}
-
-	/**
-	 * @return the autoStartEnabled
-	 */
 	public boolean isAutoStartEnabled() {
 		return autoStartEnabled;
 	}
-
-	/**
-	 * @param autoStartEnabled the autoStartEnabled to set
-	 */
 	public void setAutoStartEnabled(boolean autoStartEnabled) {
 		this.autoStartEnabled = autoStartEnabled;
 	}
-
 	public TrackingOneTouchMode getTrackingOneTouchMode() {
 		return trackingOneTouchMode;
 	}
-
 	public void setTrackingOneTouchMode(TrackingOneTouchMode trackingOneTouchMode) {
 		this.trackingOneTouchMode = trackingOneTouchMode;
 	}

@@ -34,6 +34,7 @@ public class VersionUtils {
 			this.alpha = StringUtils.contains(this.name, "alpha"); 
 			this.beta = StringUtils.contains(this.name, "beta");
 			this.test = StringUtils.contains(this.name, "test");
+			LogUtils.always(this.toString());
 		}
 		public int getCode() {
 			return code;
@@ -52,8 +53,9 @@ public class VersionUtils {
 		}
 		@Override
 		public String toString() {
-			return "v" + this.name;
-		}		
+			return "VersionDsc [code=" + code + ", name=" + name + ", alpha="
+				+ alpha + ", beta=" + beta + ", test=" + test + "]";
+		}
 	}
 	
 	private static VersionDsc versionDsc = null;

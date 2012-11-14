@@ -25,8 +25,8 @@
 	            android:layout_weight="1"	 
 	            android:gravity="center_vertical|center_horizontal"	             
 	        />
-	        <TextView
-	        	android:text="@string/tvMainDetails_UploaderLastResultCode"
+			<TextView
+	        	android:text="@string/tvMainDetails_UploaderCountUploaded"
 	        	android:textSize="6pt"
 	        	android:textColor="#000000"
 	        	android:background="#d4d0c8" 
@@ -38,8 +38,8 @@
 	            android:layout_weight="1.2"	 
 	            android:gravity="center_vertical|center_horizontal"	             
 	        />
-			<TextView
-	        	android:text="@string/tvMainDetails_UploaderCountUploaded"
+	        <TextView
+	        	android:text="@string/tvMainDetails_UploaderRealInterval"
 	        	android:textSize="6pt"
 	        	android:textColor="#000000"
 	        	android:background="#d4d0c8" 
@@ -99,9 +99,9 @@
 	            android:layout_weight="1"	 
 	            android:gravity="center_vertical|center_horizontal"	             
 	        />
-	        <TextView
-	        	android:id="@+id/tvMainDetails_UploaderLastResultCode"
-	        	android:text="OK"
+			<TextView
+	        	android:id="@+id/tvMainDetails_UploaderCountUploaded"
+	        	android:text="0000"
 	        	android:textSize="6pt"
 	        	android:textColor="#000000"
 	        	android:background="#f0f0f0" 
@@ -114,8 +114,8 @@
 	            android:gravity="center_vertical|center_horizontal"	             
 	        />
 			<TextView
-	        	android:id="@+id/tvMainDetails_UploaderCountUploaded"
-	        	android:text="0000"
+	        	android:id="@+id/tvMainDetails_UploaderRealInterval"
+	        	android:text="000.0"
 	        	android:textSize="6pt"
 	        	android:textColor="#000000"
 	        	android:background="#f0f0f0" 

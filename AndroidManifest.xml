@@ -23,6 +23,8 @@
 				<action android:name="android.intent.action.BOOT_COMPLETED"/>
 			</intent-filter>
 		</receiver> 
+		<activity android:name=".pincodequery.PinCodeQueryActivity" 
+			android:screenOrientation="portrait" />
         <activity android:name=".mainview.MainDetailsActivity" 
 			android:screenOrientation="portrait" />
         <activity android:name=".message.MessageActivity" 

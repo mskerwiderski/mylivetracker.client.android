@@ -38,14 +38,17 @@ public class UploadInfo extends AbstractInfo {
 	private String resultCode = null;	
 	private Integer countUploaded = null;
 	private Long avgUploadTimeInMSecs = null;
+	private Long realIntervalInMSecs = null;
 	private String lastUsedLocationProvider = null;
 	
 	private UploadInfo(Boolean status, String resultCode, Integer countUploaded,
-		Long avgUploadTimeInMSecs, String lastUsedLocationProvider) {
+		Long avgUploadTimeInMSecs, Long realIntervalInMSecs,
+		String lastUsedLocationProvider) {
 		this.status = status;
 		this.resultCode = resultCode;
 		this.countUploaded = countUploaded;
 		this.avgUploadTimeInMSecs = avgUploadTimeInMSecs;
+		this.realIntervalInMSecs = realIntervalInMSecs;
 		this.lastUsedLocationProvider = lastUsedLocationProvider;
 	}
 	
@@ -72,8 +75,17 @@ public class UploadInfo extends AbstractInfo {
 			avgUploadTimeInMSecs = currUploadInfo.avgUploadTimeInMSecs;
 		}
 		
+		Long realIntervalInMSecs = null;
+		if (countUploaded > 2) {
+			Long runtimeInMSecs = TrackStatus.get().getRuntimeInMSecs(false);
+			realIntervalInMSecs = runtimeInMSecs / (countUploaded - 1);
+		} else if ((currUploadInfo != null) && (currUploadInfo.realIntervalInMSecs != null)) {
+			realIntervalInMSecs = currUploadInfo.realIntervalInMSecs;
+		}
+		
 		return new UploadInfo(status, resultCode, countUploaded,
-			avgUploadTimeInMSecs, lastUsedLocationProvider);
+			avgUploadTimeInMSecs, realIntervalInMSecs, 
+			lastUsedLocationProvider);
 	}
 	
 	public boolean isSuccess() {
@@ -92,33 +104,21 @@ public class UploadInfo extends AbstractInfo {
 		return lastSuccUplDetectedInSecs <= periodOfRestInSecs;
 	}
 	
-	/**
-	 * @return the status
-	 */
 	public Boolean getStatus() {
 		return status;
 	}
-	/**
-	 * @return the resultCode
-	 */
 	public String getResultCode() {
 		return resultCode;
 	}
-	/**
-	 * @return the countUploaded
-	 */
 	public Integer getCountUploaded() {
 		return countUploaded;
 	}
-	/**
-	 * @return the avgUploadTimeInMSecs
-	 */
 	public Long getAvgUploadTimeInMSecs() {
 		return avgUploadTimeInMSecs;
 	}
-	/**
-	 * @return the lastUsedLocationProvider
-	 */
+	public Long getRealIntervalInMSecs() {
+		return realIntervalInMSecs;
+	}
 	public String getLastUsedLocationProvider() {
 		return lastUsedLocationProvider;
 	}

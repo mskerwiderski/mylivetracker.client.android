@@ -4,6 +4,7 @@ import de.msk.mylivetracker.client.android.util.LogUtils;
 
 public abstract class AbstractServiceThread extends Thread {
 
+	private volatile boolean stop = false;
 	private volatile boolean terminated = false;
 	
 	public void stopAndWaitUntilTerminated() {
@@ -11,9 +12,9 @@ public abstract class AbstractServiceThread extends Thread {
 			return;
 		}
 		LogUtils.info(this.getClass(), "stopAndWaitUntilTerminated...");
-		this.interrupt();
+		this.stop = true;
 		boolean interrupted = false;
-		while (!this.isAlive() && !interrupted) {
+		while (this.isAlive() && !interrupted) {
 			try {
 				Thread.sleep(50);
 			} catch (InterruptedException e) {
@@ -28,28 +29,29 @@ public abstract class AbstractServiceThread extends Thread {
 		if (this.terminated) {
 			throw new RuntimeException("thread already terminated.");
 		}
-		if (!this.isInterrupted()) {
+		if (!this.stop) {
 			try {
 				this.init();
 			} catch (InterruptedException e) {
+				this.stop = true;
 				LogUtils.info(this.getClass(), "init interrupted.");
 			}
 		}
-		if (!this.isInterrupted()) {
+		if (!this.stop) {
 			try {
-				boolean run = !this.isInterrupted(); 
-				while (run) {
+				while (!this.stop) {
 					this.runSinglePass();
 					if (this.runOnlyOneSinglePass()) {
-						run = false;
+						this.stop = true;
 					} else {
 						Thread.sleep(this.getSleepAfterRunSinglePassInMSecs());
-						run = !this.isInterrupted();
 					}
 				}
 			} catch (InterruptedException e) {
+				this.stop = true;
 				LogUtils.info(this.getClass(), "runSinglePass interrupted.");
 			} finally {
+				this.stop = true;
 				this.cleanUp();
 				LogUtils.info(this.getClass(), "cleanUp executed.");
 			}

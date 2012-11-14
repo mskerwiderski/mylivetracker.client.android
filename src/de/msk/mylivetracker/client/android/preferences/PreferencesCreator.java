@@ -38,6 +38,8 @@ public class PreferencesCreator {
 		Preferences prefs = new Preferences();
 		prefs.versionApp = VersionUtils.get();
 		prefs.firstStartOfApp = true;
+		prefs.pinCode = null;
+		prefs.pinCodeQuery = false;
 		prefs.transferProtocol = TransferProtocol.mltTcpEncrypted;
 		prefs.statusParamsId = null;
 		prefs.server = MyLiveTrackerUtils.getServerDns();

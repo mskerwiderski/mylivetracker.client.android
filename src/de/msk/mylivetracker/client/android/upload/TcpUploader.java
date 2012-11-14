@@ -12,6 +12,8 @@ import java.net.SocketAddress;
 
 import org.apache.commons.lang.StringUtils;
 
+import android.os.SystemClock;
+
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
@@ -88,6 +90,7 @@ public class TcpUploader extends AbstractUploader {
 		if (prefs.isFinishEveryUploadWithALinefeed()) {
 			dataStr += prefs.getLineSeperator();
 		}
+		long start = SystemClock.elapsedRealtime();
 		try {
 			this.checkConnection();
 			writer.print(dataStr);
@@ -108,11 +111,13 @@ public class TcpUploader extends AbstractUploader {
 	        	this.finish();
 	        }
 		} catch (Exception e) {
-			e.printStackTrace();
 			resultCode = MainActivity.get().getString(R.string.txMain_UploadResultFailed);		
 			this.finish();
+			if (e instanceof InterruptedException) {
+				Thread.currentThread().interrupt();				
+			}
 		} 
-		
+		long stop = SystemClock.elapsedRealtime();
 		if (!StringUtils.equals(resultCode, 
 				MainActivity.get().getString(R.string.txMain_UploadResultOk)) &&
 			!StringUtils.equals(resultCode, 
@@ -127,6 +132,7 @@ public class TcpUploader extends AbstractUploader {
 		
 		return new UploadResult(StringUtils.equals(resultCode, 
 			MainActivity.get().getString(R.string.txMain_UploadResultOk)),
+			stop - start,
 			PositionBuffer.isEnabled(), // buffer is active.
 			countPositionsUploaded, resultCode);
 	}

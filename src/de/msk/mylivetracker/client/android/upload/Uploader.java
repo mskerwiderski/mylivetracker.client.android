@@ -2,7 +2,6 @@ package de.msk.mylivetracker.client.android.upload;
 
 import java.util.Date;
 
-import android.os.SystemClock;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.preferences.Preferences.TransferProtocol;
@@ -77,8 +76,8 @@ public class Uploader {
 		return lastInfoTimestamp;
 	}	
 	
-	public static void upload(AbstractUploader uploader, LastInfoDsc lastInfoDsc) {
-		long start = SystemClock.elapsedRealtime();		
+	public static void upload(AbstractUploader uploader, LastInfoDsc lastInfoDsc)
+		throws InterruptedException {
 		Date lastInfoTimestamp = null;
 		PhoneStateInfo phoneStateInfo = PhoneStateInfo.get();
 		BatteryStateInfo batteryStateInfo = BatteryStateInfo.get();
@@ -148,12 +147,10 @@ public class Uploader {
 			}						
 		}		
 		
-		long stop = SystemClock.elapsedRealtime();	
-		
 		UploadInfo.update(uploadResult.isProcessed(), 
 			uploadResult.getResultCode(), 
 			uploadResult.getCountPositions(), 
-			stop - start,
+			uploadResult.getUploadTimeInMSecs(),
 			LocationInfo.getProviderAbbr(locationInfo));
 		
 		MainActivity.get().updateView();

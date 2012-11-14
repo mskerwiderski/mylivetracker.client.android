@@ -7,6 +7,8 @@ import java.net.URL;
 
 import org.apache.commons.lang.StringUtils;
 
+import android.os.SystemClock;
+
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
@@ -37,12 +39,11 @@ public class HttpUploader extends AbstractUploader {
 		BufferedReader bufferedReader = null;
 		int countPositionsUploaded = 0;
 		String resultCode = null;
-				
 		Preferences preferences = Preferences.get();
 		String urlStr = preferences.getServer();
 		urlStr += ":" + preferences.getPort();
 		urlStr += "/" + preferences.getPath();
-		
+		long start = SystemClock.elapsedRealtime();		
 		try {			
 			this.checkConnection();
 			URL url = new URL("http://" + urlStr + dataStr); 
@@ -51,8 +52,10 @@ public class HttpUploader extends AbstractUploader {
 			resultCode = bufferedReader.readLine();						
 			countPositionsUploaded = 1;
 		} catch (Exception e) {
-			e.printStackTrace();			
 			resultCode = MainActivity.get().getString(R.string.txMain_UploadResultFailed);
+			if (e instanceof InterruptedException) {
+				Thread.currentThread().interrupt();				
+			}
 		} finally {
 			if (bufferedReader != null) {
 				try {
@@ -62,7 +65,7 @@ public class HttpUploader extends AbstractUploader {
 				}
 			}
 		}
-		
+		long stop = SystemClock.elapsedRealtime();
 		if (!StringUtils.equals(resultCode, 
 				MainActivity.get().getString(R.string.txMain_UploadResultOk)) &&
 			!StringUtils.equals(resultCode, 
@@ -76,7 +79,8 @@ public class HttpUploader extends AbstractUploader {
 		}	
 		
 		return new UploadResult(StringUtils.equals(resultCode, 
-			MainActivity.get().getString(R.string.txMain_UploadResultOk)), 
+			MainActivity.get().getString(R.string.txMain_UploadResultOk)),
+			stop - start,
 			countPositionsUploaded, resultCode);
 	}
 

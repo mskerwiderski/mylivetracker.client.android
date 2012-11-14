@@ -47,10 +47,12 @@ public class UploadServiceThread extends AbstractServiceThread {
 	public void runSinglePass() throws InterruptedException {
 		Preferences prefs = Preferences.get();
 		LocationInfo locationInfo = LocationInfo.get();
+		if (!this.doUpload && this.runOnlyOneSinglePass) {
+			this.doUpload = true;
+		}
 		if (!this.doUpload && 
 			(this.lastInfoDsc.lastLocationInfo == null) && 
 			(locationInfo != null)) {
-			// do upload in every case, if first position was received.
 			this.doUpload = true;
 		}
 		int timeTrigger = prefs.getUplTimeTrigger().getSecs();
@@ -87,8 +89,10 @@ public class UploadServiceThread extends AbstractServiceThread {
 				this.doUpload = timeConditionFulfilled || distanceConditionFulfilled;
 			}
 		}
-		if (this.doUpload || this.runOnlyOneSinglePass) {
+		if (this.doUpload) {
 			Uploader.upload(this.uploader, this.lastInfoDsc);
+			lastUploaded = SystemClock.elapsedRealtime();
+			doUpload = false;
 		}
 	}
 

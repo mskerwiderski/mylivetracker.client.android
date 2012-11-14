@@ -29,18 +29,23 @@ import de.msk.mylivetracker.client.android.status.UploadInfo;
 public class MainDetailsViewUpdater implements Runnable {
 
 	private static void updateTvUploader(Activity act, UploadInfo uploadInfo) {
-		TextView tvLastResultCode = UpdaterUtils.tv(act, R.id.tvMainDetails_UploaderLastResultCode);
 		TextView tvCountUploaded =  UpdaterUtils.tv(act, R.id.tvMainDetails_UploaderCountUploaded);
+		TextView tvRealInterval = UpdaterUtils.tv(act, R.id.tvMainDetails_UploaderRealInterval);
 		TextView tvAverageUploadTime =  UpdaterUtils.tv(act, R.id.tvMainDetails_UploaderAverageUploadTime);
 		TextView tvPositionsInBuffer =  UpdaterUtils.tv(act, R.id.tvMainDetails_UploaderPositionsInBuffer);
 		if (uploadInfo == null) {
-			tvLastResultCode.setText(UpdaterUtils.getNoValue());
+			tvRealInterval.setText(UpdaterUtils.getNoValue());
 			tvCountUploaded.setText(UpdaterUtils.getNoValue());
 			tvAverageUploadTime.setText(UpdaterUtils.getNoValue());
 			tvPositionsInBuffer.setText(UpdaterUtils.getNoValue());
 		} else {
-			tvLastResultCode.setText(UpdaterUtils.getStr(uploadInfo.getResultCode()));
 			tvCountUploaded.setText(UpdaterUtils.getIntStr(uploadInfo.getCountUploaded()));
+			if (uploadInfo.getRealIntervalInMSecs() == null) {
+				tvRealInterval.setText(UpdaterUtils.getNoValue());
+			} else {
+				tvRealInterval.setText(UpdaterUtils.getDblStr(
+					uploadInfo.getRealIntervalInMSecs() / 1000d, 1, Unit.Seconds));
+			}
 			if (uploadInfo.getAvgUploadTimeInMSecs() == null) {
 				tvAverageUploadTime.setText(UpdaterUtils.getNoValue());
 			} else {

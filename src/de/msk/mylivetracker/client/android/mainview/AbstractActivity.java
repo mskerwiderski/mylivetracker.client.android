@@ -1,7 +1,10 @@
 package de.msk.mylivetracker.client.android.mainview;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryActivity;
 
 /**
  * AbstractActivity.
@@ -34,4 +37,9 @@ public class AbstractActivity extends Activity {
 		this.setTitle(this.getString(titleId));
 	}
 
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		this.startActivity(new Intent(this, PinCodeQueryActivity.class));
+		super.onCreate(savedInstanceState);
+	}
 }

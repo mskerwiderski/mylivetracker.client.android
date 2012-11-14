@@ -5,6 +5,7 @@ import org.apache.commons.lang.StringUtils;
 import android.content.Context;
 import android.widget.EditText;
 import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.preferences.Preferences.LocalizationMode;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
  
@@ -22,6 +23,23 @@ import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
  */
 public class ValidatorUtils {
 
+	public static boolean validatePinCode(
+		Context ctx, EditText editText) {
+		if (ctx == null) {
+			throw new IllegalArgumentException("ctx must not be null.");
+		}
+		if (editText == null) {
+			throw new IllegalArgumentException("editText must not be null.");
+		}
+		boolean valid = StringUtils.equals(
+			editText.getText().toString(), 
+			Preferences.get().getPinCode());
+		if (!valid) {
+			new SimpleInfoDialog(ctx, R.string.validator_pinCodeInvalid).show();
+		}
+		return valid;
+	}
+	
 	public static boolean validateIfLocalizationModeIsSupported(
 		Context ctx, LocalizationMode localizationMode, String localizationModeDisplayName) {
 		if (!localizationMode.supported()) {

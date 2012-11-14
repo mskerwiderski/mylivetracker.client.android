@@ -19,13 +19,17 @@ import android.util.Log;
 public class LogUtils {
 	private static final String LOG_TAG_GLOBAL = "MLT";
 	
+	public static void always(String logStr) {
+		Log.i(LOG_TAG_GLOBAL, logStr);
+	}
+	
 	public static void info(String logStr) {
-		if (!VersionUtils.isBeta()) return;
+		if (!VersionUtils.isAlpha() && !VersionUtils.isBeta()) return;
 		Log.i(LOG_TAG_GLOBAL, logStr);
 	}
 
 	public static void info(Class<?> clazz, String logStr) {
-		if (!VersionUtils.isAlpha() || !VersionUtils.isBeta()) return;
+		if (!VersionUtils.isAlpha() && !VersionUtils.isBeta()) return;
 		String className = "unknown";
 		if ((clazz != null) && !StringUtils.isEmpty(clazz.getSimpleName())) {
 			className = clazz.getSimpleName();

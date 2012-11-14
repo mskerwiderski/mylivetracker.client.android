@@ -17,6 +17,8 @@ import de.msk.mylivetracker.client.android.upload.protocol.IProtocol;
  */
 public class DummyUploader extends AbstractUploader {
 
+	private static final long SIMULATED_UPLOAD_TIME_IN_MSECS = 300;
+	
 	public DummyUploader(IProtocol protocol) {
 		super(protocol);
 	}
@@ -29,11 +31,11 @@ public class DummyUploader extends AbstractUploader {
 	@Override
 	public UploadResult upload(String dataStr) {
 		try {
-			Thread.sleep(300);
+			Thread.sleep(SIMULATED_UPLOAD_TIME_IN_MSECS);
 		} catch (InterruptedException e) {
-			// noop.
+			Thread.currentThread().interrupt();				
 		}
-		return new UploadResult(true, 1, 
+		return new UploadResult(true, SIMULATED_UPLOAD_TIME_IN_MSECS, 1, 
 			MainActivity.get().getString(R.string.txMain_UploadResultOk));
 	}
 }

@@ -39,55 +39,45 @@ public abstract class AbstractUploader {
 		private boolean processed = false; 
 		// successfully uploaded (but maybe not successfully processed on server side).
 		private boolean uploaded = false;
+		// upload time in milliseconds (even if upload failed).
+		private long uploadTimeInMSecs = 0;
 		// upload failed, but data strings has been buffered for later upload.
 		private boolean buffered = false;
 		private int countPositions = 0;
 		private String resultCode = "";
-		public UploadResult(boolean processed,  
+		public UploadResult(boolean processed,
+			long uploadTimeInMSecs,
 			int countPositions, String resultCode) {
-			this(processed, false, countPositions, resultCode);
+			this(processed, uploadTimeInMSecs, false, countPositions, resultCode);
 		}
-		public UploadResult(boolean processed, boolean buffered, 
+		public UploadResult(boolean processed, 
+			long uploadTimeInMSecs, boolean buffered, 
 			int countPositions, String resultCode) {
 			this.processed = processed;
 			this.buffered = buffered;
 			this.countPositions = countPositions; 
 			this.uploaded = (this.countPositions > 0);
+			this.uploadTimeInMSecs = uploadTimeInMSecs;
 			this.resultCode = resultCode;
 		}		
-		/**
-		 * @return the buffered
-		 */
 		public boolean isBuffered() {
 			return buffered;
 		}
-		/**
-		 * @return the processed
-		 */
 		public boolean isProcessed() {
 			return processed;
 		}
-		/**
-		 * @return the uploaded
-		 */
 		public boolean isUploaded() {
 			return uploaded;
 		}
-		/**
-		 * @return the countPositions
-		 */
+		protected long getUploadTimeInMSecs() {
+			return uploadTimeInMSecs;
+		}
 		public int getCountPositions() {
 			return countPositions;
 		}
-		/**
-		 * @return the resultCode
-		 */
 		public String getResultCode() {
 			return resultCode;
 		}
-		/* (non-Javadoc)
-		 * @see java.lang.Object#toString()
-		 */
 		@Override
 		public String toString() {
 			return "[uploaded=" + uploaded + ", resultCode="
@@ -113,7 +103,7 @@ public abstract class AbstractUploader {
 		GpsStateInfo gpsStateInfo,
 		HeartrateInfo heartrateInfo, 
 		EmergencySignalInfo emergencySignalInfo,
-		MessageInfo messageInfo) {
+		MessageInfo messageInfo) throws InterruptedException {
 		Preferences preferences = Preferences.get();
 		String dataStr = protocol.createDataStrForDataTransfer(
 			lastInfoTimestamp, 

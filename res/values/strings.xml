@@ -10,6 +10,10 @@
     <string name="prefsUpdated">Please verify your preferences, because they have been updated to version %1$s.</string>  
     <string name="prefsReset">Your preferences have been reset, because they could not be updated to version %1$s.</string>      
         
+    <!-- pin code query -->
+    <string name="tiPinCodeQuery">PIN Code</string>
+    <string name="lbPinCodeQuery_PinCodeQueryInfo">Please enter PIN Code:</string>
+        
     <!-- commons -->
     <string name="btSave">Save</string>
     <string name="btBack">Back</string>
@@ -107,8 +111,8 @@
     <string name="btMainDetails_SendSos">SOS</string>
     <string name="btMainDetails_SendMessage">Message</string>
     <string name="tvMainDetails_Uploader">Upl</string>
-    <string name="tvMainDetails_UploaderLastResultCode">Status</string>
     <string name="tvMainDetails_UploaderCountUploaded">Count</string>
+    <string name="tvMainDetails_UploaderRealInterval">Intv</string>
     <string name="tvMainDetails_UploaderAverageUploadTime">Utime</string>
     <string name="tvMainDetails_UploaderPositionsInBuffer">Buffer</string>    
     <string name="tvMainDetails_Battery">Batt</string>
@@ -244,6 +248,7 @@
     <string name="tvInfo_Mileage">Overall mileage</string>
     
     <!-- validators -->
+    <string name="validator.pinCodeInvalid">PIN Code is invalid!</string>
     <string name="validator.locationProviderNotSupported">Location provider %1$s is not supported on this device!</string>
     <string name="validator.valueMustNotBeEmpty">%1$s must not be empty!</string>
     <string name="validator.valueMustBeANumber">%1$s must be a number!</string>    

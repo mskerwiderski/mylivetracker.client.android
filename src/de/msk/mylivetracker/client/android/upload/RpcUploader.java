@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
+import android.os.SystemClock;
+
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.rpc.JsonRpcHttpClient;
@@ -52,6 +54,7 @@ public class RpcUploader extends AbstractUploader {
 		}
 		UplEncDataPacketsRequest request = new UplEncDataPacketsRequest(
 			MainActivity.getLocale().getLanguage(), positionsAsList);
+		long start = SystemClock.elapsedRealtime();
 		try {			
 			this.checkConnection();
 			JsonRpcHttpClient rcpClient = new JsonRpcHttpClient(new URL(
@@ -76,10 +79,12 @@ public class RpcUploader extends AbstractUploader {
 				resultCodeStr = MainActivity.get().getString(R.string.txMain_UploadResultFailed);
 			}
 		} catch (Throwable e) {
-			e.printStackTrace();			
 			resultCodeStr = MainActivity.get().getString(R.string.txMain_UploadResultFailed);
+			if (e instanceof InterruptedException) {
+				Thread.currentThread().interrupt();				
+			}
 		} 
-		
+		long stop = SystemClock.elapsedRealtime();
 		if (!StringUtils.equals(resultCodeStr, 
 				MainActivity.get().getString(R.string.txMain_UploadResultOk)) &&
 			!StringUtils.equals(resultCodeStr, 
@@ -94,6 +99,7 @@ public class RpcUploader extends AbstractUploader {
 		
 		return new UploadResult(StringUtils.equals(resultCodeStr, 
 			MainActivity.get().getString(R.string.txMain_UploadResultOk)), 
+			stop - start,
 			countPositionsUploaded, resultCodeStr);
 	}
 
