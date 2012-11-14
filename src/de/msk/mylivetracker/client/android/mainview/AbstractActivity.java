@@ -2,9 +2,10 @@ package de.msk.mylivetracker.client.android.mainview;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryActivity;
+import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.util.LogUtils;
 
 /**
  * AbstractActivity.
@@ -18,6 +19,17 @@ import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryActivity;
  * 
  */
 public class AbstractActivity extends Activity {
+
+	private static int activityActiveCounter = 0;
+	private static boolean pinCodeValid = false;
+	
+	protected static boolean isPinCodeValid() {
+		return pinCodeValid;
+	}
+
+	protected static void setPinCodeValid() {
+		AbstractActivity.pinCodeValid = true;
+	}
 
 	/* (non-Javadoc)
 	 * @see android.app.Activity#setTitle(java.lang.CharSequence)
@@ -38,8 +50,24 @@ public class AbstractActivity extends Activity {
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		this.startActivity(new Intent(this, PinCodeQueryActivity.class));
-		super.onCreate(savedInstanceState);
+	protected void onStart() {
+		LogUtils.info(this.getClass(), "onStart");
+		if (Preferences.get().isPinCodeQuery() && (activityActiveCounter == 0)) {
+			LogUtils.info(this.getClass(), "pinCodeQuery");
+			this.startActivity(new Intent(this, PinCodeQueryActivity.class));
+		}
+		activityActiveCounter++;
+		super.onStart();
+	}
+
+	@Override
+	protected void onStop() {
+		LogUtils.info(this.getClass(), "onStop");
+		activityActiveCounter--;
+		if (Preferences.get().isPinCodeQuery() && (activityActiveCounter == 0)) {
+			pinCodeValid = false;
+			LogUtils.info(this.getClass(), "pinCode invalidated");
+		}
+		super.onStop();
 	}
 }

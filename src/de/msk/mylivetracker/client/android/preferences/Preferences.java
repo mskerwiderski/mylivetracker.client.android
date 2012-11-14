@@ -32,7 +32,7 @@ import de.msk.mylivetracker.commons.protocol.ProtocolUtils;
 public class Preferences {
 	protected VersionDsc versionApp;
 	protected boolean firstStartOfApp;
-	protected String pinCode = "1234";
+	protected String pinCode;
 	protected boolean pinCodeQuery;
 	protected TransferProtocol transferProtocol;
 	protected String statusParamsId;
@@ -396,7 +396,7 @@ public class Preferences {
 		} else if (preferencesVersion < PREFERENCES_VERSION_MIN) {
 			Preferences.reset(context);
 			infoMessage = context.getString(R.string.prefsReset, 
-				VersionUtils.get().toString());
+				VersionUtils.get().getVersionStr());
 		} else {
 			String preferencesStr = prefs.getString(PREFERENCES_VAR, null);
 			if (!StringUtils.isEmpty(preferencesStr)) {

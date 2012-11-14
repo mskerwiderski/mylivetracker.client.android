@@ -51,6 +51,9 @@ public class VersionUtils {
 		public boolean isTest() {
 			return test;
 		}
+		public String getVersionStr() {
+			return "v" + this.name;
+		}
 		@Override
 		public String toString() {
 			return "VersionDsc [code=" + code + ", name=" + name + ", alpha="

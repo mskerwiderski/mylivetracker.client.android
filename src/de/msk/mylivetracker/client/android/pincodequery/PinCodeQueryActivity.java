@@ -40,6 +40,7 @@ public class PinCodeQueryActivity extends AbstractActivity {
 		public void onClick(View v) {
 			if (ValidatorUtils.validatePinCode(
 				this.activity, etPinCodeQuery_PinCode)) {
+				AbstractActivity.setPinCodeValid();
 				this.activity.finish();
 			}
 		}		
