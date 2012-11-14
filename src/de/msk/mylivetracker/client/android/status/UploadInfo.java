@@ -1,5 +1,6 @@
 package de.msk.mylivetracker.client.android.status;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import de.msk.mylivetracker.client.android.preferences.Preferences;
@@ -17,9 +18,12 @@ import de.msk.mylivetracker.client.android.preferences.Preferences;
  * 000 2011-08-26 initial.
  * 
  */
-public class UploadInfo extends AbstractInfo {
+public class UploadInfo extends AbstractInfo implements Serializable {
 
+	private static final long serialVersionUID = 3875399789159467945L;
+	
 	private static UploadInfo uploadInfo = null;
+	
 	public static void update(Boolean status, String resultCode,	
 		Integer positionsUploaded, Long uploadTimeInMSecs,
 		String lastUsedLocationProvider) {
@@ -33,13 +37,16 @@ public class UploadInfo extends AbstractInfo {
 	public static void reset() {
 		uploadInfo = null;
 	}
-	
+
 	private Boolean status = null;
 	private String resultCode = null;	
 	private Integer countUploaded = null;
 	private Long avgUploadTimeInMSecs = null;
 	private Long realIntervalInMSecs = null;
 	private String lastUsedLocationProvider = null;
+	
+	private UploadInfo() {
+	}
 	
 	private UploadInfo(Boolean status, String resultCode, Integer countUploaded,
 		Long avgUploadTimeInMSecs, Long realIntervalInMSecs,
@@ -76,7 +83,7 @@ public class UploadInfo extends AbstractInfo {
 		}
 		
 		Long realIntervalInMSecs = null;
-		if (countUploaded > 2) {
+		if (countUploaded >= 2) {
 			Long runtimeInMSecs = TrackStatus.get().getRuntimeInMSecs(false);
 			realIntervalInMSecs = runtimeInMSecs / (countUploaded - 1);
 		} else if ((currUploadInfo != null) && (currUploadInfo.realIntervalInMSecs != null)) {
@@ -122,4 +129,15 @@ public class UploadInfo extends AbstractInfo {
 	public String getLastUsedLocationProvider() {
 		return lastUsedLocationProvider;
 	}
+	@Override
+	public String toString() {
+		return "UploadInfo [status=" + status + ", resultCode=" + resultCode
+			+ ", countUploaded=" + countUploaded
+			+ ", avgUploadTimeInMSecs=" + avgUploadTimeInMSecs
+			+ ", realIntervalInMSecs=" + realIntervalInMSecs
+			+ ", lastUsedLocationProvider=" + lastUsedLocationProvider
+			+ "]";
+	}
+	
+	
 }

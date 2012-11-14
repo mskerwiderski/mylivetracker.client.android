@@ -1,5 +1,6 @@
 package de.msk.mylivetracker.client.android.status;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Date;
@@ -28,7 +29,9 @@ import de.msk.mylivetracker.commons.util.datetime.DateTime;
  * 000 2011-08-11 initial.
  * 
  */
-public class LocationInfo extends AbstractInfo {
+public class LocationInfo extends AbstractInfo implements Serializable {
+	private static final long serialVersionUID = -9163148611652412593L;
+
 	private static LocationInfo locationInfo = null;
 	public static void update(Location location) {
 		if (LocationInfo.skip(locationInfo, location)) {
@@ -48,6 +51,9 @@ public class LocationInfo extends AbstractInfo {
 	private Location lastLocationUsedForDistCalc = null;
 	private float trackDistanceInMtr = 0.0f;
 	private float mileageInMtr = 0.0f;
+	
+	private LocationInfo() {
+	}
 	
 	private LocationInfo(Location location,
 		Location lastLocationUsedForDistCalc,

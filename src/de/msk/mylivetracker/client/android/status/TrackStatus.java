@@ -17,6 +17,7 @@ import com.google.gson.JsonParseException;
 
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.util.LogUtils;
 
 /**
  * TrackStatus.
@@ -76,6 +77,8 @@ public class TrackStatus implements Serializable {
 			TRACK_STATUS_VERSION_VAR, 
 			serialVersionUID);
 		editor.putString(TRACK_STATUS_VAR, gson.toJson(temp));		
+		AbstractInfo.save(editor, gson, UploadInfo.get());
+		//AbstractInfo.save(editor, gson, LocationInfo.get());
 		editor.commit();			
 	}
 	
@@ -93,8 +96,11 @@ public class TrackStatus implements Serializable {
 				if (!StringUtils.isEmpty(trackStatusStr)) {
 					try {
 						Gson gson = new Gson();
-						trackStatus = gson.fromJson(trackStatusStr, TrackStatus.class);				
+						trackStatus = gson.fromJson(trackStatusStr, TrackStatus.class);
+						AbstractInfo.load(prefs, gson, UploadInfo.class);
+						//AbstractInfo.load(prefs, gson, LocationInfo.class);
 					} catch (JsonParseException e) {
+						LogUtils.info(TrackStatus.class, "loadTrackStatus failed: " + e.toString());
 						TrackStatus.reset();
 					}
 				} else {			
