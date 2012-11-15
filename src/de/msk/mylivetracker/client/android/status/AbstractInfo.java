@@ -36,7 +36,7 @@ public abstract class AbstractInfo {
 		return timestamp;
 	}
 	
-	public static AbstractInfo load(SharedPreferences prefs, Gson gson, Class<? extends AbstractInfo> infoClass) {
+	public static <T extends AbstractInfo> T load(SharedPreferences prefs, Gson gson, Class<T> infoClass) {
 		if (prefs == null) {
 			throw new IllegalArgumentException("prefs must not be null.");
 		}
@@ -48,7 +48,7 @@ public abstract class AbstractInfo {
 		}
 		String infoVar = infoClass.getSimpleName();
 		String infoStr = prefs.getString(infoVar, null);
-		AbstractInfo infoObj = gson.fromJson(infoStr, infoClass);
+		T infoObj = gson.fromJson(infoStr, infoClass);
 		LogUtils.info(AbstractInfo.class, infoVar + " loaded: " + infoObj.toString());
 		return infoObj;
 	}

@@ -97,17 +97,19 @@ public class TrackStatus implements Serializable {
 					try {
 						Gson gson = new Gson();
 						trackStatus = gson.fromJson(trackStatusStr, TrackStatus.class);
-						AbstractInfo.load(prefs, gson, UploadInfo.class);
+						UploadInfo.set(AbstractInfo.load(prefs, gson, UploadInfo.class));
 						//AbstractInfo.load(prefs, gson, LocationInfo.class);
 					} catch (JsonParseException e) {
 						LogUtils.info(TrackStatus.class, "loadTrackStatus failed: " + e.toString());
 						TrackStatus.reset();
 					}
 				} else {			
+					LogUtils.info(TrackStatus.class, "loadTrackStatus failed: no track status found");
 					TrackStatus.reset();			
 				}
 			}
 		} catch (Exception e) {
+			LogUtils.info(TrackStatus.class, "loadTrackStatus failed: " + e.toString());
 			TrackStatus.reset();
 		}
 	}

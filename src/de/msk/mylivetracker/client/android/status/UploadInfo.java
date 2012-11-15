@@ -34,6 +34,9 @@ public class UploadInfo extends AbstractInfo implements Serializable {
 	public static UploadInfo get() {
 		return uploadInfo;
 	}
+	public static void set(UploadInfo uploadInfo) {
+		UploadInfo.uploadInfo = uploadInfo;
+	}
 	public static void reset() {
 		uploadInfo = null;
 	}
