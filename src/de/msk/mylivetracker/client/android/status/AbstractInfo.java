@@ -53,18 +53,19 @@ public abstract class AbstractInfo {
 		return infoObj;
 	}
 	
-	public static void save(SharedPreferences.Editor editor, Gson gson, AbstractInfo infoObj) {
+	public static <T extends AbstractInfo> void save(SharedPreferences.Editor editor, Gson gson, Class<T> infoClass, AbstractInfo infoObj) {
 		if (editor == null) {
 			throw new IllegalArgumentException("editor must not be null.");
 		}
 		if (gson == null) {
 			throw new IllegalArgumentException("gson must not be null.");
 		}
-		if (infoObj != null) {
-			String infoVar = infoObj.getClass().getSimpleName();
-			String infoStr = gson.toJson(infoObj);
-			editor.putString(infoVar, infoStr);
-			LogUtils.info(AbstractInfo.class, infoVar + " saved: " + infoStr);
+		if (infoClass == null) {
+			throw new IllegalArgumentException("infoClass must not be null.");
 		}
+		String infoVar = infoClass.getSimpleName();
+		String infoStr = (infoObj != null) ? gson.toJson(infoObj) : null;
+		editor.putString(infoVar, infoStr);
+		LogUtils.info(AbstractInfo.class, infoVar + " saved: " + infoStr);
 	}
 }

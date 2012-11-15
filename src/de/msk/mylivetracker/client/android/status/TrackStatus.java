@@ -77,7 +77,7 @@ public class TrackStatus implements Serializable {
 			TRACK_STATUS_VERSION_VAR, 
 			serialVersionUID);
 		editor.putString(TRACK_STATUS_VAR, gson.toJson(temp));		
-		AbstractInfo.save(editor, gson, UploadInfo.get());
+		AbstractInfo.save(editor, gson, UploadInfo.class, UploadInfo.get());
 		//AbstractInfo.save(editor, gson, LocationInfo.get());
 		editor.commit();			
 	}
