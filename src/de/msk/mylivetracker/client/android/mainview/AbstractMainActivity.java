@@ -312,11 +312,7 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 			}
 			return true;
 		case R.id.mnPrefsPinCodeQuery:
-			if (TrackStatus.get().trackIsRunning()) {
-				showPrefsWarningDialogIfIsTrackRunning(PrefsPinCodeQueryActivity.class);
-			} else {
-				startActivity(new Intent(this, PrefsPinCodeQueryActivity.class));
-			}
+			startActivity(new Intent(this, PrefsPinCodeQueryActivity.class));
 			return true;	
 		case R.id.mnLinkSender:
 			if (TrackStatus.get().trackIsRunning()) {

@@ -36,6 +36,7 @@
     
     <!-- menu items -->
     <string name="mnCatPreferences">Preferences</string>
+    <string name="mnCatInfo">Info &amp; Exit</string>
     <string name="mnTrackView">Map</string>
     <string name="mnPrefsLocalization">Localization</string>
     <string name="mnPrefsServer">Server</string>

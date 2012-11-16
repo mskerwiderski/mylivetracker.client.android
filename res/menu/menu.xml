@@ -15,6 +15,11 @@
 	    </menu> 
     </item>
 	
-    <item android:id="@+id/mnInfo" android:title="@string/mnInfo" />
-    <item android:id="@+id/mnExit" android:title="@string/mnExit" />    
+    <item android:id="@+id/mnCatInfo"
+          android:title="@string/mnCatInfo" >
+    	<menu>
+		    <item android:id="@+id/mnInfo" android:title="@string/mnInfo" />
+		    <item android:id="@+id/mnExit" android:title="@string/mnExit" />
+    	</menu>
+    </item>    
 </menu>

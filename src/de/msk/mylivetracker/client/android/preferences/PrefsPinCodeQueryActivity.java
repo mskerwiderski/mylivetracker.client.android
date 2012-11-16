@@ -56,7 +56,11 @@ public class PrefsPinCodeQueryActivity extends AbstractActivity {
 					R.string.fdPrefsPinCodeQuery_PinCode, 
 					etPrefsPinCodeQuery_PinCode, 4, 6, true);
 			}
-			if (valid) {
+			if (!valid) {
+				etPrefsPinCodeQuery_PinCode.setText("");
+				etPrefsPinCodeQuery_PinCodeReenter.setText("");
+				etPrefsPinCodeQuery_PinCode.requestFocus();
+			} else {
 				preferences.setPinCodeQueryEnabled(cbPrefsPinCodeQuery_Enable.isChecked());
 				if (cbPrefsPinCodeQuery_Enable.isChecked()) {
 					preferences.setPinCode(etPrefsPinCodeQuery_PinCode.getText().toString());
@@ -94,9 +98,9 @@ public class PrefsPinCodeQueryActivity extends AbstractActivity {
         CheckBox cbPrefsPinCodeQuery_Enable = (CheckBox)findViewById(R.id.cbPrefsPinCodeQuery_Enable);
         cbPrefsPinCodeQuery_Enable.setChecked(prefs.isPinCodeQueryEnabled());
         EditText etPrefsPinCodeQuery_PinCode = (EditText) findViewById(R.id.etPrefsPinCodeQuery_PinCode);
-        etPrefsPinCodeQuery_PinCode.setText(prefs.getPinCode());
+        etPrefsPinCodeQuery_PinCode.setText("");
         EditText etPrefsPinCodeQuery_PinCodeReenter = (EditText) findViewById(R.id.etPrefsPinCodeQuery_PinCodeReenter);
-        etPrefsPinCodeQuery_PinCode.setText(prefs.getPinCode());
+        etPrefsPinCodeQuery_PinCodeReenter.setText("");
         etPrefsPinCodeQuery_PinCode.requestFocus();
         
         Button btPrefsPinCodeQuery_Ok = (Button) findViewById(R.id.btPrefsPinCodeQuery_Ok);

@@ -60,7 +60,7 @@
 	        android:id="@+id/etPrefsPinCodeQuery_PinCode"
 	        android:layout_width="fill_parent"
 	        android:layout_height="40dip"
-	        android:inputType="number|text|textPassword"
+	        android:inputType="textPassword"
 	        android:singleLine="true"
 	        android:text="" />
 
@@ -83,7 +83,7 @@
 	        android:id="@+id/etPrefsPinCodeQuery_PinCodeReenter"
 	        android:layout_width="fill_parent"
 	        android:layout_height="40dip"
-	        android:inputType="number|textPassword"
+	        android:inputType="textPassword"
 	        android:singleLine="true"
 	        android:text="" />
 
