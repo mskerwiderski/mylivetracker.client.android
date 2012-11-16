@@ -42,6 +42,7 @@
     <string name="mnPrefsAccount">Account</string>
     <string name="mnPrefsOther">Other</string>
     <string name="mnPrefsAuto">Auto</string>
+    <string name="mnPrefsPinCodeQuery">PIN code query</string>
     <string name="mnLinkSender">Linking</string>    
     <string name="mnInfo">Info</string>
     <string name="mnExit">Exit</string>
@@ -224,9 +225,13 @@
 	<string name="fdPrefsAuto_AutoStart">Auto Start</string>
     <string name="lbPrefsAuto_AutoStart">After a reboot of the smartphone, tracking will be started automatically.</string>
 	
-    <!-- preferences internal -->    
-    <string name="tiPrefsInternal">Internal preferences</string>
-    <string name="lbPrefsInternal_UploadThreadPriorityLevel">Priority level of the thread, which is responsible for uploading position data</string>
+    <!-- preferences pin code -->    
+    <string name="tiPrefsPinCodeQuery">PIN code query preferences</string>
+    <string name="lbPrefsPinCodeQuery_Info">Please note: A recovery of a lost PIN is not possible. In such a case you must re-install and re-configure the app.</string>
+    <string name="lbPrefsPinCodeQuery_Enable">Enable PIN code query</string>
+    <string name="fdPrefsPinCodeQuery_PinCode">PIN code</string>
+    <string name="lbPrefsPinCodeQuery_PinCode">Enter new PIN code:</string>
+    <string name="lbPrefsPinCodeQuery_PinCodeReenter">Reenter new PIN code:</string>
         
     <!-- link sender -->
     <string name="tiLinkSender">Link sender</string>
@@ -248,7 +253,8 @@
     <string name="tvInfo_Mileage">Overall mileage</string>
     
     <!-- validators -->
-    <string name="validator.pinCodeInvalid">PIN Code is invalid!</string>
+    <string name="validator.pinCodeInvalid">PIN code is invalid!</string>
+    <string name="validator.reenteredPinCodeNotEqualToPinCode">Reentered PIN code is not equal to PIN code!</string>
     <string name="validator.locationProviderNotSupported">Location provider %1$s is not supported on this device!</string>
     <string name="validator.valueMustNotBeEmpty">%1$s must not be empty!</string>
     <string name="validator.valueMustBeANumber">%1$s must be a number!</string>    

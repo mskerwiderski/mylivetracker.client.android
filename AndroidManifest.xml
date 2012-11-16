@@ -41,6 +41,8 @@
 			android:screenOrientation="portrait" />
 		<activity android:name=".preferences.PrefsAutoActivity" 
 			android:screenOrientation="portrait" />
+		<activity android:name=".preferences.PrefsPinCodeQueryActivity" 
+			android:screenOrientation="portrait" />
 		<activity android:name=".preferences.linksender.LinkSenderActivity" 
 			android:screenOrientation="portrait" />	
 		<activity android:name=".InfoActivity" 

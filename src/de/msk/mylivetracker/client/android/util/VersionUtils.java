@@ -23,6 +23,7 @@ public class VersionUtils {
 	public static class VersionDsc {
 		private int code;
 		private String name;
+		boolean pro;
 		boolean alpha;
 		boolean beta;
 		boolean test;
@@ -31,9 +32,10 @@ public class VersionUtils {
 		public VersionDsc(int code, String name) {
 			this.code = code;
 			this.name = name;
-			this.alpha = StringUtils.contains(this.name, "alpha"); 
-			this.beta = StringUtils.contains(this.name, "beta");
-			this.test = StringUtils.contains(this.name, "test");
+			this.pro = StringUtils.containsIgnoreCase(this.name, "pro");
+			this.alpha = StringUtils.containsIgnoreCase(this.name, "alpha"); 
+			this.beta = StringUtils.containsIgnoreCase(this.name, "beta");
+			this.test = StringUtils.containsIgnoreCase(this.name, "test");
 			LogUtils.always(this.toString());
 		}
 		public int getCode() {
@@ -41,6 +43,9 @@ public class VersionUtils {
 		}
 		public String getName() {
 			return name;
+		}
+		public boolean isPro() {
+			return pro;
 		}
 		public boolean isAlpha() {
 			return alpha;
@@ -56,12 +61,18 @@ public class VersionUtils {
 		}
 		@Override
 		public String toString() {
-			return "VersionDsc [code=" + code + ", name=" + name + ", alpha="
-				+ alpha + ", beta=" + beta + ", test=" + test + "]";
+			return "VersionDsc [code=" + code + ", name=" + name + ", pro="
+				+ pro + ", alpha=" + alpha + ", beta=" + beta + ", test="
+				+ test + "]";
 		}
 	}
 	
 	private static VersionDsc versionDsc = null;
+	
+	public static boolean isPro() {
+		VersionDsc versionDsc = get();
+		return versionDsc.isPro();
+	}
 	
 	public static boolean isAlpha() {
 		VersionDsc versionDsc = get();

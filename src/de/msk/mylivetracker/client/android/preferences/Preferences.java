@@ -33,7 +33,7 @@ public class Preferences {
 	protected VersionDsc versionApp;
 	protected boolean firstStartOfApp;
 	protected String pinCode;
-	protected boolean pinCodeQuery;
+	protected boolean pinCodeQueryEnabled;
 	protected TransferProtocol transferProtocol;
 	protected String statusParamsId;
 	protected String server;
@@ -439,7 +439,7 @@ public class Preferences {
 					}
 					if (preferencesVersion < PREFERENCES_VERSION_1500) {
 						preferences.pinCode = null;
-						preferences.pinCodeQuery = false;
+						preferences.pinCodeQueryEnabled = false;
 					}
 					if (!VersionUtils.isCurrent(context, preferences.versionApp)) {
 						preferences.firstStartOfApp = true;
@@ -448,17 +448,17 @@ public class Preferences {
 					if (doSave) {
 						save();
 						infoMessage = context.getString(R.string.prefsUpdated, 
-							VersionUtils.get().toString());
+							VersionUtils.get().getVersionStr());
 					}
 				} catch (Exception e) {
 					Preferences.reset(context);
 					infoMessage = context.getString(R.string.prefsReset, 
-						VersionUtils.get().toString());
+						VersionUtils.get().getVersionStr());
 				}
 			} else {			
 				Preferences.reset(context);			
 				infoMessage = context.getString(R.string.prefsReset, 
-					VersionUtils.get().toString());
+					VersionUtils.get().getVersionStr());
 			}
 		}
 		if (!StringUtils.isEmpty(infoMessage) && MainActivity.exists()) {
@@ -503,11 +503,11 @@ public class Preferences {
 	public void setPinCode(String pinCode) {
 		this.pinCode = pinCode;
 	}
-	public boolean isPinCodeQuery() {
-		return pinCodeQuery;
+	public boolean isPinCodeQueryEnabled() {
+		return pinCodeQueryEnabled;
 	}
-	public void setPinCodeQuery(boolean pinCodeQuery) {
-		this.pinCodeQuery = pinCodeQuery;
+	public void setPinCodeQueryEnabled(boolean pinCodeQueryEnabled) {
+		this.pinCodeQueryEnabled = pinCodeQueryEnabled;
 	}
 	public TransferProtocol getTransferProtocol() {
 		return transferProtocol;

@@ -24,18 +24,38 @@ import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
 public class ValidatorUtils {
 
 	public static boolean validatePinCode(
-		Context ctx, EditText editText) {
+		Context ctx, EditText etPinCode) {
 		if (ctx == null) {
 			throw new IllegalArgumentException("ctx must not be null.");
 		}
-		if (editText == null) {
-			throw new IllegalArgumentException("editText must not be null.");
+		if (etPinCode == null) {
+			throw new IllegalArgumentException("etPinCode must not be null.");
 		}
 		boolean valid = StringUtils.equals(
-			editText.getText().toString(), 
+			etPinCode.getText().toString(), 
 			Preferences.get().getPinCode());
 		if (!valid) {
 			new SimpleInfoDialog(ctx, R.string.validator_pinCodeInvalid).show();
+		}
+		return valid;
+	}
+	
+	public static boolean validatePinCodeEqualsPinCodeReentered(
+		Context ctx, EditText etPinCode, EditText etPinCodeReentered) {
+		if (ctx == null) {
+			throw new IllegalArgumentException("ctx must not be null.");
+		}
+		if (etPinCode == null) {
+			throw new IllegalArgumentException("etPinCode must not be null.");
+		}
+		if (etPinCodeReentered == null) {
+			throw new IllegalArgumentException("etPinCodeReentered must not be null.");
+		}
+		boolean valid = StringUtils.equals(
+			etPinCode.getText().toString(), 
+			etPinCodeReentered.getText().toString());
+		if (!valid) {
+			new SimpleInfoDialog(ctx, R.string.validator_reenteredPinCodeNotEqualToPinCode).show();
 		}
 		return valid;
 	}

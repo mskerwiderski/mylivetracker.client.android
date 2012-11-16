@@ -11,7 +11,8 @@
 		    <item android:id="@+id/mnLinkSender" android:title="@string/mnLinkSender" />
 		    <item android:id="@+id/mnPrefsOther" android:title="@string/mnPrefsOther" />    
 		    <item android:id="@+id/mnPrefsAuto" android:title="@string/mnPrefsAuto" />
-	    </menu>
+		    <item android:id="@+id/mnPrefsPinCodeQuery" android:title="@string/mnPrefsPinCodeQuery" />
+	    </menu> 
     </item>
 	
     <item android:id="@+id/mnInfo" android:title="@string/mnInfo" />

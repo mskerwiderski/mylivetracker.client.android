@@ -52,7 +52,7 @@ public class AbstractActivity extends Activity {
 	@Override
 	protected void onStart() {
 		LogUtils.info(this.getClass(), "onStart");
-		if (Preferences.get().isPinCodeQuery() && (activityActiveCounter == 0)) {
+		if (Preferences.get().isPinCodeQueryEnabled() && (activityActiveCounter == 0)) {
 			LogUtils.info(this.getClass(), "pinCodeQuery");
 			this.startActivity(new Intent(this, PinCodeQueryActivity.class));
 		}
@@ -64,7 +64,7 @@ public class AbstractActivity extends Activity {
 	protected void onStop() {
 		LogUtils.info(this.getClass(), "onStop");
 		activityActiveCounter--;
-		if (Preferences.get().isPinCodeQuery() && (activityActiveCounter == 0)) {
+		if (Preferences.get().isPinCodeQueryEnabled() && (activityActiveCounter == 0)) {
 			pinCodeValid = false;
 			LogUtils.info(this.getClass(), "pinCode invalidated");
 		}
