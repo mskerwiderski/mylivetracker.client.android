@@ -1,7 +1,7 @@
 package de.msk.mylivetracker.client.android.upload.protocol.xexun.tk102;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
@@ -18,6 +18,7 @@ import de.msk.mylivetracker.client.android.status.MessageInfo;
 import de.msk.mylivetracker.client.android.status.NmeaInfo;
 import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
 import de.msk.mylivetracker.client.android.upload.protocol.IProtocol;
+import de.msk.mylivetracker.commons.util.datetime.DateTime;
 
 /**
  * ProtocolEncoder.
@@ -47,23 +48,15 @@ public class ProtocolEncoder implements IProtocol {
 		String username, String password) {
 		Preferences prefs = Preferences.get();		
 		String dataStr = "";
-
-		SimpleDateFormat datetimef = new SimpleDateFormat("yyMMddHHmmss");
-		dataStr += datetimef.format(lastInfoTimestamp) + SEPERATOR;		
+		DateTime dateTime = new DateTime(lastInfoTimestamp.getTime());
+		String dateTimeStr = dateTime.getAsStr(TimeZone.getTimeZone(DateTime.TIME_ZONE_UTC), "yyMMddHHmmss");
+		dataStr += dateTimeStr + SEPERATOR;
 		dataStr += (StringUtils.isEmpty(prefs.getPhoneNumber()) ? "" : prefs.getPhoneNumber()) + SEPERATOR;
-		String nmeaGprmc = null;
-		if (nmeaInfo != null) {
-			// disable nmea sentences from os.
-			//nmeaGprmc = nmeaInfo.getGprmc();
-		}
-		if (!StringUtils.isEmpty(nmeaGprmc)) {
-			dataStr += StringUtils.substring(nmeaGprmc, 1) + SEPERATOR;
-		} else if ((locationInfo != null) && (locationInfo.getLocation() != null)) {
+		if ((locationInfo != null) && (locationInfo.getLocation() != null)) {
 			dataStr += LocationInfo.getLocationAsGprmcRecord(locationInfo) + SEPERATOR;
 		} else {
 			dataStr += StringUtils.substring(NmeaInfo.GPRMC_EMPTY_SENTENCE, 1) + SEPERATOR;
 		}
-		
 		boolean locValid = false;
 		String altitude = "";
 		if ((locationInfo != null) && (locationInfo.getLocation() != null)) {
