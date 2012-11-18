@@ -43,6 +43,9 @@ public class LocationInfo extends AbstractInfo implements Serializable {
 	public static LocationInfo get() {
 		return locationInfo;
 	}	
+	public static void set(LocationInfo locationInfo) {
+		LocationInfo.locationInfo = locationInfo;
+	}
 	public static void reset() {
 		locationInfo = null;
 	}

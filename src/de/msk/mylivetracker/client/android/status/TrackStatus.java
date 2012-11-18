@@ -78,6 +78,7 @@ public class TrackStatus implements Serializable {
 			serialVersionUID);
 		editor.putString(TRACK_STATUS_VAR, gson.toJson(temp));		
 		AbstractInfo.save(editor, gson, UploadInfo.class, UploadInfo.get());
+		AbstractInfo.save(editor, gson, HeartrateInfo.class, HeartrateInfo.get());
 		//AbstractInfo.save(editor, gson, LocationInfo.get());
 		editor.commit();			
 	}
@@ -98,6 +99,7 @@ public class TrackStatus implements Serializable {
 						Gson gson = new Gson();
 						trackStatus = gson.fromJson(trackStatusStr, TrackStatus.class);
 						UploadInfo.set(AbstractInfo.load(prefs, gson, UploadInfo.class));
+						HeartrateInfo.set(AbstractInfo.load(prefs, gson, HeartrateInfo.class));
 						//AbstractInfo.load(prefs, gson, LocationInfo.class);
 					} catch (JsonParseException e) {
 						LogUtils.info(TrackStatus.class, "loadTrackStatus failed: " + e.toString());

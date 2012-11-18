@@ -264,8 +264,7 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 			ExitProgressDialog exitDialog = new ExitProgressDialog();
 			exitDialog.run(
 				MainDetailsActivity.isActive() ? 
-					MainDetailsActivity.get() : MainActivity.get(), 
-				R.string.txMain_InfoExitApp);
+					MainDetailsActivity.get() : MainActivity.get());
 	    }
 	};
 	

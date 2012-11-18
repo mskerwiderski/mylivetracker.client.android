@@ -24,6 +24,9 @@ public class HeartrateInfo extends AbstractInfo {
 	public static HeartrateInfo get() {
 		return heartrateInfo;
 	}
+	public static void set(HeartrateInfo heartrateInfo) {
+		HeartrateInfo.heartrateInfo = heartrateInfo;
+	}
 	public static void reset() {
 		heartrateInfo = null;
 	}
@@ -35,6 +38,9 @@ public class HeartrateInfo extends AbstractInfo {
 	private Long hrMinInBpm = null;
 	private Long hrMaxInBpm = null;
 	private Long hrAvgInBpm = null;
+	
+	private HeartrateInfo() {
+	}
 	
 	private HeartrateInfo(Long hrInBpm, String hrInBpmStr, 
 		Long beatCnt, Long measureCnt,

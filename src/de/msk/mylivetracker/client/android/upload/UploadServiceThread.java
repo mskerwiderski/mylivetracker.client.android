@@ -36,7 +36,9 @@ public class UploadServiceThread extends AbstractServiceThread {
 	
 	@Override
 	public void init() throws InterruptedException {
-		TrackStatus.get().markAsStarted();
+		if (!this.runOnlyOneSinglePass) {
+			TrackStatus.get().markAsStarted();
+		}
 		this.uploader = Uploader.createUploader();
 		this.doUpload = true;
 		this.lastUploaded = SystemClock.elapsedRealtime();
@@ -103,7 +105,9 @@ public class UploadServiceThread extends AbstractServiceThread {
 
 	@Override
 	public void cleanUp() {
-		TrackStatus.get().markAsStopped();
+		if (!this.runOnlyOneSinglePass) {
+			TrackStatus.get().markAsStopped();
+		}
 	}
 
 	@Override
