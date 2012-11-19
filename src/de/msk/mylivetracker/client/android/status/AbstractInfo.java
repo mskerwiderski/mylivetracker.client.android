@@ -2,6 +2,8 @@ package de.msk.mylivetracker.client.android.status;
 
 import java.util.Date;
 
+import org.apache.commons.lang.StringUtils;
+
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
@@ -46,10 +48,14 @@ public abstract class AbstractInfo {
 		if (infoClass == null) {
 			throw new IllegalArgumentException("infoClass must not be null.");
 		}
+		T infoObj = null;
 		String infoVar = infoClass.getSimpleName();
 		String infoStr = prefs.getString(infoVar, null);
-		T infoObj = gson.fromJson(infoStr, infoClass);
-		LogUtils.info(AbstractInfo.class, infoVar + " loaded: " + infoObj.toString());
+		if (!StringUtils.isEmpty(infoStr)) {
+			infoObj = gson.fromJson(infoStr, infoClass);
+		}
+		LogUtils.info(AbstractInfo.class, infoVar + " loaded: " + 
+			((infoObj != null) ? infoObj.toString() : "<empty>"));
 		return infoObj;
 	}
 	
@@ -66,6 +72,7 @@ public abstract class AbstractInfo {
 		String infoVar = infoClass.getSimpleName();
 		String infoStr = (infoObj != null) ? gson.toJson(infoObj) : null;
 		editor.putString(infoVar, infoStr);
-		LogUtils.info(AbstractInfo.class, infoVar + " saved: " + infoStr);
+		LogUtils.info(AbstractInfo.class, infoVar + " saved: " + 
+			(!StringUtils.isEmpty(infoStr) ? infoStr : "<empty>"));
 	}
 }

@@ -3,7 +3,6 @@ package de.msk.mylivetracker.client.android.mainview.updater;
 import org.apache.commons.lang.StringUtils;
 
 import android.content.res.Resources;
-import android.location.Location;
 import android.widget.TextView;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.listener.LocationListener;
@@ -51,10 +50,9 @@ public class MainViewUpdater implements Runnable {
 	
 	public static String getLocationAccuracyStr(LocationInfo locationInfo) {
 		if (locationInfo == null) return UpdaterUtils.getNoValue();
-		Location location = locationInfo.getLocation();
-		if ((location == null) || (!location.hasAccuracy())) return UpdaterUtils.getNoValue(); 
+		if (locationInfo.getAccuracy() == null) return UpdaterUtils.getNoValue(); 
 		return 
-			UpdaterUtils.getFltStr(location.getAccuracy(), 0, Unit.Meter) + " (" +
+			UpdaterUtils.getFltStr(locationInfo.getAccuracy(), 0, Unit.Meter) + " (" +
 			LocationInfo.getProviderAbbr(locationInfo) + ")";
 	}
 	

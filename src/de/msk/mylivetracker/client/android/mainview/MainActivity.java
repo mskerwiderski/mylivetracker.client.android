@@ -33,7 +33,6 @@ import de.msk.mylivetracker.client.android.listener.AntPlusListener;
 import de.msk.mylivetracker.client.android.listener.AntPlusManager;
 import de.msk.mylivetracker.client.android.listener.GpsStateListener;
 import de.msk.mylivetracker.client.android.listener.LocationListener;
-import de.msk.mylivetracker.client.android.listener.NmeaListener;
 import de.msk.mylivetracker.client.android.listener.PhoneStateListener;
 import de.msk.mylivetracker.client.android.mainview.updater.MainDetailsViewUpdater;
 import de.msk.mylivetracker.client.android.mainview.updater.MainViewUpdater;
@@ -431,8 +430,6 @@ public class MainActivity extends AbstractMainActivity {
 		Preferences preferences = Preferences.get();
 		this.getLocationManager().
 			addGpsStatusListener(GpsStateListener.get());
-		this.getLocationManager().
-			addNmeaListener(NmeaListener.get());
 		if (preferences.getLocalizationMode().gpsProviderEnabled()) {
 			this.getLocationManager().requestLocationUpdates(
 				LocationManager.GPS_PROVIDER, 

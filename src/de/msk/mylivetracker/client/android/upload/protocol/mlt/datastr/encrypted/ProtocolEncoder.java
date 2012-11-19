@@ -4,7 +4,6 @@ import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
 
-import android.location.Location;
 import android.telephony.ServiceState;
 import android.telephony.gsm.GsmCellLocation;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
@@ -14,7 +13,6 @@ import de.msk.mylivetracker.client.android.status.GpsStateInfo;
 import de.msk.mylivetracker.client.android.status.HeartrateInfo;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
 import de.msk.mylivetracker.client.android.status.MessageInfo;
-import de.msk.mylivetracker.client.android.status.NmeaInfo;
 import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.upload.protocol.IProtocol;
@@ -44,7 +42,7 @@ public class ProtocolEncoder extends EncDecoder implements IProtocol {
 	@Override
 	public String createDataStrForDataTransfer(Date lastInfoTimestamp,
 		PhoneStateInfo phoneStateInfo, BatteryStateInfo batteryStateInfo,
-		LocationInfo locationInfo, NmeaInfo nmeaInfo,
+		LocationInfo locationInfo, 
 		GpsStateInfo gpsStateInfo, HeartrateInfo heartrateInfo,
 		EmergencySignalInfo emergencySignalInfo, MessageInfo messageInfo,
 		String username, String password) {
@@ -93,19 +91,19 @@ public class ProtocolEncoder extends EncDecoder implements IProtocol {
 			}
 		}
 		
-		if ((locationInfo != null) && (locationInfo.getLocation() != null)) {
-			Location location = locationInfo.getLocation();
-			data.setLatitudeInDecimal(location.getLatitude());
-			data.setLongitudeInDecimal(location.getLongitude());						
-			if (location.hasAltitude()) {
-				data.setAltitudeInMtr(location.getAltitude());
+		if ((locationInfo != null) && locationInfo.hasLatLon()) {
+			data.setLatitudeInDecimal(locationInfo.getLatitude());
+			data.setLongitudeInDecimal(locationInfo.getLongitude());						
+			if (locationInfo.getAltitude() != null) {
+				data.setAltitudeInMtr(locationInfo.getAltitude());
 			}
-			if (location.hasSpeed()) {
-				data.setSpeedInMtrPerSecs(Double.valueOf(location.getSpeed()));
+			if (locationInfo.getSpeed() != null) {
+				data.setSpeedInMtrPerSecs(Double.valueOf(locationInfo.getSpeed()));
 			}
-			if (location.hasAccuracy()) {
-				data.setLocationAccuracyInMtr(Double.valueOf(location.getAccuracy()));				
+			if (locationInfo.getAccuracy() != null) {
+				data.setLocationAccuracyInMtr(Double.valueOf(locationInfo.getAccuracy()));				
 			}
+			// TODO bearing
 			data.setLocationValid(locationInfo.isAccurate());
 			data.setMileageInMtr(new Double(locationInfo.getMileageInMtr()));
 			data.setTrackDistanceInMtr(new Float(locationInfo.getTrackDistanceInMtr()));

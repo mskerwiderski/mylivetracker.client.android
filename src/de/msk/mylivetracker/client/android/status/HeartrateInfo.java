@@ -1,5 +1,6 @@
 package de.msk.mylivetracker.client.android.status;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.wahoofitness.api.data.WFHeartrateData;
@@ -15,7 +16,8 @@ import com.wahoofitness.api.data.WFHeartrateData;
  * 000 initial 2011-08-11
  * 
  */
-public class HeartrateInfo extends AbstractInfo {	
+public class HeartrateInfo extends AbstractInfo implements Serializable {	
+	private static final long serialVersionUID = -4613427339180995270L;
 	private static HeartrateInfo heartrateInfo = null;
 	public static void update(WFHeartrateData heartrateData) {
 		heartrateInfo = 

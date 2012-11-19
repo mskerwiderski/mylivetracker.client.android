@@ -70,16 +70,16 @@ public class TrackStatus implements Serializable {
 		SharedPreferences prefs = MainActivity.get().
 			getSharedPreferences(Preferences.DB_NAME, 0);
 		SharedPreferences.Editor editor = prefs.edit();
-		Gson gson = new Gson();
 		TrackStatus temp = trackStatus.deepCopy();
 		temp.markAsStopped();
 		editor.putLong(
 			TRACK_STATUS_VERSION_VAR, 
 			serialVersionUID);
+		Gson gson = StatusDeSerializer.get();
 		editor.putString(TRACK_STATUS_VAR, gson.toJson(temp));		
 		AbstractInfo.save(editor, gson, UploadInfo.class, UploadInfo.get());
+		AbstractInfo.save(editor, gson, LocationInfo.class, LocationInfo.get());
 		AbstractInfo.save(editor, gson, HeartrateInfo.class, HeartrateInfo.get());
-		//AbstractInfo.save(editor, gson, LocationInfo.get());
 		editor.commit();			
 	}
 	
@@ -96,11 +96,11 @@ public class TrackStatus implements Serializable {
 				String trackStatusStr = prefs.getString(TRACK_STATUS_VAR, null);
 				if (!StringUtils.isEmpty(trackStatusStr)) {
 					try {
-						Gson gson = new Gson();
+						Gson gson = StatusDeSerializer.get();
 						trackStatus = gson.fromJson(trackStatusStr, TrackStatus.class);
 						UploadInfo.set(AbstractInfo.load(prefs, gson, UploadInfo.class));
+						LocationInfo.set(AbstractInfo.load(prefs, gson, LocationInfo.class));
 						HeartrateInfo.set(AbstractInfo.load(prefs, gson, HeartrateInfo.class));
-						//AbstractInfo.load(prefs, gson, LocationInfo.class);
 					} catch (JsonParseException e) {
 						LogUtils.info(TrackStatus.class, "loadTrackStatus failed: " + e.toString());
 						TrackStatus.reset();

@@ -75,8 +75,8 @@ public class UploadServiceThread extends AbstractServiceThread {
 				if ((locationInfo != null) && 
 					(this.lastInfoDsc.lastLocationInfo != null)) {
 					if (distanceTrigger <=
-						locationInfo.getLocation().distanceTo(
-							this.lastInfoDsc.lastLocationInfo.getLocation())) {
+						locationInfo.distanceTo(
+							this.lastInfoDsc.lastLocationInfo)) {
 						distanceConditionFulfilled = true;
 					}
 				}

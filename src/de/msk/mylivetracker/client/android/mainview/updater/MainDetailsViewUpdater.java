@@ -120,21 +120,21 @@ public class MainDetailsViewUpdater implements Runnable {
 			} else {
 				tvSatCount.setText(UpdaterUtils.getIntStr(gpsStateInfo.getCountSatellites()));
 			}
-			if (locationInfo.getLocation() == null) {
+			if (!locationInfo.hasLatLon()) {
 				tvAccuracy.setText(UpdaterUtils.getNoValue());
 				tvLatitude.setText(UpdaterUtils.getNoValue());
 				tvLongitude.setText(UpdaterUtils.getNoValue());
 			} else {
-			    if (!locationInfo.getLocation().hasAccuracy()) {
+			    if (locationInfo.getAccuracy() == null) {
 			    	tvAccuracy.setText(UpdaterUtils.getNoValue());
 			    } else {
 			    	tvAccuracy.setText(UpdaterUtils.getFltStr(
-			    		locationInfo.getLocation().getAccuracy(), 0, Unit.Meter));
+			    		locationInfo.getAccuracy(), 0, Unit.Meter));
 			    }
 				tvLatitude.setText(UpdaterUtils.getDblStr(
-					locationInfo.getLocation().getLatitude(), 4, null));
+					locationInfo.getLatitude(), 4, null));
 				tvLongitude.setText(UpdaterUtils.getDblStr(
-					locationInfo.getLocation().getLongitude(), 4, null));
+					locationInfo.getLongitude(), 4, null));
 			}
 		}
 		

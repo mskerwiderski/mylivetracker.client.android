@@ -12,7 +12,6 @@ import de.msk.mylivetracker.client.android.status.GpsStateInfo;
 import de.msk.mylivetracker.client.android.status.HeartrateInfo;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
 import de.msk.mylivetracker.client.android.status.MessageInfo;
-import de.msk.mylivetracker.client.android.status.NmeaInfo;
 import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
 import de.msk.mylivetracker.client.android.status.UploadInfo;
 import de.msk.mylivetracker.client.android.upload.AbstractUploader.UploadResult;
@@ -82,7 +81,6 @@ public class Uploader {
 		PhoneStateInfo phoneStateInfo = PhoneStateInfo.get();
 		BatteryStateInfo batteryStateInfo = BatteryStateInfo.get();
 		LocationInfo locationInfo = LocationInfo.get();
-		NmeaInfo nmeaInfo = NmeaInfo.get();
 		GpsStateInfo gpsStateInfo = GpsStateInfo.get();
 		HeartrateInfo heartrateInfo = HeartrateInfo.get();
 		EmergencySignalInfo emergencySignalInfo = EmergencySignalInfo.get();
@@ -94,8 +92,6 @@ public class Uploader {
 			updateLastInfoTimestamp(batteryStateInfo, lastInfoTimestamp);
 		lastInfoTimestamp = 
 			updateLastInfoTimestamp(locationInfo, lastInfoTimestamp);
-		lastInfoTimestamp = 
-			updateLastInfoTimestamp(nmeaInfo, lastInfoTimestamp);
 		lastInfoTimestamp = 
 			updateLastInfoTimestamp(gpsStateInfo, lastInfoTimestamp);
 		lastInfoTimestamp = 
@@ -129,7 +125,6 @@ public class Uploader {
 				phoneStateInfo,
 				batteryStateInfo,
 				locationInfo,
-				nmeaInfo,
 				gpsStateInfo,
 				heartrateInfo, 
 				emergencySignalInfo,

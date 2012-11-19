@@ -17,7 +17,6 @@ import de.msk.mylivetracker.client.android.InfoActivity;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.listener.GpsStateListener;
 import de.msk.mylivetracker.client.android.listener.LocationListener;
-import de.msk.mylivetracker.client.android.listener.NmeaListener;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.preferences.PrefsAccountActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsAutoActivity;
@@ -187,7 +186,6 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 	
 	public void stopLocationListener() {
 		this.getLocationManager().removeUpdates(LocationListener.get());
-		this.getLocationManager().removeNmeaListener(NmeaListener.get());
 		this.getLocationManager().removeGpsStatusListener(
 				GpsStateListener.get());
 		LocationListener.get().setActive(false);

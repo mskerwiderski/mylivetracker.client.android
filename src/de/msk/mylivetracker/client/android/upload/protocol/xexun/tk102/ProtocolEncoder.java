@@ -15,7 +15,6 @@ import de.msk.mylivetracker.client.android.status.GpsStateInfo;
 import de.msk.mylivetracker.client.android.status.HeartrateInfo;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
 import de.msk.mylivetracker.client.android.status.MessageInfo;
-import de.msk.mylivetracker.client.android.status.NmeaInfo;
 import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
 import de.msk.mylivetracker.client.android.upload.protocol.IProtocol;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;
@@ -36,13 +35,10 @@ public class ProtocolEncoder implements IProtocol {
 	
 	private static final String SEPERATOR = ",";	
 		
-	/* (non-Javadoc)
-	 * @see de.msk.mylivetracker.client.android.upload.protocol.IProtocol#createDataStrForDataTransfer(java.util.Date, de.msk.mylivetracker.client.android.status.PhoneStateInfo, de.msk.mylivetracker.client.android.status.BatteryStateInfo, de.msk.mylivetracker.client.android.status.LocationInfo, de.msk.mylivetracker.client.android.status.NmeaInfo, de.msk.mylivetracker.client.android.status.GpsStateInfo, de.msk.mylivetracker.client.android.status.HeartrateInfo, de.msk.mylivetracker.client.android.status.EmergencySignalInfo, de.msk.mylivetracker.client.android.status.MessageInfo, java.lang.String, java.lang.String)
-	 */
 	@Override
 	public String createDataStrForDataTransfer(Date lastInfoTimestamp,
 		PhoneStateInfo phoneStateInfo, BatteryStateInfo batteryStateInfo,
-		LocationInfo locationInfo, NmeaInfo nmeaInfo,
+		LocationInfo locationInfo, 
 		GpsStateInfo gpsStateInfo, HeartrateInfo heartrateInfo,
 		EmergencySignalInfo emergencySignalInfo, MessageInfo messageInfo,
 		String username, String password) {
@@ -52,17 +48,15 @@ public class ProtocolEncoder implements IProtocol {
 		String dateTimeStr = dateTime.getAsStr(TimeZone.getTimeZone(DateTime.TIME_ZONE_UTC), "yyMMddHHmmss");
 		dataStr += dateTimeStr + SEPERATOR;
 		dataStr += (StringUtils.isEmpty(prefs.getPhoneNumber()) ? "" : prefs.getPhoneNumber()) + SEPERATOR;
-		if ((locationInfo != null) && (locationInfo.getLocation() != null)) {
-			dataStr += LocationInfo.getLocationAsGprmcRecord(locationInfo) + SEPERATOR;
-		} else {
-			dataStr += StringUtils.substring(NmeaInfo.GPRMC_EMPTY_SENTENCE, 1) + SEPERATOR;
-		}
+		dataStr += LocationInfo.getLocationAsGprmcRecord(locationInfo) + SEPERATOR;
 		boolean locValid = false;
 		String altitude = "";
-		if ((locationInfo != null) && (locationInfo.getLocation() != null)) {
+		if ((locationInfo != null) && locationInfo.hasLatLon()) {
 			locValid = locationInfo.isAccurate();
-			altitude = String.valueOf( 
-				Math.round(locationInfo.getLocation().getAltitude() * 100d) / 100d);
+			if (locationInfo.getAltitude() != null) {
+				altitude = String.valueOf( 
+					Math.round(locationInfo.getAltitude() * 100d) / 100d);
+			}
 		}
 		dataStr += (locValid ? "F" : "L") + SEPERATOR;
 		if ((emergencySignalInfo != null) && emergencySignalInfo.isActivated()) {

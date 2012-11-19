@@ -11,7 +11,6 @@ import de.msk.mylivetracker.client.android.status.GpsStateInfo;
 import de.msk.mylivetracker.client.android.status.HeartrateInfo;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
 import de.msk.mylivetracker.client.android.status.MessageInfo;
-import de.msk.mylivetracker.client.android.status.NmeaInfo;
 import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
 import de.msk.mylivetracker.client.android.upload.protocol.IProtocol;
 
@@ -99,7 +98,6 @@ public abstract class AbstractUploader {
 		PhoneStateInfo phoneStateInfo,
 		BatteryStateInfo batteryStateInfo,
 		LocationInfo locationInfo,
-		NmeaInfo nmeaInfo,
 		GpsStateInfo gpsStateInfo,
 		HeartrateInfo heartrateInfo, 
 		EmergencySignalInfo emergencySignalInfo,
@@ -108,7 +106,7 @@ public abstract class AbstractUploader {
 		String dataStr = protocol.createDataStrForDataTransfer(
 			lastInfoTimestamp, 
 			phoneStateInfo, batteryStateInfo, 
-			locationInfo, nmeaInfo, gpsStateInfo, 
+			locationInfo, gpsStateInfo, 
 			heartrateInfo, emergencySignalInfo, 
 			messageInfo, 
 			preferences.getUsername(), 

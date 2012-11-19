@@ -19,11 +19,8 @@ import de.msk.mylivetracker.client.android.preferences.Preferences;
  * 
  */
 public class UploadInfo extends AbstractInfo implements Serializable {
-
 	private static final long serialVersionUID = 3875399789159467945L;
-	
 	private static UploadInfo uploadInfo = null;
-	
 	public static void update(Boolean status, String resultCode,	
 		Integer positionsUploaded, Long uploadTimeInMSecs,
 		String lastUsedLocationProvider) {

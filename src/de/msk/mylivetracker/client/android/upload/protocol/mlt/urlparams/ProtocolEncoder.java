@@ -6,7 +6,6 @@ import java.util.Date;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 
-import android.location.Location;
 import android.telephony.ServiceState;
 import android.telephony.gsm.GsmCellLocation;
 import de.msk.mylivetracker.client.android.mainview.updater.UpdaterUtils;
@@ -17,7 +16,6 @@ import de.msk.mylivetracker.client.android.status.GpsStateInfo;
 import de.msk.mylivetracker.client.android.status.HeartrateInfo;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
 import de.msk.mylivetracker.client.android.status.MessageInfo;
-import de.msk.mylivetracker.client.android.status.NmeaInfo;
 import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.upload.protocol.HttpProtocolUtils;
@@ -38,13 +36,10 @@ import de.msk.mylivetracker.client.android.util.VersionUtils;
  */
 public class ProtocolEncoder implements IProtocol {
 
-	/* (non-Javadoc)
-	 * @see de.msk.mylivetracker.client.android.upload.protocol.IProtocol#createDataStrForDataTransfer(java.util.Date, de.msk.mylivetracker.client.android.status.PhoneStateInfo, de.msk.mylivetracker.client.android.status.BatteryStateInfo, de.msk.mylivetracker.client.android.status.LocationInfo, de.msk.mylivetracker.client.android.status.NmeaInfo, de.msk.mylivetracker.client.android.status.GpsStateInfo, de.msk.mylivetracker.client.android.status.HeartrateInfo, de.msk.mylivetracker.client.android.status.EmergencySignalInfo, de.msk.mylivetracker.client.android.status.MessageInfo, java.lang.String, java.lang.String)
-	 */
 	@Override
 	public String createDataStrForDataTransfer(Date lastInfoTimestamp,
 		PhoneStateInfo phoneStateInfo, BatteryStateInfo batteryStateInfo,
-		LocationInfo locationInfo, NmeaInfo nmeaInfo,
+		LocationInfo locationInfo, 
 		GpsStateInfo gpsStateInfo, HeartrateInfo heartrateInfo,
 		EmergencySignalInfo emergencySignalInfo, MessageInfo messageInfo,
 		String username, String password) {
@@ -70,21 +65,23 @@ public class ProtocolEncoder implements IProtocol {
 			}
 		}
 		
-		if ((locationInfo != null) && (locationInfo.getLocation() != null)) {
-			Location location = locationInfo.getLocation();
-			paramsStr = HttpProtocolUtils.addParam(paramsStr, "lat", String.valueOf(location.getLatitude()));
-			paramsStr = HttpProtocolUtils.addParam(paramsStr, "lon", String.valueOf(location.getLongitude()));
+		if ((locationInfo != null) && locationInfo.hasLatLon()) {
+			paramsStr = HttpProtocolUtils.addParam(paramsStr, "lat", String.valueOf(locationInfo.getLatitude()));
+			paramsStr = HttpProtocolUtils.addParam(paramsStr, "lon", String.valueOf(locationInfo.getLongitude()));
 			paramsStr = HttpProtocolUtils.addParam(paramsStr, "dst", String.valueOf(locationInfo.getTrackDistanceInMtr()));
 			paramsStr = HttpProtocolUtils.addParam(paramsStr, "mil", String.valueOf(locationInfo.getMileageInMtr()));
-			if (location.hasAltitude()) {
-				paramsStr = HttpProtocolUtils.addParam(paramsStr, "alt", String.valueOf(location.getAltitude()));
+			if (locationInfo.getAltitude() != null) {
+				paramsStr = HttpProtocolUtils.addParam(paramsStr, "alt", String.valueOf(locationInfo.getAltitude()));
 			}
-			if (location.hasSpeed()) {
-				paramsStr = HttpProtocolUtils.addParam(paramsStr, "spd", String.valueOf(location.getSpeed()));
+			if (locationInfo.getSpeed() != null) {
+				paramsStr = HttpProtocolUtils.addParam(paramsStr, "spd", String.valueOf(locationInfo.getSpeed()));
 			}
-			if (location.hasAccuracy()) {
-				paramsStr = HttpProtocolUtils.addParam(paramsStr, "acc", String.valueOf(location.getAccuracy()));
-			}			
+			if (locationInfo.getAccuracy() != null) {
+				paramsStr = HttpProtocolUtils.addParam(paramsStr, "acc", String.valueOf(locationInfo.getAccuracy()));
+			}
+			if (locationInfo.getBearing() != null) {
+				paramsStr = HttpProtocolUtils.addParam(paramsStr, "bea", String.valueOf(locationInfo.getBearing()));
+			}
 			paramsStr = HttpProtocolUtils.addParam(paramsStr, "val", BooleanUtils.toString(locationInfo.isAccurate(), "1", "0"));
 		} else {
 			paramsStr = HttpProtocolUtils.addParam(paramsStr, "dst", String.valueOf(trackStatus.getTrackDistanceInMtr()));

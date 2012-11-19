@@ -31,7 +31,6 @@ import de.msk.mylivetracker.commons.util.datetime.DateTime;
  */
 public class LocationInfo extends AbstractInfo implements Serializable {
 	private static final long serialVersionUID = -9163148611652412593L;
-
 	private static LocationInfo locationInfo = null;
 	public static void update(Location location) {
 		if (LocationInfo.skip(locationInfo, location)) {
@@ -49,21 +48,39 @@ public class LocationInfo extends AbstractInfo implements Serializable {
 	public static void reset() {
 		locationInfo = null;
 	}
-	
-	private Location location = null;	
+
 	private Location lastLocationUsedForDistCalc = null;
+	
+	private String provider = null;
+	private Double latitude = null;
+	private Double longitude = null;
+	private Float accuracy = null;
+	private Float bearing = null;
+	private Double altitude = null;
+	private Float speed = null;
+	
 	private float trackDistanceInMtr = 0.0f;
 	private float mileageInMtr = 0.0f;
 	
 	private LocationInfo() {
 	}
 	
-	private LocationInfo(Location location,
-		Location lastLocationUsedForDistCalc,
+	private LocationInfo(
+		Location lastLocationUsedForDistCalc, 
+		String provider,
+		Double latitude, Double longitude, 
+		Float accuracy, Float bearing,
+		Double altitude, Float speed, 
 		float trackDistanceInMtr, float mileageInMtr) {
-		this.location = location;
 		this.lastLocationUsedForDistCalc = lastLocationUsedForDistCalc;
-		this.trackDistanceInMtr = trackDistanceInMtr;		
+		this.provider = provider;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.accuracy = accuracy;
+		this.bearing = bearing;
+		this.altitude = altitude;
+		this.speed = speed;
+		this.trackDistanceInMtr = trackDistanceInMtr;
 		this.mileageInMtr = mileageInMtr;
 	}
 	
@@ -74,17 +91,17 @@ public class LocationInfo extends AbstractInfo implements Serializable {
 		float newMileageInMtr = trackStatus.getMileageInMtr();
 		Location newLastLocationUsedForDistCalc = 
 			(currLocationInfo == null) ? null : 
-			currLocationInfo.getLastLocationUsedForDistCalc();
+			currLocationInfo.lastLocationUsedForDistCalc;
 		if (trackStatus.trackIsRunning() && 
 			(locationNew != null) &&
-			isAccurate(locationNew)) {			
+			isAccurate(locationNew.getAccuracy())) {			
 			if ((currLocationInfo == null) || 
-				(currLocationInfo.getLastLocationUsedForDistCalc() == null)) { 
+				(currLocationInfo.lastLocationUsedForDistCalc == null)) { 
 				newLastLocationUsedForDistCalc = locationNew;
 			} else if ((currLocationInfo != null) && 
-				(currLocationInfo.getLastLocationUsedForDistCalc() != null)) {			
+				(currLocationInfo.lastLocationUsedForDistCalc != null)) {			
 				float newDistanceInMtr = 
-					locationNew.distanceTo(currLocationInfo.getLastLocationUsedForDistCalc());
+					locationNew.distanceTo(currLocationInfo.lastLocationUsedForDistCalc);
 				if (isDistanceUsedForDistCalc(newDistanceInMtr)) {
 					trackStatus.setTrackDistanceInMtr(
 						trackStatus.getTrackDistanceInMtr() +
@@ -98,17 +115,33 @@ public class LocationInfo extends AbstractInfo implements Serializable {
 				}
 			}
 		}
-		return new LocationInfo(locationNew, 
-			newLastLocationUsedForDistCalc,	
+		return new LocationInfo( 
+			newLastLocationUsedForDistCalc,
+			locationNew.getProvider(),
+			locationNew.getLatitude(), locationNew.getLongitude(),
+			(locationNew.hasAccuracy() ? locationNew.getAccuracy() : null), 
+			(locationNew.hasBearing() ? locationNew.getBearing() : null),
+			(locationNew.hasAltitude() ? locationNew.getAltitude() : null),
+			(locationNew.hasSpeed() ? locationNew.getSpeed() : null),
 			newTrackDistanceInMtr, newMileageInMtr);			
 	}
-		
+	
+	public boolean hasLatLon() {
+		return (this.latitude != null) && (this.longitude != null);
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("[").append(location).append(":")
-				.append(trackDistanceInMtr).append(":").append(mileageInMtr)
-				.append("]");
+		builder.append("LocationInfo [lastLocationUsedForDistCalc=")
+			.append(lastLocationUsedForDistCalc).append(", provider=")
+			.append(provider).append(", latitude=").append(latitude)
+			.append(", longitude=").append(longitude).append(", accuracy=")
+			.append(accuracy).append(", bearing=").append(bearing)
+			.append(", altitude=").append(altitude).append(", speed=")
+			.append(speed).append(", trackDistanceInMtr=")
+			.append(trackDistanceInMtr).append(", mileageInMtr=")
+			.append(mileageInMtr).append("]");
 		return builder.toString();
 	}
 
@@ -121,11 +154,12 @@ public class LocationInfo extends AbstractInfo implements Serializable {
 	
 	private static boolean skip(LocationInfo currLocationInfo, Location location) {
 		boolean res = false;
-		if (location.getProvider().equals(LocationManager.NETWORK_PROVIDER)) {
+		if (StringUtils.equals(location.getProvider(), LocationManager.NETWORK_PROVIDER)) {
 			// positions from network provider are only used,
 			// if there is no valid position from gps provider.
-			if ((currLocationInfo != null) && (currLocationInfo.location != null) && 
-				currLocationInfo.location.getProvider().equals(LocationManager.GPS_PROVIDER) && 
+			if ((currLocationInfo != null) && 
+				currLocationInfo.hasLatLon() && 
+				StringUtils.equals(currLocationInfo.provider, LocationManager.GPS_PROVIDER) && 
 				currLocationInfo.isUpToDate()) {
 				res = true;
 			}
@@ -134,7 +168,7 @@ public class LocationInfo extends AbstractInfo implements Serializable {
 	}
 	
 	public boolean isUpToDate() {
-		if ((this.location == null) || (this.getTimestamp() == null)) return false;
+		if (!this.hasLatLon() || (this.getTimestamp() == null)) return false;
 		int periodOfRestInSecs = Preferences.get().getLocTimeTriggerInSeconds();
 		if (periodOfRestInSecs == 0) {
 			periodOfRestInSecs = 5;
@@ -149,30 +183,25 @@ public class LocationInfo extends AbstractInfo implements Serializable {
 		return lastPosDetectedInSecs <= periodOfRestInSecs;
 	}
 	
-	public static boolean isAccurate(Location location) {
+	public static boolean isAccurate(Float accuracy) {
 		int accReq = Preferences.get().getLocAccuracyRequiredInMeter();
 		if (accReq == 0) {
 			return true;
 		}
-		if ((location == null) || !location.hasAccuracy()) {
+		if (accuracy == null) {
 			return false;
 		}
-		return accReq >= location.getAccuracy();
+		return accReq >= accuracy;
 	}
 	
 	public boolean isAccurate() {
-		
-		return isAccurate(this.location);
+		return isAccurate(this.accuracy);
 	}
 	
-	public Location getLocation() {
-		return location;
-	}
-
 	public static String getProviderAbbr(LocationInfo locationInfo) {
 		String providerAbbr = "?";
 		if (locationInfo != null) {
-			String provider = locationInfo.location.getProvider();
+			String provider = locationInfo.provider;
 			if (StringUtils.equals(provider, LocationManager.GPS_PROVIDER)) {
 				providerAbbr = "gps";
 			} else if (StringUtils.equals(provider, LocationManager.NETWORK_PROVIDER)) {
@@ -182,25 +211,53 @@ public class LocationInfo extends AbstractInfo implements Serializable {
 		return providerAbbr;
 	}
 	
+	public float distanceTo(LocationInfo locationInfo) {
+		if (locationInfo == null) {
+			throw new IllegalArgumentException("locationInfo must not be null.");
+		}
+		if (!this.hasLatLon() || !locationInfo.hasLatLon()) {
+			throw new IllegalArgumentException("no valid position infos found.");
+		}
+		float[] results = new float[1];
+		Location.distanceBetween(this.latitude, this.longitude, 
+			locationInfo.latitude, locationInfo.longitude, results);
+		return results[0];
+	}
+	
+	private static final String GPRMC_SEP = ",";
+	private static final String GPRMC_IDENTIFIER = "GPRMC";
+	private static final char GPRMC_MARKER_CHECKSUM = '*';
+	private static final String GPRMC_EMPTY_SENTENCE = "GPRMC,,V,,,,,,,,,,N*53";
 	public static String getLocationAsGprmcRecord(LocationInfo locationInfo) {
-		String record = "GPRMC,";		
+		if ((locationInfo == null) || !locationInfo.hasLatLon()) {
+			return GPRMC_EMPTY_SENTENCE;
+		}
+		String record = GPRMC_IDENTIFIER + GPRMC_SEP;		
 		DateTime dateTime = new DateTime(locationInfo.getTimestamp().getTime());
 		String time = StringUtils.left(dateTime.getAsStr(TimeZone.getTimeZone(DateTime.TIME_ZONE_UTC), "HHmmss.S"), 8);
 		String date = dateTime.getAsStr(TimeZone.getTimeZone(DateTime.TIME_ZONE_UTC), "ddMMyy");
 		
-		DecimalFormat decimalFmtSpeed = new DecimalFormat("0.0", new DecimalFormatSymbols(Locale.ENGLISH));
-		String speedInKnoten = decimalFmtSpeed.format(locationInfo.getLocation().getSpeed() * 3.6f / 1.852f);
+		String speedInKnoten = "0.0";
+		if (locationInfo.speed != null) {
+			DecimalFormat decimalFmtSpeed = new DecimalFormat("0.0", new DecimalFormatSymbols(Locale.ENGLISH));
+			speedInKnoten = decimalFmtSpeed.format(locationInfo.speed * 3.6f / 1.852f);
+		}
 		
-		DecimalFormat decimalFmtBearing = new DecimalFormat("0.00", new DecimalFormatSymbols(Locale.ENGLISH));
-		String bearingInDegrees = decimalFmtBearing.format(locationInfo.getLocation().getBearing());
+		String bearingInDegrees = "0.00";
+		if (locationInfo.bearing != null) {
+			DecimalFormat decimalFmtBearing = new DecimalFormat("0.00", new DecimalFormatSymbols(Locale.ENGLISH));
+			bearingInDegrees = decimalFmtBearing.format(locationInfo.bearing);
+		}
 		
-		Wgs84Dsc wgs84Lat = LatLonUtils.decToWgs84(locationInfo.location.getLatitude(), PosType.Latitude);
-		Wgs84Dsc wgs84Lon = LatLonUtils.decToWgs84(locationInfo.location.getLongitude(), PosType.Longitude);
+		Wgs84Dsc wgs84Lat = LatLonUtils.decToWgs84(locationInfo.latitude, PosType.Latitude);
+		Wgs84Dsc wgs84Lon = LatLonUtils.decToWgs84(locationInfo.longitude, PosType.Longitude);
 		
-		record += time + ",A," + 
-			wgs84Lat.toNmea0183String() + "," +
-			wgs84Lon.toNmea0183String() + "," +
-			speedInKnoten + "," + bearingInDegrees + "," + date + ",0.0,E,A";
+		record += time + GPRMC_SEP + "A" + GPRMC_SEP + 
+			wgs84Lat.toNmea0183String() + GPRMC_SEP +
+			wgs84Lon.toNmea0183String() + GPRMC_SEP +
+			speedInKnoten + GPRMC_SEP + 
+			bearingInDegrees + GPRMC_SEP + 
+			date + ",0.0,E,A";
 		
 		int calcChecksum = 0;
 		for (int idx=0; idx < record.length(); idx++) {
@@ -209,20 +266,33 @@ public class LocationInfo extends AbstractInfo implements Serializable {
 		String calcChecksumStr = Integer.toHexString(calcChecksum);
 		calcChecksumStr = StringUtils.leftPad(calcChecksumStr, 2, '0');
 		calcChecksumStr = StringUtils.upperCase(calcChecksumStr);
-		record += "*" + calcChecksumStr;
+		record += GPRMC_MARKER_CHECKSUM + calcChecksumStr;
 		return record;
 	}
-	
-	/**
-	 * @return the lastLocationUsedForDistCalc
-	 */
-	public Location getLastLocationUsedForDistCalc() {
-		return lastLocationUsedForDistCalc;
+	public String getProvider() {
+		return provider;
+	}
+	public Double getLatitude() {
+		return latitude;
+	}
+	public Double getLongitude() {
+		return longitude;
+	}
+	public Float getAccuracy() {
+		return accuracy;
+	}
+	public Float getBearing() {
+		return bearing;
+	}
+	public Double getAltitude() {
+		return altitude;
+	}
+	public Float getSpeed() {
+		return speed;
 	}
 	public float getTrackDistanceInMtr() {
 		return trackDistanceInMtr;
 	}
-
 	public float getMileageInMtr() {
 		return mileageInMtr;
 	}	
