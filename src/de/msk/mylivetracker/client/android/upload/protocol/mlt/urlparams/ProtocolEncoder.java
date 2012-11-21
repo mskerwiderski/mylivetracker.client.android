@@ -65,7 +65,7 @@ public class ProtocolEncoder implements IProtocol {
 			}
 		}
 		
-		if ((locationInfo != null) && locationInfo.hasLatLon()) {
+		if ((locationInfo != null) && locationInfo.latLonValid()) {
 			paramsStr = HttpProtocolUtils.addParam(paramsStr, "lat", String.valueOf(locationInfo.getLatitude()));
 			paramsStr = HttpProtocolUtils.addParam(paramsStr, "lon", String.valueOf(locationInfo.getLongitude()));
 			paramsStr = HttpProtocolUtils.addParam(paramsStr, "dst", String.valueOf(locationInfo.getTrackDistanceInMtr()));

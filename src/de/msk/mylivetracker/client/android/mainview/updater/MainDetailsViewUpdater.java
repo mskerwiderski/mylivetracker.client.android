@@ -120,7 +120,7 @@ public class MainDetailsViewUpdater implements Runnable {
 			} else {
 				tvSatCount.setText(UpdaterUtils.getIntStr(gpsStateInfo.getCountSatellites()));
 			}
-			if (!locationInfo.hasLatLon()) {
+			if (!locationInfo.latLonValid()) {
 				tvAccuracy.setText(UpdaterUtils.getNoValue());
 				tvLatitude.setText(UpdaterUtils.getNoValue());
 				tvLongitude.setText(UpdaterUtils.getNoValue());

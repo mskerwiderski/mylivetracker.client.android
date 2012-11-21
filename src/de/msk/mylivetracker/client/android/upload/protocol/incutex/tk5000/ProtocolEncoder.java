@@ -43,7 +43,7 @@ public class ProtocolEncoder implements IProtocol {
 		String dataStr = 
 			prefs.getDeviceId() + "," +
 			sdf.format(lastInfoTimestamp) + ",";
-		if ((locationInfo != null) && locationInfo.hasLatLon()) {
+		if ((locationInfo != null) && locationInfo.latLonValid()) {
 			dataStr += 
 				locationInfo.getLongitude() + "," +
 				locationInfo.getLatitude() + "," +

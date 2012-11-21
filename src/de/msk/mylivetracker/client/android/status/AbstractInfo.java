@@ -52,7 +52,12 @@ public abstract class AbstractInfo {
 		String infoVar = infoClass.getSimpleName();
 		String infoStr = prefs.getString(infoVar, null);
 		if (!StringUtils.isEmpty(infoStr)) {
-			infoObj = gson.fromJson(infoStr, infoClass);
+			try {
+				infoObj = gson.fromJson(infoStr, infoClass);
+			} catch (Exception e) {
+				LogUtils.info(AbstractInfo.class, "parsing " + infoVar + "-string failed: " + infoStr);
+				LogUtils.info(AbstractInfo.class, "parsing " + infoVar + "-string failed: " + e.toString());
+			}
 		}
 		LogUtils.info(AbstractInfo.class, infoVar + " loaded: " + 
 			((infoObj != null) ? infoObj.toString() : "<empty>"));
