@@ -7,10 +7,7 @@ import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 
 import android.location.Location;
-import android.telephony.ServiceState;
-import android.telephony.gsm.GsmCellLocation;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
-import de.msk.mylivetracker.client.android.mainview.updater.UpdaterUtils;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
 import de.msk.mylivetracker.client.android.status.EmergencySignalInfo;
@@ -126,31 +123,27 @@ public class ProtocolEncoder implements IProtocol {
 			paramsStr = HttpProtocolUtils.addParam(paramsStr, "msg", messageInfo.getMessage());
 		}
 		
-		paramsStr = HttpProtocolUtils.addParam(paramsStr, "pht", PhoneStateInfo.getPhoneTypeAsStr());
 		if (phoneStateInfo != null) {
-			ServiceState serviceState = phoneStateInfo.getServiceState();
-			if (serviceState != null) {
-				String nwOpCode = serviceState.getOperatorNumeric();				
-				if (!StringUtils.isEmpty(nwOpCode) && 
-					((StringUtils.length(nwOpCode) == 5) || (StringUtils.length(nwOpCode) == 6))) {
-					paramsStr = HttpProtocolUtils.addParam(paramsStr, "mcc", StringUtils.left(nwOpCode, 3));
-					paramsStr = HttpProtocolUtils.addParam(paramsStr, "mnc", StringUtils.substring(nwOpCode, 3));
-				}
-				String mnn = serviceState.getOperatorAlphaLong();
-				if (!StringUtils.isEmpty(mnn)) {
-					paramsStr = HttpProtocolUtils.addParam(paramsStr, "mnn", mnn);
-				}
+			if (phoneStateInfo.hasPhoneType()) {
+				paramsStr = HttpProtocolUtils.addParam(paramsStr, "pht", phoneStateInfo.getPhoneType());
 			}
-			paramsStr = HttpProtocolUtils.addParam(paramsStr, "nwt", phoneStateInfo.getNetworkTypeAsStr(UpdaterUtils.getNoValue()));
-			
-			GsmCellLocation gsmCellLocation = phoneStateInfo.getGsmCellLocation();
-			if (gsmCellLocation != null) {				
-				if (gsmCellLocation.getCid() != -1) {
-					paramsStr = HttpProtocolUtils.addParam(paramsStr, "cid", String.valueOf(gsmCellLocation.getCid()));
-				}
-				if (gsmCellLocation.getLac() != -1) {
-					paramsStr = HttpProtocolUtils.addParam(paramsStr, "lac", String.valueOf(gsmCellLocation.getLac()));
-				}
+			if (phoneStateInfo.hasMobileCountryCode()) {
+				paramsStr = HttpProtocolUtils.addParam(paramsStr, "mcc", phoneStateInfo.getMobileCountryCode());
+			}
+			if (phoneStateInfo.hasMobileNetworkCode()) {
+				paramsStr = HttpProtocolUtils.addParam(paramsStr, "mnc", phoneStateInfo.getMobileNetworkCode());
+			}
+			if (phoneStateInfo.hasMobileNetworkName()) {
+				paramsStr = HttpProtocolUtils.addParam(paramsStr, "mnn", phoneStateInfo.getMobileNetworkName());
+			}
+			if (phoneStateInfo.hasNetworkType()) {
+				paramsStr = HttpProtocolUtils.addParam(paramsStr, "nwt", phoneStateInfo.getNetworkType());
+			}
+			if (phoneStateInfo.hasCellId()) {
+				paramsStr = HttpProtocolUtils.addParam(paramsStr, "cid", phoneStateInfo.getCellId());
+			}
+			if (phoneStateInfo.hasLocalAreaCode()) {
+				paramsStr = HttpProtocolUtils.addParam(paramsStr, "lac", phoneStateInfo.getLocalAreaCode());
 			}
 		}
 		
