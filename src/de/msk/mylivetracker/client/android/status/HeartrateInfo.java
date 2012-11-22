@@ -113,13 +113,15 @@ public class HeartrateInfo extends AbstractInfo implements Serializable {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("[").append(hrInBpm).append(":").append(beatCnt)
-			.append(":").append(measureCnt).append(":").append(hrBeatsSum)
-			.append(":").append(hrMinInBpm).append(":").append(hrMaxInBpm)
-			.append(":").append(hrAvgInBpm).append("]");
+		builder.append("HeartrateInfo [hrInBpm=").append(hrInBpm)
+			.append(", beatCnt=").append(beatCnt).append(", measureCnt=")
+			.append(measureCnt).append(", hrBeatsSum=").append(hrBeatsSum)
+			.append(", hrMinInBpm=").append(hrMinInBpm)
+			.append(", hrMaxInBpm=").append(hrMaxInBpm)
+			.append(", hrAvgInBpm=").append(hrAvgInBpm).append("]");
 		return builder.toString();
 	}
-
+	
 	public Long getHrInBpm() {
 		return hrInBpm;
 	}

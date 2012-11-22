@@ -1,5 +1,7 @@
 package de.msk.mylivetracker.client.android.status;
 
+import java.io.Serializable;
+
 import org.apache.commons.lang.StringUtils;
 
 import android.telephony.ServiceState;
@@ -20,8 +22,11 @@ import de.msk.mylivetracker.client.android.mainview.MainActivity;
  * 000	2011-08-11 initial.
  * 
  */
-public class PhoneStateInfo extends AbstractInfo {
+public class PhoneStateInfo extends AbstractInfo implements Serializable {
+	private static final long serialVersionUID = 2253858092459738806L;
+	
 	private static PhoneStateInfo phoneStateInfo = null;
+	
 	public static void update(
 		Integer networkType, GsmCellLocation gsmCellLocation,
 		ServiceState serviceState, SignalStrength signalStrength) {
@@ -37,11 +42,17 @@ public class PhoneStateInfo extends AbstractInfo {
 	public static void reset() {
 		phoneStateInfo = null;
 	}
+	public static void set(PhoneStateInfo phoneStateInfo) {
+		PhoneStateInfo.phoneStateInfo = phoneStateInfo;
+	}
 	
 	private Integer networkType;
 	private GsmCellLocation gsmCellLocation;
 	private ServiceState serviceState;
 	private SignalStrength signalStrength;
+	
+	private PhoneStateInfo() {
+	}
 	
 	private PhoneStateInfo(Integer networkType, GsmCellLocation gsmCellLocation,
 		ServiceState serviceState, SignalStrength signalStrength) {
@@ -87,12 +98,13 @@ public class PhoneStateInfo extends AbstractInfo {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("[").append(networkType).append(":")
-				.append(gsmCellLocation).append(":").append(serviceState)
-				.append(":").append(signalStrength).append("]");
+		builder.append("PhoneStateInfo [networkType=").append(networkType)
+			.append(", gsmCellLocation=").append(gsmCellLocation)
+			.append(", serviceState=").append(serviceState)
+			.append(", signalStrength=").append(signalStrength).append("]");
 		return builder.toString();
 	}
-
+	
 	public static String getPhoneTypeAsStr() {
 		return MainActivity.get().isPhoneTypeGsm() ? "GSM" : "CDMA";
 	}

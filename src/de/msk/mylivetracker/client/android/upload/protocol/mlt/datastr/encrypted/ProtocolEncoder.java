@@ -91,7 +91,7 @@ public class ProtocolEncoder extends EncDecoder implements IProtocol {
 			}
 		}
 		
-		if ((locationInfo != null) && locationInfo.latLonValid()) {
+		if ((locationInfo != null) && locationInfo.hasValidLatLon()) {
 			data.setLatitudeInDecimal(locationInfo.getLatitude());
 			data.setLongitudeInDecimal(locationInfo.getLongitude());						
 			if (locationInfo.getAltitude() != null) {

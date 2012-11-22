@@ -1,5 +1,7 @@
 package de.msk.mylivetracker.client.android.status;
 
+import java.io.Serializable;
+
 /**
  * GpsStateInfo.
  * 
@@ -11,8 +13,11 @@ package de.msk.mylivetracker.client.android.status;
  * 000 initial 2011-08-11
  * 
  */
-public class GpsStateInfo extends AbstractInfo {
+public class GpsStateInfo extends AbstractInfo implements Serializable {
+	private static final long serialVersionUID = -590577992347885756L;
+
 	private static GpsStateInfo gpsStateInfo = null;
+	
 	public static void update(int countSatellites) {
 		gpsStateInfo = 
 			GpsStateInfo.createNewGpsStateInfo(gpsStateInfo, countSatellites);
@@ -23,8 +28,14 @@ public class GpsStateInfo extends AbstractInfo {
 	public static void reset() {
 		gpsStateInfo = null;
 	}
+	public static void set(GpsStateInfo gpsStateInfo) {
+		GpsStateInfo.gpsStateInfo = gpsStateInfo;
+	}
 	
 	private Integer countSatellites = 0;
+	
+	private GpsStateInfo() {
+	}
 	
 	private GpsStateInfo(int countSatellites) {
 		this.countSatellites = countSatellites;		
@@ -42,17 +53,14 @@ public class GpsStateInfo extends AbstractInfo {
 		return this.countSatellites >= 4;
 	}
 	
+	public Integer getCountSatellites() {
+		return countSatellites;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("[").append(countSatellites).append("]");
+		builder.append("GpsStateInfo [countSatellites=")
+			.append(countSatellites).append("]");
 		return builder.toString();
-	}
-
-	/**
-	 * @return the countSatellites
-	 */
-	public Integer getCountSatellites() {
-		return countSatellites;
 	}
 }

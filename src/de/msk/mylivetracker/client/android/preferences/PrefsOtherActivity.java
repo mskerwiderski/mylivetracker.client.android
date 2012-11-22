@@ -13,7 +13,7 @@ import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences.BufferSize;
 import de.msk.mylivetracker.client.android.preferences.Preferences.ConfirmLevel;
 import de.msk.mylivetracker.client.android.preferences.Preferences.TrackingOneTouchMode;
-import de.msk.mylivetracker.client.android.status.PositionBuffer;
+import de.msk.mylivetracker.client.android.status.PositionBufferInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
@@ -64,7 +64,7 @@ public class PrefsOtherActivity extends AbstractActivity {
 			if (valid) {
 				preferences.setUplPositionBufferSize(BufferSize.values()[spPrefsOther_MaxPositionBufferSize.getSelectedItemPosition()]);
 				if (preferences.getUplPositionBufferSize().isDisabled()) {
-					PositionBuffer.reset();
+					PositionBufferInfo.reset();
 				}
 				preferences.setTrackingOneTouchMode(TrackingOneTouchMode.values()[spPrefsOther_TrackingOneTouch.getSelectedItemPosition()]);
 				preferences.setConfirmLevel(ConfirmLevel.values()[spPrefsOther_ConfirmLevel.getSelectedItemPosition()]);

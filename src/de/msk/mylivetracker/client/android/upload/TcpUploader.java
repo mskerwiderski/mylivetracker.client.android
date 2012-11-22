@@ -17,7 +17,7 @@ import android.os.SystemClock;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
-import de.msk.mylivetracker.client.android.status.PositionBuffer;
+import de.msk.mylivetracker.client.android.status.PositionBufferInfo;
 import de.msk.mylivetracker.client.android.upload.protocol.IProtocol;
 
 /**
@@ -58,7 +58,7 @@ public class TcpUploader extends AbstractUploader {
 			socket = new Socket();
 			socket.connect(serverAddress, 5000);
 			socket.setSoTimeout(3000);
-			if (PositionBuffer.isEnabled()) {
+			if (PositionBufferInfo.isEnabled()) {
 				socket.setSendBufferSize(prefs.getUplPositionBufferSize().getSize() * 1024);
 			} else {
 				socket.setSendBufferSize(1024);
@@ -81,11 +81,11 @@ public class TcpUploader extends AbstractUploader {
 		int countPositionsToUpload = 1;
 		String resultCode = null;
 		int countPositionsUploaded = 0;
-		if (PositionBuffer.isEnabled()) {
-			PositionBuffer.get().add(dataStr);
-			dataStr = PositionBuffer.get().getAll(
+		if (PositionBufferInfo.isEnabled()) {
+			PositionBufferInfo.get().add(dataStr);
+			dataStr = PositionBufferInfo.get().getAll(
 				prefs.getLineSeperator());
-			countPositionsToUpload = PositionBuffer.get().size();
+			countPositionsToUpload = PositionBufferInfo.get().size();
 		}
 		if (prefs.isFinishEveryUploadWithALinefeed()) {
 			dataStr += prefs.getLineSeperator();
@@ -104,8 +104,8 @@ public class TcpUploader extends AbstractUploader {
 	        		MainActivity.get().getString(R.string.txMain_UploadResultOk);
 	        }
 	        countPositionsUploaded = countPositionsToUpload;
-	        if (PositionBuffer.isEnabled()) {
-	        	PositionBuffer.get().clear();
+	        if (PositionBufferInfo.isEnabled()) {
+	        	PositionBufferInfo.get().clear();
 	        }
 	        if (prefs.isCloseConnectionAfterEveryUpload()) {
 	        	this.finish();
@@ -133,7 +133,7 @@ public class TcpUploader extends AbstractUploader {
 		return new UploadResult(StringUtils.equals(resultCode, 
 			MainActivity.get().getString(R.string.txMain_UploadResultOk)),
 			stop - start,
-			PositionBuffer.isEnabled(), // buffer is active.
+			PositionBufferInfo.isEnabled(), // buffer is active.
 			countPositionsUploaded, resultCode);
 	}
 	

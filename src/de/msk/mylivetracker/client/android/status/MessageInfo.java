@@ -1,5 +1,7 @@
 package de.msk.mylivetracker.client.android.status;
 
+import java.io.Serializable;
+
 /**
  * MessageInfo.
  * 
@@ -11,8 +13,11 @@ package de.msk.mylivetracker.client.android.status;
  * 000 initial 2011-08-11
  * 
  */
-public class MessageInfo extends AbstractInfo {
+public class MessageInfo extends AbstractInfo implements Serializable {
+	private static final long serialVersionUID = 820167424418185243L;
+
 	private static MessageInfo messageInfo = null;
+	
 	public static void update(String message) {
 		messageInfo = 
 			MessageInfo.createNewMessageInfo(
@@ -24,8 +29,14 @@ public class MessageInfo extends AbstractInfo {
 	public static void reset() {
 		messageInfo = null;
 	}
+	public static void set(MessageInfo messageInfo) {
+		MessageInfo.messageInfo = messageInfo;
+	}
 	
 	private String message;
+	
+	private MessageInfo() {
+	}
 	
 	private MessageInfo(String message) {
 		this.message = message;
@@ -41,10 +52,10 @@ public class MessageInfo extends AbstractInfo {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("[").append(message).append("]");
+		builder.append("MessageInfo [message=").append(message).append("]");
 		return builder.toString();
 	}
-
+	
 	public String getMessage() {
 		return message;
 	}	

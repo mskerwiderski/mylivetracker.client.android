@@ -12,7 +12,7 @@ import de.msk.mylivetracker.client.android.status.HeartrateInfo;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
 import de.msk.mylivetracker.client.android.status.MessageInfo;
 import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
-import de.msk.mylivetracker.client.android.status.PositionBuffer;
+import de.msk.mylivetracker.client.android.status.PositionBufferInfo;
 import de.msk.mylivetracker.client.android.status.UploadInfo;
 
 /**
@@ -52,11 +52,11 @@ public class MainDetailsViewUpdater implements Runnable {
 				tvAverageUploadTime.setText(UpdaterUtils.getDblStr(
 					uploadInfo.getAvgUploadTimeInMSecs() / 1000d, 2, Unit.Seconds));
 			}
-			if (!PositionBuffer.isEnabled()) {
+			if (!PositionBufferInfo.isEnabled()) {
 				tvPositionsInBuffer.setText(UpdaterUtils.getNoValue());
 			} else {
 				tvPositionsInBuffer.setText(UpdaterUtils.getIntStr(
-					PositionBuffer.get().size()));
+					PositionBufferInfo.get().size()));
 			}
 		}		
 	}
@@ -120,7 +120,7 @@ public class MainDetailsViewUpdater implements Runnable {
 			} else {
 				tvSatCount.setText(UpdaterUtils.getIntStr(gpsStateInfo.getCountSatellites()));
 			}
-			if (!locationInfo.latLonValid()) {
+			if (!locationInfo.hasValidLatLon()) {
 				tvAccuracy.setText(UpdaterUtils.getNoValue());
 				tvLatitude.setText(UpdaterUtils.getNoValue());
 				tvLongitude.setText(UpdaterUtils.getNoValue());

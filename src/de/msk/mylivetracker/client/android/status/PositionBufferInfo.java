@@ -1,5 +1,6 @@
 package de.msk.mylivetracker.client.android.status;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
@@ -20,36 +21,34 @@ import de.msk.mylivetracker.client.android.preferences.Preferences;
  * 000 initial 2011-08-11
  * 
  */
-public class PositionBuffer {
+public class PositionBufferInfo extends AbstractInfo implements Serializable {
 		
-	private static PositionBuffer positionBuffer = null;
+	private static final long serialVersionUID = -3238245644001859556L;
 	
-	public static PositionBuffer get() {
-		checkIfEnabled();
-		if (positionBuffer == null) {
-			positionBuffer = new PositionBuffer();
+	private static PositionBufferInfo positionBufferInfo = null;
+	
+	public static PositionBufferInfo get() {
+		if (positionBufferInfo == null) {
+			positionBufferInfo = new PositionBufferInfo();
 		}
-		return positionBuffer;
+		return positionBufferInfo;
 	}
 	public static void reset() {
-		positionBuffer = null;
+		positionBufferInfo = null;
+	}
+	public static void set(PositionBufferInfo positionBufferInfo) {
+		PositionBufferInfo.positionBufferInfo = positionBufferInfo;
 	}
 	
 	private Queue<String> internalBuffer = null;	
 	
-	private PositionBuffer() {
+	private PositionBufferInfo() {
 		this.internalBuffer = 
 			new ConcurrentLinkedQueue<String>();
 	}
 		
 	public static boolean isEnabled() {
 		return !Preferences.get().getUplPositionBufferSize().isDisabled();
-	}
-	
-	public static void checkIfEnabled() {
-		if (!isEnabled()) {
-			throw new RuntimeException("PositionBuffer is NOT enabled.");
-		}
 	}
 	
 	private static Integer getBufferSize() {
@@ -104,5 +103,12 @@ public class PositionBuffer {
 			res = builder.toString();
 		}
 		return res;
-	}		
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("PositionBufferInfo [internalBuffer=")
+			.append(internalBuffer).append("]");
+		return builder.toString();
+	}			
 }

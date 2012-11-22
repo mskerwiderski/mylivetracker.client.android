@@ -11,7 +11,7 @@ import android.os.SystemClock;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.rpc.JsonRpcHttpClient;
-import de.msk.mylivetracker.client.android.status.PositionBuffer;
+import de.msk.mylivetracker.client.android.status.PositionBufferInfo;
 import de.msk.mylivetracker.client.android.upload.protocol.IProtocol;
 import de.msk.mylivetracker.client.android.util.MyLiveTrackerUtils;
 import de.msk.mylivetracker.commons.rpc.RpcResponse.ResultCode;
@@ -42,12 +42,12 @@ public class RpcUploader extends AbstractUploader {
 	public UploadResult upload(String dataStr) {		
 		int countPositionsUploaded = 0;
 		String resultCodeStr = null;
-		if (PositionBuffer.isEnabled()) {
-			PositionBuffer.get().add(dataStr);
+		if (PositionBufferInfo.isEnabled()) {
+			PositionBufferInfo.get().add(dataStr);
 		}		
 		List<String> positionsAsList = null;
-		if (PositionBuffer.isEnabled()) {
-			positionsAsList = PositionBuffer.get().getAsList();
+		if (PositionBufferInfo.isEnabled()) {
+			positionsAsList = PositionBufferInfo.get().getAsList();
 		} else {
 			positionsAsList = new ArrayList<String>();
 			positionsAsList.add(dataStr);
@@ -65,8 +65,8 @@ public class RpcUploader extends AbstractUploader {
 				invoke("uploadDataPackets",
 					new Object[] { request }, UplEncDataPacketsResponse.class);
 			countPositionsUploaded = response.getCntPacketsReceived();
-	        if (PositionBuffer.isEnabled()) {
-	        	PositionBuffer.get().clear();
+	        if (PositionBufferInfo.isEnabled()) {
+	        	PositionBufferInfo.get().clear();
 	        }						
 			countPositionsUploaded = 1;
 			if (response.getResultCode().equals(ResultCode.Ok)) {

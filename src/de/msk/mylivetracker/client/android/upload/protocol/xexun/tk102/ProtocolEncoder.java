@@ -51,7 +51,7 @@ public class ProtocolEncoder implements IProtocol {
 		dataStr += LocationInfo.getLocationAsGprmcRecord(locationInfo) + SEPERATOR;
 		boolean locValid = false;
 		String altitude = "";
-		if ((locationInfo != null) && locationInfo.latLonValid()) {
+		if ((locationInfo != null) && locationInfo.hasValidLatLon()) {
 			locValid = locationInfo.isAccurate();
 			if (locationInfo.getAltitude() != null) {
 				altitude = String.valueOf( 

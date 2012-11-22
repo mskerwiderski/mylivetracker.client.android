@@ -80,6 +80,12 @@ public class TrackStatus implements Serializable {
 		AbstractInfo.save(editor, gson, UploadInfo.class, UploadInfo.get());
 		AbstractInfo.save(editor, gson, LocationInfo.class, LocationInfo.get());
 		AbstractInfo.save(editor, gson, HeartrateInfo.class, HeartrateInfo.get());
+		AbstractInfo.save(editor, gson, MessageInfo.class, MessageInfo.get());
+		AbstractInfo.save(editor, gson, EmergencySignalInfo.class, EmergencySignalInfo.get());
+		AbstractInfo.save(editor, gson, BatteryStateInfo.class, BatteryStateInfo.get());
+		AbstractInfo.save(editor, gson, GpsStateInfo.class, GpsStateInfo.get());
+		AbstractInfo.save(editor, gson, PhoneStateInfo.class, PhoneStateInfo.get());
+		AbstractInfo.save(editor, gson, PositionBufferInfo.class, PositionBufferInfo.get());
 		editor.commit();			
 	}
 	
@@ -101,6 +107,12 @@ public class TrackStatus implements Serializable {
 						UploadInfo.set(AbstractInfo.load(prefs, gson, UploadInfo.class));
 						LocationInfo.set(AbstractInfo.load(prefs, gson, LocationInfo.class));
 						HeartrateInfo.set(AbstractInfo.load(prefs, gson, HeartrateInfo.class));
+						MessageInfo.set(AbstractInfo.load(prefs, gson, MessageInfo.class));
+						EmergencySignalInfo.set(AbstractInfo.load(prefs, gson, EmergencySignalInfo.class));
+						BatteryStateInfo.set(AbstractInfo.load(prefs, gson, BatteryStateInfo.class));
+						GpsStateInfo.set(AbstractInfo.load(prefs, gson, GpsStateInfo.class));
+						PhoneStateInfo.set(AbstractInfo.load(prefs, gson, PhoneStateInfo.class));
+						PositionBufferInfo.set(AbstractInfo.load(prefs, gson, PositionBufferInfo.class));
 					} catch (JsonParseException e) {
 						LogUtils.info(TrackStatus.class, "loadTrackStatus failed: " + e.toString());
 						TrackStatus.reset();
@@ -136,7 +148,7 @@ public class TrackStatus implements Serializable {
 		trackStatus.mileageInMtr = mileageInMtr;
 		trackStatus.trackDistanceInMtr = trackDistanceInMtr;
 		trackStatus.trackId = UUID.randomUUID().toString();
-		PositionBuffer.reset();
+		PositionBufferInfo.reset();
 		PhoneStateInfo.reset();
 		BatteryStateInfo.reset();
 		LocationInfo.reset();

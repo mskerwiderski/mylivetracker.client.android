@@ -1,5 +1,7 @@
 package de.msk.mylivetracker.client.android.status;
 
+import java.io.Serializable;
+
 
 /**
  * BatteryStateInfo.
@@ -12,7 +14,9 @@ package de.msk.mylivetracker.client.android.status;
  * 000 initial 2011-08-11
  * 
  */
-public class BatteryStateInfo extends AbstractInfo {
+public class BatteryStateInfo extends AbstractInfo implements Serializable {
+	private static final long serialVersionUID = 1017373978215679750L;
+
 	public enum State {
 		Charging("CHG"), Discharging("DCHG"), NotCharging("NCHG"), Full("FULL"), Unknown("UKWN");
 		String abbr;
@@ -38,11 +42,17 @@ public class BatteryStateInfo extends AbstractInfo {
 	public static void reset() {
 		batteryStateInfo = null;
 	}
+	public static void set(BatteryStateInfo batteryStateInfo) {
+		BatteryStateInfo.batteryStateInfo = batteryStateInfo;
+	}
 	
 	private State state;
 	private Integer percent;
 	private Integer degrees;
 	private Double voltage;
+	
+	private BatteryStateInfo() {
+	}
 	
 	private BatteryStateInfo(State state,
 		Integer percent, Integer degrees, Double voltage) {
