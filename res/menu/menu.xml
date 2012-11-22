@@ -12,6 +12,7 @@
 		    <item android:id="@+id/mnPrefsOther" android:title="@string/mnPrefsOther" />    
 		    <item android:id="@+id/mnPrefsAuto" android:title="@string/mnPrefsAuto" />
 		    <item android:id="@+id/mnPrefsPinCodeQuery" android:title="@string/mnPrefsPinCodeQuery" />
+		    <item android:id="@+id/mnPrefsRemoteAccess" android:title="@string/mnPrefsRemoteAccess" />
 	    </menu> 
     </item>
 	

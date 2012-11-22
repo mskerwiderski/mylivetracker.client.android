@@ -69,7 +69,9 @@ public class Preferences {
 	protected boolean autoModeEnabled;
 	protected AutoModeResetTrackMode autoModeResetTrackMode;
 	protected boolean autoStartEnabled;
-	//protected UploadThreadPriorityLevel uploadThreadPriorityLevel;
+	protected boolean remoteAccessEnabled;
+	protected String remoteAccessEmailAddress;
+	protected String remoteAccessPassword;
 	
 	public enum ConfirmLevel {
 		low("low"), medium("medium"), high("high");
@@ -326,6 +328,10 @@ public class Preferences {
 	public static final String DB_NAME = "MyLiveTracker.DB";
 	
 	//
+	// version 1500:
+	// o properties for remote access added.
+	// o properties for pin code query added.
+	//
 	// version 1400:
 	// o property 'versionApp' added.
 	// o transferProtocol 'fransonGpsGateHttp' is not supported anymore.
@@ -440,6 +446,9 @@ public class Preferences {
 					if (preferencesVersion < PREFERENCES_VERSION_1500) {
 						preferences.pinCode = null;
 						preferences.pinCodeQueryEnabled = false;
+						preferences.remoteAccessEnabled = false;
+						preferences.remoteAccessEmailAddress = "";
+						preferences.remoteAccessPassword = "";
 					}
 					if (!VersionUtils.isCurrent(context, preferences.versionApp)) {
 						preferences.firstStartOfApp = true;
@@ -683,5 +692,23 @@ public class Preferences {
 	}
 	public void setTrackingOneTouchMode(TrackingOneTouchMode trackingOneTouchMode) {
 		this.trackingOneTouchMode = trackingOneTouchMode;
+	}
+	public boolean isRemoteAccessEnabled() {
+		return remoteAccessEnabled;
+	}
+	public void setRemoteAccessEnabled(boolean remoteAccessEnabled) {
+		this.remoteAccessEnabled = remoteAccessEnabled;
+	}
+	public String getRemoteAccessEmailAddress() {
+		return remoteAccessEmailAddress;
+	}
+	public void setRemoteAccessEmailAddress(String remoteAccessEmailAddress) {
+		this.remoteAccessEmailAddress = remoteAccessEmailAddress;
+	}
+	public String getRemoteAccessPassword() {
+		return remoteAccessPassword;
+	}
+	public void setRemoteAccessPassword(String remoteAccessPassword) {
+		this.remoteAccessPassword = remoteAccessPassword;
 	}
 }

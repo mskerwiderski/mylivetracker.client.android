@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.URLConnection;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -46,9 +47,11 @@ public class HttpUploader extends AbstractUploader {
 		long start = SystemClock.elapsedRealtime();		
 		try {			
 			this.checkConnection();
-			URL url = new URL("http://" + urlStr + dataStr); 
+			URL url = new URL("http://" + urlStr + dataStr);
+			URLConnection urlConn = url.openConnection();
+			urlConn.setReadTimeout(5000);
 			bufferedReader = new BufferedReader(
-				new InputStreamReader(url.openStream()));
+				new InputStreamReader(urlConn.getInputStream()));
 			resultCode = bufferedReader.readLine();						
 			countPositionsUploaded = 1;
 		} catch (Exception e) {

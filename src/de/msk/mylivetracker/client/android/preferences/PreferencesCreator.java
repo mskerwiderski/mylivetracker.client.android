@@ -75,6 +75,9 @@ public class PreferencesCreator {
 		prefs.autoStartEnabled = false;
 		prefs.trackingOneTouchMode = TrackingOneTouchMode.TrackingOnly;
 		prefs.logging = false;
+		prefs.remoteAccessEnabled = false;
+		prefs.remoteAccessEmailAddress = "";
+		prefs.remoteAccessPassword = "";
 		return prefs;
 	}
 }

@@ -97,10 +97,10 @@ public class MainDetailsViewUpdater implements Runnable {
 			tvLAC.setText(UpdaterUtils.getNoValue());
 			tvCellId.setText(UpdaterUtils.getNoValue());
 		} else {
-			tvMCC.setText(UpdaterUtils.getStr(phoneStateInfo.getMCC()));
-			tvMNC.setText(UpdaterUtils.getStr(phoneStateInfo.getMNC()));
-			tvLAC.setText(UpdaterUtils.getIntStr(phoneStateInfo.getLAC()));
-			tvCellId.setText(UpdaterUtils.getIntStr(phoneStateInfo.getCellId()));
+			tvMCC.setText(UpdaterUtils.getStr(phoneStateInfo.getMobileCountryCode()));
+			tvMNC.setText(UpdaterUtils.getStr(phoneStateInfo.getMobileNetworkCode()));
+			tvLAC.setText(UpdaterUtils.getStr(phoneStateInfo.getLocalAreaCode()));
+			tvCellId.setText(UpdaterUtils.getStr(phoneStateInfo.getCellId()));
 		}	    
 	}
 	

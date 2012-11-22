@@ -6,8 +6,6 @@ import java.util.TimeZone;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 
-import android.telephony.ServiceState;
-import android.telephony.gsm.GsmCellLocation;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
 import de.msk.mylivetracker.client.android.status.EmergencySignalInfo;
@@ -82,34 +80,12 @@ public class ProtocolEncoder implements IProtocol {
 			SEPERATOR;
 		if (phoneStateInfo != null) {
 			dataStr += "" + SEPERATOR; // GSM ID
-			String mcc = "";
-			String mnc = "";
-			ServiceState serviceState = phoneStateInfo.getServiceState();
-			if (serviceState != null) {
-				String nwOpCode = serviceState.getOperatorNumeric();				
-				if (!StringUtils.isEmpty(nwOpCode) && 
-					((StringUtils.length(nwOpCode) == 5) || (StringUtils.length(nwOpCode) == 6))) {
-					mcc = StringUtils.left(nwOpCode, 3);
-					mnc = StringUtils.substring(nwOpCode, 3);
-				}							
-			}
+			String mcc = phoneStateInfo.getMobileCountryCode("");
+			String mnc = phoneStateInfo.getMobileNetworkCode("");
 			dataStr += mcc + SEPERATOR;
 			dataStr += mnc + SEPERATOR;
-			String lac = "";
-			String cid = "";
-			GsmCellLocation gsmCellLocation = phoneStateInfo.getGsmCellLocation();
-			if (gsmCellLocation != null) {				
-				if (gsmCellLocation.getCid() != -1) {
-					cid = Integer.toHexString(gsmCellLocation.getCid());
-					cid = StringUtils.upperCase(cid);
-					cid = StringUtils.leftPad(cid, 4, '0');
-				}
-				if (gsmCellLocation.getLac() != -1) {
-					lac = Integer.toHexString(gsmCellLocation.getLac());
-					lac = StringUtils.upperCase(lac);
-					lac = StringUtils.leftPad(lac, 4, '0');
-				}
-			}
+			String lac = phoneStateInfo.getLocalAreaCodeAsHex("");
+			String cid = phoneStateInfo.getCellIdAsHex("");
 			dataStr += lac + SEPERATOR;
 			dataStr += cid;
 		}

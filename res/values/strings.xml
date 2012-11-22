@@ -44,6 +44,7 @@
     <string name="mnPrefsOther">Other</string>
     <string name="mnPrefsAuto">Auto</string>
     <string name="mnPrefsPinCodeQuery">PIN code query</string>
+    <string name="mnPrefsRemoteAccess">Remote access</string>
     <string name="mnLinkSender">Linking</string>    
     <string name="mnInfo">Info</string>
     <string name="mnExit">Exit</string>
@@ -233,6 +234,14 @@
     <string name="fdPrefsPinCodeQuery_PinCode">PIN code</string>
     <string name="lbPrefsPinCodeQuery_PinCode">Enter new PIN code:</string>
     <string name="lbPrefsPinCodeQuery_PinCodeReenter">Reenter new PIN code:</string>
+        
+    <!-- preferences remote access -->    
+    <string name="tiPrefsRemoteAccess">Remote access</string>
+    <string name="lbPrefsRemoteAccess_Enable">Enable remote access</string>
+    <string name="fdPrefsRemoteAccess_EmailAddress">Email address</string>
+    <string name="lbPrefsRemoteAccess_EmailAddress">Email address</string>
+    <string name="fdPrefsRemoteAccess_Password">Password</string>
+    <string name="lbPrefsRemoteAccess_Password">Password</string>
         
     <!-- link sender -->
     <string name="tiLinkSender">Link sender</string>

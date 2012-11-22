@@ -23,6 +23,7 @@ import de.msk.mylivetracker.client.android.preferences.PrefsAutoActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsLocalizationActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsOtherActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsPinCodeQueryActivity;
+import de.msk.mylivetracker.client.android.preferences.PrefsRemoteAccessActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsServerActivity;
 import de.msk.mylivetracker.client.android.preferences.linksender.LinkSenderActivity;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
@@ -310,6 +311,9 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 			return true;
 		case R.id.mnPrefsPinCodeQuery:
 			startActivity(new Intent(this, PrefsPinCodeQueryActivity.class));
+			return true;
+		case R.id.mnPrefsRemoteAccess:
+			startActivity(new Intent(this, PrefsRemoteAccessActivity.class));
 			return true;	
 		case R.id.mnLinkSender:
 			if (TrackStatus.get().trackIsRunning()) {

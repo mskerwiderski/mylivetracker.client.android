@@ -2,10 +2,6 @@ package de.msk.mylivetracker.client.android.upload.protocol.mlt.datastr.encrypte
 
 import java.util.Date;
 
-import org.apache.commons.lang.StringUtils;
-
-import android.telephony.ServiceState;
-import android.telephony.gsm.GsmCellLocation;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
 import de.msk.mylivetracker.client.android.status.EmergencySignalInfo;
@@ -132,30 +128,26 @@ public class ProtocolEncoder extends EncDecoder implements IProtocol {
 			data.setMessage(messageInfo.getMessage());
 		}
 		if (phoneStateInfo != null) {
-			data.setPhoneType(PhoneStateInfo.getPhoneTypeAsStr());
-			ServiceState serviceState = phoneStateInfo.getServiceState();
-			if (serviceState != null) {
-				String nwOpCode = serviceState.getOperatorNumeric();				
-				if (!StringUtils.isEmpty(nwOpCode) && 
-					((StringUtils.length(nwOpCode) == 5) || (StringUtils.length(nwOpCode) == 6))) {
-					data.setMobileCountryCode(StringUtils.left(nwOpCode, 3));
-					data.setMobileNetworkCode(StringUtils.substring(nwOpCode, 3));
-				}
-				String mnn = serviceState.getOperatorAlphaLong();
-				if (!StringUtils.isEmpty(mnn)) {
-					data.setMobileNetworkName(mnn);
-				}				
+			if (phoneStateInfo.hasPhoneType()) {
+				data.setPhoneType(phoneStateInfo.getPhoneType());
 			}
-			data.setMobileNetworkType(phoneStateInfo.getNetworkTypeAsStr("unknown"));
-				
-			GsmCellLocation gsmCellLocation = phoneStateInfo.getGsmCellLocation();
-			if (gsmCellLocation != null) {				
-				if (gsmCellLocation.getCid() != -1) {
-					data.setCellId(gsmCellLocation.getCid());
-				}
-				if (gsmCellLocation.getLac() != -1) {
-					data.setLocaleAreaCode(gsmCellLocation.getLac());
-				}
+			if (phoneStateInfo.hasMobileCountryCode()) {
+				data.setMobileCountryCode(phoneStateInfo.getMobileCountryCode());
+			}
+			if (phoneStateInfo.hasMobileNetworkCode()) {
+				data.setMobileNetworkCode(phoneStateInfo.getMobileNetworkCode());
+			}
+			if (phoneStateInfo.hasMobileNetworkName()) {
+				data.setMobileNetworkName(phoneStateInfo.getMobileNetworkName());
+			}
+			if (phoneStateInfo.hasNetworkType()) {
+				data.setMobileNetworkType(phoneStateInfo.getNetworkType());
+			}
+			if (phoneStateInfo.hasCellId()) {
+				data.setCellId(Integer.valueOf(phoneStateInfo.getCellId()));
+			}
+			if (phoneStateInfo.hasLocalAreaCode()) {
+				data.setLocaleAreaCode(Integer.valueOf(phoneStateInfo.getLocalAreaCode()));
 			}
 		}
 		

@@ -135,7 +135,7 @@ public class MainViewUpdater implements Runnable {
 		TextView tvMobileNetworkIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_MobileNetworkIndicator);
 		PhoneStateInfo phoneStateInfo = PhoneStateInfo.get();
 		String mobNwStr = (phoneStateInfo != null ? 
-			phoneStateInfo.getNetworkTypeAsStr(UpdaterUtils.getNoValue()) : UpdaterUtils.getNoValue());
+			phoneStateInfo.getNetworkType(UpdaterUtils.getNoValue()) : UpdaterUtils.getNoValue());
 		setIndicatorTextAndColors(tvMobileNetworkIndicator, mobNwStr, 
 			MainActivity.get().isDataConnectionAvailable() ? IndicatorState.Ok : IndicatorState.NotOk);
 		

@@ -18,11 +18,19 @@
             </intent-filter>
         </activity>
         <receiver android:name=".LaunchAppBroadcast"
-			android:permission="android.permission.RECEIVE_BOOT_COMPLETED" >
+			android:permission="android.permission.RECEIVE_BOOT_COMPLETED" 
+			android:enabled="true" >
 			<intent-filter>
 				<action android:name="android.intent.action.BOOT_COMPLETED"/>
 			</intent-filter>
 		</receiver> 
+		<receiver android:name=".receiver.SmsReceiver"
+		    android:permission="android.permission.RECEIVE_SMS" 
+		    android:enabled="true">
+			<intent-filter>
+				<action android:name="android.provider.Telephony.SMS_RECEIVED" />
+			</intent-filter>
+		</receiver>
 		<activity android:name=".pincodequery.PinCodeQueryActivity" 
 			android:screenOrientation="portrait" />
         <activity android:name=".mainview.MainDetailsActivity" 
@@ -43,6 +51,8 @@
 			android:screenOrientation="portrait" />
 		<activity android:name=".preferences.PrefsPinCodeQueryActivity" 
 			android:screenOrientation="portrait" />
+		<activity android:name=".preferences.PrefsRemoteAccessActivity" 
+			android:screenOrientation="portrait" />
 		<activity android:name=".preferences.linksender.LinkSenderActivity" 
 			android:screenOrientation="portrait" />	
 		<activity android:name=".InfoActivity" 
@@ -54,16 +64,17 @@
 		    android:enabled="true"
 		    android:exported="false" />
     </application>
+    <!--  uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" /-->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 	<uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-	<!--  uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" /-->
 	<uses-permission android:name="android.permission.CONTROL_LOCATION_UPDATES" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+	<uses-permission android:name="android.permission.RECEIVE_SMS"></uses-permission>
 	<uses-permission android:name="com.dsi.ant.permission.ANT" />
 	<uses-permission android:name="com.dsi.ant.permission.ANT_ADMIN" />
 </manifest>
