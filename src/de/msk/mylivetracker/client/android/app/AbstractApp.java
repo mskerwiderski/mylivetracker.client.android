@@ -1,10 +1,10 @@
-package de.msk.mylivetracker.client.android;
+package de.msk.mylivetracker.client.android.app;
 
 import android.app.Application;
 import android.content.Context;
 
 /**
- * App.
+ * AbstractApp.
  * 
  * @author michael skerwiderski, (c)2012
  * 
@@ -14,8 +14,8 @@ import android.content.Context;
  * 000 2012-11-04 initial.
  * 
  */
-public class App extends Application {
-	private static App app = null;
+public abstract class AbstractApp extends Application {
+	private static AbstractApp app = null;
 	private static Context context;
     public void onCreate(){
         super.onCreate();
@@ -28,10 +28,11 @@ public class App extends Application {
 		app = null;
 		super.onTerminate();
 	}
-    public static App get() {
+    public static AbstractApp get() {
         return app;
     }
 	public static Context getCtx() {
         return context;
     }
+	public abstract String getName();
 }

@@ -2,7 +2,7 @@ package de.msk.mylivetracker.client.android.util;
 
 import org.apache.commons.lang.StringUtils;
 
-import de.msk.mylivetracker.client.android.App;
+import de.msk.mylivetracker.client.android.app.AbstractApp;
 
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -97,7 +97,7 @@ public class VersionUtils {
 	public static VersionDsc get() {
 		if (versionDsc != null) return versionDsc;
 		try {
-			Context context = App.getCtx();
+			Context context = AbstractApp.getCtx();
 			versionDsc = new VersionDsc(
 				context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionCode,	
 				context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName);

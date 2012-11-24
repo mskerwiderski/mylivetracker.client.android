@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="de.msk.mylivetracker.client.android" 
-      android:versionName="1.5.0 alpha" 
+      package="de.msk.mylivetracker.client.android.app.pro" 
+      android:versionName="1.5.0 alpha (PRO)" 
       android:versionCode="150">       
     <uses-sdk android:minSdkVersion="7" />
     <application 
@@ -9,7 +9,7 @@
         android:label="@string/app_name"
         android:name=".App"
     >
-        <activity android:name=".mainview.MainActivity"
+        <activity android:name="de.msk.mylivetracker.client.android.mainview.MainActivity"
                   android:label="@string/app_name"
                   android:screenOrientation="portrait" >
             <intent-filter>
@@ -17,52 +17,52 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".LaunchAppBroadcast" >
+        <receiver android:name="de.msk.mylivetracker.client.android.LaunchAppBroadcast" >
 			<intent-filter>
 				<action android:name="android.intent.action.BOOT_COMPLETED"/>
 			</intent-filter>
 		</receiver> 
-		<receiver android:name=".remoteaccess.SmsReceiver" >
+		<receiver android:name="de.msk.mylivetracker.client.android.remoteaccess.SmsCmdReceiver" >
 			<intent-filter>
 				<action android:name="android.provider.Telephony.SMS_RECEIVED" />
 			</intent-filter>
 		</receiver>
-		<receiver android:name=".remoteaccess.SmsSentStatusReceiver" >
+		<receiver android:name="de.msk.mylivetracker.client.android.remoteaccess.SmsSentStatusReceiver" >
 			<intent-filter>
 				<action android:name="de.msk.mylivetracker.intent.action.SMS_SENT" />
 				<action android:name="de.msk.mylivetracker.intent.action.SMS_DELIVERED" />
 			</intent-filter>
 		</receiver>
-		<activity android:name=".pincodequery.PinCodeQueryActivity" 
+		<activity android:name="de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryActivity" 
 			android:screenOrientation="portrait" />
-        <activity android:name=".mainview.MainDetailsActivity" 
+        <activity android:name="de.msk.mylivetracker.client.android.mainview.MainDetailsActivity" 
 			android:screenOrientation="portrait" />
-        <activity android:name=".message.MessageActivity" 
+        <activity android:name="de.msk.mylivetracker.client.android.message.MessageActivity" 
 			android:screenOrientation="portrait" />
-        <activity android:name=".trackview.TrackViewActivity" 
+        <activity android:name="de.msk.mylivetracker.client.android.trackview.TrackViewActivity" 
 			android:screenOrientation="portrait" />
-		<activity android:name=".preferences.PrefsServerActivity" 
+		<activity android:name="de.msk.mylivetracker.client.android.preferences.PrefsServerActivity" 
 			android:screenOrientation="portrait" />
-		<activity android:name=".preferences.PrefsAccountActivity" 
+		<activity android:name="de.msk.mylivetracker.client.android.preferences.PrefsAccountActivity" 
 			android:screenOrientation="portrait" />
-		<activity android:name=".preferences.PrefsLocalizationActivity" 
+		<activity android:name="de.msk.mylivetracker.client.android.preferences.PrefsLocalizationActivity" 
 			android:screenOrientation="portrait" />
-		<activity android:name=".preferences.PrefsOtherActivity" 
+		<activity android:name="de.msk.mylivetracker.client.android.preferences.PrefsOtherActivity" 
 			android:screenOrientation="portrait" />
-		<activity android:name=".preferences.PrefsAutoActivity" 
+		<activity android:name="de.msk.mylivetracker.client.android.preferences.PrefsAutoActivity" 
 			android:screenOrientation="portrait" />
-		<activity android:name=".preferences.PrefsPinCodeQueryActivity" 
+		<activity android:name="de.msk.mylivetracker.client.android.preferences.PrefsPinCodeQueryActivity" 
 			android:screenOrientation="portrait" />
-		<activity android:name=".preferences.PrefsRemoteAccessActivity" 
+		<activity android:name="de.msk.mylivetracker.client.android.preferences.PrefsRemoteAccessActivity" 
 			android:screenOrientation="portrait" />
-		<activity android:name=".preferences.linksender.LinkSenderActivity" 
+		<activity android:name="de.msk.mylivetracker.client.android.preferences.linksender.LinkSenderActivity" 
 			android:screenOrientation="portrait" />	
-		<activity android:name=".InfoActivity" 
+		<activity android:name="de.msk.mylivetracker.client.android.InfoActivity" 
 			android:screenOrientation="portrait" />
-		<service android:name=".automode.AutoService"
+		<service android:name="de.msk.mylivetracker.client.android.automode.AutoService"
 		    android:enabled="true"
 		    android:exported="false" />
-		<service android:name=".upload.UploadService"
+		<service android:name="de.msk.mylivetracker.client.android.upload.UploadService"
 		    android:enabled="true"
 		    android:exported="false" />
     </application>

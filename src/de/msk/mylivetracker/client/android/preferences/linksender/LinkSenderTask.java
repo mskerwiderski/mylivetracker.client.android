@@ -3,7 +3,7 @@ package de.msk.mylivetracker.client.android.preferences.linksender;
 import java.net.URL;
 
 import android.os.AsyncTask;
-import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.app.pro.R;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.preferences.Preferences.TransferProtocol;

@@ -1,6 +1,6 @@
 package de.msk.mylivetracker.client.android.upload;
 
-import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.app.pro.R;
 import de.msk.mylivetracker.client.android.util.service.AbstractService;
 import de.msk.mylivetracker.client.android.util.service.AbstractServiceThread;
 

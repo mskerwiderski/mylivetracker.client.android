@@ -6,7 +6,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 
 import android.util.Log;
-import de.msk.mylivetracker.client.android.remoteaccess.SmsReceiver;
+import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdReceiver;
 import de.msk.mylivetracker.client.android.remoteaccess.SmsSentStatusReceiver;
 
 /**
@@ -26,7 +26,7 @@ public class LogUtils {
 	
 	static {
 		classes.put(SmsSentStatusReceiver.class, Boolean.TRUE);
-		classes.put(SmsReceiver.class, Boolean.TRUE);
+		classes.put(SmsCmdReceiver.class, Boolean.TRUE);
 	}
 
 	private static boolean isLogForClassEnabled(Class<?> clazz) {

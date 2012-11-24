@@ -2,7 +2,7 @@ package de.msk.mylivetracker.client.android.mainview;
 
 import android.os.Bundle;
 import android.widget.Button;
-import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.app.pro.R;
 
 /**
  * MainDetailsActivity.

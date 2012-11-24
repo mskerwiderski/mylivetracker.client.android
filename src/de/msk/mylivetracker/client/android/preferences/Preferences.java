@@ -9,7 +9,7 @@ import android.telephony.TelephonyManager;
 
 import com.google.gson.Gson;
 
-import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.app.pro.R;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.util.MyLiveTrackerUtils;
 import de.msk.mylivetracker.client.android.util.VersionUtils;

@@ -9,7 +9,7 @@ import de.msk.mylivetracker.client.android.mainview.OnClickButtonLocationListene
 import de.msk.mylivetracker.client.android.mainview.OnClickButtonResetListener;
 import de.msk.mylivetracker.client.android.mainview.OnClickButtonStartStopListener;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
-import de.msk.mylivetracker.client.android.receiver.BatteryReceiver;
+import de.msk.mylivetracker.client.android.status.BatteryReceiver;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.util.service.AbstractServiceThread;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;

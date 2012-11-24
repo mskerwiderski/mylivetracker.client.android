@@ -3,7 +3,7 @@ package de.msk.mylivetracker.client.android.preferences;
 import android.content.Context;
 import android.location.LocationManager;
 import android.telephony.TelephonyManager;
-import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.app.pro.R;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences.AutoModeResetTrackMode;
 import de.msk.mylivetracker.client.android.preferences.Preferences.BufferSize;

@@ -29,7 +29,7 @@ public abstract class AbstractSmsCmdExecutor implements Runnable {
 	@Override
 	public void run() {
 		String smsResponse = this.executeCmdAndCreateSmsResponse(this.params);
-		SmsReceiver.sendSms(this.sender, smsResponse);
+		SmsCmdReceiver.sendSms(this.sender, smsResponse);
 	}
 	
 	public static class ParamsDsc {

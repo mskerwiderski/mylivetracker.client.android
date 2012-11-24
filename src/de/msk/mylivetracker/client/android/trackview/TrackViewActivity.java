@@ -5,7 +5,7 @@ import org.apache.commons.lang.StringUtils;
 
 import android.os.Bundle;
 import android.webkit.WebView;
-import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.app.pro.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences;

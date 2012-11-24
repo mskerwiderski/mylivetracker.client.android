@@ -2,6 +2,7 @@ package de.msk.mylivetracker.client.android.remoteaccess;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -18,13 +19,13 @@ import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
-import de.msk.mylivetracker.client.android.App;
+import de.msk.mylivetracker.client.android.app.AbstractApp;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.remoteaccess.AbstractSmsCmdExecutor.ParamsDsc;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
 /**
- * SmsReceiver.
+ * SmsCmdReceiver.
  * 
  * @author michael skerwiderski, (c)2012
  * 
@@ -34,7 +35,7 @@ import de.msk.mylivetracker.client.android.util.LogUtils;
  * 000 2012-11-23 initial.
  * 
  */
-public class SmsReceiver extends BroadcastReceiver {
+public class SmsCmdReceiver extends BroadcastReceiver {
 
 	private static Map<String, Class<? extends AbstractSmsCmdExecutor>> cmdRegistry = 
 		new HashMap<String, Class<? extends AbstractSmsCmdExecutor>>();
@@ -48,9 +49,9 @@ public class SmsReceiver extends BroadcastReceiver {
 		if (StringUtils.isEmpty(cmdName)) {
 			throw new IllegalArgumentException("cmdName must not be empty.");
 		}
-		LogUtils.infoMethodIn(SmsReceiver.class, "smsCmdExecutorExists", cmdName);
+		LogUtils.infoMethodIn(SmsCmdReceiver.class, "smsCmdExecutorExists", cmdName);
 		boolean res = cmdRegistry.containsKey(StringUtils.lowerCase(cmdName));
-		LogUtils.infoMethodOut(SmsReceiver.class, "smsCmdExecutorExists", res);
+		LogUtils.infoMethodOut(SmsCmdReceiver.class, "smsCmdExecutorExists", res);
 		return res;
 	}
 	
@@ -58,14 +59,22 @@ public class SmsReceiver extends BroadcastReceiver {
 		if (StringUtils.isEmpty(cmdName)) {
 			throw new IllegalArgumentException("cmdName must not be empty.");
 		}
-		LogUtils.infoMethodIn(SmsReceiver.class, "getSmsCmdExecutor", cmdName);
+		LogUtils.infoMethodIn(SmsCmdReceiver.class, "getSmsCmdExecutor", cmdName);
 		Class<? extends AbstractSmsCmdExecutor> res = 
 			cmdRegistry.get(StringUtils.lowerCase(cmdName));
-		LogUtils.infoMethodOut(SmsReceiver.class, "getSmsCmdExecutor", res);
+		LogUtils.infoMethodOut(SmsCmdReceiver.class, "getSmsCmdExecutor", res);
 		return res;
 	}
 	
 	private static ExecutorService executorService = Executors.newSingleThreadExecutor();
+	
+	private static final String SMS_CMD_INDICATOR = "#mlt";
+	private static final String SMS_CMD_ERROR_PREFIX = "FAILED: ";
+	private static final String SMS_CMD_SYNTAX = SMS_CMD_INDICATOR + " <password> <command> [<param-0> <param-1> ... <param-n>]";
+	private static final String SMS_CMD_ERROR_SYNTAX_INVALID = "command format must be '" + SMS_CMD_SYNTAX + "'.";
+	private static final String SMS_CMD_ERROR_PASSWORD_INVALID = "invalid password.";
+	private static final String SMS_CMD_ERROR_COMMAND_INVALID = "invalid command.";
+	private static final String SMS_CMD_ERROR_PARAMETER_COUNT_INVALID = "invalid count of parameters.";
 	
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -81,17 +90,17 @@ public class SmsReceiver extends BroadcastReceiver {
 			String message = smsMessage[0].getMessageBody();
 			try {
 				if (!StringUtils.isEmpty(sender) && PhoneNumberUtils.isGlobalPhoneNumber(sender) && 
-					!StringUtils.isEmpty(message) && StringUtils.startsWithIgnoreCase(message, "#mlt")) {
+					!StringUtils.isEmpty(message) && StringUtils.startsWithIgnoreCase(message, SMS_CMD_INDICATOR)) {
 					LogUtils.infoMethodState(this.getClass(), "onReceive", "sms details", sender, message);
 					String[] messageParts = StringUtils.split(message, ' ');
-					LogUtils.infoMethodState(this.getClass(), "onReceive", "message parts", messageParts.toString());
+					LogUtils.infoMethodState(this.getClass(), "onReceive", "message parts", Arrays.toString(messageParts));
 					if (messageParts.length < 3) {
-						response = "command format must be '#MLT <password> <command> [<param-0> <param-1> ... <param-n>]'.";
+						response = SMS_CMD_ERROR_SYNTAX_INVALID;
 					} else if (!StringUtils.equals(messageParts[1], 
 						Preferences.get().getRemoteAccessPassword())) {
-						response = "invalid password.";
+						response = SMS_CMD_ERROR_PASSWORD_INVALID;
 					} else if (!smsCmdExecutorExists(messageParts[2])) {
-						response = "invalid command.";
+						response = SMS_CMD_ERROR_COMMAND_INVALID;
 					} else {
 						String[] params = new String[0];
 						if (messageParts.length > 3) {
@@ -101,16 +110,16 @@ public class SmsReceiver extends BroadcastReceiver {
 								params[i] = StringUtils.lowerCase(paramsCs[i]);
 							}
 						}
-						LogUtils.infoMethodState(this.getClass(), "onReceive", "params", params.toString());
+						LogUtils.infoMethodState(this.getClass(), "onReceive", "params", Arrays.toString(params));
 						Class<? extends AbstractSmsCmdExecutor> smsCmdExecutorClass = 
 							getSmsCmdExecutor(messageParts[2]);
 						Constructor<? extends AbstractSmsCmdExecutor> smsCmdExecutorConstructor = 
 							smsCmdExecutorClass.getConstructor(String.class, String[].class);
-						AbstractSmsCmdExecutor smsCmdExecutor = smsCmdExecutorConstructor.newInstance(sender, messageParts);
+						AbstractSmsCmdExecutor smsCmdExecutor = smsCmdExecutorConstructor.newInstance(sender, params);
 						ParamsDsc paramsDsc = smsCmdExecutor.getParamsDsc();
 						if ((params.length < paramsDsc.getMinParams()) || 
 							(params.length > paramsDsc.getMaxParams())) {
-							response = "invalid count of parameters.";
+							response = SMS_CMD_ERROR_PARAMETER_COUNT_INVALID;
 						} else {
 							executorService.execute(smsCmdExecutor);
 							response = null;
@@ -122,7 +131,7 @@ public class SmsReceiver extends BroadcastReceiver {
 				response = StringUtils.abbreviate(e.toString(), 80);
 			} finally {
 				if (!StringUtils.isEmpty(response)) {
-					SmsReceiver.sendSms(sender, "FAILED: " + response);
+					SmsCmdReceiver.sendSms(sender, SMS_CMD_ERROR_PREFIX + response);
 					LogUtils.infoMethodState(this.getClass(), "onReceive", "command failed", sender, response);
 				}
 			}
@@ -146,16 +155,16 @@ public class SmsReceiver extends BroadcastReceiver {
 		if (!PhoneNumberUtils.isGlobalPhoneNumber(phoneNumber)) {
 			throw new IllegalArgumentException("phoneNumber '" + phoneNumber + "' is invalid.");
 		}
-		LogUtils.infoMethodIn(SmsReceiver.class, "sendSms", phoneNumber, message);
+		LogUtils.infoMethodIn(SmsCmdReceiver.class, "sendSms", phoneNumber, message);
 		SmsManager manager = SmsManager.getDefault();
 
-		PendingIntent piSend = PendingIntent.getBroadcast(App.getCtx(), 0,
+		PendingIntent piSend = PendingIntent.getBroadcast(AbstractApp.getCtx(), 0,
 				new Intent(SEND_SMS_STATUS_SMS_SENT), 0);
-		PendingIntent piDelivered = PendingIntent.getBroadcast(App.getCtx(), 0,
+		PendingIntent piDelivered = PendingIntent.getBroadcast(AbstractApp.getCtx(), 0,
 				new Intent(SEND_SMS_STATUS_SMS_DELIVERED), 0);
 
 		int length = message.length();
-		LogUtils.infoMethodState(SmsReceiver.class, "sendSms", "length of message", new Integer(length));
+		LogUtils.infoMethodState(SmsCmdReceiver.class, "sendSms", "length of message", new Integer(length));
 		
 		if (length > MAX_SMS_MESSAGE_LENGTH) {
 			ArrayList<String> messagelist = manager.divideMessage(message);
@@ -167,6 +176,6 @@ public class SmsReceiver extends BroadcastReceiver {
 				phoneNumber, null, message, piSend,
 				piDelivered);
 		}
-		LogUtils.infoMethodOut(SmsReceiver.class, "sendSms");
+		LogUtils.infoMethodOut(SmsCmdReceiver.class, "sendSms");
 	}
 }

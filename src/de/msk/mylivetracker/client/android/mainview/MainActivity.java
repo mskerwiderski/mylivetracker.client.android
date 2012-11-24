@@ -26,7 +26,7 @@ import com.wahoofitness.api.WFAntServiceNotInstalledException;
 import com.wahoofitness.api.WFDisplaySettings;
 import com.wahoofitness.api.WFHardwareConnector;
 
-import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.app.pro.R;
 import de.msk.mylivetracker.client.android.automode.AutoService;
 import de.msk.mylivetracker.client.android.listener.AntPlusHeartrateListener;
 import de.msk.mylivetracker.client.android.listener.AntPlusListener;
@@ -38,7 +38,7 @@ import de.msk.mylivetracker.client.android.mainview.updater.MainDetailsViewUpdat
 import de.msk.mylivetracker.client.android.mainview.updater.MainViewUpdater;
 import de.msk.mylivetracker.client.android.mainview.updater.UpdaterUtils;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
-import de.msk.mylivetracker.client.android.receiver.BatteryReceiver;
+import de.msk.mylivetracker.client.android.status.BatteryReceiver;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.upload.UploadService;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;

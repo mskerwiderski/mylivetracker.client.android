@@ -1,4 +1,4 @@
-package de.msk.mylivetracker.client.android.receiver;
+package de.msk.mylivetracker.client.android.status;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.BatteryManager;
-import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
 
 /**
  * BatteryReceiver.
