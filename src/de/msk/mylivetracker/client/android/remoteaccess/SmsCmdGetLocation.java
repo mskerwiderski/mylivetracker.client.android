@@ -21,16 +21,16 @@ import de.msk.mylivetracker.client.android.status.LocationInfo;
  */
 public class SmsCmdGetLocation extends AbstractSmsCmdExecutor {
 
-	public SmsCmdGetLocation(String sender, String[] params) {
-		super(sender, params);
+	public SmsCmdGetLocation(String cmdName, String sender, String... params) {
+		super(cmdName, sender, params);
 	}
 
 	@Override
-	public ParamsDsc getParamsDsc() {
-		return new ParamsDsc(0, 1);
+	public CmdDsc getCmdDsc() {
+		return new CmdDsc("[google]", 0,1);
 	}
 
-	private boolean googleLocation(String...params) {
+	private boolean googleLocation(String... params) {
 		if (params.length < 1) return false;
 		return StringUtils.equalsIgnoreCase(params[0], "google");
 	}

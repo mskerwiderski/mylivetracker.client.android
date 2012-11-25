@@ -21,7 +21,7 @@ import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 import de.msk.mylivetracker.client.android.app.AbstractApp;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
-import de.msk.mylivetracker.client.android.remoteaccess.AbstractSmsCmdExecutor.ParamsDsc;
+import de.msk.mylivetracker.client.android.remoteaccess.AbstractSmsCmdExecutor.CmdDsc;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
 /**
@@ -43,6 +43,7 @@ public class SmsCmdReceiver extends BroadcastReceiver {
 	static {
 		cmdRegistry.put(StringUtils.lowerCase("version"), SmsCmdGetAppVersion.class);
 		cmdRegistry.put(StringUtils.lowerCase("location"), SmsCmdGetLocation.class);
+		cmdRegistry.put(StringUtils.lowerCase("track"), SmsCmdTrack.class);
 	}
 	
 	private static boolean smsCmdExecutorExists(String cmdName) {
@@ -74,7 +75,7 @@ public class SmsCmdReceiver extends BroadcastReceiver {
 	private static final String SMS_CMD_ERROR_SYNTAX_INVALID = "command format must be '" + SMS_CMD_SYNTAX + "'.";
 	private static final String SMS_CMD_ERROR_PASSWORD_INVALID = "invalid password.";
 	private static final String SMS_CMD_ERROR_COMMAND_INVALID = "invalid command.";
-	private static final String SMS_CMD_ERROR_PARAMETER_COUNT_INVALID = "invalid count of parameters.";
+	private static final String SMS_CMD_ERROR_COMMAND_SYNTAX_INVALID = "invalid command syntax. correct syntax is: '$SYNTAX'";
 	
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -102,6 +103,7 @@ public class SmsCmdReceiver extends BroadcastReceiver {
 					} else if (!smsCmdExecutorExists(messageParts[2])) {
 						response = SMS_CMD_ERROR_COMMAND_INVALID;
 					} else {
+						String cmdName = messageParts[2];
 						String[] params = new String[0];
 						if (messageParts.length > 3) {
 							String[] paramsCs = (String[])ArrayUtils.subarray(messageParts, 3, messageParts.length);
@@ -114,12 +116,14 @@ public class SmsCmdReceiver extends BroadcastReceiver {
 						Class<? extends AbstractSmsCmdExecutor> smsCmdExecutorClass = 
 							getSmsCmdExecutor(messageParts[2]);
 						Constructor<? extends AbstractSmsCmdExecutor> smsCmdExecutorConstructor = 
-							smsCmdExecutorClass.getConstructor(String.class, String[].class);
-						AbstractSmsCmdExecutor smsCmdExecutor = smsCmdExecutorConstructor.newInstance(sender, params);
-						ParamsDsc paramsDsc = smsCmdExecutor.getParamsDsc();
-						if ((params.length < paramsDsc.getMinParams()) || 
-							(params.length > paramsDsc.getMaxParams())) {
-							response = SMS_CMD_ERROR_PARAMETER_COUNT_INVALID;
+							smsCmdExecutorClass.getConstructor(String.class, String.class, String[].class);
+						AbstractSmsCmdExecutor smsCmdExecutor = smsCmdExecutorConstructor.newInstance(cmdName, sender, params);
+						CmdDsc cmdDsc = smsCmdExecutor.getCmdDsc();
+						if ((params.length < cmdDsc.getMinParams()) || 
+							(params.length > cmdDsc.getMaxParams())) {
+							response = SMS_CMD_ERROR_COMMAND_SYNTAX_INVALID;
+							response = StringUtils.replace(response, "$SYNTAX", 
+								cmdName + " " + cmdDsc.getParamSyntax());
 						} else {
 							executorService.execute(smsCmdExecutor);
 							response = null;
@@ -131,7 +135,8 @@ public class SmsCmdReceiver extends BroadcastReceiver {
 				response = StringUtils.abbreviate(e.toString(), 80);
 			} finally {
 				if (!StringUtils.isEmpty(response)) {
-					SmsCmdReceiver.sendSms(sender, SMS_CMD_ERROR_PREFIX + response);
+					SmsCmdError smsCmdError = new SmsCmdError(sender, SMS_CMD_ERROR_PREFIX, response);
+					executorService.execute(smsCmdError);
 					LogUtils.infoMethodState(this.getClass(), "onReceive", "command failed", sender, response);
 				}
 			}

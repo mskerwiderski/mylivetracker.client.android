@@ -34,5 +34,9 @@ public abstract class AbstractApp extends Application {
 	public static Context getCtx() {
         return context;
     }
+	public static boolean isPro() {
+		return app.isProAux();
+	}
 	public abstract String getName();
+	protected abstract boolean isProAux();
 }

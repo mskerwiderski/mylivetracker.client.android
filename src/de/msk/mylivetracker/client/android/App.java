@@ -1,4 +1,4 @@
-package de.msk.mylivetracker.client.android.app.std;
+package de.msk.mylivetracker.client.android;
 
 import de.msk.mylivetracker.client.android.app.AbstractApp;
 
@@ -20,4 +20,8 @@ public class App extends AbstractApp {
 		return "MLTApp";
 	}
 
+	@Override
+	protected boolean isProAux() {
+		return true;
+	}
 }

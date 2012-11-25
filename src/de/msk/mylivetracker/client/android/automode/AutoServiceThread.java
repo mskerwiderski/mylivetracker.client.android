@@ -4,13 +4,10 @@ import java.util.TimeZone;
 
 import org.apache.commons.lang.StringUtils;
 
-import de.msk.mylivetracker.client.android.mainview.MainActivity;
-import de.msk.mylivetracker.client.android.mainview.OnClickButtonLocationListenerOnOffListener;
-import de.msk.mylivetracker.client.android.mainview.OnClickButtonResetListener;
-import de.msk.mylivetracker.client.android.mainview.OnClickButtonStartStopListener;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.status.BatteryReceiver;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
+import de.msk.mylivetracker.client.android.util.TrackUtils;
 import de.msk.mylivetracker.client.android.util.service.AbstractServiceThread;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;
 
@@ -40,19 +37,16 @@ public class AutoServiceThread extends AbstractServiceThread {
 			if (BatteryReceiver.get().isBatteryCharging() &&
 				!status.trackIsRunning()) {
 				if (trackIsExpired()) {
-					MainActivity.get().runOnUiThread(new ResetTrackTask());
+					TrackUtils.resetTrack();
 				}
-				MainActivity.get().runOnUiThread(new LocalizationTask(true));
-				MainActivity.get().runOnUiThread(new TrackingTask(true));
+				TrackUtils.startTrack();
 			} else if (!BatteryReceiver.get().isBatteryCharging() && 
 				status.trackIsRunning()) {
-				MainActivity.get().runOnUiThread(new TrackingTask(false));
-				MainActivity.get().runOnUiThread(new LocalizationTask(false));
+				TrackUtils.stopTrack();
 				status.updateLastAutoModeStopSignalReceived();
 			}
 		} else if (prefs.isAutoStartEnabled() && !status.trackIsRunning()) {
-			MainActivity.get().runOnUiThread(new LocalizationTask(true));
-			MainActivity.get().runOnUiThread(new TrackingTask(true));
+			TrackUtils.startTrack();
 		}
 	}
 
@@ -66,43 +60,6 @@ public class AutoServiceThread extends AbstractServiceThread {
 		// noop.
 	}
 
-	private static class ResetTrackTask implements Runnable {
-		@Override
-		public void run() {
-			OnClickButtonResetListener.resetTrack(MainActivity.get());
-		}
-	}
-	
-	private static class LocalizationTask implements Runnable {
-		private boolean start = true;
-		
-		public LocalizationTask(boolean start) {
-			this.start = start;
-		}
-
-		@Override
-		public void run() {
-			OnClickButtonLocationListenerOnOffListener.
-				startStopLocationListener(MainActivity.get(), 
-				this.start);
-		}
-	}
-	
-	private static class TrackingTask implements Runnable {
-		private boolean start = true;
-		
-		public TrackingTask(boolean start) {
-			this.start = start;
-		}
-
-		@Override
-		public void run() {
-			OnClickButtonStartStopListener.
-				startStopTrack(MainActivity.get(), 
-				this.start, false);
-		}
-	}
-	
 	private boolean trackIsExpired() {
 		boolean res = false;
 		Long lastStopSignal = TrackStatus.get().getLastAutoModeStopSignalReceived();

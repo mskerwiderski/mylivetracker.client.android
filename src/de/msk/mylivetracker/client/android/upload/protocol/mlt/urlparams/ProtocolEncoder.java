@@ -79,7 +79,7 @@ public class ProtocolEncoder implements IProtocol {
 			if (locationInfo.getBearing() != null) {
 				paramsStr = HttpProtocolUtils.addParam(paramsStr, "bea", String.valueOf(locationInfo.getBearing()));
 			}
-			paramsStr = HttpProtocolUtils.addParam(paramsStr, "val", BooleanUtils.toString(locationInfo.isAccurate(), "1", "0"));
+			paramsStr = HttpProtocolUtils.addParam(paramsStr, "val", BooleanUtils.toString(locationInfo.isAccurate(), "true", "false"));
 		} else {
 			paramsStr = HttpProtocolUtils.addParam(paramsStr, "dst", String.valueOf(trackStatus.getTrackDistanceInMtr()));
 			paramsStr = HttpProtocolUtils.addParam(paramsStr, "mil", String.valueOf(trackStatus.getMileageInMtr()));

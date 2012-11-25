@@ -15,13 +15,13 @@ import de.msk.mylivetracker.client.android.util.VersionUtils;
  */
 public class SmsCmdGetAppVersion extends AbstractSmsCmdExecutor {
 
-	public SmsCmdGetAppVersion(String sender, String[] params) {
-		super(sender, params);
+	public SmsCmdGetAppVersion(String cmdName, String sender, String... params) {
+		super(cmdName, sender, params);
 	}
 
 	@Override
-	public ParamsDsc getParamsDsc() {
-		return new ParamsDsc(0, 0);
+	public CmdDsc getCmdDsc() {
+		return new CmdDsc("", 0,0);
 	}
 
 	@Override

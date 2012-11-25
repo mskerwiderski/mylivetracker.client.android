@@ -20,4 +20,8 @@ public class App extends AbstractApp {
 		return "MLTAppPro";
 	}
 
+	@Override
+	protected boolean isProAux() {
+		return true;
+	}
 }

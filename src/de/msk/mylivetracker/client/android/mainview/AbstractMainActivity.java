@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import de.msk.mylivetracker.client.android.InfoActivity;
+import de.msk.mylivetracker.client.android.app.AbstractApp;
 import de.msk.mylivetracker.client.android.app.pro.R;
 import de.msk.mylivetracker.client.android.listener.GpsStateListener;
 import de.msk.mylivetracker.client.android.listener.LocationListener;
@@ -28,6 +29,7 @@ import de.msk.mylivetracker.client.android.preferences.PrefsServerActivity;
 import de.msk.mylivetracker.client.android.preferences.linksender.LinkSenderActivity;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.trackview.TrackViewActivity;
+import de.msk.mylivetracker.client.android.util.dialog.AbstractInfoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractProgressDialog;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
@@ -128,6 +130,18 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 		}
 	}
 	
+	private static final class IsProFeatureDialog extends AbstractInfoDialog {
+
+		public IsProFeatureDialog(AbstractMainActivity activity) {
+			super(activity, R.string.txIsProFeature);
+		}
+
+		@Override
+		public void onOk() {
+			// noop.
+		}
+	}
+	
 	public static boolean showStartStopInfoDialogIfInAutoMode() {
 		if (Preferences.get().isAutoModeEnabled()) {
 			SimpleInfoDialog dlg = new SimpleInfoDialog(
@@ -150,6 +164,11 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 		}
 	}
 
+	private void showIsProFeatureDialog() {
+		IsProFeatureDialog dlg = new IsProFeatureDialog(this);
+		dlg.show();
+	}
+	
 	private LocationManager locationManager;
 
 	public LocationManager getLocationManager() {
@@ -310,10 +329,18 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 			}
 			return true;
 		case R.id.mnPrefsPinCodeQuery:
-			startActivity(new Intent(this, PrefsPinCodeQueryActivity.class));
+			if (!AbstractApp.isPro()) {
+				showIsProFeatureDialog();
+			} else {
+				startActivity(new Intent(this, PrefsPinCodeQueryActivity.class));
+			}
 			return true;
 		case R.id.mnPrefsRemoteAccess:
-			startActivity(new Intent(this, PrefsRemoteAccessActivity.class));
+			if (!AbstractApp.isPro()) {
+				showIsProFeatureDialog();
+			} else {
+				startActivity(new Intent(this, PrefsRemoteAccessActivity.class));
+			}
 			return true;	
 		case R.id.mnLinkSender:
 			if (TrackStatus.get().trackIsRunning()) {

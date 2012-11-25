@@ -23,7 +23,6 @@ public class VersionUtils {
 	public static class VersionDsc {
 		private int code;
 		private String name;
-		boolean pro;
 		boolean alpha;
 		boolean beta;
 		boolean test;
@@ -32,7 +31,6 @@ public class VersionUtils {
 		public VersionDsc(int code, String name) {
 			this.code = code;
 			this.name = name;
-			this.pro = StringUtils.containsIgnoreCase(this.name, "pro");
 			this.alpha = StringUtils.containsIgnoreCase(this.name, "alpha"); 
 			this.beta = StringUtils.containsIgnoreCase(this.name, "beta");
 			this.test = StringUtils.containsIgnoreCase(this.name, "test");
@@ -44,9 +42,6 @@ public class VersionUtils {
 		public String getName() {
 			return name;
 		}
-		public boolean isPro() {
-			return pro;
-		}
 		public boolean isAlpha() {
 			return alpha;
 		}
@@ -57,22 +52,24 @@ public class VersionUtils {
 			return test;
 		}
 		public String getVersionStr() {
-			return "v" + this.name;
+			String versionStr = "v" + this.name; 
+			if (AbstractApp.isPro()) {
+				versionStr += " (PRO)";
+			}
+			return versionStr; 
 		}
 		@Override
 		public String toString() {
-			return "VersionDsc [code=" + code + ", name=" + name + ", pro="
-				+ pro + ", alpha=" + alpha + ", beta=" + beta + ", test="
-				+ test + "]";
+			StringBuilder builder = new StringBuilder();
+			builder.append("VersionDsc [code=").append(code).append(", name=")
+				.append(name).append(", alpha=").append(alpha)
+				.append(", beta=").append(beta).append(", test=")
+				.append(test).append("]");
+			return builder.toString();
 		}
 	}
 	
 	private static VersionDsc versionDsc = null;
-	
-	public static boolean isPro() {
-		VersionDsc versionDsc = get();
-		return versionDsc.isPro();
-	}
 	
 	public static boolean isAlpha() {
 		VersionDsc versionDsc = get();

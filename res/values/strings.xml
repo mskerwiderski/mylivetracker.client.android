@@ -2,6 +2,8 @@
 <resources>
 	<!-- Application name -->
     <string name="app_name">MyLiveTracker</string>
+    
+    <string name="txIsProFeature">This feature is available only in the PRO version of MyLiveTracker!</string>
         	
     <!-- Welcome message -->
     <string name="welcomeMessage">Welcome to MyLiveTracker. If you have questions or need support, please visit our forum at http://forum.mylivetracker.info!</string>
