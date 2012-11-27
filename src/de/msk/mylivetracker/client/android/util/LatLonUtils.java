@@ -20,6 +20,9 @@ import org.apache.commons.lang.StringUtils;
  */
 public class LatLonUtils {
 
+	private LatLonUtils() {
+	}
+	
 	public static class DmsDsc {
 		public double degrees;
 		public double minutes;

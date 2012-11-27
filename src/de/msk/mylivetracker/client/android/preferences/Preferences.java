@@ -70,8 +70,9 @@ public class Preferences {
 	protected AutoModeResetTrackMode autoModeResetTrackMode;
 	protected boolean autoStartEnabled;
 	protected boolean remoteAccessEnabled;
-	protected String remoteAccessEmailAddress;
 	protected String remoteAccessPassword;
+	protected boolean remoteAccessUseReceiver;
+	protected String remoteAccessReceiver;
 	
 	public enum ConfirmLevel {
 		low("low"), medium("medium"), high("high");
@@ -447,8 +448,9 @@ public class Preferences {
 						preferences.pinCode = null;
 						preferences.pinCodeQueryEnabled = false;
 						preferences.remoteAccessEnabled = false;
-						preferences.remoteAccessEmailAddress = "";
 						preferences.remoteAccessPassword = "";
+						preferences.remoteAccessUseReceiver = false;
+						preferences.remoteAccessReceiver = "";
 					}
 					if (!VersionUtils.isCurrent(context, preferences.versionApp)) {
 						preferences.firstStartOfApp = true;
@@ -699,16 +701,22 @@ public class Preferences {
 	public void setRemoteAccessEnabled(boolean remoteAccessEnabled) {
 		this.remoteAccessEnabled = remoteAccessEnabled;
 	}
-	public String getRemoteAccessEmailAddress() {
-		return remoteAccessEmailAddress;
-	}
-	public void setRemoteAccessEmailAddress(String remoteAccessEmailAddress) {
-		this.remoteAccessEmailAddress = remoteAccessEmailAddress;
-	}
 	public String getRemoteAccessPassword() {
 		return remoteAccessPassword;
 	}
 	public void setRemoteAccessPassword(String remoteAccessPassword) {
 		this.remoteAccessPassword = remoteAccessPassword;
+	}
+	public boolean isRemoteAccessUseReceiver() {
+		return remoteAccessUseReceiver;
+	}
+	public void setRemoteAccessUseReceiver(boolean remoteAccessUseReceiver) {
+		this.remoteAccessUseReceiver = remoteAccessUseReceiver;
+	}
+	public String getRemoteAccessReceiver() {
+		return remoteAccessReceiver;
+	}
+	public void setRemoteAccessReceiver(String remoteAccessReceiver) {
+		this.remoteAccessReceiver = remoteAccessReceiver;
 	}
 }

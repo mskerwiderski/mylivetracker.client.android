@@ -7,13 +7,13 @@ import android.widget.TextView;
 import de.msk.mylivetracker.client.android.app.pro.R;
 import de.msk.mylivetracker.client.android.listener.LocationListener;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
-import de.msk.mylivetracker.client.android.mainview.updater.UpdaterUtils.Unit;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.status.HeartrateInfo;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
 import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.status.UploadInfo;
+import de.msk.mylivetracker.client.android.util.FormatUtils.Unit;
 
 /**
  * MainViewUpdater.
@@ -50,9 +50,9 @@ public class MainViewUpdater implements Runnable {
 	
 	public static String getLocationAccuracyStr(LocationInfo locationInfo) {
 		if (locationInfo == null) return UpdaterUtils.getNoValue();
-		if (locationInfo.getAccuracy() == null) return UpdaterUtils.getNoValue(); 
+		if (!locationInfo.hasValidAccuracy()) return UpdaterUtils.getNoValue(); 
 		return 
-			UpdaterUtils.getFltStr(locationInfo.getAccuracy(), 0, Unit.Meter) + " (" +
+			UpdaterUtils.getFltStr(locationInfo.getAccuracyInMtr(), 0, Unit.Meter) + " (" +
 			LocationInfo.getProviderAbbr(locationInfo) + ")";
 	}
 	

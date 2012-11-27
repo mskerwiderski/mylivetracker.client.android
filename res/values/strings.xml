@@ -240,10 +240,11 @@
     <!-- preferences remote access -->    
     <string name="tiPrefsRemoteAccess">Remote access</string>
     <string name="lbPrefsRemoteAccess_Enable">Enable remote access</string>
-    <string name="fdPrefsRemoteAccess_EmailAddress">Email address</string>
-    <string name="lbPrefsRemoteAccess_EmailAddress">Email address</string>
     <string name="fdPrefsRemoteAccess_Password">Password</string>
     <string name="lbPrefsRemoteAccess_Password">Password</string>
+    <string name="lbPrefsRemoteAccess_UseReceiver">Send response to specified receiver. If disabled responses will be send to command originator.</string>
+    <string name="fdPrefsRemoteAccess_Receiver">Receiver (phone number)</string>
+    <string name="lbPrefsRemoteAccess_Receiver">Receiver</string>
         
     <!-- link sender -->
     <string name="tiLinkSender">Link sender</string>
@@ -268,6 +269,7 @@
     <string name="validator.pinCodeInvalid">PIN code is invalid!</string>
     <string name="validator.reenteredPinCodeNotEqualToPinCode">Reentered PIN code is not equal to PIN code!</string>
     <string name="validator.locationProviderNotSupported">Location provider %1$s is not supported on this device!</string>
+    <string name="validator.phoneNumberInvalid">Phone number is invalid!</string>
     <string name="validator.valueMustNotBeEmpty">%1$s must not be empty!</string>
     <string name="validator.valueMustBeANumber">%1$s must be a number!</string>    
     <string name="validator.valueMustBeInRange">%1$s must be in range of %2$s-%3$s digits!</string>

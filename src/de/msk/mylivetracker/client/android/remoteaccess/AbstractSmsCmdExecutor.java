@@ -38,12 +38,15 @@ public abstract class AbstractSmsCmdExecutor implements Runnable {
 	@Override
 	public void run() {
 		LogUtils.infoMethodIn(this.getClass(), "run");
+		String smsResponse = SmsCmdReceiver.SMS_CMD_ERROR_PREFIX + "internal command error: ";
 		try {
 			LogUtils.infoMethodState(this.getClass(), "run", "params", Arrays.toString(this.params));
-			String smsResponse = this.executeCmdAndCreateSmsResponse(this.params);
-			SmsCmdReceiver.sendSms(this.sender, smsResponse);
+			smsResponse = this.executeCmdAndCreateSmsResponse(this.params);
 		} catch (Exception e) {
+			smsResponse += e.toString();
 			LogUtils.infoMethodState(this.getClass(), "run", "run failed", e.toString());
+		} finally {
+			SmsSendUtils.sendSms(this.sender, smsResponse);
 		}
 		LogUtils.infoMethodOut(this.getClass(), "run");
 	}

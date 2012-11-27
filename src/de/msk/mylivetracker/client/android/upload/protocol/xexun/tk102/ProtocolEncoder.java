@@ -51,9 +51,9 @@ public class ProtocolEncoder implements IProtocol {
 		String altitude = "";
 		if ((locationInfo != null) && locationInfo.hasValidLatLon()) {
 			locValid = locationInfo.isAccurate();
-			if (locationInfo.getAltitude() != null) {
+			if (locationInfo.hasValidAltitude()) {
 				altitude = String.valueOf( 
-					Math.round(locationInfo.getAltitude() * 100d) / 100d);
+					Math.round(locationInfo.getAltitudeInMtr() * 100d) / 100d);
 			}
 		}
 		dataStr += (locValid ? "F" : "L") + SEPERATOR;

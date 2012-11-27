@@ -10,6 +10,7 @@ import org.apache.commons.lang.StringUtils;
 import android.app.Activity;
 import android.widget.TextView;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
+import de.msk.mylivetracker.client.android.util.FormatUtils.Unit;
 
 /**
  * UpdaterUtils.
@@ -24,25 +25,6 @@ import de.msk.mylivetracker.client.android.mainview.MainActivity;
  */
 public class UpdaterUtils {
 
-	public enum Unit {
-		Percent("%"), 
-		Volt("V"), 
-		DegreeCelsius("¡C"),
-		Seconds("s"),
-		Milliseconds("ms"),
-		Kilometer("km"),
-		Meter("m"),
-		BeatsPerMinute("bpm");
-		
-		private String txt;
-		private Unit(String txt) {
-			this.txt = txt;
-		}
-		public String getTxt() {
-			return txt;
-		}
-	};
-	
 	private UpdaterUtils() {
 	}	
 	

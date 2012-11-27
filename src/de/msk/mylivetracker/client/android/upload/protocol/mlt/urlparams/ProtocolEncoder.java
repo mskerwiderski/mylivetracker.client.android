@@ -67,17 +67,17 @@ public class ProtocolEncoder implements IProtocol {
 			paramsStr = HttpProtocolUtils.addParam(paramsStr, "lon", String.valueOf(locationInfo.getLongitude()));
 			paramsStr = HttpProtocolUtils.addParam(paramsStr, "dst", String.valueOf(locationInfo.getTrackDistanceInMtr()));
 			paramsStr = HttpProtocolUtils.addParam(paramsStr, "mil", String.valueOf(locationInfo.getMileageInMtr()));
-			if (locationInfo.getAltitude() != null) {
-				paramsStr = HttpProtocolUtils.addParam(paramsStr, "alt", String.valueOf(locationInfo.getAltitude()));
+			if (locationInfo.hasValidAltitude()) {
+				paramsStr = HttpProtocolUtils.addParam(paramsStr, "alt", String.valueOf(locationInfo.getAltitudeInMtr()));
 			}
-			if (locationInfo.getSpeed() != null) {
-				paramsStr = HttpProtocolUtils.addParam(paramsStr, "spd", String.valueOf(locationInfo.getSpeed()));
+			if (locationInfo.hasValidSpeed()) {
+				paramsStr = HttpProtocolUtils.addParam(paramsStr, "spd", String.valueOf(locationInfo.getSpeedInMtrPerSecs()));
 			}
-			if (locationInfo.getAccuracy() != null) {
-				paramsStr = HttpProtocolUtils.addParam(paramsStr, "acc", String.valueOf(locationInfo.getAccuracy()));
+			if (locationInfo.hasValidAccuracy()) {
+				paramsStr = HttpProtocolUtils.addParam(paramsStr, "acc", String.valueOf(locationInfo.getAccuracyInMtr()));
 			}
-			if (locationInfo.getBearing() != null) {
-				paramsStr = HttpProtocolUtils.addParam(paramsStr, "bea", String.valueOf(locationInfo.getBearing()));
+			if (locationInfo.hasValidBearing()) {
+				paramsStr = HttpProtocolUtils.addParam(paramsStr, "bea", String.valueOf(locationInfo.getBearingInDegree()));
 			}
 			paramsStr = HttpProtocolUtils.addParam(paramsStr, "val", BooleanUtils.toString(locationInfo.isAccurate(), "true", "false"));
 		} else {

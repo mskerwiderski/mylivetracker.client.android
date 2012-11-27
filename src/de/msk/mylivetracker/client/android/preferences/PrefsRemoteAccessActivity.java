@@ -28,20 +28,23 @@ public class PrefsRemoteAccessActivity extends AbstractActivity {
 		private PrefsRemoteAccessActivity activity;
 		private Preferences preferences;
 		private CheckBox cbPrefsRemoteAccess_Enabled;
-		private EditText etPrefsRemoteAccess_EmailAddress;
 		private EditText etPrefsRemoteAccess_Password;
+		private CheckBox cbPrefsRemoteAccess_UseReceiver;
+		private EditText etPrefsRemoteAccess_Receiver;
 		
 		public OnClickButtonSaveListener(
 			PrefsRemoteAccessActivity activity,
 			Preferences preferences, 
 			CheckBox cbPrefsRemoteAccess_Enabled,
-			EditText etPrefsRemoteAccess_EmailAddress,
-			EditText etPrefsRemoteAccess_Password) {
+			EditText etPrefsRemoteAccess_Password,
+			CheckBox cbPrefsRemoteAccess_UseReceiver,
+			EditText etPrefsRemoteAccess_Receiver) {
 			this.activity = activity;
 			this.preferences = preferences;
 			this.cbPrefsRemoteAccess_Enabled = cbPrefsRemoteAccess_Enabled;
-			this.etPrefsRemoteAccess_EmailAddress = etPrefsRemoteAccess_EmailAddress;
 			this.etPrefsRemoteAccess_Password = etPrefsRemoteAccess_Password;
+			this.cbPrefsRemoteAccess_UseReceiver = cbPrefsRemoteAccess_UseReceiver;
+			this.etPrefsRemoteAccess_Receiver = etPrefsRemoteAccess_Receiver;
 		}
 
 		/* (non-Javadoc)
@@ -51,22 +54,38 @@ public class PrefsRemoteAccessActivity extends AbstractActivity {
 		public void onClick(View v) {
 			boolean valid = true;
 			
-			valid = valid && 
-				ValidatorUtils.validateEditTextString(
-					this.activity, 
-					R.string.fdPrefsRemoteAccess_EmailAddress, 
-					etPrefsRemoteAccess_EmailAddress, 
-					5, 80, true) &&
-				ValidatorUtils.validateEditTextString(
-					this.activity, 
-					R.string.fdPrefsRemoteAccess_Password, 
-					etPrefsRemoteAccess_Password, 
-					4, 8, true);
+			boolean remoteAccessEnabled = cbPrefsRemoteAccess_Enabled.isChecked();
+			boolean useReceiver = cbPrefsRemoteAccess_UseReceiver.isChecked();
+			
+			if (remoteAccessEnabled) {
+				valid = 
+					ValidatorUtils.validateEditTextString(
+						this.activity, 
+						R.string.fdPrefsRemoteAccess_Password, 
+						etPrefsRemoteAccess_Password, 
+						4, 8, true);
+				if (valid && useReceiver) {
+					valid = ValidatorUtils.validateIfPhoneNumber(
+						this.activity, 
+						R.string.fdPrefsRemoteAccess_Receiver, 
+						etPrefsRemoteAccess_Receiver, 
+						true);	
+				}
+			}
 			
 			if (valid) {
 				preferences.setRemoteAccessEnabled(cbPrefsRemoteAccess_Enabled.isChecked());
-				preferences.setRemoteAccessEmailAddress(etPrefsRemoteAccess_EmailAddress.getText().toString());
-				preferences.setRemoteAccessPassword(etPrefsRemoteAccess_Password.getText().toString());
+				if (cbPrefsRemoteAccess_Enabled.isChecked()) {
+					preferences.setRemoteAccessPassword(etPrefsRemoteAccess_Password.getText().toString());
+				} else {
+					preferences.setRemoteAccessPassword("");
+				}
+				preferences.setRemoteAccessUseReceiver(cbPrefsRemoteAccess_UseReceiver.isChecked());
+				if (cbPrefsRemoteAccess_UseReceiver.isChecked()) {
+					preferences.setRemoteAccessReceiver(etPrefsRemoteAccess_Receiver.getText().toString());
+				} else {
+					preferences.setRemoteAccessReceiver("");
+				}
 				Preferences.save();
 				this.activity.finish();
 			}
@@ -102,10 +121,13 @@ public class PrefsRemoteAccessActivity extends AbstractActivity {
         
         CheckBox cbPrefsRemoteAccess_Enable = (CheckBox)findViewById(R.id.cbPrefsRemoteAccess_Enable);
         cbPrefsRemoteAccess_Enable.setChecked(prefs.isRemoteAccessEnabled());
-        EditText etPrefsRemote_EmailAddress = (EditText) findViewById(R.id.etPrefsRemoteAccess_EmailAddress);
-        etPrefsRemote_EmailAddress.setText(String.valueOf(prefs.getRemoteAccessEmailAddress()));
         EditText etPrefsRemote_Password = (EditText) findViewById(R.id.etPrefsRemoteAccess_Password);
         etPrefsRemote_Password.setText(String.valueOf(prefs.getRemoteAccessPassword()));
+        
+        CheckBox cbPrefsRemote_UseReceiver = (CheckBox)findViewById(R.id.cbPrefsRemoteAccess_UseReceiver);
+        cbPrefsRemote_UseReceiver.setChecked(prefs.isRemoteAccessUseReceiver());
+        EditText etPrefsRemote_Receiver = (EditText) findViewById(R.id.etPrefsRemoteAccess_Receiver);
+        etPrefsRemote_Receiver.setText(String.valueOf(prefs.getRemoteAccessReceiver()));
         
         Button btnPrefsRemoteAccess_Save = (Button) findViewById(R.id.btPrefsRemoteAccess_Save);
         Button btnPrefsRemoteAccess_Cancel = (Button) findViewById(R.id.btPrefsRemoteAccess_Cancel);
@@ -113,8 +135,9 @@ public class PrefsRemoteAccessActivity extends AbstractActivity {
         btnPrefsRemoteAccess_Save.setOnClickListener(
 			new OnClickButtonSaveListener(this, prefs,
 				cbPrefsRemoteAccess_Enable,
-				etPrefsRemote_EmailAddress,
-				etPrefsRemote_Password));
+				etPrefsRemote_Password,
+				cbPrefsRemote_UseReceiver,
+				etPrefsRemote_Receiver));
 		
         btnPrefsRemoteAccess_Cancel.setOnClickListener(
 			new OnClickButtonCancelListener(this));

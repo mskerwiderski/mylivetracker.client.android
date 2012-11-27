@@ -3,6 +3,7 @@ package de.msk.mylivetracker.client.android.util.validation;
 import org.apache.commons.lang.StringUtils;
 
 import android.content.Context;
+import android.telephony.PhoneNumberUtils;
 import android.widget.EditText;
 import de.msk.mylivetracker.client.android.app.pro.R;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
@@ -70,6 +71,28 @@ public class ValidatorUtils {
 			return false;
 		}
 		return true;
+	}
+	
+	public static boolean validateIfPhoneNumber(
+		Context ctx, int label, EditText editText,
+		boolean setFocusIfInvalid) {
+		if (ctx == null) {
+			throw new IllegalArgumentException("ctx must not be null.");
+		}
+		if (editText == null) {
+			throw new IllegalArgumentException("editText must not be null.");
+		}
+		boolean valid = PhoneNumberUtils.isGlobalPhoneNumber(editText.getText().toString());
+		if (!valid) {
+			String message = 
+				ctx.getString(R.string.validator_phoneNumberInvalid, 
+				ctx.getString(label));
+			new SimpleInfoDialog(ctx, message).show();
+		}
+		if (!valid && setFocusIfInvalid) {
+			editText.requestFocus();
+		}
+		return valid;
 	}
 	
 	public static boolean validateEditTextString(

@@ -240,10 +240,11 @@
     <!-- preferences remote access -->    
     <string name="tiPrefsRemoteAccess">Fernzugriff</string>
     <string name="lbPrefsRemoteAccess_Enable">Fernzugriff aktivieren</string>
-    <string name="fdPrefsRemoteAccess_EmailAddress">Email Adresse</string>
-    <string name="lbPrefsRemoteAccess_EmailAddress">Email Adresse</string>
     <string name="fdPrefsRemoteAccess_Password">Passwort</string>
     <string name="lbPrefsRemoteAccess_Password">Passwort</string>
+    <string name="lbPrefsRemoteAccess_UseReceiver">Sende Antworten an angegebenen Empfänger. Falls deaktiviert, werden die Antworten an den ursprünglichen Sender geschickt.</string>
+   	<string name="fdPrefsRemoteAccess_Receiver">Empfänger (Telefonnummer)</string>
+    <string name="lbPrefsRemoteAccess_Receiver">Empfänger</string>
     
     <!-- link sender to server -->
     <string name="tiLinkSender">Sender koppeln</string>
@@ -268,6 +269,7 @@
     <string name="validator.pinCodeInvalid">Der PIN Code ist ungültig!</string>
     <string name="validator.reenteredPinCodeNotEqualToPinCode">Die PIN Code Eingaben sind nicht identisch!</string>
     <string name="validator.locationProviderNotSupported">Der Lokalisierungsdienst %1$s ist auf diesem Gerät nicht verfügbar!</string>
+    <string name="validator.phoneNumberInvalid">Telefonnummer ist ungültig!</string>
     <string name="validator.valueMustNotBeEmpty">%1$s darf nicht leer sein!</string>
     <string name="validator.valueMustBeANumber">%1$s muss eine Zahl sein!</string>    
     <string name="validator.valueMustBeInRange">%1$s muss %2$s-%3$s Stellen lang sein!</string>

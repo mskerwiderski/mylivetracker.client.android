@@ -47,9 +47,9 @@ public class ProtocolEncoder implements IProtocol {
 			dataStr += 
 				locationInfo.getLongitude() + "," +
 				locationInfo.getLatitude() + "," +
-				((locationInfo.getSpeed() != null) ? locationInfo.getSpeed() : "0.0") + "," +
-				((locationInfo.getBearing() != null) ? locationInfo.getBearing() : "0.0") + "," +
-				((locationInfo.getAltitude() != null) ? locationInfo.getAltitude() : "0.0") + ",";
+				(locationInfo.hasValidSpeed() ? locationInfo.getSpeedInMtrPerSecs() : "0.0") + "," +
+				(locationInfo.hasValidBearing() ? locationInfo.getBearingInDegree() : "0.0") + "," +
+				(locationInfo.hasValidAltitude() ? locationInfo.getAltitudeInMtr() : "0.0") + ",";
 			
 			if (gpsStateInfo != null) {
 				dataStr += gpsStateInfo.getCountSatellites();

@@ -90,14 +90,14 @@ public class ProtocolEncoder extends EncDecoder implements IProtocol {
 		if ((locationInfo != null) && locationInfo.hasValidLatLon()) {
 			data.setLatitudeInDecimal(locationInfo.getLatitude());
 			data.setLongitudeInDecimal(locationInfo.getLongitude());						
-			if (locationInfo.getAltitude() != null) {
-				data.setAltitudeInMtr(locationInfo.getAltitude());
+			if (locationInfo.hasValidAltitude()) {
+				data.setAltitudeInMtr(locationInfo.getAltitudeInMtr());
 			}
-			if (locationInfo.getSpeed() != null) {
-				data.setSpeedInMtrPerSecs(Double.valueOf(locationInfo.getSpeed()));
+			if (locationInfo.hasValidSpeed()) {
+				data.setSpeedInMtrPerSecs(Double.valueOf(locationInfo.getSpeedInMtrPerSecs()));
 			}
-			if (locationInfo.getAccuracy() != null) {
-				data.setLocationAccuracyInMtr(Double.valueOf(locationInfo.getAccuracy()));				
+			if (locationInfo.hasValidAccuracy()) {
+				data.setLocationAccuracyInMtr(Double.valueOf(locationInfo.getAccuracyInMtr()));				
 			}
 			// TODO bearing
 			data.setLocationValid(locationInfo.isAccurate());

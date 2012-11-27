@@ -1,10 +1,7 @@
 package de.msk.mylivetracker.client.android.status;
 
 import java.io.Serializable;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.Date;
-import java.util.Locale;
 import java.util.TimeZone;
 
 import org.apache.commons.lang.StringUtils;
@@ -12,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import android.location.Location;
 import android.location.LocationManager;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.util.FormatUtils;
 import de.msk.mylivetracker.client.android.util.LatLonUtils;
 import de.msk.mylivetracker.client.android.util.LatLonUtils.PosType;
 import de.msk.mylivetracker.client.android.util.LatLonUtils.Wgs84Dsc;
@@ -63,11 +61,9 @@ public class LocationInfo extends AbstractInfo implements Serializable {
 		locationInfo = null;
 	}
 
-	public static class LatLonPos {
+	private static class LatLonPos {
 		private Double latitude = null;
 		private Double longitude = null;
-		public LatLonPos() {
-		}
 		public LatLonPos(Location location) {
 			this.latitude = location.getLatitude();
 			this.longitude = location.getLongitude();
@@ -85,21 +81,15 @@ public class LocationInfo extends AbstractInfo implements Serializable {
 				(this.latitude != null) && 
 				(this.longitude != null);
 		}
-		public Double getLatitude() {
-			return latitude;
-		}
-		public Double getLongitude() {
-			return longitude;
-		}
 	}
 	
 	private LatLonPos lastLatLonPos = null;
 	private String provider = null;
 	private LatLonPos latLonPos = null;
-	private Float accuracy = null;
-	private Float bearing = null;
-	private Double altitude = null;
-	private Float speed = null;
+	private Float accuracyInMtr = null;
+	private Float bearingInDegree = null;
+	private Double altitudeInMtr = null;
+	private Float speedInMtrPerSecs = null;
 	
 	private float trackDistanceInMtr = 0.0f;
 	private float mileageInMtr = 0.0f;
@@ -111,16 +101,16 @@ public class LocationInfo extends AbstractInfo implements Serializable {
 		LatLonPos lastLatLonPos,  
 		String provider,
 		LatLonPos latLonPos, 
-		Float accuracy, Float bearing,
-		Double altitude, Float speed, 
+		Float accuracyInMtr, Float bearingInDegree,
+		Double altitudeInMtr, Float speedInMtrPerSecs, 
 		float trackDistanceInMtr, float mileageInMtr) {
 		this.lastLatLonPos = lastLatLonPos;
 		this.provider = provider;
 		this.latLonPos = latLonPos;
-		this.accuracy = accuracy;
-		this.bearing = bearing;
-		this.altitude = altitude;
-		this.speed = speed;
+		this.accuracyInMtr = accuracyInMtr;
+		this.bearingInDegree = bearingInDegree;
+		this.altitudeInMtr = altitudeInMtr;
+		this.speedInMtrPerSecs = speedInMtrPerSecs;
 		this.trackDistanceInMtr = trackDistanceInMtr;
 		this.mileageInMtr = mileageInMtr;
 	}
@@ -208,7 +198,7 @@ public class LocationInfo extends AbstractInfo implements Serializable {
 	}
 	
 	public boolean isAccurate() {
-		return isAccurate(this.accuracy);
+		return isAccurate(this.accuracyInMtr);
 	}
 	
 	public static String getProviderAbbr(LocationInfo locationInfo) {
@@ -259,14 +249,16 @@ public class LocationInfo extends AbstractInfo implements Serializable {
 		StringBuilder builder = new StringBuilder();
 		builder.append("LocationInfo [lastLatLonPos=").append(lastLatLonPos)
 			.append(", provider=").append(provider).append(", latLonPos=")
-			.append(latLonPos).append(", accuracy=").append(accuracy)
-			.append(", bearing=").append(bearing).append(", altitude=")
-			.append(altitude).append(", speed=").append(speed)
-			.append(", trackDistanceInMtr=").append(trackDistanceInMtr)
-			.append(", mileageInMtr=").append(mileageInMtr).append("]");
+			.append(latLonPos).append(", accuracyInMtr=")
+			.append(accuracyInMtr).append(", bearingInDegree=")
+			.append(bearingInDegree).append(", altitudeInMtr=")
+			.append(altitudeInMtr).append(", speedInMtrPerSecs=")
+			.append(speedInMtrPerSecs).append(", trackDistanceInMtr=")
+			.append(trackDistanceInMtr).append(", mileageInMtr=")
+			.append(mileageInMtr).append("]");
 		return builder.toString();
 	}
-	
+
 	private static final String GPRMC_SEP = ",";
 	private static final String GPRMC_IDENTIFIER = "GPRMC";
 	private static final char GPRMC_MARKER_CHECKSUM = '*';
@@ -281,15 +273,13 @@ public class LocationInfo extends AbstractInfo implements Serializable {
 		String date = dateTime.getAsStr(TimeZone.getTimeZone(DateTime.TIME_ZONE_UTC), "ddMMyy");
 		
 		String speedInKnoten = "0.0";
-		if (locationInfo.speed != null) {
-			DecimalFormat decimalFmtSpeed = new DecimalFormat("0.0", new DecimalFormatSymbols(Locale.ENGLISH));
-			speedInKnoten = decimalFmtSpeed.format(locationInfo.speed * 3.6f / 1.852f);
+		if (locationInfo.hasValidSpeed()) {
+			speedInKnoten = FormatUtils.getDoubleAsSimpleStr(locationInfo.speedInMtrPerSecs * 3.6f / 1.852f, 1);
 		}
 		
 		String bearingInDegrees = "0.00";
-		if (locationInfo.bearing != null) {
-			DecimalFormat decimalFmtBearing = new DecimalFormat("0.00", new DecimalFormatSymbols(Locale.ENGLISH));
-			bearingInDegrees = decimalFmtBearing.format(locationInfo.bearing);
+		if (locationInfo.hasValidBearing()) {
+			bearingInDegrees = FormatUtils.getDoubleAsSimpleStr(locationInfo.bearingInDegree, 2);
 		}
 		
 		Wgs84Dsc wgs84Lat = LatLonUtils.decToWgs84(locationInfo.latLonPos.latitude, PosType.Latitude);
@@ -324,29 +314,29 @@ public class LocationInfo extends AbstractInfo implements Serializable {
 	public Double getLongitude() {
 		return (latLonPos == null) ? null : latLonPos.longitude;
 	}
-	public Float getAccuracy() {
-		return accuracy;
+	public Float getAccuracyInMtr() {
+		return accuracyInMtr;
 	}
 	public boolean hasValidAccuracy() {
-		return ((accuracy == null) && (accuracy > 0)) ? false : true;
+		return ((accuracyInMtr == null) && (accuracyInMtr > 0)) ? false : true;
 	}
-	public Float getBearing() {
-		return bearing;
+	public Float getBearingInDegree() {
+		return bearingInDegree;
 	}
 	public boolean hasValidBearing() {
-		return ((bearing == null) && (bearing > 0)) ? false : true;
+		return ((bearingInDegree == null) && (bearingInDegree > 0)) ? false : true;
 	}
-	public Double getAltitude() {
-		return altitude;
+	public Double getAltitudeInMtr() {
+		return altitudeInMtr;
 	}
 	public boolean hasValidAltitude() {
-		return ((altitude == null) && (altitude > 0)) ? false : true;
+		return ((altitudeInMtr == null) && (altitudeInMtr > 0)) ? false : true;
 	}
-	public Float getSpeed() {
-		return speed;
+	public Float getSpeedInMtrPerSecs() {
+		return speedInMtrPerSecs;
 	}
 	public boolean hasValidSpeed() {
-		return ((speed == null) && (speed > 0)) ? false : true;
+		return ((speedInMtrPerSecs == null) && (speedInMtrPerSecs > 0)) ? false : true;
 	}
 	public float getTrackDistanceInMtr() {
 		return trackDistanceInMtr;

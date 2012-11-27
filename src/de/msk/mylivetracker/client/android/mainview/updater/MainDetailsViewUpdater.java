@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.widget.TextView;
 import de.msk.mylivetracker.client.android.app.pro.R;
 import de.msk.mylivetracker.client.android.mainview.MainDetailsActivity;
-import de.msk.mylivetracker.client.android.mainview.updater.UpdaterUtils.Unit;
 import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
 import de.msk.mylivetracker.client.android.status.EmergencySignalInfo;
 import de.msk.mylivetracker.client.android.status.GpsStateInfo;
@@ -14,6 +13,7 @@ import de.msk.mylivetracker.client.android.status.MessageInfo;
 import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
 import de.msk.mylivetracker.client.android.status.PositionBufferInfo;
 import de.msk.mylivetracker.client.android.status.UploadInfo;
+import de.msk.mylivetracker.client.android.util.FormatUtils.Unit;
 
 /**
  * MainDetailsViewUpdater.
@@ -125,11 +125,11 @@ public class MainDetailsViewUpdater implements Runnable {
 				tvLatitude.setText(UpdaterUtils.getNoValue());
 				tvLongitude.setText(UpdaterUtils.getNoValue());
 			} else {
-			    if (locationInfo.getAccuracy() == null) {
+			    if (!locationInfo.hasValidAccuracy()) {
 			    	tvAccuracy.setText(UpdaterUtils.getNoValue());
 			    } else {
 			    	tvAccuracy.setText(UpdaterUtils.getFltStr(
-			    		locationInfo.getAccuracy(), 0, Unit.Meter));
+			    		locationInfo.getAccuracyInMtr(), 0, Unit.Meter));
 			    }
 				tvLatitude.setText(UpdaterUtils.getDblStr(
 					locationInfo.getLatitude(), 4, null));

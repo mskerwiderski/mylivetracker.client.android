@@ -25,31 +25,6 @@
         android:paddingLeft="5dip"
         android:paddingRight="5dip"
         android:textSize="16dip"
-        android:text="@string/lbPrefsRemoteAccess_EmailAddress" 
-        android:textColor="@color/colorText"
-        android:layout_height="wrap_content" 
-        android:layout_width="wrap_content" 
-    />
-	<LinearLayout 
-        android:layout_height="wrap_content" 
-        android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip"
-    >    
-
-	    <EditText
-	        android:id="@+id/etPrefsRemoteAccess_EmailAddress"
-	        android:layout_width="fill_parent"
-	        android:layout_height="40dip"
-	        android:inputType="text|textEmailAddress"
-	        android:singleLine="true"
-	        android:text="" />
-
-    </LinearLayout>
-    <TextView
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip"
-        android:textSize="16dip"
         android:text="@string/lbPrefsRemoteAccess_Password"
         android:textColor="@color/colorText"
         android:layout_height="wrap_content" 
@@ -68,6 +43,44 @@
 	        android:inputType="textPassword"
 	        android:singleLine="true"
 	        android:text="" />
+    </LinearLayout>
+    <LinearLayout 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip"
+    >    
+	    <CheckBox
+            android:id="@+id/cbPrefsRemoteAccess_UseReceiver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lbPrefsRemoteAccess_UseReceiver" 
+        />
+    </LinearLayout>
+    <TextView
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip"
+        android:textSize="16dip"
+        android:text="@string/lbPrefsRemoteAccess_Receiver" 
+        android:textColor="@color/colorText"
+        android:layout_height="wrap_content" 
+        android:layout_width="wrap_content" 
+    />
+	<LinearLayout 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip"
+    >    
+
+	    <EditText
+	        android:id="@+id/etPrefsRemoteAccess_Receiver"
+	        android:layout_width="fill_parent"
+	        android:layout_height="40dip"
+	        android:inputType="phone"
+	        android:singleLine="true"
+	        android:text="" />
+
     </LinearLayout>
     <LinearLayout android:layout_height="fill_parent" android:layout_width="fill_parent" >
         <Button
