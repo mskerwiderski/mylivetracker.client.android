@@ -14,8 +14,8 @@ package de.msk.mylivetracker.client.android.remoteaccess;
  */
 public class SmsCmdError extends AbstractSmsCmdExecutor {
 
-	public SmsCmdError(String cmdName, String sender, String... params) {
-		super(cmdName, sender, params);
+	public SmsCmdError(String sender, String... params) {
+		super("dummy", sender, params);
 	}
 
 	@Override

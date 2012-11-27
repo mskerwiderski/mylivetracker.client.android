@@ -46,7 +46,11 @@ public abstract class AbstractSmsCmdExecutor implements Runnable {
 			smsResponse += e.toString();
 			LogUtils.infoMethodState(this.getClass(), "run", "run failed", e.toString());
 		} finally {
-			SmsSendUtils.sendSms(this.sender, smsResponse);
+			try {
+				SmsSendUtils.sendSms(this.sender, smsResponse);
+			} catch (Exception e) {
+				LogUtils.infoMethodState(this.getClass(), "run", "send sms", e.toString());
+			}
 		}
 		LogUtils.infoMethodOut(this.getClass(), "run");
 	}

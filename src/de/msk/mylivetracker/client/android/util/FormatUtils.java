@@ -44,12 +44,19 @@ public class FormatUtils {
 	}
 
 	public static final String getDoubleAsSimpleStr(double value, int decimalPositions) {
-		if (decimalPositions <= 0) {
-			throw new IllegalArgumentException("decimalPositions must not be null.");
+		if (decimalPositions < 0) {
+			throw new IllegalArgumentException("decimalPositions must not be 0.");
 		}
-		String decimalFmtStr = StringUtils.rightPad("0.", decimalPositions + 2, '0');
-		DecimalFormat decimalFmt = new DecimalFormat(decimalFmtStr, 
-			new DecimalFormatSymbols(Locale.ENGLISH));
-		return decimalFmt.format(value);
+		String result = null;
+		if (decimalPositions == 0) {
+			result = String.valueOf(Math.round(value));
+		} else {
+			// TODO round before convert to string.
+			String decimalFmtStr = StringUtils.rightPad("0.", decimalPositions + 2, '0');
+			DecimalFormat decimalFmt = new DecimalFormat(decimalFmtStr, 
+				new DecimalFormatSymbols(Locale.ENGLISH));
+			result = decimalFmt.format(value);
+		}
+		return result;
 	}
 }

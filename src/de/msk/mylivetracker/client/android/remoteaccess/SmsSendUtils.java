@@ -63,7 +63,10 @@ public class SmsSendUtils {
 		
 		if (length > maxLength) {
 			ArrayList<String> messages = manager.divideMessage(message);
-			messages = (ArrayList<String>)messages.subList(0, Math.min(messages.size(), maxCount));
+			// TODO hack!
+			while (messages.size() > maxCount) {
+				messages.remove(messages.size()-1);
+			}
 			manager.sendMultipartTextMessage(
 				phoneNumber, null, messages,
 				null, null);
