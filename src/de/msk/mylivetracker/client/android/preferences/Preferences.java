@@ -35,7 +35,6 @@ public class Preferences {
 	protected String pinCode;
 	protected boolean pinCodeQueryEnabled;
 	protected TransferProtocol transferProtocol;
-	protected String statusParamsId;
 	protected String server;
 	protected int port;
 	protected String path;
@@ -332,6 +331,7 @@ public class Preferences {
 	// version 1500:
 	// o properties for remote access added.
 	// o properties for pin code query added.
+	// o property 'statusParamsId' removed.
 	//
 	// version 1400:
 	// o property 'versionApp' added.
@@ -436,7 +436,6 @@ public class Preferences {
 					} 
 					if (preferencesVersion < PREFERENCES_VERSION_1400) {
 						preferences.firstStartOfApp = true;
-						preferences.statusParamsId = null;
 						if (preferences.transferProtocol.equals(TransferProtocol.fransonGpsGateHttp)) {
 							preferences.transferProtocol = TransferProtocol.uploadDisabled;
 						} else if (preferences.transferProtocol.equals(TransferProtocol.mltTcpEncrypted)) {
@@ -525,12 +524,6 @@ public class Preferences {
 	}
 	public void setTransferProtocol(TransferProtocol transferProtocol) {
 		this.transferProtocol = transferProtocol;
-	}
-	public String getStatusParamsId() {
-		return statusParamsId;
-	}
-	public void setStatusParamsId(String statusParamsId) {
-		this.statusParamsId = statusParamsId;
 	}
 	public String getServer() {
 		return server;

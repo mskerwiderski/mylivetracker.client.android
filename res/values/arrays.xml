@@ -9,7 +9,6 @@
     	<item>Upload disabled</item>
         <item>MLT HTTP (plain)</item>
         <item>MLT TCP (encrypted)</item>
-        <item>MLT RPC (encrypted)</item>
         <item>Tk102 Emulator</item>
         <item>Tk5000 Emulator</item>        
     </string-array>

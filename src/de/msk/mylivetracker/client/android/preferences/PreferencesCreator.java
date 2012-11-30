@@ -41,7 +41,6 @@ public class PreferencesCreator {
 		prefs.pinCode = null;
 		prefs.pinCodeQueryEnabled = false;
 		prefs.transferProtocol = TransferProtocol.mltTcpEncrypted;
-		prefs.statusParamsId = null;
 		prefs.server = MyLiveTrackerUtils.getServerDns();
 		prefs.port = MyLiveTrackerUtils.getServerPortTcp();
 		prefs.path = "";

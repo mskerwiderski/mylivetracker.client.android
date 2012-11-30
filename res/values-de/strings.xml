@@ -37,9 +37,9 @@
     <string name="nfListenerRunning">Lokalisierung und/oder ANT+ Emfänger ist aktiv.</string>
     
     <!-- menu items -->
-    <string name="mnCatPreferences">Einstellungen</string>
+    <string name="mnCatPrefs">Einstellungen</string>
+    <string name="mnCatMorePrefs">Mehr</string>
     <string name="mnCatInfo">Info &amp; Exit</string>
-    <string name="mnTrackView">Karte</string>
     <string name="mnPrefsLocalization">Lokalisierung</string>
     <string name="mnPrefsServer">Server</string>
     <string name="mnPrefsAccount">Zugang</string>
@@ -47,6 +47,7 @@
     <string name="mnPrefsAuto">Auto</string>
     <string name="mnPrefsPinCodeQuery">PIN Code Abfrage</string>
     <string name="mnPrefsRemoteAccess">Fernzugriff</string>
+    <string name="mnPrefsHttpProtocolParams">HTTP Parameter</string>
     <string name="mnLinkSender">Koppeln</string>    
     <string name="mnInfo">Info</string>
     <string name="mnExit">Beenden</string>
@@ -159,11 +160,6 @@
     <string name="txPrefs_InfoAutoModeEnabled">Das manuelle Zurücksetzen, Starten/Stoppen des Tracks, der Lokalisierung oder HF-Messung ist im Auto Modus nicht möglich!</string>
     <string name="txPrefs_WarningChangePrefsDuringRunningTrack">Das Verändern der Einstellungen während eines laufenden Tracks kann zu unerwartetem Verhalten führen!</string>
     
-    <!-- track view -->
-    <string name="tiTrackView">Karte</string>
-    <string name="wvInfoTrackView_NotLinkedToMyLiveTrackerPortal">Die aktuelle Version der Anwendung wurde noch nicht mit dem MyLiveTracker-Portal gekoppelt. Eine Kartenanzeige des aktuellen Tracks ist deshalb nicht möglich!</string>
-    <string name="wvInfoTrackView_NotSupportedBySmartphone">Die Kartenanzeige des aktuellen Tracks wird von Ihrem Gerät leider nicht unterstützt!</string>
-    
     <!-- preferences server -->
     <string name="tiPrefsServer">Einstellungen Server</string>
     <string name="lbPrefsServer_TransferProtocol">Transfer Protokoll</string>
@@ -245,6 +241,13 @@
     <string name="lbPrefsRemoteAccess_UseReceiver">Sende Antworten an angegebenen Empfänger. Falls deaktiviert, werden die Antworten an den ursprünglichen Sender geschickt.</string>
    	<string name="fdPrefsRemoteAccess_Receiver">Empfänger (Telefonnummer)</string>
     <string name="lbPrefsRemoteAccess_Receiver">Empfänger</string>
+    
+    <!-- preferences http protocol params -->    
+    <string name="tiPrefsHttpProtocolParams">HTTP Protocol Parameter</string>
+    <string name="lbPrefsHttpProtocolParams_Info">Für das MLT (HTTP) Protokoll kann für jeden Parameter der Name festgelegt werden, und ob der Parameterwert hochgeladen werden soll.</string>
+    <string name="lbPrefsHttpProtocolParams_Parameter">Parameter</string>
+    <string name="lbPrefsHttpProtocolParams_ParameterName">Parameter Name</string>
+    <string name="lbPrefsHttpProtocolParams_EnabledForUploading">Wird hochgeladen.</string>
     
     <!-- link sender to server -->
     <string name="tiLinkSender">Sender koppeln</string>

@@ -9,7 +9,6 @@
     	<item>Datentransfer aus</item>
         <item>MLT HTTP (Klartext)</item>
         <item>MLT TCP (verschlüsselt)</item>
-        <item>MLT RPC (verschlüsselt)</item>
         <item>Tk102 Emulator</item>
         <item>Tk5000 Emulator</item>        
     </string-array>

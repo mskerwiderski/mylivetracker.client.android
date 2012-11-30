@@ -39,8 +39,6 @@
 			android:screenOrientation="portrait" />
         <activity android:name="de.msk.mylivetracker.client.android.message.MessageActivity" 
 			android:screenOrientation="portrait" />
-        <activity android:name="de.msk.mylivetracker.client.android.trackview.TrackViewActivity" 
-			android:screenOrientation="portrait" />
 		<activity android:name="de.msk.mylivetracker.client.android.preferences.PrefsServerActivity" 
 			android:screenOrientation="portrait" />
 		<activity android:name="de.msk.mylivetracker.client.android.preferences.PrefsAccountActivity" 
@@ -54,6 +52,8 @@
 		<activity android:name="de.msk.mylivetracker.client.android.preferences.PrefsPinCodeQueryActivity" 
 			android:screenOrientation="portrait" />
 		<activity android:name="de.msk.mylivetracker.client.android.preferences.PrefsRemoteAccessActivity" 
+			android:screenOrientation="portrait" />
+		<activity android:name="de.msk.mylivetracker.client.android.preferences.PrefsHttpProtocolParamsActivity" 
 			android:screenOrientation="portrait" />
 		<activity android:name="de.msk.mylivetracker.client.android.preferences.linksender.LinkSenderActivity" 
 			android:screenOrientation="portrait" />	

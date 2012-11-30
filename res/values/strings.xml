@@ -37,9 +37,9 @@
     <string name="nfListenerRunning">Location Listener and/or ANT+ Listener is running.</string>
     
     <!-- menu items -->
-    <string name="mnCatPreferences">Preferences</string>
+    <string name="mnCatPrefs">Prefs</string>
+    <string name="mnCatMorePrefs">More Prefs</string>
     <string name="mnCatInfo">Info &amp; Exit</string>
-    <string name="mnTrackView">Map</string>
     <string name="mnPrefsLocalization">Localization</string>
     <string name="mnPrefsServer">Server</string>
     <string name="mnPrefsAccount">Account</string>
@@ -47,6 +47,7 @@
     <string name="mnPrefsAuto">Auto</string>
     <string name="mnPrefsPinCodeQuery">PIN code query</string>
     <string name="mnPrefsRemoteAccess">Remote access</string>
+    <string name="mnPrefsHttpProtocolParams">HTTP Parameters</string>
     <string name="mnLinkSender">Linking</string>    
     <string name="mnInfo">Info</string>
     <string name="mnExit">Exit</string>
@@ -159,11 +160,6 @@
     <string name="txPrefs_InfoAutoModeEnabled">Manual resetting, starting/stopping of tracking, localization or hr-measuring is not possible in auto mode!</string>
     <string name="txPrefs_WarningChangePrefsDuringRunningTrack">Changing the preferences during a running track can lead to an unexpected behavior!</string>
     
-    <!-- track view -->
-    <string name="tiTrackView">Map</string>
-    <string name="wvInfoTrackView_NotLinkedToMyLiveTrackerPortal">The current app version is not linked to the MyLiveTracker-Portal. A view of the current track is therefore not possible!</string>
-    <string name="wvInfoTrackView_NotSupportedBySmartphone">Unfortunately a view of the current track is not supported by your device!</string>
-    
     <!-- preferences server -->
     <string name="tiPrefsServer">Server preferences</string>
     <string name="lbPrefsServer_TransferProtocol">Transfer protocol</string>
@@ -245,7 +241,14 @@
     <string name="lbPrefsRemoteAccess_UseReceiver">Send response to specified receiver. If disabled responses will be send to command originator.</string>
     <string name="fdPrefsRemoteAccess_Receiver">Receiver (phone number)</string>
     <string name="lbPrefsRemoteAccess_Receiver">Receiver</string>
-        
+
+   	<!-- preferences http protocol params -->    
+    <string name="tiPrefsHttpProtocolParams">HTTP protocol parameters</string>
+    <string name="lbPrefsHttpProtocolParams_Info">Specify the name for each parameter of the MLT (HTTP) protocol and if it is enabled for uploading.</string>
+    <string name="lbPrefsHttpProtocolParams_Parameter">Parameter</string>
+    <string name="lbPrefsHttpProtocolParams_ParameterName">Parameter name</string>
+    <string name="lbPrefsHttpProtocolParams_EnabledForUploading">Enabled for uploading.</string>
+    
     <!-- link sender -->
     <string name="tiLinkSender">Link sender</string>
     <string name="lbLinkSender_LinkInfo">

@@ -65,7 +65,6 @@ public class LinkSenderTask extends
 	        	prefs.setTrackName(response.getTrackName());
 	        	prefs.setCloseConnectionAfterEveryUpload(false);
 	        	prefs.setFinishEveryUploadWithALinefeed(false);
-	        	prefs.setStatusParamsId(response.getStatusParamsId());
 	        	Preferences.save();
 			}
 		} catch (Throwable e) {

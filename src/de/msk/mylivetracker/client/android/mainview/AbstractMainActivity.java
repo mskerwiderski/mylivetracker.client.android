@@ -21,6 +21,7 @@ import de.msk.mylivetracker.client.android.listener.LocationListener;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.preferences.PrefsAccountActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsAutoActivity;
+import de.msk.mylivetracker.client.android.preferences.PrefsHttpProtocolParamsActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsLocalizationActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsOtherActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsPinCodeQueryActivity;
@@ -28,7 +29,6 @@ import de.msk.mylivetracker.client.android.preferences.PrefsRemoteAccessActivity
 import de.msk.mylivetracker.client.android.preferences.PrefsServerActivity;
 import de.msk.mylivetracker.client.android.preferences.linksender.LinkSenderActivity;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
-import de.msk.mylivetracker.client.android.trackview.TrackViewActivity;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractInfoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractProgressDialog;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
@@ -294,9 +294,6 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.mnTrackView:
-			startActivity(new Intent(this, TrackViewActivity.class));
-			return true;
 		case R.id.mnPrefsServer:
 			if (TrackStatus.get().trackIsRunning()) {
 				showPrefsWarningDialogIfIsTrackRunning(PrefsServerActivity.class);
@@ -340,6 +337,17 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 				showIsProFeatureDialog();
 			} else {
 				startActivity(new Intent(this, PrefsRemoteAccessActivity.class));
+			}
+			return true;	
+		case R.id.mnPrefsHttpProtocolParams:
+			if (!AbstractApp.isPro()) {
+				showIsProFeatureDialog();
+			} else {
+				if (TrackStatus.get().trackIsRunning()) {
+					showPrefsWarningDialogIfIsTrackRunning(PrefsHttpProtocolParamsActivity.class);
+				} else {
+					startActivity(new Intent(this, PrefsHttpProtocolParamsActivity.class));
+				}
 			}
 			return true;	
 		case R.id.mnLinkSender:

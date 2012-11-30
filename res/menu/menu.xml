@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:id="@+id/mnTrackView" android:title="@string/mnTrackView" />
-	
-	<item android:id="@+id/mnCatPreferences"
-          android:title="@string/mnCatPreferences" >
+	<item 
+	    android:id="@+id/mnCatPrefs"
+        android:title="@string/mnCatPrefs" >
         <menu>  
 	      	<item android:id="@+id/mnPrefsLocalization" android:title="@string/mnPrefsLocalization" />
 			<item android:id="@+id/mnPrefsServer" android:title="@string/mnPrefsServer" />
 		    <item android:id="@+id/mnPrefsAccount" android:title="@string/mnPrefsAccount" />
-		    <item android:id="@+id/mnLinkSender" android:title="@string/mnLinkSender" />
-		    <item android:id="@+id/mnPrefsOther" android:title="@string/mnPrefsOther" />    
 		    <item android:id="@+id/mnPrefsAuto" android:title="@string/mnPrefsAuto" />
-		    <item android:id="@+id/mnPrefsPinCodeQuery" android:title="@string/mnPrefsPinCodeQuery" />
-		    <item android:id="@+id/mnPrefsRemoteAccess" android:title="@string/mnPrefsRemoteAccess" />
 	    </menu> 
     </item>
-	
-    <item android:id="@+id/mnCatInfo"
-          android:title="@string/mnCatInfo" >
+	<item 
+	    android:id="@+id/mnCatMorePrefs"
+		android:title="@string/mnCatMorePrefs" >
+        <menu>  
+		    <item android:id="@+id/mnLinkSender" android:title="@string/mnLinkSender" />
+		    <item android:id="@+id/mnPrefsOther" android:title="@string/mnPrefsOther" />    
+		    <item android:id="@+id/mnPrefsPinCodeQuery" android:title="@string/mnPrefsPinCodeQuery" />
+		    <item android:id="@+id/mnPrefsRemoteAccess" android:title="@string/mnPrefsRemoteAccess" />
+		    <item android:id="@+id/mnPrefsHttpProtocolParams" android:title="@string/mnPrefsHttpProtocolParams" />
+	    </menu> 
+    </item>
+    <item 
+        android:id="@+id/mnCatInfo"
+        android:title="@string/mnCatInfo" >
     	<menu>
 		    <item android:id="@+id/mnInfo" android:title="@string/mnInfo" />
 		    <item android:id="@+id/mnExit" android:title="@string/mnExit" />
