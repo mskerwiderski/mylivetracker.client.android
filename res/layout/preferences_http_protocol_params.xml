@@ -8,7 +8,6 @@
     <LinearLayout android:layout_height="4dip" android:layout_width="fill_parent" />
     <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent">
         <TextView
-            android:textSize="16dip"
         	android:text="@string/lbPrefsHttpProtocolParams_Info" 
         	android:textColor="@color/colorText"
         	android:layout_weight="1" 
@@ -47,7 +46,35 @@
         	android:layout_width="fill_parent"
         />    	    	        
     </LinearLayout>
-    <LinearLayout android:layout_height="5dip" android:layout_width="fill_parent" />
+    <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent">
+        <TextView
+            android:textSize="16dip"
+        	android:text="@string/lbPrefsHttpProtocolParams_ParameterExample" 
+        	android:textColor="@color/colorText"
+        	android:layout_weight="1" 
+        	android:layout_height="wrap_content" 
+        	android:layout_width="fill_parent" 
+        	android:gravity="left"
+        	android:paddingLeft="5dip"
+        	android:paddingRight="5dip"
+        	android:paddingBottom="3dip"
+        />
+    </LinearLayout>
+    <LinearLayout 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingLeft="5dip"
+       	android:paddingRight="5dip" 
+    >
+		<EditText
+		    android:id="@+id/etPrefsHttpProtocolParams_ParameterExample"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1"
+		    android:inputType="none"
+		    android:singleLine="true" >
+        </EditText>
+    </LinearLayout>
     <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent">
         <TextView
             android:textSize="16dip"
@@ -80,7 +107,6 @@
             <requestFocus />
         </EditText>
     </LinearLayout>
-    <LinearLayout android:layout_height="5dip" android:layout_width="fill_parent" />
     <LinearLayout 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
@@ -97,10 +123,9 @@
 		    android:paddingLeft="42dip"
 		/>	
     </LinearLayout>
-    <LinearLayout android:layout_height="10dip" android:layout_width="fill_parent" />
 	<LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent">        
         <Button
-        	android:id="@+id/btPrefsAuto_Save" 
+        	android:id="@+id/btPrefsHttpProtocolParams_Save" 
         	android:text="@string/btSave"
         	android:layout_height="50dip"
         	android:layout_width="fill_parent"
@@ -108,7 +133,7 @@
 			android:layout_gravity="bottom"
         />
         <Button
-        	android:id="@+id/btPrefsAuto_Cancel"
+        	android:id="@+id/btPrefsHttpProtocolParams_Cancel"
         	android:text="@string/btCancel"
         	android:layout_height="50dip" 
         	android:layout_width="fill_parent"         	

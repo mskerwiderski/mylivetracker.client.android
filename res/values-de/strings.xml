@@ -247,6 +247,7 @@
     <string name="lbPrefsHttpProtocolParams_Info">Für das MLT (HTTP) Protokoll kann für jeden Parameter der Name festgelegt werden, und ob der Parameterwert hochgeladen werden soll.</string>
     <string name="lbPrefsHttpProtocolParams_Parameter">Parameter</string>
     <string name="lbPrefsHttpProtocolParams_ParameterName">Parameter Name</string>
+    <string name="lbPrefsHttpProtocolParams_ParameterExample">Beispiel</string>
     <string name="lbPrefsHttpProtocolParams_EnabledForUploading">Wird hochgeladen.</string>
     
     <!-- link sender to server -->

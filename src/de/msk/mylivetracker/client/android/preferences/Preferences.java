@@ -11,6 +11,8 @@ import com.google.gson.Gson;
 
 import de.msk.mylivetracker.client.android.app.pro.R;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
+import de.msk.mylivetracker.client.android.status.TrackStatus;
+import de.msk.mylivetracker.client.android.util.LogUtils;
 import de.msk.mylivetracker.client.android.util.MyLiveTrackerUtils;
 import de.msk.mylivetracker.client.android.util.VersionUtils;
 import de.msk.mylivetracker.client.android.util.VersionUtils.VersionDsc;
@@ -72,6 +74,7 @@ public class Preferences {
 	protected String remoteAccessPassword;
 	protected boolean remoteAccessUseReceiver;
 	protected String remoteAccessReceiver;
+	protected HttpProtocolParams httpProtocolParams;
 	
 	public enum ConfirmLevel {
 		low("low"), medium("medium"), high("high");
@@ -331,6 +334,7 @@ public class Preferences {
 	// version 1500:
 	// o properties for remote access added.
 	// o properties for pin code query added.
+	// o property 'httpProtocolParams' added.
 	// o property 'statusParamsId' removed.
 	//
 	// version 1400:
@@ -384,8 +388,11 @@ public class Preferences {
 	}
 	
 	public static void reset(Context context) {
+		TrackStatus.resetMileage();
+		TrackStatus.reset();
 		preferences = PreferencesCreator.create(context);
 		save();
+		
 	}
 	
 	private static void load() {
@@ -394,6 +401,7 @@ public class Preferences {
 	}
 	
 	private static void load(Context context, String name) {
+		LogUtils.infoMethodIn(Preferences.class, "load", name);
 		String infoMessage = null;
 		SharedPreferences prefs = context.getSharedPreferences(name, 0);				
 		int preferencesVersion = prefs.getInt(PREFERENCES_VERSION_VAR, -1);
@@ -408,7 +416,7 @@ public class Preferences {
 			String preferencesStr = prefs.getString(PREFERENCES_VAR, null);
 			if (!StringUtils.isEmpty(preferencesStr)) {
 				try {
-					Gson gson = new Gson();
+					Gson gson = PrefsDeSerializer.get();
 					preferences = gson.fromJson(preferencesStr, Preferences.class);
 					boolean doSave = false;
 					if (preferencesVersion < PREFERENCES_VERSION_300) {
@@ -450,6 +458,7 @@ public class Preferences {
 						preferences.remoteAccessPassword = "";
 						preferences.remoteAccessUseReceiver = false;
 						preferences.remoteAccessReceiver = "";
+						preferences.httpProtocolParams = HttpProtocolParams.create();
 					}
 					if (!VersionUtils.isCurrent(context, preferences.versionApp)) {
 						preferences.firstStartOfApp = true;
@@ -461,6 +470,7 @@ public class Preferences {
 							VersionUtils.get().getVersionStr());
 					}
 				} catch (Exception e) {
+					LogUtils.infoMethodState(Preferences.class, "load", "loading failed", e.toString());
 					Preferences.reset(context);
 					infoMessage = context.getString(R.string.prefsReset, 
 						VersionUtils.get().getVersionStr());
@@ -476,6 +486,7 @@ public class Preferences {
 				MainActivity.get(), infoMessage);
 			infoDlg.show();
 		}
+		LogUtils.infoMethodOut(Preferences.class, "load");
 	}
 	
 	public static void save() {
@@ -711,5 +722,11 @@ public class Preferences {
 	}
 	public void setRemoteAccessReceiver(String remoteAccessReceiver) {
 		this.remoteAccessReceiver = remoteAccessReceiver;
+	}
+	public HttpProtocolParams getHttpProtocolParams() {
+		return httpProtocolParams;
+	}
+	public void setHttpProtocolParams(HttpProtocolParams httpProtocolParams) {
+		this.httpProtocolParams = httpProtocolParams;
 	}
 }

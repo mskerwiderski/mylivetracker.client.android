@@ -78,6 +78,7 @@ public class PreferencesCreator {
 		prefs.remoteAccessPassword = "";
 		prefs.remoteAccessUseReceiver = false;
 		prefs.remoteAccessReceiver = "";
+		prefs.httpProtocolParams = HttpProtocolParams.create();
 		return prefs;
 	}
 }

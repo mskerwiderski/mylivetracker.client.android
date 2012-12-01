@@ -6,6 +6,9 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 
 import android.util.Log;
+import de.msk.mylivetracker.client.android.preferences.HttpProtocolParams;
+import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.preferences.PrefsHttpProtocolParamsActivity;
 import de.msk.mylivetracker.client.android.remoteaccess.AbstractSmsCmdExecutor;
 import de.msk.mylivetracker.client.android.remoteaccess.ResponseCreator;
 import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdReceiver;
@@ -28,6 +31,9 @@ public class LogUtils {
 	private static Map<Class<?>, Boolean> classes = new HashMap<Class<?>, Boolean>();
 	
 	static {
+		classes.put(HttpProtocolParams.class, Boolean.TRUE);
+		classes.put(PrefsHttpProtocolParamsActivity.class, Boolean.TRUE);
+		classes.put(Preferences.class, Boolean.TRUE);
 		classes.put(SmsSentStatusReceiver.class, Boolean.TRUE);
 		classes.put(SmsCmdReceiver.class, Boolean.TRUE);
 		classes.put(ResponseCreator.class, Boolean.TRUE);

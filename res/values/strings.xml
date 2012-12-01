@@ -246,9 +246,15 @@
     <string name="tiPrefsHttpProtocolParams">HTTP protocol parameters</string>
     <string name="lbPrefsHttpProtocolParams_Info">Specify the name for each parameter of the MLT (HTTP) protocol and if it is enabled for uploading.</string>
     <string name="lbPrefsHttpProtocolParams_Parameter">Parameter</string>
+    <string name="lbPrefsHttpProtocolParams_ParameterExample">Example</string>
     <string name="lbPrefsHttpProtocolParams_ParameterName">Parameter name</string>
     <string name="lbPrefsHttpProtocolParams_EnabledForUploading">Enabled for uploading.</string>
     
+    <string name="txPrefsHttpProtocolParams_ParamNameLatitude">lat</string>    
+    <string name="txPrefsHttpProtocolParams_ParamValueExampleLatitude">48.105024</string>
+    <string name="txPrefsHttpProtocolParams_ParamNameLongitude">lon</string>    
+    <string name="txPrefsHttpProtocolParams_ParamValueExampleLongitude">11.615274</string>
+        
     <!-- link sender -->
     <string name="tiLinkSender">Link sender</string>
     <string name="lbLinkSender_LinkInfo">

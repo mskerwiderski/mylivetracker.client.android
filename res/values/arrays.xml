@@ -77,4 +77,9 @@
         <item>after 8 hours pause</item>
         <item>after 24 hours pause</item>
     </string-array>
+    
+ 	<string-array name="httpProtocolParams">
+ 	    <item>latitude (decimal)</item>
+ 	    <item>longitude (decimal)</item>
+    </string-array>
 </resources>
