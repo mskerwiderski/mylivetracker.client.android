@@ -6,6 +6,8 @@ import java.util.Date;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 
+import de.msk.mylivetracker.client.android.preferences.HttpProtocolParams;
+import de.msk.mylivetracker.client.android.preferences.HttpProtocolParams.ParamId;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
 import de.msk.mylivetracker.client.android.status.EmergencySignalInfo;
@@ -40,16 +42,17 @@ public class ProtocolEncoder implements IProtocol {
 		GpsStateInfo gpsStateInfo, HeartrateInfo heartrateInfo,
 		EmergencySignalInfo emergencySignalInfo, MessageInfo messageInfo,
 		String username, String password) {
-		Preferences preferences = Preferences.get();
+		Preferences prefs = Preferences.get();
+		HttpProtocolParams params = prefs.getHttpProtocolParams();
 		TrackStatus trackStatus = TrackStatus.get();
 				
 		String paramsStr = null;
-		paramsStr = HttpProtocolUtils.addParam(paramsStr, "vco", String.valueOf(VersionUtils.get().getCode()));
-		paramsStr = HttpProtocolUtils.addParam(paramsStr, "vna", VersionUtils.get().getName());
-		paramsStr = HttpProtocolUtils.addParam(paramsStr, "did", preferences.getDeviceId());
-		paramsStr = HttpProtocolUtils.addParam(paramsStr, "tid", trackStatus.getTrackId());
-		paramsStr = HttpProtocolUtils.addParam(paramsStr, "trn", preferences.getTrackName());
-		paramsStr = HttpProtocolUtils.addParam(paramsStr, "phn", preferences.getPhoneNumber());
+		paramsStr = HttpProtocolUtils.addParam(paramsStr, params.getParamName(ParamId.AppVersionCode), String.valueOf(VersionUtils.get().getCode()));
+		paramsStr = HttpProtocolUtils.addParam(paramsStr, params.getParamName(ParamId.AppVersionName), VersionUtils.get().getName());
+		paramsStr = HttpProtocolUtils.addParam(paramsStr, params.getParamName(ParamId.DeviceId), prefs.getDeviceId());
+		paramsStr = HttpProtocolUtils.addParam(paramsStr, params.getParamName(ParamId.TrackId), trackStatus.getTrackId());
+		paramsStr = HttpProtocolUtils.addParam(paramsStr, params.getParamName(ParamId.TrackName), prefs.getTrackName());
+		paramsStr = HttpProtocolUtils.addParam(paramsStr, params.getParamName(ParamId.PhoneType), prefs.getPhoneNumber());
 		
 		if (batteryStateInfo != null) {
 			if (batteryStateInfo.getPercent() != null) {
@@ -92,11 +95,11 @@ public class ProtocolEncoder implements IProtocol {
 		paramsStr = HttpProtocolUtils.addParam(paramsStr, "rtm", String.valueOf(trackStatus.getRuntimeInMSecs(false)));					
 		paramsStr = HttpProtocolUtils.addParam(paramsStr, "rtp", String.valueOf(trackStatus.getRuntimeInMSecs(true)));
 		
-		if (!StringUtils.isEmpty(preferences.getUsername())) {
-			paramsStr = HttpProtocolUtils.addParam(paramsStr, "usr", preferences.getUsername());
+		if (!StringUtils.isEmpty(prefs.getUsername())) {
+			paramsStr = HttpProtocolUtils.addParam(paramsStr, "usr", prefs.getUsername());
 		} 
-		if (!StringUtils.isEmpty(preferences.getPassword())) {
-			paramsStr = HttpProtocolUtils.addParam(paramsStr, "pwd", preferences.getSeed());
+		if (!StringUtils.isEmpty(prefs.getPassword())) {
+			paramsStr = HttpProtocolUtils.addParam(paramsStr, "pwd", prefs.getSeed());
 		}
 		
 		if (heartrateInfo != null) {

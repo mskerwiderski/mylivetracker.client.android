@@ -318,25 +318,25 @@ public class LocationInfo extends AbstractInfo implements Serializable {
 		return accuracyInMtr;
 	}
 	public boolean hasValidAccuracy() {
-		return ((accuracyInMtr == null) && (accuracyInMtr > 0)) ? false : true;
+		return ((accuracyInMtr != null) && (accuracyInMtr > 0)) ? true : false;
 	}
 	public Float getBearingInDegree() {
 		return bearingInDegree;
 	}
 	public boolean hasValidBearing() {
-		return ((bearingInDegree == null) && (bearingInDegree > 0)) ? false : true;
+		return ((bearingInDegree != null) && (bearingInDegree > 0)) ? true : false;
 	}
 	public Double getAltitudeInMtr() {
 		return altitudeInMtr;
 	}
 	public boolean hasValidAltitude() {
-		return ((altitudeInMtr == null) && (altitudeInMtr > 0)) ? false : true;
+		return ((altitudeInMtr != null) && (altitudeInMtr > 0)) ? true : false;
 	}
 	public Float getSpeedInMtrPerSecs() {
 		return speedInMtrPerSecs;
 	}
 	public boolean hasValidSpeed() {
-		return ((speedInMtrPerSecs == null) && (speedInMtrPerSecs > 0)) ? false : true;
+		return ((speedInMtrPerSecs != null) && (speedInMtrPerSecs > 0)) ? true : false;
 	}
 	public float getTrackDistanceInMtr() {
 		return trackDistanceInMtr;

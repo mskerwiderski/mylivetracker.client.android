@@ -79,7 +79,42 @@
     </string-array>
     
  	<string-array name="httpProtocolParams">
+ 	    <item>timestamp (ddMMyyHHmmssSSS)</item>
+ 	    <item>device id (imei)</item>
+ 	    <item>app version code</item>
+ 	    <item>app version name</item>
+ 	    <item>track id</item>
+ 	    <item>track name</item>
+ 	    <item>phone number</item>
+ 	    <item>battery power (percent)</item>
+ 	    <item>battery power (voltage)</item>
+ 	    <item>valid position (true/false)</item>
  	    <item>latitude (decimal)</item>
  	    <item>longitude (decimal)</item>
+ 	    <item>altitude (mtr)</item>
+ 	    <item>speed (mtr/secs)</item>
+ 	    <item>accuracy (mtr)</item>
+ 	    <item>bearing (degree)</item>
+ 		<item>number of satellites</item>    
+ 	    <item>distance (mtr)</item>
+ 	    <item>mileage (mtr)</item>
+ 	    <item>runtime net (msecs)</item>
+ 	    <item>runtime gross (msecs)</item>
+ 	    <item>username</item>
+ 	    <item>password (md5)</item>
+ 	    <item>current hr (bpm)</item>
+ 	    <item>min hr (bpm)</item>
+        <item>max hr (bpm)</item>
+        <item>avg hr (bpm)</item>
+        <item>sos id</item>
+        <item>sos activated (on/off)</item>
+ 	    <item>message</item>
+ 	    <item>phone type</item>
+ 	    <item>network type</item>
+ 	    <item>mobile country code</item>
+ 	    <item>mobile network code</item>
+ 	    <item>mobile network name</item>
+ 	    <item>cell id</item>
+ 	    <item>local area code</item>
     </string-array>
 </resources>
