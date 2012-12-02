@@ -17,7 +17,7 @@ public class App extends AbstractApp {
 
 	@Override
 	public String getName() {
-		return "MLTAppPro";
+		return "MyLiveTracker (Pro)";
 	}
 
 	@Override

@@ -26,6 +26,7 @@ import com.wahoofitness.api.WFAntServiceNotInstalledException;
 import com.wahoofitness.api.WFDisplaySettings;
 import com.wahoofitness.api.WFHardwareConnector;
 
+import de.msk.mylivetracker.client.android.app.AbstractApp;
 import de.msk.mylivetracker.client.android.app.pro.R;
 import de.msk.mylivetracker.client.android.automode.AutoService;
 import de.msk.mylivetracker.client.android.listener.AntPlusHeartrateListener;
@@ -237,7 +238,8 @@ public class MainActivity extends AbstractMainActivity {
 		
 		if (Preferences.firstStartOfApp()) {
 			SimpleInfoDialog welcomeDlg = 
-				new SimpleInfoDialog(this, R.string.welcomeMessage);
+				new SimpleInfoDialog(this, 
+					R.string.welcomeMessage, AbstractApp.get().getName());
 			welcomeDlg.show();
 		}
 		

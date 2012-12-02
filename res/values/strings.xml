@@ -6,7 +6,7 @@
     <string name="txIsProFeature">This feature is available only in the PRO version of MyLiveTracker!</string>
         	
     <!-- Welcome message -->
-    <string name="welcomeMessage">Welcome to MyLiveTracker. If you have questions or need support, please visit our forum at http://forum.mylivetracker.info!</string>
+    <string name="welcomeMessage">Welcome to %1$s. If you have questions or need support, please visit our forum at http://forum.mylivetracker.info!</string>
         
     <!-- preferences: update message / create message -->
     <string name="prefsUpdated">Please verify your preferences, because they have been updated to version %1$s.</string>  

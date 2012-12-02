@@ -17,11 +17,11 @@ public class App extends AbstractApp {
 
 	@Override
 	public String getName() {
-		return "MLTApp";
+		return "MyLiveTracker";
 	}
 
 	@Override
 	protected boolean isProAux() {
-		return true;
+		return false;
 	}
 }

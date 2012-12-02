@@ -3,10 +3,10 @@
 	<!-- Application name -->
     <string name="app_name">MyLiveTracker</string>
         	 
-    <string name="txIsProFeature">Diese Funktion ist nur in der PRO Version von MyLIveTracker verfügbar!</string>
+    <string name="txIsProFeature">Diese Funktion ist nur in der PRO Version von MyLiveTracker verfügbar!</string>
         
     <!-- Welcome message -->
-    <string name="welcomeMessage">Willkommen bei MyLiveTracker. Wenn Sie Fragen haben oder Unterstützung benötigen, besuchen Sie uns doch im Forum unter http://forum.mylivetracker.info!</string>
+    <string name="welcomeMessage">Willkommen zu %1$s. Wenn Sie Fragen haben oder Unterstützung benötigen, besuchen Sie uns doch im Forum unter http://forum.mylivetracker.info!</string>
        
     <!-- preferences: update message / create message -->
     <string name="prefsUpdated">Bitte überprüfen Sie Ihre Einstellungen, da diese auf die Version %1$s aktualisiert wurden.</string>  

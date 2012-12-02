@@ -18,6 +18,10 @@ public class SimpleInfoDialog extends AbstractInfoDialog {
 	public SimpleInfoDialog(Context ctx, int message) {
 		super(ctx, message);
 	}
+	
+	public SimpleInfoDialog(Context ctx, int message, Object... args) {
+		super(ctx, ctx.getString(message, args));
+	}
 
 	public SimpleInfoDialog(Context ctx, String message) {
 		super(ctx, message);

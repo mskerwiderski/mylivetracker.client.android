@@ -9,6 +9,7 @@ import android.telephony.TelephonyManager;
 
 import com.google.gson.Gson;
 
+import de.msk.mylivetracker.client.android.app.AbstractApp;
 import de.msk.mylivetracker.client.android.app.pro.R;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
@@ -328,8 +329,6 @@ public class Preferences {
 		TrackingLocalizationHeartrate;
 	};
 
-	public static final String DB_NAME = "MyLiveTracker.DB";
-	
 	//
 	// version 1500:
 	// o properties for remote access added.
@@ -384,7 +383,7 @@ public class Preferences {
 	
 	public static Preferences get(Context context) {
 		if (preferences == null) {			
-			Preferences.load(context, DB_NAME);
+			Preferences.load(context, AbstractApp.getDbName());
 		} 
 		return preferences;
 	}
@@ -399,7 +398,7 @@ public class Preferences {
 	
 	private static void load() {
 		MainActivity mainActivity = MainActivity.get();
-		load(mainActivity, DB_NAME);
+		load(mainActivity, AbstractApp.getDbName());
 	}
 	
 	private static void load(Context context, String name) {
@@ -496,7 +495,7 @@ public class Preferences {
 	public static void save() {
 		if (preferences == null) return;				
 		SharedPreferences prefs = MainActivity.get().
-			getSharedPreferences(Preferences.DB_NAME, 0);
+			getSharedPreferences(AbstractApp.getDbName(), 0);
 		SharedPreferences.Editor editor = prefs.edit();
 		
 		preferences.seed = ProtocolUtils.calcSeed(

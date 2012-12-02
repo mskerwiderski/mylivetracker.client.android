@@ -37,6 +37,9 @@ public abstract class AbstractApp extends Application {
 	public static boolean isPro() {
 		return app.isProAux();
 	}
+	public static String getDbName() {
+		return app.getName() + ".DB";
+	}
 	public abstract String getName();
 	protected abstract boolean isProAux();
 }
