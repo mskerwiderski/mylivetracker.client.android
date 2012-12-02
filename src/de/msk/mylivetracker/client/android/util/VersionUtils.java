@@ -26,6 +26,7 @@ public class VersionUtils {
 		boolean alpha;
 		boolean beta;
 		boolean test;
+		boolean local;
 		public VersionDsc() {
 		}
 		public VersionDsc(int code, String name) {
@@ -34,6 +35,7 @@ public class VersionUtils {
 			this.alpha = StringUtils.containsIgnoreCase(this.name, "alpha"); 
 			this.beta = StringUtils.containsIgnoreCase(this.name, "beta");
 			this.test = StringUtils.containsIgnoreCase(this.name, "test");
+			this.local = StringUtils.containsIgnoreCase(this.name, "local");
 			LogUtils.always(this.toString());
 		}
 		public int getCode() {
@@ -51,6 +53,9 @@ public class VersionUtils {
 		public boolean isTest() {
 			return test;
 		}
+		public boolean isLocal() {
+			return local;
+		}
 		public String getVersionStr() {
 			String versionStr = "v" + this.name; 
 			if (AbstractApp.isPro()) {
@@ -64,7 +69,7 @@ public class VersionUtils {
 			builder.append("VersionDsc [code=").append(code).append(", name=")
 				.append(name).append(", alpha=").append(alpha)
 				.append(", beta=").append(beta).append(", test=")
-				.append(test).append("]");
+				.append(test).append(", local=").append(local).append("]");
 			return builder.toString();
 		}
 	}
@@ -84,6 +89,11 @@ public class VersionUtils {
 	public static boolean isTest() {
 		VersionDsc versionDsc = get();
 		return versionDsc.isTest();
+	}
+	
+	public static boolean isLocal() {
+		VersionDsc versionDsc = get();
+		return versionDsc.isLocal();
 	}
 	
 	public static boolean isCurrent(Context context, VersionDsc versionDsc) {

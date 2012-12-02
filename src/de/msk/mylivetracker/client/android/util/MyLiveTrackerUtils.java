@@ -35,6 +35,16 @@ public class MyLiveTrackerUtils {
 		"http://portal.mylivetracker.de/track_as_map.sec?pid="
 	};
 	
+	private static final String[] PARAMS_TEST = new String[] {
+		"SKERWIDERSKI",
+		"80.190.245.43",
+		"80",
+		"63395",
+		"upl_mlt.sec",
+		"http://test.mylivetracker.de/rpc.json",
+		"http://test.mylivetracker.de/track_as_map.sec?pid="
+	};
+	
 	private static final String[] PARAMS_LOCALE = new String[] {
 		"SKERWIDERSKI",
 		"skerwiderski.homedns.org",
@@ -46,9 +56,13 @@ public class MyLiveTrackerUtils {
 	};
 	
 	private static String getValue(Param param) {
-		return VersionUtils.get().isTest() ? 
-			PARAMS_LOCALE[param.ordinal()] : 
-			PARAMS_PRODUCTION[param.ordinal()];
+		String value = PARAMS_PRODUCTION[param.ordinal()]; 
+		if (VersionUtils.get().isTest()) { 
+			value = PARAMS_TEST[param.ordinal()];
+		} else if (VersionUtils.get().isLocal()) { 
+			value = PARAMS_LOCALE[param.ordinal()];
+		}
+		return value;
 	}
 	public static String getRealm() {
 		return getValue(Param.Realm);

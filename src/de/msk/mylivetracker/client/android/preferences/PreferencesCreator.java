@@ -14,7 +14,6 @@ import de.msk.mylivetracker.client.android.preferences.Preferences.TransferProto
 import de.msk.mylivetracker.client.android.preferences.Preferences.UploadDistanceTrigger;
 import de.msk.mylivetracker.client.android.preferences.Preferences.UploadTimeTrigger;
 import de.msk.mylivetracker.client.android.preferences.Preferences.UploadTriggerLogic;
-import de.msk.mylivetracker.client.android.util.MyLiveTrackerUtils;
 import de.msk.mylivetracker.client.android.util.VersionUtils;
 
 /**
@@ -40,22 +39,22 @@ public class PreferencesCreator {
 		prefs.firstStartOfApp = true;
 		prefs.pinCode = null;
 		prefs.pinCodeQueryEnabled = false;
-		prefs.transferProtocol = TransferProtocol.mltTcpEncrypted;
-		prefs.server = MyLiveTrackerUtils.getServerDns();
-		prefs.port = MyLiveTrackerUtils.getServerPortTcp();
+		prefs.transferProtocol = TransferProtocol.uploadDisabled;
+		prefs.server = "";
+		prefs.port = 80;
 		prefs.path = "";
 		prefs.trackName = MainActivity.get().getResources().getString(R.string.txPrefs_Def_TrackName);		
 		if (MainActivity.get().getLocationManager().getProvider(LocationManager.GPS_PROVIDER) == null) {
 			prefs.localizationMode = LocalizationMode.network;
 		} else {
-			prefs.localizationMode = LocalizationMode.gps;
+			prefs.localizationMode = LocalizationMode.gpsAndNetwork;
 		}
 		prefs.locTimeTriggerInSeconds = 0;
 		prefs.locDistanceTriggerInMeter = 0;	
 		prefs.closeConnectionAfterEveryUpload = false;
 		prefs.finishEveryUploadWithALinefeed = false;
 		prefs.lineSeperator = "\r\n";
-		prefs.locAccuracyRequiredInMeter = 100;
+		prefs.locAccuracyRequiredInMeter = 150;
 		prefs.locDistBtwTwoLocsForDistCalcRequiredInCMtr = 1650;
 		prefs.uplTimeTrigger = UploadTimeTrigger.Secs10;
 		prefs.uplTriggerLogic = UploadTriggerLogic.OR;
