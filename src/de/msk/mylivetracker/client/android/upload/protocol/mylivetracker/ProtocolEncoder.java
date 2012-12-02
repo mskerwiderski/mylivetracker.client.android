@@ -1,4 +1,4 @@
-package de.msk.mylivetracker.client.android.upload.protocol.mlt.datastr.encrypted;
+package de.msk.mylivetracker.client.android.upload.protocol.mylivetracker;
 
 import java.util.Date;
 

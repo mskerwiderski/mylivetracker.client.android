@@ -7,10 +7,10 @@
         
     <string-array name="transferProtocols">
     	<item>Datentransfer aus</item>
-        <item>MLT HTTP (Klartext)</item>
         <item>MLT TCP (verschlüsselt)</item>
         <item>Tk102 Emulator</item>
-        <item>Tk5000 Emulator</item>        
+        <item>Tk5000 Emulator</item>
+        <item>HTTP (benutzerdefiniert)</item>        
     </string-array>
     
     <string-array name="trackingOneTouchModes">
@@ -76,5 +76,45 @@
         <item>nach 4 Stunden Pause</item>
         <item>nach 8 Stunden Pause</item>
         <item>nach 24 Stunden Pause</item>
+    </string-array>
+    
+    <string-array name="httpProtocolParams">
+ 	    <item>Zeitstempel (ddMMyyHHmmssSSS)</item>
+ 	    <item>Geräte Id (IMEI)</item>
+ 	    <item>App Version Code</item>
+ 	    <item>App Version Name</item>
+ 	    <item>Track Id</item>
+ 	    <item>Trackname</item>
+ 	    <item>Telefonnummer</item>
+ 	    <item>Batterieleistung (Prozent)</item>
+ 	    <item>Batterieleistung (Volt)</item>
+ 	    <item>Position gültig (true/false)</item>
+ 	    <item>Breite (Dezimal)</item>
+ 	    <item>Länge (Dezimal)</item>
+ 	    <item>Höhe (Mtr)</item>
+ 	    <item>Geschwindigkeit (Mtr/Sek)</item>
+ 	    <item>Genauigkeit (Mtr)</item>
+ 	    <item>Kurs (Grad)</item>
+ 		<item>Anzahl der Satelliten</item>    
+ 	    <item>Distanz (Mtr)</item>
+ 	    <item>Kilometerstand (Mtr)</item>
+ 	    <item>Laufzeit netto (MSecs)</item>
+ 	    <item>Laufzeit brutto (MSecs)</item>
+ 	    <item>Benutzername</item>
+ 	    <item>Passwort (verschlüsselt)</item>
+ 	    <item>Aktuelle HF (Bpm)</item>
+ 	    <item>Minimale HF (Bpm)</item>
+        <item>Maximale HF (Bpm)</item>
+        <item>Durchschn. HF (Bpm)</item>
+        <item>SOS Id</item>
+        <item>SOS Aktiviert (on/off)</item>
+ 	    <item>Nachricht</item>
+ 	    <item>Telefontyp</item>
+ 	    <item>Netzwerktyp</item>
+ 	    <item>Mobile Country Code (MCC)</item>
+ 	    <item>Mobile Network Code (MNC)</item>
+ 	    <item>Mobile Network Name (MNN)</item>
+ 	    <item>Cell Id</item>
+ 	    <item>Local Area Code</item>
     </string-array>
 </resources>

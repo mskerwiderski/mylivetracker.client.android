@@ -17,10 +17,10 @@ public class Protocols {
 		return new de.msk.mylivetracker.client.android.upload.protocol.DummyProtocol();
 	}
 	public static IProtocol createProtocolMltUrlparams() {
-		return new de.msk.mylivetracker.client.android.upload.protocol.mlt.urlparams.ProtocolEncoder();
+		return new de.msk.mylivetracker.client.android.upload.protocol.http.userdefined.ProtocolEncoder();
 	}
 	public static IProtocol createProtocolMltDatastrEncrypted() {
-		return new de.msk.mylivetracker.client.android.upload.protocol.mlt.datastr.encrypted.ProtocolEncoder();
+		return new de.msk.mylivetracker.client.android.upload.protocol.mylivetracker.ProtocolEncoder();
 	}
 	public static IProtocol createProtocolXexunTk102() {
 		return new de.msk.mylivetracker.client.android.upload.protocol.xexun.tk102.ProtocolEncoder();

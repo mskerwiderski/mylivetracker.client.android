@@ -6,6 +6,7 @@ import android.content.Context;
 import android.telephony.PhoneNumberUtils;
 import android.widget.EditText;
 import de.msk.mylivetracker.client.android.app.pro.R;
+import de.msk.mylivetracker.client.android.preferences.HttpProtocolParams;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.preferences.Preferences.LocalizationMode;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
@@ -24,6 +25,49 @@ import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
  */
 public class ValidatorUtils {
 
+	public static boolean validateHttpParamName(
+		Context ctx,
+		HttpProtocolParams httpProtocolParams, 
+		int position,
+		EditText etHttpParamName) {
+		if (ctx == null) {
+			throw new IllegalArgumentException("ctx must not be null.");
+		}
+		if (httpProtocolParams == null) {
+			throw new IllegalArgumentException("httpProtocolParams must not be null.");
+		}
+		if (etHttpParamName == null) {
+			throw new IllegalArgumentException("etHttpParamName must not be null.");
+		}
+		boolean valid = true;
+		String paramName = etHttpParamName.getText().toString();
+		if (StringUtils.isEmpty(paramName)) {
+			valid = false;
+			new SimpleInfoDialog(ctx, 
+				ctx.getString(
+					R.string.validator_valueMustNotBeEmpty, 
+					ctx.getString(R.string.lbPrefsHttpProtocolParams_ParameterName))).
+				show();
+		}
+		if (!StringUtils.isAlpha(paramName)) {
+			valid = false;
+			new SimpleInfoDialog(ctx, 
+				ctx.getString(
+					R.string.validator_valueMayHaveOnlyAlphaChars, 
+					ctx.getString(R.string.lbPrefsHttpProtocolParams_ParameterName))).
+				show();
+		}
+		if (httpProtocolParams.paramNameExistsOutsidePosition(paramName, position)) {
+			valid = false;
+			new SimpleInfoDialog(ctx, 
+				ctx.getString(
+					R.string.validator_valueAlreadyExists, 
+					ctx.getString(R.string.lbPrefsHttpProtocolParams_ParameterName))).
+				show();
+		}
+		return valid;
+	}
+	
 	public static boolean validatePinCode(
 		Context ctx, EditText etPinCode) {
 		if (ctx == null) {

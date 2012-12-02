@@ -115,13 +115,21 @@
     >
     	<CheckBox
 		    android:id="@+id/cbPrefsHttpProtocolParams_EnabledForUploading"
-		    android:layout_width="wrap_content"
+		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
 		    android:layout_weight="1"
 		    android:text="@string/lbPrefsHttpProtocolParams_EnabledForUploading" 
 		    android:textColor="@color/colorText"
 		    android:paddingLeft="42dip"
 		/>	
+		<Button
+    		android:id="@+id/btPrefsHttpProtocolParams_ResetToDefaults"
+    		android:text="@string/btPrefsHttpProtocolParams_ResetToDefaults" 
+    		android:layout_gravity="bottom" 
+    		android:layout_weight="1"
+    		android:layout_height="wrap_content" 
+    		android:layout_width="fill_parent" 
+    	/>
     </LinearLayout>
 	<LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent">        
         <Button

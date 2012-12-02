@@ -242,10 +242,18 @@ public class HttpProtocolParams implements Serializable {
 	public HttpProtocolParamDsc getParamDsc(int id) {
 		return params.get(id);
 	}
-	public boolean paramNameExists(String paramName) {
+	public boolean paramNameExistsOutsidePosition(String paramName, int position) {
+		if (StringUtils.isEmpty(paramName)) {
+			throw new IllegalArgumentException("paramName must not be empty.");
+		}
+		if ((position < 0) || (position >= this.params.size())) {
+			throw new IllegalArgumentException("position out of valid range.");
+		}
 		boolean exists = false;
 		for (int i=0; !exists && (i < this.params.size()); i++) {
-			exists = StringUtils.equals(paramName, this.params.get(i).getName());
+			exists = 
+				StringUtils.equals(paramName, this.params.get(i).getName()) &&
+				(i != position);
 		}
 		return exists;
 	}

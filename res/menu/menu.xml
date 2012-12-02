@@ -4,18 +4,18 @@
 	    android:id="@+id/mnCatPrefs"
         android:title="@string/mnCatPrefs" >
         <menu>  
-	      	<item android:id="@+id/mnPrefsLocalization" android:title="@string/mnPrefsLocalization" />
 			<item android:id="@+id/mnPrefsServer" android:title="@string/mnPrefsServer" />
 		    <item android:id="@+id/mnPrefsAccount" android:title="@string/mnPrefsAccount" />
+		    <item android:id="@+id/mnPrefsLocalization" android:title="@string/mnPrefsLocalization" />
 		    <item android:id="@+id/mnPrefsAuto" android:title="@string/mnPrefsAuto" />
+		    <item android:id="@+id/mnLinkSender" android:title="@string/mnLinkSender" />
+		    <item android:id="@+id/mnPrefsOther" android:title="@string/mnPrefsOther" />
 	    </menu> 
     </item>
 	<item 
-	    android:id="@+id/mnCatMorePrefs"
-		android:title="@string/mnCatMorePrefs" >
+	    android:id="@+id/mnCatPrefsPro"
+		android:title="@string/mnCatPrefsPro" >
         <menu>  
-		    <item android:id="@+id/mnLinkSender" android:title="@string/mnLinkSender" />
-		    <item android:id="@+id/mnPrefsOther" android:title="@string/mnPrefsOther" />    
 		    <item android:id="@+id/mnPrefsPinCodeQuery" android:title="@string/mnPrefsPinCodeQuery" />
 		    <item android:id="@+id/mnPrefsRemoteAccess" android:title="@string/mnPrefsRemoteAccess" />
 		    <item android:id="@+id/mnPrefsHttpProtocolParams" android:title="@string/mnPrefsHttpProtocolParams" />

@@ -37,8 +37,8 @@
     <string name="nfListenerRunning">Location Listener and/or ANT+ Listener is running.</string>
     
     <!-- menu items -->
-    <string name="mnCatPrefs">Prefs</string>
-    <string name="mnCatMorePrefs">More Prefs</string>
+    <string name="mnCatPrefs">Config</string>
+    <string name="mnCatPrefsPro">Pro</string>
     <string name="mnCatInfo">Info &amp; Exit</string>
     <string name="mnPrefsLocalization">Localization</string>
     <string name="mnPrefsServer">Server</string>
@@ -248,8 +248,10 @@
     <string name="lbPrefsHttpProtocolParams_Parameter">Parameter</string>
     <string name="lbPrefsHttpProtocolParams_ParameterExample">Example</string>
     <string name="lbPrefsHttpProtocolParams_ParameterName">Parameter name</string>
-    <string name="lbPrefsHttpProtocolParams_EnabledForUploading">Enabled for uploading.</string>
-    
+    <string name="lbPrefsHttpProtocolParams_EnabledForUploading">Enabled</string>
+    <string name="btPrefsHttpProtocolParams_ResetToDefaults">Reset to defaults</string>
+    <string name="txPrefsHttpProtocolParams_QuestionResetToDefaults">Do you really want to reset to defaults?</string>
+    <string name="txPrefsHttpProtocolParams_InfoResetToDefaultsDone">HTTP parameters has been reset to defaults!</string>
     <string name="txPrefsHttpProtocolParams_ParamNameTimestamp">tst</string>
     <string name="txPrefsHttpProtocolParams_ParamValueExampleTimestamp">310113195559325</string>
     <string name="txPrefsHttpProtocolParams_ParamNameDeviceId">did</string>
@@ -261,7 +263,7 @@
     <string name="txPrefsHttpProtocolParams_ParamNameTrackId">tid</string>
     <string name="txPrefsHttpProtocolParams_ParamValueExampleTrackId">f2262811-2929-465c-b7e7-1dc06d9828b7</string>   
     <string name="txPrefsHttpProtocolParams_ParamNameTrackName">trn</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleTrackName">MyTrack</string>   
+    <string name="txPrefsHttpProtocolParams_ParamValueExampleTrackName">My track</string>   
     <string name="txPrefsHttpProtocolParams_ParamNamePhoneNumber">phn</string>
     <string name="txPrefsHttpProtocolParams_ParamValueExamplePhoneNumber">+49407624521</string>   
     <string name="txPrefsHttpProtocolParams_ParamNameBatteryPowerPercent">pow</string>
@@ -352,4 +354,6 @@
     <string name="validator.valueMustNotBeEmpty">%1$s must not be empty!</string>
     <string name="validator.valueMustBeANumber">%1$s must be a number!</string>    
     <string name="validator.valueMustBeInRange">%1$s must be in range of %2$s-%3$s digits!</string>
+    <string name="validator.valueMayHaveOnlyAlphaChars">%1$s may have only alphabetical characters!</string>
+    <string name="validator.valueAlreadyExists">%1$s already exists!</string>
 </resources>

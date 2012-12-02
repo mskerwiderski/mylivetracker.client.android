@@ -112,12 +112,12 @@ public class Preferences {
 	
 	public enum TransferProtocol {
 		uploadDisabled("Upload disabled", false, false),
-		mltHttpPlain("MLT HTTP (plain)", true, true),
 		mltTcpEncrypted("MLT TCP (encrypted)", true, true),
-		mltRpcEncrypted("MLT RPC (encrypted)", true, true),
 		tk102Emulator("Tk102 Emulator", false, true),
 		tk5000Emulator("Tk5000 Emulator", false, true),
-		fransonGpsGateHttp("Franson GpsGate HTTP", false, false); // not supported since version 1400
+		httpUserDefined("HTTP (user defined)", true, true),
+		fransonGpsGateHttp("Franson GpsGate HTTP", false, false), // not supported since version 1400.
+		mltHttpPlain("MLT HTTP (plain)", true, true); // not supported since version 1500.
 		
 		private String dsc;
 		private boolean supportsSendMessage;
@@ -336,6 +336,8 @@ public class Preferences {
 	// o properties for pin code query added.
 	// o property 'httpProtocolParams' added.
 	// o property 'statusParamsId' removed.
+	// o transferProtocol 'mltHttpPlain' is not supported anymore.
+	// o transferProtocol 'httpUserDefined' added.
 	//
 	// version 1400:
 	// o property 'versionApp' added.
@@ -443,7 +445,6 @@ public class Preferences {
 						doSave = true;
 					} 
 					if (preferencesVersion < PREFERENCES_VERSION_1400) {
-						preferences.firstStartOfApp = true;
 						if (preferences.transferProtocol.equals(TransferProtocol.fransonGpsGateHttp)) {
 							preferences.transferProtocol = TransferProtocol.uploadDisabled;
 						} else if (preferences.transferProtocol.equals(TransferProtocol.mltTcpEncrypted)) {
@@ -452,6 +453,9 @@ public class Preferences {
 						doSave = true;
 					}
 					if (preferencesVersion < PREFERENCES_VERSION_1500) {
+						if (preferences.transferProtocol.equals(TransferProtocol.mltHttpPlain)) {
+							preferences.transferProtocol = TransferProtocol.uploadDisabled;
+						}
 						preferences.pinCode = null;
 						preferences.pinCodeQueryEnabled = false;
 						preferences.remoteAccessEnabled = false;

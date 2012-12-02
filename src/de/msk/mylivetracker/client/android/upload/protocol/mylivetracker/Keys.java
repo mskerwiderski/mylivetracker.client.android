@@ -1,4 +1,4 @@
-package de.msk.mylivetracker.client.android.upload.protocol.mlt.datastr.encrypted;
+package de.msk.mylivetracker.client.android.upload.protocol.mylivetracker;
 
 import de.msk.mylivetracker.commons.protocol.KeyDsc;
 import de.msk.mylivetracker.commons.protocol.KeyDsc.KeyType;
