@@ -1,6 +1,6 @@
 package de.msk.mylivetracker.client.android.remoteaccess;
 
-import de.msk.mylivetracker.client.android.util.VersionUtils;
+import de.msk.mylivetracker.client.android.App.VersionDsc;
 
 /**
  * SmsCmdGetAppVersion.
@@ -26,6 +26,6 @@ public class SmsCmdGetAppVersion extends AbstractSmsCmdExecutor {
 
 	@Override
 	public String executeCmdAndCreateSmsResponse(String... params) {
-		return VersionUtils.get().getVersionStr();
+		return VersionDsc.getVersionStr();
 	}
 }

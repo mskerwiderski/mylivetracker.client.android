@@ -3,7 +3,7 @@ package de.msk.mylivetracker.client.android.preferences;
 import android.content.Context;
 import android.location.LocationManager;
 import android.telephony.TelephonyManager;
-import de.msk.mylivetracker.client.android.app.pro.R;
+import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences.AutoModeResetTrackMode;
 import de.msk.mylivetracker.client.android.preferences.Preferences.BufferSize;
@@ -14,7 +14,7 @@ import de.msk.mylivetracker.client.android.preferences.Preferences.TransferProto
 import de.msk.mylivetracker.client.android.preferences.Preferences.UploadDistanceTrigger;
 import de.msk.mylivetracker.client.android.preferences.Preferences.UploadTimeTrigger;
 import de.msk.mylivetracker.client.android.preferences.Preferences.UploadTriggerLogic;
-import de.msk.mylivetracker.client.android.util.VersionUtils;
+import de.msk.mylivetracker.client.android.pro.R;
 
 /**
  * PreferencesCreator.
@@ -35,7 +35,7 @@ public class PreferencesCreator {
 	
 	private static Preferences createDefault(Context context) {
 		Preferences prefs = new Preferences();
-		prefs.versionApp = VersionUtils.get();
+		prefs.versionApp = App.getVersionDsc();
 		prefs.firstStartOfApp = true;
 		prefs.pinCode = null;
 		prefs.pinCodeQueryEnabled = false;

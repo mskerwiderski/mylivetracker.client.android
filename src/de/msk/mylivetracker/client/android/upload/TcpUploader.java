@@ -13,9 +13,9 @@ import java.net.SocketAddress;
 import org.apache.commons.lang.StringUtils;
 
 import android.os.SystemClock;
-import de.msk.mylivetracker.client.android.app.pro.R;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.status.PositionBufferInfo;
 import de.msk.mylivetracker.client.android.upload.protocol.IProtocol;
 

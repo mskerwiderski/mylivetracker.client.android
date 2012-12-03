@@ -5,10 +5,10 @@ import org.apache.commons.lang.StringUtils;
 import android.content.Context;
 import android.telephony.PhoneNumberUtils;
 import android.widget.EditText;
-import de.msk.mylivetracker.client.android.app.pro.R;
 import de.msk.mylivetracker.client.android.preferences.HttpProtocolParams;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.preferences.Preferences.LocalizationMode;
+import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
  
 /**

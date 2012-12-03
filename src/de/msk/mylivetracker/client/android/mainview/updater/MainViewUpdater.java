@@ -4,10 +4,10 @@ import org.apache.commons.lang.StringUtils;
 
 import android.content.res.Resources;
 import android.widget.TextView;
-import de.msk.mylivetracker.client.android.app.pro.R;
 import de.msk.mylivetracker.client.android.listener.LocationListener;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.status.HeartrateInfo;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
 import de.msk.mylivetracker.client.android.status.PhoneStateInfo;

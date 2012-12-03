@@ -8,7 +8,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsManager;
-import de.msk.mylivetracker.client.android.app.AbstractApp;
+import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
 /**
@@ -53,9 +53,9 @@ public class SmsSendUtils {
 		LogUtils.infoMethodIn(SmsSendUtils.class, "sendSms", phoneNumber, message);
 		SmsManager manager = SmsManager.getDefault();
 
-		PendingIntent piSend = PendingIntent.getBroadcast(AbstractApp.getCtx(), 0,
+		PendingIntent piSend = PendingIntent.getBroadcast(App.getCtx(), 0,
 				new Intent(SEND_SMS_STATUS_SMS_SENT), 0);
-		PendingIntent piDelivered = PendingIntent.getBroadcast(AbstractApp.getCtx(), 0,
+		PendingIntent piDelivered = PendingIntent.getBroadcast(App.getCtx(), 0,
 				new Intent(SEND_SMS_STATUS_SMS_DELIVERED), 0);
 
 		int length = message.length();

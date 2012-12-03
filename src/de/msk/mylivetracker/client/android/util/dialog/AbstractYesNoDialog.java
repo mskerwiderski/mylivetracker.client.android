@@ -3,7 +3,7 @@ package de.msk.mylivetracker.client.android.util.dialog;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import de.msk.mylivetracker.client.android.app.pro.R;
+import de.msk.mylivetracker.client.android.pro.R;
 
 /**
  * AbstractSimpleYesNoDialog.

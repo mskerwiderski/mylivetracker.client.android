@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
 
+import de.msk.mylivetracker.client.android.App.VersionDsc;
 import de.msk.mylivetracker.client.android.preferences.HttpProtocolParams;
 import de.msk.mylivetracker.client.android.preferences.HttpProtocolParams.ParamId;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
@@ -17,7 +18,6 @@ import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.upload.protocol.HttpProtocolUtils;
 import de.msk.mylivetracker.client.android.upload.protocol.IProtocol;
-import de.msk.mylivetracker.client.android.util.VersionUtils;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;
 
 /**
@@ -50,10 +50,10 @@ public class ProtocolEncoder implements IProtocol {
 		String paramsStr = null;
 		paramsStr = HttpProtocolUtils.addParam(paramsStr, 
 			params.getParamDsc(ParamId.AppVersionCode), 
-			VersionUtils.get().getCode());
+			VersionDsc.getCode());
 		paramsStr = HttpProtocolUtils.addParam(paramsStr, 
 			params.getParamDsc(ParamId.AppVersionName), 
-			VersionUtils.get().getName());
+			VersionDsc.getName());
 		paramsStr = HttpProtocolUtils.addParam(paramsStr, 
 			params.getParamDsc(ParamId.DeviceId), 
 			prefs.getDeviceId());

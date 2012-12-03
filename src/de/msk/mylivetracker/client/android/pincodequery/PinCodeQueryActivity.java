@@ -5,8 +5,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import de.msk.mylivetracker.client.android.app.pro.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
+import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
 
 /**

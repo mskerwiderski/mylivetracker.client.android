@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 
 import android.util.Log;
+import de.msk.mylivetracker.client.android.App.VersionDsc;
 import de.msk.mylivetracker.client.android.preferences.HttpProtocolParams;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.preferences.PrefsHttpProtocolParamsActivity;
@@ -14,6 +15,7 @@ import de.msk.mylivetracker.client.android.remoteaccess.ResponseCreator;
 import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdReceiver;
 import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdTrack;
 import de.msk.mylivetracker.client.android.remoteaccess.SmsSentStatusReceiver;
+import de.msk.mylivetracker.client.android.status.AbstractInfo;
 
 /**
  * LogUtils.
@@ -31,6 +33,7 @@ public class LogUtils {
 	private static Map<Class<?>, Boolean> classes = new HashMap<Class<?>, Boolean>();
 	
 	static {
+		classes.put(AbstractInfo.class, Boolean.TRUE);
 		classes.put(HttpProtocolParams.class, Boolean.TRUE);
 		classes.put(PrefsHttpProtocolParamsActivity.class, Boolean.TRUE);
 		classes.put(Preferences.class, Boolean.TRUE);
@@ -42,9 +45,8 @@ public class LogUtils {
 	}
 
 	private static boolean isLogForClassEnabled(Class<?> clazz) {
-		return 
-			(VersionUtils.isAlpha() || VersionUtils.isBeta()) &&
-				(classes.containsKey(clazz) ? classes.get(clazz) : false);
+		return !VersionDsc.isRelease() &&
+			(classes.containsKey(clazz) ? classes.get(clazz) : false);
 	}
 	
 	public static void always(String logStr) {
@@ -52,8 +54,7 @@ public class LogUtils {
 	}
 
 	public static void info(String logStr) {
-		if (!VersionUtils.isAlpha() && !VersionUtils.isBeta())
-			return;
+		if (VersionDsc.isRelease()) return;
 		Log.i(LOG_TAG_GLOBAL, logStr);
 	}
 

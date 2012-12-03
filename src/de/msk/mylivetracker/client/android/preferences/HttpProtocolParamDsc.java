@@ -2,7 +2,7 @@ package de.msk.mylivetracker.client.android.preferences;
 
 import java.io.Serializable;
 
-import de.msk.mylivetracker.client.android.App;
+import de.msk.mylivetracker.client.android.AppStd;
 
 /**
  * HttpProtocolParamDsc.
@@ -33,8 +33,8 @@ public class HttpProtocolParamDsc implements Serializable {
 	}
 
 	protected HttpProtocolParamDsc(int nameId, int exampleId, boolean enabled) {
-		this.name = App.get().getString(nameId);
-		this.example = App.get().getString(exampleId);
+		this.name = AppStd.get().getString(nameId);
+		this.example = AppStd.get().getString(exampleId);
 		this.enabled = enabled;
 	}
 

@@ -7,9 +7,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
-import de.msk.mylivetracker.client.android.app.pro.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences.AutoModeResetTrackMode;
+import de.msk.mylivetracker.client.android.pro.R;
 
 /**
  * PrefsAutoActivity.

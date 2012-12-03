@@ -14,11 +14,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import de.msk.mylivetracker.client.android.app.pro.R;
+import de.msk.mylivetracker.client.android.App.ConfigDsc;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
-import de.msk.mylivetracker.client.android.util.MyLiveTrackerUtils;
+import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractInfoDialog;
 import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
 import de.msk.mylivetracker.commons.rpc.LinkSenderRequest;
@@ -87,7 +87,7 @@ public class LinkSenderActivity extends AbstractActivity {
 					MD5 md5 = new MD5();
 					md5.Update(
 						etLinkSender_PortalUsername.getText().toString() + ":" +
-						MyLiveTrackerUtils.getRealm() + ":" +
+						ConfigDsc.getRealm() + ":" +
 						etLinkSender_PortalPassword.getText().toString(), null);
 					hashedPassword = md5.asHex();
 				} catch (UnsupportedEncodingException e) {

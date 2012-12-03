@@ -5,12 +5,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-import de.msk.mylivetracker.client.android.app.pro.R;
+import de.msk.mylivetracker.client.android.App.VersionDsc;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.mainview.updater.UpdaterUtils;
+import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.util.FormatUtils.Unit;
-import de.msk.mylivetracker.client.android.util.VersionUtils;
 
 /**
  * InfoActivity.
@@ -53,7 +53,7 @@ public class InfoActivity extends AbstractActivity {
         TextView tvInfo_Version = (TextView)findViewById(R.id.tvInfo_Version);
         TextView tvInfo_Mileage = (TextView)findViewById(R.id.tvInfo_Mileage);
         
-        tvInfo_Version.setText(VersionUtils.get().getVersionStr());
+        tvInfo_Version.setText(VersionDsc.getVersionStr());
         tvInfo_Mileage.setText(UpdaterUtils.getFltStr(TrackStatus.get().getMileageInMtr() / 1000f, 2, Unit.Kilometer));
         
         btnInfo_Back.setOnClickListener(

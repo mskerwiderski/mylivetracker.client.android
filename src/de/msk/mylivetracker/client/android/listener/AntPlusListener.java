@@ -5,8 +5,8 @@ import org.apache.commons.lang.StringUtils;
 import com.wahoofitness.api.WFHardwareConnectorTypes.WFAntError;
 import com.wahoofitness.api.WFHardwareConnectorTypes.WFHardwareState;
 
-import de.msk.mylivetracker.client.android.app.pro.R;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
+import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 
 /**

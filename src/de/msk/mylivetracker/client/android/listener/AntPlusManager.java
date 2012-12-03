@@ -12,8 +12,8 @@ import com.wahoofitness.api.comm.WFHeartrateConnection;
 import com.wahoofitness.api.comm.WFSensorConnection;
 import com.wahoofitness.api.comm.WFSensorConnection.WFSensorConnectionStatus;
 
-import de.msk.mylivetracker.client.android.app.pro.R;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
+import de.msk.mylivetracker.client.android.pro.R;
 
 /**
  * AntPlusManager.

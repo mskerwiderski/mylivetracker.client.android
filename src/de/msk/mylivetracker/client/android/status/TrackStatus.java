@@ -15,7 +15,7 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 
-import de.msk.mylivetracker.client.android.app.AbstractApp;
+import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
@@ -68,7 +68,7 @@ public class TrackStatus implements Serializable {
 	public static void saveTrackStatus() {
 		if (trackStatus == null) return;				
 		SharedPreferences prefs = MainActivity.get().
-			getSharedPreferences(AbstractApp.getDbName(), 0);
+			getSharedPreferences(App.getDbName(), 0);
 		SharedPreferences.Editor editor = prefs.edit();
 		TrackStatus temp = trackStatus.deepCopy();
 		temp.markAsStopped();
@@ -94,7 +94,7 @@ public class TrackStatus implements Serializable {
 		try {
 			MainActivity mainActivity = MainActivity.get();
 			SharedPreferences prefs = mainActivity.
-				getSharedPreferences(AbstractApp.getDbName(), 0);		
+				getSharedPreferences(App.getDbName(), 0);		
 			long trackVersion = prefs.getLong(TRACK_STATUS_VERSION_VAR, -1);
 			if (trackVersion != serialVersionUID) {
 				TrackStatus.reset();

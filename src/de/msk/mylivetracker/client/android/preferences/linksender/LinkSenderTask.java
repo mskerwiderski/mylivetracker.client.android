@@ -3,13 +3,13 @@ package de.msk.mylivetracker.client.android.preferences.linksender;
 import java.net.URL;
 
 import android.os.AsyncTask;
-import de.msk.mylivetracker.client.android.app.pro.R;
+import de.msk.mylivetracker.client.android.App.ConfigDsc;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.preferences.Preferences.TransferProtocol;
 import de.msk.mylivetracker.client.android.preferences.linksender.LinkSenderActivity.ProgressDialogHandler;
+import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.rpc.JsonRpcHttpClient;
-import de.msk.mylivetracker.client.android.util.MyLiveTrackerUtils;
 import de.msk.mylivetracker.commons.rpc.LinkSenderRequest;
 import de.msk.mylivetracker.commons.rpc.LinkSenderResponse;
 import de.msk.mylivetracker.commons.rpc.RpcResponse.ResultCode;
@@ -48,7 +48,7 @@ public class LinkSenderTask extends
 				throw new RuntimeException(MainActivity.get().getResources().getString(R.string.txErr_NoDataConnection));
 			}
 			JsonRpcHttpClient rcpClient = new JsonRpcHttpClient(new URL(
-				MyLiveTrackerUtils.getPortalRpcUrl()));
+				ConfigDsc.getPortalRpcUrl()));
 			rcpClient.setConnectionTimeoutMillis(10000);
 			rcpClient.setReadTimeoutMillis(5000);
 			response = (LinkSenderResponse) rcpClient.invoke("linkSender",

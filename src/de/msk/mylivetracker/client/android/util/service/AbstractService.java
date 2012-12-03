@@ -14,7 +14,7 @@ import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import de.msk.mylivetracker.client.android.app.AbstractApp;
+import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
@@ -41,8 +41,8 @@ public abstract class AbstractService extends Service {
 			isServiceRunning(serviceClass)) {
 			LogUtils.info(serviceClass, "service is already running.");
 		} else {
-			AbstractApp.getCtx().startService(
-				new Intent(AbstractApp.getCtx(), serviceClass));
+			App.getCtx().startService(
+				new Intent(App.getCtx(), serviceClass));
 			waitStartStopServiceDone(serviceClass, true);
 			serviceStatus.put(serviceClass, Boolean.TRUE);
 			LogUtils.info(serviceClass, "service successfully started.");
@@ -55,8 +55,8 @@ public abstract class AbstractService extends Service {
 			!isServiceRunning(serviceClass)) {
 			LogUtils.info(serviceClass, "service is not running.");
 		} else {
-			AbstractApp.getCtx().stopService(
-				new Intent(AbstractApp.getCtx(), serviceClass));
+			App.getCtx().stopService(
+				new Intent(App.getCtx(), serviceClass));
 			waitStartStopServiceDone(serviceClass, false);
 			serviceStatus.put(serviceClass, Boolean.FALSE);
 			LogUtils.info(serviceClass, "service successfully stopped.");
@@ -65,7 +65,7 @@ public abstract class AbstractService extends Service {
 
 	public static boolean isServiceRunning(Class<? extends AbstractService> serviceClass) {
 		boolean found = false;
-	    ActivityManager manager = (ActivityManager) AbstractApp.getCtx().getSystemService(Context.ACTIVITY_SERVICE);
+	    ActivityManager manager = (ActivityManager) App.getCtx().getSystemService(Context.ACTIVITY_SERVICE);
 	    List<RunningServiceInfo> runningServiceInfos = manager.getRunningServices(Integer.MAX_VALUE);
 	    for (int i=0; !found && (i < runningServiceInfos.size()); i++) {
 	        if (StringUtils.equals(serviceClass.getName(), 
@@ -118,7 +118,7 @@ public abstract class AbstractService extends Service {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		NotificationDsc notificationDsc = getNotificationDsc();
 		if (notificationDsc != null) {
-			Context ctx = AbstractApp.getCtx();
+			Context ctx = App.getCtx();
 			CharSequence contentTitle = ctx.getText(notificationDsc.titleId);
 			CharSequence contentText = ctx.getText(notificationDsc.messageId);
 			Notification notification = new Notification(

@@ -13,9 +13,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.InfoActivity;
-import de.msk.mylivetracker.client.android.app.AbstractApp;
-import de.msk.mylivetracker.client.android.app.pro.R;
 import de.msk.mylivetracker.client.android.listener.GpsStateListener;
 import de.msk.mylivetracker.client.android.listener.LocationListener;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
@@ -28,6 +27,7 @@ import de.msk.mylivetracker.client.android.preferences.PrefsPinCodeQueryActivity
 import de.msk.mylivetracker.client.android.preferences.PrefsRemoteAccessActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsServerActivity;
 import de.msk.mylivetracker.client.android.preferences.linksender.LinkSenderActivity;
+import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractInfoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractProgressDialog;
@@ -326,21 +326,21 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 			}
 			return true;
 		case R.id.mnPrefsPinCodeQuery:
-			if (!AbstractApp.isPro()) {
+			if (!App.isPro()) {
 				showIsProFeatureDialog();
 			} else {
 				startActivity(new Intent(this, PrefsPinCodeQueryActivity.class));
 			}
 			return true;
 		case R.id.mnPrefsRemoteAccess:
-			if (!AbstractApp.isPro()) {
+			if (!App.isPro()) {
 				showIsProFeatureDialog();
 			} else {
 				startActivity(new Intent(this, PrefsRemoteAccessActivity.class));
 			}
 			return true;	
 		case R.id.mnPrefsHttpProtocolParams:
-			if (!AbstractApp.isPro()) {
+			if (!App.isPro()) {
 				showIsProFeatureDialog();
 			} else {
 				if (TrackStatus.get().trackIsRunning()) {

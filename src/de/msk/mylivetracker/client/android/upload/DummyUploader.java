@@ -1,7 +1,7 @@
 package de.msk.mylivetracker.client.android.upload;
 
-import de.msk.mylivetracker.client.android.app.pro.R;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
+import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.upload.protocol.IProtocol;
 
 /**

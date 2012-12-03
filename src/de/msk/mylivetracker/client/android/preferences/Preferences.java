@@ -9,14 +9,13 @@ import android.telephony.TelephonyManager;
 
 import com.google.gson.Gson;
 
-import de.msk.mylivetracker.client.android.app.AbstractApp;
-import de.msk.mylivetracker.client.android.app.pro.R;
+import de.msk.mylivetracker.client.android.App;
+import de.msk.mylivetracker.client.android.App.ConfigDsc;
+import de.msk.mylivetracker.client.android.App.VersionDsc;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
+import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.util.LogUtils;
-import de.msk.mylivetracker.client.android.util.MyLiveTrackerUtils;
-import de.msk.mylivetracker.client.android.util.VersionUtils;
-import de.msk.mylivetracker.client.android.util.VersionUtils.VersionDsc;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
 import de.msk.mylivetracker.commons.protocol.ProtocolUtils;
 
@@ -383,7 +382,7 @@ public class Preferences {
 	
 	public static Preferences get(Context context) {
 		if (preferences == null) {			
-			Preferences.load(context, AbstractApp.getDbName());
+			Preferences.load(context, App.getDbName());
 		} 
 		return preferences;
 	}
@@ -398,7 +397,7 @@ public class Preferences {
 	
 	private static void load() {
 		MainActivity mainActivity = MainActivity.get();
-		load(mainActivity, AbstractApp.getDbName());
+		load(mainActivity, App.getDbName());
 	}
 	
 	private static void load(Context context, String name) {
@@ -412,7 +411,7 @@ public class Preferences {
 		} else if (preferencesVersion < PREFERENCES_VERSION_MIN) {
 			Preferences.reset(context);
 			infoMessage = context.getString(R.string.prefsReset, 
-				VersionUtils.get().getVersionStr());
+				VersionDsc.getVersionStr());
 		} else {
 			String preferencesStr = prefs.getString(PREFERENCES_VAR, null);
 			if (!StringUtils.isEmpty(preferencesStr)) {
@@ -447,7 +446,7 @@ public class Preferences {
 						if (preferences.transferProtocol.equals(TransferProtocol.fransonGpsGateHttp)) {
 							preferences.transferProtocol = TransferProtocol.uploadDisabled;
 						} else if (preferences.transferProtocol.equals(TransferProtocol.mltTcpEncrypted)) {
-							preferences.server = MyLiveTrackerUtils.getServerDns();
+							preferences.server = ConfigDsc.getServerDns();
 						}
 						doSave = true;
 					}
@@ -463,25 +462,25 @@ public class Preferences {
 						preferences.remoteAccessReceiver = "";
 						preferences.httpProtocolParams = HttpProtocolParams.create();
 					}
-					if (!VersionUtils.isCurrent(context, preferences.versionApp)) {
+					if (!VersionDsc.isCurrent(preferences.versionApp)) {
 						preferences.firstStartOfApp = true;
-						preferences.versionApp = VersionUtils.get();
+						preferences.versionApp = App.getVersionDsc();
 					}
 					if (doSave) {
 						save();
 						infoMessage = context.getString(R.string.prefsUpdated, 
-							VersionUtils.get().getVersionStr());
+							VersionDsc.getVersionStr());
 					}
 				} catch (Exception e) {
 					LogUtils.infoMethodState(Preferences.class, "load", "loading failed", e.toString());
 					Preferences.reset(context);
 					infoMessage = context.getString(R.string.prefsReset, 
-						VersionUtils.get().getVersionStr());
+						VersionDsc.getVersionStr());
 				}
 			} else {			
 				Preferences.reset(context);			
 				infoMessage = context.getString(R.string.prefsReset, 
-					VersionUtils.get().getVersionStr());
+					VersionDsc.getVersionStr());
 			}
 		}
 		if (!StringUtils.isEmpty(infoMessage) && MainActivity.exists()) {
@@ -495,7 +494,7 @@ public class Preferences {
 	public static void save() {
 		if (preferences == null) return;				
 		SharedPreferences prefs = MainActivity.get().
-			getSharedPreferences(AbstractApp.getDbName(), 0);
+			getSharedPreferences(App.getDbName(), 0);
 		SharedPreferences.Editor editor = prefs.edit();
 		
 		preferences.seed = ProtocolUtils.calcSeed(

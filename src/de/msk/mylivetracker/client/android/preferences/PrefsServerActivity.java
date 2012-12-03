@@ -10,13 +10,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
-import de.msk.mylivetracker.client.android.app.pro.R;
+import de.msk.mylivetracker.client.android.App.ConfigDsc;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences.TransferProtocol;
 import de.msk.mylivetracker.client.android.preferences.Preferences.UploadDistanceTrigger;
 import de.msk.mylivetracker.client.android.preferences.Preferences.UploadTimeTrigger;
 import de.msk.mylivetracker.client.android.preferences.Preferences.UploadTriggerLogic;
-import de.msk.mylivetracker.client.android.util.MyLiveTrackerUtils;
+import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
 
 /**
@@ -151,12 +151,12 @@ public class PrefsServerActivity extends AbstractActivity {
 			View view, int position, long id) {
 			if (this.currentItemId != id) {
 				if (TransferProtocol.mltHttpPlain.ordinal() == id) {
-					this.etPrefsServer_ServerAddress.setText(MyLiveTrackerUtils.getServerDns());
-					this.etPrefsServer_ServerPort.setText(String.valueOf(MyLiveTrackerUtils.getServerPortHttp()));
-					this.etPrefsServer_ServerPath.setText(MyLiveTrackerUtils.getServerPathHttp());
+					this.etPrefsServer_ServerAddress.setText(ConfigDsc.getServerDns());
+					this.etPrefsServer_ServerPort.setText(String.valueOf(ConfigDsc.getServerPortHttp()));
+					this.etPrefsServer_ServerPath.setText(ConfigDsc.getServerPathHttp());
 				} else if (TransferProtocol.mltTcpEncrypted.ordinal() == id) {
-					this.etPrefsServer_ServerAddress.setText(MyLiveTrackerUtils.getServerDns());
-					this.etPrefsServer_ServerPort.setText(String.valueOf(MyLiveTrackerUtils.getServerPortTcp()));
+					this.etPrefsServer_ServerAddress.setText(ConfigDsc.getServerDns());
+					this.etPrefsServer_ServerPort.setText(String.valueOf(ConfigDsc.getServerPortTcp()));
 					this.etPrefsServer_ServerPath.setText("");
 				}
 				this.currentItemId = id;

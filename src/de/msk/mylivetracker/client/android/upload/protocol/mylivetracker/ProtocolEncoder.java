@@ -2,6 +2,7 @@ package de.msk.mylivetracker.client.android.upload.protocol.mylivetracker;
 
 import java.util.Date;
 
+import de.msk.mylivetracker.client.android.App.VersionDsc;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
 import de.msk.mylivetracker.client.android.status.EmergencySignalInfo;
@@ -12,7 +13,6 @@ import de.msk.mylivetracker.client.android.status.MessageInfo;
 import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.upload.protocol.IProtocol;
-import de.msk.mylivetracker.client.android.util.VersionUtils;
 import de.msk.mylivetracker.commons.protocol.EncDecoder;
 import de.msk.mylivetracker.commons.protocol.KeyStore;
 import de.msk.mylivetracker.commons.protocol.UploadDataPacket;
@@ -69,8 +69,8 @@ public class ProtocolEncoder extends EncDecoder implements IProtocol {
 			
 		UploadDataPacket data = new UploadDataPacket();
 		data.setTimestamp(lastInfoTimestamp.getTime());
-		data.setVersionCode(VersionUtils.get().getCode());
-		data.setVersionName(VersionUtils.get().getName());
+		data.setVersionCode(VersionDsc.getCode());
+		data.setVersionName(VersionDsc.getName());
 		data.setUsername(prefs.getUsername());
 		data.setSeed(prefs.getSeed());
 		data.setDeviceId(prefs.getDeviceId());

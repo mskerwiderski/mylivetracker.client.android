@@ -64,6 +64,9 @@ public class LocationInfo extends AbstractInfo implements Serializable {
 	private static class LatLonPos {
 		private Double latitude = null;
 		private Double longitude = null;
+		@SuppressWarnings("unused")
+		private LatLonPos() { // constructor needed for gson.
+		}
 		public LatLonPos(Location location) {
 			this.latitude = location.getLatitude();
 			this.longitude = location.getLongitude();

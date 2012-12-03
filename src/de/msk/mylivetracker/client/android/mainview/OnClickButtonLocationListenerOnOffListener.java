@@ -2,9 +2,9 @@ package de.msk.mylivetracker.client.android.mainview;
 
 import android.view.View;
 import android.view.View.OnClickListener;
-import de.msk.mylivetracker.client.android.app.pro.R;
 import de.msk.mylivetracker.client.android.listener.LocationListener;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 
 /**
