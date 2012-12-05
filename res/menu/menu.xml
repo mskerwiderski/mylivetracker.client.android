@@ -16,6 +16,7 @@
 	    android:id="@+id/mnCatPrefsPro"
 		android:title="@string/mnCatPrefsPro" >
         <menu>  
+            <item android:id="@+id/mnTrack" android:title="@string/mnTrack" />
 		    <item android:id="@+id/mnPrefsPinCodeQuery" android:title="@string/mnPrefsPinCodeQuery" />
 		    <item android:id="@+id/mnPrefsRemoteAccess" android:title="@string/mnPrefsRemoteAccess" />
 		    <item android:id="@+id/mnPrefsHttpProtocolParams" android:title="@string/mnPrefsHttpProtocolParams" />

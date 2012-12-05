@@ -29,6 +29,7 @@ import de.msk.mylivetracker.client.android.preferences.PrefsServerActivity;
 import de.msk.mylivetracker.client.android.preferences.linksender.LinkSenderActivity;
 import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
+import de.msk.mylivetracker.client.android.track.TrackActivity;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractInfoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractProgressDialog;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
@@ -348,6 +349,13 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 				} else {
 					startActivity(new Intent(this, PrefsHttpProtocolParamsActivity.class));
 				}
+			}
+			return true;
+		case R.id.mnTrack:
+			if (TrackStatus.get().trackIsRunning()) {
+				showPrefsWarningDialogIfIsTrackRunning(TrackActivity.class);
+			} else {
+				startActivity(new Intent(this, TrackActivity.class));
 			}
 			return true;	
 		case R.id.mnLinkSender:

@@ -5,6 +5,7 @@ import org.apache.commons.lang.StringUtils;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.telephony.TelephonyManager;
 import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
@@ -246,4 +247,13 @@ public abstract class App extends Application {
 		return dbName;
 	}
 	protected abstract boolean isProAux();
+	
+	/*
+	 * other util stuff.
+	 */
+	
+	public static String getDeviceId() {
+		return ((TelephonyManager)App.get().getSystemService(
+			Context.TELEPHONY_SERVICE)).getDeviceId();
+	}
 }

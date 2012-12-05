@@ -75,6 +75,8 @@ public class Preferences {
 	protected boolean remoteAccessUseReceiver;
 	protected String remoteAccessReceiver;
 	protected HttpProtocolParams httpProtocolParams;
+	protected String dropboxTokenKey;
+	protected String dropboxTokenSecret;
 	
 	public enum ConfirmLevel {
 		low("low"), medium("medium"), high("high");
@@ -336,6 +338,7 @@ public class Preferences {
 	// o property 'statusParamsId' removed.
 	// o transferProtocol 'mltHttpPlain' is not supported anymore.
 	// o transferProtocol 'httpUserDefined' added.
+	// o properties for dropbox added.
 	//
 	// version 1400:
 	// o property 'versionApp' added.
@@ -461,6 +464,8 @@ public class Preferences {
 						preferences.remoteAccessUseReceiver = false;
 						preferences.remoteAccessReceiver = "";
 						preferences.httpProtocolParams = HttpProtocolParams.create();
+						preferences.dropboxTokenKey = null;
+						preferences.dropboxTokenSecret = null;
 					}
 					if (!VersionDsc.isCurrent(preferences.versionApp)) {
 						preferences.firstStartOfApp = true;
@@ -730,5 +735,22 @@ public class Preferences {
 	}
 	public void setHttpProtocolParams(HttpProtocolParams httpProtocolParams) {
 		this.httpProtocolParams = httpProtocolParams;
+	}
+	public void setDropboxTokens(String key, String secret) {
+		if (StringUtils.isEmpty(key) || StringUtils.isEmpty(secret)) {
+			throw new IllegalArgumentException("invalid dropbox tokens.");
+		}
+		this.dropboxTokenKey = key;
+		this.dropboxTokenSecret = secret;
+	}
+	public boolean hasValidDropboxTokens() {
+		return (!StringUtils.isEmpty(this.dropboxTokenKey) || 
+			!StringUtils.isEmpty(this.dropboxTokenSecret));
+	}
+	public String[] getDropboxTokens() {
+		if (!hasValidDropboxTokens()) {
+			throw new IllegalArgumentException("invalid dropbox tokens.");
+		}
+		return new String[] { this.dropboxTokenKey, this.dropboxTokenSecret };
 	}
 }

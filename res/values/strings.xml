@@ -48,6 +48,7 @@
     <string name="mnPrefsPinCodeQuery">PIN code query</string>
     <string name="mnPrefsRemoteAccess">Remote access</string>
     <string name="mnPrefsHttpProtocolParams">HTTP Parameters</string>
+    <string name="mnTrack">Track</string>
     <string name="mnLinkSender">Linking</string>    
     <string name="mnInfo">Info</string>
     <string name="mnExit">Exit</string>
@@ -209,10 +210,13 @@
     <string name="lbPrefsOther_MaxPositionBufferSize">Buffer size to bridge data connection timeouts</string>
     <string name="lbPrefsOther_ConfirmLevel">Confirmation level to prevent unintended actions</string>  
     <string name="lbPrefsOther_TrackingOneTouch">Tracking one-touch mode</string>
-    <string name="btPrefsOther_ResetToFactoryDefaults">Reset to factory defaults</string>
-    <string name="btPrefsOther_ResetOverallMileage">Reset overall mileage</string>
+    <string name="btPrefsOther_SendReportToSupport">Send report to support</string>
+	<string name="btPrefsOther_ResetOverallMileage">Reset mileage</string>
+    <string name="btPrefsOther_ResetToFactoryDefaults">Factory defaults</string>
+    <string name="txPrefsOther_QuestionSendReportToSupport">Do you really want to send a report to support?</string>
     <string name="txPrefsOther_QuestionResetToFactoryDefaults">Do you really want to reset to factory defaults?</string>
     <string name="txPrefsOther_QuestionResetOverallMileage">Do you really want to reset overall mileage?</string>
+    <string name="txPrefsOther_InfoSendReportToSupportDone">Send report to support done!</string>
     <string name="txPrefsOther_InfoResetToFactoryDefaultsDone">MyLiveTracker has been reset to factory defaults! Please restart the application!</string>
     <string name="txPrefsOther_InfoResetOverallMileageDone">Reset overall mileage done!</string>
     
@@ -341,6 +345,11 @@
     <string name="fdLinkSender_PortalPassword">Portal password</string>
     <string name="lbLinkSender_ProgressDialog">Linking sender...</string>  
     <string name="txLinkSender_InfoLinkSenderDone">Link this sender to MyLiveTracker portal done!</string>  
+    
+    <!-- track -->
+    <string name="tiTrack">Track</string>
+    <string name="btTrack_UploadToDropbox">Upload to Dropbox</string>
+    <string name="btTrack_LinkToDropbox">Link to Dropbox</string>
     
     <!-- info -->
     <string name="tiInfo">Info</string>

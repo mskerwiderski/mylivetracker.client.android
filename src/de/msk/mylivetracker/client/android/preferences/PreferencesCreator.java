@@ -2,7 +2,6 @@ package de.msk.mylivetracker.client.android.preferences;
 
 import android.content.Context;
 import android.location.LocationManager;
-import android.telephony.TelephonyManager;
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences.AutoModeResetTrackMode;
@@ -61,9 +60,7 @@ public class PreferencesCreator {
 		prefs.uplDistanceTrigger = UploadDistanceTrigger.Off;
 		prefs.uplPositionBufferSize = BufferSize.disabled;
 		prefs.phoneNumber = "";
-		prefs.deviceId = 
-			((TelephonyManager)MainActivity.get().getSystemService(
-			Context.TELEPHONY_SERVICE)).getDeviceId();
+		prefs.deviceId = App.getDeviceId();
 		prefs.username = "";
 		prefs.password = "";	
 		prefs.seed = null;
@@ -78,6 +75,8 @@ public class PreferencesCreator {
 		prefs.remoteAccessUseReceiver = false;
 		prefs.remoteAccessReceiver = "";
 		prefs.httpProtocolParams = HttpProtocolParams.create();
+		prefs.dropboxTokenKey = null;
+		prefs.dropboxTokenSecret = null;
 		return prefs;
 	}
 }
