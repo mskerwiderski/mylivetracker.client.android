@@ -10,6 +10,7 @@ import de.msk.mylivetracker.client.android.status.EmergencySignalInfo;
 import de.msk.mylivetracker.client.android.status.GpsStateInfo;
 import de.msk.mylivetracker.client.android.status.HeartrateInfo;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
+import de.msk.mylivetracker.client.android.status.LogInfo;
 import de.msk.mylivetracker.client.android.status.MessageInfo;
 import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
 import de.msk.mylivetracker.client.android.upload.protocol.IProtocol;
@@ -111,6 +112,7 @@ public abstract class AbstractUploader {
 			messageInfo, 
 			preferences.getUsername(), 
 			preferences.getPassword());
+		LogInfo.addLogItem(locationInfo);
 		return this.upload(dataStr);
 	}	
 }

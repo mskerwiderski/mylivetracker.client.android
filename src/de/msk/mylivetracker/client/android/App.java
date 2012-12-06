@@ -131,9 +131,14 @@ public abstract class App extends Application {
 			return versionDsc;
 		}
 		public static boolean isCurrent(VersionDsc foundVersionDsc) {
+			LogUtils.infoMethodIn(App.class, "isCurrent", foundVersionDsc);
 			VersionDsc.get();
-			if (foundVersionDsc == null) return false;
-			return (VersionDsc.getCode() == foundVersionDsc.code);
+			boolean res = false;
+			if (foundVersionDsc != null) {
+				res = (VersionDsc.getCode() == foundVersionDsc.code);
+			}
+			LogUtils.infoMethodOut(App.class, "isCurrent", res);
+			return res;
 		}
 		public static boolean isRelease() {
 			VersionDsc.get();

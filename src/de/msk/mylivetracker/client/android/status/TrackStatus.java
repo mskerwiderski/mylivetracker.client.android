@@ -35,6 +35,7 @@ public class TrackStatus implements Serializable {
 	private static final long serialVersionUID = 1705600083488798901L;
 	
 	private String trackId = null;
+	private String logFileName = null;
 	private Float trackDistanceInMtr = 0.0f;
 	private Long markerFirstStarted = null;
 	private Long markerLastStarted = null;
@@ -143,11 +144,15 @@ public class TrackStatus implements Serializable {
 		float trackDistanceInMtr = 0.0f;
 		MainActivity.get().stopPhoneStateListener();
 		MainActivity.get().stopBatteryReceiver();
+		if ((trackStatus != null) && !StringUtils.isEmpty(trackStatus.logFileName)) {
+			App.get().deleteFile(trackStatus.logFileName);
+		}
 		trackStatus = new TrackStatus();
 		trackStatus.antPlusStatus = lastAntPlusStatus;
 		trackStatus.mileageInMtr = mileageInMtr;
 		trackStatus.trackDistanceInMtr = trackDistanceInMtr;
 		trackStatus.trackId = UUID.randomUUID().toString();
+		trackStatus.logFileName = "track_" + trackStatus.trackId + ".log";
 		PositionBufferInfo.reset();
 		PhoneStateInfo.reset();
 		BatteryStateInfo.reset();
@@ -166,6 +171,10 @@ public class TrackStatus implements Serializable {
 		return trackId;
 	}
 		
+	public String getLogFileName() {
+		return logFileName;
+	}
+
 	public boolean trackIsRunning() {
 		return this.markerLastStarted != null;
 	}

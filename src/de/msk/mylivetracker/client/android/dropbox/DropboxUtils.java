@@ -1,7 +1,8 @@
 package de.msk.mylivetracker.client.android.dropbox;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -20,8 +21,11 @@ import com.google.gson.Gson;
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
+import de.msk.mylivetracker.client.android.status.LogInfo;
 import de.msk.mylivetracker.client.android.status.StatusDeSerializer;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
+import de.msk.mylivetracker.client.android.util.FileUtils;
+import de.msk.mylivetracker.client.android.util.LogUtils;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractProgressDialog;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;
 
@@ -51,6 +55,73 @@ public class DropboxUtils {
 	private static AccessTokenPair accessTokenPair = new AccessTokenPair(
 		DROPBOX_ACCESS_KEY, DROPBOX_ACCESS_SECRET);
 	
+	public static AndroidAuthSession checkAuth(Activity activity) {
+		if (activity == null) {
+			throw new IllegalArgumentException("activity must not be null.");
+		}
+		if (Preferences.get().hasValidDropboxTokens()) return null;
+		AndroidAuthSession session = new AndroidAuthSession(appKeys, DROPBOX_ACCESS_TYPE);
+		session.startAuthentication(activity);
+		return session;
+	}
+	
+	public static boolean finishAuth(AndroidAuthSession session) {
+		Preferences prefs = Preferences.get();
+		boolean res = false;
+		if ((session != null) && session.authenticationSuccessful()) {
+	        try {
+	        	session.finishAuthentication();
+	        	AccessTokenPair dropboxTokenPair = session.getAccessTokenPair();
+	        	prefs.setDropboxTokens(dropboxTokenPair.key, dropboxTokenPair.secret);
+	        	LogUtils.always("KEY:" + dropboxTokenPair.key);
+	        	LogUtils.always("SECRET:" + dropboxTokenPair.secret);
+	        	Preferences.save();
+	        } catch (IllegalStateException e) {
+	        	res = false;
+	        }
+	    } 
+		return res;
+	}
+	
+	private static class UploadTrackProgressDialog<T extends Activity> extends AbstractProgressDialog<T> {
+		@Override
+		public void beforeTask(T activity) {
+		}
+		@Override
+		public void doTask(T activity) {
+			uploadTrackTask();
+		}
+		@Override
+		public void cleanUp(T activity) {
+		}
+	}
+	public static void uploadTrack(Activity activity) {
+		UploadTrackProgressDialog<Activity> dlg = 
+			new UploadTrackProgressDialog<Activity>();
+		dlg.run(activity);
+	}
+	private static void uploadTrackTask() {
+		String gpxFileName = LogInfo.createGpxFileLogItemsToGpxFile();
+		AndroidAuthSession session = new AndroidAuthSession(appKeys, DROPBOX_ACCESS_TYPE);
+		DropboxAPI<AndroidAuthSession> dropboxApi = new DropboxAPI<AndroidAuthSession>(session);
+		dropboxApi.getSession().setAccessTokenPair(getUsersAccessTokenPair());
+		FileInputStream fis = null;
+		try {
+			fis = App.get().openFileInput(gpxFileName);
+		    @SuppressWarnings("unused")
+			Entry newEntry = dropboxApi.putFile("/" + gpxFileName, fis,
+				FileUtils.getFileLength(gpxFileName), null, null);
+		} catch (DropboxUnlinkedException e) {
+			throw new RuntimeException(e);
+		} catch (DropboxException e) {
+			throw new RuntimeException(e);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		} finally {
+			FileUtils.closeStream(fis);
+		}
+	}
+	
 	private static class UploadReportToSupportProgressDialog<T extends Activity> extends AbstractProgressDialog<T> {
 		@Override
 		public void beforeTask(T activity) {
@@ -69,10 +140,10 @@ public class DropboxUtils {
 		dlg.run(activity);
 	}
 	private static void uploadReportToSupportTask() {
-		String filename = FILENAME_TEMPLATE;
-		filename = StringUtils.replace(filename, "#DATETIME", 
+		String fileName = FILENAME_TEMPLATE;
+		fileName = StringUtils.replace(fileName, "#DATETIME", 
 			DateTime.getCurrentAsUtcStr(DateTime.INTERNAL_DATE_TIME_FMT)); 
-		filename = StringUtils.replace(filename, "#DEVICEID", App.getDeviceId());
+		fileName = StringUtils.replace(fileName, "#DEVICEID", App.getDeviceId());
 		
 		AndroidAuthSession session = new AndroidAuthSession(appKeys, DROPBOX_ACCESS_TYPE);
 		DropboxAPI<AndroidAuthSession> dropboxApi = new DropboxAPI<AndroidAuthSession>(session);
@@ -86,24 +157,30 @@ public class DropboxUtils {
 			"TrackStatus:" + LINE_SEP + gson.toJson(TrackStatus.get()) + LINE_SEP +
 			"LocationInfo:" + LINE_SEP + gson.toJson(LocationInfo.get() + LINE_SEP);
 		
-		ByteArrayInputStream byteArrayInputStream = 
+		ByteArrayInputStream baos = 
 			new ByteArrayInputStream(report.getBytes());
 		
 		try {
 		    @SuppressWarnings("unused")
 			Entry newEntry = dropboxApi.putFile(
-				"/" + filename, byteArrayInputStream,
+				"/" + fileName, baos,
 				report.length(), null, null);
 		} catch (DropboxUnlinkedException e) {
 			throw new RuntimeException(e);
 		} catch (DropboxException e) {
 			throw new RuntimeException(e);
 		} finally {
-		    if (byteArrayInputStream != null) {
-		        try {
-		        	byteArrayInputStream.close();
-		        } catch (IOException e) {}
-		    }
+		    FileUtils.closeStream(baos);
 		}
+	}
+	
+	private static AccessTokenPair getUsersAccessTokenPair() {
+		Preferences prefs = Preferences.get();
+		if (!prefs.hasValidDropboxTokens()) {
+			throw new RuntimeException("no valid dropbox tokens found.");
+		}
+		String[] tokens = prefs.getDropboxTokens();
+		AccessTokenPair accessTokenPair = new AccessTokenPair(tokens[0], tokens[1]);
+		return accessTokenPair;
 	}
 }

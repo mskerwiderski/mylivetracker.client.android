@@ -466,6 +466,7 @@ public class Preferences {
 						preferences.httpProtocolParams = HttpProtocolParams.create();
 						preferences.dropboxTokenKey = null;
 						preferences.dropboxTokenSecret = null;
+						doSave = true;
 					}
 					if (!VersionDsc.isCurrent(preferences.versionApp)) {
 						preferences.firstStartOfApp = true;

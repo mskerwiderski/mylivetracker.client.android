@@ -350,6 +350,9 @@
     <string name="tiTrack">Track</string>
     <string name="btTrack_UploadToDropbox">Upload to Dropbox</string>
     <string name="btTrack_LinkToDropbox">Link to Dropbox</string>
+    <string name="txTrack_QuestionLinkToDropbox">Do you really want to link to Dropbox?</string>
+    <string name="txTrack_QuestionUploadTrack">Do you really want to upload the current track?</string>
+    <string name="txTrack_InfoUploadTrackDone">Current track successfully uploaded!</string>
     
     <!-- info -->
     <string name="tiInfo">Info</string>

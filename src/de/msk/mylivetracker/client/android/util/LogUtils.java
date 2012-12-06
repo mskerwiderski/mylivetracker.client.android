@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 
 import android.util.Log;
+import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.App.VersionDsc;
 import de.msk.mylivetracker.client.android.preferences.HttpProtocolParams;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
@@ -33,6 +34,7 @@ public class LogUtils {
 	private static Map<Class<?>, Boolean> classes = new HashMap<Class<?>, Boolean>();
 	
 	static {
+		classes.put(App.class, Boolean.TRUE);
 		classes.put(AbstractInfo.class, Boolean.TRUE);
 		classes.put(HttpProtocolParams.class, Boolean.TRUE);
 		classes.put(PrefsHttpProtocolParamsActivity.class, Boolean.TRUE);
