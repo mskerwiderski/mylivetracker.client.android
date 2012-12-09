@@ -25,8 +25,8 @@ public class LogInfo {
 	    "<trk><name>$TRACKNAME</name><cmt>$COMMENT</cmt><trkseg>";
 	private static final String GPX_FOOTER_TEMPLATE = "</trkseg></trk></gpx>";
 	private static final String TRKPT_TEMPLATE = "<trkpt lat=\"$LAT\" lon=\"$LON\">$ATTR</trkpt>";
-	private static final String ATTR_TIME_TEMPLATE = "<time>$TIME<time>";
-	private static final String ATTR_ALTITUDE_TEMPLATE = "<geoidheight>$ALTITUDE<geoidheight>";
+	private static final String ATTR_TIME_TEMPLATE = "<time>$TIME</time>";
+	private static final String ATTR_ALTITUDE_TEMPLATE = "<geoidheight>$ALTITUDE</geoidheight>";
 	private static final String TIMESTAMP_FMT = "yyyy-MM-dd'T'hh:mm:ss.SSS";
 	
 	public static String createGpxFileNameOfCurrentTrack() {
