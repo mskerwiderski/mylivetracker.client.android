@@ -75,8 +75,7 @@ public class PreferencesCreator {
 		prefs.remoteAccessUseReceiver = false;
 		prefs.remoteAccessReceiver = "";
 		prefs.httpProtocolParams = HttpProtocolParams.create();
-		prefs.dropboxTokenKey = null;
-		prefs.dropboxTokenSecret = null;
+		prefs.resetDropboxTokens();
 		return prefs;
 	}
 }

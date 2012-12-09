@@ -8,8 +8,8 @@
     <LinearLayout android:layout_height="10dip" android:layout_width="fill_parent" />       
     <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
     	<Button 
-    		android:id="@+id/btTrack_UploadToDropbox"
-    		android:text="@string/btTrack_UploadToDropbox"
+    		android:id="@+id/btTrackExport_UploadToDropbox"
+    		android:text="@string/btTrackExport_UploadToDropbox"
     		android:layout_gravity="bottom"
     		android:layout_weight="1"     		 
     		android:layout_height="wrap_content"
@@ -18,22 +18,16 @@
     </LinearLayout>    
     <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">    	        
     </LinearLayout>    
-	<LinearLayout android:layout_height="fill_parent" android:layout_width="fill_parent" >
+	<LinearLayout
+    	android:layout_height="fill_parent" 
+    	android:layout_width="fill_parent" >    	
         <Button
-        	android:id="@+id/btTrack_Save"
-        	android:text="@string/btSave"  
-        	android:layout_gravity="bottom" 
-        	android:layout_weight="1"
-        	android:layout_height="50dip" 
-        	android:layout_width="fill_parent"         	 
-        />
-        <Button
-        	android:id="@+id/btTrack_Cancel"
-        	android:text="@string/btCancel"
-        	android:layout_gravity="bottom" 
+        	android:id="@+id/btTrackExport_Back" 
+        	android:text="@string/btBack"
+        	android:layout_height="50dip"
+        	android:layout_width="fill_parent"  
         	android:layout_weight="1" 
-        	android:layout_height="50dip" 
-        	android:layout_width="fill_parent" 
+        	android:layout_gravity="bottom" 
         />
-    </LinearLayout>       
+    </LinearLayout>   
 </LinearLayout> 

@@ -36,20 +36,28 @@
     <string name="nfTrackRunning">Track is running.</string>
     <string name="nfListenerRunning">Location Listener and/or ANT+ Listener is running.</string>
     
-    <!-- menu items -->
-    <string name="mnCatPrefs">Config</string>
-    <string name="mnCatPrefsPro">Pro</string>
-    <string name="mnCatInfo">Info &amp; Exit</string>
+    <!-- menu items for 'tracking' -->
+    <string name="mnCatTracking">Tracking</string>
     <string name="mnPrefsLocalization">Localization</string>
     <string name="mnPrefsServer">Server</string>
     <string name="mnPrefsAccount">Account</string>
-    <string name="mnPrefsOther">Other</string>
-    <string name="mnPrefsAuto">Auto</string>
+    <string name="mnTrackExport">Export</string>
+        
+    <!-- menu items for 'connect' -->
+    <string name="mnCatConnectTo">Connect</string>
+    <string name="mnConnectToMyLiveTrackerPortal">MyLiveTracker</string>
+    <string name="mnConnectToDropbox">Dropbox</string>
+    
+    <!-- menu items for 'system' -->
+    <string name="mnCatSystem">System</string>
     <string name="mnPrefsPinCodeQuery">PIN code query</string>
+    <string name="mnPrefsAuto">Auto</string>
     <string name="mnPrefsRemoteAccess">Remote access</string>
     <string name="mnPrefsHttpProtocolParams">HTTP Parameters</string>
-    <string name="mnTrack">Track</string>
-    <string name="mnLinkSender">Linking</string>    
+    <string name="mnPrefsOther">Other</string>
+    
+    <!-- menu items for 'info & exit' -->
+    <string name="mnCatInfoAndExit">Info &amp; Exit</string>
     <string name="mnInfo">Info</string>
     <string name="mnExit">Exit</string>
         
@@ -210,13 +218,10 @@
     <string name="lbPrefsOther_MaxPositionBufferSize">Buffer size to bridge data connection timeouts</string>
     <string name="lbPrefsOther_ConfirmLevel">Confirmation level to prevent unintended actions</string>  
     <string name="lbPrefsOther_TrackingOneTouch">Tracking one-touch mode</string>
-    <string name="btPrefsOther_SendReportToSupport">Send report to support</string>
 	<string name="btPrefsOther_ResetOverallMileage">Reset mileage</string>
     <string name="btPrefsOther_ResetToFactoryDefaults">Factory defaults</string>
-    <string name="txPrefsOther_QuestionSendReportToSupport">Do you really want to send a report to support?</string>
     <string name="txPrefsOther_QuestionResetToFactoryDefaults">Do you really want to reset to factory defaults?</string>
     <string name="txPrefsOther_QuestionResetOverallMileage">Do you really want to reset overall mileage?</string>
-    <string name="txPrefsOther_InfoSendReportToSupportDone">Send report to support done!</string>
     <string name="txPrefsOther_InfoResetToFactoryDefaultsDone">MyLiveTracker has been reset to factory defaults! Please restart the application!</string>
     <string name="txPrefsOther_InfoResetOverallMileageDone">Reset overall mileage done!</string>
     
@@ -331,28 +336,47 @@
     <string name="txPrefsHttpProtocolParams_ParamNameLocalAreaCode">lac</string>
     <string name="txPrefsHttpProtocolParams_ParamValueExampleLocalAreaCode">5942014</string>
 
-    <!-- link sender -->
-    <string name="tiLinkSender">Link sender</string>
-    <string name="lbLinkSender_LinkInfo">
+    <!-- connect to MyLiveTracker Portal -->
+    <string name="tiConnectToMyLiveTrackerPortal">Connect to MyLiveTracker portal</string>
+    <string name="lbConnectToMyLiveTrackerPortal_Info">
     	Please note:
-    	\n* Linking this device to MyLiveTracker portal will override the server and account preferences.
-    	\n* Linking this device to MyLiveTracker portal requires a valid MyLiveTracker portal account. 
+    	\n* Connecting to MyLiveTracker portal will override the server and account preferences.
+    	\n* Connecting to MyLiveTracker portal requires a valid MyLiveTracker portal account. 
 		An account can be applied at support@mylivetracker.de.
     </string>          
-	<string name="lbLinkSender_PortalUsername">Portal username</string>
-    <string name="fdLinkSender_PortalUsername">Portal username</string>
-    <string name="lbLinkSender_PortalPassword">Portal password</string>
-    <string name="fdLinkSender_PortalPassword">Portal password</string>
-    <string name="lbLinkSender_ProgressDialog">Linking sender...</string>  
-    <string name="txLinkSender_InfoLinkSenderDone">Link this sender to MyLiveTracker portal done!</string>  
+	<string name="lbConnectToMyLiveTrackerPortal_PortalUsername">Portal username</string>
+    <string name="fdConnectToMyLiveTrackerPortal_PortalUsername">Portal username</string>
+    <string name="lbConnectToMyLiveTrackerPortal_PortalPassword">Portal password</string>
+    <string name="fdConnectToMyLiveTrackerPortal_PortalPassword">Portal password</string>
+    <string name="lbConnectToMyLiveTrackerPortal_ProgressDialog">Connecting to MyLiveTracker portal...</string>  
+    <string name="txConnectToMyLiveTrackerPortal_InfoConnectingDone">Connecting to MyLiveTracker portal sucessfully done!</string>  
     
-    <!-- track -->
-    <string name="tiTrack">Track</string>
-    <string name="btTrack_UploadToDropbox">Upload to Dropbox</string>
-    <string name="btTrack_LinkToDropbox">Link to Dropbox</string>
-    <string name="txTrack_QuestionLinkToDropbox">Do you really want to link to Dropbox?</string>
-    <string name="txTrack_QuestionUploadTrack">Do you really want to upload the current track?</string>
-    <string name="txTrack_InfoUploadTrackDone">Current track successfully uploaded!</string>
+    <!-- connect to Dropbox -->
+    <string name="tiConnectToDropbox">Connect to Dropbox</string>
+    <string name="btConnectToDropbox_Connect">Connect</string>
+    <string name="btConnectToDropbox_Release">Release connection</string>
+    <string name="lbConnectToDropbox_Status">Connected Dropbox account:</string>
+    <string name="txConnectToDropbox_StatusConnected">%1$s</string>
+    <string name="txConnectToDropbox_StatusNotConnected">Not connected</string>
+    <string name="txConnectToDropbox_NoConnectionExists">No connection to Dropbox exists!</string>
+    <string name="txConnectToDropbox_ConnectionExists">A connection to Dropbox already exists. Release existing connection first!</string>
+    <string name="txConnectToDropbox_QuestionConnect">Do you really want to connect to Dropbox?</string>
+    <string name="txConnectToDropbox_QuestionRelease">Do you really want to release to Dropbox?</string>
+    <string name="txConnectToDropbox_InfoConnectingFailed">Connecting to Dropbox failed or canceled!</string>
+    <string name="txConnectToDropbox_InfoConnectingDone">Connecting to Dropbox successfully done!</string>
+    
+    <!-- track export-->
+    <string name="tiTrackExport">Track export</string>
+    <string name="btTrackExport_UploadToDropbox">Upload current track to Dropbox</string>
+    <string name="txTrackExport_NotConnectedToDropbox">There is no connection to Dropbox. Connect to Dropbox first!</string>
+    <string name="txTrackExport_NoTrackExists">No track exists!</string>
+    <string name="txTrackExport_QuestionUploadTrack">Do you really want to upload the current track to Dropbox?</string>
+    <string name="txTrackExport_InfoUploadTrackDone">Current track successfully uploaded to Dropbox!</string>
+    <string name="lbTrackExport_ProgressDialog">Uploading current track...</string>
+    <string name="txTrackExport_ErrorAuthenticationFailed">Authentication failed or is maybe invalid! Try to upload again or try to reconnect to Dropbox.</string>
+    <string name="txTrackExport_ErrorFileTooLarge">File is too large! Maybe there is not enough space on Dropbox side.</string>
+    <string name="txTrackExport_ErrorUploadCanceled">Upload canceled!</string>
+    <string name="txTrackExport_ErrorUploadFailed">Upload failed! Try to upload again.</string>
     
     <!-- info -->
     <string name="tiInfo">Info</string>

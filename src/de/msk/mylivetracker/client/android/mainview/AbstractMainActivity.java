@@ -15,6 +15,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.InfoActivity;
+import de.msk.mylivetracker.client.android.connections.dropbox.ConnectToDropboxActivity;
+import de.msk.mylivetracker.client.android.connections.mylivetracker.ConnectToMyLiveTrackerPortalActivity;
 import de.msk.mylivetracker.client.android.listener.GpsStateListener;
 import de.msk.mylivetracker.client.android.listener.LocationListener;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
@@ -26,10 +28,9 @@ import de.msk.mylivetracker.client.android.preferences.PrefsOtherActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsPinCodeQueryActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRemoteAccessActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsServerActivity;
-import de.msk.mylivetracker.client.android.preferences.linksender.LinkSenderActivity;
 import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
-import de.msk.mylivetracker.client.android.track.TrackActivity;
+import de.msk.mylivetracker.client.android.trackexport.TrackExportActivity;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractInfoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractProgressDialog;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
@@ -351,18 +352,25 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 				}
 			}
 			return true;
-		case R.id.mnTrack:
+		case R.id.mnTrackExport:
 			if (TrackStatus.get().trackIsRunning()) {
-				showPrefsWarningDialogIfIsTrackRunning(TrackActivity.class);
+				showPrefsWarningDialogIfIsTrackRunning(TrackExportActivity.class);
 			} else {
-				startActivity(new Intent(this, TrackActivity.class));
+				startActivity(new Intent(this, TrackExportActivity.class));
 			}
 			return true;	
-		case R.id.mnLinkSender:
+		case R.id.mnConnectToMyLiveTrackerPortal:
 			if (TrackStatus.get().trackIsRunning()) {
-				showPrefsWarningDialogIfIsTrackRunning(LinkSenderActivity.class);
+				showPrefsWarningDialogIfIsTrackRunning(ConnectToMyLiveTrackerPortalActivity.class);
 			} else {
-				startActivity(new Intent(this, LinkSenderActivity.class));
+				startActivity(new Intent(this, ConnectToMyLiveTrackerPortalActivity.class));
+			}
+			return true;
+		case R.id.mnConnectToDropbox:
+			if (TrackStatus.get().trackIsRunning()) {
+				showPrefsWarningDialogIfIsTrackRunning(ConnectToDropboxActivity.class);
+			} else {
+				startActivity(new Intent(this, ConnectToDropboxActivity.class));
 			}
 			return true;	
 		case R.id.mnInfo:

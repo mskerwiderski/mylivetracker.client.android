@@ -55,9 +55,11 @@
 			android:screenOrientation="portrait" />
 		<activity android:name="de.msk.mylivetracker.client.android.preferences.PrefsHttpProtocolParamsActivity" 
 			android:screenOrientation="portrait" />
-		<activity android:name="de.msk.mylivetracker.client.android.preferences.linksender.LinkSenderActivity" 
+		<activity android:name="de.msk.mylivetracker.client.android.connections.mylivetracker.ConnectToMyLiveTrackerPortalActivity" 
 			android:screenOrientation="portrait" />
-		<activity android:name="de.msk.mylivetracker.client.android.track.TrackActivity" 
+		<activity android:name="de.msk.mylivetracker.client.android.connections.dropbox.ConnectToDropboxActivity" 
+			android:screenOrientation="portrait" />
+		<activity android:name="de.msk.mylivetracker.client.android.trackexport.TrackExportActivity" 
 			android:screenOrientation="portrait" />	
 		<activity android:name="de.msk.mylivetracker.client.android.InfoActivity" 
 			android:screenOrientation="portrait" />

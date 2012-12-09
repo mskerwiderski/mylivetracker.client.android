@@ -75,6 +75,7 @@ public class Preferences {
 	protected boolean remoteAccessUseReceiver;
 	protected String remoteAccessReceiver;
 	protected HttpProtocolParams httpProtocolParams;
+	protected String dropboxAccount;
 	protected String dropboxTokenKey;
 	protected String dropboxTokenSecret;
 	
@@ -330,6 +331,31 @@ public class Preferences {
 		TrackingLocalizationHeartrate;
 	};
 
+	public class DropboxInfo {
+		private String account;
+		private String tokenKey;
+		private String tokenSecret;
+		private DropboxInfo() {
+		}
+		public String getAccount() {
+			return account;
+		}
+		public String getTokenKey() {
+			return tokenKey;
+		}
+		public String getTokenSecret() {
+			return tokenSecret;
+		}
+		@Override
+		public String toString() {
+			StringBuilder builder = new StringBuilder();
+			builder.append("DropboxInfo [account=").append(account)
+				.append(", tokenKey=").append(tokenKey)
+				.append(", tokenSecret=").append(tokenSecret).append("]");
+			return builder.toString();
+		}
+	}
+	
 	//
 	// version 1500:
 	// o properties for remote access added.
@@ -737,21 +763,37 @@ public class Preferences {
 	public void setHttpProtocolParams(HttpProtocolParams httpProtocolParams) {
 		this.httpProtocolParams = httpProtocolParams;
 	}
-	public void setDropboxTokens(String key, String secret) {
+	public void setDropboxDetails(String account, String key, String secret) {
+		if (StringUtils.isEmpty(account)) {
+			throw new IllegalArgumentException("account must not be empty.");
+		}
 		if (StringUtils.isEmpty(key) || StringUtils.isEmpty(secret)) {
 			throw new IllegalArgumentException("invalid dropbox tokens.");
 		}
+		this.dropboxAccount = account;
 		this.dropboxTokenKey = key;
 		this.dropboxTokenSecret = secret;
 	}
-	public boolean hasValidDropboxTokens() {
-		return (!StringUtils.isEmpty(this.dropboxTokenKey) || 
+	public void resetDropboxTokens() {
+		this.dropboxAccount = null;
+		this.dropboxTokenKey = null;
+		this.dropboxTokenSecret = null;
+	}
+	public boolean hasValidDropboxDetails() {
+		return (!StringUtils.isEmpty(this.dropboxAccount) ||
+			!StringUtils.isEmpty(this.dropboxTokenKey) || 
 			!StringUtils.isEmpty(this.dropboxTokenSecret));
 	}
 	public String[] getDropboxTokens() {
-		if (!hasValidDropboxTokens()) {
-			throw new IllegalArgumentException("invalid dropbox tokens.");
+		if (!hasValidDropboxDetails()) {
+			throw new IllegalArgumentException("invalid dropbox details.");
 		}
 		return new String[] { this.dropboxTokenKey, this.dropboxTokenSecret };
+	}
+	public String getDropboxAccount() {
+		if (!hasValidDropboxDetails()) {
+			throw new IllegalArgumentException("invalid dropbox details.");
+		}
+		return dropboxAccount;
 	}
 }

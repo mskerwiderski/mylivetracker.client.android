@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" 
+    android:orientation="vertical" 
+    android:background="@color/colorBackground"
+>
+    <LinearLayout android:layout_height="10dip" android:layout_width="fill_parent" />     
+    <TextView 
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip"
+        android:textSize="16dip"
+        android:text="@string/lbConnectToDropbox_Status"
+        android:textColor="@color/colorText"
+       	android:layout_height="wrap_content" 
+       	android:layout_width="wrap_content" 
+    />
+	<LinearLayout 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip"
+    >    
+
+	    <EditText
+	        android:id="@+id/etConnectToDropbox_Status"
+	        android:layout_width="fill_parent"
+	        android:layout_height="40dip"
+	        android:inputType="none"
+	        android:singleLine="true"
+	        android:text=""
+	        android:textColor="@color/colorText" />
+
+    </LinearLayout>  
+    <LinearLayout android:layout_height="10dip" android:layout_width="fill_parent" />   
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+    	<Button 
+    		android:id="@+id/btConnectToDropbox_Connect"
+    		android:text="@string/btConnectToDropbox_Connect"
+    		android:layout_gravity="bottom"
+    		android:layout_weight="1"     		 
+    		android:layout_height="wrap_content"
+    		android:layout_width="fill_parent"     		     		 
+    	/>    	        
+    </LinearLayout>   
+    <LinearLayout android:layout_height="5dip" android:layout_width="fill_parent" />   
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+    	<Button 
+    		android:id="@+id/btConnectToDropbox_Release"
+    		android:text="@string/btConnectToDropbox_Release"
+    		android:layout_gravity="bottom"
+    		android:layout_weight="1"     		 
+    		android:layout_height="wrap_content"
+    		android:layout_width="fill_parent"     		     		 
+    	/>    	        
+    </LinearLayout>  
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">    	        
+    </LinearLayout>    
+	<LinearLayout
+    	android:layout_height="fill_parent" 
+    	android:layout_width="fill_parent" >    	
+        <Button
+        	android:id="@+id/btConnectToDropbox_Back" 
+        	android:text="@string/btBack"
+        	android:layout_height="50dip"
+        	android:layout_width="fill_parent"  
+        	android:layout_weight="1" 
+        	android:layout_gravity="bottom" 
+        />
+    </LinearLayout>      
+</LinearLayout> 

@@ -36,20 +36,28 @@
     <string name="nfTrackRunning">Trackaufzeichnung ist aktiv.</string>
     <string name="nfListenerRunning">Lokalisierung und/oder ANT+ Emfänger ist aktiv.</string>
     
-    <!-- menu items -->
-    <string name="mnCatPrefs">Konfig</string>
-    <string name="mnCatPrefsPro">Pro</string>
-    <string name="mnCatInfo">Info &amp; Exit</string>
+    <!-- menu items for 'tracking' -->
+    <string name="mnCatTracking">Tracking</string>
     <string name="mnPrefsLocalization">Lokalisierung</string>
     <string name="mnPrefsServer">Server</string>
     <string name="mnPrefsAccount">Zugang</string>
-    <string name="mnPrefsOther">Sonstige</string>
-    <string name="mnPrefsAuto">Auto</string>
+    <string name="mnTrackExport">Export</string>
+        
+    <!-- menu items for 'connect' -->
+    <string name="mnCatConnectTo">Koppeln</string>
+    <string name="mnConnectToMyLiveTrackerPortal">MyLiveTracker</string>
+    <string name="mnConnectToDropbox">Dropbox</string>
+    
+    <!-- menu items for 'system' -->
+    <string name="mnCatSystem">System</string>
     <string name="mnPrefsPinCodeQuery">PIN Code Abfrage</string>
+    <string name="mnPrefsAuto">Auto</string>
     <string name="mnPrefsRemoteAccess">Fernzugriff</string>
     <string name="mnPrefsHttpProtocolParams">HTTP Parameter</string>
-    <string name="mnTrack">Track</string>
-    <string name="mnLinkSender">Koppeln</string>    
+    <string name="mnPrefsOther">Sonstiges</string>
+    
+    <!-- menu items for 'info & exit' -->
+    <string name="mnCatInfoAndExit">Info &amp; Beenden</string>
     <string name="mnInfo">Info</string>
     <string name="mnExit">Beenden</string>
     
@@ -210,7 +218,6 @@
     <string name="lbPrefsOther_MaxPositionBufferSize">Puffergröße um Funklöcher zu überbrücken</string>
     <string name="lbPrefsOther_ConfirmLevel">Sicherheitsabfragen um ungewollte Aktionen zu verhindern</string>       
     <string name="lbPrefsOther_TrackingOneTouch">Tracking One-Touch Modus</string> 
-    <string name="btPrefsOther_SendReportToSupport">Report an Support</string>
     <string name="btPrefsOther_ResetOverallMileage">Km-Zähler zurücksetzen</string>
     <string name="btPrefsOther_ResetToFactoryDefaults">Werkseinstellungen</string>
     <string name="txPrefsOther_QuestionResetToFactoryDefaults">Wollen Sie wirklich auf die Werkseinstellungen zurücksetzen?</string>
@@ -329,21 +336,48 @@
     <string name="txPrefsHttpProtocolParams_ParamNameLocalAreaCode">lac</string>
     <string name="txPrefsHttpProtocolParams_ParamValueExampleLocalAreaCode">5942014</string>
         
-    <!-- link sender to server -->
-    <string name="tiLinkSender">Sender koppeln</string>
-    <string name="lbLinkSender_LinkInfo">
+    <!-- connect to MyLiveTracker -->
+    <string name="tiConnectToMyLiveTrackerPortal">Koppeln mit MyLiveTracker Portal</string>
+    <string name="lbConnectToMyLiveTrackerPortal_Info">
     	Hinweis:
-    	\n* Durch das Koppeln des Senders mit dem MyLiveTracker Portal, werden die Server- und Zugangseinstellungen überschrieben. 
-    	\n* Der Sender kann nur mit dem MyLiveTracker Portal gekoppelt werden, wenn Sie über einen MyLiveTracker Portal-Zugang verfügen. 
+    	\n* Durch das Koppeln mit dem MyLiveTracker Portal, werden die Server- und Zugangseinstellungen überschrieben. 
+    	\n* Eine Koppelung mit dem MyLiveTracker Portal erfordert einen MyLiveTracker Portal-Zugang. 
 		Einen Zugang können Sie unter support@mylivetracker.de anfordern.
     </string>          
-	<string name="lbLinkSender_PortalUsername">Portal Benutzername</string>
-    <string name="fdLinkSender_PortalUsername">Portal Benutzername</string>
-    <string name="lbLinkSender_PortalPassword">Portal Passwort</string>
-    <string name="fdLinkSender_PortalPassword">Portal Passwort</string>
-    <string name="lbLinkSender_ProgressDialog">Der Sender wird gekoppelt...</string>  
-    <string name="txLinkSender_InfoLinkSenderDone">Der Sender wurde mit dem MyLiveTracker Portal erfolgreich gekoppelt!</string>    
-    
+	<string name="lbConnectToMyLiveTrackerPortal_PortalUsername">Portal Benutzername</string>
+    <string name="fdConnectToMyLiveTrackerPortal_PortalUsername">Portal Benutzername</string>
+    <string name="lbConnectToMyLiveTrackerPortal_PortalPassword">Portal Passwort</string>
+    <string name="fdConnectToMyLiveTrackerPortal_PortalPassword">Portal Passwort</string>
+    <string name="lbConnectToMyLiveTrackerPortal_ProgressDialog">Die Koppelung mit dem MyLiveTracker Portal wird hergestellt...</string>  
+    <string name="txConnectToMyLiveTrackerPortal_InfoConnectingDone">Die Koppelung mit dem MyLiveTracker Portal wurde erfolgreich hergestellt!</string>  
+        
+    <!-- connect to Dropbox -->
+    <string name="tiConnectToDropbox">Koppeln mit Dropbox</string>
+    <string name="btConnectToDropbox_Connect">Koppeln</string>
+    <string name="btConnectToDropbox_Release">Koppelung auflösen</string>
+    <string name="lbConnectToDropbox_Status">Gekoppeltes Dropbox Konto:</string>
+    <string name="txConnectToDropbox_StatusConnected">%1$s</string>
+    <string name="txConnectToDropbox_StatusNotConnected">Nicht gekoppelt</string>
+    <string name="txConnectToDropbox_NoConnectionExists">Es existiert keine Koppelung mit Dropbox!</string>
+    <string name="txConnectToDropbox_ConnectionExists">Eine Koppelung mit Dropbox existiert bereits. Diese muss vorher freigegeben werden!</string>
+    <string name="txConnectToDropbox_QuestionConnect">Wollen Sie wirklich eine Koppelung mit Dropbox herstellen?</string>
+    <string name="txConnectToDropbox_QuestionRelease">Wollen Sie wirklich die Koppelung mit Dropbox auflösen?</string>
+    <string name="txConnectToDropbox_InfoConnectingFailed">Die Koppelung mit der Dropbox ist fehlgeschlagen oder wurde abgebrochen!</string>
+    <string name="txConnectToDropbox_InfoConnectingDone">Die Koppelung mit der Dropbox wurde erfolgreich hergestellt!</string>
+        
+    <!-- track export-->
+    <string name="tiTrackExport">Track export</string>
+    <string name="btTrackExport_UploadToDropbox">Aktuellen Track in die Dropbox hochladen</string>
+    <string name="txTrackExport_NotConnectedToDropbox">Es ist keine Koppelung zu Dropbox vorhanden. Bitte stellen Sie zuerst eine Koppelung zu Dropbox her!</string>
+    <string name="txTrackExport_NoTrackExists">Es ist kein Track vorhanden!</string>
+    <string name="txTrackExport_QuestionUploadTrack">Wollen Sie wirklich den aktuellen Track in Dropbox hochladen?</string>
+    <string name="txTrackExport_InfoUploadTrackDone">Der aktuelle Track wurde erfolgreich in die Dropbox hochgeladen!</string>
+    <string name="lbTrackExport_ProgressDialog">Der aktuelle Track wird hochgeladen...</string>
+    <string name="txTrackExport_ErrorAuthenticationFailed">Die Authentifizierung ist fehlgeschlagen! Versuchen Sie es noch einmal.</string>
+    <string name="txTrackExport_ErrorFileTooLarge">Die Datei ist zu gross! U.U. ist seitens der Dropbox nicht genügend Speicherplatz verfügbar.</string>
+    <string name="txTrackExport_ErrorUploadCanceled">Das Hochladen wurde abgebrochen!</string>
+    <string name="txTrackExport_ErrorUploadFailed">Das Hochladen ist fehlgeschlagen! Versuchen Sie es noch einmal.</string>
+        
     <!-- info -->
     <string name="tiInfo">Info</string>
     <string name="tvInfo_Mileage">Kilometerstand</string>

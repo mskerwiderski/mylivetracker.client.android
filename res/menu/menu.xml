@@ -1,30 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 	<item 
-	    android:id="@+id/mnCatPrefs"
-        android:title="@string/mnCatPrefs" >
+	    android:id="@+id/mnCatTracking"
+        android:title="@string/mnCatTracking" >
         <menu>  
 			<item android:id="@+id/mnPrefsServer" android:title="@string/mnPrefsServer" />
 		    <item android:id="@+id/mnPrefsAccount" android:title="@string/mnPrefsAccount" />
 		    <item android:id="@+id/mnPrefsLocalization" android:title="@string/mnPrefsLocalization" />
-		    <item android:id="@+id/mnPrefsAuto" android:title="@string/mnPrefsAuto" />
-		    <item android:id="@+id/mnLinkSender" android:title="@string/mnLinkSender" />
-		    <item android:id="@+id/mnPrefsOther" android:title="@string/mnPrefsOther" />
-	    </menu> 
-    </item>
-	<item 
-	    android:id="@+id/mnCatPrefsPro"
-		android:title="@string/mnCatPrefsPro" >
-        <menu>  
-            <item android:id="@+id/mnTrack" android:title="@string/mnTrack" />
-		    <item android:id="@+id/mnPrefsPinCodeQuery" android:title="@string/mnPrefsPinCodeQuery" />
-		    <item android:id="@+id/mnPrefsRemoteAccess" android:title="@string/mnPrefsRemoteAccess" />
-		    <item android:id="@+id/mnPrefsHttpProtocolParams" android:title="@string/mnPrefsHttpProtocolParams" />
+		    <item android:id="@+id/mnTrackExport" android:title="@string/mnTrackExport" />
 	    </menu> 
     </item>
     <item 
-        android:id="@+id/mnCatInfo"
-        android:title="@string/mnCatInfo" >
+	    android:id="@+id/mnCatConnectTo"
+		android:title="@string/mnCatConnectTo" >
+        <menu>
+            <item android:id="@+id/mnConnectToMyLiveTrackerPortal" android:title="@string/mnConnectToMyLiveTrackerPortal" />
+            <item android:id="@+id/mnConnectToDropbox" android:title="@string/mnConnectToDropbox" />  
+	    </menu> 
+    </item>
+    <item 
+	    android:id="@+id/mnCatSystem"
+		android:title="@string/mnCatSystem" >
+        <menu>  
+		    <item android:id="@+id/mnPrefsPinCodeQuery" android:title="@string/mnPrefsPinCodeQuery" />
+		    <item android:id="@+id/mnPrefsAuto" android:title="@string/mnPrefsAuto" />
+		    <item android:id="@+id/mnPrefsRemoteAccess" android:title="@string/mnPrefsRemoteAccess" />
+		    <item android:id="@+id/mnPrefsHttpProtocolParams" android:title="@string/mnPrefsHttpProtocolParams" />
+		    <item android:id="@+id/mnPrefsOther" android:title="@string/mnPrefsOther" />
+	    </menu> 
+    </item>
+    <item 
+        android:id="@+id/mnCatInfoAndExit"
+        android:title="@string/mnCatInfoAndExit" >
     	<menu>
 		    <item android:id="@+id/mnInfo" android:title="@string/mnInfo" />
 		    <item android:id="@+id/mnExit" android:title="@string/mnExit" />

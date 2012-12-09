@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
-import de.msk.mylivetracker.client.android.dropbox.DropboxUtils;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences.BufferSize;
 import de.msk.mylivetracker.client.android.preferences.Preferences.ConfirmLevel;
@@ -90,37 +89,6 @@ public class PrefsOtherActivity extends AbstractActivity {
 		@Override
 		public void onClick(View v) {			
 			this.activity.finish();		
-		}		
-	}
-
-	private static final class SendReportToSupportDialog extends AbstractYesNoDialog {
-		private Activity activity;
-				
-		public SendReportToSupportDialog(Activity activity) {
-			super(activity, R.string.txPrefsOther_QuestionSendReportToSupport);
-			this.activity = activity;			
-		}
-
-		@Override
-		public void onYes() {			
-			DropboxUtils.uploadReportToSupport(this.activity);
-			SimpleInfoDialog dlg = new SimpleInfoDialog(
-				this.activity, R.string.txPrefsOther_InfoSendReportToSupportDone);
-			dlg.show();
-		}	
-	}
-	
-	private static final class OnClickButtonSendReportToSupport implements OnClickListener {
-		private Activity activity;
-		
-		private OnClickButtonSendReportToSupport(Activity activity) {
-			this.activity = activity;					
-		}
-		
-		@Override
-		public void onClick(View view) {		
-			SendReportToSupportDialog dlg = new SendReportToSupportDialog(this.activity);
-			dlg.show();			
 		}		
 	}
 
@@ -224,14 +192,11 @@ public class PrefsOtherActivity extends AbstractActivity {
         spPrefsOther_TrackingOneTouch.setAdapter(adapter);
         spPrefsOther_TrackingOneTouch.setSelection(prefs.getTrackingOneTouchMode().ordinal());
         
-        Button btPrefsOther_SendReportToSupport = (Button)findViewById(R.id.btPrefsOther_SendReportToSupport);
         Button btPrefsOther_ResetToFactoryDefaults = (Button)findViewById(R.id.btPrefsOther_ResetToFactoryDefaults);
         Button btPrefsOther_ResetOverallMileage = (Button)findViewById(R.id.btPrefsOther_ResetOverallMileage);      
         Button btnPrefsOther_Save = (Button) findViewById(R.id.btPrefsOther_Save);
         Button btnPrefsOther_Cancel = (Button) findViewById(R.id.btPrefsOther_Cancel);
          
-        btPrefsOther_SendReportToSupport.setOnClickListener(
-        	new OnClickButtonSendReportToSupport(this));
         btPrefsOther_ResetToFactoryDefaults.setOnClickListener(
 			new OnClickButtonAppReset(this));
         btPrefsOther_ResetOverallMileage.setOnClickListener(

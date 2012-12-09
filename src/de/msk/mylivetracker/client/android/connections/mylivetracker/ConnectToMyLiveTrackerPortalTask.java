@@ -1,21 +1,21 @@
-package de.msk.mylivetracker.client.android.preferences.linksender;
+package de.msk.mylivetracker.client.android.connections.mylivetracker;
 
 import java.net.URL;
 
 import android.os.AsyncTask;
 import de.msk.mylivetracker.client.android.App.ConfigDsc;
+import de.msk.mylivetracker.client.android.connections.mylivetracker.ConnectToMyLiveTrackerPortalActivity.ProgressDialogHandler;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.preferences.Preferences.TransferProtocol;
-import de.msk.mylivetracker.client.android.preferences.linksender.LinkSenderActivity.ProgressDialogHandler;
 import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.rpc.JsonRpcHttpClient;
-import de.msk.mylivetracker.commons.rpc.LinkSenderRequest;
-import de.msk.mylivetracker.commons.rpc.LinkSenderResponse;
+import de.msk.mylivetracker.commons.rpc.ConnectToMyLiveTrackerPortalRequest;
+import de.msk.mylivetracker.commons.rpc.ConnectToMyLiveTrackerPortalResponse;
 import de.msk.mylivetracker.commons.rpc.RpcResponse.ResultCode;
 
 /**
- * LinkSenderTask.
+ * ConnectToMyLiveTrackerPortalTask.
  * 
  * @author michael skerwiderski, (c)2011
  * 
@@ -25,23 +25,18 @@ import de.msk.mylivetracker.commons.rpc.RpcResponse.ResultCode;
  * 000 	2011-08-16 initial.
  * 
  */
-public class LinkSenderTask extends
-	AsyncTask<LinkSenderRequest, Integer, LinkSenderResponse> {
+public class ConnectToMyLiveTrackerPortalTask extends
+	AsyncTask<ConnectToMyLiveTrackerPortalRequest, Integer, ConnectToMyLiveTrackerPortalResponse> {
 
 	private ProgressDialogHandler progressDialogHandler = null;
 	
-	public LinkSenderTask(ProgressDialogHandler progressDialogHandler) {
+	public ConnectToMyLiveTrackerPortalTask(ProgressDialogHandler progressDialogHandler) {
 		this.progressDialogHandler = progressDialogHandler;
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.os.AsyncTask#doInBackground(Params[])
-	 */
 	@Override
-	protected LinkSenderResponse doInBackground(LinkSenderRequest... requests) {
-		LinkSenderResponse response = null;
+	protected ConnectToMyLiveTrackerPortalResponse doInBackground(ConnectToMyLiveTrackerPortalRequest... requests) {
+		ConnectToMyLiveTrackerPortalResponse response = null;
 		Preferences prefs = Preferences.get();
 		try {	
 			if (!MainActivity.get().isDataConnectionActive()) {
@@ -51,8 +46,8 @@ public class LinkSenderTask extends
 				ConfigDsc.getPortalRpcUrl()));
 			rcpClient.setConnectionTimeoutMillis(10000);
 			rcpClient.setReadTimeoutMillis(5000);
-			response = (LinkSenderResponse) rcpClient.invoke("linkSender",
-				new Object[] { requests[0] }, LinkSenderResponse.class);
+			response = (ConnectToMyLiveTrackerPortalResponse) rcpClient.invoke("connectToMyLiveTrackerPortal",
+				new Object[] { requests[0] }, ConnectToMyLiveTrackerPortalResponse.class);
 			
 			if (response.getResultCode().isSuccess()) {				
 	        	prefs.setTransferProtocol(TransferProtocol.mltTcpEncrypted);
@@ -68,29 +63,19 @@ public class LinkSenderTask extends
 	        	Preferences.save();
 			}
 		} catch (Throwable e) {
-			response = new LinkSenderResponse(MainActivity.getLocale().getLanguage(),
+			response = new ConnectToMyLiveTrackerPortalResponse(MainActivity.getLocale().getLanguage(),
 				ResultCode.InternalServerError, e.getMessage());
 		}
 		return response;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
-	 */
 	@Override
-	protected void onPostExecute(LinkSenderResponse response) {
+	protected void onPostExecute(ConnectToMyLiveTrackerPortalResponse response) {
 		ProgressDialogHandler.closeProgressDialog(
 			progressDialogHandler, response);				
 		super.onPostExecute(response);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.os.AsyncTask#onProgressUpdate(Progress[])
-	 */
 	@Override
 	protected void onProgressUpdate(Integer... values) {
 		super.onProgressUpdate(values);
