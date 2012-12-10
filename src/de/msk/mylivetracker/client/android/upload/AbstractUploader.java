@@ -112,7 +112,8 @@ public abstract class AbstractUploader {
 			messageInfo, 
 			preferences.getUsername(), 
 			preferences.getPassword());
-		LogInfo.addLogItem(locationInfo);
+		LogInfo.addLogItem(locationInfo,
+			emergencySignalInfo, messageInfo);
 		return this.upload(dataStr);
 	}	
 }

@@ -354,22 +354,25 @@
     <!-- connect to Dropbox -->
     <string name="tiConnectToDropbox">Koppeln mit Dropbox</string>
     <string name="btConnectToDropbox_Connect">Koppeln</string>
-    <string name="btConnectToDropbox_Release">Koppelung auflösen</string>
+    <string name="btConnectToDropbox_Release">Freigeben</string>
     <string name="lbConnectToDropbox_Status">Gekoppeltes Dropbox Konto:</string>
     <string name="txConnectToDropbox_StatusConnected">%1$s</string>
     <string name="txConnectToDropbox_StatusNotConnected">Nicht gekoppelt</string>
     <string name="txConnectToDropbox_NoConnectionExists">Es existiert keine Koppelung mit Dropbox!</string>
     <string name="txConnectToDropbox_ConnectionExists">Eine Koppelung mit Dropbox existiert bereits. Diese muss vorher freigegeben werden!</string>
     <string name="txConnectToDropbox_QuestionConnect">Wollen Sie wirklich eine Koppelung mit Dropbox herstellen?</string>
-    <string name="txConnectToDropbox_QuestionRelease">Wollen Sie wirklich die Koppelung mit Dropbox auflösen?</string>
+    <string name="txConnectToDropbox_QuestionRelease">Wollen Sie wirklich die Koppelung mit Dropbox freigeben?</string>
     <string name="txConnectToDropbox_InfoConnectingFailed">Die Koppelung mit der Dropbox ist fehlgeschlagen oder wurde abgebrochen!</string>
     <string name="txConnectToDropbox_InfoConnectingDone">Die Koppelung mit der Dropbox wurde erfolgreich hergestellt!</string>
         
     <!-- track export-->
     <string name="tiTrackExport">Track export</string>
-    <string name="btTrackExport_UploadToDropbox">Aktuellen Track in die Dropbox hochladen</string>
+    <string name="lbTrackExport_ExportTo">Aktuellen Track exportieren auf...</string>
+    <string name="btTrackExport_UploadToDropbox">Dropbox</string>
+    <string name="btTrackExport_ExportToExternalStorage">Speicherkarte</string>
     <string name="txTrackExport_NotConnectedToDropbox">Es ist keine Koppelung zu Dropbox vorhanden. Bitte stellen Sie zuerst eine Koppelung zu Dropbox her!</string>
     <string name="txTrackExport_NoTrackExists">Es ist kein Track vorhanden!</string>
+    <string name="txTrackExport_NoExternalStoragAvailable">Es ist keine externe Speicherkarte vorhanden!</string>
     <string name="txTrackExport_QuestionUploadTrack">Wollen Sie wirklich den aktuellen Track in Dropbox hochladen?</string>
     <string name="txTrackExport_InfoUploadTrackDone">Der aktuelle Track wurde erfolgreich in die Dropbox hochgeladen!</string>
     <string name="lbTrackExport_ProgressDialog">Der aktuelle Track wird hochgeladen...</string>

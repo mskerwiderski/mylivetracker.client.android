@@ -354,7 +354,7 @@
     <!-- connect to Dropbox -->
     <string name="tiConnectToDropbox">Connect to Dropbox</string>
     <string name="btConnectToDropbox_Connect">Connect</string>
-    <string name="btConnectToDropbox_Release">Release connection</string>
+    <string name="btConnectToDropbox_Release">Release</string>
     <string name="lbConnectToDropbox_Status">Connected Dropbox account:</string>
     <string name="txConnectToDropbox_StatusConnected">%1$s</string>
     <string name="txConnectToDropbox_StatusNotConnected">Not connected</string>
@@ -367,9 +367,12 @@
     
     <!-- track export-->
     <string name="tiTrackExport">Track export</string>
-    <string name="btTrackExport_UploadToDropbox">Upload current track to Dropbox</string>
+    <string name="lbTrackExport_ExportTo">Export current track to...</string>
+    <string name="btTrackExport_UploadToDropbox">Dropbox</string>
+    <string name="btTrackExport_ExportToExternalStorage">External storage</string>
     <string name="txTrackExport_NotConnectedToDropbox">There is no connection to Dropbox. Connect to Dropbox first!</string>
     <string name="txTrackExport_NoTrackExists">No track exists!</string>
+    <string name="txTrackExport_NoExternalStoragAvailable">No external storage is available!</string>
     <string name="txTrackExport_QuestionUploadTrack">Do you really want to upload the current track to Dropbox?</string>
     <string name="txTrackExport_InfoUploadTrackDone">Current track successfully uploaded to Dropbox!</string>
     <string name="lbTrackExport_ProgressDialog">Uploading current track...</string>

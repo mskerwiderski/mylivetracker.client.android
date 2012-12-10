@@ -24,9 +24,12 @@ public class LogInfo {
 	    "<time>$TIMESTAMPSTART</time></metadata>" +
 	    "<trk><name>$TRACKNAME</name><cmt>$COMMENT</cmt><trkseg>";
 	private static final String GPX_FOOTER_TEMPLATE = "</trkseg></trk></gpx>";
+	@SuppressWarnings("unused")
+	private static final String WPT_TEMPLATE = "<wpt lat=\"$LAT\" lon=\"$LON\">$ATTR</wpt>";
 	private static final String TRKPT_TEMPLATE = "<trkpt lat=\"$LAT\" lon=\"$LON\">$ATTR</trkpt>";
+	private static final String ATTR_NAME_TEMPLATE = "<name>$NAME</name>";
 	private static final String ATTR_TIME_TEMPLATE = "<time>$TIME</time>";
-	private static final String ATTR_ALTITUDE_TEMPLATE = "<geoidheight>$ALTITUDE</geoidheight>";
+	private static final String ATTR_ALTITUDE_TEMPLATE = "<ele>$ALTITUDE</ele>";
 	private static final String TIMESTAMP_FMT = "yyyy-MM-dd'T'hh:mm:ss.SSS";
 	
 	public static String createGpxFileNameOfCurrentTrack() {
@@ -51,12 +54,19 @@ public class LogInfo {
 		}
 	}
 	
+	public static void exportGpxFileOfCurrentTrackToExternalStorage() {
+		String gpxFileName = createGpxFileNameOfCurrentTrack();
+		createGpxFileOfCurrentTrack(gpxFileName);
+		FileUtils.copyToExternalStorage(gpxFileName, gpxFileName);
+	}
+	
 	public static boolean logFileExists() {
 		String filename = TrackStatus.get().getLogFileName();
 		return FileUtils.fileExists(filename);
 	}
 	
-	public static void addLogItem(LocationInfo locationInfo) {
+	public static void addLogItem(LocationInfo locationInfo, 
+		EmergencySignalInfo emergencySignalInfo, MessageInfo messageInfo) {
 		if ((locationInfo == null) || !locationInfo.hasValidLatLon()) return;
 		FileOutputStream fos = null;
 		try {
@@ -77,27 +87,52 @@ public class LogInfo {
 				gpxHead = StringUtils.replace(gpxHead, "$COMMENT", "");
 				fos.write(gpxHead.getBytes());
 			}
-			String trkpt = TRKPT_TEMPLATE;
-			trkpt = StringUtils.replace(trkpt, "$LAT", 
-				FormatUtils.getDoubleAsSimpleStr(locationInfo.getLatitude(), 8));
-			trkpt = StringUtils.replace(trkpt, "$LON", 
-				FormatUtils.getDoubleAsSimpleStr(locationInfo.getLongitude(), 8));
-			String attr = "";
-			DateTime dateTime = new DateTime(locationInfo.getTimestamp().getTime());
-			String timestamp = dateTime.getAsStr(
-				TimeZone.getTimeZone(DateTime.TIME_ZONE_UTC), 
-				TIMESTAMP_FMT);
-			attr += StringUtils.replace(ATTR_TIME_TEMPLATE, "$TIME", timestamp);
-			if (locationInfo.hasValidAltitude()) {
-				attr += StringUtils.replace(ATTR_ALTITUDE_TEMPLATE, "$ALTITUDE", 
-					FormatUtils.getDoubleAsSimpleStr(locationInfo.getAltitudeInMtr(), 2));
-			}
-			trkpt = StringUtils.replace(trkpt, "$ATTR", attr);
+//			if ((emergencySignalInfo != null) || (messageInfo != null)) {
+//				String name = (emergencySignalInfo != null) ? 
+//					"SOS" : messageInfo.getMessage(); 
+//				String wpt = createGpxPoint(WPT_TEMPLATE, name, locationInfo);
+//				fos.write(wpt.getBytes());
+//			}
+			String trkpt = createGpxPoint(TRKPT_TEMPLATE, 
+				locationInfo, emergencySignalInfo, messageInfo);
 			fos.write(trkpt.getBytes());
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		} finally {
 			FileUtils.closeStream(fos);
 		}
+	}
+	
+	private static String createGpxPoint(String template, LocationInfo locationInfo,
+		EmergencySignalInfo emergencySignalInfo, MessageInfo messageInfo) {
+		String pointStr = template;
+		String latStr = FormatUtils.getDoubleAsSimpleStr(locationInfo.getLatitude(), 8);
+		String lonStr = FormatUtils.getDoubleAsSimpleStr(locationInfo.getLongitude(), 8);
+		DateTime dateTime = new DateTime(locationInfo.getTimestamp().getTime());
+		String timestamp = dateTime.getAsStr(
+			TimeZone.getTimeZone(DateTime.TIME_ZONE_UTC), 
+			TIMESTAMP_FMT);
+		String alt = null;
+		if (locationInfo.hasValidAltitude()) {
+			alt = FormatUtils.getDoubleAsSimpleStr(locationInfo.getAltitudeInMtr(), 2);
+		}
+		pointStr = StringUtils.replace(pointStr, "$LAT", latStr); 
+		pointStr = StringUtils.replace(pointStr, "$LON", lonStr); 
+		String attr = "";
+		String name = null;
+		if (emergencySignalInfo != null) {
+			name = "SOS";
+		} else if (messageInfo != null) {
+			name = messageInfo.getMessage();
+		}
+		if (!StringUtils.isEmpty(name)) {
+			attr += StringUtils.replace(ATTR_NAME_TEMPLATE, "$NAME", name);
+		}
+		attr += StringUtils.replace(ATTR_TIME_TEMPLATE, "$TIME", timestamp);
+		if (!StringUtils.isEmpty(alt)) {
+			attr += StringUtils.replace(ATTR_ALTITUDE_TEMPLATE, "$ALTITUDE", alt);
+		}
+		pointStr = StringUtils.replace(pointStr, "$ATTR", attr);
+		return pointStr;
 	}
 }

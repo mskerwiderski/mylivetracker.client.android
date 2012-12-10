@@ -10,6 +10,7 @@ import java.io.OutputStream;
 
 import org.apache.commons.lang.StringUtils;
 
+import android.os.Environment;
 import de.msk.mylivetracker.client.android.App;
 
 /**
@@ -25,11 +26,40 @@ import de.msk.mylivetracker.client.android.App;
  */
 public class FileUtils {
 	
+	public static boolean externalStorageUsable() {
+		boolean externalStorageAvailable = false;
+		boolean externalStorageWriteable = false;
+		String state = Environment.getExternalStorageState();
+		if (Environment.MEDIA_MOUNTED.equals(state)) {
+		    externalStorageAvailable = externalStorageWriteable = true;
+		} else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+		    externalStorageAvailable = true;
+		    externalStorageWriteable = false;
+		} else {
+		    externalStorageAvailable = externalStorageWriteable = false;
+		}
+		return externalStorageAvailable && externalStorageWriteable;
+	}
+	
 	private static String getPathFileName(String fileName) {
+		return getPathFileName(fileName, false);
+	}
+	
+	private static String getPathFileName(String fileName, boolean useExternalStorage) {
 		if (StringUtils.isEmpty(fileName)) {
 			throw new IllegalArgumentException("fileName must not be empty.");
 		}
 		String pathFileName = App.get().getFilesDir().getAbsolutePath();
+		if (useExternalStorage) {
+			String mltDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+			if (!StringUtils.endsWith(mltDir, "/")) {
+				mltDir += "/";
+			}
+			mltDir += "data/" + App.getAppName() + "/";
+			boolean created = new File(mltDir).mkdirs();
+			LogUtils.always("dir created=" + created);
+			pathFileName = mltDir;
+		}
 		if (!StringUtils.endsWith(pathFileName, "/")) {
 			pathFileName += "/";
 		}
@@ -52,6 +82,18 @@ public class FileUtils {
 		return file.length();
 	}
 	
+	public static void copyToExternalStorage(String srcFileName, String destFileName) {
+		if (StringUtils.isEmpty(srcFileName)) {
+			throw new IllegalArgumentException("srcFileName must not be empty.");
+		}
+		if (StringUtils.isEmpty(destFileName)) {
+			throw new IllegalArgumentException("destFileName must not be empty.");
+		}
+		copyAux(
+			new File(getPathFileName(srcFileName)), 
+			new File(getPathFileName(destFileName, true)));
+	}
+	
 	public static void copy(String srcFileName, String destFileName) {
 		if (StringUtils.isEmpty(srcFileName)) {
 			throw new IllegalArgumentException("srcFileName must not be empty.");
@@ -59,13 +101,23 @@ public class FileUtils {
 		if (StringUtils.isEmpty(destFileName)) {
 			throw new IllegalArgumentException("destFileName must not be empty.");
 		}
-		File src = new File(getPathFileName(srcFileName));
-		File dst = new File(getPathFileName(destFileName));
+		copyAux(
+			new File(getPathFileName(srcFileName)), 
+			new File(getPathFileName(destFileName)));
+	}
+	
+	private static void copyAux(File src, File dest) {
+		if (src == null) {
+			throw new IllegalArgumentException("src must not be null.");
+		}
+		if (dest == null) {
+			throw new IllegalArgumentException("dest must not be null.");
+		}
 		InputStream in = null;
 		OutputStream out = null;
 		try {
 			in = new FileInputStream(src);
-			out = new FileOutputStream(dst);
+			out = new FileOutputStream(dest);
 		    byte[] buf = new byte[1024];
 		    int len;
 		    while ((len = in.read(buf)) > 0) {

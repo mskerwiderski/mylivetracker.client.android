@@ -30,6 +30,7 @@ import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.status.LogInfo;
 import de.msk.mylivetracker.client.android.util.FileUtils;
+import de.msk.mylivetracker.client.android.util.LogUtils;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
 
@@ -137,7 +138,10 @@ public class TrackExportActivity extends AbstractActivity {
 
 	    @Override
 	    protected void onProgressUpdate(Long... progress) {
+	    	LogUtils.always("progress uploading:" + progress[0]);
+	    	LogUtils.always("fileLength:" + fileLength);
 	        int percent = (int)(100.0*(double)progress[0]/fileLength + 0.5);
+	        LogUtils.always("percent:" + percent);
 	        dialog.setProgress(percent);
 	    }
 
@@ -192,6 +196,31 @@ public class TrackExportActivity extends AbstractActivity {
 		}		
 	}
 
+	private static final class OnClickButtonExportToExternalStorage implements OnClickListener {
+		private Activity activity;
+		
+		private OnClickButtonExportToExternalStorage(Activity activity) {
+			this.activity = activity;
+		}
+		
+		@Override
+		public void onClick(View view) {	
+			if (!LogInfo.logFileExists()) {
+				SimpleInfoDialog dlg = new SimpleInfoDialog(
+					this.activity, R.string.txTrackExport_NoTrackExists);
+				dlg.show();
+			} else {
+				if (!FileUtils.externalStorageUsable()) {
+					SimpleInfoDialog dlg = new SimpleInfoDialog(
+						this.activity, R.string.txTrackExport_NoExternalStoragAvailable);
+					dlg.show();
+				} else {
+					LogInfo.exportGpxFileOfCurrentTrackToExternalStorage();
+				}
+			}
+		}		
+	}
+	
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -204,10 +233,13 @@ public class TrackExportActivity extends AbstractActivity {
         this.setTitle(R.string.tiTrackExport);
 
         Button btTrackExport_UploadToDropbox = (Button)findViewById(R.id.btTrackExport_UploadToDropbox);
+        Button btTrackExport_ExportToExternalStorage = (Button)findViewById(R.id.btTrackExport_ExportToExternalStorage);
         Button btTrackExport_Back = (Button)findViewById(R.id.btTrackExport_Back);
         
         btTrackExport_UploadToDropbox.setOnClickListener(
 			new OnClickButtonUploadToDropbox(this));
+        btTrackExport_ExportToExternalStorage.setOnClickListener(
+			new OnClickButtonExportToExternalStorage(this));
         btTrackExport_Back.setOnClickListener(
 			new OnClickButtonBackListener(this));
     }
