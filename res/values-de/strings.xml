@@ -372,10 +372,13 @@
     <string name="btTrackExport_ExportToExternalStorage">Speicherkarte</string>
     <string name="txTrackExport_NotConnectedToDropbox">Es ist keine Koppelung zu Dropbox vorhanden. Bitte stellen Sie zuerst eine Koppelung zu Dropbox her!</string>
     <string name="txTrackExport_NoTrackExists">Es ist kein Track vorhanden!</string>
-    <string name="txTrackExport_NoExternalStoragAvailable">Es ist keine externe Speicherkarte vorhanden!</string>
+    <string name="txTrackExport_NoExternalStorageAvailable">Es ist keine externe Speicherkarte vorhanden!</string>
     <string name="txTrackExport_QuestionUploadTrack">Wollen Sie wirklich den aktuellen Track in Dropbox hochladen?</string>
     <string name="txTrackExport_InfoUploadTrackDone">Der aktuelle Track wurde erfolgreich in die Dropbox hochgeladen!</string>
-    <string name="lbTrackExport_ProgressDialog">Der aktuelle Track wird hochgeladen...</string>
+    <string name="lbTrackExport_UploadProgressDialog">Der aktuelle Track wird hochgeladen...</string>
+    <string name="txTrackExport_QuestionExportTrack">Wollen Sie wirklich den aktuellen Track auf die Speicherkarte exportieren?</string>
+    <string name="txTrackExport_InfoExportTrackDone">Der aktuelle Track wurde erfolgreich auf die Speicherkarte exportiert!</string>
+    <string name="lbTrackExport_ExportProgressDialog">Der aktuelle Track wird exportiert...</string>
     <string name="txTrackExport_ErrorAuthenticationFailed">Die Authentifizierung ist fehlgeschlagen! Versuchen Sie es noch einmal.</string>
     <string name="txTrackExport_ErrorFileTooLarge">Die Datei ist zu gross! U.U. ist seitens der Dropbox nicht genügend Speicherplatz verfügbar.</string>
     <string name="txTrackExport_ErrorUploadCanceled">Das Hochladen wurde abgebrochen!</string>

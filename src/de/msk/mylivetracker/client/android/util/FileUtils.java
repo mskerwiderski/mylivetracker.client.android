@@ -41,13 +41,12 @@ public class FileUtils {
 		return externalStorageAvailable && externalStorageWriteable;
 	}
 	
-	private static String getPathFileName(String fileName) {
-		return getPathFileName(fileName, false);
-	}
-	
 	private static String getPathFileName(String fileName, boolean useExternalStorage) {
 		if (StringUtils.isEmpty(fileName)) {
 			throw new IllegalArgumentException("fileName must not be empty.");
+		}
+		if (useExternalStorage && !externalStorageUsable()) {
+			throw new IllegalArgumentException("external storage is not available.");
 		}
 		String pathFileName = App.get().getFilesDir().getAbsolutePath();
 		if (useExternalStorage) {
@@ -56,8 +55,7 @@ public class FileUtils {
 				mltDir += "/";
 			}
 			mltDir += "data/" + App.getAppName() + "/";
-			boolean created = new File(mltDir).mkdirs();
-			LogUtils.always("dir created=" + created);
+			new File(mltDir).mkdirs();
 			pathFileName = mltDir;
 		}
 		if (!StringUtils.endsWith(pathFileName, "/")) {
@@ -70,7 +68,7 @@ public class FileUtils {
 		if (StringUtils.isEmpty(fileName)) {
 			throw new IllegalArgumentException("fileName must not be empty.");
 		}
-		File file = new File(getPathFileName(fileName));
+		File file = new File(getPathFileName(fileName, false));
 		return file.exists();
 	}
 	
@@ -78,7 +76,7 @@ public class FileUtils {
 		if (StringUtils.isEmpty(fileName)) {
 			throw new IllegalArgumentException("fileName must not be empty.");
 		}
-		File file = new File(getPathFileName(fileName));
+		File file = new File(getPathFileName(fileName, false));
 		return file.length();
 	}
 	
@@ -90,7 +88,7 @@ public class FileUtils {
 			throw new IllegalArgumentException("destFileName must not be empty.");
 		}
 		copyAux(
-			new File(getPathFileName(srcFileName)), 
+			new File(getPathFileName(srcFileName, false)), 
 			new File(getPathFileName(destFileName, true)));
 	}
 	
@@ -102,8 +100,8 @@ public class FileUtils {
 			throw new IllegalArgumentException("destFileName must not be empty.");
 		}
 		copyAux(
-			new File(getPathFileName(srcFileName)), 
-			new File(getPathFileName(destFileName)));
+			new File(getPathFileName(srcFileName, false)), 
+			new File(getPathFileName(destFileName, false)));
 	}
 	
 	private static void copyAux(File src, File dest) {

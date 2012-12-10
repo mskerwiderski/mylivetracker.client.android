@@ -372,10 +372,13 @@
     <string name="btTrackExport_ExportToExternalStorage">External storage</string>
     <string name="txTrackExport_NotConnectedToDropbox">There is no connection to Dropbox. Connect to Dropbox first!</string>
     <string name="txTrackExport_NoTrackExists">No track exists!</string>
-    <string name="txTrackExport_NoExternalStoragAvailable">No external storage is available!</string>
+    <string name="txTrackExport_NoExternalStorageAvailable">No external storage is available!</string>
     <string name="txTrackExport_QuestionUploadTrack">Do you really want to upload the current track to Dropbox?</string>
     <string name="txTrackExport_InfoUploadTrackDone">Current track successfully uploaded to Dropbox!</string>
-    <string name="lbTrackExport_ProgressDialog">Uploading current track...</string>
+    <string name="lbTrackExport_UploadProgressDialog">Uploading current track...</string>
+    <string name="txTrackExport_QuestionExportTrack">Do you really want to export the current track to external storage?</string>
+    <string name="txTrackExport_InfoExportTrackDone">Current track successfully exported to external storage!</string>
+    <string name="lbTrackExport_ExportProgressDialog">Exporting current track...</string> 
     <string name="txTrackExport_ErrorAuthenticationFailed">Authentication failed or is maybe invalid! Try to upload again or try to reconnect to Dropbox.</string>
     <string name="txTrackExport_ErrorFileTooLarge">File is too large! Maybe there is not enough space on Dropbox side.</string>
     <string name="txTrackExport_ErrorUploadCanceled">Upload canceled!</string>

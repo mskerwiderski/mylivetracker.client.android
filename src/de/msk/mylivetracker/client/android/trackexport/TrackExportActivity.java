@@ -31,6 +31,7 @@ import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.status.LogInfo;
 import de.msk.mylivetracker.client.android.util.FileUtils;
 import de.msk.mylivetracker.client.android.util.LogUtils;
+import de.msk.mylivetracker.client.android.util.dialog.AbstractProgressDialog;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
 
@@ -78,7 +79,7 @@ public class TrackExportActivity extends AbstractActivity {
 	    	this.fileName = fileName;
 	        dialog = new ProgressDialog(this.activity);
 	        dialog.setMax(100);
-	        dialog.setMessage(App.getCtx().getText(R.string.lbTrackExport_ProgressDialog));
+	        dialog.setMessage(App.getCtx().getText(R.string.lbTrackExport_UploadProgressDialog));
 	        dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 	        dialog.setProgress(0);
 	        dialog.setButton(App.getCtx().getText(R.string.btCancel), 
@@ -103,7 +104,7 @@ public class TrackExportActivity extends AbstractActivity {
 	                new ProgressListener() {
 	            		@Override
 	            		public long progressInterval() {
-	            			return 100;
+	            			return 30;
 	            		}
 	            		@Override
 	            		public void onProgress(long bytes, long total) {
@@ -158,10 +159,10 @@ public class TrackExportActivity extends AbstractActivity {
 	    }
 	}
 
-	private static final class UploadTrackDialog extends AbstractYesNoDialog {
+	private static final class UploadToDropboxDialog extends AbstractYesNoDialog {
 		private Activity activity;
 				
-		public UploadTrackDialog(Activity activity) {
+		public UploadToDropboxDialog(Activity activity) {
 			super(activity, R.string.txTrackExport_QuestionUploadTrack);
 			this.activity = activity;			
 		}
@@ -189,17 +190,39 @@ public class TrackExportActivity extends AbstractActivity {
 					this.activity, R.string.txTrackExport_NoTrackExists);
 				dlg.show();
 			} else {
-				UploadTrackDialog dlg = new UploadTrackDialog(
+				UploadToDropboxDialog dlg = new UploadToDropboxDialog(
 					this.activity);
 				dlg.show();
 			}
 		}		
 	}
 
+	private static class ExportTrackProgressDialog extends AbstractProgressDialog<TrackExportActivity> {
+		@Override
+		public void doTask(TrackExportActivity activity) {
+			LogInfo.exportGpxFileOfCurrentTrackToExternalStorage();
+		}
+	}
+	
+	private static final class ExportToExternalStorageTrackDialog extends AbstractYesNoDialog {
+		private TrackExportActivity activity;
+				
+		public ExportToExternalStorageTrackDialog(TrackExportActivity activity) {
+			super(activity, R.string.txTrackExport_QuestionExportTrack);
+			this.activity = activity;			
+		}
+
+		@Override
+		public void onYes() {			
+			ExportTrackProgressDialog dlg = new ExportTrackProgressDialog();
+			dlg.run(this.activity, R.string.lbTrackExport_ExportProgressDialog);
+		}	
+	}
+	
 	private static final class OnClickButtonExportToExternalStorage implements OnClickListener {
-		private Activity activity;
+		private TrackExportActivity activity;
 		
-		private OnClickButtonExportToExternalStorage(Activity activity) {
+		private OnClickButtonExportToExternalStorage(TrackExportActivity activity) {
 			this.activity = activity;
 		}
 		
@@ -209,14 +232,14 @@ public class TrackExportActivity extends AbstractActivity {
 				SimpleInfoDialog dlg = new SimpleInfoDialog(
 					this.activity, R.string.txTrackExport_NoTrackExists);
 				dlg.show();
+			} else if (!FileUtils.externalStorageUsable()) {
+				SimpleInfoDialog dlg = new SimpleInfoDialog(
+					this.activity, R.string.txTrackExport_NoExternalStorageAvailable);
+				dlg.show();
 			} else {
-				if (!FileUtils.externalStorageUsable()) {
-					SimpleInfoDialog dlg = new SimpleInfoDialog(
-						this.activity, R.string.txTrackExport_NoExternalStoragAvailable);
-					dlg.show();
-				} else {
-					LogInfo.exportGpxFileOfCurrentTrackToExternalStorage();
-				}
+				ExportToExternalStorageTrackDialog dlg = new ExportToExternalStorageTrackDialog(
+					this.activity);
+				dlg.show();
 			}
 		}		
 	}
