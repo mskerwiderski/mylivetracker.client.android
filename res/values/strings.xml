@@ -61,6 +61,17 @@
     <string name="mnInfo">Info</string>
     <string name="mnExit">Exit</string>
         
+    <!-- dropbox commons -->
+    <string name="lbDropbox_UploadInProgress">Uploading...</string>
+    <string name="lbDropbox_UploadDone">Upload successfully done!</string>
+    <string name="lbDropbox_UploadCanceled">Upload canceled!</string>
+    <string name="lbDropbox_UploadRejected">Upload rejected:</string>
+    <string name="lbDropbox_AuthFailed">Authentication failed! Check the connection to Dropbox!</string>
+    <string name="lbDropbox_FileTooLargeToUpload">File is too large to upload via this API!</string>
+    <string name="lbDropbox_NetworkError">Network error! Try to upload again!</string>
+    <string name="lbDropbox_DropboxError">Dropbox error! Try to upload again!</string>
+    <string name="lbDropbox_UnknownError">Unknown error! Try to upload again!</string>
+    	   
     <!-- antPlus -->
     <string name="antPlus_NotSupported">ANT+ not supported!</string>
     <string name="antPlus_InstallInfo">You must install the ANT+ radio service to interface to the ANT+ hardware!</string>
@@ -220,10 +231,16 @@
     <string name="lbPrefsOther_TrackingOneTouch">Tracking one-touch mode</string>
 	<string name="btPrefsOther_ResetOverallMileage">Reset mileage</string>
     <string name="btPrefsOther_ResetToFactoryDefaults">Factory defaults</string>
+    <string name="btPrefsOther_BackupPrefs">Backup prefs</string>
+    <string name="btPrefsOther_RestorePrefs">Restore prefs</string>
     <string name="txPrefsOther_QuestionResetToFactoryDefaults">Do you really want to reset to factory defaults?</string>
     <string name="txPrefsOther_QuestionResetOverallMileage">Do you really want to reset overall mileage?</string>
+    <string name="txPrefsOther_QuestionBackupPrefs">Do you really want to backup the preferences?</string>
+    <string name="txPrefsOther_QuestionRestorePrefs">Do you really want to restore the preferences?</string>
     <string name="txPrefsOther_InfoResetToFactoryDefaultsDone">MyLiveTracker has been reset to factory defaults! Please restart the application!</string>
     <string name="txPrefsOther_InfoResetOverallMileageDone">Reset overall mileage done!</string>
+    <string name="txPrefsOther_InfoBackupPrefsDone">Backup of preferences successfully done!</string>
+    <string name="txPrefsOther_InfoRestorePrefsDone">Preferences successfully restored!</string>
     
     <!-- preferences auto -->
     <string name="tiPrefsAuto">Automatic preferences</string>
@@ -374,15 +391,9 @@
     <string name="txTrackExport_NoTrackExists">No track exists!</string>
     <string name="txTrackExport_NoExternalStorageAvailable">No external storage is available!</string>
     <string name="txTrackExport_QuestionUploadTrack">Do you really want to upload the current track to Dropbox?</string>
-    <string name="txTrackExport_InfoUploadTrackDone">Current track successfully uploaded to Dropbox!</string>
-    <string name="lbTrackExport_UploadProgressDialog">Uploading current track...</string>
     <string name="txTrackExport_QuestionExportTrack">Do you really want to export the current track to external storage?</string>
     <string name="txTrackExport_InfoExportTrackDone">Current track successfully exported to external storage!</string>
     <string name="lbTrackExport_ExportProgressDialog">Exporting current track...</string> 
-    <string name="txTrackExport_ErrorAuthenticationFailed">Authentication failed or is maybe invalid! Try to upload again or try to reconnect to Dropbox.</string>
-    <string name="txTrackExport_ErrorFileTooLarge">File is too large! Maybe there is not enough space on Dropbox side.</string>
-    <string name="txTrackExport_ErrorUploadCanceled">Upload canceled!</string>
-    <string name="txTrackExport_ErrorUploadFailed">Upload failed! Try to upload again.</string>
     
     <!-- info -->
     <string name="tiInfo">Info</string>

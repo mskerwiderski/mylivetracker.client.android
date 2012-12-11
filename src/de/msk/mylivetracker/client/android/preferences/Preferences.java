@@ -409,37 +409,24 @@ public class Preferences {
 		return preferences;
 	}
 	
-	public static Preferences get(Context context) {
-		if (preferences == null) {			
-			Preferences.load(context, App.getDbName());
-		} 
-		return preferences;
-	}
-	
-	public static void reset(Context context) {
+	public static void reset() {
 		TrackStatus.resetMileage();
 		TrackStatus.reset();
-		preferences = PreferencesCreator.create(context);
+		preferences = PreferencesCreator.create();
 		save();
-		
 	}
 	
 	private static void load() {
-		MainActivity mainActivity = MainActivity.get();
-		load(mainActivity, App.getDbName());
-	}
-	
-	private static void load(Context context, String name) {
-		LogUtils.infoMethodIn(Preferences.class, "load", name);
+		LogUtils.infoMethodIn(Preferences.class, "load", App.getPrefsName());
 		String infoMessage = null;
-		SharedPreferences prefs = context.getSharedPreferences(name, 0);				
+		SharedPreferences prefs = App.getCtx().getSharedPreferences(App.getPrefsName(), 0);				
 		int preferencesVersion = prefs.getInt(PREFERENCES_VERSION_VAR, -1);
 		if (preferencesVersion == -1) {
 			// first time of using the app.
-			Preferences.reset(context);
+			Preferences.reset();
 		} else if (preferencesVersion < PREFERENCES_VERSION_MIN) {
-			Preferences.reset(context);
-			infoMessage = context.getString(R.string.prefsReset, 
+			Preferences.reset();
+			infoMessage = App.getCtx().getString(R.string.prefsReset, 
 				VersionDsc.getVersionStr());
 		} else {
 			String preferencesStr = prefs.getString(PREFERENCES_VAR, null);
@@ -492,6 +479,7 @@ public class Preferences {
 						preferences.httpProtocolParams = HttpProtocolParams.create();
 						preferences.dropboxTokenKey = null;
 						preferences.dropboxTokenSecret = null;
+						preferences.dropboxAccount = null;
 						doSave = true;
 					}
 					if (!VersionDsc.isCurrent(preferences.versionApp)) {
@@ -500,25 +488,23 @@ public class Preferences {
 					}
 					if (doSave) {
 						save();
-						infoMessage = context.getString(R.string.prefsUpdated, 
+						infoMessage = App.getCtx().getString(R.string.prefsUpdated, 
 							VersionDsc.getVersionStr());
 					}
 				} catch (Exception e) {
 					LogUtils.infoMethodState(Preferences.class, "load", "loading failed", e.toString());
-					Preferences.reset(context);
-					infoMessage = context.getString(R.string.prefsReset, 
+					Preferences.reset();
+					infoMessage = App.getCtx().getString(R.string.prefsReset, 
 						VersionDsc.getVersionStr());
 				}
 			} else {			
-				Preferences.reset(context);			
-				infoMessage = context.getString(R.string.prefsReset, 
+				Preferences.reset();			
+				infoMessage = App.getCtx().getString(R.string.prefsReset, 
 					VersionDsc.getVersionStr());
 			}
 		}
 		if (!StringUtils.isEmpty(infoMessage) && MainActivity.exists()) {
-			SimpleInfoDialog infoDlg = new SimpleInfoDialog(
-				MainActivity.get(), infoMessage);
-			infoDlg.show();
+			SimpleInfoDialog.show(MainActivity.get(), infoMessage);
 		}
 		LogUtils.infoMethodOut(Preferences.class, "load");
 	}
@@ -526,7 +512,7 @@ public class Preferences {
 	public static void save() {
 		if (preferences == null) return;				
 		SharedPreferences prefs = MainActivity.get().
-			getSharedPreferences(App.getDbName(), 0);
+			getSharedPreferences(App.getPrefsName(), 0);
 		SharedPreferences.Editor editor = prefs.edit();
 		
 		preferences.seed = ProtocolUtils.calcSeed(

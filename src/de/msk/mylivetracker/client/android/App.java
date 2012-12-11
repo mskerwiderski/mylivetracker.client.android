@@ -27,7 +27,7 @@ public abstract class App extends Application {
 	private static String appName = null;
 	private static String appNameComplete = null;
 	private static String versionStr = null;
-	private static String dbName = null;
+	private static String prefsName = null;
 	
 	public enum VersionStage {
 		Release("R"),
@@ -121,9 +121,9 @@ public abstract class App extends Application {
 					}
 					appName = App.getCtx().getString(R.string.app_name);
 					appNameComplete = appName + " " + versionStr;
-					dbName = (App.isPro() ? appName + "PRO" : appName) + ".DB"; 
+					prefsName = (App.isPro() ? appName + "PRO" : appName) + ".DB"; 
 					LogUtils.always("APP: " + appNameComplete);
-					LogUtils.always("DB: " + dbName);
+					LogUtils.always("PREFS: " + prefsName);
 				} catch (NameNotFoundException e) {
 					throw new RuntimeException(e);
 				}
@@ -248,8 +248,11 @@ public abstract class App extends Application {
 	public static String getAppNameComplete() {
 		return appNameComplete;
 	}
-	public static String getDbName() {
-		return dbName;
+	public static String getPrefsName() {
+		return prefsName;
+	}
+	public static String getPrefsFileName() {
+		return prefsName + ".xml";
 	}
 	protected abstract boolean isProAux();
 	

@@ -146,9 +146,8 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 	
 	public static boolean showStartStopInfoDialogIfInAutoMode() {
 		if (Preferences.get().isAutoModeEnabled()) {
-			SimpleInfoDialog dlg = new SimpleInfoDialog(
-				MainActivity.get(), R.string.txPrefs_InfoAutoModeEnabled);
-			dlg.show();
+			SimpleInfoDialog.show(MainActivity.get(), 
+				R.string.txPrefs_InfoAutoModeEnabled);
 			return true;
 		}
 		return false;

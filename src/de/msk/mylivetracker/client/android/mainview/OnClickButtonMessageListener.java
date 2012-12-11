@@ -42,7 +42,7 @@ public class OnClickButtonMessageListener implements OnClickListener {
 				R.array.transferProtocols)[Preferences.get().getTransferProtocol().ordinal()];
 			String message = mainActivity.getString(
 				R.string.txMainDetails_SendMessageNotSupportedByTransferProtocol, protocol);			
-			new SimpleInfoDialog(activity, message).show();
+			SimpleInfoDialog.show(activity, message);
 		}
 	}
 }

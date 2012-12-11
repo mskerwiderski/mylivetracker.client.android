@@ -8,6 +8,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
+import de.msk.mylivetracker.client.android.App;
+import de.msk.mylivetracker.client.android.dropbox.DropboxUploadTask;
+import de.msk.mylivetracker.client.android.dropbox.DropboxUploadTask.DoInBackgroundInitializer;
+import de.msk.mylivetracker.client.android.dropbox.DropboxUploadTask.LabelDsc;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences.BufferSize;
 import de.msk.mylivetracker.client.android.preferences.Preferences.ConfirmLevel;
@@ -15,6 +19,8 @@ import de.msk.mylivetracker.client.android.preferences.Preferences.TrackingOneTo
 import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.status.PositionBufferInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
+import de.msk.mylivetracker.client.android.util.FileUtils;
+import de.msk.mylivetracker.client.android.util.FileUtils.PathType;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
 
@@ -103,10 +109,9 @@ public class PrefsOtherActivity extends AbstractActivity {
 
 		@Override
 		public void onYes() {			
-			Preferences.reset(this.activity);
-			SimpleInfoDialog dlg = new SimpleInfoDialog(
-				this.activity, R.string.txPrefsOther_InfoResetToFactoryDefaultsDone);
-			dlg.show();
+			Preferences.reset();
+			SimpleInfoDialog.show(this.activity, 
+				R.string.txPrefsOther_InfoResetToFactoryDefaultsDone);
 		}	
 	}
 	
@@ -161,7 +166,47 @@ public class PrefsOtherActivity extends AbstractActivity {
 			dlg.show();			
 		}		
 	}	
-    	
+
+	private static final class BackUpPrefsDialog extends AbstractYesNoDialog {
+
+		private Activity activity;
+				
+		public BackUpPrefsDialog(Activity activity) {
+			super(activity, R.string.txPrefsOther_QuestionBackupPrefs);
+			this.activity = activity;			
+		}
+
+		@Override
+		public void onYes() {			
+			LabelDsc labelDsc = new LabelDsc();
+			labelDsc.labelIdUploadDone = R.string.txPrefsOther_InfoBackupPrefsDone;
+			DropboxUploadTask.execute(this.activity, null, 
+				App.getPrefsFileName(), 
+				new DoInBackgroundInitializer() {
+					@Override
+					public void init(String fileName) {
+						FileUtils.copy(App.getPrefsFileName(), PathType.AppSharedPrefsDir, 
+							App.getPrefsFileName(), PathType.AppDataDir);
+					}
+				}
+			);
+		}	
+	}
+	
+	private static final class OnClickButtonBackupPrefs implements OnClickListener {
+		private Activity activity;
+		
+		private OnClickButtonBackupPrefs(Activity activity) {
+			this.activity = activity;					
+		}
+		
+		@Override
+		public void onClick(View view) {		
+			BackUpPrefsDialog dlg = new BackUpPrefsDialog(this.activity);
+			dlg.show();			
+		}		
+	}	
+
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -193,7 +238,9 @@ public class PrefsOtherActivity extends AbstractActivity {
         spPrefsOther_TrackingOneTouch.setSelection(prefs.getTrackingOneTouchMode().ordinal());
         
         Button btPrefsOther_ResetToFactoryDefaults = (Button)findViewById(R.id.btPrefsOther_ResetToFactoryDefaults);
-        Button btPrefsOther_ResetOverallMileage = (Button)findViewById(R.id.btPrefsOther_ResetOverallMileage);      
+        Button btPrefsOther_ResetOverallMileage = (Button)findViewById(R.id.btPrefsOther_ResetOverallMileage);
+        Button btPrefsOther_BackupPrefs = (Button)findViewById(R.id.btPrefsOther_BackupPrefs);
+        Button btPrefsOther_RestorePrefs = (Button)findViewById(R.id.btPrefsOther_RestorePrefs);
         Button btnPrefsOther_Save = (Button) findViewById(R.id.btPrefsOther_Save);
         Button btnPrefsOther_Cancel = (Button) findViewById(R.id.btPrefsOther_Cancel);
          
@@ -201,6 +248,8 @@ public class PrefsOtherActivity extends AbstractActivity {
 			new OnClickButtonAppReset(this));
         btPrefsOther_ResetOverallMileage.setOnClickListener(
 			new OnClickButtonMileageReset(this));
+        btPrefsOther_BackupPrefs.setOnClickListener(
+			new OnClickButtonBackupPrefs(this));
         btnPrefsOther_Save.setOnClickListener(
 			new OnClickButtonSaveListener(this, prefs,
 				spPrefsOther_MaxPositionBufferSize,

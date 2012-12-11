@@ -87,10 +87,6 @@
         	android:layout_width="fill_parent" 
         />    	    	        
     </LinearLayout>
-    <LinearLayout 
-        android:layout_height="10dip" 
-        android:layout_width="fill_parent" 
-    />
     <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
     	<Button 
     		android:id="@+id/btPrefsOther_ResetOverallMileage"
@@ -109,6 +105,24 @@
     		android:layout_width="fill_parent" 
     	/>    	        
     </LinearLayout>    
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+    	<Button 
+    		android:id="@+id/btPrefsOther_BackupPrefs"
+    		android:text="@string/btPrefsOther_BackupPrefs"
+    		android:layout_gravity="bottom"
+    		android:layout_weight="1"     		 
+    		android:layout_height="wrap_content"
+    		android:layout_width="fill_parent"     		     		 
+    	/>
+    	<Button
+    		android:id="@+id/btPrefsOther_RestorePrefs"
+    		android:text="@string/btPrefsOther_RestorePrefs" 
+    		android:layout_gravity="bottom" 
+    		android:layout_weight="1"
+    		android:layout_height="wrap_content" 
+    		android:layout_width="fill_parent" 
+    	/>    	        
+    </LinearLayout>  
 	<LinearLayout android:layout_height="fill_parent" android:layout_width="fill_parent" >
         <Button
         	android:id="@+id/btPrefsOther_Save"

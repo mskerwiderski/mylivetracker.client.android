@@ -43,27 +43,24 @@ public class ValidatorUtils {
 		String paramName = etHttpParamName.getText().toString();
 		if (StringUtils.isEmpty(paramName)) {
 			valid = false;
-			new SimpleInfoDialog(ctx, 
+			SimpleInfoDialog.show(ctx, 
 				ctx.getString(
 					R.string.validator_valueMustNotBeEmpty, 
-					ctx.getString(R.string.lbPrefsHttpProtocolParams_ParameterName))).
-				show();
+					ctx.getString(R.string.lbPrefsHttpProtocolParams_ParameterName)));
 		}
 		if (!StringUtils.isAlpha(paramName)) {
 			valid = false;
-			new SimpleInfoDialog(ctx, 
+			SimpleInfoDialog.show(ctx, 
 				ctx.getString(
 					R.string.validator_valueMayHaveOnlyAlphaChars, 
-					ctx.getString(R.string.lbPrefsHttpProtocolParams_ParameterName))).
-				show();
+					ctx.getString(R.string.lbPrefsHttpProtocolParams_ParameterName)));
 		}
 		if (httpProtocolParams.paramNameExistsOutsidePosition(paramName, position)) {
 			valid = false;
-			new SimpleInfoDialog(ctx, 
+			SimpleInfoDialog.show(ctx, 
 				ctx.getString(
 					R.string.validator_valueAlreadyExists, 
-					ctx.getString(R.string.lbPrefsHttpProtocolParams_ParameterName))).
-				show();
+					ctx.getString(R.string.lbPrefsHttpProtocolParams_ParameterName)));
 		}
 		return valid;
 	}
@@ -80,7 +77,7 @@ public class ValidatorUtils {
 			etPinCode.getText().toString(), 
 			Preferences.get().getPinCode());
 		if (!valid) {
-			new SimpleInfoDialog(ctx, R.string.validator_pinCodeInvalid).show();
+			SimpleInfoDialog.show(ctx, R.string.validator_pinCodeInvalid);
 		}
 		return valid;
 	}
@@ -100,7 +97,7 @@ public class ValidatorUtils {
 			etPinCode.getText().toString(), 
 			etPinCodeReentered.getText().toString());
 		if (!valid) {
-			new SimpleInfoDialog(ctx, R.string.validator_reenteredPinCodeNotEqualToPinCode).show();
+			SimpleInfoDialog.show(ctx, R.string.validator_reenteredPinCodeNotEqualToPinCode);
 		}
 		return valid;
 	}
@@ -111,7 +108,7 @@ public class ValidatorUtils {
 			String message = 
 				ctx.getString(R.string.validator_locationProviderNotSupported, 
 				localizationModeDisplayName);
-			new SimpleInfoDialog(ctx, message).show();
+			SimpleInfoDialog.show(ctx, message);
 			return false;
 		}
 		return true;
@@ -131,7 +128,7 @@ public class ValidatorUtils {
 			String message = 
 				ctx.getString(R.string.validator_phoneNumberInvalid, 
 				ctx.getString(label));
-			new SimpleInfoDialog(ctx, message).show();
+			SimpleInfoDialog.show(ctx, message);
 		}
 		if (!valid && setFocusIfInvalid) {
 			editText.requestFocus();
@@ -169,7 +166,7 @@ public class ValidatorUtils {
 			String message = 
 				ctx.getString(R.string.validator_valueMustNotBeEmpty, 
 				ctx.getString(label));
-			new SimpleInfoDialog(ctx, message).show();
+			SimpleInfoDialog.show(ctx, message);
 			return false;
 		}
 		if ((valueStr.length() < minLength) || 
@@ -178,7 +175,7 @@ public class ValidatorUtils {
 				ctx.getString(R.string.validator_valueMustBeInRange, 
 				ctx.getString(label), minLength, 
 				(maxLength >= minLength ? maxLength : "..."));
-			new SimpleInfoDialog(ctx, message).show();
+			SimpleInfoDialog.show(ctx, message);
 			return false;
 		}
 		return true;
@@ -216,7 +213,7 @@ public class ValidatorUtils {
 			String message = 
 				ctx.getString(R.string.validator_valueMustNotBeEmpty, 
 				ctx.getString(label));
-			new SimpleInfoDialog(ctx, message).show();
+			SimpleInfoDialog.show(ctx, message);
 			return false;
 		}
 		long value = -1;
@@ -226,14 +223,14 @@ public class ValidatorUtils {
 			String message =
 				ctx.getString(R.string.validator_valueMustBeANumber,
 				ctx.getString(label));
-			new SimpleInfoDialog(ctx, message).show();
+			SimpleInfoDialog.show(ctx, message);
 			return false;
 		}
 		if ((value < minDigit) || (value > maxDigit)) {
 			String message = 
 				ctx.getString(R.string.validator_valueMustBeInRange, 
 				ctx.getString(label), minDigit, maxDigit);
-			new SimpleInfoDialog(ctx, message).show();
+			SimpleInfoDialog.show(ctx, message);
 			return false;
 		}
 		return true;

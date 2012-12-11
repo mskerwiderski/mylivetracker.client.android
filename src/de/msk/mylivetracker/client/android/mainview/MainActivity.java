@@ -237,10 +237,8 @@ public class MainActivity extends AbstractMainActivity {
 			new OnClickButtonNetworkListener());
 		
 		if (Preferences.firstStartOfApp()) {
-			SimpleInfoDialog welcomeDlg = 
-				new SimpleInfoDialog(this, 
-					R.string.welcomeMessage, App.getAppNameComplete());
-			welcomeDlg.show();
+			SimpleInfoDialog.show(this, 
+				R.string.welcomeMessage, App.getAppNameComplete());
 		}
 		
 		AbstractService.startService(AutoService.class);

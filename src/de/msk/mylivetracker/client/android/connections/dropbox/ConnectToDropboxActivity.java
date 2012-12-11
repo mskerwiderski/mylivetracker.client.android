@@ -52,9 +52,8 @@ public class ConnectToDropboxActivity extends AbstractActivity {
 		public void onClick(View v) {
 			Preferences prefs = Preferences.get();
 			if (prefs.hasValidDropboxDetails()) {
-				SimpleInfoDialog dlg = new SimpleInfoDialog(
-					this.activity, R.string.txConnectToDropbox_ConnectionExists);
-				dlg.show();
+				SimpleInfoDialog.show(this.activity, 
+					R.string.txConnectToDropbox_ConnectionExists);
 			} else {
 				ConnectDialog dlg = new ConnectDialog(this.activity);
 				dlg.show();
@@ -88,9 +87,8 @@ public class ConnectToDropboxActivity extends AbstractActivity {
 		public void onClick(View v) {
 			Preferences prefs = Preferences.get();
 			if (!prefs.hasValidDropboxDetails()) {
-				SimpleInfoDialog dlg = new SimpleInfoDialog(
-					this.activity, R.string.txConnectToDropbox_NoConnectionExists);
-				dlg.show();
+				SimpleInfoDialog.show(this.activity, 
+					R.string.txConnectToDropbox_NoConnectionExists);
 			} else {
 				ReleaseDialog dlg = new ReleaseDialog(this.activity);
 				dlg.show();
@@ -117,9 +115,7 @@ public class ConnectToDropboxActivity extends AbstractActivity {
 		Integer infoMsgId = 
 			DropboxUtils.completeAuthenticationIfStarted();
 		if (infoMsgId != null) {
-			SimpleInfoDialog dlg = 
-				new SimpleInfoDialog(this, infoMsgId);
-			dlg.show();
+			SimpleInfoDialog.show(this, infoMsgId);
 		}
 		updateConnectionStatus(this);
 	}

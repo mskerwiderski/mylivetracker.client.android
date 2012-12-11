@@ -1,6 +1,5 @@
 package de.msk.mylivetracker.client.android.preferences;
 
-import android.content.Context;
 import android.location.LocationManager;
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
@@ -28,11 +27,11 @@ import de.msk.mylivetracker.client.android.pro.R;
  */
 public class PreferencesCreator {
 
-	public static Preferences create(Context context) {
-		return createDefault(context);
+	public static Preferences create() {
+		return createDefault();
 	}
 	
-	private static Preferences createDefault(Context context) {
+	private static Preferences createDefault() {
 		Preferences prefs = new Preferences();
 		prefs.versionApp = App.getVersionDsc();
 		prefs.firstStartOfApp = true;

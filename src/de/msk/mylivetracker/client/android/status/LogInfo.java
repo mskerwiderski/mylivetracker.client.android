@@ -10,6 +10,7 @@ import android.content.Context;
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.util.FileUtils;
+import de.msk.mylivetracker.client.android.util.FileUtils.PathType;
 import de.msk.mylivetracker.client.android.util.FormatUtils;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;
 
@@ -43,7 +44,8 @@ public class LogInfo {
 		try {
 			String srcFileName = TrackStatus.get().getLogFileName();
 			App.get().deleteFile(gpxFileName);
-			FileUtils.copy(srcFileName, gpxFileName);
+			FileUtils.copy(srcFileName, PathType.AppDataDir, 
+				gpxFileName, PathType.AppDataDir);
 			fos = App.get().openFileOutput(
 				gpxFileName, Context.MODE_APPEND | Context.MODE_PRIVATE);
 			fos.write(GPX_FOOTER_TEMPLATE.getBytes());
@@ -57,7 +59,8 @@ public class LogInfo {
 	public static void exportGpxFileOfCurrentTrackToExternalStorage() {
 		String gpxFileName = createGpxFileNameOfCurrentTrack();
 		createGpxFileOfCurrentTrack(gpxFileName);
-		FileUtils.copyToExternalStorage(gpxFileName, gpxFileName);
+		FileUtils.copy(gpxFileName, PathType.AppDataDir, 
+			gpxFileName, PathType.ExternalStorage);
 	}
 	
 	public static boolean logFileExists() {

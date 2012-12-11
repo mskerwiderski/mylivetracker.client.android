@@ -23,7 +23,7 @@ public class LaunchAppBroadcast extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent unused) {
 		LogUtils.info(LaunchAppBroadcast.class, "onReceive called.");
-		Preferences prefs = Preferences.get(context);
+		Preferences prefs = Preferences.get();
 		if (prefs.isAutoStartEnabled()) {
 			// start MainActivity.
 			Intent intent = new Intent(context, MainActivity.class);

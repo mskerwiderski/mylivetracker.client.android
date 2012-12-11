@@ -40,16 +40,25 @@ public class FileUtils {
 		}
 		return externalStorageAvailable && externalStorageWriteable;
 	}
+
+	public enum PathType {
+		AppDataDir,
+		AppSharedPrefsDir,
+		ExternalStorage
+	}
 	
-	private static String getPathFileName(String fileName, boolean useExternalStorage) {
+	private static String getPathFileName(String fileName, PathType pathType) {
 		if (StringUtils.isEmpty(fileName)) {
 			throw new IllegalArgumentException("fileName must not be empty.");
 		}
-		if (useExternalStorage && !externalStorageUsable()) {
+		if (pathType == null) {
+			throw new IllegalArgumentException("pathType must not be null.");
+		}
+		if (pathType.equals(PathType.ExternalStorage) && !externalStorageUsable()) {
 			throw new IllegalArgumentException("external storage is not available.");
 		}
 		String pathFileName = App.get().getFilesDir().getAbsolutePath();
-		if (useExternalStorage) {
+		if (pathType.equals(PathType.ExternalStorage)) {
 			String mltDir = Environment.getExternalStorageDirectory().getAbsolutePath();
 			if (!StringUtils.endsWith(mltDir, "/")) {
 				mltDir += "/";
@@ -57,18 +66,21 @@ public class FileUtils {
 			mltDir += "data/" + App.getAppName() + "/";
 			new File(mltDir).mkdirs();
 			pathFileName = mltDir;
+		} else if (pathType.equals(PathType.AppSharedPrefsDir)) {
+			pathFileName = StringUtils.replace(pathFileName, "files", "shared_prefs");
 		}
 		if (!StringUtils.endsWith(pathFileName, "/")) {
 			pathFileName += "/";
 		}
-		return pathFileName + fileName;
+		pathFileName += fileName;
+		return pathFileName;
 	}
 	
 	public static boolean fileExists(String fileName) {
 		if (StringUtils.isEmpty(fileName)) {
 			throw new IllegalArgumentException("fileName must not be empty.");
 		}
-		File file = new File(getPathFileName(fileName, false));
+		File file = new File(getPathFileName(fileName, PathType.AppDataDir));
 		return file.exists();
 	}
 	
@@ -76,32 +88,27 @@ public class FileUtils {
 		if (StringUtils.isEmpty(fileName)) {
 			throw new IllegalArgumentException("fileName must not be empty.");
 		}
-		File file = new File(getPathFileName(fileName, false));
+		File file = new File(getPathFileName(fileName, PathType.AppDataDir));
 		return file.length();
 	}
 	
-	public static void copyToExternalStorage(String srcFileName, String destFileName) {
+	public static void copy(String srcFileName, PathType srcPathType, 
+		String destFileName, PathType destPathType) {
 		if (StringUtils.isEmpty(srcFileName)) {
 			throw new IllegalArgumentException("srcFileName must not be empty.");
+		}
+		if (srcPathType == null) {
+			throw new IllegalArgumentException("srcPathType must not be null.");
 		}
 		if (StringUtils.isEmpty(destFileName)) {
 			throw new IllegalArgumentException("destFileName must not be empty.");
 		}
-		copyAux(
-			new File(getPathFileName(srcFileName, false)), 
-			new File(getPathFileName(destFileName, true)));
-	}
-	
-	public static void copy(String srcFileName, String destFileName) {
-		if (StringUtils.isEmpty(srcFileName)) {
-			throw new IllegalArgumentException("srcFileName must not be empty.");
-		}
-		if (StringUtils.isEmpty(destFileName)) {
-			throw new IllegalArgumentException("destFileName must not be empty.");
+		if (destPathType == null) {
+			throw new IllegalArgumentException("destPathType must not be null.");
 		}
 		copyAux(
-			new File(getPathFileName(srcFileName, false)), 
-			new File(getPathFileName(destFileName, false)));
+			new File(getPathFileName(srcFileName, srcPathType)), 
+			new File(getPathFileName(destFileName, destPathType)));
 	}
 	
 	private static void copyAux(File src, File dest) {

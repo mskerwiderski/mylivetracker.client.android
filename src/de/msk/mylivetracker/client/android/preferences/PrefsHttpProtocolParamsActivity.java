@@ -118,9 +118,8 @@ public class PrefsHttpProtocolParamsActivity extends AbstractActivity {
 			httpProtocolParamsCopy = this.preferences.getHttpProtocolParams().copy();
 			currSelectedId = 0;
 			spPrefsHttpProtocolParams_Parameter.setSelection(currSelectedId);
-			SimpleInfoDialog dlg = new SimpleInfoDialog(
-				this.activity, R.string.txPrefsHttpProtocolParams_InfoResetToDefaultsDone);
-			dlg.show();
+			SimpleInfoDialog.show(this.activity, 
+				R.string.txPrefsHttpProtocolParams_InfoResetToDefaultsDone);
 		}	
 	}
 	
