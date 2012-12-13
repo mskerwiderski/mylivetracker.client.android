@@ -74,7 +74,6 @@
     
     <!-- antPlus -->
     <string name="antPlus_NotSupported">ANT+ wird nicht unterstützt!</string>
-    <string name="antPlus_InstallInfo">Es muss der ANT+ Radio Service installiert werden, bevor der ANT+ Chip genutzt werden kann!</string>
     <string name="antPlus_InitError">ANT+ Initialisierung fehlgeschlagen</string>
     <string name="antPlus_InUse">ANT+ Radio Service ist in Gebrauch</string>
     <string name="antPlus_Disabled">ANT+ Radio Servce ist deaktiviert!</string>
@@ -105,10 +104,12 @@
     <string name="tvMain_LocalizationIndicator">Pos</string>
     <string name="tvMain_WirelessLanIndicator">WLAN</string>
     <string name="tvMain_MobileNetworkIndicator">Daten</string>
-    <string name="btMain_LocationListener">Lokalisierung</string>
+    <string name="btMain_LocationListener">Lok.</string>
     <string name="btMain_Tracking">Tracking</string>    
-    <string name="btMain_ResetTrack">Zurücksetzen</string>
+    <string name="btMain_ResetTrack">Reset</string>
     <string name="btMain_AntPlus">ANT+</string>
+    <string name="btMain_SendSos">SOS</string>
+    <string name="btMain_SendMessage">Nachricht</string>
     <string name="tvMain_Runtime">Laufzeit</string>
     <string name="tvMain_Distance">Distanz</string>
     <string name="tvMain_Heartrate">Puls</string>
@@ -131,11 +132,11 @@
     <string name="txMain_InfoSendSosSignalDone">Ein SOS Signal wurde gesendet!</string>    
     <string name="txMain_QuestionExit">Wollen Sie MyLiveTracker wirklich beenden?</string>    
     <string name="txMain_InfoExitApp">MyLiveTracker wird beendet...</string>
+    <string name="txMain_SendMessageNotSupportedByTransferProtocol">Der Nachrichtenversand wird vom eingestellten Übertragungsprotokoll (%1$s) nicht unterstützt.</string>
+    <string name="txMain_SendEmergencySignalNotSupportedByTransferProtocol">Der Versand von Notrufsignalen wird vom eingestellten Übertragungsprotokoll (%1$s) nicht unterstützt.</string>    
     
     <!-- main details -->
     <string name="tiMainDetails">Details</string>
-    <string name="btMainDetails_SendSos">SOS</string>
-    <string name="btMainDetails_SendMessage">Nachricht</string>
     <string name="tvMainDetails_Uploader">Upl</string>
     <string name="tvMainDetails_UploaderCountUploaded">Count</string>
     <string name="tvMainDetails_UploaderRealInterval">Intv</string>
@@ -163,8 +164,6 @@
     <string name="tvMainDetails_HeartrateMaximum">Max</string>
     <string name="tvMainDetails_Message">Msg</string>
     <string name="tvMainDetails_Emergency">SOS</string>
-    <string name="txMainDetails_SendMessageNotSupportedByTransferProtocol">Der Nachrichtenversand wird vom eingestellten Übertragungsprotokoll (%1$s) nicht unterstützt.</string>
-    <string name="txMainDetails_SendEmergencySignalNotSupportedByTransferProtocol">Der Versand von Notrufsignalen wird vom eingestellten Übertragungsprotokoll (%1$s) nicht unterstützt.</string>    
     
     <!-- message -->
     <string name="tiMsg">Nachrichtenversand</string>

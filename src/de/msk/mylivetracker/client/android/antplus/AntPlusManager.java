@@ -1,4 +1,4 @@
-package de.msk.mylivetracker.client.android.listener;
+package de.msk.mylivetracker.client.android.antplus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,10 +53,12 @@ public class AntPlusManager implements Callback {
 
 	public static AntPlusManager get() {
 		if (antPlusManager == null) {
-			antPlusManager = new AntPlusManager();			
+			antPlusManager = new AntPlusManager();
+			antPlusManager.setListener(AntPlusListener.get());
 		} 
 		return antPlusManager;
 	}
+	
 	
 	public void setListener(IAntPlusListener antPlusListener) {
 		this.antPlusListener = antPlusListener;
@@ -68,8 +70,7 @@ public class AntPlusManager implements Callback {
 	
 	public void requestSensorUpdates(
 		IAntPlusSensorListener antPlusSensorListener) {
-		WFHardwareConnector antPlusHwConnector =
-			MainActivity.get().getAntPlusHwConnector();
+		WFHardwareConnector antPlusHwConnector = AntPlusHardware.getConn();
 		WFSensorConnection connection = null;
 		ConnDsc connDsc = connMap.get(antPlusSensorListener.getSensorType());
 		if (connDsc != null) {
@@ -154,7 +155,7 @@ public class AntPlusManager implements Callback {
 				if (this.antPlusListener != null) {
 					this.antPlusListener.onAntPlusError(error);
 				}
-				MainActivity.get().getAntPlusHwConnector().forceAntConnection(
+				AntPlusHardware.getConn().forceAntConnection(
 					MainActivity.get().getString(R.string.app_name));
 			break;
 		}
@@ -175,7 +176,7 @@ public class AntPlusManager implements Callback {
 	public void hwConnConnectionRestored() {
 		for (Short sensorType : connMap.keySet()) {
 			WFSensorConnection[] connections = 
-				MainActivity.get().getAntPlusHwConnector().
+				AntPlusHardware.getConn().
 				getSensorConnections(sensorType);
 			if (connections != null) {
 				WFSensorConnection connection = 
@@ -201,7 +202,7 @@ public class AntPlusManager implements Callback {
 	public void hwConnHasData() {
 		for (Short sensorType : connMap.keySet()) {
 			WFSensorConnection[] connections = 
-				MainActivity.get().getAntPlusHwConnector().
+				AntPlusHardware.getConn().
 				getSensorConnections(sensorType);
 			if ((connections != null) && (connections[0] != null)) {
 				connMap.get(sensorType).getListener().onHasData();				

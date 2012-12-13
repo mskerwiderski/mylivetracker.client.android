@@ -2,8 +2,6 @@ package de.msk.mylivetracker.client.android.mainview;
 
 import java.util.Locale;
 
-import org.apache.commons.lang.StringUtils;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -17,20 +15,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
-
-import com.wahoofitness.api.WFAntException;
-import com.wahoofitness.api.WFAntNotSupportedException;
-import com.wahoofitness.api.WFAntServiceNotInstalledException;
-import com.wahoofitness.api.WFDisplaySettings;
-import com.wahoofitness.api.WFHardwareConnector;
-
 import de.msk.mylivetracker.client.android.App;
+import de.msk.mylivetracker.client.android.antplus.AntPlusHardware;
+import de.msk.mylivetracker.client.android.antplus.AntPlusHeartrateListener;
+import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
 import de.msk.mylivetracker.client.android.automode.AutoService;
-import de.msk.mylivetracker.client.android.listener.AntPlusHeartrateListener;
-import de.msk.mylivetracker.client.android.listener.AntPlusListener;
-import de.msk.mylivetracker.client.android.listener.AntPlusManager;
 import de.msk.mylivetracker.client.android.listener.GpsStateListener;
 import de.msk.mylivetracker.client.android.listener.LocationListener;
 import de.msk.mylivetracker.client.android.listener.PhoneStateListener;
@@ -89,86 +79,9 @@ public class MainActivity extends AbstractMainActivity {
         mainActivity = this;         
         this.setTitle(R.string.tiMain);
         TrackStatus.loadTrackStatus();
-		Context context = this.getApplicationContext();
-		AntPlusManager antPlusListener = AntPlusManager.get();
-		
-		String statusStr = null;
-		// check for ANT hardware support.
-        if (isAntPlusSupported()) {
-	        try {
-	        	boolean bResumed = false;
-	        	// attempt to retrieve the previously suspended WFHardwareConnector instance.
-	        	//
-	        	// see the onRetainNonConfigurationInstance method.
-	        	this.antPlusHwConnector = (WFHardwareConnector)
-	        		this.getLastNonConfigurationInstance();
-	        	if (this.antPlusHwConnector != null) {
-	        		// attempt to resume the WFHardwareConnector instance.
-	        		if (!(bResumed = this.antPlusHwConnector.resume(antPlusListener))) {
-	        			// if the WFHardwareConnector instance failed to resume,
-	        			// it must be re-initialized.
-	        			this.antPlusHwConnector.connectAnt();
-	        		}
-	        	}
-	        	// if there is no suspended WFHardwareConnector instance,
-	        	// configure the singleton instance.
-	        	else {
-			         // get the hardware connector singleton instance.
-	        		this.antPlusHwConnector = WFHardwareConnector.getInstance(
-			        	this, antPlusListener);
-	        		this.antPlusHwConnector.connectAnt();
-	        	}
-		        // restore connection state only if the previous
-		        // WFHardwareConnector instance was not resumed.
-		        if (!bResumed) {
-			        // the connection state is cached in the state
-			        // bundle (onSaveInstanceState).  this is used to
-			        // restore previous connections.  if the Bundle
-			        // is null, no connections are configured.
-		        	this.antPlusHwConnector.restoreInstanceState(savedInstanceState);
-		        }
-		        // configure the display settings.
-		        //
-		        // this demonstrates how to use the display
-		        // settings.  if this step is skipped, the
-		        // default settings will be used.
-		        WFDisplaySettings settings = this.antPlusHwConnector.getDisplaySettings();
-		        settings.staleDataTimeout = 5.0f;          // seconds, default = 5
-		        settings.staleDataString = "--";           // string to display when data is stale, default = "--"
-		        settings.useMetricUnits = true;            // display metric units, default = false
-		        settings.bikeWheelCircumference = 2.07f;   // meters, default = 2.07
-		        settings.bikeCoastingTimeout = 3.0f;       // seconds, default = 3    
-		        this.antPlusHwConnector.setDisplaySettings(settings);
-	        } catch (WFAntNotSupportedException nse) {
-	        	// ANT hardware not supported.
-	        	statusStr = this.getString(R.string.antPlus_NotSupported);
-	        } catch (WFAntServiceNotInstalledException nie) {
-
-				Toast installNotification = Toast.makeText(context, 
-					this.getString(R.string.antPlus_InstallInfo),
-					Toast.LENGTH_LONG);
-				installNotification.show();
-
-				// open the Market Place app, search for the ANT Radio service.
-				this.antPlusHwConnector.destroy();
-				this.antPlusHwConnector = null;
-				WFHardwareConnector.installAntService(context);
-
-				// close this app.
-				this.finish();
-	        } catch (WFAntException e) {
-	        	statusStr = this.getString(R.string.antPlus_InitError);
-			} catch (Exception e) {
-				statusStr = this.getString(R.string.antPlus_InitError);
-			}
-        } else {
-        	// ANT hardware not supported.
-        	statusStr = this.getString(R.string.antPlus_NotSupported);
-        }  
-        if (!StringUtils.isEmpty(statusStr)) {
-        	TrackStatus.get().setAntPlusStatus(statusStr);
-        }                      
         
+        AntPlusHardware.init(this.getLastNonConfigurationInstance(), savedInstanceState);
+
         this.onResume();
         
         this.startPhoneStateListener();
@@ -181,12 +94,17 @@ public class MainActivity extends AbstractMainActivity {
 		this.getUiBtReset().setOnClickListener(
 			new OnClickButtonResetListener());
 		
-		if (this.isAntPlusSupported()) {
+		if (AntPlusHardware.initialized()) {
 			this.getUiBtConnectDisconnectAnt().setOnClickListener(
 				new OnClickButtonAntPlusListener());
 		} else {
 			this.getUiBtConnectDisconnectAnt().setVisibility(View.GONE);
 		}
+		
+		((Button)findViewById(R.id.btMain_SendSos)).setOnClickListener(
+			new OnClickButtonSosListener(this));
+		((Button)findViewById(R.id.btMain_SendMessage)).setOnClickListener(
+			new OnClickButtonMessageListener(this));
 		
 		TextView tvAutoStartIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_AutoStartIndicator);
 		tvAutoStartIndicator.setOnClickListener(
@@ -291,7 +209,7 @@ public class MainActivity extends AbstractMainActivity {
         }		
         
         Button btConnectDisconnectAnt = this.getUiBtConnectDisconnectAnt();
-		if (!this.isAntPlusSupported()) {
+		if (!AntPlusHardware.initialized()) {
         	btConnectDisconnectAnt.setClickable(false);
         } else {
         	btConnectDisconnectAnt.setClickable(true);
@@ -322,7 +240,6 @@ public class MainActivity extends AbstractMainActivity {
 	
 	private ConnectivityManager connectivityManager = null;
 	private TelephonyManager telephonyManager = null;	
-	private AntPlusManager antPlusManager = null;
 	
 	public boolean isDataConnectionActive() {
 		boolean res = false;
@@ -374,25 +291,6 @@ public class MainActivity extends AbstractMainActivity {
 		int phoneType = getTelephonyManager().getPhoneType();
 		isPhoneTypeGsm = (phoneType == TelephonyManager.PHONE_TYPE_GSM);
 		return isPhoneTypeGsm();
-	}
-	
-	private WFHardwareConnector antPlusHwConnector;
-	public boolean isAntPlusSupported() {
-		return WFHardwareConnector.hasAntSupport(
-			this.getApplicationContext());
-	}
-	public WFHardwareConnector getAntPlusHwConnector() {
-		if (!isAntPlusSupported()) {
-			return null;
-		}
-		return this.antPlusHwConnector;
-	}
-	public AntPlusManager getAntPlusManager() {
-		if (this.antPlusManager == null) {
-			this.antPlusManager = AntPlusManager.get();
-			this.antPlusManager.setListener(AntPlusListener.get());
-		}
-		return this.antPlusManager;
 	}
 	
 	public void startBatteryReceiver() {
@@ -448,12 +346,12 @@ public class MainActivity extends AbstractMainActivity {
 	}
 	
 	public void startAntPlusHeartrateListener() {
-		this.getAntPlusManager().requestSensorUpdates(
+		AntPlusManager.get().requestSensorUpdates(
 			AntPlusHeartrateListener.get());
 	}
 	
 	public void stopAntPlusHeartrateListener() {
-		this.getAntPlusManager().removeUpdates(
+		AntPlusManager.get().removeUpdates(
 			AntPlusHeartrateListener.get());
 	}
 	

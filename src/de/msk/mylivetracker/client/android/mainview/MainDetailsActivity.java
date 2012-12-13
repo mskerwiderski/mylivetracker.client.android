@@ -1,7 +1,6 @@
 package de.msk.mylivetracker.client.android.mainview;
 
 import android.os.Bundle;
-import android.widget.Button;
 import de.msk.mylivetracker.client.android.pro.R;
 
 /**
@@ -48,11 +47,6 @@ public class MainDetailsActivity extends AbstractMainActivity {
 		mainDetailsActivity = this;
 		
 		this.setTitle(R.string.tiMainDetails);
-		
-		((Button)findViewById(R.id.btMainDetails_SendSos)).setOnClickListener(
-			new OnClickButtonSosListener(this));
-		((Button)findViewById(R.id.btMainDetails_SendMessage)).setOnClickListener(
-			new OnClickButtonMessageListener(this));			
 	}
 
 	/* (non-Javadoc)

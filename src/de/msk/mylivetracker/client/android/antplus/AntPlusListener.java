@@ -1,4 +1,4 @@
-package de.msk.mylivetracker.client.android.listener;
+package de.msk.mylivetracker.client.android.antplus;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -77,7 +77,7 @@ public class AntPlusListener implements IAntPlusListener {
 		String statusStr = null;
 		switch (state) {
 			case WF_HARDWARE_STATE_DISABLED:
-	        	if (MainActivity.get().isAntPlusSupported()) {
+	        	if (AntPlusHardware.supported()) {
 	        		statusStr = MainActivity.get().getString(R.string.antPlus_Disabled);
 	        	}
 	        	else {

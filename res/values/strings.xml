@@ -74,7 +74,6 @@
     	   
     <!-- antPlus -->
     <string name="antPlus_NotSupported">ANT+ not supported!</string>
-    <string name="antPlus_InstallInfo">You must install the ANT+ radio service to interface to the ANT+ hardware!</string>
     <string name="antPlus_InitError">ANT+ initialization error!</string>
     <string name="antPlus_InUse">ANT+ radio service in use!</string>
     <string name="antPlus_Disabled">ANT+ radio service disabled!</string>
@@ -105,10 +104,12 @@
     <string name="tvMain_LocalizationIndicator">Pos</string>
     <string name="tvMain_WirelessLanIndicator">WLAN</string>
     <string name="tvMain_MobileNetworkIndicator">Data</string>
-    <string name="btMain_LocationListener">Localization</string>
+    <string name="btMain_LocationListener">Loc.</string>
     <string name="btMain_Tracking">Tracking</string>    
-    <string name="btMain_ResetTrack">Reset Track</string>
+    <string name="btMain_ResetTrack">Reset</string>
     <string name="btMain_AntPlus">ANT+</string>
+    <string name="btMain_SendSos">SOS</string>
+    <string name="btMain_SendMessage">Message</string>
     <string name="tvMain_Runtime">Runtime</string>
     <string name="tvMain_Distance">Distance</string>
     <string name="tvMain_Heartrate">Heartrate</string>
@@ -131,11 +132,11 @@
     <string name="txMain_InfoSendSosSignalDone">Send SOS signal done!</string>    
     <string name="txMain_QuestionExit">Do you really want to exit MyLiveTracker?</string>   
     <string name="txMain_InfoExitApp">MyLiveTracker is terminated...</string>
+    <string name="txMain_SendMessageNotSupportedByTransferProtocol">Send messages is not supported by selected transfer protocol (%1$s).</string>
+    <string name="txMain_SendEmergencySignalNotSupportedByTransferProtocol">Send SOS signals is not supported by selected transfer protocol (%1$s).</string>
     
     <!-- main details -->
     <string name="tiMainDetails">Details</string>
-    <string name="btMainDetails_SendSos">SOS</string>
-    <string name="btMainDetails_SendMessage">Message</string>
     <string name="tvMainDetails_Uploader">Upl</string>
     <string name="tvMainDetails_UploaderCountUploaded">Count</string>
     <string name="tvMainDetails_UploaderRealInterval">Intv</string>
@@ -163,8 +164,6 @@
     <string name="tvMainDetails_HeartrateMaximum">Max</string>
     <string name="tvMainDetails_Message">Msg</string>
     <string name="tvMainDetails_Emergency">SOS</string>
-    <string name="txMainDetails_SendMessageNotSupportedByTransferProtocol">Send messages is not supported by selected transfer protocol (%1$s).</string>
-    <string name="txMainDetails_SendEmergencySignalNotSupportedByTransferProtocol">Send SOS signals is not supported by selected transfer protocol (%1$s).</string>
     
     <!-- message -->
     <string name="tiMsg">Send message</string>

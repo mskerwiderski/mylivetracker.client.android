@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="de.msk.mylivetracker.client.android.pro" 
-      android:versionName="1.5.0 AI" 
+      android:versionName="1.5.0.4 AI" 
       android:versionCode="150">       
     <uses-sdk android:minSdkVersion="7" />
     <application 

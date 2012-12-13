@@ -1,4 +1,4 @@
-package de.msk.mylivetracker.client.android.listener;
+package de.msk.mylivetracker.client.android.antplus;
 
 import com.wahoofitness.api.comm.WFSensorConnection;
 import com.wahoofitness.api.comm.WFSensorConnection.Callback;

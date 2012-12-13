@@ -4,6 +4,7 @@ import org.apache.commons.lang.StringUtils;
 
 import android.content.res.Resources;
 import android.widget.TextView;
+import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
 import de.msk.mylivetracker.client.android.listener.LocationListener;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
@@ -151,16 +152,16 @@ public class MainViewUpdater implements Runnable {
 		
 		// heartrate
 		TextView tvHeartrate = UpdaterUtils.tv(mainActivity, R.id.tvMain_Heartrate);								
-		if (mainActivity.getAntPlusManager().hasSensorListeners() &&
+		if (AntPlusManager.get().hasSensorListeners() &&
 			(heartrateInfo != null) && heartrateInfo.isUpToDate()) {
 			tvHeartrate.setBackgroundColor(res.getColor(R.color.colorAntPlListValueValid));
 			tvHeartrate.setText(getHeartrateCurrentStr(heartrateInfo));
-		} else if (mainActivity.getAntPlusManager().hasSensorListeners() &&
+		} else if (AntPlusManager.get().hasSensorListeners() &&
 			StringUtils.equals(status.getAntPlusHeartrateStatus(), 
 				mainActivity.getText(R.string.antPlus_ConnStateConnected).toString())) {
 			tvHeartrate.setBackgroundColor(res.getColor(R.color.colorAntPlListConnected));
 			tvHeartrate.setText(status.getAntPlusHeartrateStatus());
-		} else if (mainActivity.getAntPlusManager().hasSensorListeners() &&
+		} else if (AntPlusManager.get().hasSensorListeners() &&
 			StringUtils.equals(status.getAntPlusHeartrateStatus(), 
 				mainActivity.getText(R.string.antPlus_ConnStateConnecting).toString())) {
 			tvHeartrate.setBackgroundColor(res.getColor(R.color.colorAntPlListConnecting));

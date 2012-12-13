@@ -2,6 +2,7 @@ package de.msk.mylivetracker.client.android.mainview;
 
 import android.view.View;
 import android.view.View.OnClickListener;
+import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
 import de.msk.mylivetracker.client.android.preferences.Preferences;
 import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
@@ -28,7 +29,7 @@ public class OnClickButtonAntPlusListener implements OnClickListener {
 				
 		public StartStopAntPlusDialog(MainActivity activity) {
 			super(activity,
-				activity.getAntPlusManager().hasSensorListeners() ? 	
+				AntPlusManager.get().hasSensorListeners() ? 	
 				R.string.txMain_QuestionStopAntPlus :
 				R.string.txMain_QuestionStartAntPlus);
 			this.activity = activity;			
@@ -36,7 +37,7 @@ public class OnClickButtonAntPlusListener implements OnClickListener {
 
 		@Override
 		public void onYes() {		
-			startStopAntPlus(activity, !activity.getAntPlusManager().hasSensorListeners());
+			startStopAntPlus(activity, !AntPlusManager.get().hasSensorListeners());
 		}
 
 		/* (non-Javadoc)
@@ -45,7 +46,7 @@ public class OnClickButtonAntPlusListener implements OnClickListener {
 		@Override
 		public void onNo() {
 			this.activity.getUiBtConnectDisconnectAnt().setChecked(
-				activity.getAntPlusManager().hasSensorListeners());
+				AntPlusManager.get().hasSensorListeners());
 		}			
 	}
 	
@@ -57,25 +58,26 @@ public class OnClickButtonAntPlusListener implements OnClickListener {
 		MainActivity activity = MainActivity.get();
 		if (MainActivity.showStartStopInfoDialogIfInAutoMode()) {
 			activity.getUiBtConnectDisconnectAnt().setChecked(
-				activity.getAntPlusManager().hasSensorListeners());
+				AntPlusManager.get().hasSensorListeners());
 			return;
 		}
 		if (Preferences.get().getConfirmLevel().isHigh()) {
 			StartStopAntPlusDialog dlg = new StartStopAntPlusDialog(activity);
 			dlg.show();
 		} else {
-			startStopAntPlus(activity, !activity.getAntPlusManager().hasSensorListeners());
+			startStopAntPlus(activity, 
+				!AntPlusManager.get().hasSensorListeners());
 		}
 	}
 	
 	public static void startStopAntPlus(MainActivity activity, boolean start) {
-		if (!start && activity.getAntPlusManager().hasSensorListeners()) {
+		if (!start && AntPlusManager.get().hasSensorListeners()) {
 			activity.stopAntPlusHeartrateListener();
-		} else if (start && !activity.getAntPlusManager().hasSensorListeners()) {
+		} else if (start && !AntPlusManager.get().hasSensorListeners()) {
 			activity.startAntPlusHeartrateListener();
 		}			
 		activity.getUiBtConnectDisconnectAnt().setChecked(
-			activity.getAntPlusManager().hasSensorListeners());
+			AntPlusManager.get().hasSensorListeners());
 		activity.updateView();
 	}
 }
