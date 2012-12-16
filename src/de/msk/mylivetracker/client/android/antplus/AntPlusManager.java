@@ -158,6 +158,8 @@ public class AntPlusManager implements Callback {
 				AntPlusHardware.getConn().forceAntConnection(
 					MainActivity.get().getString(R.string.app_name));
 			break;
+		default:
+			break;
 		}
 	}
 

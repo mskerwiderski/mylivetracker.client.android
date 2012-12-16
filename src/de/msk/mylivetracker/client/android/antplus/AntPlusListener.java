@@ -66,6 +66,8 @@ public class AntPlusListener implements IAntPlusListener {
 					MainActivity.get().getString(R.string.antPlus_InUse));
 				MainActivity.get().updateView();
 			break;
+		default:
+			break;
 		}		
 	}
 

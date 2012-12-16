@@ -47,6 +47,12 @@ public class PinCodeQueryActivity extends AbstractActivity {
 	}
 	
 	@Override
+	public void onBackPressed() {
+		// noop.
+		return;
+	}
+	
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pin_code_query);
