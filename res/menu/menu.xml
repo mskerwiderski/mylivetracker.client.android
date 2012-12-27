@@ -6,16 +6,17 @@
         <menu>  
 			<item android:id="@+id/mnPrefsServer" android:title="@string/mnPrefsServer" />
 		    <item android:id="@+id/mnPrefsAccount" android:title="@string/mnPrefsAccount" />
+		    <item android:id="@+id/mnPrefsProtocol" android:title="@string/mnPrefsProtocol" />
 		    <item android:id="@+id/mnPrefsLocalization" android:title="@string/mnPrefsLocalization" />
 		    <item android:id="@+id/mnTrackExport" android:title="@string/mnTrackExport" />
 	    </menu> 
     </item>
     <item 
-	    android:id="@+id/mnCatConnectTo"
-		android:title="@string/mnCatConnectTo" >
+	    android:id="@+id/mnCatConnect"
+		android:title="@string/mnCatConnect" >
         <menu>
-            <item android:id="@+id/mnConnectToMyLiveTrackerPortal" android:title="@string/mnConnectToMyLiveTrackerPortal" />
-            <item android:id="@+id/mnConnectToDropbox" android:title="@string/mnConnectToDropbox" />  
+            <item android:id="@+id/mnMyLiveTrackerPortalConnect" android:title="@string/mnMyLiveTrackerPortalConnect" />
+            <item android:id="@+id/mnDropboxConnect" android:title="@string/mnDropboxConnect" />  
 	    </menu> 
     </item>
     <item 

@@ -1,5 +1,6 @@
 package de.msk.mylivetracker.client.android.mainview;
 
+import de.msk.mylivetracker.client.android.auto.AutoPrefsActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -18,6 +19,7 @@ public class OnClickButtonAutoIndicatorListener implements OnClickListener {
 	 */
 	@Override
 	public void onClick(View v) {			
-		MainActivity.get().startActivityPrefsAuto();
+		MainActivity.get().
+			startActivityWithWarningDlgIfTrackRunning(AutoPrefsActivity.class);
 	}
 }

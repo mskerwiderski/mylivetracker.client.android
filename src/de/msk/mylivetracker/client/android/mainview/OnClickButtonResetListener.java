@@ -3,7 +3,8 @@ package de.msk.mylivetracker.client.android.mainview;
 import android.os.SystemClock;
 import android.view.View;
 import android.view.View.OnClickListener;
-import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.other.OtherPrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.upload.UploadService;
@@ -47,7 +48,7 @@ public class OnClickButtonResetListener implements OnClickListener {
 	public void onClick(View v) {
 		if (MainActivity.showStartStopInfoDialogIfInAutoMode()) return;
 		final MainActivity activity = MainActivity.get();
-		if (Preferences.get().getConfirmLevel().isMedium()) {
+		if (PrefsRegistry.get(OtherPrefs.class).getConfirmLevel().isMedium()) {
 			ResetTrackDialog dlg = new ResetTrackDialog(activity);
 			dlg.show();
 		} else {

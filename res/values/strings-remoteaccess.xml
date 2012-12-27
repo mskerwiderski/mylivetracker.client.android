@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tiRemoteAccessPrefs">Remote access</string>
+    <string name="lbRemoteAccessPrefs_Enable">Enable remote access</string>
+    <string name="fdRemoteAccessPrefs_Password">Password</string>
+    <string name="lbRemoteAccessPrefs_Password">Password</string>
+    <string name="lbRemoteAccessPrefs_UseReceiver">Send response to specified receiver. If disabled responses will be send to command originator.</string>
+    <string name="fdRemoteAccessPrefs_Receiver">Receiver (phone number)</string>
+    <string name="lbRemoteAccessPrefs_Receiver">Receiver</string>
+</resources>

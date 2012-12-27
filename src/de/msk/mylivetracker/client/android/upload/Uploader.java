@@ -3,8 +3,9 @@ package de.msk.mylivetracker.client.android.upload;
 import java.util.Date;
 
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
-import de.msk.mylivetracker.client.android.preferences.Preferences;
-import de.msk.mylivetracker.client.android.preferences.Preferences.TransferProtocol;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
+import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
+import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs.TransferProtocol;
 import de.msk.mylivetracker.client.android.status.AbstractInfo;
 import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
 import de.msk.mylivetracker.client.android.status.EmergencySignalInfo;
@@ -36,16 +37,17 @@ public class Uploader {
 	
 	public static AbstractUploader createUploader() {
 		AbstractUploader uploader = null;
-		Preferences prefs = Preferences.get();		
-		if (prefs.getTransferProtocol().equals(TransferProtocol.uploadDisabled)) {
+		TransferProtocol transferProtocol = 
+			PrefsRegistry.get(ProtocolPrefs.class).getTransferProtocol();
+		if (transferProtocol.equals(TransferProtocol.uploadDisabled)) {
 			uploader = new DummyUploader(Protocols.createProtocolDummy());
-		} else if (prefs.getTransferProtocol().equals(TransferProtocol.mltHttpPlain)) {
+		} else if (transferProtocol.equals(TransferProtocol.httpUserDefined)) {
 			uploader = new HttpUploader(Protocols.createProtocolMltUrlparams());
-		} else if (prefs.getTransferProtocol().equals(TransferProtocol.mltTcpEncrypted)) {
+		} else if (transferProtocol.equals(TransferProtocol.mltTcpEncrypted)) {
 			uploader = new TcpUploader(Protocols.createProtocolMltDatastrEncrypted(), true);
-		} else if (prefs.getTransferProtocol().equals(TransferProtocol.tk102Emulator)) {
+		} else if (transferProtocol.equals(TransferProtocol.tk102Emulator)) {
 			uploader = new TcpUploader(Protocols.createProtocolXexunTk102(), false);
-		} else if (prefs.getTransferProtocol().equals(TransferProtocol.tk5000Emulator)) {
+		} else if (transferProtocol.equals(TransferProtocol.tk5000Emulator)) {
 			uploader = new TcpUploader(Protocols.createProtocolIncutexTk5000(), false);
 		} else {
 			throw new RuntimeException();

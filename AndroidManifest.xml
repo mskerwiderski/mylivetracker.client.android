@@ -2,11 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="de.msk.mylivetracker.client.android.pro"
     android:versionCode="150" 
-    android:versionName="1.5.0.5 AI" 
+    android:versionName="1.5.0.6 AI" 
     >       
     <uses-sdk
-       android:minSdkVersion="7"
-       android:targetSdkVersion="7" 
+       android:minSdkVersion="7" 
+       android:targetSdkVersion="17"
     />
     <!--  uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" /-->
    	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -46,7 +46,8 @@
 				<action android:name="android.provider.Telephony.SMS_RECEIVED" />
 			</intent-filter>
 		</receiver>
-		<receiver android:name="de.msk.mylivetracker.client.android.remoteaccess.SmsSentStatusReceiver" >
+		<receiver android:name="de.msk.mylivetracker.client.android.remoteaccess.SmsSentStatusReceiver" 
+		    android:exported="false">
 			<intent-filter>
 				<action android:name="de.msk.mylivetracker.intent.action.SMS_SENT" />
 				<action android:name="de.msk.mylivetracker.intent.action.SMS_DELIVERED" />
@@ -54,29 +55,31 @@
 		</receiver>
 		<activity android:name="de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryActivity" 
 			android:screenOrientation="portrait" />
+		<activity android:name="de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryPrefsActivity" 
+			android:screenOrientation="portrait" />
         <activity android:name="de.msk.mylivetracker.client.android.mainview.MainDetailsActivity" 
 			android:screenOrientation="portrait" />
         <activity android:name="de.msk.mylivetracker.client.android.message.MessageActivity" 
 			android:screenOrientation="portrait" />
-		<activity android:name="de.msk.mylivetracker.client.android.preferences.PrefsServerActivity" 
+		<activity android:name="de.msk.mylivetracker.client.android.server.ServerPrefsActivity" 
 			android:screenOrientation="portrait" />
-		<activity android:name="de.msk.mylivetracker.client.android.preferences.PrefsAccountActivity" 
+		<activity android:name="de.msk.mylivetracker.client.android.protocol.ProtocolPrefsActivity" 
 			android:screenOrientation="portrait" />
-		<activity android:name="de.msk.mylivetracker.client.android.preferences.PrefsLocalizationActivity" 
+		<activity android:name="de.msk.mylivetracker.client.android.account.AccountPrefsActivity" 
 			android:screenOrientation="portrait" />
-		<activity android:name="de.msk.mylivetracker.client.android.preferences.PrefsOtherActivity" 
+		<activity android:name="de.msk.mylivetracker.client.android.localization.LocalizationPrefsActivity" 
 			android:screenOrientation="portrait" />
-		<activity android:name="de.msk.mylivetracker.client.android.preferences.PrefsAutoActivity" 
+		<activity android:name="de.msk.mylivetracker.client.android.other.OtherPrefsActivity" 
 			android:screenOrientation="portrait" />
-		<activity android:name="de.msk.mylivetracker.client.android.preferences.PrefsPinCodeQueryActivity" 
+		<activity android:name="de.msk.mylivetracker.client.android.auto.AutoPrefsActivity" 
 			android:screenOrientation="portrait" />
-		<activity android:name="de.msk.mylivetracker.client.android.preferences.PrefsRemoteAccessActivity" 
+		<activity android:name="de.msk.mylivetracker.client.android.remoteaccess.RemoteAccessPrefsActivity" 
 			android:screenOrientation="portrait" />
-		<activity android:name="de.msk.mylivetracker.client.android.preferences.PrefsHttpProtocolParamsActivity" 
+		<activity android:name="de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParamsPrefsActivity" 
 			android:screenOrientation="portrait" />
-		<activity android:name="de.msk.mylivetracker.client.android.connections.mylivetracker.ConnectToMyLiveTrackerPortalActivity" 
+		<activity android:name="de.msk.mylivetracker.client.android.mylivetrackerportal.MyLiveTrackerPortalConnectActivity" 
 			android:screenOrientation="portrait" />
-		<activity android:name="de.msk.mylivetracker.client.android.connections.dropbox.ConnectToDropboxActivity" 
+		<activity android:name="de.msk.mylivetracker.client.android.dropbox.DropboxConnectActivity" 
 			android:screenOrientation="portrait" />
 		<activity android:name="de.msk.mylivetracker.client.android.trackexport.TrackExportActivity" 
 			android:screenOrientation="portrait" />	
@@ -85,7 +88,8 @@
 		<activity
       		android:name="com.dropbox.client2.android.AuthActivity"
       		android:launchMode="singleTask"
-      		android:configChanges="orientation|keyboard">
+      		android:configChanges="orientation|keyboard"
+      	>
       		<intent-filter>
 		        <data android:scheme="db-a73z7br0b53qrbj" />
         		<action android:name="android.intent.action.VIEW" />
@@ -93,7 +97,7 @@
         		<category android:name="android.intent.category.DEFAULT" />
       		</intent-filter>
     	</activity>
-		<service android:name="de.msk.mylivetracker.client.android.automode.AutoService"
+		<service android:name="de.msk.mylivetracker.client.android.auto.AutoService"
 		    android:enabled="true"
 		    android:exported="false" />
 		<service android:name="de.msk.mylivetracker.client.android.upload.UploadService"

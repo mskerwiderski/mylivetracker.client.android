@@ -3,7 +3,8 @@ package de.msk.mylivetracker.client.android.status;
 import java.io.Serializable;
 import java.util.Date;
 
-import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
+import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 
 
 /**
@@ -96,8 +97,11 @@ public class UploadInfo extends AbstractInfo implements Serializable {
 	}
 	
 	public boolean isSuccess() {
-		if ((this.status == null) || !this.status || (this.getTimestamp() == null)) return false;
-		int periodOfRestInSecs = Preferences.get().getUplTimeTrigger().getSecs();
+		if ((this.status == null) || !this.status || 
+			(this.getTimestamp() == null)) return false;
+		int periodOfRestInSecs = 
+			PrefsRegistry.get(ProtocolPrefs.class).
+			getUplTimeTrigger().getSecs();
 		if (periodOfRestInSecs == 0) {
 			periodOfRestInSecs = 5;
 		} else {

@@ -9,10 +9,11 @@ package de.msk.mylivetracker.client.android.remoteaccess;
  * @version 001
  * 
  * history 
- * 000 2012-11-24 initial.
+ * 001	2012-12-25 	revised for v1.5.x.
+ * 000 	2012-11-24 	initial.
  * 
  */
-public class SmsCmdError extends AbstractSmsCmdExecutor {
+public class SmsCmdError extends ASmsCmdExecutor {
 
 	public SmsCmdError(String sender, String... params) {
 		super("dummy", sender, params);

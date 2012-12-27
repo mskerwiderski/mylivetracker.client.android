@@ -3,8 +3,10 @@ package de.msk.mylivetracker.client.android.upload;
 import java.io.IOException;
 import java.util.Date;
 
+import de.msk.mylivetracker.client.android.account.AccountPrefs;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
-import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
+import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
 import de.msk.mylivetracker.client.android.status.EmergencySignalInfo;
 import de.msk.mylivetracker.client.android.status.GpsStateInfo;
@@ -103,17 +105,19 @@ public abstract class AbstractUploader {
 		HeartrateInfo heartrateInfo, 
 		EmergencySignalInfo emergencySignalInfo,
 		MessageInfo messageInfo) throws InterruptedException {
-		Preferences preferences = Preferences.get();
+		AccountPrefs accountPrefs = PrefsRegistry.get(AccountPrefs.class);
 		String dataStr = protocol.createDataStrForDataTransfer(
 			lastInfoTimestamp, 
 			phoneStateInfo, batteryStateInfo, 
 			locationInfo, gpsStateInfo, 
 			heartrateInfo, emergencySignalInfo, 
 			messageInfo, 
-			preferences.getUsername(), 
-			preferences.getPassword());
-		LogInfo.addLogItem(locationInfo,
-			emergencySignalInfo, messageInfo);
+			accountPrefs.getUsername(), 
+			accountPrefs.getPassword());
+		if (PrefsRegistry.get(ProtocolPrefs.class).isLogTrackData()) {
+			LogInfo.addLogItem(locationInfo,
+				emergencySignalInfo, messageInfo);
+		}
 		return this.upload(dataStr);
 	}	
 }

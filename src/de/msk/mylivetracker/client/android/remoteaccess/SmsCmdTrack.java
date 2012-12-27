@@ -16,17 +16,18 @@ import de.msk.mylivetracker.client.android.util.TrackUtils;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;
 
 /**
- * SmsCmdGetAppVersion.
+ * SmsCmdTrack.
  * 
  * @author michael skerwiderski, (c)2012
  * 
  * @version 001
  * 
  * history 
- * 000 2012-11-23 initial.
+ * 001	2012-12-25 	revised for v1.5.x.
+ * 000 	2012-11-23 	initial.
  * 
  */
-public class SmsCmdTrack extends AbstractSmsCmdExecutor {
+public class SmsCmdTrack extends ASmsCmdExecutor {
 
 	public SmsCmdTrack(String cmdName, String sender, String... params) {
 		super(cmdName, sender, params);

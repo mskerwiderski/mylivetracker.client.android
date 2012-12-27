@@ -6,8 +6,10 @@ import android.content.DialogInterface;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
-import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.pro.R;
+import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
+import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs.TransferProtocol;
 import de.msk.mylivetracker.client.android.status.EmergencySignalInfo;
 import de.msk.mylivetracker.client.android.upload.Uploader;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
@@ -36,8 +38,9 @@ public class OnClickButtonSosListener implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		final MainActivity mainActivity = MainActivity.get();
-		 
-		if (Preferences.get().getTransferProtocol().supportsSendEmergencySignal()) {
+		TransferProtocol transferProtocol = 
+			PrefsRegistry.get(ProtocolPrefs.class).getTransferProtocol(); 
+		if (transferProtocol.supportsSendEmergencySignal()) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 			builder.setMessage(activity.getString(R.string.txMain_QuestionSendSosSignal))
 				.setCancelable(false)
@@ -62,7 +65,7 @@ public class OnClickButtonSosListener implements OnClickListener {
 			builder.create().show();
 		} else {
 			String protocol = mainActivity.getResources().getStringArray(
-				R.array.transferProtocols)[Preferences.get().getTransferProtocol().ordinal()];
+				R.array.transferProtocols)[transferProtocol.ordinal()];
 			SimpleInfoDialog.show(activity, 
 				R.string.txMain_SendEmergencySignalNotSupportedByTransferProtocol, protocol);
 		}

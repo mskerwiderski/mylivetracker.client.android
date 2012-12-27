@@ -69,7 +69,7 @@ public class TrackStatus implements Serializable {
 	public static void saveTrackStatus() {
 		if (trackStatus == null) return;				
 		SharedPreferences prefs = MainActivity.get().
-			getSharedPreferences(App.getPrefsName(), 0);
+			getSharedPreferences(App.getStatusFileName(false), 0);
 		SharedPreferences.Editor editor = prefs.edit();
 		TrackStatus temp = trackStatus.deepCopy();
 		temp.markAsStopped();
@@ -95,7 +95,7 @@ public class TrackStatus implements Serializable {
 		try {
 			MainActivity mainActivity = MainActivity.get();
 			SharedPreferences prefs = mainActivity.
-				getSharedPreferences(App.getPrefsName(), 0);		
+				getSharedPreferences(App.getStatusFileName(false), 0);		
 			long trackVersion = prefs.getLong(TRACK_STATUS_VERSION_VAR, -1);
 			if (trackVersion != serialVersionUID) {
 				TrackStatus.reset();

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lbDropbox_UploadInProgress">Uploading...</string>
+    <string name="lbDropbox_UploadDone">Upload successfully done!</string>
+    <string name="lbDropbox_UploadCanceled">Upload canceled!</string>
+    <string name="lbDropbox_UploadRejected">Upload rejected:</string>
+    <string name="lbDropbox_AuthFailed">Authentication failed! Check the connection to Dropbox!</string>
+    <string name="lbDropbox_FileTooLargeToUpload">File is too large to upload via this API!</string>
+    <string name="lbDropbox_NetworkError">Network error! Try to upload again!</string>
+    <string name="lbDropbox_DropboxError">Dropbox error! Try to upload again!</string>
+    <string name="lbDropbox_UnknownError">Unknown error! Try to upload again!</string>
+    <string name="tiDropboxConnect">Connect to Dropbox</string>
+    <string name="btDropboxConnect_Connect">Connect</string>
+    <string name="btDropboxConnect_Release">Release</string>
+    <string name="lbDropboxConnect_Status">Connected Dropbox account:</string>
+    <string name="txDropboxConnect_StatusConnected">%1$s</string>
+    <string name="txDropboxConnect_StatusNotConnected">Not connected</string>
+    <string name="txDropboxConnect_NoConnectionExists">No connection to Dropbox exists!</string>
+    <string name="txDropboxConnect_ConnectionExists">A connection to Dropbox already exists. Release existing connection first!</string>
+    <string name="txDropboxConnect_QuestionConnect">Do you really want to connect to Dropbox?</string>
+    <string name="txDropboxConnect_QuestionRelease">Do you really want to release to Dropbox?</string>
+    <string name="txDropboxConnect_InfoConnectingFailed">Connecting to Dropbox failed or canceled!</string>
+    <string name="txDropboxConnect_InfoConnectingDone">Connecting to Dropbox successfully done!</string>
+</resources>

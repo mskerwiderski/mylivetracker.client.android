@@ -20,14 +20,16 @@ import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.antplus.AntPlusHardware;
 import de.msk.mylivetracker.client.android.antplus.AntPlusHeartrateListener;
 import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
-import de.msk.mylivetracker.client.android.automode.AutoService;
+import de.msk.mylivetracker.client.android.auto.AutoService;
 import de.msk.mylivetracker.client.android.listener.GpsStateListener;
 import de.msk.mylivetracker.client.android.listener.LocationListener;
 import de.msk.mylivetracker.client.android.listener.PhoneStateListener;
+import de.msk.mylivetracker.client.android.localization.LocalizationPrefs;
 import de.msk.mylivetracker.client.android.mainview.updater.MainDetailsViewUpdater;
 import de.msk.mylivetracker.client.android.mainview.updater.MainViewUpdater;
 import de.msk.mylivetracker.client.android.mainview.updater.UpdaterUtils;
-import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry.InitResult;
 import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.status.BatteryReceiver;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
@@ -154,7 +156,13 @@ public class MainActivity extends AbstractMainActivity {
 		tvUploader.setOnClickListener(
 			new OnClickButtonNetworkListener());
 		
-		if (Preferences.firstStartOfApp()) {
+		if (App.getInitPrefsResult().equals(InitResult.PrefsCreated)) {
+			SimpleInfoDialog.show(this, R.string.prefsCreated);
+		} else if (App.getInitPrefsResult().equals(InitResult.PrefsUpdated)) {
+			SimpleInfoDialog.show(this, R.string.prefsUpdated);
+		}
+		
+		if (App.wasStartedForTheFirstTime()) {
 			SimpleInfoDialog.show(this, 
 				R.string.welcomeMessage, App.getAppNameComplete());
 		}
@@ -321,25 +329,26 @@ public class MainActivity extends AbstractMainActivity {
 	}
 
 	public boolean localizationEnabled() {
-		return Preferences.get().getLocalizationMode().neededProvidersEnabled();
+		return PrefsRegistry.get(LocalizationPrefs.class).
+			getLocalizationMode().neededProvidersEnabled();
 	}
 	
 	public void startLocationListener() {
-		Preferences preferences = Preferences.get();
+		LocalizationPrefs prefs = PrefsRegistry.get(LocalizationPrefs.class);
 		this.getLocationManager().
 			addGpsStatusListener(GpsStateListener.get());
-		if (preferences.getLocalizationMode().gpsProviderEnabled()) {
+		if (prefs.getLocalizationMode().gpsProviderEnabled()) {
 			this.getLocationManager().requestLocationUpdates(
 				LocationManager.GPS_PROVIDER, 
-				preferences.getLocTimeTriggerInSeconds() * 1000, 
-				preferences.getLocDistanceTriggerInMeter(), 
+				prefs.getTimeTriggerInSeconds() * 1000, 
+				prefs.getDistanceTriggerInMeter(), 
 				LocationListener.get());
 		}
-		if (preferences.getLocalizationMode().networkProviderEnabled()) {
+		if (prefs.getLocalizationMode().networkProviderEnabled()) {
 			this.getLocationManager().requestLocationUpdates(
 				LocationManager.NETWORK_PROVIDER, 
-				preferences.getLocTimeTriggerInSeconds() * 1000, 
-				preferences.getLocDistanceTriggerInMeter(), 
+				prefs.getTimeTriggerInSeconds() * 1000, 
+				prefs.getDistanceTriggerInMeter(), 
 				LocationListener.get());
 		}
 		LocationListener.get().setActive(true);		

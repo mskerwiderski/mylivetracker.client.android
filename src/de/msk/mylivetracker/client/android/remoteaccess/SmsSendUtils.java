@@ -19,7 +19,8 @@ import de.msk.mylivetracker.client.android.util.LogUtils;
  * @version 001
  * 
  * history 
- * 000 2012-11-27 initial.
+ * 001	2012-12-25 	revised for v1.5.x.
+ * 000 	2012-11-27 	initial.
  * 
  */
 public class SmsSendUtils {
@@ -59,7 +60,7 @@ public class SmsSendUtils {
 				new Intent(SEND_SMS_STATUS_SMS_DELIVERED), 0);
 
 		int length = message.length();
-		LogUtils.infoMethodState(SmsSendUtils.class, "sendSms", "length of message", new Integer(length));
+		LogUtils.infoMethodState(SmsSendUtils.class, "sendSms", "length of message", Integer.valueOf(length));
 		
 		if (length > maxLength) {
 			ArrayList<String> messages = manager.divideMessage(message);

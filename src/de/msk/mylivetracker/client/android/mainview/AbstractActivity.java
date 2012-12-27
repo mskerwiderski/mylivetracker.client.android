@@ -3,7 +3,8 @@ package de.msk.mylivetracker.client.android.mainview;
 import android.app.Activity;
 import android.content.Intent;
 import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryActivity;
-import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryPrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
@@ -52,7 +53,8 @@ public class AbstractActivity extends Activity {
 	@Override
 	protected void onStart() {
 		LogUtils.info(this.getClass(), "onStart");
-		if (Preferences.get().isPinCodeQueryEnabled() && (activityActiveCounter == 0)) {
+		if (PrefsRegistry.get(PinCodeQueryPrefs.class).isPinCodeQueryEnabled() && 
+			(activityActiveCounter == 0)) {
 			LogUtils.info(this.getClass(), "pinCodeQuery");
 			this.startActivity(new Intent(this, PinCodeQueryActivity.class));
 		}
@@ -64,7 +66,8 @@ public class AbstractActivity extends Activity {
 	protected void onStop() {
 		LogUtils.info(this.getClass(), "onStop");
 		activityActiveCounter--;
-		if (Preferences.get().isPinCodeQueryEnabled() && (activityActiveCounter == 0)) {
+		if (PrefsRegistry.get(PinCodeQueryPrefs.class).isPinCodeQueryEnabled() && 
+			(activityActiveCounter == 0)) {
 			pinCodeValid = false;
 			LogUtils.info(this.getClass(), "pinCode invalidated");
 		}

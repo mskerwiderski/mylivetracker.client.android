@@ -9,7 +9,7 @@ import com.dropbox.client2.session.AccessTokenPair;
 import com.dropbox.client2.session.AppKeyPair;
 import com.dropbox.client2.session.Session.AccessType;
 
-import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.pro.R;
 
 /**
@@ -17,10 +17,11 @@ import de.msk.mylivetracker.client.android.pro.R;
  * 
  * @author michael skerwiderski, (c)2012
  * 
- * @version 000
+ * @version 001
  * 
  * history
- * 000 	2012-12-05 initial. 
+ * 001	2012-12-24 	revised for v1.5.x.
+ * 000 	2012-12-05 	initial. 
  * 
  */
 public class DropboxUtils {
@@ -36,11 +37,11 @@ public class DropboxUtils {
 	
 	private static AndroidAuthSession dropboxAuthSession = null;
 	static {
-		Preferences prefs = Preferences.get();
+		DropboxPrefs prefs = PrefsRegistry.get(DropboxPrefs.class);
 		dropboxAuthSession = 
 			new AndroidAuthSession(appKeys, DROPBOX_ACCESS_TYPE);
-		if (prefs.hasValidDropboxDetails()) {
-			String[] tokens = prefs.getDropboxTokens();
+		if (prefs.hasValidAccountAndTokens()) {
+			String[] tokens = prefs.getTokens();
 			dropboxAuthSession.setAccessTokenPair(
 				new AccessTokenPair(tokens[0], tokens[1]));
 		}
@@ -57,8 +58,8 @@ public class DropboxUtils {
 	
 	public static void releaseConnection() {
 		dropboxAuthSession.unlink();
-		Preferences.get().resetDropboxTokens();
-		Preferences.save();
+		PrefsRegistry.get(DropboxPrefs.class).resetAccountAndTokens();
+		PrefsRegistry.save(DropboxPrefs.class);
 	}
 	
 	public static void startAuthentication(Activity activity) {
@@ -74,22 +75,22 @@ public class DropboxUtils {
 		Integer infoMsgId = null;
 		if (authenticationStarted) {
 			if (dropboxAuthSession.authenticationSuccessful()) {
-				Preferences prefs = Preferences.get();
+				DropboxPrefs prefs = PrefsRegistry.get(DropboxPrefs.class);
 		        try {
 		        	dropboxAuthSession.finishAuthentication();
 		        	AccessTokenPair dropboxTokenPair = dropboxAuthSession.getAccessTokenPair();
-		        	prefs.setDropboxDetails(
+		        	prefs.setAccountAndTokens(
 		        		dropboxApi.accountInfo().displayName, 
 		        		dropboxTokenPair.key, dropboxTokenPair.secret);
-		        	Preferences.save();
-		        	infoMsgId = R.string.txConnectToDropbox_InfoConnectingDone;
+		        	PrefsRegistry.save(DropboxPrefs.class);
+		        	infoMsgId = R.string.txDropboxConnect_InfoConnectingDone;
 		        } catch (DropboxException e) {
-		        	infoMsgId = R.string.txConnectToDropbox_InfoConnectingFailed;
+		        	infoMsgId = R.string.txDropboxConnect_InfoConnectingFailed;
 		        } catch (IllegalStateException e) {
-		        	infoMsgId = R.string.txConnectToDropbox_InfoConnectingFailed;
+		        	infoMsgId = R.string.txDropboxConnect_InfoConnectingFailed;
 		        }
 		    } else {
-		    	infoMsgId = R.string.txConnectToDropbox_InfoConnectingFailed;
+		    	infoMsgId = R.string.txDropboxConnect_InfoConnectingFailed;
 		    }
 			authenticationStarted = false;
 		}

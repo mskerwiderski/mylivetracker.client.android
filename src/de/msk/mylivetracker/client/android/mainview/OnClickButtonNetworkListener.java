@@ -2,6 +2,7 @@ package de.msk.mylivetracker.client.android.mainview;
 
 import android.view.View;
 import android.view.View.OnClickListener;
+import de.msk.mylivetracker.client.android.server.ServerPrefsActivity;
 
 /**
  * OnClickButtonLocalizationListener.
@@ -21,6 +22,7 @@ public class OnClickButtonNetworkListener implements OnClickListener {
 	 */
 	@Override
 	public void onClick(View v) {			
-		MainActivity.get().startActivityPrefsServer();	
+		MainActivity.get().
+			startActivityWithWarningDlgIfTrackRunning(ServerPrefsActivity.class);	
 	}
 }

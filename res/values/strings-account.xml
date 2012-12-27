@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tiAccountPrefs">Account preferences</string>
+	<string name="lbAccountPrefs_DeviceId">Device Id (IMEI)</string>
+	<string name="fdAccountPrefs_DeviceId">Device Id</string>
+    <string name="lbAccountPrefs_Username">Username</string>
+    <string name="fdAccountPrefs_Username">Username</string>
+    <string name="lbAccountPrefs_Password">Password</string>
+    <string name="fdAccountPrefs_Password">Password</string>
+    <string name="lbAccountPrefs_TrackName">Trackname</string>
+    <string name="fdAccountPrefs_TrackName">Trackname</string>
+    <string name="fdAccountPrefs_PhoneNumber">Phone number</string>
+    <string name="lbAccountPrefs_PhoneNumber">Phone number</string>
+</resources>

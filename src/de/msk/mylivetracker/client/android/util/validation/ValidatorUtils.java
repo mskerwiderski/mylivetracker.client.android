@@ -5,9 +5,8 @@ import org.apache.commons.lang.StringUtils;
 import android.content.Context;
 import android.telephony.PhoneNumberUtils;
 import android.widget.EditText;
-import de.msk.mylivetracker.client.android.preferences.HttpProtocolParams;
-import de.msk.mylivetracker.client.android.preferences.Preferences;
-import de.msk.mylivetracker.client.android.preferences.Preferences.LocalizationMode;
+import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParams;
+import de.msk.mylivetracker.client.android.localization.LocalizationPrefs.LocalizationMode;
 import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
  
@@ -46,58 +45,21 @@ public class ValidatorUtils {
 			SimpleInfoDialog.show(ctx, 
 				ctx.getString(
 					R.string.validator_valueMustNotBeEmpty, 
-					ctx.getString(R.string.lbPrefsHttpProtocolParams_ParameterName)));
+					ctx.getString(R.string.lbHttpProtocolParamsPrefs_ParameterName)));
 		}
 		if (!StringUtils.isAlpha(paramName)) {
 			valid = false;
 			SimpleInfoDialog.show(ctx, 
 				ctx.getString(
 					R.string.validator_valueMayHaveOnlyAlphaChars, 
-					ctx.getString(R.string.lbPrefsHttpProtocolParams_ParameterName)));
+					ctx.getString(R.string.lbHttpProtocolParamsPrefs_ParameterName)));
 		}
 		if (httpProtocolParams.paramNameExistsOutsidePosition(paramName, position)) {
 			valid = false;
 			SimpleInfoDialog.show(ctx, 
 				ctx.getString(
 					R.string.validator_valueAlreadyExists, 
-					ctx.getString(R.string.lbPrefsHttpProtocolParams_ParameterName)));
-		}
-		return valid;
-	}
-	
-	public static boolean validatePinCode(
-		Context ctx, EditText etPinCode) {
-		if (ctx == null) {
-			throw new IllegalArgumentException("ctx must not be null.");
-		}
-		if (etPinCode == null) {
-			throw new IllegalArgumentException("etPinCode must not be null.");
-		}
-		boolean valid = StringUtils.equals(
-			etPinCode.getText().toString(), 
-			Preferences.get().getPinCode());
-		if (!valid) {
-			SimpleInfoDialog.show(ctx, R.string.validator_pinCodeInvalid);
-		}
-		return valid;
-	}
-	
-	public static boolean validatePinCodeEqualsPinCodeReentered(
-		Context ctx, EditText etPinCode, EditText etPinCodeReentered) {
-		if (ctx == null) {
-			throw new IllegalArgumentException("ctx must not be null.");
-		}
-		if (etPinCode == null) {
-			throw new IllegalArgumentException("etPinCode must not be null.");
-		}
-		if (etPinCodeReentered == null) {
-			throw new IllegalArgumentException("etPinCodeReentered must not be null.");
-		}
-		boolean valid = StringUtils.equals(
-			etPinCode.getText().toString(), 
-			etPinCodeReentered.getText().toString());
-		if (!valid) {
-			SimpleInfoDialog.show(ctx, R.string.validator_reenteredPinCodeNotEqualToPinCode);
+					ctx.getString(R.string.lbHttpProtocolParamsPrefs_ParameterName)));
 		}
 		return valid;
 	}

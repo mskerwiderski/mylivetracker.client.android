@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tiAutoPrefs">Automatic preferences</string>
+    <string name="fdAutoPrefs_AutoMode">Automatic Modus</string>
+    <string name="lbAutoPrefs_AutoMode">If battery changes in charging mode (leaves charging mode), tracking will be started (stopped) automatically.</string>
+   	<string name="fdAutoPrefs_ResetTrackMode">Reset-track mode</string>
+	<string name="txAutoPrefs_ResetTrackMode">Reset-track mode</string>
+	<string name="fdAutoPrefs_AutoStart">Auto Start</string>
+    <string name="lbAutoPrefs_AutoStart">After a reboot of the smartphone, tracking will be started automatically.</string>
+</resources>

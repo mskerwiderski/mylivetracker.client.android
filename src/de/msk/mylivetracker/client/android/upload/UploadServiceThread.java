@@ -1,7 +1,8 @@
 package de.msk.mylivetracker.client.android.upload;
 
 import android.os.SystemClock;
-import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
+import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.upload.Uploader.LastInfoDsc;
@@ -47,7 +48,7 @@ public class UploadServiceThread extends AbstractServiceThread {
 
 	@Override
 	public void runSinglePass() throws InterruptedException {
-		Preferences prefs = Preferences.get();
+		ProtocolPrefs prefs = PrefsRegistry.get(ProtocolPrefs.class);
 		LocationInfo locationInfo = LocationInfo.get();
 		if (!this.doUpload && this.runOnlyOneSinglePass) {
 			this.doUpload = true;

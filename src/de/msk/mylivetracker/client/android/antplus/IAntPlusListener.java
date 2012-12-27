@@ -8,14 +8,14 @@ import com.wahoofitness.api.WFHardwareConnectorTypes.WFHardwareState;
  * 
  * @author michael skerwiderski, (c)2011
  * 
- * @version 000
+ * @version 001
  * 
  * history
- * 000 	2011-08-11 initial.
+ * 001	2012-12-25	revised for v1.5.x.
+ * 000 	2011-08-11 	initial.
  * 
  */
 public interface IAntPlusListener {
-
 	public void onAntPlusSensorListenerAdded(int countSensorListeners);
 	public void onAntPlusSensorListenerRemoved(int countSensorListeners);
 	public void onAntPlusError(WFAntError error);

@@ -10,8 +10,9 @@ import org.apache.commons.lang.StringUtils;
 
 import android.os.SystemClock;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
-import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.pro.R;
+import de.msk.mylivetracker.client.android.server.ServerPrefs;
 import de.msk.mylivetracker.client.android.upload.protocol.IProtocol;
 
 /**
@@ -39,10 +40,10 @@ public class HttpUploader extends AbstractUploader {
 		BufferedReader bufferedReader = null;
 		int countPositionsUploaded = 0;
 		String resultCode = null;
-		Preferences preferences = Preferences.get();
-		String urlStr = preferences.getServer();
-		urlStr += ":" + preferences.getPort();
-		urlStr += "/" + preferences.getPath();
+		ServerPrefs prefs = PrefsRegistry.get(ServerPrefs.class);
+		String urlStr = prefs.getServer();
+		urlStr += ":" + prefs.getPort();
+		urlStr += "/" + prefs.getPath();
 		long start = SystemClock.elapsedRealtime();		
 		try {			
 			this.checkConnection();

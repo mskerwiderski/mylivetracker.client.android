@@ -2,8 +2,10 @@ package de.msk.mylivetracker.client.android.upload.protocol.incutex.tk5000;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
-import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.account.AccountPrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
 import de.msk.mylivetracker.client.android.status.EmergencySignalInfo;
 import de.msk.mylivetracker.client.android.status.GpsStateInfo;
@@ -38,10 +40,10 @@ public class ProtocolEncoder implements IProtocol {
 		GpsStateInfo gpsStateInfo, HeartrateInfo heartrateInfo,
 		EmergencySignalInfo emergencySignalInfo, MessageInfo messageInfo,
 		String username, String password) {
-		Preferences prefs = Preferences.get();		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");		
+		AccountPrefs accountPrefs = PrefsRegistry.get(AccountPrefs.class);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss", Locale.ENGLISH);		
 		String dataStr = 
-			prefs.getDeviceId() + "," +
+			accountPrefs.getDeviceId() + "," +
 			sdf.format(lastInfoTimestamp) + ",";
 		if ((locationInfo != null) && locationInfo.hasValidLatLon()) {
 			dataStr += 

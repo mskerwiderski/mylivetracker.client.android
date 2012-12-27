@@ -7,7 +7,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
-import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.other.OtherPrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.status.MessageInfo;
 import de.msk.mylivetracker.client.android.upload.Uploader;
@@ -65,7 +66,7 @@ public class MessageActivity extends AbstractActivity {
 					etMsgMessage, 1, 80, true);
 					
 			if (valid) {
-				if (Preferences.get().getConfirmLevel().isMedium()) {
+				if (PrefsRegistry.get(OtherPrefs.class).getConfirmLevel().isMedium()) {
 					SendMessageDialog dlg = new SendMessageDialog(this.activity, message);
 					dlg.show();
 				} else {

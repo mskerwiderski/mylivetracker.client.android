@@ -10,10 +10,11 @@ import de.msk.mylivetracker.client.android.status.LocationInfo;
  * @version 001
  * 
  * history 
- * 000 2012-11-23 initial.
+ * 001	2012-12-25 	revised for v1.5.x.
+ * 000 	2012-11-23 	initial.
  * 
  */
-public class SmsCmdGetLocation extends AbstractSmsCmdExecutor {
+public class SmsCmdGetLocation extends ASmsCmdExecutor {
 
 	public SmsCmdGetLocation(String cmdName, String sender, String... params) {
 		super(cmdName, sender, params);

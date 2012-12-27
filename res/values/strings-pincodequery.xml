@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tiPinCodeQuery">PIN Code</string>
+    <string name="lbPinCodeQuery_PinCodeQueryInfo">Please enter PIN Code:</string>
+    <string name="tiPinCodeQueryPrefs">PIN code query preferences</string>
+    <string name="lbPinCodeQueryPrefs_Info">Please note: A recovery of a lost PIN is not possible. In such a case you must re-install and re-configure the app.</string>
+    <string name="lbPinCodeQueryPrefs_Enable">Enable PIN code query</string>
+    <string name="fdPinCodeQueryPrefs_PinCode">PIN code</string>
+    <string name="lbPinCodeQueryPrefs_PinCode">Enter new PIN code:</string>
+    <string name="lbPinCodeQueryPrefs_PinCodeReenter">Reenter new PIN code:</string>
+    <string name="vdPinCodeQueryPrefs_PinCodeInvalid">PIN code is invalid!</string>
+    <string name="vdPinCodeQueryPrefs_ReenteredPinCodeNotEqualToPinCode">Reentered PIN code is not equal to PIN code!</string>
+</resources>

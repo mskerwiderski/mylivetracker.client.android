@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tiOtherPrefs">Einstellungen Sonstige</string>
+    <string name="lbOtherPrefs_ConfirmLevel">Sicherheitsabfragen um ungewollte Aktionen zu verhindern</string>       
+    <string name="lbOtherPrefs_TrackingOneTouch">Tracking One-Touch Modus</string> 
+    <string name="btOtherPrefs_ResetOverallMileage">Km-Zähler zurücksetzen</string>
+    <string name="btOtherPrefs_ResetToFactoryDefaults">Werkseinstellungen</string>
+    <string name="txOtherPrefs_QuestionResetToFactoryDefaults">Wollen Sie wirklich auf die Werkseinstellungen zurücksetzen?</string>
+    <string name="txOtherPrefs_QuestionResetOverallMileage">Wollen Sie den Kilometerzähler wirklich zurücksetzen?</string>
+    <string name="txOtherPrefs_InfoResetToFactoryDefaultsDone">MyLiveTracker wurde auf die Werkseinstellungen zurückgesetzt! Bitte starten Sie die Anwendung neu!</string>
+    <string name="txOtherPrefs_InfoResetOverallMileageDone">Der Kilometerzähler wurde zurückgesetzt!</string>
+</resources>

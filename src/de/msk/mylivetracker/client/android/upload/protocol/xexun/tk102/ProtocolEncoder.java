@@ -6,7 +6,8 @@ import java.util.TimeZone;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 
-import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.account.AccountPrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
 import de.msk.mylivetracker.client.android.status.EmergencySignalInfo;
 import de.msk.mylivetracker.client.android.status.GpsStateInfo;
@@ -40,12 +41,12 @@ public class ProtocolEncoder implements IProtocol {
 		GpsStateInfo gpsStateInfo, HeartrateInfo heartrateInfo,
 		EmergencySignalInfo emergencySignalInfo, MessageInfo messageInfo,
 		String username, String password) {
-		Preferences prefs = Preferences.get();		
+		AccountPrefs accountPrefs = PrefsRegistry.get(AccountPrefs.class);
 		String dataStr = "";
 		DateTime dateTime = new DateTime(lastInfoTimestamp.getTime());
 		String dateTimeStr = dateTime.getAsStr(TimeZone.getTimeZone(DateTime.TIME_ZONE_UTC), "yyMMddHHmmss");
 		dataStr += dateTimeStr + SEPERATOR;
-		dataStr += (StringUtils.isEmpty(prefs.getPhoneNumber()) ? "" : prefs.getPhoneNumber()) + SEPERATOR;
+		dataStr += (StringUtils.isEmpty(accountPrefs.getPhoneNumber()) ? "" : accountPrefs.getPhoneNumber()) + SEPERATOR;
 		dataStr += LocationInfo.getLocationAsGprmcRecord(locationInfo) + SEPERATOR;
 		boolean locValid = false;
 		String altitude = "";
@@ -62,7 +63,7 @@ public class ProtocolEncoder implements IProtocol {
 		} else if ((batteryStateInfo != null) && batteryStateInfo.isBatteryLow()) {
 			dataStr += "low battery" + SEPERATOR;
 		}		
-		dataStr += "imei:" + prefs.getDeviceId() + SEPERATOR;
+		dataStr += "imei:" + accountPrefs.getDeviceId() + SEPERATOR;
 		dataStr += ((gpsStateInfo != null) ? 
 			StringUtils.leftPad(gpsStateInfo.getCountSatellites().toString(), 2, '0') : "0") + 
 			SEPERATOR;

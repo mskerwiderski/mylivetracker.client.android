@@ -8,7 +8,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.apache.commons.lang.StringUtils;
 
-import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
+import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 
 /**
  * PositionBuffer.
@@ -48,12 +49,14 @@ public class PositionBufferInfo extends AbstractInfo implements Serializable {
 	}
 		
 	public static boolean isEnabled() {
-		return !Preferences.get().getUplPositionBufferSize().isDisabled();
+		return !PrefsRegistry.get(ProtocolPrefs.class).
+			getUplPositionBufferSize().isDisabled();
 	}
 	
 	private static Integer getBufferSize() {
 		Integer bufferSize = 
-			Preferences.get().getUplPositionBufferSize().getSize();
+			PrefsRegistry.get(ProtocolPrefs.class).
+			getUplPositionBufferSize().getSize();
 		if ((bufferSize == null) || (bufferSize <= 0)) {
 			throw new RuntimeException("invalid buffer size.");
 		}

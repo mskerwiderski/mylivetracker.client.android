@@ -13,7 +13,8 @@ import de.msk.mylivetracker.client.android.util.LogUtils;
  * @version 001
  * 
  * history 
- * 000 2012-11-23 initial.
+ * 001	2012-12-25 	revised for v1.5.x.
+ * 000 	2012-11-23 	initial.
  * 
  */
 public class SmsSentStatusReceiver extends BroadcastReceiver {

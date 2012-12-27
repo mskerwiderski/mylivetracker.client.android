@@ -6,7 +6,7 @@ import java.net.URLEncoder;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 
-import de.msk.mylivetracker.client.android.preferences.HttpProtocolParamDsc;
+import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParamDsc;
 
 /**
  * HttpProtocolUtils.

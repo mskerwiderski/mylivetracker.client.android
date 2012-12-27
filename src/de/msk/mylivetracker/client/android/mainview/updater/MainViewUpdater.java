@@ -5,9 +5,10 @@ import org.apache.commons.lang.StringUtils;
 import android.content.res.Resources;
 import android.widget.TextView;
 import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
+import de.msk.mylivetracker.client.android.auto.AutoPrefs;
 import de.msk.mylivetracker.client.android.listener.LocationListener;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
-import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.status.HeartrateInfo;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
@@ -83,7 +84,7 @@ public class MainViewUpdater implements Runnable {
 	 */
 	@Override
 	public void run() {
-		Preferences preferences = Preferences.get();
+		AutoPrefs preferences = PrefsRegistry.get(AutoPrefs.class);
 		TrackStatus status = TrackStatus.get();
 		
 		MainActivity mainActivity = MainActivity.get();					

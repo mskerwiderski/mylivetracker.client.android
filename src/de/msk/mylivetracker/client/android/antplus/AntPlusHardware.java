@@ -15,6 +15,18 @@ import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 
+/**
+ * AntPlusHardware.
+ * 
+ * @author michael skerwiderski, (c)2012
+ * 
+ * @version 001
+ * 
+ * history
+ * 001	2012-12-25	revised for v1.5.x.
+ * 000 	2012-12-25 	initial.
+ * 
+ */
 public class AntPlusHardware {
 
 	private static WFHardwareConnector antPlusHwConnector = null;

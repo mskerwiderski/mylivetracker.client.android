@@ -14,8 +14,10 @@ import org.apache.commons.lang.StringUtils;
 
 import android.os.SystemClock;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
-import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.pro.R;
+import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
+import de.msk.mylivetracker.client.android.server.ServerPrefs;
 import de.msk.mylivetracker.client.android.status.PositionBufferInfo;
 import de.msk.mylivetracker.client.android.upload.protocol.IProtocol;
 
@@ -43,22 +45,21 @@ public class TcpUploader extends AbstractUploader {
 	private PrintWriter writer = null;
 	private BufferedReader reader = null;
 		
-	/* (non-Javadoc)
-	 * @see de.msk.mylivetracker.client.android.upload.AbstractUploader#checkConnection()
-	 */
 	@Override
 	public void checkConnection() throws Exception {
 		super.checkConnection();
-		Preferences prefs = Preferences.get();
+		ProtocolPrefs protocolPrefs = PrefsRegistry.get(ProtocolPrefs.class);
+		ServerPrefs serverPrefs = PrefsRegistry.get(ServerPrefs.class);
 		if (socket == null) {
-			int port = prefs.getPort();
+			int port = serverPrefs.getPort();
 			SocketAddress serverAddress = new InetSocketAddress(
-				InetAddress.getByName(prefs.getServer()), port);
+				InetAddress.getByName(serverPrefs.getServer()), port);
 			socket = new Socket();
 			socket.connect(serverAddress, 5000);
 			socket.setSoTimeout(3000);
 			if (PositionBufferInfo.isEnabled()) {
-				socket.setSendBufferSize(prefs.getUplPositionBufferSize().getSize() * 1024);
+				socket.setSendBufferSize(
+					protocolPrefs.getUplPositionBufferSize().getSize() * 1024);
 			} else {
 				socket.setSendBufferSize(1024);
 			}
@@ -71,23 +72,20 @@ public class TcpUploader extends AbstractUploader {
 		} 
 	}
 	
-	/* (non-Javadoc)
-	 * @see de.msk.mylivetracker.client.android.upload.AbstractUploader#upload(java.lang.String)
-	 */
 	@Override
 	public UploadResult upload(String dataStr) {
-		Preferences prefs = Preferences.get();
+		ProtocolPrefs prefs = PrefsRegistry.get(ProtocolPrefs.class);
 		int countPositionsToUpload = 1;
 		String resultCode = null;
 		int countPositionsUploaded = 0;
 		if (PositionBufferInfo.isEnabled()) {
 			PositionBufferInfo.get().add(dataStr);
 			dataStr = PositionBufferInfo.get().getAll(
-				prefs.getLineSeperator());
+				prefs.getLineSeparator());
 			countPositionsToUpload = PositionBufferInfo.get().size();
 		}
 		if (prefs.isFinishEveryUploadWithALinefeed()) {
-			dataStr += prefs.getLineSeperator();
+			dataStr += prefs.getLineSeparator();
 		}
 		long start = SystemClock.elapsedRealtime();
 		try {

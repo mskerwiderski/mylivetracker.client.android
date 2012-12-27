@@ -15,20 +15,23 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.InfoActivity;
-import de.msk.mylivetracker.client.android.connections.dropbox.ConnectToDropboxActivity;
-import de.msk.mylivetracker.client.android.connections.mylivetracker.ConnectToMyLiveTrackerPortalActivity;
+import de.msk.mylivetracker.client.android.account.AccountPrefsActivity;
+import de.msk.mylivetracker.client.android.auto.AutoPrefs;
+import de.msk.mylivetracker.client.android.auto.AutoPrefsActivity;
+import de.msk.mylivetracker.client.android.dropbox.DropboxConnectActivity;
+import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParamsPrefsActivity;
 import de.msk.mylivetracker.client.android.listener.GpsStateListener;
 import de.msk.mylivetracker.client.android.listener.LocationListener;
-import de.msk.mylivetracker.client.android.preferences.Preferences;
-import de.msk.mylivetracker.client.android.preferences.PrefsAccountActivity;
-import de.msk.mylivetracker.client.android.preferences.PrefsAutoActivity;
-import de.msk.mylivetracker.client.android.preferences.PrefsHttpProtocolParamsActivity;
-import de.msk.mylivetracker.client.android.preferences.PrefsLocalizationActivity;
-import de.msk.mylivetracker.client.android.preferences.PrefsOtherActivity;
-import de.msk.mylivetracker.client.android.preferences.PrefsPinCodeQueryActivity;
-import de.msk.mylivetracker.client.android.preferences.PrefsRemoteAccessActivity;
-import de.msk.mylivetracker.client.android.preferences.PrefsServerActivity;
+import de.msk.mylivetracker.client.android.localization.LocalizationPrefsActivity;
+import de.msk.mylivetracker.client.android.mylivetrackerportal.MyLiveTrackerPortalConnectActivity;
+import de.msk.mylivetracker.client.android.other.OtherPrefs;
+import de.msk.mylivetracker.client.android.other.OtherPrefsActivity;
+import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryPrefsActivity;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.pro.R;
+import de.msk.mylivetracker.client.android.protocol.ProtocolPrefsActivity;
+import de.msk.mylivetracker.client.android.remoteaccess.RemoteAccessPrefsActivity;
+import de.msk.mylivetracker.client.android.server.ServerPrefsActivity;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.trackexport.TrackExportActivity;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractInfoDialog;
@@ -145,7 +148,7 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 	}
 	
 	public static boolean showStartStopInfoDialogIfInAutoMode() {
-		if (Preferences.get().isAutoModeEnabled()) {
+		if (PrefsRegistry.get(AutoPrefs.class).isAutoModeEnabled()) {
 			SimpleInfoDialog.show(MainActivity.get(), 
 				R.string.txPrefs_InfoAutoModeEnabled);
 			return true;
@@ -155,7 +158,7 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 	
 	private void showPrefsWarningDialogIfIsTrackRunning(
 		Class<? extends Activity> activityClassToStart) {
-		if (Preferences.get().getConfirmLevel().isMedium()) {
+		if (PrefsRegistry.get(OtherPrefs.class).getConfirmLevel().isMedium()) {
 			PrefsWarningDialog dlg = new PrefsWarningDialog(this,
 				activityClassToStart);
 			dlg.show();
@@ -212,35 +215,11 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 		LocationListener.get().setActive(false);
 	}	
 	
-	public void startActivityPrefsLocalization() {
+	public void startActivityWithWarningDlgIfTrackRunning(Class<? extends Activity> activityClassToStart) {
 		if (TrackStatus.get().trackIsRunning()) {
-			showPrefsWarningDialogIfIsTrackRunning(PrefsLocalizationActivity.class);
+			showPrefsWarningDialogIfIsTrackRunning(activityClassToStart);
 		} else {
-			startActivity(new Intent(this, PrefsLocalizationActivity.class));
-		}
-	}
-	
-	public void startActivityPrefsServer() {
-		if (TrackStatus.get().trackIsRunning()) {
-			showPrefsWarningDialogIfIsTrackRunning(PrefsServerActivity.class);
-		} else {
-			startActivity(new Intent(this, PrefsServerActivity.class));
-		}
-	}
-	
-	public void startActivityPrefsAccount() {
-		if (TrackStatus.get().trackIsRunning()) {
-			showPrefsWarningDialogIfIsTrackRunning(PrefsAccountActivity.class);
-		} else {
-			startActivity(new Intent(this, PrefsAccountActivity.class));
-		}
-	}
-	
-	public void startActivityPrefsAuto() {
-		if (TrackStatus.get().trackIsRunning()) {
-			showPrefsWarningDialogIfIsTrackRunning(PrefsAutoActivity.class);
-		} else {
-			startActivity(new Intent(this, PrefsAutoActivity.class));
+			startActivity(new Intent(this, activityClassToStart));
 		}
 	}
 	
@@ -296,81 +275,52 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.mnPrefsServer:
-			if (TrackStatus.get().trackIsRunning()) {
-				showPrefsWarningDialogIfIsTrackRunning(PrefsServerActivity.class);
-			} else {
-				startActivity(new Intent(this, PrefsServerActivity.class));
-			}
+			startActivityWithWarningDlgIfTrackRunning(ServerPrefsActivity.class);
 			return true;
 		case R.id.mnPrefsAccount:
-			startActivityPrefsAccount();
+			startActivityWithWarningDlgIfTrackRunning(AccountPrefsActivity.class);
 			return true;
+		case R.id.mnPrefsProtocol:
+			startActivityWithWarningDlgIfTrackRunning(ProtocolPrefsActivity.class);
+			return true;	
 		case R.id.mnPrefsLocalization:
-			if (TrackStatus.get().trackIsRunning()) {
-				showPrefsWarningDialogIfIsTrackRunning(PrefsLocalizationActivity.class);
-			} else {
-				startActivity(new Intent(this, PrefsLocalizationActivity.class));
-			}
+			startActivityWithWarningDlgIfTrackRunning(LocalizationPrefsActivity.class);
 			return true;
-		case R.id.mnPrefsOther:
-			if (TrackStatus.get().trackIsRunning()) {
-				showPrefsWarningDialogIfIsTrackRunning(PrefsOtherActivity.class);
-			} else {
-				startActivity(new Intent(this, PrefsOtherActivity.class));
-			}
+		case R.id.mnTrackExport:
+			startActivityWithWarningDlgIfTrackRunning(TrackExportActivity.class);
+			return true;	
+		case R.id.mnMyLiveTrackerPortalConnect:
+			startActivityWithWarningDlgIfTrackRunning(MyLiveTrackerPortalConnectActivity.class);
 			return true;
-		case R.id.mnPrefsAuto:
-			if (TrackStatus.get().trackIsRunning()) {
-				showPrefsWarningDialogIfIsTrackRunning(PrefsAutoActivity.class);
-			} else {
-				startActivity(new Intent(this, PrefsAutoActivity.class));
-			}
-			return true;
+		case R.id.mnDropboxConnect:
+			startActivityWithWarningDlgIfTrackRunning(DropboxConnectActivity.class);
+			return true;	
 		case R.id.mnPrefsPinCodeQuery:
 			if (!App.isPro()) {
 				showIsProFeatureDialog();
 			} else {
-				startActivity(new Intent(this, PrefsPinCodeQueryActivity.class));
+				startActivityWithWarningDlgIfTrackRunning(PinCodeQueryPrefsActivity.class);
 			}
+			return true;
+		case R.id.mnPrefsAuto:
+			startActivityWithWarningDlgIfTrackRunning(AutoPrefsActivity.class);
 			return true;
 		case R.id.mnPrefsRemoteAccess:
 			if (!App.isPro()) {
 				showIsProFeatureDialog();
 			} else {
-				startActivity(new Intent(this, PrefsRemoteAccessActivity.class));
+				startActivityWithWarningDlgIfTrackRunning(RemoteAccessPrefsActivity.class);
 			}
-			return true;	
+			return true;
 		case R.id.mnPrefsHttpProtocolParams:
 			if (!App.isPro()) {
 				showIsProFeatureDialog();
 			} else {
-				if (TrackStatus.get().trackIsRunning()) {
-					showPrefsWarningDialogIfIsTrackRunning(PrefsHttpProtocolParamsActivity.class);
-				} else {
-					startActivity(new Intent(this, PrefsHttpProtocolParamsActivity.class));
-				}
+				startActivityWithWarningDlgIfTrackRunning(HttpProtocolParamsPrefsActivity.class);
 			}
 			return true;
-		case R.id.mnTrackExport:
-			if (TrackStatus.get().trackIsRunning()) {
-				showPrefsWarningDialogIfIsTrackRunning(TrackExportActivity.class);
-			} else {
-				startActivity(new Intent(this, TrackExportActivity.class));
-			}
-			return true;	
-		case R.id.mnConnectToMyLiveTrackerPortal:
-			if (TrackStatus.get().trackIsRunning()) {
-				showPrefsWarningDialogIfIsTrackRunning(ConnectToMyLiveTrackerPortalActivity.class);
-			} else {
-				startActivity(new Intent(this, ConnectToMyLiveTrackerPortalActivity.class));
-			}
-			return true;
-		case R.id.mnConnectToDropbox:
-			if (TrackStatus.get().trackIsRunning()) {
-				showPrefsWarningDialogIfIsTrackRunning(ConnectToDropboxActivity.class);
-			} else {
-				startActivity(new Intent(this, ConnectToDropboxActivity.class));
-			}
+		case R.id.mnPrefsOther:
+			startActivityWithWarningDlgIfTrackRunning(OtherPrefsActivity.class);
 			return true;	
 		case R.id.mnInfo:
 			startActivity(new Intent(this, InfoActivity.class));

@@ -4,8 +4,11 @@ import org.apache.commons.lang.StringUtils;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.telephony.TelephonyManager;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry.InitResult;
 import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
@@ -27,7 +30,8 @@ public abstract class App extends Application {
 	private static String appName = null;
 	private static String appNameComplete = null;
 	private static String versionStr = null;
-	private static String prefsName = null;
+	private static String fileNamePrefix = null;
+	private static InitResult initPrefsResult = null;
 	
 	public enum VersionStage {
 		Release("R"),
@@ -121,9 +125,9 @@ public abstract class App extends Application {
 					}
 					appName = App.getCtx().getString(R.string.app_name);
 					appNameComplete = appName + " " + versionStr;
-					prefsName = (App.isPro() ? appName + "PRO" : appName) + ".DB"; 
-					LogUtils.always("APP: " + appNameComplete);
-					LogUtils.always("PREFS: " + prefsName);
+					fileNamePrefix = (App.isPro() ? appName + "_PRO" : appName + "_STD"); 
+					LogUtils.always("AppNameComplete: " + appNameComplete);
+					LogUtils.always("FileNamePrefix: " + fileNamePrefix);
 				} catch (NameNotFoundException e) {
 					throw new RuntimeException(e);
 				}
@@ -222,6 +226,7 @@ public abstract class App extends Application {
         app = this;
         context = getApplicationContext();
         VersionDsc.get();
+        initPrefsResult = PrefsRegistry.init();
     }
     @Override
 	public void onTerminate() {
@@ -248,11 +253,31 @@ public abstract class App extends Application {
 	public static String getAppNameComplete() {
 		return appNameComplete;
 	}
-	public static String getPrefsName() {
-		return prefsName;
+	private static final String VERSION_CODE_VAR = "versionCode";
+	public static boolean wasStartedForTheFirstTime() {
+		boolean startedForTheFirstTime = false;
+		String fileName = fileNamePrefix + "_app";
+		SharedPreferences sharedPrefs = App.getCtx().
+			getSharedPreferences(fileName, Context.MODE_PRIVATE);
+		int foundVersionCode = sharedPrefs.getInt(VERSION_CODE_VAR, -1);
+		if (foundVersionCode != VersionDsc.getCode()) {
+			startedForTheFirstTime = true;
+			SharedPreferences.Editor sharedPrefsEditor = sharedPrefs.edit();
+			sharedPrefsEditor.putInt(VERSION_CODE_VAR, VersionDsc.getCode());
+			sharedPrefsEditor.commit();
+		}
+		return startedForTheFirstTime;
 	}
-	public static String getPrefsFileName() {
-		return prefsName + ".xml";
+	public static InitResult getInitPrefsResult() {
+		return initPrefsResult;
+	}
+	public static String getPrefsFileName(boolean extensionIncl) {
+		return fileNamePrefix + "_prefs" +
+			(extensionIncl ? ".xml" : "");
+	}
+	public static String getStatusFileName(boolean extensionIncl) {
+		return fileNamePrefix + "_status" +
+			(extensionIncl ? ".xml" : "");
 	}
 	protected abstract boolean isProAux();
 	

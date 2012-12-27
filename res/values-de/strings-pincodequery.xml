@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tiPinCodeQuery">PIN Code</string>
+    <string name="lbPinCodeQuery_PinCodeQueryInfo">Bitte geben Sie den PIN Code ein:</string>
+    <string name="tiPinCodeQueryPrefs">Einstellungen PIN Code Abfrage</string>
+    <string name="lbPinCodeQueryPrefs_Info">Wichtig: Eine Wiederherstellung eines vergessenen PINs ist nicht möglich. In diesem Fall ist ein erneutes Installieren und Konfigurieren der App notwendig.</string>
+    <string name="lbPinCodeQueryPrefs_Enable">PIN Code Abfrage aktivieren</string>
+    <string name="fdPinCodeQueryPrefs_PinCode">PIN Code</string>
+    <string name="lbPinCodeQueryPrefs_PinCode">Eingabe des neuen PIN Codes:</string>
+    <string name="lbPinCodeQueryPrefs_PinCodeReenter">Erneute Eingabe des neuen PIN Codes:</string>
+    <string name="vdPinCodeQueryPrefs_PinCodeInvalid">Der PIN Code ist ungültig!</string>
+    <string name="vdPinCodeQueryPrefs_ReenteredPinCodeNotEqualToPinCode">Die PIN Code Eingaben sind nicht identisch!</string>
+</resources>

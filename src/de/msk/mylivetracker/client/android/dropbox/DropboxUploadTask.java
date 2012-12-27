@@ -23,6 +23,7 @@ import com.dropbox.client2.exception.DropboxUnlinkedException;
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.util.FileUtils;
+import de.msk.mylivetracker.client.android.util.FileUtils.PathType;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
 
 /**
@@ -30,10 +31,11 @@ import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
  * 
  * @author michael skerwiderski, (c)2012
  * 
- * @version 000
+ * @version 001
  * 
  * history
- * 000 	2012-12-11 initial. 
+ * 001	2012-12-24 	revised for v1.5.x.
+ * 000 	2012-12-11 	initial. 
  * 
  */
 public class DropboxUploadTask extends AsyncTask<Void, Long, Boolean> {
@@ -132,7 +134,7 @@ public class DropboxUploadTask extends AsyncTask<Void, Long, Boolean> {
         	if (this.doInBackgroundInitializer != null) {
         		this.doInBackgroundInitializer.init(fileName);
         	}
-        	this.fileLength = FileUtils.getFileLength(fileName);
+        	this.fileLength = FileUtils.getFileLength(fileName, PathType.AppDataDir);
             fis = App.get().openFileInput(fileName);
             this.request = DropboxUtils.getDropboxApi().putFileOverwriteRequest(
             	"/" + fileName, fis, this.fileLength,

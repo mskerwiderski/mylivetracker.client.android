@@ -16,8 +16,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsMessage;
-import de.msk.mylivetracker.client.android.preferences.Preferences;
-import de.msk.mylivetracker.client.android.remoteaccess.AbstractSmsCmdExecutor.CmdDsc;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
+import de.msk.mylivetracker.client.android.remoteaccess.ASmsCmdExecutor.CmdDsc;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
 /**
@@ -28,13 +28,14 @@ import de.msk.mylivetracker.client.android.util.LogUtils;
  * @version 001
  * 
  * history 
- * 000 2012-11-23 initial.
+ * 001	2012-12-25 	revised for v1.5.x.
+ * 000 	2012-11-23 	initial.
  * 
  */
 public class SmsCmdReceiver extends BroadcastReceiver {
 
-	private static Map<String, Class<? extends AbstractSmsCmdExecutor>> cmdRegistry = 
-		new HashMap<String, Class<? extends AbstractSmsCmdExecutor>>();
+	private static Map<String, Class<? extends ASmsCmdExecutor>> cmdRegistry = 
+		new HashMap<String, Class<? extends ASmsCmdExecutor>>();
 	
 	static {
 		cmdRegistry.put(StringUtils.lowerCase("getversion"), SmsCmdGetAppVersion.class);
@@ -52,12 +53,12 @@ public class SmsCmdReceiver extends BroadcastReceiver {
 		return res;
 	}
 	
-	private static Class<? extends AbstractSmsCmdExecutor> getSmsCmdExecutor(String cmdName) {
+	private static Class<? extends ASmsCmdExecutor> getSmsCmdExecutor(String cmdName) {
 		if (StringUtils.isEmpty(cmdName)) {
 			throw new IllegalArgumentException("cmdName must not be empty.");
 		}
 		LogUtils.infoMethodIn(SmsCmdReceiver.class, "getSmsCmdExecutor", cmdName);
-		Class<? extends AbstractSmsCmdExecutor> res = 
+		Class<? extends ASmsCmdExecutor> res = 
 			cmdRegistry.get(StringUtils.lowerCase(cmdName));
 		LogUtils.infoMethodOut(SmsCmdReceiver.class, "getSmsCmdExecutor", res);
 		return res;
@@ -72,7 +73,7 @@ public class SmsCmdReceiver extends BroadcastReceiver {
 	
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		Preferences prefs = Preferences.get();
+		RemoteAccessPrefs prefs = PrefsRegistry.get(RemoteAccessPrefs.class);
 		if (!prefs.isRemoteAccessEnabled()) return;
 		LogUtils.infoMethodIn(this.getClass(), "onReceive");
 		Bundle bundle = intent.getExtras();
@@ -114,11 +115,11 @@ public class SmsCmdReceiver extends BroadcastReceiver {
 							}
 						}
 						LogUtils.infoMethodState(this.getClass(), "onReceive", "params", Arrays.toString(params));
-						Class<? extends AbstractSmsCmdExecutor> smsCmdExecutorClass = 
+						Class<? extends ASmsCmdExecutor> smsCmdExecutorClass = 
 							getSmsCmdExecutor(messageParts[2]);
-						Constructor<? extends AbstractSmsCmdExecutor> smsCmdExecutorConstructor = 
+						Constructor<? extends ASmsCmdExecutor> smsCmdExecutorConstructor = 
 							smsCmdExecutorClass.getConstructor(String.class, String.class, String[].class);
-						AbstractSmsCmdExecutor smsCmdExecutor = smsCmdExecutorConstructor.newInstance(cmdName, sender, params);
+						ASmsCmdExecutor smsCmdExecutor = smsCmdExecutorConstructor.newInstance(cmdName, sender, params);
 						CmdDsc cmdDsc = smsCmdExecutor.getCmdDsc();
 						if ((params.length < cmdDsc.getMinParams()) || 
 							(params.length > cmdDsc.getMaxParams())) {

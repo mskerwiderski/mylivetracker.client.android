@@ -3,7 +3,8 @@ package de.msk.mylivetracker.client.android.mainview;
 import android.view.View;
 import android.view.View.OnClickListener;
 import de.msk.mylivetracker.client.android.listener.LocationListener;
-import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.other.OtherPrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 
@@ -62,7 +63,7 @@ public class OnClickButtonLocationListenerOnOffListener implements OnClickListen
 			return;
 		}
 		
-		if (Preferences.get().getConfirmLevel().isHigh()) {
+		if (PrefsRegistry.get(OtherPrefs.class).getConfirmLevel().isHigh()) {
 			StartStopLocationListenerDialog dlg = new StartStopLocationListenerDialog(activity);
 			dlg.show();
 		} else {

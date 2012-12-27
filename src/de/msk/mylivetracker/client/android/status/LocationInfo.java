@@ -8,7 +8,8 @@ import org.apache.commons.lang.StringUtils;
 
 import android.location.Location;
 import android.location.LocationManager;
-import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.localization.LocalizationPrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.util.FormatUtils;
 import de.msk.mylivetracker.client.android.util.LatLonUtils;
 import de.msk.mylivetracker.client.android.util.LatLonUtils.PosType;
@@ -167,15 +168,16 @@ public class LocationInfo extends AbstractInfo implements Serializable {
 	}
 	
 	public static boolean isDistanceUsedForDistCalc(float distanceInMtr) {
-		int distReqInCMtr = Preferences.get().
-			getLocDistBtwTwoLocsForDistCalcRequiredInCMtr();
+		int distReqInCMtr = PrefsRegistry.get(LocalizationPrefs.class).
+			getDistBtwTwoLocsForDistCalcRequiredInCMtr();
 		if (distReqInCMtr == 0) return true;
 		else return ((distanceInMtr * 100f) >= (float)distReqInCMtr);
 	}
 	
 	public boolean isUpToDate() {
 		if (!this.latLonPos.valid() || (this.getTimestamp() == null)) return false;
-		int periodOfRestInSecs = Preferences.get().getLocTimeTriggerInSeconds();
+		int periodOfRestInSecs = PrefsRegistry.get(LocalizationPrefs.class).
+			getTimeTriggerInSeconds();
 		if (periodOfRestInSecs == 0) {
 			periodOfRestInSecs = 5;
 		} else {
@@ -190,7 +192,8 @@ public class LocationInfo extends AbstractInfo implements Serializable {
 	}
 	
 	public static boolean isAccurate(Float accuracy) {
-		int accReq = Preferences.get().getLocAccuracyRequiredInMeter();
+		int accReq = PrefsRegistry.get(LocalizationPrefs.class).
+			getAccuracyRequiredInMeter();
 		if (accReq == 0) {
 			return true;
 		}

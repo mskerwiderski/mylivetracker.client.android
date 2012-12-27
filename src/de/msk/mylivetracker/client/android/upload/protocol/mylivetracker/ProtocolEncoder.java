@@ -3,7 +3,8 @@ package de.msk.mylivetracker.client.android.upload.protocol.mylivetracker;
 import java.util.Date;
 
 import de.msk.mylivetracker.client.android.App.VersionDsc;
-import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.account.AccountPrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
 import de.msk.mylivetracker.client.android.status.EmergencySignalInfo;
 import de.msk.mylivetracker.client.android.status.GpsStateInfo;
@@ -64,19 +65,19 @@ public class ProtocolEncoder extends EncDecoder implements IProtocol {
 		LocationInfo locationInfo, GpsStateInfo gpsStateInfo,
 		HeartrateInfo heartrateInfo, EmergencySignalInfo emergencySignalInfo,
 		MessageInfo messageInfo) {
-		Preferences prefs = Preferences.get();
+		AccountPrefs accountPrefs = PrefsRegistry.get(AccountPrefs.class);
 		TrackStatus status = TrackStatus.get();
 			
 		UploadDataPacket data = new UploadDataPacket();
 		data.setTimestamp(lastInfoTimestamp.getTime());
 		data.setVersionCode(VersionDsc.getCode());
 		data.setVersionName(VersionDsc.getName());
-		data.setUsername(prefs.getUsername());
-		data.setSeed(prefs.getSeed());
-		data.setDeviceId(prefs.getDeviceId());
+		data.setUsername(accountPrefs.getUsername());
+		data.setSeed(accountPrefs.getSeed());
+		data.setDeviceId(accountPrefs.getDeviceId());
 		data.setTrackId(status.getTrackId());
-		data.setTrackName(prefs.getTrackName());
-		data.setPhoneNumber(prefs.getPhoneNumber());
+		data.setTrackName(accountPrefs.getTrackName());
+		data.setPhoneNumber(accountPrefs.getPhoneNumber());
 		
 		if (batteryStateInfo != null) {
 			if (batteryStateInfo.getPercent() != null) {
@@ -101,11 +102,11 @@ public class ProtocolEncoder extends EncDecoder implements IProtocol {
 			}
 			// TODO bearing
 			data.setLocationValid(locationInfo.isAccurate());
-			data.setMileageInMtr(new Double(locationInfo.getMileageInMtr()));
-			data.setTrackDistanceInMtr(new Float(locationInfo.getTrackDistanceInMtr()));
+			data.setMileageInMtr(Double.valueOf(locationInfo.getMileageInMtr()));
+			data.setTrackDistanceInMtr(Float.valueOf(locationInfo.getTrackDistanceInMtr()));
 		} else {		
-			data.setMileageInMtr(new Double(status.getMileageInMtr()));
-			data.setTrackDistanceInMtr(new Float(status.getTrackDistanceInMtr()));
+			data.setMileageInMtr(Double.valueOf(status.getMileageInMtr()));
+			data.setTrackDistanceInMtr(Float.valueOf(status.getTrackDistanceInMtr()));
 		}
 		
 		if (gpsStateInfo != null) {

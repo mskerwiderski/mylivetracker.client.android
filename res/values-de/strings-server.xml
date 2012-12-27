@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tiServerPrefs">Einstellungen Server</string>
+    <string name="fdServerPrefs_ServerAddress">Server Adresse</string>    
+    <string name="lbServerPrefs_ServerAddressAndPort">Server Adresse (DNS oder IP) und Port</string>
+    <string name="fdServerPrefs_ServerPort">Server Port</string>
+    <string name="fdServerPrefs_ServerPath">Server Pfad</string>    
+    <string name="lbServerPrefs_ServerPath">Server Pfad (nur bei Übertragung via HTTP)</string>
+</resources>

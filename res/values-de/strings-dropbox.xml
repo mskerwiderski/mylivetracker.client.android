@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lbDropbox_UploadInProgress">Upload...</string>
+    <string name="lbDropbox_UploadDone">Der Upload wurde erfolgreich durchgeführt!</string>
+    <string name="lbDropbox_UploadCanceled">Der Upload wurde abgebrochen!</string>
+    <string name="lbDropbox_UploadRejected">Der Upload wurde abgewiesen:</string>
+    <string name="lbDropbox_AuthFailed">Die Authentisierung ist fehlgeschlagen! Überprüfen Sie die Verbindung zur Dropbox!</string>
+    <string name="lbDropbox_FileTooLargeToUpload">Die Datei ist für den Upload zu groß!</string>
+    <string name="lbDropbox_NetworkError">Netzwerk-Fehler! Wiederholen Sie den Upload!</string>
+    <string name="lbDropbox_DropboxError">Dropbox-Fehler! Wiederholen Sie den Upload!</string>
+    <string name="lbDropbox_UnknownError">Unbekannter Fehler! Wiederholen Sie den Upload!</string>
+    <string name="tiDropboxConnect">Koppeln mit Dropbox</string>
+    <string name="btDropboxConnect_Connect">Koppeln</string>
+    <string name="btDropboxConnect_Release">Freigeben</string>
+    <string name="lbDropboxConnect_Status">Gekoppeltes Dropbox Konto:</string>
+    <string name="txDropboxConnect_StatusConnected">%1$s</string>
+    <string name="txDropboxConnect_StatusNotConnected">Nicht gekoppelt</string>
+    <string name="txDropboxConnect_NoConnectionExists">Es existiert keine Koppelung mit Dropbox!</string>
+    <string name="txDropboxConnect_ConnectionExists">Eine Koppelung mit Dropbox existiert bereits. Diese muss vorher freigegeben werden!</string>
+    <string name="txDropboxConnect_QuestionConnect">Wollen Sie wirklich eine Koppelung mit Dropbox herstellen?</string>
+    <string name="txDropboxConnect_QuestionRelease">Wollen Sie wirklich die Koppelung mit Dropbox freigeben?</string>
+    <string name="txDropboxConnect_InfoConnectingFailed">Die Koppelung mit der Dropbox ist fehlgeschlagen oder wurde abgebrochen!</string>
+    <string name="txDropboxConnect_InfoConnectingDone">Die Koppelung mit der Dropbox wurde erfolgreich hergestellt!</string>
+</resources>

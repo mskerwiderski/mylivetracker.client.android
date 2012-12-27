@@ -49,13 +49,13 @@ public class FileUtils {
 	
 	private static String getPathFileName(String fileName, PathType pathType) {
 		if (StringUtils.isEmpty(fileName)) {
-			throw new IllegalArgumentException("fileName must not be empty.");
+			throw new IllegalArgumentException("fileName must not be empty!");
 		}
 		if (pathType == null) {
-			throw new IllegalArgumentException("pathType must not be null.");
+			throw new IllegalArgumentException("pathType must not be null!");
 		}
 		if (pathType.equals(PathType.ExternalStorage) && !externalStorageUsable()) {
-			throw new IllegalArgumentException("external storage is not available.");
+			throw new IllegalArgumentException("external storage is not available!");
 		}
 		String pathFileName = App.get().getFilesDir().getAbsolutePath();
 		if (pathType.equals(PathType.ExternalStorage)) {
@@ -76,35 +76,57 @@ public class FileUtils {
 		return pathFileName;
 	}
 	
-	public static boolean fileExists(String fileName) {
+	public static boolean fileExists(String fileName, PathType srcPathType) {
 		if (StringUtils.isEmpty(fileName)) {
-			throw new IllegalArgumentException("fileName must not be empty.");
+			throw new IllegalArgumentException("fileName must not be empty!");
 		}
-		File file = new File(getPathFileName(fileName, PathType.AppDataDir));
+		if (srcPathType == null) {
+			throw new IllegalArgumentException("srcPathType must not be null!");
+		}
+		File file = new File(getPathFileName(fileName, srcPathType));
 		return file.exists();
 	}
 	
-	public static long getFileLength(String fileName) {
+	public static void fileDelete(String fileName, PathType srcPathType) {
 		if (StringUtils.isEmpty(fileName)) {
-			throw new IllegalArgumentException("fileName must not be empty.");
+			throw new IllegalArgumentException("fileName must not be empty!");
 		}
-		File file = new File(getPathFileName(fileName, PathType.AppDataDir));
+		if (srcPathType == null) {
+			throw new IllegalArgumentException("srcPathType must not be null!");
+		}
+		File file = new File(getPathFileName(fileName, srcPathType));
+		if (file.exists()) {
+			file.delete();
+		}
+		if (file.exists()) {
+			throw new RuntimeException("deleting file failed!");
+		}
+	}
+	
+	public static long getFileLength(String fileName, PathType srcPathType) {
+		if (StringUtils.isEmpty(fileName)) {
+			throw new IllegalArgumentException("fileName must not be empty!");
+		}
+		if (srcPathType == null) {
+			throw new IllegalArgumentException("srcPathType must not be null!");
+		}
+		File file = new File(getPathFileName(fileName, srcPathType));
 		return file.length();
 	}
 	
 	public static void copy(String srcFileName, PathType srcPathType, 
 		String destFileName, PathType destPathType) {
 		if (StringUtils.isEmpty(srcFileName)) {
-			throw new IllegalArgumentException("srcFileName must not be empty.");
+			throw new IllegalArgumentException("srcFileName must not be empty!");
 		}
 		if (srcPathType == null) {
-			throw new IllegalArgumentException("srcPathType must not be null.");
+			throw new IllegalArgumentException("srcPathType must not be null!");
 		}
 		if (StringUtils.isEmpty(destFileName)) {
-			throw new IllegalArgumentException("destFileName must not be empty.");
+			throw new IllegalArgumentException("destFileName must not be empty!");
 		}
 		if (destPathType == null) {
-			throw new IllegalArgumentException("destPathType must not be null.");
+			throw new IllegalArgumentException("destPathType must not be null!");
 		}
 		copyAux(
 			new File(getPathFileName(srcFileName, srcPathType)), 
@@ -113,10 +135,10 @@ public class FileUtils {
 	
 	private static void copyAux(File src, File dest) {
 		if (src == null) {
-			throw new IllegalArgumentException("src must not be null.");
+			throw new IllegalArgumentException("src must not be null!");
 		}
 		if (dest == null) {
-			throw new IllegalArgumentException("dest must not be null.");
+			throw new IllegalArgumentException("dest must not be null!");
 		}
 		InputStream in = null;
 		OutputStream out = null;

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" 
+    android:orientation="vertical" 
+    android:background="@color/colorBackground"
+>
+    <TextView 
+        android:paddingTop="4dip"
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip"
+        android:textSize="16sp"
+        android:text="@string/lbAccountPrefs_DeviceId"
+        android:textColor="@color/colorText"
+       	android:layout_height="wrap_content" 
+       	android:layout_width="wrap_content" 
+    />
+	<LinearLayout 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip"
+    >    
+
+	    <EditText
+	        android:id="@+id/etAccountPrefs_DeviceId"
+	        android:layout_width="fill_parent"
+	        android:layout_height="40dip"
+	        android:inputType="none"
+	        android:singleLine="true"
+	        android:text="" />
+
+    </LinearLayout>
+    <TextView
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip"
+        android:textSize="16sp"
+        android:text="@string/lbAccountPrefs_Username" 
+        android:textColor="@color/colorText"
+        android:layout_height="wrap_content" 
+        android:layout_width="wrap_content" 
+    />
+	<LinearLayout 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip"
+    >    
+
+	    <EditText
+	        android:id="@+id/etAccountPrefs_Username"
+	        android:layout_width="fill_parent"
+	        android:layout_height="40dip"
+	        android:inputType="text"
+	        android:singleLine="true"
+	        android:text="" />
+
+    </LinearLayout>
+    <TextView
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip"
+        android:textSize="16sp"
+        android:text="@string/lbAccountPrefs_Password"
+        android:textColor="@color/colorText"
+        android:layout_height="wrap_content" 
+        android:layout_width="wrap_content" 
+    />
+	<LinearLayout 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip"
+    >    
+
+	    <EditText
+	        android:id="@+id/etAccountPrefs_Password"
+	        android:layout_width="fill_parent"
+	        android:layout_height="40dip"
+	        android:inputType="textPassword"
+	        android:singleLine="true"
+	        android:text="" />
+
+    </LinearLayout>
+    <TextView 
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip"
+        android:textSize="16sp"
+        android:text="@string/lbAccountPrefs_TrackName"
+        android:textColor="@color/colorText"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content" 
+    />
+	<LinearLayout 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip"
+    >    
+	    <EditText
+	        android:id="@+id/etAccountPrefs_TrackName"
+	        android:layout_width="fill_parent"
+	        android:layout_height="40dip"
+	        android:inputType="text"
+	        android:singleLine="true"
+	        android:text="" />
+
+	</LinearLayout>    
+    <TextView
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip"
+        android:textSize="16sp"
+    	android:text="@string/lbAccountPrefs_PhoneNumber" 
+    	android:textColor="@color/colorText"
+    	android:layout_height="wrap_content" 
+    	android:layout_width="wrap_content" 
+    />
+	<LinearLayout 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip"
+    >    
+
+		<EditText
+		    android:id="@+id/etAccountPrefs_PhoneNumber"
+		    android:layout_width="fill_parent"
+		    android:layout_height="40dip"
+		    android:inputType="phone"
+		    android:singleLine="true"
+		    android:text="" />
+
+	</LinearLayout>	
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <Button 
+            android:layout_gravity="bottom" 
+            android:layout_width="fill_parent" 
+            android:layout_weight="1" 
+            android:layout_height="50dip" 
+            android:text="@string/btSave" 
+            android:id="@+id/btAccountPrefs_Save" 
+        />
+        <Button 
+            android:layout_width="fill_parent" 
+            android:layout_gravity="bottom" 
+            android:layout_weight="1" 
+            android:layout_height="50dip" 
+            android:text="@string/btCancel" 
+            android:id="@+id/btAccountPrefs_Cancel" 
+        />
+    </LinearLayout>   
+</LinearLayout>

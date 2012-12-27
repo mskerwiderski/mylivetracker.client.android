@@ -3,7 +3,8 @@ package de.msk.mylivetracker.client.android.mainview;
 import android.view.View;
 import android.view.View.OnClickListener;
 import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
-import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.other.OtherPrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 
@@ -61,7 +62,7 @@ public class OnClickButtonAntPlusListener implements OnClickListener {
 				AntPlusManager.get().hasSensorListeners());
 			return;
 		}
-		if (Preferences.get().getConfirmLevel().isHigh()) {
+		if (PrefsRegistry.get(OtherPrefs.class).getConfirmLevel().isHigh()) {
 			StartStopAntPlusDialog dlg = new StartStopAntPlusDialog(activity);
 			dlg.show();
 		} else {

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tiRemoteAccessPrefs">Fernzugriff</string>
+    <string name="lbRemoteAccessPrefs_Enable">Fernzugriff aktivieren</string>
+    <string name="fdRemoteAccessPrefs_Password">Passwort</string>
+    <string name="lbRemoteAccessPrefs_Password">Passwort</string>
+    <string name="lbRemoteAccessPrefs_UseReceiver">Sende Antworten an angegebenen Empfänger. Falls deaktiviert, werden die Antworten an den ursprünglichen Sender geschickt.</string>
+   	<string name="fdRemoteAccessPrefs_Receiver">Empfänger (Telefonnummer)</string>
+    <string name="lbRemoteAccessPrefs_Receiver">Empfänger</string>
+</resources>

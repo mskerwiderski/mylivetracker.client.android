@@ -4,8 +4,9 @@ import android.os.SystemClock;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Chronometer;
-import de.msk.mylivetracker.client.android.preferences.Preferences;
-import de.msk.mylivetracker.client.android.preferences.Preferences.TrackingOneTouchMode;
+import de.msk.mylivetracker.client.android.other.OtherPrefs;
+import de.msk.mylivetracker.client.android.other.OtherPrefs.TrackingOneTouchMode;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.upload.UploadService;
@@ -70,7 +71,7 @@ public class OnClickButtonStartStopListener implements OnClickListener {
 			return;
 		}
 		
-		if (Preferences.get().getConfirmLevel().isHigh()) {
+		if (PrefsRegistry.get(OtherPrefs.class).getConfirmLevel().isHigh()) {
 			StartStopTrackDialog dlg = new StartStopTrackDialog(activity);
 			dlg.show();
 		} else {
@@ -83,7 +84,8 @@ public class OnClickButtonStartStopListener implements OnClickListener {
 		@Override
 		public void beforeTask(MainActivity activity) {
 			if (this.oneTouchMode) {
-				TrackingOneTouchMode mode = Preferences.get().getTrackingOneTouchMode();
+				TrackingOneTouchMode mode = PrefsRegistry.get(OtherPrefs.class).
+					getTrackingOneTouchMode();
 				switch (mode) {
 					case TrackingLocalizationHeartrate:
 						OnClickButtonAntPlusListener.
@@ -133,7 +135,8 @@ public class OnClickButtonStartStopListener implements OnClickListener {
 		public void cleanUp(MainActivity activity) {
 			activity.getUiChronometer().stop();
 			if (this.oneTouchMode) {
-				TrackingOneTouchMode mode = Preferences.get().getTrackingOneTouchMode();
+				TrackingOneTouchMode mode = PrefsRegistry.get(OtherPrefs.class).
+					getTrackingOneTouchMode();
 				switch (mode) {
 					case TrackingLocalizationHeartrate:
 						OnClickButtonAntPlusListener.

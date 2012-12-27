@@ -8,7 +8,8 @@ import org.apache.commons.lang.StringUtils;
 
 import android.content.Context;
 import de.msk.mylivetracker.client.android.App;
-import de.msk.mylivetracker.client.android.preferences.Preferences;
+import de.msk.mylivetracker.client.android.account.AccountPrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.util.FileUtils;
 import de.msk.mylivetracker.client.android.util.FileUtils.PathType;
 import de.msk.mylivetracker.client.android.util.FormatUtils;
@@ -65,7 +66,7 @@ public class LogInfo {
 	
 	public static boolean logFileExists() {
 		String filename = TrackStatus.get().getLogFileName();
-		return FileUtils.fileExists(filename);
+		return FileUtils.fileExists(filename, PathType.AppDataDir);
 	}
 	
 	public static void addLogItem(LocationInfo locationInfo, 
@@ -74,19 +75,19 @@ public class LogInfo {
 		FileOutputStream fos = null;
 		try {
 			String filename = TrackStatus.get().getLogFileName();
-			boolean writeGpxHead = !FileUtils.fileExists(filename);
+			boolean writeGpxHead = !FileUtils.fileExists(filename, PathType.AppDataDir);
 			fos = App.get().openFileOutput(filename, 
 				Context.MODE_PRIVATE | Context.MODE_APPEND);
 			if (writeGpxHead) {
 				String gpxHead = GPX_HEAD_TEMPLATE;
 				gpxHead = StringUtils.replace(gpxHead, "$MLTVERSION", App.getAppNameComplete());
-				gpxHead = StringUtils.replace(gpxHead, "$AUTHOR", Preferences.get().getUsername());
+				gpxHead = StringUtils.replace(gpxHead, "$AUTHOR", PrefsRegistry.get(AccountPrefs.class).getUsername());
 				DateTime dateTime = new DateTime(TrackStatus.get().getStartedInMSecs());
 				String timestamp = dateTime.getAsStr(
 					TimeZone.getTimeZone(DateTime.TIME_ZONE_UTC), 
 					TIMESTAMP_FMT);
 				gpxHead = StringUtils.replace(gpxHead, "$TIMESTAMPSTART", timestamp);
-				gpxHead = StringUtils.replace(gpxHead, "$TRACKNAME", Preferences.get().getTrackName());
+				gpxHead = StringUtils.replace(gpxHead, "$TRACKNAME", PrefsRegistry.get(AccountPrefs.class).getTrackName());
 				gpxHead = StringUtils.replace(gpxHead, "$COMMENT", "");
 				fos.write(gpxHead.getBytes());
 			}

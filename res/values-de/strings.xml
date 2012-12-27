@@ -8,13 +8,9 @@
     <!-- Welcome message -->
     <string name="welcomeMessage">Willkommen zu %1$s. Wenn Sie Fragen haben oder Unterstützung benötigen, besuchen Sie uns doch im Forum unter http://forum.mylivetracker.info!</string>
        
-    <!-- preferences: update message / create message -->
-    <string name="prefsUpdated">Bitte überprüfen Sie Ihre Einstellungen, da diese auf die Version %1$s aktualisiert wurden.</string>  
-    <string name="prefsReset">Ihre Einstellungen wurden zurückgesetzt, da eine Aktualisierung auf die Version %1$s nicht möglich war.</string> 
-        
-    <!-- pin code query -->
-    <string name="tiPinCodeQuery">PIN Code</string>
-    <string name="lbPinCodeQuery_PinCodeQueryInfo">Bitte geben Sie den PIN Code ein:</string>
+    <!-- preferences -->
+    <string name="prefsCreated">Bitte überprüfen Sie die Einstellungen! Da Sie MyLiveTracker das erste Mal benutzen, wurden alle Einstellungen auf Standardwerte gesetzt!</string>  
+    <string name="prefsUpdated">Bitte überprüfen Sie die Einstellungen! Mit der neuen Version von MyLiveTracker sind evtl. neue Einstellungen hinzugekommen oder haben sich geändert!</string> 
         
     <!-- commons -->
     <string name="btSave">Speichern</string>
@@ -41,12 +37,13 @@
     <string name="mnPrefsLocalization">Lokalisierung</string>
     <string name="mnPrefsServer">Server</string>
     <string name="mnPrefsAccount">Zugang</string>
+    <string name="mnPrefsProtocol">Protokoll</string>
     <string name="mnTrackExport">Export</string>
         
     <!-- menu items for 'connect' -->
-    <string name="mnCatConnectTo">Koppeln</string>
-    <string name="mnConnectToMyLiveTrackerPortal">MyLiveTracker</string>
-    <string name="mnConnectToDropbox">Dropbox</string>
+    <string name="mnCatConnect">Koppeln</string>
+    <string name="mnMyLiveTrackerPortalConnect">MyLiveTracker</string>
+    <string name="mnDropboxConnect">Dropbox</string>
     
     <!-- menu items for 'system' -->
     <string name="mnCatSystem">System</string>
@@ -60,17 +57,6 @@
     <string name="mnCatInfoAndExit">Info &amp; Beenden</string>
     <string name="mnInfo">Info</string>
     <string name="mnExit">Beenden</string>
-    
-    <!-- dropbox commons -->
-    <string name="lbDropbox_UploadInProgress">Upload...</string>
-    <string name="lbDropbox_UploadDone">Der Upload wurde erfolgreich durchgeführt!</string>
-    <string name="lbDropbox_UploadCanceled">Der Upload wurde abgebrochen!</string>
-    <string name="lbDropbox_UploadRejected">Der Upload wurde abgewiesen:</string>
-    <string name="lbDropbox_AuthFailed">Die Authentisierung ist fehlgeschlagen! Überprüfen Sie die Verbindung zur Dropbox!</string>
-    <string name="lbDropbox_FileTooLargeToUpload">Die Datei ist für den Upload zu groß!</string>
-    <string name="lbDropbox_NetworkError">Netzwerk-Fehler! Wiederholen Sie den Upload!</string>
-    <string name="lbDropbox_DropboxError">Dropbox-Fehler! Wiederholen Sie den Upload!</string>
-    <string name="lbDropbox_UnknownError">Unbekannter Fehler! Wiederholen Sie den Upload!</string>
     
     <!-- antPlus -->
     <string name="antPlus_NotSupported">ANT+ wird nicht unterstützt!</string>
@@ -179,173 +165,6 @@
     <string name="txPrefs_InfoAutoModeEnabled">Das manuelle Zurücksetzen, Starten/Stoppen des Tracks, der Lokalisierung oder HF-Messung ist im Auto Modus nicht möglich!</string>
     <string name="txPrefs_WarningChangePrefsDuringRunningTrack">Das Verändern der Einstellungen während eines laufenden Tracks kann zu unerwartetem Verhalten führen!</string>
     
-    <!-- preferences server -->
-    <string name="tiPrefsServer">Einstellungen Server</string>
-    <string name="lbPrefsServer_TransferProtocol">Transfer Protokoll</string>
-    <string name="fdPrefsServer_ServerAddress">Server Adresse</string>    
-    <string name="lbPrefsServer_ServerAddressAndPort">Server Addresse (DNS oder IP) und Port</string>
-    <string name="fdPrefsServer_ServerPort">Server Port</string>
-    <string name="fdPrefsServer_ServerPath">Server Pfad</string>    
-    <string name="lbPrefsServer_ServerPath">Server Pfad (nur bei Übertragung via HTTP)</string>
-    <string name="fdPrefsServer_TimeTriggerInSecs">Zeit Trigger</string>
-    <string name="lbPrefsServer_TimeTriggerInSecs">Zeit Trigger</string>
-    <string name="fdPrefsServer_DistanceTriggerInMtr">Distanz Trigger</string>
-    <string name="lbPrefsServer_DistanceTriggerInMtr">Dist. Trigger</string>
-    <string name="lbPrefsServer_TriggerLogic">Trigger Logik</string>       
-    <string name="lbPrefsServer_CloseConnectionAfterEveryUpload">Verbindung nach jeder Übertragung schliessen</string>
-    <string name="lbPrefsServer_FinishEveryUploadWithALinefeed">Jede Übertragung mit einem Zeilenumbruch beenden</string>
-    
-    <!-- preferences account -->
-    <string name="tiPrefsAccount">Einstellungen Zugang</string>
-	<string name="lbPrefsAccount_DeviceId">Geräte-Id (IMEI)</string>
-	<string name="fdPrefsAccount_DeviceId">Geräte-Id</string>
-    <string name="lbPrefsAccount_Username">Benutzername</string>
-    <string name="fdPrefsAccount_Username">Benutzername</string>
-    <string name="lbPrefsAccount_Password">Passwort</string>
-    <string name="fdPrefsAccount_Password">Passwort</string>
-    <string name="lbPrefsAccount_TrackName">Trackname</string>
-    <string name="fdPrefsAccount_TrackName">Trackname</string>
-    <string name="fdPrefsAccount_PhoneNumber">Telefonnummer</string>
-    <string name="lbPrefsAccount_PhoneNumber">Telefonnummer</string>
-    
-	<!-- preferences localization -->
-	<string name="tiPrefsLocalization">Einstellungen Lokalisierung</string>
-	<string name="lbPrefsLocalization_Provider">Art der Positionsbestimmuung</string>
-    <string name="lbPrefsLocalization_TimeTriggerInSecs">Zeit Trigger (Sek)</string>
-    <string name="fdPrefsLocalization_TimeTriggerInSecs">Zeit Trigger</string>
-    <string name="lbPrefsLocalization_DistanceTriggerInMtr">Distanz Trigger (Mtr)</string>    
-    <string name="fdPrefsLocalization_DistanceTriggerInMtr">Distanz Trigger</string>
-    <string name="fdPrefsLocalization_LocationAccuracyRequiredInMtr">Min. Genauigkeit</string>
-    <string name="lbPrefsLocalization_LocationAccuracyRequiredInMtr">Min. Genauigkeit für\ndie Positions-\nvalidierung in Mtr.</string>
-    <string name="fdPrefsLocalization_DistBtwTwoLocsForDistCalcRequiredInCMtr">Min. Distanz</string>
-    <string name="lbPrefsLocalization_DistBtwTwoLocsForDistCalcRequiredInCMtr">Min. Distanz zwischen\nzwei Positionen für\ndie Distanzber. in cm</string>
-    <string name="lbPrefsLocalization_TriggerInfo">Hinweis: Wenn beide Trigger auf 0 gesetzt sind, arbeitet die Lokalisierung ständig.</string>
-    <string name="lbPrefsLocalization_RequiredAccuracyAndDistanceInfo">Hinweis: Sind die Werte auf 0 gesetzt, sind die Checks deaktiviert.</string>
-    
-    <!-- preferences other -->
-    <string name="tiPrefsOther">Einstellungen Sonstige</string>
-    <string name="fdPrefsOther_MaxPositionBufferSize">Puffer Größe</string>
-    <string name="lbPrefsOther_MaxPositionBufferSize">Puffergröße um Funklöcher zu überbrücken</string>
-    <string name="lbPrefsOther_ConfirmLevel">Sicherheitsabfragen um ungewollte Aktionen zu verhindern</string>       
-    <string name="lbPrefsOther_TrackingOneTouch">Tracking One-Touch Modus</string> 
-    <string name="btPrefsOther_ResetOverallMileage">Km-Zähler zurücksetzen</string>
-    <string name="btPrefsOther_ResetToFactoryDefaults">Werkseinstellungen</string>
-    <string name="txPrefsOther_QuestionResetToFactoryDefaults">Wollen Sie wirklich auf die Werkseinstellungen zurücksetzen?</string>
-    <string name="txPrefsOther_QuestionResetOverallMileage">Wollen Sie den Kilometerzähler wirklich zurücksetzen?</string>
-    <string name="txPrefsOther_InfoResetToFactoryDefaultsDone">MyLiveTracker wurde auf die Werkseinstellungen zurückgesetzt! Bitte starten Sie die Anwendung neu!</string>
-    <string name="txPrefsOther_InfoResetOverallMileageDone">Der Kilometerzähler wurde zurückgesetzt!</string>
-    
-    <!-- preferences auto -->
-    <string name="tiPrefsAuto">Einstellungen Automatik</string>
-    <string name="fdPrefsAuto_AutoMode">Automatik Modus</string>
-    <string name="lbPrefsAuto_AutoMode">Wenn der Akku in den Ladestatus wechselt (den Ladestatus verlässt), wird der Track automatisch gestartet (gestoppt).</string>
-   	<string name="fdPrefsAuto_ResetTrackMode">Track-zurücksetzen Modus</string>
-	<string name="txPrefsAuto_ResetTrackMode">Track-zurücksetzen Modus</string>
-	<string name="fdPrefsAuto_AutoStart">Auto Start</string>
-    <string name="lbPrefsAuto_AutoStart">Nach einem Reboot des Smartphones wird das Tracking automatisch gestartet.</string>
-	
-    <!-- preferences pin code -->    
-    <string name="tiPrefsPinCodeQuery">Einstellungen PIN Code Abfrage</string>
-    <string name="lbPrefsPinCodeQuery_Info">Wichtig: Eine Wiederherstellung eines vergessenen PINs ist nicht möglich. In diesem Fall ist ein erneutes Installieren und Konfigurieren der App notwendig.</string>
-    <string name="lbPrefsPinCodeQuery_Enable">PIN Code Abfrage aktivieren</string>
-    <string name="fdPrefsPinCodeQuery_PinCode">PIN Code</string>
-    <string name="lbPrefsPinCodeQuery_PinCode">Eingabe des neuen PIN Codes:</string>
-    <string name="lbPrefsPinCodeQuery_PinCodeReenter">Erneute Eingabe des neuen PIN Codes:</string>
-    
-    <!-- preferences remote access -->    
-    <string name="tiPrefsRemoteAccess">Fernzugriff</string>
-    <string name="lbPrefsRemoteAccess_Enable">Fernzugriff aktivieren</string>
-    <string name="fdPrefsRemoteAccess_Password">Passwort</string>
-    <string name="lbPrefsRemoteAccess_Password">Passwort</string>
-    <string name="lbPrefsRemoteAccess_UseReceiver">Sende Antworten an angegebenen Empfänger. Falls deaktiviert, werden die Antworten an den ursprünglichen Sender geschickt.</string>
-   	<string name="fdPrefsRemoteAccess_Receiver">Empfänger (Telefonnummer)</string>
-    <string name="lbPrefsRemoteAccess_Receiver">Empfänger</string>
-    
-    <!-- preferences http protocol params -->    
-    <string name="tiPrefsHttpProtocolParams">HTTP Protocol Parameter</string>
-    <string name="lbPrefsHttpProtocolParams_Info">Für das MLT (HTTP) Protokoll kann für jeden Parameter der Name festgelegt werden, und ob der Parameterwert hochgeladen werden soll.</string>
-    <string name="lbPrefsHttpProtocolParams_Parameter">Parameter</string>
-    <string name="lbPrefsHttpProtocolParams_ParameterName">Parameter Name</string>
-    <string name="lbPrefsHttpProtocolParams_ParameterExample">Beispiel</string>
-    <string name="lbPrefsHttpProtocolParams_EnabledForUploading">Aktiviert</string>
-    <string name="btPrefsHttpProtocolParams_ResetToDefaults">Auf Standardwerte zurücksetzen</string>
-    <string name="txPrefsHttpProtocolParams_QuestionResetToDefaults">Wollen Sie wirklich auf die Standardwerte zurücksetzen?</string>
-    <string name="txPrefsHttpProtocolParams_InfoResetToDefaultsDone">Die HTTP Parameter wurden auf die Standardwerte zurückgesetzt!</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameTimestamp">tst</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleTimestamp">310113195559325</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameDeviceId">did</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleDeviceId">379530023755001</string>
-	<string name="txPrefsHttpProtocolParams_ParamNameAppVersionCode">vco</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleAppVersionCode">150</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameAppVersionName">vna</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleAppVersionName">1.5.0</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameTrackId">tid</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleTrackId">f2262811-2929-465c-b7e7-1dc06d9828b7</string>   
-    <string name="txPrefsHttpProtocolParams_ParamNameTrackName">trn</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleTrackName">Mein Track</string>   
-    <string name="txPrefsHttpProtocolParams_ParamNamePhoneNumber">phn</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExamplePhoneNumber">+49407624521</string>   
-    <string name="txPrefsHttpProtocolParams_ParamNameBatteryPowerPercent">pow</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleBatteryPowerPercent">75</string>   
-    <string name="txPrefsHttpProtocolParams_ParamNameBatteryPowerVoltage">vol</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleBatteryPowerVoltage">3.82</string>   
-    <string name="txPrefsHttpProtocolParams_ParamNameValidPosition">val</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleValidPosition">true</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameLatitude">lat</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleLatitude">48.207024</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameLongitude">lon</string>    
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleLongitude">12.115374</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameAltitude">alt</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleAltitude">547.0</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameSpeed">spd</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleSpeed">18.34</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameAccuracy">acc</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleAccuracy">30.0</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameBearing">bea</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleBearing">120.0</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameSatelliteCount">sat</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleSatelliteCount">7</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameDistance">dst</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleDistance">10.3</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameMileage">mil</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleMileage">10345.7</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameRuntimeNet">rtm</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleRuntimeNet">2168006</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameRuntimeGross">rtp</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleRuntimeGross">2569006</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameUsername">usr</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleUsername">max</string>
-    <string name="txPrefsHttpProtocolParams_ParamNamePassword">pwd</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExamplePassword">19042b94e448d328454842d16549f58c</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameHeartrateCurrent">hrt</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleHeartrateCurrent">145</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameHeartrateMin">hrn</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleHeartrateMin">80</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameHeartrateMax">hrm</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleHeartrateMax">167</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameHeartrateAvg">hra</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleHeartrateAvg">134</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameSosId">sosid</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleSosId">f4463821-2929-367c-a7f6-1dc07b9833b7</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameSosActivated">sos</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleSosActivated">on</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameMessage">msg</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleMessage">Bitte um Anruf!</string>
-    <string name="txPrefsHttpProtocolParams_ParamNamePhoneType">pht</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExamplePhoneType">GSM</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameNetworkType">nwt</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleNetworkType">UMTS</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameMobileCountryCode">mcc</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleMobileCountryCode">262</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameMobileNetworkCode">mnc</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleMobileNetworkCode">01</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameMobileNetworkName">mnn</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleMobileNetworkName">Telekom.de</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameCellId">cid</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleCellId">17353</string>
-    <string name="txPrefsHttpProtocolParams_ParamNameLocalAreaCode">lac</string>
-    <string name="txPrefsHttpProtocolParams_ParamValueExampleLocalAreaCode">5942014</string>
-        
     <!-- connect to MyLiveTracker -->
     <string name="tiConnectToMyLiveTrackerPortal">Koppeln mit MyLiveTracker Portal</string>
     <string name="lbConnectToMyLiveTrackerPortal_Info">
@@ -360,20 +179,6 @@
     <string name="fdConnectToMyLiveTrackerPortal_PortalPassword">Portal Passwort</string>
     <string name="lbConnectToMyLiveTrackerPortal_ProgressDialog">Die Koppelung mit dem MyLiveTracker Portal wird hergestellt...</string>  
     <string name="txConnectToMyLiveTrackerPortal_InfoConnectingDone">Die Koppelung mit dem MyLiveTracker Portal wurde erfolgreich hergestellt!</string>  
-        
-    <!-- connect to Dropbox -->
-    <string name="tiConnectToDropbox">Koppeln mit Dropbox</string>
-    <string name="btConnectToDropbox_Connect">Koppeln</string>
-    <string name="btConnectToDropbox_Release">Freigeben</string>
-    <string name="lbConnectToDropbox_Status">Gekoppeltes Dropbox Konto:</string>
-    <string name="txConnectToDropbox_StatusConnected">%1$s</string>
-    <string name="txConnectToDropbox_StatusNotConnected">Nicht gekoppelt</string>
-    <string name="txConnectToDropbox_NoConnectionExists">Es existiert keine Koppelung mit Dropbox!</string>
-    <string name="txConnectToDropbox_ConnectionExists">Eine Koppelung mit Dropbox existiert bereits. Diese muss vorher freigegeben werden!</string>
-    <string name="txConnectToDropbox_QuestionConnect">Wollen Sie wirklich eine Koppelung mit Dropbox herstellen?</string>
-    <string name="txConnectToDropbox_QuestionRelease">Wollen Sie wirklich die Koppelung mit Dropbox freigeben?</string>
-    <string name="txConnectToDropbox_InfoConnectingFailed">Die Koppelung mit der Dropbox ist fehlgeschlagen oder wurde abgebrochen!</string>
-    <string name="txConnectToDropbox_InfoConnectingDone">Die Koppelung mit der Dropbox wurde erfolgreich hergestellt!</string>
         
     <!-- track export-->
     <string name="tiTrackExport">Track export</string>
@@ -393,8 +198,6 @@
     <string name="tvInfo_Mileage">Kilometerstand</string>
     
     <!-- validators -->
-    <string name="validator.pinCodeInvalid">Der PIN Code ist ungültig!</string>
-    <string name="validator.reenteredPinCodeNotEqualToPinCode">Die PIN Code Eingaben sind nicht identisch!</string>
     <string name="validator.locationProviderNotSupported">Der Lokalisierungsdienst %1$s ist auf diesem Gerät nicht verfügbar!</string>
     <string name="validator.phoneNumberInvalid">Telefonnummer ist ungültig!</string>
     <string name="validator.valueMustNotBeEmpty">%1$s darf nicht leer sein!</string>
