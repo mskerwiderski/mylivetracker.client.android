@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.Toast;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
@@ -38,24 +39,27 @@ public class OtherPrefsActivity extends AbstractActivity {
 		private OtherPrefsActivity activity;
 		private Spinner spOtherPrefs_TrackingOneTouch;
 		private Spinner spOtherPrefs_ConfirmLevel;
+		private CheckBox cbOtherPrefs_EnableAntPlusIfAvailable;
 		
 		public OnClickButtonSaveListener(
 			OtherPrefsActivity activity,
 			Spinner spOtherPrefs_TrackingOneTouch,
-			Spinner spOtherPrefs_ConfirmLevel) {
+			Spinner spOtherPrefs_ConfirmLevel,
+			CheckBox cbOtherPrefs_EnableAntPlusIfAvailable) {
 			this.activity = activity;
 			this.spOtherPrefs_TrackingOneTouch = spOtherPrefs_TrackingOneTouch;
 			this.spOtherPrefs_ConfirmLevel = spOtherPrefs_ConfirmLevel;
+			this.cbOtherPrefs_EnableAntPlusIfAvailable = cbOtherPrefs_EnableAntPlusIfAvailable;
 		}
 
 		@Override
 		public void onClick(View v) {
 			boolean valid = true;
-				
 			if (valid) {
 				OtherPrefs prefs = PrefsRegistry.get(OtherPrefs.class);
 				prefs.setTrackingOneTouchMode(TrackingOneTouchMode.values()[spOtherPrefs_TrackingOneTouch.getSelectedItemPosition()]);
 				prefs.setConfirmLevel(ConfirmLevel.values()[spOtherPrefs_ConfirmLevel.getSelectedItemPosition()]);
+				prefs.setAntPlusEnabledIfAvailable(cbOtherPrefs_EnableAntPlusIfAvailable.isChecked());
 				PrefsRegistry.save(OtherPrefs.class);
 				this.activity.finish();
 			}			
@@ -171,6 +175,9 @@ public class OtherPrefsActivity extends AbstractActivity {
         spOtherPrefs_TrackingOneTouch.setAdapter(adapter);
         spOtherPrefs_TrackingOneTouch.setSelection(prefs.getTrackingOneTouchMode().ordinal());
         
+        CheckBox cbOtherPrefs_EnableAntPlusIfAvailable = (CheckBox)findViewById(R.id.cbOtherPrefs_EnableAntPlusIfAvailable);
+        cbOtherPrefs_EnableAntPlusIfAvailable.setChecked(prefs.isAntPlusEnabledIfAvailable());
+        
         Button btOtherPrefs_ResetToFactoryDefaults = (Button)findViewById(R.id.btOtherPrefs_ResetToFactoryDefaults);
         Button btOtherPrefs_ResetOverallMileage = (Button)findViewById(R.id.btOtherPrefs_ResetOverallMileage);
         Button btnOtherPrefs_Save = (Button) findViewById(R.id.btOtherPrefs_Save);
@@ -183,7 +190,8 @@ public class OtherPrefsActivity extends AbstractActivity {
         btnOtherPrefs_Save.setOnClickListener(
 			new OnClickButtonSaveListener(this, 
 				spOtherPrefs_TrackingOneTouch,
-				spOtherPrefs_ConfirmLevel));		
+				spOtherPrefs_ConfirmLevel,
+				cbOtherPrefs_EnableAntPlusIfAvailable));		
         btnOtherPrefs_Cancel.setOnClickListener(
 			new OnClickButtonCancelListener(this));
     }

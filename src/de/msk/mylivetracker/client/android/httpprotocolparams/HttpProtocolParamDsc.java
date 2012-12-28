@@ -22,23 +22,42 @@ public class HttpProtocolParamDsc implements Serializable {
 	private String name;
 	private String example;
 	private boolean enabled;
+	private boolean disableAllowed;
 
 	@SuppressWarnings("unused")
 	private HttpProtocolParamDsc() {
 	}
 	
-	private HttpProtocolParamDsc(String name, String example, boolean enabled) {
+	protected HttpProtocolParamDsc(int nameId, int exampleId, 
+		boolean enabled, boolean disableAllowed) {
+		this.init(
+			AppStd.get().getString(nameId), 
+			AppStd.get().getString(exampleId), 
+			enabled, disableAllowed);
+	}
+	
+	protected HttpProtocolParamDsc(int nameId, int exampleId, 
+		boolean enabled) {
+		this.init(
+			AppStd.get().getString(nameId), 
+			AppStd.get().getString(exampleId), 
+			enabled, true);
+	}
+
+	private HttpProtocolParamDsc(String name, String example, 
+		boolean enabled, boolean disableAllowed) {
+		this.init(name, example, 
+			enabled, disableAllowed);
+	}
+	
+	private void init(String name, String example, 
+		boolean enabled, boolean disableAllowed) {
 		this.name = name;
 		this.example = example;
 		this.enabled = enabled;
+		this.disableAllowed = disableAllowed;
 	}
-
-	protected HttpProtocolParamDsc(int nameId, int exampleId, boolean enabled) {
-		this.name = AppStd.get().getString(nameId);
-		this.example = AppStd.get().getString(exampleId);
-		this.enabled = enabled;
-	}
-
+	
 	public String getName() {
 		return name;
 	}
@@ -54,21 +73,26 @@ public class HttpProtocolParamDsc implements Serializable {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
+	public boolean isDisableAllowed() {
+		return disableAllowed;
+	}
+	public void setDisableAllowed(boolean disableAllowed) {
+		this.disableAllowed = disableAllowed;
+	}
 
 	protected HttpProtocolParamDsc copy() {
 		return new HttpProtocolParamDsc(
 			this.name,
 			this.example,
-			this.enabled
+			this.enabled,
+			this.disableAllowed
 		);		
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("HttpParamDsc [name=").append(name).append(", example=")
-			.append(example).append(", enabled=").append(enabled)
-			.append("]");
-		return builder.toString();
+		return "HttpProtocolParamDsc [name=" + name + ", example=" + example
+			+ ", enabled=" + enabled + ", disableAllowed=" + disableAllowed
+			+ "]";
 	}
 }

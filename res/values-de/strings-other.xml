@@ -3,6 +3,7 @@
     <string name="tiOtherPrefs">Einstellungen Sonstige</string>
     <string name="lbOtherPrefs_ConfirmLevel">Sicherheitsabfragen um ungewollte Aktionen zu verhindern</string>       
     <string name="lbOtherPrefs_TrackingOneTouch">Tracking One-Touch Modus</string> 
+    <string name="lbOtherPrefs_EnableAntPlusIfAvailable">ANT+ aktivieren</string>
     <string name="btOtherPrefs_ResetOverallMileage">Km-Zähler zurücksetzen</string>
     <string name="btOtherPrefs_ResetToFactoryDefaults">Werkseinstellungen</string>
     <string name="txOtherPrefs_QuestionResetToFactoryDefaults">Wollen Sie wirklich auf die Werkseinstellungen zurücksetzen?</string>

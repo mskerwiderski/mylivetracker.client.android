@@ -112,11 +112,11 @@ public class HttpProtocolParams implements Serializable {
 		httpProtocolParams.params.add(new HttpProtocolParamDsc(
 			R.string.txHttpProtocolParamsPrefs_ParamNameLatitude,
 			R.string.txHttpProtocolParamsPrefs_ParamValueExampleLatitude, 
-			true));
+			true, false));
 		httpProtocolParams.params.add(new HttpProtocolParamDsc(
 			R.string.txHttpProtocolParamsPrefs_ParamNameLongitude,
 			R.string.txHttpProtocolParamsPrefs_ParamValueExampleLongitude, 
-			true));
+			true, false));
 		httpProtocolParams.params.add(new HttpProtocolParamDsc(
 			R.string.txHttpProtocolParamsPrefs_ParamNameAltitude,
 			R.string.txHttpProtocolParamsPrefs_ParamValueExampleAltitude, 

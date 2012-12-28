@@ -61,6 +61,22 @@
         />    	    	        
     </LinearLayout>
     <LinearLayout 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingLeft="5dip"
+       	android:paddingRight="5dip" 
+    >
+	    <CheckBox
+	    	android:id="@+id/cbOtherPrefs_EnableAntPlusIfAvailable"
+	    	android:text="@string/lbOtherPrefs_EnableAntPlusIfAvailable"
+	    	android:textColor="@color/colorText"
+	    	android:layout_height="40dip" 
+	    	android:layout_width="wrap_content"
+	    	android:paddingLeft="42dip"
+	       	android:paddingRight="5dip" 
+	    />
+	</LinearLayout>
+    <LinearLayout 
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content"
         android:paddingTop="10dip">

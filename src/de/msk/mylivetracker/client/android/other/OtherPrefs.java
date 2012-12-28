@@ -51,6 +51,7 @@ public class OtherPrefs extends APrefs implements Serializable {
 	
 	private ConfirmLevel confirmLevel;
 	private TrackingOneTouchMode trackingOneTouchMode;
+	private boolean antPlusEnabledIfAvailable;
 	
 	@Override
 	public int getVersion() {
@@ -58,8 +59,9 @@ public class OtherPrefs extends APrefs implements Serializable {
 	}	
 	@Override
 	public void initWithDefaults() {
-		this.confirmLevel = ConfirmLevel.medium;
-		this.trackingOneTouchMode = TrackingOneTouchMode.TrackingOnly;
+		this.confirmLevel = ConfirmLevel.high;
+		this.trackingOneTouchMode = TrackingOneTouchMode.TrackingLocalization;
+		this.antPlusEnabledIfAvailable = true;
 	}
 	@Override
 	public void initWithValuesOfOldVersion(int foundVersion, String foundGsonStr) {
@@ -78,10 +80,18 @@ public class OtherPrefs extends APrefs implements Serializable {
 	public void setTrackingOneTouchMode(TrackingOneTouchMode trackingOneTouchMode) {
 		this.trackingOneTouchMode = trackingOneTouchMode;
 	}
-	
+	public boolean isAntPlusEnabledIfAvailable() {
+		return antPlusEnabledIfAvailable;
+	}
+	public void setAntPlusEnabledIfAvailable(boolean antPlusEnabledIfAvailable) {
+		this.antPlusEnabledIfAvailable = antPlusEnabledIfAvailable;
+	}
+
 	@Override
 	public String toString() {
 		return "OtherPrefs [confirmLevel=" + confirmLevel
-				+ ", trackingOneTouchMode=" + trackingOneTouchMode + "]";
+			+ ", trackingOneTouchMode=" + trackingOneTouchMode
+			+ ", antPlusEnabledIfAvailable=" + antPlusEnabledIfAvailable
+			+ "]";
 	}
 }

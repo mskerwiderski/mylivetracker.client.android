@@ -5,6 +5,7 @@
     
     <color name="colorBackground">#4c4c4c</color>
 	<color name="colorText">#ffffff</color>
+	<color name="colorTextSos">#ea1619</color>
     
     <!-- colors for auto mode indicator -->
     <color name="colorIndicatorOk">#4bb648</color>

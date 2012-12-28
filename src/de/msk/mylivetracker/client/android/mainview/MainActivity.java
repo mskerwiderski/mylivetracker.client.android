@@ -28,6 +28,7 @@ import de.msk.mylivetracker.client.android.localization.LocalizationPrefs;
 import de.msk.mylivetracker.client.android.mainview.updater.MainDetailsViewUpdater;
 import de.msk.mylivetracker.client.android.mainview.updater.MainViewUpdater;
 import de.msk.mylivetracker.client.android.mainview.updater.UpdaterUtils;
+import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry.InitResult;
 import de.msk.mylivetracker.client.android.pro.R;
@@ -96,7 +97,8 @@ public class MainActivity extends AbstractMainActivity {
 		this.getUiBtReset().setOnClickListener(
 			new OnClickButtonResetListener());
 		
-		if (AntPlusHardware.initialized()) {
+		if (AntPlusHardware.initialized() && 
+			PrefsRegistry.get(OtherPrefs.class).isAntPlusEnabledIfAvailable()) {
 			this.getUiBtConnectDisconnectAnt().setOnClickListener(
 				new OnClickButtonAntPlusListener());
 		} else {
@@ -216,13 +218,15 @@ public class MainActivity extends AbstractMainActivity {
     		chronometer.start();
         }		
         
-        Button btConnectDisconnectAnt = this.getUiBtConnectDisconnectAnt();
-		if (!AntPlusHardware.initialized()) {
-        	btConnectDisconnectAnt.setClickable(false);
-        } else {
-        	btConnectDisconnectAnt.setClickable(true);
-        }		
-		
+        if (AntPlusHardware.initialized() && 
+			PrefsRegistry.get(OtherPrefs.class).isAntPlusEnabledIfAvailable()) {
+			this.getUiBtConnectDisconnectAnt().setOnClickListener(
+				new OnClickButtonAntPlusListener());
+			this.getUiBtConnectDisconnectAnt().setVisibility(View.VISIBLE);
+		} else {
+			this.getUiBtConnectDisconnectAnt().setVisibility(View.GONE);
+		}
+        
 		this.getUiBtStartStop().setChecked(TrackStatus.get().trackIsRunning());
 		this.getUiBtLocationListenerOnOff().setChecked(LocationListener.get().isActive());
 		this.getUiBtConnectDisconnectAnt().setChecked(AntPlusManager.get().hasSensorListeners());
