@@ -1,31 +1,29 @@
 package de.msk.mylivetracker.client.android.account;
 
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.pro.R;
+import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
+import de.msk.mylivetracker.client.android.util.listener.OnFinishActivityListener;
 import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
 
 /**
- * AccountPrefsActivity.
+ * classname: AccountPrefsActivity
  * 
- * @author michael skerwiderski, (c)2011
+ * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 002
- * 
- * history
- * 002	2012-12-24 	revised for v1.5.x.
- * 001  2012-02-18 	phoneNumber added.
- * 000 	2011-08-11 	initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class AccountPrefsActivity extends AbstractActivity {
 
-	private static final class OnClickButtonSaveListener implements OnClickListener {
+	private static final class OnClickButtonSaveListener extends ASafeOnClickListener {
 		private AccountPrefsActivity activity;
 		private EditText etAccountPrefs_DeviceId;
 		private EditText etAccountPrefs_Username;
@@ -49,9 +47,8 @@ public class AccountPrefsActivity extends AbstractActivity {
 		}
 
 		@Override
-		public void onClick(View v) {
+		public void onClick() {
 			boolean valid = true;
-			
 			valid = valid && 
 				ValidatorUtils.validateEditTextString(
 					this.activity, 
@@ -77,7 +74,6 @@ public class AccountPrefsActivity extends AbstractActivity {
 					R.string.fdAccountPrefs_PhoneNumber, 
 					etAccountPrefs_PhoneNumber, 					
 					0, 25, true);
-			
 			if (valid) {
 				AccountPrefs prefs = PrefsRegistry.get(AccountPrefs.class);
 				prefs.setDeviceId(etAccountPrefs_DeviceId.getText().toString());
@@ -90,19 +86,7 @@ public class AccountPrefsActivity extends AbstractActivity {
 			}
 		}		
 	}
-	
-	private static final class OnClickButtonCancelListener implements OnClickListener {
-		private AccountPrefsActivity activity;
 		
-		private OnClickButtonCancelListener(AccountPrefsActivity activity) {
-			this.activity = activity;
-		}
-		@Override
-		public void onClick(View v) {			
-			this.activity.finish();		
-		}		
-	}
-	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,13 +102,17 @@ public class AccountPrefsActivity extends AbstractActivity {
         etAccountPrefs_DeviceId.setEnabled(false);
         etAccountPrefs_DeviceId.setFocusable(false);
         etAccountPrefs_DeviceId.setClickable(false);
-        EditText etAccountPrefs_Username = (EditText) findViewById(R.id.etAccountPrefs_Username);
+        EditText etAccountPrefs_Username = (EditText)
+        	findViewById(R.id.etAccountPrefs_Username);
         etAccountPrefs_Username.setText(String.valueOf(prefs.getUsername()));
-        EditText etAccountPrefs_Password = (EditText) findViewById(R.id.etAccountPrefs_Password);
+        EditText etAccountPrefs_Password = (EditText)
+    		findViewById(R.id.etAccountPrefs_Password);
         etAccountPrefs_Password.setText(String.valueOf(prefs.getPassword()));
-        EditText etAccountPrefs_TrackName = (EditText) findViewById(R.id.etAccountPrefs_TrackName);
+        EditText etAccountPrefs_TrackName = (EditText)
+    		findViewById(R.id.etAccountPrefs_TrackName);
         etAccountPrefs_TrackName.setText(String.valueOf(prefs.getTrackName()));
-        EditText etAccountPrefs_PhoneNumber = (EditText) findViewById(R.id.etAccountPrefs_PhoneNumber);
+        EditText etAccountPrefs_PhoneNumber = (EditText)
+        	findViewById(R.id.etAccountPrefs_PhoneNumber);
         etAccountPrefs_PhoneNumber.setText(String.valueOf(prefs.getPhoneNumber()));
         
         Button btnAccountPrefs_Save = (Button) findViewById(R.id.btAccountPrefs_Save);
@@ -139,6 +127,6 @@ public class AccountPrefsActivity extends AbstractActivity {
 				etAccountPrefs_PhoneNumber));
 		
         btnAccountPrefs_Cancel.setOnClickListener(
-			new OnClickButtonCancelListener(this));
+			new OnFinishActivityListener(this));
     }
 }

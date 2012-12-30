@@ -14,9 +14,11 @@ import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 import de.msk.mylivetracker.client.android.App;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.antplus.AntPlusHardware;
 import de.msk.mylivetracker.client.android.antplus.AntPlusHeartrateListener;
 import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
@@ -31,7 +33,6 @@ import de.msk.mylivetracker.client.android.mainview.updater.UpdaterUtils;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry.InitResult;
-import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.status.BatteryReceiver;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.upload.UploadService;
@@ -39,21 +40,14 @@ import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
 import de.msk.mylivetracker.client.android.util.service.AbstractService;
 
 /**
- * MainActivity.
+ * classname: MainActivity
  * 
- * @author michael skerwiderski, (c)2011
+ * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 001
- * 
- * history
- * 001 	2012-02-21
- * 		o property 'localizationMode' implemented (gps, network, gpsAndNetwork).
- * 		o listener to autoModeIndicator added.
- *      o isDataConnectionAvailable implemented.
- *      o 'onBackPressed' implemented.
- *      o 'exit' implemented.
- *      o 'exitHandler' implemented.
- * 000 	2011-08-11 initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class MainActivity extends AbstractMainActivity {
@@ -97,13 +91,7 @@ public class MainActivity extends AbstractMainActivity {
 		this.getUiBtReset().setOnClickListener(
 			new OnClickButtonResetListener());
 		
-		if (AntPlusHardware.initialized() && 
-			PrefsRegistry.get(OtherPrefs.class).isAntPlusEnabledIfAvailable()) {
-			this.getUiBtConnectDisconnectAnt().setOnClickListener(
-				new OnClickButtonAntPlusListener());
-		} else {
-			this.getUiBtConnectDisconnectAnt().setVisibility(View.GONE);
-		}
+		checkButtons();
 		
 		((Button)findViewById(R.id.btMain_SendSos)).setOnClickListener(
 			new OnClickButtonSosListener(this));
@@ -150,6 +138,10 @@ public class MainActivity extends AbstractMainActivity {
 		tvHeadMobileNetworkIndicator.setOnClickListener(
 			new OnClickButtonMobileNetworkIndicatorListener());
 		
+		TextView tvHeartrate = UpdaterUtils.tv(mainActivity, R.id.tvMain_Heartrate);
+		tvHeartrate.setOnClickListener(
+			new OnClickButtonHeartrateListener());
+		
 		TextView tvLocation = UpdaterUtils.tv(mainActivity, R.id.tvMain_Location);
 		tvLocation.setOnClickListener(
 			new OnClickButtonLocalizationListener());
@@ -158,7 +150,9 @@ public class MainActivity extends AbstractMainActivity {
 		tvUploader.setOnClickListener(
 			new OnClickButtonNetworkListener());
 		
-		if (App.getInitPrefsResult().equals(InitResult.PrefsCreated)) {
+		if (App.getInitPrefsResult().equals(InitResult.PrefsImportedFromV144)) {
+			SimpleInfoDialog.show(this, R.string.prefsImportedFromV144);
+		} else if (App.getInitPrefsResult().equals(InitResult.PrefsCreated)) {
 			SimpleInfoDialog.show(this, R.string.prefsCreated);
 		} else if (App.getInitPrefsResult().equals(InitResult.PrefsUpdated)) {
 			SimpleInfoDialog.show(this, R.string.prefsUpdated);
@@ -172,9 +166,6 @@ public class MainActivity extends AbstractMainActivity {
 		AbstractService.startService(AutoService.class);
     }	
 	
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onDestroy()
-	 */
 	@Override
 	protected void onDestroy() {
 		AbstractService.stopService(AutoService.class);		
@@ -190,9 +181,6 @@ public class MainActivity extends AbstractMainActivity {
 		super.onDestroy();
 	}
 	
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onPause()
-	 */
 	@Override
 	protected void onPause() {		
 		super.onPause();
@@ -200,9 +188,6 @@ public class MainActivity extends AbstractMainActivity {
 		TrackStatus.saveTrackStatus();		
 	}
 	
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onResume()
-	 */
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -218,14 +203,7 @@ public class MainActivity extends AbstractMainActivity {
     		chronometer.start();
         }		
         
-        if (AntPlusHardware.initialized() && 
-			PrefsRegistry.get(OtherPrefs.class).isAntPlusEnabledIfAvailable()) {
-			this.getUiBtConnectDisconnectAnt().setOnClickListener(
-				new OnClickButtonAntPlusListener());
-			this.getUiBtConnectDisconnectAnt().setVisibility(View.VISIBLE);
-		} else {
-			this.getUiBtConnectDisconnectAnt().setVisibility(View.GONE);
-		}
+        checkButtons();
         
 		this.getUiBtStartStop().setChecked(TrackStatus.get().trackIsRunning());
 		this.getUiBtLocationListenerOnOff().setChecked(LocationListener.get().isActive());
@@ -234,17 +212,37 @@ public class MainActivity extends AbstractMainActivity {
 		this.updateView();				
 	}
 	
-	/* (non-Javadoc)
-	 * @see de.msk.mylivetracker.client.android.mainview.AbstractMainActivity#onSwitchToView(boolean)
-	 */
+	private void checkButtons() {
+		if (AntPlusHardware.initialized() && 
+			PrefsRegistry.get(OtherPrefs.class).isAntPlusEnabledIfAvailable() &&
+			!PrefsRegistry.get(OtherPrefs.class).getTrackingOneTouchMode().
+				equals(OtherPrefs.TrackingOneTouchMode.TrackingLocalizationHeartrate)) {
+			this.getUiBtConnectDisconnectAnt().setOnClickListener(
+				new OnClickButtonAntPlusListener());
+			this.getUiBtConnectDisconnectAnt().setVisibility(View.VISIBLE);
+		} else {
+			this.getUiBtConnectDisconnectAnt().setVisibility(View.GONE);
+		}
+		LinearLayout llHeartrate = (LinearLayout)this.findViewById(R.id.llMain_Heartrate);
+		if (AntPlusHardware.initialized() && 
+			PrefsRegistry.get(OtherPrefs.class).isAntPlusEnabledIfAvailable()) {
+			llHeartrate.setVisibility(View.VISIBLE);
+		} else {
+			llHeartrate.setVisibility(View.GONE);
+		}
+		if (PrefsRegistry.get(OtherPrefs.class).getTrackingOneTouchMode().
+			equals(OtherPrefs.TrackingOneTouchMode.TrackingOnly)) {
+			this.getUiBtLocationListenerOnOff().setVisibility(View.VISIBLE);
+		} else {
+			this.getUiBtLocationListenerOnOff().setVisibility(View.GONE);
+		}
+	}
+	
 	@Override
 	public void onSwitchToView(boolean next) {
 		startActivity(new Intent(this, MainDetailsActivity.class));	
 	}
 	
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onBackPressed()
-	 */
 	@Override
 	public void onBackPressed() {
 		startActivity(new Intent(this, MainDetailsActivity.class));

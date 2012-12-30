@@ -9,15 +9,14 @@ import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.status.GpsStateInfo;
 
 /**
- * GpsStateListener.
+ * classname: GpsStateListener
  * 
- * @author michael skerwiderski, (c)2011
+ * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 001
- * 
- * history
- * 001	2012-12-25 	revised for v1.5.x.
- * 000 	2011-08-11 	initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class GpsStateListener implements Listener {
@@ -31,9 +30,6 @@ public class GpsStateListener implements Listener {
 		return gpsStateListener;
 	}
 	
-	/* (non-Javadoc)
-	 * @see android.location.GpsStatus.Listener#onGpsStatusChanged(int)
-	 */
 	@Override
 	public void onGpsStatusChanged(int event) {
 		int countSatellites = 0;
@@ -49,5 +45,4 @@ public class GpsStateListener implements Listener {
 		GpsStateInfo.update(countSatellites);
 		MainActivity.get().updateView();
 	}
-
 }

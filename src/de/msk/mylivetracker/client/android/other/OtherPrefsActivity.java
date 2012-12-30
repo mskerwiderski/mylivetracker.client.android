@@ -9,81 +9,69 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.Toast;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.other.OtherPrefs.ConfirmLevel;
 import de.msk.mylivetracker.client.android.other.OtherPrefs.TrackingOneTouchMode;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
+import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
+import de.msk.mylivetracker.client.android.util.listener.OnFinishActivityListener;
 
 /**
- * OtherPrefsActivity.
+ * classname: OtherPrefsActivity
  * 
- * @author michael skerwiderski, (c)2011
+ * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 002
- * 
- * history
- * 002	2012-12-25 	revised for v1.5.x.
- * 001  2011-02-18
- * 		o phoneNumber removed.
- * 		o trackinOneTouch added.
- * 000 	2011-08-11 	initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class OtherPrefsActivity extends AbstractActivity {
 
-	private static final class OnClickButtonSaveListener implements OnClickListener {
+	private static final class OnClickButtonSaveListener extends ASafeOnClickListener {
 		private OtherPrefsActivity activity;
 		private Spinner spOtherPrefs_TrackingOneTouch;
 		private Spinner spOtherPrefs_ConfirmLevel;
+		private CheckBox cbOtherPrefs_AdaptButtonsForOneTouchMode;
 		private CheckBox cbOtherPrefs_EnableAntPlusIfAvailable;
 		
 		public OnClickButtonSaveListener(
 			OtherPrefsActivity activity,
 			Spinner spOtherPrefs_TrackingOneTouch,
 			Spinner spOtherPrefs_ConfirmLevel,
+			CheckBox cbOtherPrefs_AdaptButtonsForOneTouchMode,
 			CheckBox cbOtherPrefs_EnableAntPlusIfAvailable) {
 			this.activity = activity;
 			this.spOtherPrefs_TrackingOneTouch = spOtherPrefs_TrackingOneTouch;
 			this.spOtherPrefs_ConfirmLevel = spOtherPrefs_ConfirmLevel;
+			this.cbOtherPrefs_AdaptButtonsForOneTouchMode = cbOtherPrefs_AdaptButtonsForOneTouchMode;
 			this.cbOtherPrefs_EnableAntPlusIfAvailable = cbOtherPrefs_EnableAntPlusIfAvailable;
 		}
 
 		@Override
-		public void onClick(View v) {
+		public void onClick() {
 			boolean valid = true;
 			if (valid) {
 				OtherPrefs prefs = PrefsRegistry.get(OtherPrefs.class);
-				prefs.setTrackingOneTouchMode(TrackingOneTouchMode.values()[spOtherPrefs_TrackingOneTouch.getSelectedItemPosition()]);
-				prefs.setConfirmLevel(ConfirmLevel.values()[spOtherPrefs_ConfirmLevel.getSelectedItemPosition()]);
-				prefs.setAntPlusEnabledIfAvailable(cbOtherPrefs_EnableAntPlusIfAvailable.isChecked());
+				prefs.setTrackingOneTouchMode(TrackingOneTouchMode.values()[
+                    spOtherPrefs_TrackingOneTouch.getSelectedItemPosition()]);
+				prefs.setConfirmLevel(ConfirmLevel.values()[
+                    spOtherPrefs_ConfirmLevel.getSelectedItemPosition()]);
+				prefs.setAdaptButtonsForOneTouchMode(
+					cbOtherPrefs_AdaptButtonsForOneTouchMode.isChecked());
+				prefs.setAntPlusEnabledIfAvailable(
+					cbOtherPrefs_EnableAntPlusIfAvailable.isChecked());
 				PrefsRegistry.save(OtherPrefs.class);
 				this.activity.finish();
 			}			
 		}		
 	}
 	
-	private static final class OnClickButtonCancelListener implements OnClickListener {
-		private OtherPrefsActivity activity;
-		
-		/**
-		 * @param aMain
-		 */
-		private OnClickButtonCancelListener(OtherPrefsActivity activity) {
-			this.activity = activity;
-		}
-		/* (non-Javadoc)
-		 * @see android.view.View.OnClickListener#onClick(android.view.View)
-		 */
-		@Override
-		public void onClick(View v) {			
-			this.activity.finish();		
-		}		
-	}
-
 	private static final class AppResetDialog extends AbstractYesNoDialog {
 
 		private Activity activity;
@@ -110,9 +98,6 @@ public class OtherPrefsActivity extends AbstractActivity {
 			this.activity = activity;					
 		}
 		
-		/* (non-Javadoc)
-		 * @see android.view.View.OnClickListener#onClick(android.view.View)
-		 */
 		@Override
 		public void onClick(View view) {		
 			AppResetDialog dlg = new AppResetDialog(this.activity);
@@ -175,6 +160,9 @@ public class OtherPrefsActivity extends AbstractActivity {
         spOtherPrefs_TrackingOneTouch.setAdapter(adapter);
         spOtherPrefs_TrackingOneTouch.setSelection(prefs.getTrackingOneTouchMode().ordinal());
         
+        CheckBox cbOtherPrefs_AdaptButtonsForOneTouchMode = (CheckBox)findViewById(R.id.cbOtherPrefs_AdaptButtonsForOneTouchMode);
+        cbOtherPrefs_AdaptButtonsForOneTouchMode.setChecked(prefs.isAdaptButtonsForOneTouchMode());
+        
         CheckBox cbOtherPrefs_EnableAntPlusIfAvailable = (CheckBox)findViewById(R.id.cbOtherPrefs_EnableAntPlusIfAvailable);
         cbOtherPrefs_EnableAntPlusIfAvailable.setChecked(prefs.isAntPlusEnabledIfAvailable());
         
@@ -191,8 +179,9 @@ public class OtherPrefsActivity extends AbstractActivity {
 			new OnClickButtonSaveListener(this, 
 				spOtherPrefs_TrackingOneTouch,
 				spOtherPrefs_ConfirmLevel,
+				cbOtherPrefs_AdaptButtonsForOneTouchMode,
 				cbOtherPrefs_EnableAntPlusIfAvailable));		
         btnOtherPrefs_Cancel.setOnClickListener(
-			new OnClickButtonCancelListener(this));
+			new OnFinishActivityListener(this));
     }
 }

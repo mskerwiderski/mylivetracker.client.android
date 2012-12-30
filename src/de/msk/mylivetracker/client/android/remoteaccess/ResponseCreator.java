@@ -11,15 +11,14 @@ import de.msk.mylivetracker.client.android.util.FormatUtils.Unit;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;
 
 /**
- * ResponseCreator.
+ * classname: ResponseCreator
  * 
  * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 001
- * 
- * history 
- * 001	2012-12-25 	revised for v1.5.x.
- * 000 	2012-11-27 	initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class ResponseCreator {

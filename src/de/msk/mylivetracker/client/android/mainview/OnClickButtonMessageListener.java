@@ -2,27 +2,26 @@ package de.msk.mylivetracker.client.android.mainview;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.view.View;
-import android.view.View.OnClickListener;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.message.MessageActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs.TransferProtocol;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
+import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
 
 /**
- * OnClickButtonMessageListener.
+ * classname: OnClickButtonMessageListener
  * 
- * @author michael skerwiderski, (c)2011
- * 
+ * @author michael skerwiderski, (c)2012
  * @version 000
+ * @since 1.5.0
  * 
- * history
- * 000 	2011-08-11 initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
-public class OnClickButtonMessageListener implements OnClickListener {
+public class OnClickButtonMessageListener extends ASafeOnClickListener {
 	
 	private Activity activity;
 	
@@ -31,7 +30,7 @@ public class OnClickButtonMessageListener implements OnClickListener {
 	}
 
 	@Override
-	public void onClick(View v) {			
+	public void onClick() {			
 		final MainActivity mainActivity = MainActivity.get();
 		TransferProtocol transferProtocol = 
 			PrefsRegistry.get(ProtocolPrefs.class).getTransferProtocol();		

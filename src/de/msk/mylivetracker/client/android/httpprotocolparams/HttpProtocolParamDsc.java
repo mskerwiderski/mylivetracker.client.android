@@ -2,18 +2,17 @@ package de.msk.mylivetracker.client.android.httpprotocolparams;
 
 import java.io.Serializable;
 
-import de.msk.mylivetracker.client.android.AppStd;
+import de.msk.mylivetracker.client.android.App;
 
 /**
- * HttpProtocolParamDsc.
+ * classname: HttpProtocolParamDsc
  * 
  * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 001
- * 
- * history
- * 001	2012-12-25 	revised for v1.5.x.
- * 000 	2012-12-01 	initial. 
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class HttpProtocolParamDsc implements Serializable {
@@ -31,16 +30,16 @@ public class HttpProtocolParamDsc implements Serializable {
 	protected HttpProtocolParamDsc(int nameId, int exampleId, 
 		boolean enabled, boolean disableAllowed) {
 		this.init(
-			AppStd.get().getString(nameId), 
-			AppStd.get().getString(exampleId), 
+			App.get().getString(nameId), 
+			App.get().getString(exampleId), 
 			enabled, disableAllowed);
 	}
 	
 	protected HttpProtocolParamDsc(int nameId, int exampleId, 
 		boolean enabled) {
 		this.init(
-			AppStd.get().getString(nameId), 
-			AppStd.get().getString(exampleId), 
+			App.get().getString(nameId), 
+			App.get().getString(exampleId), 
 			enabled, true);
 	}
 

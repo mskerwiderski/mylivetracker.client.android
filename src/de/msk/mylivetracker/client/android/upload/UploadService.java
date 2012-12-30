@@ -1,18 +1,18 @@
 package de.msk.mylivetracker.client.android.upload;
 
-import de.msk.mylivetracker.client.android.pro.R;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.util.service.AbstractService;
 import de.msk.mylivetracker.client.android.util.service.AbstractServiceThread;
 
 /**
- * UploadService.
+ * classname: UploadService
  * 
  * @author michael skerwiderski, (c)2012
- * 
  * @version 000
+ * @since 1.5.0
  * 
- * history
- * 000 initial 2012-10-27
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class UploadService extends AbstractService {

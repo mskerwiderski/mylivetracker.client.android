@@ -5,20 +5,19 @@ import org.apache.commons.lang.StringUtils;
 import com.wahoofitness.api.WFHardwareConnectorTypes.WFAntError;
 import com.wahoofitness.api.WFHardwareConnectorTypes.WFHardwareState;
 
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
-import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 
 /**
- * AntPlusListener.
+ * classname: AntPlusListener
  * 
- * @author michael skerwiderski, (c)2011
+ * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 001
- * 
- * history
- * 001	2012-12-25	revised for v1.5.x.
- * 000 	2011-08-11 	initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class AntPlusListener implements IAntPlusListener {
@@ -32,9 +31,6 @@ public class AntPlusListener implements IAntPlusListener {
 		return antPlusListener;
 	}	
 
-	/* (non-Javadoc)
-	 * @see de.msk.mylivetracker.client.android.listener.IAntPlusListener#onAntPlusSensorListenerAdded(int)
-	 */
 	@Override
 	public void onAntPlusSensorListenerAdded(int countSensorListeners) {
 		TrackStatus.get().setAntPlusStatus(MainActivity.get().getString(
@@ -42,9 +38,6 @@ public class AntPlusListener implements IAntPlusListener {
 		MainActivity.get().updateView();
 	}
 
-	/* (non-Javadoc)
-	 * @see de.msk.mylivetracker.client.android.listener.IAntPlusListener#onAntPlusSensorListenerRemoved(int)
-	 */
 	@Override
 	public void onAntPlusSensorListenerRemoved(int countSensorListeners) {		
 		if (countSensorListeners == 0) {
@@ -56,9 +49,6 @@ public class AntPlusListener implements IAntPlusListener {
 		MainActivity.get().updateView();
 	}
 
-	/* (non-Javadoc)
-	 * @see de.msk.mylivetracker.client.android.listener.IAntPlusListener#onAntPlusError(com.wahoofitness.api.WFHardwareConnectorTypes.WFAntError)
-	 */
 	@Override
 	public void onAntPlusError(WFAntError error) {
 		switch (error) {
@@ -72,9 +62,6 @@ public class AntPlusListener implements IAntPlusListener {
 		}		
 	}
 
-	/* (non-Javadoc)
-	 * @see de.msk.mylivetracker.client.android.listener.IAntPlusListener#onAntPlusStateChanged(com.wahoofitness.api.WFHardwareConnectorTypes.WFHardwareState)
-	 */
 	@Override
 	public void onAntPlusStateChanged(WFHardwareState state) {
 		String statusStr = null;

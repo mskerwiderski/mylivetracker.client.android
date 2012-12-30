@@ -2,27 +2,26 @@ package de.msk.mylivetracker.client.android.dropbox;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import de.msk.mylivetracker.client.android.App;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
+import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
+import de.msk.mylivetracker.client.android.util.listener.OnFinishActivityListener;
 
 /**
- * DropboxConnectActivity.
+ * classname: DropboxConnectActivity
  * 
  * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 001
- * 
- * history
- * 001	2012-12-24 	revised for v1.5.x.
- * 000 	2012-12-09 	initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class DropboxConnectActivity extends AbstractActivity {	
@@ -41,7 +40,7 @@ public class DropboxConnectActivity extends AbstractActivity {
 		}	
 	}
 	
-	private static final class OnClickButtonConnectListener implements OnClickListener {
+	private static final class OnClickButtonConnectListener extends ASafeOnClickListener {
 		private DropboxConnectActivity activity;
 		
 		public OnClickButtonConnectListener(DropboxConnectActivity activity) {
@@ -49,7 +48,7 @@ public class DropboxConnectActivity extends AbstractActivity {
 		}
 	
 		@Override
-		public void onClick(View v) {
+		public void onClick() {
 			DropboxPrefs prefs = PrefsRegistry.get(DropboxPrefs.class);
 			if (prefs.hasValidAccountAndTokens()) {
 				SimpleInfoDialog.show(this.activity, 
@@ -76,7 +75,7 @@ public class DropboxConnectActivity extends AbstractActivity {
 		}	
 	}
 	
-	private static final class OnClickButtonReleaseListener implements OnClickListener {
+	private static final class OnClickButtonReleaseListener extends ASafeOnClickListener {
 		private DropboxConnectActivity activity;
 		
 		public OnClickButtonReleaseListener(DropboxConnectActivity activity) {
@@ -84,7 +83,7 @@ public class DropboxConnectActivity extends AbstractActivity {
 		}
 
 		@Override
-		public void onClick(View v) {
+		public void onClick() {
 			DropboxPrefs prefs = PrefsRegistry.get(DropboxPrefs.class);
 			if (!prefs.hasValidAccountAndTokens()) {
 				SimpleInfoDialog.show(this.activity, 
@@ -93,19 +92,6 @@ public class DropboxConnectActivity extends AbstractActivity {
 				ReleaseDialog dlg = new ReleaseDialog(this.activity);
 				dlg.show();
 			}
-		}		
-	}
-	
-	private static final class OnClickButtonBackListener implements OnClickListener {
-		private DropboxConnectActivity activity;
-		
-		private OnClickButtonBackListener(DropboxConnectActivity activity) {
-			this.activity = activity;
-		}
-		
-		@Override
-		public void onClick(View v) {			
-			this.activity.finish();		
 		}		
 	}
 	
@@ -148,15 +134,18 @@ public class DropboxConnectActivity extends AbstractActivity {
         etDropboxConnect_Status.setClickable(false);
         updateConnectionStatus(this);
         
-        Button btDropboxConnect_Connect = (Button)findViewById(R.id.btDropboxConnect_Connect);
-        Button btDropboxConnect_Release = (Button)findViewById(R.id.btDropboxConnect_Release);
-        Button btDropboxConnect_Back = (Button)findViewById(R.id.btDropboxConnect_Back);
+        Button btDropboxConnect_Connect = (Button)
+        	findViewById(R.id.btDropboxConnect_Connect);
+        Button btDropboxConnect_Release = (Button)
+        	findViewById(R.id.btDropboxConnect_Release);
+        Button btDropboxConnect_Back = (Button)
+        	findViewById(R.id.btDropboxConnect_Back);
         
         btDropboxConnect_Connect.setOnClickListener(
 			new OnClickButtonConnectListener(this));
         btDropboxConnect_Release.setOnClickListener(
 			new OnClickButtonReleaseListener(this));
         btDropboxConnect_Back.setOnClickListener(
-			new OnClickButtonBackListener(this));
+			new OnFinishActivityListener(this));
     }
 }

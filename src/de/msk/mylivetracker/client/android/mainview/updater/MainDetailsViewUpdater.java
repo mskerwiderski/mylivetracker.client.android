@@ -2,8 +2,8 @@ package de.msk.mylivetracker.client.android.mainview.updater;
 
 import android.app.Activity;
 import android.widget.TextView;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.MainDetailsActivity;
-import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
 import de.msk.mylivetracker.client.android.status.EmergencySignalInfo;
 import de.msk.mylivetracker.client.android.status.GpsStateInfo;
@@ -16,14 +16,14 @@ import de.msk.mylivetracker.client.android.status.UploadInfo;
 import de.msk.mylivetracker.client.android.util.FormatUtils.Unit;
 
 /**
- * MainDetailsViewUpdater.
+ * classname: MainDetailsViewUpdater
  * 
- * @author michael skerwiderski, (c)2011
- * 
+ * @author michael skerwiderski, (c)2012
  * @version 000
+ * @since 1.5.0
  * 
- * history
- * 000 	2011-08-28 initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class MainDetailsViewUpdater implements Runnable {

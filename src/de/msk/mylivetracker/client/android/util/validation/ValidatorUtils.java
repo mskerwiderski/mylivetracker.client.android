@@ -5,21 +5,20 @@ import org.apache.commons.lang.StringUtils;
 import android.content.Context;
 import android.telephony.PhoneNumberUtils;
 import android.widget.EditText;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParams;
 import de.msk.mylivetracker.client.android.localization.LocalizationPrefs.LocalizationMode;
-import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
  
 /**
- * ValidatorUtils.
+ * classname: ValidatorUtils
  * 
- * @author michael skerwiderski, (c)2011
- * 
+ * @author michael skerwiderski, (c)2012
  * @version 000
+ * @since 1.5.0
  * 
- * history
- * 001 2012-02-04 localizationModes implemented (gps, network, gpsAndNetwork).
- * 000 2011-08-11 initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class ValidatorUtils {

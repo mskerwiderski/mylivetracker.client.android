@@ -1,24 +1,22 @@
 package de.msk.mylivetracker.client.android.mainview;
 
 import de.msk.mylivetracker.client.android.auto.AutoPrefsActivity;
-import android.view.View;
-import android.view.View.OnClickListener;
+import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
 
 /**
- * OnClickButtonAutoIndicatorListener.
+ * classname: OnClickButtonAutoIndicatorListener
  * 
  * @author michael skerwiderski, (c)2012
- * @since 1.3.0 (22.02.2012)
+ * @version 000
+ * @since 1.5.0
  * 
- * Listener class which opens the auto preferences on click.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
-public class OnClickButtonAutoIndicatorListener implements OnClickListener {
-	/* (non-Javadoc)
-	 * @see android.view.View.OnClickListener#onClick(android.view.View)
-	 */
+public class OnClickButtonAutoIndicatorListener extends ASafeOnClickListener {
 	@Override
-	public void onClick(View v) {			
+	public void onClick() {			
 		MainActivity.get().
 			startActivityWithWarningDlgIfTrackRunning(AutoPrefsActivity.class);
 	}

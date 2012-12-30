@@ -9,16 +9,16 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import de.msk.mylivetracker.client.android.App;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.App.ConfigDsc;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
-import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractInfoDialog;
+import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
+import de.msk.mylivetracker.client.android.util.listener.OnFinishActivityListener;
 import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
 import de.msk.mylivetracker.commons.rpc.ConnectToMyLiveTrackerPortalRequest;
 import de.msk.mylivetracker.commons.rpc.ConnectToMyLiveTrackerPortalResponse;
@@ -26,20 +26,19 @@ import de.msk.mylivetracker.commons.util.datetime.DateTime;
 import de.msk.mylivetracker.commons.util.md5.MD5;
 
 /**
- * MyLiveTrackerPortalConnectActivity.
+ * classname: MyLiveTrackerPortalConnectActivity
  * 
- * @author michael skerwiderski, (c)2011
- * 
+ * @author michael skerwiderski, (c)2012
  * @version 000
+ * @since 1.5.0
  * 
- * history
- * 001	2012-12-25	revised for v1.5.x.
- * 000 	2011-08-16 	initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class MyLiveTrackerPortalConnectActivity extends AbstractActivity {	
 	
-	private static final class OnClickButtonOkListener implements OnClickListener {
+	private static final class OnClickButtonOkListener extends ASafeOnClickListener {
 		private MyLiveTrackerPortalConnectActivity activity;
 		private EditText etConnectToMyLiveTrackerPortal_PortalUsername;
 		private EditText etConnectToMyLiveTrackerPortal_PortalPassword;
@@ -56,7 +55,7 @@ public class MyLiveTrackerPortalConnectActivity extends AbstractActivity {
 		}
 	
 		@Override
-		public void onClick(View v) {
+		public void onClick() {
 			boolean valid = true;
 			
 			valid = valid && 
@@ -180,21 +179,6 @@ public class MyLiveTrackerPortalConnectActivity extends AbstractActivity {
         }
     };
     
-	private static final class OnClickButtonCancelListener implements OnClickListener {
-		private MyLiveTrackerPortalConnectActivity activity;
-		
-		private OnClickButtonCancelListener(MyLiveTrackerPortalConnectActivity activity) {
-			this.activity = activity;
-		}
-		/* (non-Javadoc)
-		 * @see android.view.View.OnClickListener#onClick(android.view.View)
-		 */
-		@Override
-		public void onClick(View v) {			
-			this.activity.finish();		
-		}		
-	}
-	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -219,6 +203,6 @@ public class MyLiveTrackerPortalConnectActivity extends AbstractActivity {
 				etConnectToMyLiveTrackerPortal_PortalPassword));
 		
         btConnectToMyLiveTrackerPortal_Cancel.setOnClickListener(
-			new OnClickButtonCancelListener(this));
+			new OnFinishActivityListener(this));
     }
 }

@@ -3,17 +3,17 @@ package de.msk.mylivetracker.client.android.util.dialog;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import de.msk.mylivetracker.client.android.pro.R;
+import de.msk.mylivetracker.client.android.R;
 
 /**
- * AbstractInfoDialog.
+ * classname: AbstractInfoDialog
  * 
- * @author michael skerwiderski, (c)2011
- * 
+ * @author michael skerwiderski, (c)2012
  * @version 000
+ * @since 1.5.0
  * 
- * history
- * 000 initial 2011-08-17
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public abstract class AbstractInfoDialog extends AlertDialog {

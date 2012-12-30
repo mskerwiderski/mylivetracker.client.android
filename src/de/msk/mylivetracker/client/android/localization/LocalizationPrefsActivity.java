@@ -1,34 +1,32 @@
 package de.msk.mylivetracker.client.android.localization;
 
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.localization.LocalizationPrefs.LocalizationMode;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.pro.R;
+import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
+import de.msk.mylivetracker.client.android.util.listener.OnFinishActivityListener;
 import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
 
 /**
- * LocalizationPrefsActivity.
+ * classname: LocalizationPrefsActivity
  * 
- * @author michael skerwiderski, (c)2011
+ * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 002
- * 
- * history
- * 002	2012-12-24 	revised for v1.5.x.
- * 001 	2012-02-04 	localizationModes implemented (gps, network, gpsAndNetwork).
- * 000 	2011-08-11 	initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class LocalizationPrefsActivity extends AbstractActivity {
 
-	private static final class OnClickButtonSaveListener implements OnClickListener {
+	private static final class OnClickButtonSaveListener extends ASafeOnClickListener {
 		private LocalizationPrefsActivity activity;
 		private Spinner spLocalizationPrefs_LocalizationMode;
 		private EditText etLocalizationPrefs_TimeTriggerInSecs;
@@ -52,7 +50,7 @@ public class LocalizationPrefsActivity extends AbstractActivity {
 		}
 
 		@Override
-		public void onClick(View v) {
+		public void onClick() {
 			boolean valid = true;
 			LocalizationMode localizationMode =
 				LocalizationMode.values()[spLocalizationPrefs_LocalizationMode.getSelectedItemPosition()];
@@ -106,17 +104,6 @@ public class LocalizationPrefsActivity extends AbstractActivity {
 		}		
 	}
 	
-	private static final class OnClickButtonCancelListener implements OnClickListener {
-		private LocalizationPrefsActivity activity;
-		private OnClickButtonCancelListener(LocalizationPrefsActivity activity) {
-			this.activity = activity;
-		}
-		@Override
-		public void onClick(View v) {			
-			this.activity.finish();		
-		}		
-	}
-	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,8 +135,10 @@ public class LocalizationPrefsActivity extends AbstractActivity {
         etLocalizationPrefs_DistBtwTwoLocsForDistCalcRequiredInCMtr.setText(
         	String.valueOf(prefs.getDistBtwTwoLocsForDistCalcRequiredInCMtr()));
         
-    	Button btLocalizationPrefs_Save = (Button)findViewById(R.id.btLocalizationPrefs_Save);
-        Button btLocalizationPrefs_Cancel = (Button)findViewById(R.id.btLocalizationPrefs_Cancel);
+    	Button btLocalizationPrefs_Save = (Button)
+    		findViewById(R.id.btLocalizationPrefs_Save);
+        Button btLocalizationPrefs_Cancel = (Button)
+        	findViewById(R.id.btLocalizationPrefs_Cancel);
                 
         btLocalizationPrefs_Save.setOnClickListener(
 			new OnClickButtonSaveListener(this, 
@@ -160,6 +149,6 @@ public class LocalizationPrefsActivity extends AbstractActivity {
 				etLocalizationPrefs_DistBtwTwoLocsForDistCalcRequiredInCMtr));
 		
         btLocalizationPrefs_Cancel.setOnClickListener(
-			new OnClickButtonCancelListener(this));
+			new OnFinishActivityListener(this));
     }
 }

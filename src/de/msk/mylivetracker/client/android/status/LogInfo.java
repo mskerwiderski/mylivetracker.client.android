@@ -15,6 +15,17 @@ import de.msk.mylivetracker.client.android.util.FileUtils.PathType;
 import de.msk.mylivetracker.client.android.util.FormatUtils;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;
 
+/**
+ * classname: LogInfo
+ * 
+ * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
+ * 
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
+ * 
+ */
 public class LogInfo {
 
 	private static final String GPX_HEAD_TEMPLATE = 

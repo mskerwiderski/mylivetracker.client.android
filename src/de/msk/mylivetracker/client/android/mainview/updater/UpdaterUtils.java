@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -13,14 +14,14 @@ import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.util.FormatUtils.Unit;
 
 /**
- * UpdaterUtils.
+ * classname: UpdaterUtils
  * 
- * @author michael skerwiderski, (c)2011
- * 
+ * @author michael skerwiderski, (c)2012
  * @version 000
+ * @since 1.5.0
  * 
- * history
- * 000 	2011-08-28 initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class UpdaterUtils {
@@ -100,7 +101,7 @@ public class UpdaterUtils {
 	
 	public static String getTimestampStr(Date timestamp) {
 		if (timestamp == null) return getNoValue();
-		SimpleDateFormat sdf = new SimpleDateFormat(TIMESTAMP_FORMAT);
+		SimpleDateFormat sdf = new SimpleDateFormat(TIMESTAMP_FORMAT, Locale.ENGLISH);
 		return "[" + sdf.format(timestamp) + "]";
 	}
 }

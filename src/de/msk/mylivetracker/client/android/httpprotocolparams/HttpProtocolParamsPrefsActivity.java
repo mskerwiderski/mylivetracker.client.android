@@ -3,7 +3,6 @@ package de.msk.mylivetracker.client.android.httpprotocolparams;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -11,24 +10,25 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
+import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
+import de.msk.mylivetracker.client.android.util.listener.OnFinishActivityListener;
 import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
 
 /**
- * HttpProtocolParamsPrefsActivity.
+ * classname: HttpProtocolParamsPrefsActivity
  * 
  * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 001
- * 
- * history
- * 001	2012-12-25 	revised for v1.5.x.
- * 000 	2012-11-30 	initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class HttpProtocolParamsPrefsActivity extends AbstractActivity {
@@ -77,7 +77,7 @@ public class HttpProtocolParamsPrefsActivity extends AbstractActivity {
 		}
 	}
 	
-	private static final class OnClickButtonResetToDefaultsListener implements OnClickListener {
+	private static final class OnClickButtonResetToDefaultsListener extends ASafeOnClickListener {
 		private HttpProtocolParamsPrefsActivity activity;
 		private Spinner spHttpProtocolParamsPrefs_Parameter;
 		
@@ -88,7 +88,7 @@ public class HttpProtocolParamsPrefsActivity extends AbstractActivity {
 		}
 
 		@Override
-		public void onClick(View v) {			
+		public void onClick() {			
 			ResetToDefaultsDialog dlg = new ResetToDefaultsDialog(
 				this.activity,
 				spHttpProtocolParamsPrefs_Parameter);
@@ -119,7 +119,7 @@ public class HttpProtocolParamsPrefsActivity extends AbstractActivity {
 		}	
 	}
 	
-	private static final class OnClickButtonSaveListener implements OnClickListener {
+	private static final class OnClickButtonSaveListener extends ASafeOnClickListener {
 		private HttpProtocolParamsPrefsActivity activity;
 		private EditText etHttpProtocolParamsPrefs_ParameterName;
 		private CheckBox cbHttpProtocolParamsPrefs_EnabledForUploading;
@@ -134,7 +134,7 @@ public class HttpProtocolParamsPrefsActivity extends AbstractActivity {
 		}
 
 		@Override
-		public void onClick(View v) {
+		public void onClick() {
 			boolean valid = 
 				this.activity.updateHttpProtocolParamDsc(
 					this.activity,
@@ -145,19 +145,6 @@ public class HttpProtocolParamsPrefsActivity extends AbstractActivity {
 					setHttpProtocolParams(httpProtocolParamsCopy);
 				this.activity.finish();
 			}			
-		}		
-	}
-	
-	private static final class OnClickButtonCancelListener implements OnClickListener {
-		private HttpProtocolParamsPrefsActivity activity;
-		
-		private OnClickButtonCancelListener(HttpProtocolParamsPrefsActivity activity) {
-			this.activity = activity;
-		}
-
-		@Override
-		public void onClick(View v) {			
-			this.activity.finish();		
 		}		
 	}
 	
@@ -172,6 +159,11 @@ public class HttpProtocolParamsPrefsActivity extends AbstractActivity {
 		etHttpProtocolParamsPrefs_ParameterExample.setText(paramDsc.getExample());
 		etHttpProtocolParamsPrefs_ParameterName.setText(paramDsc.getName());
 		cbHttpProtocolParamsPrefs_EnabledForUploading.setChecked(paramDsc.isEnabled());
+		if (paramDsc.isDisableAllowed()) {
+			cbHttpProtocolParamsPrefs_EnabledForUploading.setClickable(true);
+		} else {
+			cbHttpProtocolParamsPrefs_EnabledForUploading.setClickable(false);
+		}
 	}
 	
 	public boolean updateHttpProtocolParamDsc(
@@ -213,24 +205,31 @@ public class HttpProtocolParamsPrefsActivity extends AbstractActivity {
      
         this.setTitle(R.string.tiHttpProtocolParamsPrefs);
         
-        EditText etHttpProtocolParamsPrefs_ParameterExample = (EditText)findViewById(R.id.etHttpProtocolParamsPrefs_ParameterExample);
+        EditText etHttpProtocolParamsPrefs_ParameterExample = (EditText)
+    		findViewById(R.id.etHttpProtocolParamsPrefs_ParameterExample);
         etHttpProtocolParamsPrefs_ParameterExample.setEnabled(false);
         etHttpProtocolParamsPrefs_ParameterExample.setFocusable(false);
         etHttpProtocolParamsPrefs_ParameterExample.setClickable(false);
         
-        Spinner spHttpProtocolParamsPrefs_Parameter = (Spinner)findViewById(R.id.spHttpProtocolParamsPrefs_Parameter);
+        Spinner spHttpProtocolParamsPrefs_Parameter = (Spinner)
+        	findViewById(R.id.spHttpProtocolParamsPrefs_Parameter);
         ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(
             this, R.array.httpProtocolParams, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spHttpProtocolParamsPrefs_Parameter.setAdapter(adapter);
         spHttpProtocolParamsPrefs_Parameter.setSelection(currSelectedId);
         
-        EditText etHttpProtocolParamsPrefs_ParameterName = (EditText)findViewById(R.id.etHttpProtocolParamsPrefs_ParameterName);
-        CheckBox cbHttpProtocolParamsPrefs_EnabledForUploading = (CheckBox)findViewById(R.id.cbHttpProtocolParamsPrefs_EnabledForUploading);
+        EditText etHttpProtocolParamsPrefs_ParameterName = (EditText)
+        	findViewById(R.id.etHttpProtocolParamsPrefs_ParameterName);
+        CheckBox cbHttpProtocolParamsPrefs_EnabledForUploading = (CheckBox)
+        	findViewById(R.id.cbHttpProtocolParamsPrefs_EnabledForUploading);
         
-        Button btHttpProtocolParamsPrefs_ResetToDefaults = (Button)findViewById(R.id.btHttpProtocolParamsPrefs_ResetToDefaults);
-        Button btHttpProtocolParamsPrefs_Save = (Button)findViewById(R.id.btHttpProtocolParamsPrefs_Save);
-        Button btHttpProtocolParamsPrefs_Cancel = (Button)findViewById(R.id.btHttpProtocolParamsPrefs_Cancel);
+        Button btHttpProtocolParamsPrefs_ResetToDefaults = (Button)
+        	findViewById(R.id.btHttpProtocolParamsPrefs_ResetToDefaults);
+        Button btHttpProtocolParamsPrefs_Save = (Button)
+        	findViewById(R.id.btHttpProtocolParamsPrefs_Save);
+        Button btHttpProtocolParamsPrefs_Cancel = (Button)
+        	findViewById(R.id.btHttpProtocolParamsPrefs_Cancel);
            
         spHttpProtocolParamsPrefs_Parameter.setOnItemSelectedListener(
     		new OnHttpParameterItemSelectedListener(this, 
@@ -245,6 +244,6 @@ public class HttpProtocolParamsPrefsActivity extends AbstractActivity {
 				etHttpProtocolParamsPrefs_ParameterName,	
 				cbHttpProtocolParamsPrefs_EnabledForUploading));		
         btHttpProtocolParamsPrefs_Cancel.setOnClickListener(
-			new OnClickButtonCancelListener(this));
+			new OnFinishActivityListener(this));
     }
 }

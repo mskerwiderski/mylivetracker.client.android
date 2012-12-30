@@ -3,40 +3,36 @@ package de.msk.mylivetracker.client.android.mainview;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Toast;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs.TransferProtocol;
 import de.msk.mylivetracker.client.android.status.EmergencySignalInfo;
 import de.msk.mylivetracker.client.android.upload.Uploader;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
+import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
 
 /**
- * OnClickButtonSosListener.
+ * classname: OnClickButtonSosListener
  * 
- * @author michael skerwiderski, (c)2011
- * 
+ * @author michael skerwiderski, (c)2012
  * @version 000
+ * @since 1.5.0
  * 
- * history
- * 000 	2011-08-11 initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
-public class OnClickButtonSosListener implements OnClickListener {
+public class OnClickButtonSosListener extends ASafeOnClickListener {
 		
 	private Activity activity;
 	OnClickButtonSosListener(Activity activity) {
 		this.activity = activity;
 	}
 	
-	/* (non-Javadoc)
-	 * @see android.view.View.OnClickListener#onClick(android.view.View)
-	 */
 	@Override
-	public void onClick(View v) {
+	public void onClick() {
 		final MainActivity mainActivity = MainActivity.get();
 		TransferProtocol transferProtocol = 
 			PrefsRegistry.get(ProtocolPrefs.class).getTransferProtocol(); 

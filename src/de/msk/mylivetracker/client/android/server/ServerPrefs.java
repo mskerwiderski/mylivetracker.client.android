@@ -5,15 +5,14 @@ import java.io.Serializable;
 import de.msk.mylivetracker.client.android.preferences.APrefs;
 
 /**
- * ServerPrefs.
+ * classname: ServerPrefs
  * 
  * @author michael skerwiderski, (c)2012
- * 
  * @version 000
+ * @since 1.5.0
  * 
- * history
- * 001	2012-12-24 revised for v1.5.x.
- * 000 	2012-12-24 initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class ServerPrefs extends APrefs implements Serializable {

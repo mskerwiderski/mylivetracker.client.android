@@ -6,14 +6,14 @@ import java.util.Date;
 import com.wahoofitness.api.data.WFHeartrateData;
 
 /**
- * HeartrateInfo.
+ * classname: HeartrateInfo
  * 
- * @author michael skerwiderski, (c)2011
- * 
+ * @author michael skerwiderski, (c)2012
  * @version 000
+ * @since 1.5.0
  * 
- * history
- * 000 initial 2011-08-11
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class HeartrateInfo extends AbstractInfo implements Serializable {	

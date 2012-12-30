@@ -4,15 +4,14 @@ import com.wahoofitness.api.WFHardwareConnectorTypes.WFAntError;
 import com.wahoofitness.api.WFHardwareConnectorTypes.WFHardwareState;
 
 /**
- * IAntPlusListener.
+ * classname: IAntPlusListener
  * 
- * @author michael skerwiderski, (c)2011
+ * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 001
- * 
- * history
- * 001	2012-12-25	revised for v1.5.x.
- * 000 	2011-08-11 	initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public interface IAntPlusListener {

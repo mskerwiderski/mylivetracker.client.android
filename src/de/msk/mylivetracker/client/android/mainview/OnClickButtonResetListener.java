@@ -1,30 +1,28 @@
 package de.msk.mylivetracker.client.android.mainview;
 
 import android.os.SystemClock;
-import android.view.View;
-import android.view.View.OnClickListener;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.upload.UploadService;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractProgressDialog;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
+import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
 import de.msk.mylivetracker.client.android.util.service.AbstractService;
 
 /**
- * OnClickButtonResetListener.
+ * classname: OnClickButtonResetListener
  * 
- * @author michael skerwiderski, (c)2011
+ * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 001
- * 
- * history
- * 001	2011-02-20 If in auto mode, resetTrack is rejected.
- * 000 	2011-08-11 initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
-public class OnClickButtonResetListener implements OnClickListener {
+public class OnClickButtonResetListener extends ASafeOnClickListener {
 	
 	private static final class ResetTrackDialog extends AbstractYesNoDialog {
 
@@ -41,11 +39,7 @@ public class OnClickButtonResetListener implements OnClickListener {
 		}	
 	}
 	
-	/* (non-Javadoc)
-	 * @see android.view.View.OnClickListener#onClick(android.view.View)
-	 */
-	@Override
-	public void onClick(View v) {
+	public void onClick() {
 		if (MainActivity.showStartStopInfoDialogIfInAutoMode()) return;
 		final MainActivity activity = MainActivity.get();
 		if (PrefsRegistry.get(OtherPrefs.class).getConfirmLevel().isMedium()) {

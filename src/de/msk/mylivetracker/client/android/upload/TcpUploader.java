@@ -13,23 +13,23 @@ import java.net.SocketAddress;
 import org.apache.commons.lang.StringUtils;
 
 import android.os.SystemClock;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.server.ServerPrefs;
 import de.msk.mylivetracker.client.android.status.PositionBufferInfo;
 import de.msk.mylivetracker.client.android.upload.protocol.IProtocol;
 
 /**
- * TcpUploader.
+ * classname: TcpUploader
  * 
- * @author michael skerwiderski, (c)2011
- * 
+ * @author michael skerwiderski, (c)2012
  * @version 000
+ * @since 1.5.0
  * 
- * history
- * 000 initial 2011-08-11
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class TcpUploader extends AbstractUploader {
@@ -150,9 +150,6 @@ public class TcpUploader extends AbstractUploader {
 		socket = null;
 	}
 	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return "TcpUploader";

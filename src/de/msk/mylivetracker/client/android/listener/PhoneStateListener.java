@@ -8,15 +8,14 @@ import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
 
 /**
- * PhoneStateListener.
+ * classname: PhoneStateListener
  * 
- * @author michael skerwiderski, (c)2011
+ * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 001
- * 
- * history
- * 001	2012-12-25 	revised for v1.5.x.
- * 000 	2011-08-11 	initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class PhoneStateListener extends android.telephony.PhoneStateListener {
@@ -29,9 +28,6 @@ public class PhoneStateListener extends android.telephony.PhoneStateListener {
 		return phoneStateListener;
 	}
 
-	/* (non-Javadoc)
-	 * @see android.telephony.PhoneStateListener#onCellLocationChanged(android.telephony.CellLocation)
-	 */
 	@Override
 	public void onCellLocationChanged(CellLocation location) {
 		if (MainActivity.get().isPhoneTypeGsm()) {
@@ -40,35 +36,23 @@ public class PhoneStateListener extends android.telephony.PhoneStateListener {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see android.telephony.PhoneStateListener#onDataConnectionStateChanged(int, int)
-	 */
 	@Override
 	public void onDataConnectionStateChanged(int state, int networkType) {
 		PhoneStateInfo.update(networkType, null, null, null);
 		MainActivity.get().updateView();
 	}
 
-	/* (non-Javadoc)
-	 * @see android.telephony.PhoneStateListener#onDataConnectionStateChanged(int)
-	 */
 	@Override
 	public void onDataConnectionStateChanged(int state) {
 		MainActivity.get().updateView();
 	}
 	
-	/* (non-Javadoc)
-	 * @see android.telephony.PhoneStateListener#onServiceStateChanged(android.telephony.ServiceState)
-	 */
 	@Override
 	public void onServiceStateChanged(ServiceState serviceState) {
 		PhoneStateInfo.update(null, null, serviceState, null);
 		MainActivity.get().updateView();
 	}
 
-	/* (non-Javadoc)
-	 * @see android.telephony.PhoneStateListener#onSignalStrengthsChanged(android.telephony.SignalStrength)
-	 */
 	@Override
 	public void onSignalStrengthsChanged(SignalStrength signalStrength) {
 		PhoneStateInfo.update(null, null, null, signalStrength);

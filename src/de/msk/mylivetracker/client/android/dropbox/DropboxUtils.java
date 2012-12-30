@@ -9,19 +9,18 @@ import com.dropbox.client2.session.AccessTokenPair;
 import com.dropbox.client2.session.AppKeyPair;
 import com.dropbox.client2.session.Session.AccessType;
 
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.pro.R;
 
 /**
- * DropboxUtils.
+ * classname: DropboxUtils
  * 
  * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 001
- * 
- * history
- * 001	2012-12-24 	revised for v1.5.x.
- * 000 	2012-12-05 	initial. 
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class DropboxUtils {

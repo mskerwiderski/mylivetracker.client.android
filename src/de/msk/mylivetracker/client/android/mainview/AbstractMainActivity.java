@@ -13,8 +13,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.InfoActivity;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.account.AccountPrefsActivity;
 import de.msk.mylivetracker.client.android.auto.AutoPrefs;
 import de.msk.mylivetracker.client.android.auto.AutoPrefsActivity;
@@ -28,7 +28,6 @@ import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.other.OtherPrefsActivity;
 import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryPrefsActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefsActivity;
 import de.msk.mylivetracker.client.android.remoteaccess.RemoteAccessPrefsActivity;
 import de.msk.mylivetracker.client.android.server.ServerPrefsActivity;
@@ -40,33 +39,20 @@ import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
 
 /**
- * AbstractMainActivity.
+ * classname: AbstractMainActivity
  * 
- * @author michael skerwiderski, (c)2011
+ * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 001
- * 
- * history 
- * 001	2012-02-20 
- * 		o startActivityPrefsAuto implemented.
- * 		o startActivityPrefsLocalization implemented.
- * 		o startActivityPrefsServer implemented.
- * 		o isGpsEnabled implemented.
- * 		o isLocalizationByNetworkEnabled implemented.
- * 		o getWifiManager implemented.
- * 		o isWifiEnabled implemented.
- * 000 	2011-08-18 initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public abstract class AbstractMainActivity extends AbstractActivity {
 
 	private GestureDetector gestureDetector = null;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Activity#onCreate(android.os.Bundle)
-	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -93,20 +79,12 @@ public abstract class AbstractMainActivity extends AbstractActivity {
     
 	public abstract void onSwitchToView(boolean next);
 	
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onTouchEvent(android.view.MotionEvent)
-	 */
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		gestureDetector.onTouchEvent(event);
         return true;		
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
-	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -168,6 +146,7 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private void showIsProFeatureDialog() {
 		IsProFeatureDialog dlg = new IsProFeatureDialog(this);
 		dlg.show();
@@ -266,11 +245,6 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 	    }
 	};
 	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
-	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -296,28 +270,16 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 			startActivityWithWarningDlgIfTrackRunning(DropboxConnectActivity.class);
 			return true;	
 		case R.id.mnPrefsPinCodeQuery:
-			if (!App.isPro()) {
-				showIsProFeatureDialog();
-			} else {
-				startActivityWithWarningDlgIfTrackRunning(PinCodeQueryPrefsActivity.class);
-			}
+			startActivityWithWarningDlgIfTrackRunning(PinCodeQueryPrefsActivity.class);
 			return true;
 		case R.id.mnPrefsAuto:
 			startActivityWithWarningDlgIfTrackRunning(AutoPrefsActivity.class);
 			return true;
 		case R.id.mnPrefsRemoteAccess:
-			if (!App.isPro()) {
-				showIsProFeatureDialog();
-			} else {
-				startActivityWithWarningDlgIfTrackRunning(RemoteAccessPrefsActivity.class);
-			}
+			startActivityWithWarningDlgIfTrackRunning(RemoteAccessPrefsActivity.class);
 			return true;
 		case R.id.mnPrefsHttpProtocolParams:
-			if (!App.isPro()) {
-				showIsProFeatureDialog();
-			} else {
-				startActivityWithWarningDlgIfTrackRunning(HttpProtocolParamsPrefsActivity.class);
-			}
+			startActivityWithWarningDlgIfTrackRunning(HttpProtocolParamsPrefsActivity.class);
 			return true;
 		case R.id.mnPrefsOther:
 			startActivityWithWarningDlgIfTrackRunning(OtherPrefsActivity.class);

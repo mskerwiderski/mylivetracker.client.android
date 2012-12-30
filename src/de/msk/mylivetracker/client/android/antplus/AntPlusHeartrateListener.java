@@ -6,21 +6,20 @@ import com.wahoofitness.api.comm.WFSensorConnection;
 import com.wahoofitness.api.comm.WFSensorConnection.WFSensorConnectionStatus;
 import com.wahoofitness.api.data.WFHeartrateData;
 
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
-import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.status.HeartrateInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 
 /**
- * AntPlusHeartrateListener.
+ * classname: AntPlusHeartrateListener
  * 
- * @author michael skerwiderski, (c)2011
+ * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 001
- * 
- * history
- * 001	2012-12-25	revised for v1.5.x.
- * 000 	2011-08-11 	initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class AntPlusHeartrateListener implements IAntPlusSensorListener {
@@ -37,25 +36,16 @@ public class AntPlusHeartrateListener implements IAntPlusSensorListener {
 		return antPlusHeartrateListener;
 	}
 	
-	/* (non-Javadoc)
-	 * @see de.msk.mylivetracker.client.android.listener.IAntPlusListener#getSensorType()
-	 */
 	@Override
 	public Short getSensorType() {
 		return SENSOR_TYPE;
 	}
 	
-	/* (non-Javadoc)
-	 * @see de.msk.mylivetracker.client.android.listener.IAntPlusListener#setConnection(com.wahoofitness.api.comm.WFSensorConnection)
-	 */
 	@Override
 	public void setConnection(WFSensorConnection connection) {
 		this.connection = (WFHeartrateConnection)connection;
 	}
 
-	/* (non-Javadoc)
-	 * @see de.msk.mylivetracker.client.android.listener.IAntPlusSensorListener#onEnabled(com.wahoofitness.api.comm.WFSensorConnection.WFSensorConnectionStatus)
-	 */
 	@Override
 	public void onEnabled(WFSensorConnectionStatus status) {
 		String statusStr = null;
@@ -80,18 +70,12 @@ public class AntPlusHeartrateListener implements IAntPlusSensorListener {
 		MainActivity.get().updateView();
 	}
 
-	/* (non-Javadoc)
-	 * @see de.msk.mylivetracker.client.android.listener.IAntPlusSensorListener#onDisabled()
-	 */
 	@Override
 	public void onDisabled() {
 		TrackStatus.get().setAntPlusHeartrateStatus(null);
 		MainActivity.get().updateView();		
 	}
 
-	/* (non-Javadoc)
-	 * @see de.msk.mylivetracker.client.android.listener.IAntPlusSensorListener#onHasData()
-	 */
 	@Override
 	public void onHasData() {
 		WFHeartrateData heartrateData = connection.getHeartrateData();
@@ -101,9 +85,6 @@ public class AntPlusHeartrateListener implements IAntPlusSensorListener {
 		}		
 	}
 
-	/* (non-Javadoc)
-	 * @see com.wahoofitness.api.comm.WFSensorConnection.Callback#connectionStateChanged(com.wahoofitness.api.comm.WFSensorConnection.WFSensorConnectionStatus)
-	 */
 	@Override
 	public void connectionStateChanged(WFSensorConnectionStatus connState) {
 		if ((this.connection != null) && !this.connection.isValid()) {

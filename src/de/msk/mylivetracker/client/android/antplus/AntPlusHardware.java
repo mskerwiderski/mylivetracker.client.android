@@ -12,19 +12,18 @@ import com.wahoofitness.api.WFDisplaySettings;
 import com.wahoofitness.api.WFHardwareConnector;
 
 import de.msk.mylivetracker.client.android.App;
-import de.msk.mylivetracker.client.android.pro.R;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 
 /**
- * AntPlusHardware.
+ * classname: AntPlusHardware
  * 
  * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 001
- * 
- * history
- * 001	2012-12-25	revised for v1.5.x.
- * 000 	2012-12-25 	initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class AntPlusHardware {

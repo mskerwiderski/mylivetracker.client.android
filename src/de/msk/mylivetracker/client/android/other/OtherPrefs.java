@@ -5,15 +5,14 @@ import java.io.Serializable;
 import de.msk.mylivetracker.client.android.preferences.APrefs;
 
 /**
- * OtherPrefs.
+ * classname: OtherPrefs
  * 
  * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 001
- * 
- * history
- * 001	2012-12-25 	revised for v1.5.x.
- * 000 	2012-12-25 	initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class OtherPrefs extends APrefs implements Serializable {
@@ -51,6 +50,7 @@ public class OtherPrefs extends APrefs implements Serializable {
 	
 	private ConfirmLevel confirmLevel;
 	private TrackingOneTouchMode trackingOneTouchMode;
+	private boolean adaptButtonsForOneTouchMode;
 	private boolean antPlusEnabledIfAvailable;
 	
 	@Override
@@ -61,6 +61,7 @@ public class OtherPrefs extends APrefs implements Serializable {
 	public void initWithDefaults() {
 		this.confirmLevel = ConfirmLevel.high;
 		this.trackingOneTouchMode = TrackingOneTouchMode.TrackingLocalization;
+		this.adaptButtonsForOneTouchMode = false;
 		this.antPlusEnabledIfAvailable = true;
 	}
 	@Override
@@ -80,18 +81,24 @@ public class OtherPrefs extends APrefs implements Serializable {
 	public void setTrackingOneTouchMode(TrackingOneTouchMode trackingOneTouchMode) {
 		this.trackingOneTouchMode = trackingOneTouchMode;
 	}
+	public boolean isAdaptButtonsForOneTouchMode() {
+		return adaptButtonsForOneTouchMode;
+	}
+	public void setAdaptButtonsForOneTouchMode(boolean adaptButtonsForOneTouchMode) {
+		this.adaptButtonsForOneTouchMode = adaptButtonsForOneTouchMode;
+	}
 	public boolean isAntPlusEnabledIfAvailable() {
 		return antPlusEnabledIfAvailable;
 	}
 	public void setAntPlusEnabledIfAvailable(boolean antPlusEnabledIfAvailable) {
 		this.antPlusEnabledIfAvailable = antPlusEnabledIfAvailable;
 	}
-
 	@Override
 	public String toString() {
 		return "OtherPrefs [confirmLevel=" + confirmLevel
 			+ ", trackingOneTouchMode=" + trackingOneTouchMode
-			+ ", antPlusEnabledIfAvailable=" + antPlusEnabledIfAvailable
-			+ "]";
+			+ ", adaptButtonsForOneTouchMode="
+			+ adaptButtonsForOneTouchMode + ", antPlusEnabledIfAvailable="
+			+ antPlusEnabledIfAvailable + "]";
 	}
 }

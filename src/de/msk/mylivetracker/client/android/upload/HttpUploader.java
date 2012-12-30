@@ -9,21 +9,21 @@ import java.net.URLConnection;
 import org.apache.commons.lang.StringUtils;
 
 import android.os.SystemClock;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.server.ServerPrefs;
 import de.msk.mylivetracker.client.android.upload.protocol.IProtocol;
 
 /**
- * HttpUploader.
+ * classname: HttpUploader
  * 
- * @author michael skerwiderski, (c)2011
- * 
+ * @author michael skerwiderski, (c)2012
  * @version 000
+ * @since 1.5.0
  * 
- * history
- * 000 initial 2011-08-11
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class HttpUploader extends AbstractUploader {
@@ -32,9 +32,6 @@ public class HttpUploader extends AbstractUploader {
 		super(protocol);		
 	}
 	
-	/* (non-Javadoc)
-	 * @see de.msk.mylivetracker.client.android.upload.AbstractUploader#upload(java.lang.String)
-	 */
 	@Override
 	public UploadResult upload(String dataStr) {		
 		BufferedReader bufferedReader = null;
@@ -92,9 +89,6 @@ public class HttpUploader extends AbstractUploader {
 		// noop.
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return "HttpUploader";

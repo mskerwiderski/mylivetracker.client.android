@@ -1,22 +1,17 @@
 package de.msk.mylivetracker.client.android.mainview;
 
 import android.os.Bundle;
-import de.msk.mylivetracker.client.android.pro.R;
+import de.msk.mylivetracker.client.android.R;
 
 /**
- * MainDetailsActivity.
+ * classname: MainDetailsActivity
  * 
- * @author michael skerwiderski, (c)2011
+ * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 001
- * 
- * history
- * 001  2012-02-21 
- * 		o 'close' implemented.
- * 		o 'isActive' implemented-
- * 		o 'onBackPressed' implemented.
- * 		o 'onSwitchToView' and 'onBackPressed' call 'close'.
- * 000 	2011-08-18 initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class MainDetailsActivity extends AbstractMainActivity {
@@ -37,9 +32,6 @@ public class MainDetailsActivity extends AbstractMainActivity {
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onCreate(android.os.Bundle)
-	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,9 +41,6 @@ public class MainDetailsActivity extends AbstractMainActivity {
 		this.setTitle(R.string.tiMainDetails);
 	}
 
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onResume()
-	 */
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -64,17 +53,11 @@ public class MainDetailsActivity extends AbstractMainActivity {
 		mainDetailsActivity = null;
 	}
 
-	/* (non-Javadoc)
-	 * @see de.msk.mylivetracker.client.android.mainview.AbstractMainActivity#onSwitchToView(boolean)
-	 */
 	@Override
 	public void onSwitchToView(boolean next) {
 		close();
 	}	
 	
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onBackPressed()
-	 */
 	@Override
 	public void onBackPressed() {
 		close();

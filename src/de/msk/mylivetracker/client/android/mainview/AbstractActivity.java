@@ -2,21 +2,21 @@ package de.msk.mylivetracker.client.android.mainview;
 
 import android.app.Activity;
 import android.content.Intent;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryActivity;
 import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
 /**
- * AbstractActivity.
+ * classname: AbstractActivity
  * 
- * @author michael skerwiderski, (c)2011
- * 
+ * @author michael skerwiderski, (c)2012
  * @version 000
+ * @since 1.5.0
  * 
- * history 
- * 000	2011-08-19 initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class AbstractActivity extends Activity {
@@ -32,9 +32,6 @@ public class AbstractActivity extends Activity {
 		AbstractActivity.pinCodeValid = true;
 	}
 
-	/* (non-Javadoc)
-	 * @see android.app.Activity#setTitle(java.lang.CharSequence)
-	 */
 	@Override
 	public void setTitle(CharSequence title) {
 		super.setTitle(
@@ -42,9 +39,6 @@ public class AbstractActivity extends Activity {
 			" - " + title);
 	}
 
-	/* (non-Javadoc)
-	 * @see android.app.Activity#setTitle(int)
-	 */
 	@Override
 	public void setTitle(int titleId) {
 		this.setTitle(this.getString(titleId));

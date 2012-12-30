@@ -1,29 +1,29 @@
 package de.msk.mylivetracker.client.android.message;
 
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.status.MessageInfo;
 import de.msk.mylivetracker.client.android.upload.Uploader;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
+import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
+import de.msk.mylivetracker.client.android.util.listener.OnFinishActivityListener;
 import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
 
 /**
- * MessageActivity.
+ * classname: MessageActivity
  * 
- * @author michael skerwiderski, (c)2011
- * 
+ * @author michael skerwiderski, (c)2012
  * @version 000
+ * @since 1.5.0
  * 
- * history
- * 000 	2011-08-11 initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class MessageActivity extends AbstractActivity {	
@@ -45,19 +45,17 @@ public class MessageActivity extends AbstractActivity {
 		}	
 	}
 	
-	private static final class OnClickButtonSendListener implements OnClickListener {
+	private static final class OnClickButtonSendListener extends ASafeOnClickListener {
 		private MessageActivity activity;
 		
 		private OnClickButtonSendListener(MessageActivity activity) {
 			this.activity = activity;					
 		}
 		
-		/* (non-Javadoc)
-		 * @see android.view.View.OnClickListener#onClick(android.view.View)
-		 */
 		@Override
-		public void onClick(View view) {
-			EditText etMsgMessage = (EditText)this.activity.findViewById(R.id.etMsg_Message);
+		public void onClick() {
+			EditText etMsgMessage = (EditText)
+				this.activity.findViewById(R.id.etMsg_Message);
 			String message = etMsgMessage.getText().toString();
 			boolean valid = 
 				ValidatorUtils.validateEditTextString(
@@ -84,24 +82,6 @@ public class MessageActivity extends AbstractActivity {
 			Toast.LENGTH_SHORT).show();	
 	}
 	
-	private static final class OnClickButtonCancelListener implements OnClickListener {
-		private MessageActivity activity;
-		
-		/**
-		 * @param aMain
-		 */
-		private OnClickButtonCancelListener(MessageActivity activity) {
-			this.activity = activity;
-		}
-		/* (non-Javadoc)
-		 * @see android.view.View.OnClickListener#onClick(android.view.View)
-		 */
-		@Override
-		public void onClick(View v) {			
-			this.activity.finish();		
-		}		
-	}
-	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,6 +95,6 @@ public class MessageActivity extends AbstractActivity {
         btMsg_Send.setOnClickListener(
 			new OnClickButtonSendListener(this));
         btMsg_Cancel.setOnClickListener(
-			new OnClickButtonCancelListener(this));
+			new OnFinishActivityListener(this));
     }
 }

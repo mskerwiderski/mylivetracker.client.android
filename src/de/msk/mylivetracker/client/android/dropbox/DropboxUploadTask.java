@@ -21,21 +21,20 @@ import com.dropbox.client2.exception.DropboxServerException;
 import com.dropbox.client2.exception.DropboxUnlinkedException;
 
 import de.msk.mylivetracker.client.android.App;
-import de.msk.mylivetracker.client.android.pro.R;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.util.FileUtils;
 import de.msk.mylivetracker.client.android.util.FileUtils.PathType;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
 
 /**
- * DropboxUploadTask.
+ * classname: DropboxUploadTask
  * 
  * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 001
- * 
- * history
- * 001	2012-12-24 	revised for v1.5.x.
- * 000 	2012-12-11 	initial. 
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class DropboxUploadTask extends AsyncTask<Void, Long, Boolean> {

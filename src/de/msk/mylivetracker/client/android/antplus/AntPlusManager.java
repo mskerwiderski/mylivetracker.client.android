@@ -12,19 +12,18 @@ import com.wahoofitness.api.comm.WFHeartrateConnection;
 import com.wahoofitness.api.comm.WFSensorConnection;
 import com.wahoofitness.api.comm.WFSensorConnection.WFSensorConnectionStatus;
 
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
-import de.msk.mylivetracker.client.android.pro.R;
 
 /**
- * AntPlusManager.
+ * classname: AntPlusManager
  * 
- * @author michael skerwiderski, (c)2011
+ * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 001
- * 
- * history
- * 001	2012-12-25	revised for v1.5.x.
- * 000 	2011-08-11 	initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class AntPlusManager implements Callback {
@@ -146,9 +145,6 @@ public class AntPlusManager implements Callback {
 		return state;
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.wahoofitness.api.WFHardwareConnector.Callback#hwConnAntError(com.wahoofitness.api.WFHardwareConnectorTypes.WFAntError)
-	 */
 	@Override
 	public void hwConnAntError(WFAntError error) {
 		switch (error) {
@@ -164,17 +160,11 @@ public class AntPlusManager implements Callback {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.wahoofitness.api.WFHardwareConnector.Callback#hwConnConnectedSensor(com.wahoofitness.api.comm.WFSensorConnection)
-	 */
 	@Override
 	public void hwConnConnectedSensor(WFSensorConnection connection) {
 		// nothing to do.
 	}
 
-	/* (non-Javadoc)
-	 * @see com.wahoofitness.api.WFHardwareConnector.Callback#hwConnConnectionRestored()
-	 */
 	@Override
 	public void hwConnConnectionRestored() {
 		for (Short sensorType : connMap.keySet()) {
@@ -190,17 +180,11 @@ public class AntPlusManager implements Callback {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.wahoofitness.api.WFHardwareConnector.Callback#hwConnDisconnectedSensor(com.wahoofitness.api.comm.WFSensorConnection)
-	 */
 	@Override
 	public void hwConnDisconnectedSensor(WFSensorConnection connection) {
 		// nothing to do.
 	}
 
-	/* (non-Javadoc)
-	 * @see com.wahoofitness.api.WFHardwareConnector.Callback#hwConnHasData()
-	 */
 	@Override
 	public void hwConnHasData() {
 		for (Short sensorType : connMap.keySet()) {
@@ -213,9 +197,6 @@ public class AntPlusManager implements Callback {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.wahoofitness.api.WFHardwareConnector.Callback#hwConnStateChanged(com.wahoofitness.api.WFHardwareConnectorTypes.WFHardwareState)
-	 */
 	@Override
 	public void hwConnStateChanged(WFHardwareState state) {
 		if (this.antPlusListener != null) {

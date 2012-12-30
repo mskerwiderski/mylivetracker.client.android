@@ -17,15 +17,14 @@ import de.msk.mylivetracker.client.android.util.LatLonUtils.Wgs84Dsc;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;
 
 /**
- * LocationInfo.
+ * classname: LocationInfo
  * 
- * @author michael skerwiderski, (c)2011
- * 
+ * @author michael skerwiderski, (c)2012
  * @version 000
+ * @since 1.5.0
  * 
- * history
- * 001 2012-02-04 additional localizationMode implemented (gpsAndNetwork).
- * 000 2011-08-11 initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class LocationInfo extends AbstractInfo implements Serializable {

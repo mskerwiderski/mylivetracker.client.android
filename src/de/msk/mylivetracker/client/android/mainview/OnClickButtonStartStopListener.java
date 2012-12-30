@@ -1,36 +1,32 @@
 package de.msk.mylivetracker.client.android.mainview;
 
 import android.os.SystemClock;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Chronometer;
+import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.antplus.AntPlusHardware;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.other.OtherPrefs.TrackingOneTouchMode;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.upload.UploadService;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractProgressDialog;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
+import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
 import de.msk.mylivetracker.client.android.util.service.AbstractService;
 
 /**
- * OnClickButtonStartStopListener.
+ * classname: OnClickButtonStartStopListener
  * 
- * @author michael skerwiderski, (c)2011
+ * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 001
- * 
- * history
- * 001	2012-02-20 
- *     	o TrackingOneTouch mode implemented.
- *      o startStopTrack adapted, that it can be used by AutoModeManager.
- *      o If in auto mode, startStopTrack is rejected.
- * 000 	2011-08-11 initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
-public class OnClickButtonStartStopListener implements OnClickListener {
+public class OnClickButtonStartStopListener extends ASafeOnClickListener {
 	
 	private static final class StartStopTrackDialog extends AbstractYesNoDialog {
 
@@ -49,9 +45,6 @@ public class OnClickButtonStartStopListener implements OnClickListener {
 			startStopTrack(activity, !TrackStatus.get().trackIsRunning(), true);							
 		}	
 		
-		/* (non-Javadoc)
-		 * @see de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog#onNo()
-		 */
 		@Override
 		public void onNo() {
 			this.activity.getUiBtStartStop().setChecked(
@@ -59,11 +52,8 @@ public class OnClickButtonStartStopListener implements OnClickListener {
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see android.view.View.OnClickListener#onClick(android.view.View)
-	 */
 	@Override
-	public void onClick(View v) {
+	public void onClick() {
 		MainActivity activity = MainActivity.get();
 		if (MainActivity.showStartStopInfoDialogIfInAutoMode()) {
 			activity.getUiBtStartStop().setChecked(
@@ -88,8 +78,11 @@ public class OnClickButtonStartStopListener implements OnClickListener {
 					getTrackingOneTouchMode();
 				switch (mode) {
 					case TrackingLocalizationHeartrate:
-						OnClickButtonAntPlusListener.
-							startStopAntPlus(activity, true);
+						if (AntPlusHardware.initialized() && 
+							PrefsRegistry.get(OtherPrefs.class).isAntPlusEnabledIfAvailable()) { 
+							OnClickButtonAntPlusListener.
+								startStopAntPlus(activity, true);
+						}
 					case TrackingLocalization:
 						OnClickButtonLocationListenerOnOffListener.
 							startStopLocationListener(activity, true);

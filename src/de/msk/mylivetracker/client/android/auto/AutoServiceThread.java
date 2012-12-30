@@ -12,15 +12,14 @@ import de.msk.mylivetracker.client.android.util.service.AbstractServiceThread;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;
 
 /**
- * AutoServiceThread.
+ * classname: AutoServiceThread
  * 
  * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 001
- * 
- * history
- * 001	2012-12-24 	revised for v1.5.x.
- * 000 	2012-02-18 	initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class AutoServiceThread extends AbstractServiceThread {

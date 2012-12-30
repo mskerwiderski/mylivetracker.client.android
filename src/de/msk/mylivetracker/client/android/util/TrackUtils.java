@@ -6,14 +6,14 @@ import de.msk.mylivetracker.client.android.mainview.OnClickButtonStartStopListen
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 
 /**
- * TrackUtils.
+ * classname: TrackUtils
  * 
  * @author michael skerwiderski, (c)2012
- * 
  * @version 000
+ * @since 1.5.0
  * 
- * history 
- * 000	2012-11-24 initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class TrackUtils {

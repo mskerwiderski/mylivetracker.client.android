@@ -4,12 +4,12 @@ import org.apache.commons.lang.StringUtils;
 
 import android.content.res.Resources;
 import android.widget.TextView;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
 import de.msk.mylivetracker.client.android.auto.AutoPrefs;
 import de.msk.mylivetracker.client.android.listener.LocationListener;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.status.HeartrateInfo;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
 import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
@@ -18,17 +18,14 @@ import de.msk.mylivetracker.client.android.status.UploadInfo;
 import de.msk.mylivetracker.client.android.util.FormatUtils.Unit;
 
 /**
- * MainViewUpdater.
+ * classname: MainViewUpdater
  * 
- * @author michael skerwiderski, (c)2011
+ * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 001
- * 
- * history
- * 001 	2012-02-04 
- *     	o additional localizationMode implemented (gpsAndNetwork).
- *     	o lastUsedLocationProvider added.
- * 000 	2011-08-11 initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class MainViewUpdater implements Runnable {

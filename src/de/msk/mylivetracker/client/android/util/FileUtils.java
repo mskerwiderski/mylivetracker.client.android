@@ -14,14 +14,14 @@ import android.os.Environment;
 import de.msk.mylivetracker.client.android.App;
 
 /**
- * FileUtils.
+ * classname: FileUtils
  * 
  * @author michael skerwiderski, (c)2012
- * 
  * @version 000
+ * @since 1.5.0
  * 
- * history 
- * 000	2012-12-06 initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class FileUtils {

@@ -3,7 +3,8 @@
     <string name="tiOtherPrefs">Other preferences</string>
     <string name="lbOtherPrefs_ConfirmLevel">Confirmation level to prevent unintended actions</string>  
     <string name="lbOtherPrefs_TrackingOneTouch">Tracking one-touch mode</string>
-    <string name="lbOtherPrefs_EnableAntPlusIfAvailable">Enable ANT+</string>
+    <string name="lbOtherPrefs_EnableAntPlusIfAvailable">Enable ANT+ (if available)</string>
+    <string name="lbOtherPrefs_AdaptButtonsForOneTouchMode">Adapt buttons for one-touch mode</string>
 	<string name="btOtherPrefs_ResetOverallMileage">Reset mileage</string>
     <string name="btOtherPrefs_ResetToFactoryDefaults">Factory defaults</string>
     <string name="txOtherPrefs_QuestionResetToFactoryDefaults">Do you really want to reset to factory defaults?</string>

@@ -9,21 +9,20 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.telephony.TelephonyManager;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry.InitResult;
-import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
 /**
- * App.
+ * classname: App
  * 
  * @author michael skerwiderski, (c)2012
- * 
  * @version 000
+ * @since 1.5.0
  * 
- * history
- * 000 2012-11-04 initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
-public abstract class App extends Application {
+public class App extends Application {
 	private static App app = null;
 	private static Context context = null;
 	private static VersionDsc versionDsc = null;
@@ -120,12 +119,9 @@ public abstract class App extends Application {
 						context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionCode,	
 						context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName);
 					versionStr = "v" + versionDsc.name;
-					if (App.isPro()) {
-						versionStr += " (PRO)";
-					}
 					appName = App.getCtx().getString(R.string.app_name);
 					appNameComplete = appName + " " + versionStr;
-					fileNamePrefix = (App.isPro() ? appName + "_PRO" : appName + "_STD"); 
+					fileNamePrefix = appName; 
 					LogUtils.always("AppNameComplete: " + appNameComplete);
 					LogUtils.always("FileNamePrefix: " + fileNamePrefix);
 				} catch (NameNotFoundException e) {
@@ -244,9 +240,6 @@ public abstract class App extends Application {
 	public static VersionDsc getVersionDsc() {
         return versionDsc;
     }
-	public static boolean isPro() {
-		return app.isProAux();
-	}
 	public static String getAppName() {
 		return appName;
 	}
@@ -279,7 +272,6 @@ public abstract class App extends Application {
 		return fileNamePrefix + "_status" +
 			(extensionIncl ? ".xml" : "");
 	}
-	protected abstract boolean isProAux();
 	
 	/*
 	 * other util stuff.

@@ -19,15 +19,14 @@ import de.msk.mylivetracker.commons.protocol.KeyStore;
 import de.msk.mylivetracker.commons.protocol.UploadDataPacket;
 
 /**
- * ProtocolEncoder.
+ * classname: ProtocolEncoder
  * 
- * @author michael skerwiderski, (c)2011
+ * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 001
- * 
- * history
- * 001 	2012-02-20 default value for getNetworkTypeAsStr is 'unknown'.
- * 000 	2011-08-11 initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class ProtocolEncoder extends EncDecoder implements IProtocol {

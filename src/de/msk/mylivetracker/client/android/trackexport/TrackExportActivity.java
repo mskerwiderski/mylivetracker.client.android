@@ -5,41 +5,31 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.dropbox.DropboxUploadTask;
 import de.msk.mylivetracker.client.android.dropbox.DropboxUploadTask.DoInBackgroundInitializer;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
-import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.status.LogInfo;
 import de.msk.mylivetracker.client.android.util.FileUtils;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractProgressDialog;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
+import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
+import de.msk.mylivetracker.client.android.util.listener.OnFinishActivityListener;
 
 /**
- * TrackActivity.
+ * classname: TrackExportActivity
  * 
  * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 001
- * 
- * history
- * 000 	2012-12-04 initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class TrackExportActivity extends AbstractActivity {
 
-	private static final class OnClickButtonBackListener implements OnClickListener {
-		private TrackExportActivity activity;
-		
-		private OnClickButtonBackListener(TrackExportActivity activity) {
-			this.activity = activity;
-		}
-		@Override
-		public void onClick(View v) {			
-			this.activity.finish();		
-		}		
-	}
-	
 	private static final class UploadToDropboxDialog extends AbstractYesNoDialog {
 		private Activity activity;
 				
@@ -63,7 +53,7 @@ public class TrackExportActivity extends AbstractActivity {
 		}	
 	}
 	
-	private static final class OnClickButtonUploadToDropbox implements OnClickListener {
+	private static final class OnClickButtonUploadToDropbox extends ASafeOnClickListener {
 		private Activity activity;
 		
 		private OnClickButtonUploadToDropbox(Activity activity) {
@@ -71,7 +61,7 @@ public class TrackExportActivity extends AbstractActivity {
 		}
 		
 		@Override
-		public void onClick(View view) {	
+		public void onClick() {	
 			if (!LogInfo.logFileExists()) {
 				SimpleInfoDialog.show(this.activity, R.string.txTrackExport_NoTrackExists);
 			} else {
@@ -136,15 +126,18 @@ public class TrackExportActivity extends AbstractActivity {
         setContentView(R.layout.track_export);
         this.setTitle(R.string.tiTrackExport);
 
-        Button btTrackExport_UploadToDropbox = (Button)findViewById(R.id.btTrackExport_UploadToDropbox);
-        Button btTrackExport_ExportToExternalStorage = (Button)findViewById(R.id.btTrackExport_ExportToExternalStorage);
-        Button btTrackExport_Back = (Button)findViewById(R.id.btTrackExport_Back);
+        Button btTrackExport_UploadToDropbox = (Button)
+        	findViewById(R.id.btTrackExport_UploadToDropbox);
+        Button btTrackExport_ExportToExternalStorage = (Button)
+        	findViewById(R.id.btTrackExport_ExportToExternalStorage);
+        Button btTrackExport_Back = (Button)
+        	findViewById(R.id.btTrackExport_Back);
         
         btTrackExport_UploadToDropbox.setOnClickListener(
 			new OnClickButtonUploadToDropbox(this));
         btTrackExport_ExportToExternalStorage.setOnClickListener(
 			new OnClickButtonExportToExternalStorage(this));
         btTrackExport_Back.setOnClickListener(
-			new OnClickButtonBackListener(this));
+			new OnFinishActivityListener(this));
     }
 }

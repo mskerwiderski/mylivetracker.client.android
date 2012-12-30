@@ -1,10 +1,19 @@
 package de.msk.mylivetracker.client.android.util.listener;
 
 import android.app.Activity;
-import android.view.View;
-import android.view.View.OnClickListener;
 
-public class OnFinishActivityListener implements OnClickListener {
+/**
+ * classname: OnFinishActivityListener
+ * 
+ * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
+ * 
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
+ * 
+ */
+public class OnFinishActivityListener extends ASafeOnClickListener {
 
 	private Activity activity;
 	
@@ -16,7 +25,7 @@ public class OnFinishActivityListener implements OnClickListener {
 	}
 	
 	@Override
-	public void onClick(View v) {
+	public void onClick() {
 		this.activity.finish();		
 	}
 }

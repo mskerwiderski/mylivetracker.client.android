@@ -7,14 +7,14 @@ import android.os.Message;
 import android.widget.Toast;
 
 /**
- * AbstractProgressDialog.
+ * classname: AbstractProgressDialog
  * 
  * @author michael skerwiderski, (c)2012
- * 
  * @version 000
+ * @since 1.5.0
  * 
- * history
- * 000 	2012-10-28 initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public abstract class AbstractProgressDialog<T extends Activity> {
@@ -42,6 +42,9 @@ public abstract class AbstractProgressDialog<T extends Activity> {
 		this.run(activity, progressMsgId, NO_MESSAGE_ID);
 	}
 	
+	private static class CleanUpHandler extends Handler {
+	}
+	
 	public void run(final T activity, final int progressMsgId, final int doneMsgId) {
 				
 		String progressMessage = 
@@ -54,7 +57,7 @@ public abstract class AbstractProgressDialog<T extends Activity> {
 				activity.getText(progressMsgId).toString(), true) : 
 			null;
 		
-		final Handler handler = new Handler() {
+		final Handler handler = new CleanUpHandler() {
 			public void handleMessage(Message msg) {
 				if (activity != null) {
 					cleanUp(activity);

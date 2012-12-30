@@ -263,6 +263,7 @@
         />	 	               
 	</LinearLayout>
     <LinearLayout
+        android:id="@+id/llMain_Heartrate"
         android:paddingTop="3dip"     	
     	android:layout_height="wrap_content" 
     	android:layout_width="fill_parent" 
@@ -281,7 +282,7 @@
             android:layout_weight="1"	  
             android:gravity="center_vertical|center_horizontal"                       
            />			
-           <TextView
+       <TextView
         	android:id="@+id/tvMain_Heartrate"
         	android:text=""
         	android:textSize="9pt"

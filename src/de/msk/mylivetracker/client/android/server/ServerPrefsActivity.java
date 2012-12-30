@@ -1,31 +1,29 @@
 package de.msk.mylivetracker.client.android.server;
 
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.pro.R;
+import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
 import de.msk.mylivetracker.client.android.util.listener.OnFinishActivityListener;
 import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
 
 /**
- * ServerPrefsActivity.
+ * classname: ServerPrefsActivity
  * 
- * @author michael skerwiderski, (c)2011
- * 
+ * @author michael skerwiderski, (c)2012
  * @version 000
+ * @since 1.5.0
  * 
- * history
- * 001	2012-12-24 revised for v1.5.x.
- * 000 	2011-08-11 initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class ServerPrefsActivity extends AbstractActivity {
 
-	private static final class OnClickButtonSaveListener implements OnClickListener {
+	private static final class OnClickButtonSaveListener extends ASafeOnClickListener {
 		private ServerPrefsActivity activity;
 		private EditText etServerPrefs_ServerAddress;
 		private EditText etServerPrefs_ServerPort;
@@ -43,7 +41,7 @@ public class ServerPrefsActivity extends AbstractActivity {
 		}
 
 		@Override
-		public void onClick(View v) {
+		public void onClick() {
 			boolean valid = true;
 			
 			valid = valid && 

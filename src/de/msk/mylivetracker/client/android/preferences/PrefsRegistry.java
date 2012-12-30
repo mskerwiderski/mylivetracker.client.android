@@ -18,6 +18,7 @@ import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParams
 import de.msk.mylivetracker.client.android.localization.LocalizationPrefs;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryPrefs;
+import de.msk.mylivetracker.client.android.preferences.prefsv144.PrefsV144Updater;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.remoteaccess.RemoteAccessPrefs;
 import de.msk.mylivetracker.client.android.server.ServerPrefs;
@@ -26,15 +27,14 @@ import de.msk.mylivetracker.client.android.util.FileUtils.PathType;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
 /**
- * PrefsRegistry.
+ * classname: PrefsRegistry
  * 
  * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 001
- * 
- * history
- * 001	2012-12-24 	revised for v1.5.x.
- * 000 	2012-12-23 	initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class PrefsRegistry {
@@ -66,6 +66,7 @@ public class PrefsRegistry {
 	};
 
 	public enum InitResult {
+		PrefsImportedFromV144,
 		PrefsCreated, 
 		PrefsUpdated, 
 		PrefsLoaded, 
@@ -80,6 +81,11 @@ public class PrefsRegistry {
 			reset();
 			initResult = InitResult.PrefsCreated;
 			LogUtils.infoMethodState(PrefsRegistry.class, "init", "initResult", initResult);
+			if (PrefsV144Updater.run()) {
+				saveAllInternal();
+				initResult = InitResult.PrefsImportedFromV144;
+				LogUtils.infoMethodState(PrefsRegistry.class, "init", "initResult", initResult);
+			}
 		} else {
 			SharedPreferences sharedPrefs = App.getCtx().
 				getSharedPreferences(App.getPrefsFileName(false), 0);
@@ -127,15 +133,11 @@ public class PrefsRegistry {
 		FileUtils.fileDelete(
 			App.getPrefsFileName(true),
 			PathType.AppSharedPrefsDir);
-		SharedPreferences sharedPrefs = App.getCtx().
-			getSharedPreferences(App.getPrefsFileName(false), Context.MODE_PRIVATE);
-		SharedPreferences.Editor sharedPrefsEditor = sharedPrefs.edit();
 		for (PrefsDsc prefsDsc : prefsDscArr) {
 			APrefs prefs = create(prefsDsc.prefsClass);
 			prefsReg.put(prefsDsc.prefsClass, prefs);
-			saveInternal(sharedPrefsEditor, prefsDsc.prefsClass);
 		}
-		sharedPrefsEditor.commit();
+		saveAllInternal();
 		LogUtils.infoMethodOut(PrefsRegistry.class, "reset");
 	}
 	
@@ -224,5 +226,17 @@ public class PrefsRegistry {
 		sharedPrefsEditor.putInt(getVersionVar(prefsClass), prefs.getVersion());
 		sharedPrefsEditor.putString(getPrefsVar(prefsClass), serialize(prefs));		
 		LogUtils.infoMethodOut(PrefsRegistry.class, "saveInternal");
+	}
+	
+	private static <T extends APrefs> void saveAllInternal() {
+		LogUtils.infoMethodIn(PrefsRegistry.class, "saveAllInternal");
+		SharedPreferences sharedPrefs = App.getCtx().
+			getSharedPreferences(App.getPrefsFileName(false), Context.MODE_PRIVATE);
+		SharedPreferences.Editor sharedPrefsEditor = sharedPrefs.edit();
+		for (PrefsDsc prefsDsc : prefsDscArr) {
+			saveInternal(sharedPrefsEditor, prefsDsc.prefsClass);
+		}
+		sharedPrefsEditor.commit();
+		LogUtils.infoMethodOut(PrefsRegistry.class, "saveAllInternal");
 	}
 }

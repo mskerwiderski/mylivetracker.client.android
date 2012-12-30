@@ -9,6 +9,7 @@
     <string name="welcomeMessage">Willkommen zu %1$s. Wenn Sie Fragen haben oder Unterstützung benötigen, besuchen Sie uns doch im Forum unter http://forum.mylivetracker.info!</string>
        
     <!-- preferences -->
+    <string name="prefsImportedFromV144">Bitte überprüfen Sie die Einstellungen! Die Einstellungen wurden von einer alten MyLiveTracker Version importiert!</string>
     <string name="prefsCreated">Bitte überprüfen Sie die Einstellungen! Da Sie MyLiveTracker das erste Mal benutzen, wurden alle Einstellungen auf Standardwerte gesetzt!</string>  
     <string name="prefsUpdated">Bitte überprüfen Sie die Einstellungen! Mit der neuen Version von MyLiveTracker sind evtl. neue Einstellungen hinzugekommen oder haben sich geändert!</string> 
         

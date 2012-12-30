@@ -1,37 +1,36 @@
 package de.msk.mylivetracker.client.android.protocol;
 
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs.BufferSize;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs.TransferProtocol;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs.UploadDistanceTrigger;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs.UploadTimeTrigger;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs.UploadTriggerLogic;
 import de.msk.mylivetracker.client.android.status.PositionBufferInfo;
+import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
+import de.msk.mylivetracker.client.android.util.listener.OnFinishActivityListener;
 
 /**
- * ProtocolPrefsActivity.
+ * classname: ProtocolPrefsActivity
  * 
- * @author michael skerwiderski, (c)2011
- * 
+ * @author michael skerwiderski, (c)2012
  * @version 000
+ * @since 1.5.0
  * 
- * history
- * 001	2012-12-25 revised for v1.5.x.
- * 000 	2011-08-11 initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class ProtocolPrefsActivity extends AbstractActivity {
 
-	private static final class OnClickButtonSaveListener implements OnClickListener {
+	private static final class OnClickButtonSaveListener extends ASafeOnClickListener {
 		private ProtocolPrefsActivity activity;
 		private Spinner spProtocolPrefs_TransferProtocol;
 		private Spinner spProtocolPrefs_TimeTriggerInSecs;
@@ -64,7 +63,7 @@ public class ProtocolPrefsActivity extends AbstractActivity {
 		}
 
 		@Override
-		public void onClick(View v) {
+		public void onClick() {
 			boolean valid = true;
 						
 			if (valid) {
@@ -90,17 +89,6 @@ public class ProtocolPrefsActivity extends AbstractActivity {
 				PrefsRegistry.save(ProtocolPrefs.class);
 				this.activity.finish();
 			}
-		}		
-	}
-	
-	private static final class OnClickButtonCancelListener implements OnClickListener {
-		private ProtocolPrefsActivity activity;
-		private OnClickButtonCancelListener(ProtocolPrefsActivity activity) {
-			this.activity = activity;
-		}
-		@Override
-		public void onClick(View v) {			
-			this.activity.finish();		
 		}		
 	}
 	
@@ -172,6 +160,6 @@ public class ProtocolPrefsActivity extends AbstractActivity {
 				cbProtocolPrefs_LogTrackData));
 		
         btProtocolPrefs_Cancel.setOnClickListener(
-			new OnClickButtonCancelListener(this));        
+			new OnFinishActivityListener(this));        
     }
 }

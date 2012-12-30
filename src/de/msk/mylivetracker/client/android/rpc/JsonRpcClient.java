@@ -16,22 +16,32 @@ import org.codehaus.jackson.map.type.TypeFactory;
 import org.codehaus.jackson.node.ObjectNode;
 
 /**
- * A JSON-RPC client.
+ * classname: JsonRpcClient
  * 
- * extracted from jsonrpc4j.
+ * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * reason: 
- * it seems to be an error in android 2.1-update1 (level 7).
- * an io-exception occurs while flushing the output stream.
- * 
- * history
- * 000 hack: flush on output stream is not called 2011-08-15
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class JsonRpcClient {
 
+	/*
+	 * A JSON-RPC client.
+	 * 
+	 * extracted from jsonrpc4j.
+	 * 
+	 * reason: 
+	 * it seems to be an error in android 2.1-update1 (level 7).
+	 * an io-exception occurs while flushing the output stream.
+	 * 
+	 * hack: flush on output stream is not called 2011-08-15
+	 * 
+	 */
+	
     private static final String JSON_RPC_VERSION = "2.0";
-
 
     private ObjectMapper mapper;
     private Random random;

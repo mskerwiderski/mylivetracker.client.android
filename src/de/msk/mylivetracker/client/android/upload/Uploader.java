@@ -19,14 +19,14 @@ import de.msk.mylivetracker.client.android.upload.AbstractUploader.UploadResult;
 import de.msk.mylivetracker.client.android.upload.protocol.Protocols;
 
 /**
- * Uploader.
+ * classname: Uploader
  * 
  * @author michael skerwiderski, (c)2012
- * 
  * @version 000
+ * @since 1.5.0
  * 
- * history
- * 000 initial 2012-11-12
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class Uploader {

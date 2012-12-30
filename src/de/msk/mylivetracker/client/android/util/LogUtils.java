@@ -19,13 +19,14 @@ import de.msk.mylivetracker.client.android.remoteaccess.SmsSentStatusReceiver;
 import de.msk.mylivetracker.client.android.status.AbstractInfo;
 
 /**
- * LogUtils.
+ * classname: LogUtils
  * 
  * @author michael skerwiderski, (c)2012
- * 
  * @version 000
+ * @since 1.5.0
  * 
- *          history 000 2012-11-03 initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class LogUtils {

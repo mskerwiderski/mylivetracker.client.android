@@ -19,15 +19,14 @@ import de.msk.mylivetracker.client.android.upload.protocol.IProtocol;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;
 
 /**
- * ProtocolEncoder.
+ * classname: ProtocolEncoder
  * 
- * @author michael skerwiderski, (c)2011
- * 
+ * @author michael skerwiderski, (c)2012
  * @version 000
+ * @since 1.5.0
  * 
- * history
- * 001 2011-11-20 create own nmea sentence, if nmea listener does not provide it. 
- * 000 2011-08-11 initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class ProtocolEncoder implements IProtocol {

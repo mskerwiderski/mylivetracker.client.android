@@ -3,30 +3,28 @@ package de.msk.mylivetracker.client.android.pincodequery;
 import org.apache.commons.lang.StringUtils;
 
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
+import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
 
 /**
- * PinCodeQueryActivity.
+ * classname: PinCodeQueryActivity
  * 
  * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 001
- * 
- * history
- * 001	2012-12-23 	revised for v1.5.x.
- * 000 	2012-11-13 	initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class PinCodeQueryActivity extends AbstractActivity {	
 	
-	private static final class OnClickButtonOkListener implements OnClickListener {
+	private static final class OnClickButtonOkListener extends ASafeOnClickListener {
 		private PinCodeQueryActivity activity;
 		private EditText etPinCodeQuery_PinCode;
 		
@@ -38,7 +36,7 @@ public class PinCodeQueryActivity extends AbstractActivity {
 		}
 	
 		@Override
-		public void onClick(View v) {
+		public void onClick() {
 			boolean valid = StringUtils.equals(
 				etPinCodeQuery_PinCode.getText().toString(), 
 				PrefsRegistry.get(PinCodeQueryPrefs.class).getPinCode());

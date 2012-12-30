@@ -1,28 +1,24 @@
 package de.msk.mylivetracker.client.android.mainview;
 
-import android.view.View;
-import android.view.View.OnClickListener;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.listener.LocationListener;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
+import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
 
 /**
- * OnClickButtonLocationListenerOnOffListener.
+ * classname: OnClickButtonLocationListenerOnOffListener
  * 
- * @author michael skerwiderski, (c)2011
+ * @author michael skerwiderski, (c)2012
+ * @version 000
+ * @since 1.5.0
  * 
- * @version 001
- * 
- * history
- * 001	2012-02-18 
- *     	o startStopLocationListener adapted, that it can be used by OnClickButtonStartStopListener::startStopTrack.
- *     	o If in auto mode, startStopLocationListener is rejected.
- * 000 	2011-08-11 initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
-public class OnClickButtonLocationListenerOnOffListener implements OnClickListener {
+public class OnClickButtonLocationListenerOnOffListener extends ASafeOnClickListener {
 	
 	private static final class StartStopLocationListenerDialog extends AbstractYesNoDialog {
 
@@ -41,9 +37,6 @@ public class OnClickButtonLocationListenerOnOffListener implements OnClickListen
 			startStopLocationListener(activity, !LocationListener.get().isActive());							
 		}	
 		
-		/* (non-Javadoc)
-		 * @see de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog#onNo()
-		 */
 		@Override
 		public void onNo() {
 			this.activity.getUiBtLocationListenerOnOff().setChecked(
@@ -51,11 +44,8 @@ public class OnClickButtonLocationListenerOnOffListener implements OnClickListen
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see android.view.View.OnClickListener#onClick(android.view.View)
-	 */
 	@Override 
-	public void onClick(View v) {	
+	public void onClick() {	
 		MainActivity activity = MainActivity.get();
 		if (MainActivity.showStartStopInfoDialogIfInAutoMode()) {
 			activity.getUiBtLocationListenerOnOff().setChecked(

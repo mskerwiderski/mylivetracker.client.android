@@ -3,12 +3,12 @@ package de.msk.mylivetracker.client.android.mylivetrackerportal;
 import java.net.URL;
 
 import android.os.AsyncTask;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.App.ConfigDsc;
 import de.msk.mylivetracker.client.android.account.AccountPrefs;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.mylivetrackerportal.MyLiveTrackerPortalConnectActivity.ProgressDialogHandler;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.pro.R;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs.BufferSize;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs.TransferProtocol;
@@ -19,15 +19,14 @@ import de.msk.mylivetracker.commons.rpc.ConnectToMyLiveTrackerPortalResponse;
 import de.msk.mylivetracker.commons.rpc.RpcResponse.ResultCode;
 
 /**
- * MyLiveTrackerPortalConnectTask.
+ * classname: MyLiveTrackerPortalConnectTask
  * 
- * @author michael skerwiderski, (c)2011
- * 
+ * @author michael skerwiderski, (c)2012
  * @version 000
+ * @since 1.5.0
  * 
- * history
- * 001	2012-12-25	revised for v1.5.x.
- * 000 	2011-08-16 	initial.
+ * history:
+ * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class MyLiveTrackerPortalConnectTask extends
