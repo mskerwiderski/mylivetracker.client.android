@@ -59,6 +59,7 @@ public class ProtocolPrefs extends APrefs implements Serializable {
 		Secs20("20 secs", 20),
 		Secs30("30 secs", 30),
 		Min1("1 min", 60),
+		Min2("2 min", 120),
 		Min3("3 mins", 180),
 		Min5("5 mins", 300),
 		Min10("10 mins", 600),
@@ -78,22 +79,6 @@ public class ProtocolPrefs extends APrefs implements Serializable {
 		}
 		public int getSecs() {
 			return secs;
-		}
-		public static UploadTimeTrigger findSuitable(int secs) {
-			if (secs == 0) return Off;
-			if (secs <= 1) return Sec1;
-			if (secs <= 3) return Secs3;
-			if (secs <= 5) return Secs5;
-			if (secs <= 10) return Secs10;
-			if (secs <= 20) return Secs20;
-			if (secs <= 30) return Secs30;
-			if (secs <= 60) return Min1;
-			if (secs <= 180) return Min3;
-			if (secs <= 300) return Min5;
-			if (secs <= 600) return Min10;
-			if (secs <= 1200) return Min20;
-			if (secs <= 1800) return Min30;
-			return Hr1;
 		}
 	};
 	

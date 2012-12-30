@@ -17,7 +17,7 @@
     <string name="btSave">Save</string>
     <string name="btBack">Back</string>
     <string name="btCancel">Cancel</string>
-    <string name="btOk">Ok</string>
+    <string name="btOk">OK</string>
     <string name="btYes">Yes</string>    	
     <string name="btNo">No</string>
     <string name="btContinue">Continue</string>
@@ -29,7 +29,7 @@
     <string name="txErr_NoDataConnection">No data connection could be established!</string>
     
     <!-- status bar notifications -->
-    <string name="nfAppWaiting">waiting...</string>
+    <string name="nfAppWaiting">waiting&#8230;</string>
     <string name="nfTrackRunning">Track is running.</string>
     <string name="nfListenerRunning">Location Listener and/or ANT+ Listener is running.</string>
     
@@ -106,19 +106,19 @@
     <string name="txMain_QuestionStopLocalization">Do you really want to stop localization?</string>
     <string name="txMain_QuestionStartTrack">Do you really want to start the track?</string>
     <string name="txMain_QuestionStopTrack">Do you really want to stop the track?</string>
-    <string name="txMain_InfoStartingTracking">Starting the track...</string>
+    <string name="txMain_InfoStartingTracking">Starting the track&#8230;</string>
     <string name="txMain_InfoStartTrackDone">Start track done!</string>
-    <string name="txMain_InfoStoppingTracking">Stopping the track...</string>
+    <string name="txMain_InfoStoppingTracking">Stopping the track&#8230;</string>
     <string name="txMain_InfoStopTrackDone">Stop track done!</string>
     <string name="txMain_QuestionStartAntPlus">Do you really want to activate Ant+?</string>
     <string name="txMain_QuestionStopAntPlus">Do you really want to deactivate Ant+?</string>
     <string name="txMain_QuestionResetTrack">Do you really want to reset the track?</string>
-    <string name="txMain_InfoResettingTracking">Resetting the track...</string>
+    <string name="txMain_InfoResettingTracking">Resetting the track&#8230;</string>
     <string name="txMain_InfoResetTrackDone">Reset track done!</string>               
     <string name="txMain_QuestionSendSosSignal">Do you really want to send a SOS signal?</string>    
     <string name="txMain_InfoSendSosSignalDone">Send SOS signal done!</string>    
     <string name="txMain_QuestionExit">Do you really want to exit MyLiveTracker?</string>   
-    <string name="txMain_InfoExitApp">MyLiveTracker is terminated...</string>
+    <string name="txMain_InfoExitApp">MyLiveTracker is terminated&#8230;</string>
     <string name="txMain_SendMessageNotSupportedByTransferProtocol">Send messages is not supported by selected transfer protocol (%1$s).</string>
     <string name="txMain_SendEmergencySignalNotSupportedByTransferProtocol">Send SOS signals is not supported by selected transfer protocol (%1$s).</string>
     
@@ -178,12 +178,12 @@
     <string name="fdConnectToMyLiveTrackerPortal_PortalUsername">Portal username</string>
     <string name="lbConnectToMyLiveTrackerPortal_PortalPassword">Portal password</string>
     <string name="fdConnectToMyLiveTrackerPortal_PortalPassword">Portal password</string>
-    <string name="lbConnectToMyLiveTrackerPortal_ProgressDialog">Connecting to MyLiveTracker portal...</string>  
-    <string name="txConnectToMyLiveTrackerPortal_InfoConnectingDone">Connecting to MyLiveTracker portal sucessfully done!</string>  
+    <string name="lbConnectToMyLiveTrackerPortal_ProgressDialog">Connecting to MyLiveTracker portal&#8230;</string>  
+    <string name="txConnectToMyLiveTrackerPortal_InfoConnectingDone">Connecting to MyLiveTracker portal successfully done!</string>  
     
     <!-- track export-->
     <string name="tiTrackExport">Track export</string>
-    <string name="lbTrackExport_ExportTo">Export current track to...</string>
+    <string name="lbTrackExport_ExportTo">Export current track to&#8230;</string>
     <string name="btTrackExport_UploadToDropbox">Dropbox</string>
     <string name="btTrackExport_ExportToExternalStorage">External storage</string>
     <string name="txTrackExport_NotConnectedToDropbox">There is no connection to Dropbox. Connect to Dropbox first!</string>
@@ -192,11 +192,7 @@
     <string name="txTrackExport_QuestionUploadTrack">Do you really want to upload the current track to Dropbox?</string>
     <string name="txTrackExport_QuestionExportTrack">Do you really want to export the current track to external storage?</string>
     <string name="txTrackExport_InfoExportTrackDone">Current track successfully exported to external storage!</string>
-    <string name="lbTrackExport_ExportProgressDialog">Exporting current track...</string> 
-    
-    <!-- info -->
-    <string name="tiInfo">Info</string>
-    <string name="tvInfo_Mileage">Overall mileage</string>
+    <string name="lbTrackExport_ExportProgressDialog">Exporting current track&#8230;</string> 
     
     <!-- validators -->
     <string name="validator.locationProviderNotSupported">Location provider %1$s is not supported on this device!</string>

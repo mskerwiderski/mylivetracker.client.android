@@ -17,7 +17,7 @@
     <string name="btSave">Speichern</string>
     <string name="btBack">Zurück</string>
     <string name="btCancel">Abbrechen</string>
-    <string name="btOk">Ok</string>
+    <string name="btOk">OK</string>
     <string name="btYes">Ja</string>    	
     <string name="btNo">Nein</string>
     <string name="btContinue">Weiter</string>
@@ -29,7 +29,7 @@
     <string name="txErr_NoDataConnection">Es konnte keine Datenverbindung hergestellt werden!</string>
     
     <!-- status bar notifications -->
-    <string name="nfAppWaiting">warte...</string>
+    <string name="nfAppWaiting">warte&#8230;</string>
     <string name="nfTrackRunning">Trackaufzeichnung ist aktiv.</string>
     <string name="nfListenerRunning">Lokalisierung und/oder ANT+ Emfänger ist aktiv.</string>
     
@@ -106,19 +106,19 @@
     <string name="txMain_QuestionStopLocalization">Wollen Sie die Lokalisierung wirklich stoppen?</string>
     <string name="txMain_QuestionStartTrack">Wollen Sie den Track wirklich starten?</string>
     <string name="txMain_QuestionStopTrack">Wollen Sie den Track wirklich stoppen?</string>
-    <string name="txMain_InfoStartingTracking">Der Track wird gestartet...</string>
+    <string name="txMain_InfoStartingTracking">Der Track wird gestartet&#8230;</string>
     <string name="txMain_InfoStartTrackDone">Der Track wurde gestartet!</string>
-    <string name="txMain_InfoStoppingTracking">Der Track wird gestoppt...</string>
+    <string name="txMain_InfoStoppingTracking">Der Track wird gestoppt&#8230;</string>
     <string name="txMain_InfoStopTrackDone">Der Track wurde gestoppt!</string>
     <string name="txMain_QuestionStartAntPlus">Wollen Sie Ant+ wirklich aktivieren?</string>
     <string name="txMain_QuestionStopAntPlus">Wollen Sie Ant+ wirklich deaktivieren?</string>
     <string name="txMain_QuestionResetTrack">Wollen Sie den Track wirklich zurücksetzen?</string>
-    <string name="txMain_InfoResettingTracking">Der Track wird zurückgesetzt...</string>
+    <string name="txMain_InfoResettingTracking">Der Track wird zurückgesetzt&#8230;</string>
     <string name="txMain_InfoResetTrackDone">Der Track wurde zurückgesetzt!</string>               
     <string name="txMain_QuestionSendSosSignal">Wollen Sie wirklich ein SOS Signal senden?</string>    
     <string name="txMain_InfoSendSosSignalDone">Ein SOS Signal wurde gesendet!</string>    
     <string name="txMain_QuestionExit">Wollen Sie MyLiveTracker wirklich beenden?</string>    
-    <string name="txMain_InfoExitApp">MyLiveTracker wird beendet...</string>
+    <string name="txMain_InfoExitApp">MyLiveTracker wird beendet&#8230;</string>
     <string name="txMain_SendMessageNotSupportedByTransferProtocol">Der Nachrichtenversand wird vom eingestellten Übertragungsprotokoll (%1$s) nicht unterstützt.</string>
     <string name="txMain_SendEmergencySignalNotSupportedByTransferProtocol">Der Versand von Notrufsignalen wird vom eingestellten Übertragungsprotokoll (%1$s) nicht unterstützt.</string>    
     
@@ -178,12 +178,12 @@
     <string name="fdConnectToMyLiveTrackerPortal_PortalUsername">Portal Benutzername</string>
     <string name="lbConnectToMyLiveTrackerPortal_PortalPassword">Portal Passwort</string>
     <string name="fdConnectToMyLiveTrackerPortal_PortalPassword">Portal Passwort</string>
-    <string name="lbConnectToMyLiveTrackerPortal_ProgressDialog">Die Koppelung mit dem MyLiveTracker Portal wird hergestellt...</string>  
+    <string name="lbConnectToMyLiveTrackerPortal_ProgressDialog">Die Koppelung mit dem MyLiveTracker Portal wird hergestellt&#8230;</string>  
     <string name="txConnectToMyLiveTrackerPortal_InfoConnectingDone">Die Koppelung mit dem MyLiveTracker Portal wurde erfolgreich hergestellt!</string>  
         
     <!-- track export-->
     <string name="tiTrackExport">Track export</string>
-    <string name="lbTrackExport_ExportTo">Aktuellen Track exportieren auf...</string>
+    <string name="lbTrackExport_ExportTo">Aktuellen Track exportieren auf&#8230;</string>
     <string name="btTrackExport_UploadToDropbox">Dropbox</string>
     <string name="btTrackExport_ExportToExternalStorage">Speicherkarte</string>
     <string name="txTrackExport_NotConnectedToDropbox">Es ist keine Koppelung zu Dropbox vorhanden. Bitte stellen Sie zuerst eine Koppelung zu Dropbox her!</string>
@@ -192,12 +192,8 @@
     <string name="txTrackExport_QuestionUploadTrack">Wollen Sie wirklich den aktuellen Track in Dropbox hochladen?</string>
     <string name="txTrackExport_QuestionExportTrack">Wollen Sie wirklich den aktuellen Track auf die Speicherkarte exportieren?</string>
     <string name="txTrackExport_InfoExportTrackDone">Der aktuelle Track wurde erfolgreich auf die Speicherkarte exportiert!</string>
-    <string name="lbTrackExport_ExportProgressDialog">Der aktuelle Track wird exportiert...</string>
+    <string name="lbTrackExport_ExportProgressDialog">Der aktuelle Track wird exportiert&#8230;</string>
         
-    <!-- info -->
-    <string name="tiInfo">Info</string>
-    <string name="tvInfo_Mileage">Kilometerstand</string>
-    
     <!-- validators -->
     <string name="validator.locationProviderNotSupported">Der Lokalisierungsdienst %1$s ist auf diesem Gerät nicht verfügbar!</string>
     <string name="validator.phoneNumberInvalid">Telefonnummer ist ungültig!</string>
