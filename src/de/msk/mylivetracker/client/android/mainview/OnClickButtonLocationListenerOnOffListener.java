@@ -1,6 +1,6 @@
 package de.msk.mylivetracker.client.android.mainview;
 
-import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.liontrack.R;
 import de.msk.mylivetracker.client.android.listener.LocationListener;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;

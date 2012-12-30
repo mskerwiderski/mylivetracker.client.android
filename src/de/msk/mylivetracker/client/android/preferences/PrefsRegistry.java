@@ -18,7 +18,7 @@ import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParams
 import de.msk.mylivetracker.client.android.localization.LocalizationPrefs;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryPrefs;
-import de.msk.mylivetracker.client.android.preferences.prefsv144.PrefsV144Updater;
+import de.msk.mylivetracker.client.android.preferences.liontrack.LiontrackDefaults;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.remoteaccess.RemoteAccessPrefs;
 import de.msk.mylivetracker.client.android.server.ServerPrefs;
@@ -81,11 +81,8 @@ public class PrefsRegistry {
 			reset();
 			initResult = InitResult.PrefsCreated;
 			LogUtils.infoMethodState(PrefsRegistry.class, "init", "initResult", initResult);
-			if (PrefsV144Updater.run()) {
-				saveAllInternal();
-				initResult = InitResult.PrefsImportedFromV144;
-				LogUtils.infoMethodState(PrefsRegistry.class, "init", "initResult", initResult);
-			}
+			LiontrackDefaults.run();
+			saveAllInternal();
 		} else {
 			SharedPreferences sharedPrefs = App.getCtx().
 				getSharedPreferences(App.getPrefsFileName(false), 0);

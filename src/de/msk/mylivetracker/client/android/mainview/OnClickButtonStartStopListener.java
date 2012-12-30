@@ -2,8 +2,8 @@ package de.msk.mylivetracker.client.android.mainview;
 
 import android.os.SystemClock;
 import android.widget.Chronometer;
-import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.antplus.AntPlusHardware;
+import de.msk.mylivetracker.client.android.liontrack.R;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.other.OtherPrefs.TrackingOneTouchMode;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;

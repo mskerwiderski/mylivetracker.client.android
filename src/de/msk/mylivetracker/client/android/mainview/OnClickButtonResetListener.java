@@ -1,7 +1,7 @@
 package de.msk.mylivetracker.client.android.mainview;
 
 import android.os.SystemClock;
-import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.liontrack.R;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.status.TrackStatus;

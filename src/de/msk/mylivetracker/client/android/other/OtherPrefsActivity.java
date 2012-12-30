@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.Toast;
-import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.liontrack.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.other.OtherPrefs.ConfirmLevel;
 import de.msk.mylivetracker.client.android.other.OtherPrefs.TrackingOneTouchMode;

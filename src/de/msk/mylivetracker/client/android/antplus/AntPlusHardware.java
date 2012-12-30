@@ -12,7 +12,7 @@ import com.wahoofitness.api.WFDisplaySettings;
 import com.wahoofitness.api.WFHardwareConnector;
 
 import de.msk.mylivetracker.client.android.App;
-import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.liontrack.R;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 
 /**

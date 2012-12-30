@@ -2,7 +2,7 @@ package de.msk.mylivetracker.client.android.mainview;
 
 import android.app.Activity;
 import android.content.Intent;
-import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.liontrack.R;
 import de.msk.mylivetracker.client.android.message.MessageActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;

@@ -3,7 +3,7 @@ package de.msk.mylivetracker.client.android.server;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.liontrack.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;

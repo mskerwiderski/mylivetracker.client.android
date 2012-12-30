@@ -13,7 +13,7 @@ import java.net.SocketAddress;
 import org.apache.commons.lang.StringUtils;
 
 import android.os.SystemClock;
-import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.liontrack.R;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;

@@ -3,9 +3,9 @@ package de.msk.mylivetracker.client.android.mylivetrackerportal;
 import java.net.URL;
 
 import android.os.AsyncTask;
-import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.App.ConfigDsc;
 import de.msk.mylivetracker.client.android.account.AccountPrefs;
+import de.msk.mylivetracker.client.android.liontrack.R;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.mylivetrackerportal.MyLiveTrackerPortalConnectActivity.ProgressDialogHandler;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;

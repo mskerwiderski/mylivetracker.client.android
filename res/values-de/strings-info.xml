@@ -2,9 +2,9 @@
 <resources>
     <string name="tiInfo">Info</string>
     <string name="tvInfo_Mileage">Kilometerstand</string>
-    <string name="tvInfo_Copyright1">&#169; 2011 Michael Skerwiderski</string>
+    <string name="tvInfo_Copyright1">&#169; 2012 Motomara (Liontrack)</string>
     <string name="tvInfo_Copyright2">alle Rechte vorbehalten</string>
-    <string name="tvInfo_EmailAddress">support@mylivetracker.de</string>
-    <string name="tvInfo_ForumUrl">http://forum.mylivetracker.info</string>
+    <string name="tvInfo_EmailAddress">support@motomara.com.au</string>
+    <string name="tvInfo_ForumUrl"></string>
     <string name="tvInfo_Separator">* * *</string>
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<!-- Application name -->
-    <string name="app_name">MyLiveTracker</string>
+    <string name="app_name">Liontracker</string>
     
     <string name="txIsProFeature">This feature is available only in the PRO version of MyLiveTracker!</string>
         	
