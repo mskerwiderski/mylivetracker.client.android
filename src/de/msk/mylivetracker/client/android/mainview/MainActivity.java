@@ -222,6 +222,7 @@ public class MainActivity extends AbstractMainActivity {
 				PrefsRegistry.get(OtherPrefs.class).isAdaptButtonsForOneTouchMode()) {
 				// ANT+ supported and enabled by user
 				// one touch mode includes heartrate control
+				// adaption enabled by user
 				// --> hide ANT+ button.
 				this.getUiBtConnectDisconnectAnt().setVisibility(View.GONE);
 			} else {
@@ -246,8 +247,9 @@ public class MainActivity extends AbstractMainActivity {
 			// one touch mode does not include localization control
 			// --> show localization button.
 			this.getUiBtLocationListenerOnOff().setVisibility(View.VISIBLE);
-		} else {
+		} else if  (PrefsRegistry.get(OtherPrefs.class).isAdaptButtonsForOneTouchMode()) {
 			// one touch mode includes localization control
+			// adaption enabled by user
 			// --> hide localization button.
 			this.getUiBtLocationListenerOnOff().setVisibility(View.GONE);
 		}
