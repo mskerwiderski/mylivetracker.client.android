@@ -3,15 +3,13 @@
 	<!-- Application name -->
     <string name="app_name">Liontracker</string>
         	 
-    <string name="txIsProFeature">Diese Funktion ist nur in der PRO Version von MyLiveTracker verfügbar!</string>
-        
     <!-- Welcome message -->
-    <string name="welcomeMessage">Willkommen zu %1$s. Wenn Sie Fragen haben oder Unterstützung benötigen, besuchen Sie uns doch im Forum unter http://forum.mylivetracker.info!</string>
+    <string name="welcomeMessage">Willkommen zu %1$s. Wenn Sie Fragen haben oder Unterstützung benötigen, kontaktieren Sie uns unter support@motomara.com.au!</string>
        
     <!-- preferences -->
-    <string name="prefsImportedFromV144">Bitte überprüfen Sie die Einstellungen! Die Einstellungen wurden von einer alten MyLiveTracker Version importiert!</string>
-    <string name="prefsCreated">Bitte überprüfen Sie die Einstellungen! Da Sie MyLiveTracker das erste Mal benutzen, wurden alle Einstellungen auf Standardwerte gesetzt!</string>  
-    <string name="prefsUpdated">Bitte überprüfen Sie die Einstellungen! Mit der neuen Version von MyLiveTracker sind evtl. neue Einstellungen hinzugekommen oder haben sich geändert!</string> 
+    <string name="prefsImportedFromV144">Bitte überprüfen Sie die Einstellungen! Die Einstellungen wurden von einer alten Liontracker Version importiert!</string>
+    <string name="prefsCreated">Bitte überprüfen Sie die Einstellungen! Da Sie Liontracker das erste Mal benutzen, wurden alle Einstellungen auf Standardwerte gesetzt!</string>  
+    <string name="prefsUpdated">Bitte überprüfen Sie die Einstellungen! Mit der neuen Version von Liontracker sind evtl. neue Einstellungen hinzugekommen oder haben sich geändert!</string> 
         
     <!-- commons -->
     <string name="btSave">Speichern</string>
@@ -117,8 +115,8 @@
     <string name="txMain_InfoResetTrackDone">Der Track wurde zurückgesetzt!</string>               
     <string name="txMain_QuestionSendSosSignal">Wollen Sie wirklich ein SOS Signal senden?</string>    
     <string name="txMain_InfoSendSosSignalDone">Ein SOS Signal wurde gesendet!</string>    
-    <string name="txMain_QuestionExit">Wollen Sie MyLiveTracker wirklich beenden?</string>    
-    <string name="txMain_InfoExitApp">MyLiveTracker wird beendet&#8230;</string>
+    <string name="txMain_QuestionExit">Wollen Sie Liontracker wirklich beenden?</string>    
+    <string name="txMain_InfoExitApp">Liontracker wird beendet&#8230;</string>
     <string name="txMain_SendMessageNotSupportedByTransferProtocol">Der Nachrichtenversand wird vom eingestellten Übertragungsprotokoll (%1$s) nicht unterstützt.</string>
     <string name="txMain_SendEmergencySignalNotSupportedByTransferProtocol">Der Versand von Notrufsignalen wird vom eingestellten Übertragungsprotokoll (%1$s) nicht unterstützt.</string>    
     

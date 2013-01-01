@@ -3,22 +3,24 @@
 	<item 
 	    android:id="@+id/mnCatTracking"
         android:title="@string/mnCatTracking" >
-        <menu>  
-			<item android:id="@+id/mnPrefsServer" android:title="@string/mnPrefsServer" />
+        <menu>
+            <!-- Liontrack customization. -->  
+			<!-- item android:id="@+id/mnPrefsServer" android:title="@string/mnPrefsServer" / -->
 		    <item android:id="@+id/mnPrefsAccount" android:title="@string/mnPrefsAccount" />
-		    <item android:id="@+id/mnPrefsProtocol" android:title="@string/mnPrefsProtocol" />
-		    <item android:id="@+id/mnPrefsLocalization" android:title="@string/mnPrefsLocalization" />
-		    <item android:id="@+id/mnTrackExport" android:title="@string/mnTrackExport" />
+		    <!-- item android:id="@+id/mnPrefsProtocol" android:title="@string/mnPrefsProtocol" / -->
+		    <!-- item android:id="@+id/mnPrefsLocalization" android:title="@string/mnPrefsLocalization" / -->
+		    <!-- item android:id="@+id/mnTrackExport" android:title="@string/mnTrackExport" / -->
 	    </menu> 
     </item>
-    <item 
+   	<!-- Liontrack customization. -->
+    <!-- item 
 	    android:id="@+id/mnCatConnect"
 		android:title="@string/mnCatConnect" >
         <menu>
             <item android:id="@+id/mnMyLiveTrackerPortalConnect" android:title="@string/mnMyLiveTrackerPortalConnect" />
             <item android:id="@+id/mnDropboxConnect" android:title="@string/mnDropboxConnect" />  
 	    </menu> 
-    </item>
+    </item -->
     <item 
 	    android:id="@+id/mnCatSystem"
 		android:title="@string/mnCatSystem" >
@@ -26,16 +28,19 @@
 		    <item android:id="@+id/mnPrefsPinCodeQuery" android:title="@string/mnPrefsPinCodeQuery" />
 		    <item android:id="@+id/mnPrefsAuto" android:title="@string/mnPrefsAuto" />
 		    <item android:id="@+id/mnPrefsRemoteAccess" android:title="@string/mnPrefsRemoteAccess" />
-		    <item android:id="@+id/mnPrefsHttpProtocolParams" android:title="@string/mnPrefsHttpProtocolParams" />
+		    <!-- item android:id="@+id/mnPrefsHttpProtocolParams" android:title="@string/mnPrefsHttpProtocolParams" / -->
 		    <item android:id="@+id/mnPrefsOther" android:title="@string/mnPrefsOther" />
 	    </menu> 
     </item>
-    <item 
+    <!-- Liontrack customization. -->
+    <item android:id="@+id/mnInfo" android:title="@string/mnInfo" />
+    <item android:id="@+id/mnExit" android:title="@string/mnExit" />
+    <!-- item 
         android:id="@+id/mnCatInfoAndExit"
         android:title="@string/mnCatInfoAndExit" >
     	<menu>
 		    <item android:id="@+id/mnInfo" android:title="@string/mnInfo" />
 		    <item android:id="@+id/mnExit" android:title="@string/mnExit" />
     	</menu>
-    </item>    
+    </item -->    
 </menu>

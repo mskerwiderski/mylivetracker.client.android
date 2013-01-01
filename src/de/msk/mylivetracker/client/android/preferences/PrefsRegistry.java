@@ -81,8 +81,6 @@ public class PrefsRegistry {
 			reset();
 			initResult = InitResult.PrefsCreated;
 			LogUtils.infoMethodState(PrefsRegistry.class, "init", "initResult", initResult);
-			LiontrackDefaults.run();
-			saveAllInternal();
 		} else {
 			SharedPreferences sharedPrefs = App.getCtx().
 				getSharedPreferences(App.getPrefsFileName(false), 0);
@@ -134,6 +132,8 @@ public class PrefsRegistry {
 			APrefs prefs = create(prefsDsc.prefsClass);
 			prefsReg.put(prefsDsc.prefsClass, prefs);
 		}
+		// Liontrack customization.
+		LiontrackDefaults.run();
 		saveAllInternal();
 		LogUtils.infoMethodOut(PrefsRegistry.class, "reset");
 	}

@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import de.msk.mylivetracker.client.android.liontrack.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
@@ -169,7 +170,9 @@ public class OtherPrefsActivity extends AbstractActivity {
         Button btOtherPrefs_ResetToFactoryDefaults = (Button)findViewById(R.id.btOtherPrefs_ResetToFactoryDefaults);
         Button btOtherPrefs_ResetOverallMileage = (Button)findViewById(R.id.btOtherPrefs_ResetOverallMileage);
         Button btnOtherPrefs_Save = (Button) findViewById(R.id.btOtherPrefs_Save);
-        Button btnOtherPrefs_Cancel = (Button) findViewById(R.id.btOtherPrefs_Cancel);
+        
+        // Liontrack customization.
+        Button btnOtherPrefs_Back = (Button) findViewById(R.id.btOtherPrefs_Back);
          
         btOtherPrefs_ResetToFactoryDefaults.setOnClickListener(
 			new OnClickButtonAppReset(this));
@@ -180,8 +183,21 @@ public class OtherPrefsActivity extends AbstractActivity {
 				spOtherPrefs_TrackingOneTouch,
 				spOtherPrefs_ConfirmLevel,
 				cbOtherPrefs_AdaptButtonsForOneTouchMode,
-				cbOtherPrefs_EnableAntPlusIfAvailable));		
-        btnOtherPrefs_Cancel.setOnClickListener(
+				cbOtherPrefs_EnableAntPlusIfAvailable));	
+        
+        // Liontrack customization.
+        btnOtherPrefs_Back.setOnClickListener(
 			new OnFinishActivityListener(this));
+        
+        // Liontrack customization.
+        btnOtherPrefs_Save.setVisibility(View.GONE);
+        spOtherPrefs_TrackingOneTouch.setVisibility(View.GONE);
+        spOtherPrefs_ConfirmLevel.setVisibility(View.GONE);
+        cbOtherPrefs_AdaptButtonsForOneTouchMode.setVisibility(View.GONE);
+        cbOtherPrefs_EnableAntPlusIfAvailable.setVisibility(View.GONE);
+        TextView tvOtherPrefs_ConfirmLevel = (TextView)findViewById(R.id.tvOtherPrefs_ConfirmLevel);
+        TextView tvOtherPrefs_TrackingOneTouch = (TextView)findViewById(R.id.tvOtherPrefs_TrackingOneTouch);
+        tvOtherPrefs_ConfirmLevel.setVisibility(View.GONE);
+        tvOtherPrefs_TrackingOneTouch.setVisibility(View.GONE);
     }
 }

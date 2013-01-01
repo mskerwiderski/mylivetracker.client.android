@@ -17,23 +17,15 @@ import de.msk.mylivetracker.client.android.InfoActivity;
 import de.msk.mylivetracker.client.android.account.AccountPrefsActivity;
 import de.msk.mylivetracker.client.android.auto.AutoPrefs;
 import de.msk.mylivetracker.client.android.auto.AutoPrefsActivity;
-import de.msk.mylivetracker.client.android.dropbox.DropboxConnectActivity;
-import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParamsPrefsActivity;
 import de.msk.mylivetracker.client.android.liontrack.R;
 import de.msk.mylivetracker.client.android.listener.GpsStateListener;
 import de.msk.mylivetracker.client.android.listener.LocationListener;
-import de.msk.mylivetracker.client.android.localization.LocalizationPrefsActivity;
-import de.msk.mylivetracker.client.android.mylivetrackerportal.MyLiveTrackerPortalConnectActivity;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.other.OtherPrefsActivity;
 import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryPrefsActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.protocol.ProtocolPrefsActivity;
 import de.msk.mylivetracker.client.android.remoteaccess.RemoteAccessPrefsActivity;
-import de.msk.mylivetracker.client.android.server.ServerPrefsActivity;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
-import de.msk.mylivetracker.client.android.trackexport.TrackExportActivity;
-import de.msk.mylivetracker.client.android.util.dialog.AbstractInfoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractProgressDialog;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
@@ -113,17 +105,18 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 		}
 	}
 	
-	private static final class IsProFeatureDialog extends AbstractInfoDialog {
-
-		public IsProFeatureDialog(AbstractMainActivity activity) {
-			super(activity, R.string.txIsProFeature);
-		}
-
-		@Override
-		public void onOk() {
-			// noop.
-		}
-	}
+	// Liontrack customization.
+//	private static final class IsProFeatureDialog extends AbstractInfoDialog {
+//
+//		public IsProFeatureDialog(AbstractMainActivity activity) {
+//			super(activity, R.string.txIsProFeature);
+//		}
+//
+//		@Override
+//		public void onOk() {
+//			// noop.
+//		}
+//	}
 	
 	public static boolean showStartStopInfoDialogIfInAutoMode() {
 		if (PrefsRegistry.get(AutoPrefs.class).isAutoModeEnabled()) {
@@ -145,12 +138,13 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 				activityClassToStart));
 		}
 	}
-
-	@SuppressWarnings("unused")
-	private void showIsProFeatureDialog() {
-		IsProFeatureDialog dlg = new IsProFeatureDialog(this);
-		dlg.show();
-	}
+	
+	// Liontrack customization.
+//	@SuppressWarnings("unused")
+//	private void showIsProFeatureDialog() {
+//		IsProFeatureDialog dlg = new IsProFeatureDialog(this);
+//		dlg.show();
+//	}
 	
 	private LocationManager locationManager;
 
@@ -248,27 +242,29 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.mnPrefsServer:
-			startActivityWithWarningDlgIfTrackRunning(ServerPrefsActivity.class);
-			return true;
+		// Liontrack customization.
+//		case R.id.mnPrefsServer:
+//			startActivityWithWarningDlgIfTrackRunning(ServerPrefsActivity.class);
+//			return true;
 		case R.id.mnPrefsAccount:
 			startActivityWithWarningDlgIfTrackRunning(AccountPrefsActivity.class);
 			return true;
-		case R.id.mnPrefsProtocol:
-			startActivityWithWarningDlgIfTrackRunning(ProtocolPrefsActivity.class);
-			return true;	
-		case R.id.mnPrefsLocalization:
-			startActivityWithWarningDlgIfTrackRunning(LocalizationPrefsActivity.class);
-			return true;
-		case R.id.mnTrackExport:
-			startActivityWithWarningDlgIfTrackRunning(TrackExportActivity.class);
-			return true;	
-		case R.id.mnMyLiveTrackerPortalConnect:
-			startActivityWithWarningDlgIfTrackRunning(MyLiveTrackerPortalConnectActivity.class);
-			return true;
-		case R.id.mnDropboxConnect:
-			startActivityWithWarningDlgIfTrackRunning(DropboxConnectActivity.class);
-			return true;	
+		// Liontrack customization.	
+//		case R.id.mnPrefsProtocol:
+//			startActivityWithWarningDlgIfTrackRunning(ProtocolPrefsActivity.class);
+//			return true;	
+//		case R.id.mnPrefsLocalization:
+//			startActivityWithWarningDlgIfTrackRunning(LocalizationPrefsActivity.class);
+//			return true;
+//		case R.id.mnTrackExport:
+//			startActivityWithWarningDlgIfTrackRunning(TrackExportActivity.class);
+//			return true;	
+//		case R.id.mnMyLiveTrackerPortalConnect:
+//			startActivityWithWarningDlgIfTrackRunning(MyLiveTrackerPortalConnectActivity.class);
+//			return true;
+//		case R.id.mnDropboxConnect:
+//			startActivityWithWarningDlgIfTrackRunning(DropboxConnectActivity.class);
+//			return true;	
 		case R.id.mnPrefsPinCodeQuery:
 			startActivityWithWarningDlgIfTrackRunning(PinCodeQueryPrefsActivity.class);
 			return true;
@@ -278,9 +274,10 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 		case R.id.mnPrefsRemoteAccess:
 			startActivityWithWarningDlgIfTrackRunning(RemoteAccessPrefsActivity.class);
 			return true;
-		case R.id.mnPrefsHttpProtocolParams:
-			startActivityWithWarningDlgIfTrackRunning(HttpProtocolParamsPrefsActivity.class);
-			return true;
+		// Liontrack customization.	
+//		case R.id.mnPrefsHttpProtocolParams:
+//			startActivityWithWarningDlgIfTrackRunning(HttpProtocolParamsPrefsActivity.class);
+//			return true;
 		case R.id.mnPrefsOther:
 			startActivityWithWarningDlgIfTrackRunning(OtherPrefsActivity.class);
 			return true;	
