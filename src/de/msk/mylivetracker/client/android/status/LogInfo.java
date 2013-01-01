@@ -10,6 +10,7 @@ import android.content.Context;
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.account.AccountPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
+import de.msk.mylivetracker.client.android.trackexport.TrackExportPrefs;
 import de.msk.mylivetracker.client.android.util.FileUtils;
 import de.msk.mylivetracker.client.android.util.FileUtils.PathType;
 import de.msk.mylivetracker.client.android.util.FormatUtils;
@@ -43,11 +44,33 @@ public class LogInfo {
 	private static final String ATTR_NAME_TEMPLATE = "<name>$NAME</name>";
 	private static final String ATTR_TIME_TEMPLATE = "<time>$TIME</time>";
 	private static final String ATTR_ALTITUDE_TEMPLATE = "<ele>$ALTITUDE</ele>";
-	private static final String TIMESTAMP_FMT = "yyyy-MM-dd'T'hh:mm:ss.SSS";
+	private static final String TIMESTAMP_FMT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+	private static final String TIMESTAMP_FMT_FOR_FILENAME = "'UTC'yyyy-MM-dd'T'HH-mm-ss-SSS'Z'";
 	
 	public static String createGpxFileNameOfCurrentTrack() {
-		String gpxFileName = DateTime.getCurrentAsUtcStr(DateTime.INTERNAL_DATE_TIME_FMT);
-		gpxFileName += "_" + TrackStatus.get().getTrackId() + ".gpx";
+		TrackExportPrefs trackExportPrefs = PrefsRegistry.get(TrackExportPrefs.class);
+		AccountPrefs accountPrefs = PrefsRegistry.get(AccountPrefs.class);
+		
+		String gpxFileName = trackExportPrefs.getFilenamePrefix(); 
+		if (trackExportPrefs.isFilenameAppendTrackName() &&
+			!StringUtils.isEmpty(accountPrefs.getTrackName())) {
+			gpxFileName += "_" + accountPrefs.getTrackName();
+		}
+		if (trackExportPrefs.isFilenameAppendTimestampOfTrackStartTime()) {
+			DateTime trackStartTime = new DateTime(
+				TrackStatus.get().getStartedInMSecs());
+			gpxFileName += "_" + trackStartTime.getAsStr(
+				TimeZone.getTimeZone(DateTime.TIME_ZONE_UTC), 
+				TIMESTAMP_FMT_FOR_FILENAME);
+		}
+		if (trackExportPrefs.isFilenameAppendSequenceNumber()) {
+			gpxFileName += "_" + 
+				StringUtils.leftPad(String.valueOf(
+					trackExportPrefs.getFilenameNextSequenceNumber()), 6, '0');
+			trackExportPrefs.incNextSequenceNumber();
+			PrefsRegistry.save(TrackExportPrefs.class);
+		}
+		gpxFileName += ".gpx";
 		return gpxFileName;
 	}
 	

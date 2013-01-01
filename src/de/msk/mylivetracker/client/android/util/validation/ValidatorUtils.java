@@ -144,14 +144,15 @@ public class ValidatorUtils {
 	
 	public static boolean validateEditTextNumber(
 		Context ctx, int label, EditText editText,
-		boolean required, int minDigit, int maxDigit, boolean setFocusIfInvalid) {
+		boolean required, int minValue, int maxValue, boolean setFocusIfInvalid) {
 		if (ctx == null) {
 			throw new IllegalArgumentException("ctx must not be null.");
 		}
 		if (editText == null) {
 			throw new IllegalArgumentException("editText must not be null.");
 		}
-		boolean valid = validateEditTextNumber(ctx, label, editText, required, minDigit, maxDigit);
+		boolean valid = validateEditTextNumber(
+			ctx, label, editText, required, minValue, maxValue);
 				
 		if (!valid && setFocusIfInvalid) {
 			editText.requestFocus();
@@ -162,7 +163,7 @@ public class ValidatorUtils {
 	private static boolean validateEditTextNumber(
 		Context ctx, int label, EditText editText,
 		boolean required,  
-		int minDigit, int maxDigit) {
+		int minValue, int maxValue) {
 		if (editText == null) {
 			throw new IllegalArgumentException("editText must not be null.");
 		}
@@ -187,10 +188,10 @@ public class ValidatorUtils {
 			SimpleInfoDialog.show(ctx, message);
 			return false;
 		}
-		if ((value < minDigit) || (value > maxDigit)) {
+		if ((value < minValue) || (value > maxValue)) {
 			String message = 
 				ctx.getString(R.string.validator_valueMustBeInRange, 
-				ctx.getString(label), minDigit, maxDigit);
+				ctx.getString(label), minValue, maxValue);
 			SimpleInfoDialog.show(ctx, message);
 			return false;
 		}

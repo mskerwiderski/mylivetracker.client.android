@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tiTrackExport">Track export</string>
+    <string name="lbTrackExportPrefs_ExportTo">Export current track to&#8230;</string>
+    <string name="btTrackExportPrefs_UploadToDropbox">Dropbox</string>
+    <string name="btTrackExportPrefs_ExportToExternalStorage">External storage</string>
+    <string name="txTrackExportPrefs_NotConnectedToDropbox">There is no connection to Dropbox. Connect to Dropbox first!</string>
+    <string name="txTrackExportPrefs_NoTrackExists">No track exists!</string>
+    <string name="txTrackExportPrefs_NoExternalStorageAvailable">No external storage is available!</string>
+    <string name="txTrackExportPrefs_QuestionUploadTrack">Do you really want to upload the current track to Dropbox?</string>
+    <string name="txTrackExportPrefs_QuestionExportTrack">Do you really want to export the current track to external storage?</string>
+    <string name="txTrackExportPrefs_InfoExportTrackDone">Current track successfully exported to external storage!</string>
+    <string name="lbTrackExportPrefs_ExportProgressDialog">Exporting current track&#8230;</string> 
+    <string name="lbTrackExportPrefs_FilenameCreationRules">Rules for export filename creation:</string>
+    <string name="fdTrackExportPrefs_FilenamePrefix">Prefix</string>
+    <string name="lbTrackExportPrefs_FilenamePrefix">Prefix</string>    
+    <string name="lbTrackExportPrefs_FilenameAppendTrackName">Append trackname</string>
+    <string name="lbTrackExportPrefs_FilenameAppendTimestampOfTrackStartTime">Append timestamp of track start time</string>
+    <string name="lbTrackExportPrefs_FilenameAppendSequenceNumber">Append sequence number</string>
+    <string name="fdTrackExportPrefs_FilenameNextSequenceNumber">Next sequence number</string>
+    <string name="lbTrackExportPrefs_FilenameNextSequenceNumber">Next sequence number</string>
+    <string name="btTrackExportPrefs_FilenameResetSequenceNumber">Reset</string>
+</resources>

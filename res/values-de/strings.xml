@@ -181,25 +181,12 @@
     <string name="lbConnectToMyLiveTrackerPortal_ProgressDialog">Die Koppelung mit dem MyLiveTracker Portal wird hergestellt&#8230;</string>  
     <string name="txConnectToMyLiveTrackerPortal_InfoConnectingDone">Die Koppelung mit dem MyLiveTracker Portal wurde erfolgreich hergestellt!</string>  
         
-    <!-- track export-->
-    <string name="tiTrackExport">Track export</string>
-    <string name="lbTrackExport_ExportTo">Aktuellen Track exportieren auf&#8230;</string>
-    <string name="btTrackExport_UploadToDropbox">Dropbox</string>
-    <string name="btTrackExport_ExportToExternalStorage">Speicherkarte</string>
-    <string name="txTrackExport_NotConnectedToDropbox">Es ist keine Koppelung zu Dropbox vorhanden. Bitte stellen Sie zuerst eine Koppelung zu Dropbox her!</string>
-    <string name="txTrackExport_NoTrackExists">Es ist kein Track vorhanden!</string>
-    <string name="txTrackExport_NoExternalStorageAvailable">Es ist keine externe Speicherkarte vorhanden!</string>
-    <string name="txTrackExport_QuestionUploadTrack">Wollen Sie wirklich den aktuellen Track in Dropbox hochladen?</string>
-    <string name="txTrackExport_QuestionExportTrack">Wollen Sie wirklich den aktuellen Track auf die Speicherkarte exportieren?</string>
-    <string name="txTrackExport_InfoExportTrackDone">Der aktuelle Track wurde erfolgreich auf die Speicherkarte exportiert!</string>
-    <string name="lbTrackExport_ExportProgressDialog">Der aktuelle Track wird exportiert&#8230;</string>
-        
     <!-- validators -->
     <string name="validator.locationProviderNotSupported">Der Lokalisierungsdienst %1$s ist auf diesem Gerät nicht verfügbar!</string>
     <string name="validator.phoneNumberInvalid">Telefonnummer ist ungültig!</string>
     <string name="validator.valueMustNotBeEmpty">%1$s darf nicht leer sein!</string>
     <string name="validator.valueMustBeANumber">%1$s muss eine Zahl sein!</string>    
-    <string name="validator.valueMustBeInRange">%1$s muss %2$s-%3$s Stellen lang sein!</string>
+    <string name="validator.valueMustBeInRange">%1$s muss im Bereich %2$s-%3$s liegen!</string>
     <string name="validator.valueMayHaveOnlyAlphaChars">%1$s darf nur alphabetische Zeichen beinhalten!</string>
     <string name="validator.valueAlreadyExists">%1$s existiert bereits!</string>
 </resources>

@@ -181,25 +181,12 @@
     <string name="lbConnectToMyLiveTrackerPortal_ProgressDialog">Connecting to MyLiveTracker portal&#8230;</string>  
     <string name="txConnectToMyLiveTrackerPortal_InfoConnectingDone">Connecting to MyLiveTracker portal successfully done!</string>  
     
-    <!-- track export-->
-    <string name="tiTrackExport">Track export</string>
-    <string name="lbTrackExport_ExportTo">Export current track to&#8230;</string>
-    <string name="btTrackExport_UploadToDropbox">Dropbox</string>
-    <string name="btTrackExport_ExportToExternalStorage">External storage</string>
-    <string name="txTrackExport_NotConnectedToDropbox">There is no connection to Dropbox. Connect to Dropbox first!</string>
-    <string name="txTrackExport_NoTrackExists">No track exists!</string>
-    <string name="txTrackExport_NoExternalStorageAvailable">No external storage is available!</string>
-    <string name="txTrackExport_QuestionUploadTrack">Do you really want to upload the current track to Dropbox?</string>
-    <string name="txTrackExport_QuestionExportTrack">Do you really want to export the current track to external storage?</string>
-    <string name="txTrackExport_InfoExportTrackDone">Current track successfully exported to external storage!</string>
-    <string name="lbTrackExport_ExportProgressDialog">Exporting current track&#8230;</string> 
-    
     <!-- validators -->
     <string name="validator.locationProviderNotSupported">Location provider %1$s is not supported on this device!</string>
     <string name="validator.phoneNumberInvalid">Phone number is invalid!</string>
     <string name="validator.valueMustNotBeEmpty">%1$s must not be empty!</string>
     <string name="validator.valueMustBeANumber">%1$s must be a number!</string>    
-    <string name="validator.valueMustBeInRange">%1$s must be in range of %2$s-%3$s digits!</string>
+    <string name="validator.valueMustBeInRange">%1$s must be in range of %2$s-%3$s!</string>
     <string name="validator.valueMayHaveOnlyAlphaChars">%1$s may have only alphabetical characters!</string>
     <string name="validator.valueAlreadyExists">%1$s already exists!</string>
 </resources>

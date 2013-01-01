@@ -90,6 +90,8 @@ public class MainActivity extends AbstractMainActivity {
 			new OnClickButtonLocationListenerOnOffListener());
 		this.getUiBtReset().setOnClickListener(
 			new OnClickButtonResetListener());
+		this.getUiBtConnectDisconnectAnt().setOnClickListener(
+			new OnClickButtonAntPlusListener());
 		
 		checkButtons();
 		
@@ -214,26 +216,39 @@ public class MainActivity extends AbstractMainActivity {
 	
 	private void checkButtons() {
 		if (AntPlusHardware.initialized() && 
-			PrefsRegistry.get(OtherPrefs.class).isAntPlusEnabledIfAvailable() &&
-			!PrefsRegistry.get(OtherPrefs.class).getTrackingOneTouchMode().
-				equals(OtherPrefs.TrackingOneTouchMode.TrackingLocalizationHeartrate)) {
-			this.getUiBtConnectDisconnectAnt().setOnClickListener(
-				new OnClickButtonAntPlusListener());
-			this.getUiBtConnectDisconnectAnt().setVisibility(View.VISIBLE);
+			PrefsRegistry.get(OtherPrefs.class).isAntPlusEnabledIfAvailable()) {
+			if (PrefsRegistry.get(OtherPrefs.class).getTrackingOneTouchMode().
+				equals(OtherPrefs.TrackingOneTouchMode.TrackingLocalizationHeartrate) &&
+				PrefsRegistry.get(OtherPrefs.class).isAdaptButtonsForOneTouchMode()) {
+				// ANT+ supported and enabled by user
+				// one touch mode includes heartrate control
+				// --> hide ANT+ button.
+				this.getUiBtConnectDisconnectAnt().setVisibility(View.GONE);
+			} else {
+				// ANT+ supported and enabled by user --> show ANT+ button.
+				this.getUiBtConnectDisconnectAnt().setVisibility(View.VISIBLE);
+			}
 		} else {
+			// ANT+ not supported or/and disabled by user --> hide ANT+ button.
 			this.getUiBtConnectDisconnectAnt().setVisibility(View.GONE);
 		}
 		LinearLayout llHeartrate = (LinearLayout)this.findViewById(R.id.llMain_Heartrate);
 		if (AntPlusHardware.initialized() && 
 			PrefsRegistry.get(OtherPrefs.class).isAntPlusEnabledIfAvailable()) {
+			// ANT+ supported and enabled by user --> show heartrate info.
 			llHeartrate.setVisibility(View.VISIBLE);
 		} else {
+			// ANT+ not supported or/and disabled by user --> hide heartrate info.
 			llHeartrate.setVisibility(View.GONE);
 		}
 		if (PrefsRegistry.get(OtherPrefs.class).getTrackingOneTouchMode().
 			equals(OtherPrefs.TrackingOneTouchMode.TrackingOnly)) {
+			// one touch mode does not include localization control
+			// --> show localization button.
 			this.getUiBtLocationListenerOnOff().setVisibility(View.VISIBLE);
 		} else {
+			// one touch mode includes localization control
+			// --> hide localization button.
 			this.getUiBtLocationListenerOnOff().setVisibility(View.GONE);
 		}
 	}

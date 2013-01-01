@@ -22,6 +22,7 @@ import de.msk.mylivetracker.client.android.preferences.prefsv144.PrefsV144Update
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.remoteaccess.RemoteAccessPrefs;
 import de.msk.mylivetracker.client.android.server.ServerPrefs;
+import de.msk.mylivetracker.client.android.trackexport.TrackExportPrefs;
 import de.msk.mylivetracker.client.android.util.FileUtils;
 import de.msk.mylivetracker.client.android.util.FileUtils.PathType;
 import de.msk.mylivetracker.client.android.util.LogUtils;
@@ -63,6 +64,7 @@ public class PrefsRegistry {
 		new PrefsDsc(ProtocolPrefs.class, ProtocolPrefs.VERSION),
 		new PrefsDsc(RemoteAccessPrefs.class, RemoteAccessPrefs.VERSION),
 		new PrefsDsc(ServerPrefs.class, ServerPrefs.VERSION),
+		new PrefsDsc(TrackExportPrefs.class, TrackExportPrefs.VERSION),
 	};
 
 	public enum InitResult {
