@@ -4,38 +4,7 @@
     android:layout_height="fill_parent" 
     android:orientation="vertical" 
     android:background="@color/colorBackground"
->
-    <TextView
-        android:paddingTop="4dip"
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip"
-        android:textSize="16sp"
-        android:text="@string/lbTrackExportPrefs_ExportTo"
-        android:textColor="@color/colorText" 
-        android:layout_height="wrap_content" 
-        android:layout_width="wrap_content" 
-    />
-    <LinearLayout
-        android:paddingTop="5dip" 
-        android:layout_width="fill_parent" 
-        android:layout_height="wrap_content">
-    	<Button 
-    		android:id="@+id/btTrackExportPrefs_UploadToDropbox"
-    		android:text="@string/btTrackExportPrefs_UploadToDropbox"
-    		android:layout_gravity="bottom"
-    		android:layout_weight="1"     		 
-    		android:layout_height="wrap_content"
-    		android:layout_width="fill_parent"     		     		 
-    	/>  
-    	<Button 
-    		android:id="@+id/btTrackExportPrefs_ExportToExternalStorage"
-    		android:text="@string/btTrackExportPrefs_ExportToExternalStorage"
-    		android:layout_gravity="bottom"
-    		android:layout_weight="1"     		 
-    		android:layout_height="wrap_content"
-    		android:layout_width="fill_parent"     		     		 
-    	/>    	        
-   </LinearLayout>    
+>    
    <TextView
         android:paddingTop="5dip"
         android:paddingLeft="5dip"

@@ -1,23 +1,12 @@
 package de.msk.mylivetracker.client.android.trackexport;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import de.msk.mylivetracker.client.android.R;
-import de.msk.mylivetracker.client.android.dropbox.DropboxUploadTask;
-import de.msk.mylivetracker.client.android.dropbox.DropboxUploadTask.DoInBackgroundInitializer;
-import de.msk.mylivetracker.client.android.dropbox.DropboxUploadTask.PostProcessor;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.status.LogInfo;
-import de.msk.mylivetracker.client.android.util.FileUtils;
-import de.msk.mylivetracker.client.android.util.dialog.AbstractProgressDialog;
-import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
-import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
 import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
 import de.msk.mylivetracker.client.android.util.listener.OnFinishActivityListener;
 import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
@@ -30,117 +19,10 @@ import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
  * @since 1.5.0
  * 
  * history:
- * 000	2012-12-29	revised for v1.5.x.
+ * 000	2013-01-02	revised for v1.5.x.
  * 
  */
 public class TrackExportPrefsActivity extends AbstractActivity {
-
-	private static final class UploadToDropboxDialog extends AbstractYesNoDialog {
-		private Activity activity;
-				
-		public UploadToDropboxDialog(Activity activity) {
-			super(activity, R.string.txTrackExportPrefs_QuestionUploadTrack);
-			this.activity = activity;			
-		}
-
-		@Override
-		public void onYes() {	
-		 	final String gpxFileName = LogInfo.createGpxFileNameOfCurrentTrack();
-			DropboxUploadTask.execute(this.activity, null, 
-				gpxFileName, 
-				new DoInBackgroundInitializer() {
-					@Override
-					public void init(String fileName) {
-						LogInfo.createGpxFileOfCurrentTrack(gpxFileName);
-					}
-				},
-				new PostProcessor() {
-					@Override
-					public void postProcess() {
-						TrackExportPrefs prefs = PrefsRegistry.get(TrackExportPrefs.class);
-						EditText etTrackExportPrefs_FilenameNextSequenceNumber = (EditText)
-				        	activity.findViewById(R.id.etTrackExportPrefs_FilenameNextSequenceNumber);
-				        etTrackExportPrefs_FilenameNextSequenceNumber.setText(
-				        	String.valueOf(prefs.getFilenameNextSequenceNumber()));
-					}
-				}
-			);
-		}	
-		
-	}
-	
-	private static final class OnClickButtonUploadToDropbox extends ASafeOnClickListener {
-		private Activity activity;
-		
-		private OnClickButtonUploadToDropbox(Activity activity) {
-			this.activity = activity;
-		}
-		
-		@Override
-		public void onClick() {	
-			if (!LogInfo.logFileExists()) {
-				SimpleInfoDialog.show(this.activity, R.string.txTrackExportPrefs_NoTrackExists);
-			} else {
-				UploadToDropboxDialog dlg = new UploadToDropboxDialog(
-					this.activity);
-				dlg.show();
-			}
-		}		
-	}
-
-	private static class ExportTrackProgressDialog extends AbstractProgressDialog<TrackExportPrefsActivity> {
-		@Override
-		public void doTask(TrackExportPrefsActivity activity) {
-			LogInfo.exportGpxFileOfCurrentTrackToExternalStorage();
-		}
-		@Override
-		public void cleanUp(TrackExportPrefsActivity activity) {
-			TrackExportPrefs prefs = PrefsRegistry.get(TrackExportPrefs.class);
-			EditText etTrackExportPrefs_FilenameNextSequenceNumber = (EditText)
-	        	activity.findViewById(R.id.etTrackExportPrefs_FilenameNextSequenceNumber);
-	        etTrackExportPrefs_FilenameNextSequenceNumber.setText(
-	        	String.valueOf(prefs.getFilenameNextSequenceNumber()));
-		}
-	}
-	
-	private static final class ExportToExternalStorageTrackDialog extends AbstractYesNoDialog {
-		private TrackExportPrefsActivity activity;
-				
-		public ExportToExternalStorageTrackDialog(TrackExportPrefsActivity activity) {
-			super(activity, R.string.txTrackExportPrefs_QuestionExportTrack);
-			this.activity = activity;			
-		}
-
-		@Override
-		public void onYes() {			
-			ExportTrackProgressDialog dlg = new ExportTrackProgressDialog();
-			dlg.run(this.activity, 
-				R.string.lbTrackExportPrefs_ExportProgressDialog);
-			SimpleInfoDialog.show(this.activity, 
-				R.string.txTrackExportPrefs_InfoExportTrackDone);
-		}	
-	}
-	
-	private static final class OnClickButtonExportToExternalStorage implements OnClickListener {
-		private TrackExportPrefsActivity activity;
-		
-		private OnClickButtonExportToExternalStorage(TrackExportPrefsActivity activity) {
-			this.activity = activity;
-		}
-		
-		@Override
-		public void onClick(View view) {	
-			if (!LogInfo.logFileExists()) {
-				SimpleInfoDialog.show(this.activity, R.string.txTrackExportPrefs_NoTrackExists);
-			} else if (!FileUtils.externalStorageUsable()) {
-				SimpleInfoDialog.show(this.activity, R.string.txTrackExportPrefs_NoExternalStorageAvailable);
-			} else {
-				ExportToExternalStorageTrackDialog dlg = new ExportToExternalStorageTrackDialog(
-					this.activity);
-				dlg.show();
-			}
-		}		
-	}
 
 	private static final class OnClickButtonSaveListener extends ASafeOnClickListener {
 		private TrackExportPrefsActivity activity;
@@ -219,7 +101,7 @@ public class TrackExportPrefsActivity extends AbstractActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.track_export_prefs);
-        this.setTitle(R.string.tiTrackExport);
+        this.setTitle(R.string.tiTrackExportPrefs);
 
         TrackExportPrefs prefs = PrefsRegistry.get(TrackExportPrefs.class);
         
@@ -240,10 +122,6 @@ public class TrackExportPrefsActivity extends AbstractActivity {
         etTrackExportPrefs_FilenameNextSequenceNumber.setFocusable(false);
         etTrackExportPrefs_FilenameNextSequenceNumber.setClickable(false);
         
-        Button btTrackExportPrefs_UploadToDropbox = (Button)
-        	findViewById(R.id.btTrackExportPrefs_UploadToDropbox);
-        Button btTrackExportPrefs_ExportToExternalStorage = (Button)
-        	findViewById(R.id.btTrackExportPrefs_ExportToExternalStorage);
         Button btTrackExportPrefs_Save = (Button)
         	findViewById(R.id.btTrackExportPrefs_Save);
         Button btTrackExportPrefs_Cancel = (Button)
@@ -251,10 +129,6 @@ public class TrackExportPrefsActivity extends AbstractActivity {
         Button btTrackExportPrefs_FilenameResetSequenceNumber = (Button)
         	findViewById(R.id.btTrackExportPrefs_FilenameResetSequenceNumber);
         
-        btTrackExportPrefs_UploadToDropbox.setOnClickListener(
-			new OnClickButtonUploadToDropbox(this));
-        btTrackExportPrefs_ExportToExternalStorage.setOnClickListener(
-			new OnClickButtonExportToExternalStorage(this));
         btTrackExportPrefs_Save.setOnClickListener(
         	new OnClickButtonSaveListener(
     			this,

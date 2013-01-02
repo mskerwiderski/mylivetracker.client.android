@@ -91,8 +91,8 @@ public class LogInfo {
 		}
 	}
 	
-	public static void exportGpxFileOfCurrentTrackToExternalStorage() {
-		String gpxFileName = createGpxFileNameOfCurrentTrack();
+	public static void exportGpxFileOfCurrentTrackToExternalStorage(String gpxFileName) {
+		FileUtils.fileExists(gpxFileName, PathType.ExternalStorage);
 		createGpxFileOfCurrentTrack(gpxFileName);
 		FileUtils.copy(gpxFileName, PathType.AppDataDir, 
 			gpxFileName, PathType.ExternalStorage);

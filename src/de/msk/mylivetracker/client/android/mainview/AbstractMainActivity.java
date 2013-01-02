@@ -32,7 +32,7 @@ import de.msk.mylivetracker.client.android.protocol.ProtocolPrefsActivity;
 import de.msk.mylivetracker.client.android.remoteaccess.RemoteAccessPrefsActivity;
 import de.msk.mylivetracker.client.android.server.ServerPrefsActivity;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
-import de.msk.mylivetracker.client.android.trackexport.TrackExportPrefsActivity;
+import de.msk.mylivetracker.client.android.trackexport.TrackExportActivity;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractInfoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractProgressDialog;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
@@ -261,7 +261,7 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 			startActivityWithWarningDlgIfTrackRunning(LocalizationPrefsActivity.class);
 			return true;
 		case R.id.mnTrackExport:
-			startActivityWithWarningDlgIfTrackRunning(TrackExportPrefsActivity.class);
+			startActivityWithWarningDlgIfTrackRunning(TrackExportActivity.class);
 			return true;	
 		case R.id.mnMyLiveTrackerPortalConnect:
 			startActivityWithWarningDlgIfTrackRunning(MyLiveTrackerPortalConnectActivity.class);
