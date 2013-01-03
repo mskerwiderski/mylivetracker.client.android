@@ -56,9 +56,16 @@ public class LogInfo {
 			!StringUtils.isEmpty(accountPrefs.getTrackName())) {
 			gpxFileName += "_" + accountPrefs.getTrackName();
 		}
-		if (trackExportPrefs.isFilenameAppendTimestampOfTrackStartTime()) {
+		if (trackExportPrefs.isFilenameAppendTimestampOfFirstPosition()) {
 			DateTime trackStartTime = new DateTime(
-				TrackStatus.get().getStartedInMSecs());
+				TrackStatus.get().getMarkerFirstPositionReceived());
+			gpxFileName += "_" + trackStartTime.getAsStr(
+				TimeZone.getTimeZone(DateTime.TIME_ZONE_UTC), 
+				TIMESTAMP_FMT_FOR_FILENAME);
+		}
+		if (trackExportPrefs.isFilenameAppendTimestampOfLastPosition()) {
+			DateTime trackStartTime = new DateTime(
+				TrackStatus.get().getMarkerLastPositionReceived());
 			gpxFileName += "_" + trackStartTime.getAsStr(
 				TimeZone.getTimeZone(DateTime.TIME_ZONE_UTC), 
 				TIMESTAMP_FMT_FOR_FILENAME);

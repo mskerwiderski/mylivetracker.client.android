@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="tiTrackExport">Track export</string>
+    <string name="tiTrackExport">Track Export</string>
     <string name="lbTrackExport_ExportTo">Aktuellen Track exportieren auf&#8230;</string>
     <string name="btTrackExport_UploadToDropbox">Dropbox</string>
     <string name="btTrackExport_ExportToExternalStorage">Speicherkarte</string>
@@ -14,12 +14,13 @@
     <string name="txTrackExport_InfoExportTrackDone">Der aktuelle Track wurde erfolgreich auf die Speicherkarte exportiert!</string>
     <string name="lbTrackExport_ExportProgressDialog">Der aktuelle Track wird exportiert&#8230;</string>
     <string name="tiTrackExportPrefs">Track export</string>
-    <string name="lbTrackExportPrefs_FilenameCreationRules">Regeln für die Generierung des Export Dateinamens:</string>
+    <string name="lbTrackExportPrefs_FilenameCreationRules">Generierung des Dateinamens:</string>
     <string name="fdTrackExportPrefs_FilenamePrefix">Prefix</string>
     <string name="lbTrackExportPrefs_FilenamePrefix">Prefix</string>    
-    <string name="lbTrackExportPrefs_FilenameAppendTrackName">Tracknamen inkludieren</string>
-    <string name="lbTrackExportPrefs_FilenameAppendTimestampOfTrackStartTime">Zeitstempel der Track-Startzeit inkludieren</string>
-    <string name="lbTrackExportPrefs_FilenameAppendSequenceNumber">Fortlaufende Nummer inkludieren</string>
+    <string name="lbTrackExportPrefs_FilenameAppendTrackName">Tracknamen anhängen</string>
+    <string name="lbTrackExportPrefs_FilenameAppendTimestampOfFirstPosition">Zeitstempel der ersten Position anhängen</string>
+    <string name="lbTrackExportPrefs_FilenameAppendTimestampOfLastPosition">Zeitstempel der letzten Position anhängen</string>
+    <string name="lbTrackExportPrefs_FilenameAppendSequenceNumber">Fortlaufende Nummer anhängen</string>
     <string name="fdTrackExportPrefs_FilenameNextSequenceNumber">Nächste fortlaufende Nummer</string>
     <string name="lbTrackExportPrefs_FilenameNextSequenceNumber">Nächste fortlaufende Nummer</string>
     <string name="btTrackExportPrefs_FilenameResetSequenceNumber">Reset</string>

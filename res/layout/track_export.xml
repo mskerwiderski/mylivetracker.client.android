@@ -24,7 +24,7 @@
     		android:text="@string/btTrackExport_UploadToDropbox"
     		android:layout_gravity="bottom"
     		android:layout_weight="1"     		 
-    		android:layout_height="wrap_content"
+    		android:layout_height="50dip"
     		android:layout_width="fill_parent"     		     		 
     	/>  
     	<Button 
@@ -32,7 +32,7 @@
     		android:text="@string/btTrackExport_ExportToExternalStorage"
     		android:layout_gravity="bottom"
     		android:layout_weight="1"     		 
-    		android:layout_height="wrap_content"
+    		android:layout_height="50dip"
     		android:layout_width="fill_parent"     		     		 
     	/>    	        
    </LinearLayout>
@@ -45,7 +45,7 @@
     		android:text="@string/btTrackExport_FilenamePrefs"
     		android:layout_gravity="bottom"
     		android:layout_weight="1"     		 
-    		android:layout_height="wrap_content"
+    		android:layout_height="50dip"
     		android:layout_width="0dip"     		     		 
     	/>  
    </LinearLayout>

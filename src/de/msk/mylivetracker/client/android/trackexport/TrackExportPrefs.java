@@ -23,7 +23,8 @@ public class TrackExportPrefs extends APrefs implements Serializable {
 	
 	private String filenamePrefix;
 	private boolean filenameAppendTrackName;
-	private boolean filenameAppendTimestampOfTrackStartTime;
+	private boolean filenameAppendTimestampOfFirstPosition;
+	private boolean filenameAppendTimestampOfLastPosition;
 	private boolean filenameAppendSequenceNumber;
 	private int filenameNextSequenceNumber;
 	
@@ -35,7 +36,8 @@ public class TrackExportPrefs extends APrefs implements Serializable {
 	public void initWithDefaults() {
 		this.filenamePrefix = "Export";
 		this.filenameAppendTrackName = true;
-		this.filenameAppendTimestampOfTrackStartTime = true;
+		this.filenameAppendTimestampOfFirstPosition = false;
+		this.filenameAppendTimestampOfLastPosition = false;
 		this.filenameAppendSequenceNumber = true;
 		this.filenameNextSequenceNumber = 0;
 	}
@@ -72,12 +74,19 @@ public class TrackExportPrefs extends APrefs implements Serializable {
 	public void setFilenameAppendTrackName(boolean filenameAppendTrackName) {
 		this.filenameAppendTrackName = filenameAppendTrackName;
 	}
-	public boolean isFilenameAppendTimestampOfTrackStartTime() {
-		return filenameAppendTimestampOfTrackStartTime;
+	public boolean isFilenameAppendTimestampOfFirstPosition() {
+		return filenameAppendTimestampOfFirstPosition;
 	}
-	public void setFilenameAppendTimestampOfTrackStartTime(
-			boolean filenameAppendTimestampOfTrackStartTime) {
-		this.filenameAppendTimestampOfTrackStartTime = filenameAppendTimestampOfTrackStartTime;
+	public void setFilenameAppendTimestampOfFirstPosition(
+			boolean filenameAppendTimestampOfFirstPosition) {
+		this.filenameAppendTimestampOfFirstPosition = filenameAppendTimestampOfFirstPosition;
+	}
+	public boolean isFilenameAppendTimestampOfLastPosition() {
+		return filenameAppendTimestampOfLastPosition;
+	}
+	public void setFilenameAppendTimestampOfLastPosition(
+			boolean filenameAppendTimestampOfLastPosition) {
+		this.filenameAppendTimestampOfLastPosition = filenameAppendTimestampOfLastPosition;
 	}
 	public boolean isFilenameAppendSequenceNumber() {
 		return filenameAppendSequenceNumber;
@@ -96,8 +105,10 @@ public class TrackExportPrefs extends APrefs implements Serializable {
 	public String toString() {
 		return "TrackExportPrefs [filenamePrefix=" + filenamePrefix
 			+ ", filenameAppendTrackName=" + filenameAppendTrackName
-			+ ", filenameAppendTimestampOfTrackStartTime="
-			+ filenameAppendTimestampOfTrackStartTime
+			+ ", filenameAppendTimestampOfFirstPosition="
+			+ filenameAppendTimestampOfFirstPosition
+			+ ", filenameAppendTimestampOfLastPosition="
+			+ filenameAppendTimestampOfLastPosition
 			+ ", filenameAppendSequenceNumber="
 			+ filenameAppendSequenceNumber
 			+ ", filenameNextSequenceNumber=" + filenameNextSequenceNumber

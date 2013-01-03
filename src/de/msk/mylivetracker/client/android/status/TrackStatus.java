@@ -39,6 +39,8 @@ public class TrackStatus implements Serializable {
 	private Float trackDistanceInMtr = 0.0f;
 	private Long markerFirstStarted = null;
 	private Long markerLastStarted = null;
+	private Long markerFirstPositionReceived = null;
+	private Long markerLastPositionReceived = null;
 	private Long runtimeAfterLastStopInMSecs = 0L;	
 	private String antPlusStatus = null;
 	private String antPlusHeartrateStatus = null;
@@ -200,6 +202,26 @@ public class TrackStatus implements Serializable {
 				this.markerLastStarted;			
 			this.markerLastStarted = null;
 		}		
+	}
+
+	public Long getMarkerFirstPositionReceived() {
+		return markerFirstPositionReceived;
+	}
+
+	public Long getMarkerLastPositionReceived() {
+		return markerLastPositionReceived;
+	}
+
+	public void updateMarkersFirstAndLastPositionReceived(LocationInfo locationInfo) {
+		if (locationInfo == null) {
+			throw new IllegalArgumentException("locationInfo must not be null!");
+		}
+		if (this.markerFirstPositionReceived == null) {
+			this.markerFirstPositionReceived = 
+				locationInfo.getTimestamp().getTime();
+		}
+		this.markerLastPositionReceived = 
+			locationInfo.getTimestamp().getTime();
 	}
 
 	public Long getStartedInMSecs() {

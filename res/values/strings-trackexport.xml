@@ -14,11 +14,12 @@
     <string name="txTrackExport_InfoExportTrackDone">Current track successfully exported to external storage!</string>
     <string name="lbTrackExport_ExportProgressDialog">Exporting current track&#8230;</string>
     <string name="tiTrackExportPrefs">Track export</string> 
-    <string name="lbTrackExportPrefs_FilenameCreationRules">Rules for export filename creation:</string>
+    <string name="lbTrackExportPrefs_FilenameCreationRules">Creation of filename:</string>
     <string name="fdTrackExportPrefs_FilenamePrefix">Prefix</string>
     <string name="lbTrackExportPrefs_FilenamePrefix">Prefix</string>    
     <string name="lbTrackExportPrefs_FilenameAppendTrackName">Append trackname</string>
-    <string name="lbTrackExportPrefs_FilenameAppendTimestampOfTrackStartTime">Append timestamp of track start time</string>
+    <string name="lbTrackExportPrefs_FilenameAppendTimestampOfFirstPosition">Append timestamp of first position</string>
+    <string name="lbTrackExportPrefs_FilenameAppendTimestampOfLastPosition">Append timestamp of last position</string>
     <string name="lbTrackExportPrefs_FilenameAppendSequenceNumber">Append sequence number</string>
     <string name="fdTrackExportPrefs_FilenameNextSequenceNumber">Next sequence number</string>
     <string name="lbTrackExportPrefs_FilenameNextSequenceNumber">Next sequence number</string>

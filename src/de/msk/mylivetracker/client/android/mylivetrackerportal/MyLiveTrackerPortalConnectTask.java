@@ -52,7 +52,7 @@ public class MyLiveTrackerPortalConnectTask extends
 			rcpClient.setConnectionTimeoutMillis(10000);
 			rcpClient.setReadTimeoutMillis(5000);
 			response = (RegisterSenderResponse) rcpClient.invoke(
-				requests[0].getMethodName(),
+				RegisterSenderRequest.METHOD_NAME,
 				new Object[] { requests[0] }, RegisterSenderResponse.class);
 			
 			if (response.getResultCode().isSuccess()) {				

@@ -28,7 +28,8 @@ public class TrackExportPrefsActivity extends AbstractActivity {
 		private TrackExportPrefsActivity activity;
 		private EditText etTrackExportPrefs_FilenamePrefix;
 		private CheckBox cbTrackExportPrefs_FilenameAppendTrackName;
-		private CheckBox cbTrackExportPrefs_FilenameAppendTimestampOfTrackStartTime;
+		private CheckBox cbTrackExportPrefs_FilenameAppendTimestampOfFirstPosition;
+		private CheckBox cbTrackExportPrefs_FilenameAppendTimestampOfLastPosition;
 		private CheckBox cbTrackExportPrefs_FilenameAppendSequenceNumber;
 		private EditText etTrackExportPrefs_FilenameNextSequenceNumber;
 		
@@ -36,13 +37,15 @@ public class TrackExportPrefsActivity extends AbstractActivity {
 			TrackExportPrefsActivity activity,
 			EditText etTrackExportPrefs_FilenamePrefix,
 			CheckBox cbTrackExportPrefs_FilenameAppendTrackName,
-			CheckBox cbTrackExportPrefs_FilenameAppendTimestampOfTrackStartTime,
+			CheckBox cbTrackExportPrefs_FilenameAppendTimestampOfFirstPosition,
+			CheckBox cbTrackExportPrefs_FilenameAppendTimestampOfLastPosition,
 			CheckBox cbTrackExportPrefs_FilenameAppendSequenceNumber,
 			EditText etTrackExportPrefs_FilenameNextSequenceNumber) {
 			this.activity = activity;
 			this.etTrackExportPrefs_FilenamePrefix = etTrackExportPrefs_FilenamePrefix;
 			this.cbTrackExportPrefs_FilenameAppendTrackName = cbTrackExportPrefs_FilenameAppendTrackName;
-			this.cbTrackExportPrefs_FilenameAppendTimestampOfTrackStartTime = cbTrackExportPrefs_FilenameAppendTimestampOfTrackStartTime;
+			this.cbTrackExportPrefs_FilenameAppendTimestampOfFirstPosition = cbTrackExportPrefs_FilenameAppendTimestampOfFirstPosition;
+			this.cbTrackExportPrefs_FilenameAppendTimestampOfLastPosition = cbTrackExportPrefs_FilenameAppendTimestampOfLastPosition;
 			this.cbTrackExportPrefs_FilenameAppendSequenceNumber = cbTrackExportPrefs_FilenameAppendSequenceNumber;
 			this.etTrackExportPrefs_FilenameNextSequenceNumber = etTrackExportPrefs_FilenameNextSequenceNumber;
 		}
@@ -68,8 +71,10 @@ public class TrackExportPrefsActivity extends AbstractActivity {
 			if (valid) {
 				prefs.setFilenameAppendSequenceNumber(
 					cbTrackExportPrefs_FilenameAppendSequenceNumber.isChecked());
-				prefs.setFilenameAppendTimestampOfTrackStartTime(
-					cbTrackExportPrefs_FilenameAppendTimestampOfTrackStartTime.isChecked());
+				prefs.setFilenameAppendTimestampOfFirstPosition(
+					cbTrackExportPrefs_FilenameAppendTimestampOfFirstPosition.isChecked());
+				prefs.setFilenameAppendTimestampOfLastPosition(
+					cbTrackExportPrefs_FilenameAppendTimestampOfLastPosition.isChecked());
 				prefs.setFilenameAppendTrackName(
 					cbTrackExportPrefs_FilenameAppendTrackName.isChecked());
 				prefs.setFilenameNextSequenceNumber(Integer.valueOf(
@@ -108,12 +113,21 @@ public class TrackExportPrefsActivity extends AbstractActivity {
         EditText etTrackExportPrefs_FilenamePrefix = (EditText)
         	findViewById(R.id.etTrackExportPrefs_FilenamePrefix);
         etTrackExportPrefs_FilenamePrefix.setText(prefs.getFilenamePrefix());
-        CheckBox cbTrackExportPrefs_FilenameAppendTrackName = (CheckBox)findViewById(R.id.cbTrackExportPrefs_FilenameAppendTrackName);
+        CheckBox cbTrackExportPrefs_FilenameAppendTrackName = (CheckBox)
+        	findViewById(R.id.cbTrackExportPrefs_FilenameAppendTrackName);
         cbTrackExportPrefs_FilenameAppendTrackName.setChecked(prefs.isFilenameAppendTrackName());
-        CheckBox cbTrackExportPrefs_FilenameAppendTimestampOfTrackStartTime = (CheckBox)findViewById(R.id.cbTrackExportPrefs_FilenameAppendTimestampOfTrackStartTime);
-        cbTrackExportPrefs_FilenameAppendTimestampOfTrackStartTime.setChecked(prefs.isFilenameAppendTimestampOfTrackStartTime());
-        CheckBox cbTrackExportPrefs_FilenameAppendSequenceNumber = (CheckBox)findViewById(R.id.cbTrackExportPrefs_FilenameAppendSequenceNumber);
-        cbTrackExportPrefs_FilenameAppendSequenceNumber.setChecked(prefs.isFilenameAppendSequenceNumber());
+        CheckBox cbTrackExportPrefs_FilenameAppendTimestampOfFirstPosition = (CheckBox)
+        	findViewById(R.id.cbTrackExportPrefs_FilenameAppendTimestampOfFirstPosition);
+        cbTrackExportPrefs_FilenameAppendTimestampOfFirstPosition.setChecked(
+        	prefs.isFilenameAppendTimestampOfFirstPosition());
+        CheckBox cbTrackExportPrefs_FilenameAppendTimestampOfLastPosition = (CheckBox)
+        	findViewById(R.id.cbTrackExportPrefs_FilenameAppendTimestampOfLastPosition);
+        cbTrackExportPrefs_FilenameAppendTimestampOfLastPosition.setChecked(
+        	prefs.isFilenameAppendTimestampOfLastPosition());
+        CheckBox cbTrackExportPrefs_FilenameAppendSequenceNumber = (CheckBox)
+        	findViewById(R.id.cbTrackExportPrefs_FilenameAppendSequenceNumber);
+        cbTrackExportPrefs_FilenameAppendSequenceNumber.setChecked(
+        	prefs.isFilenameAppendSequenceNumber());
         EditText etTrackExportPrefs_FilenameNextSequenceNumber = (EditText)
         	findViewById(R.id.etTrackExportPrefs_FilenameNextSequenceNumber);
         etTrackExportPrefs_FilenameNextSequenceNumber.setText(
@@ -134,7 +148,8 @@ public class TrackExportPrefsActivity extends AbstractActivity {
     			this,
 		        etTrackExportPrefs_FilenamePrefix,
 		        cbTrackExportPrefs_FilenameAppendTrackName,
-		        cbTrackExportPrefs_FilenameAppendTimestampOfTrackStartTime,
+		        cbTrackExportPrefs_FilenameAppendTimestampOfFirstPosition,
+		        cbTrackExportPrefs_FilenameAppendTimestampOfLastPosition,
 		        cbTrackExportPrefs_FilenameAppendSequenceNumber,
 		        etTrackExportPrefs_FilenameNextSequenceNumber));
         btTrackExportPrefs_Cancel.setOnClickListener(
