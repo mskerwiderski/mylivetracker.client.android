@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="antPlus_NotSupported">ANT+ not supported!</string>
+    <string name="antPlus_InitError">ANT+ initialization error!</string>
+    <string name="antPlus_InUse">ANT+ radio service in use!</string>
+    <string name="antPlus_Disabled">ANT+ radio service disabled!</string>
+    <string name="antPlus_NotInstalled">ANT+ radio service not installed!</string>
+    <string name="antPlus_Suspended">ANT+ connection suspended!</string>
+    <string name="antPlus_ConnStateIdle">idle</string>
+    <string name="antPlus_ConnStateConnecting">connecting</string>
+    <string name="antPlus_ConnStateConnected">connected</string>
+    <string name="antPlus_ConnStateDisconnecting">disconnecting</string>
+    <string name="antPlus_ConnStateSearching">searching</string>     
+    <string name="antPlus_CountSensorListeners">%d listeners</string>
+</resources>

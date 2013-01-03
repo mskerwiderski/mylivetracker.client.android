@@ -5,30 +5,24 @@
     android:orientation="vertical" 
     android:background="@color/colorBackground"
 >
-    <LinearLayout 
-        android:layout_height="10dip" 
-        android:layout_width="fill_parent" 
-    />       
     <TextView 
+        android:paddingTop="10dip"
         android:paddingLeft="5dip"
         android:paddingRight="5dip"
-        android:textSize="14dip"
+        android:textSize="14sp"
         android:layout_height="wrap_content" 
         android:layout_width="wrap_content" 
-        android:text="@string/lbConnectToMyLiveTrackerPortal_Info"
+        android:text="@string/lbMyLiveTrackerPortalConnect_Info"
         android:textColor="@color/colorText" 
     />
-    <LinearLayout
-        android:layout_height="10dip" 
-        android:layout_width="fill_parent" 
-    />       
     <TextView
+        android:paddingTop="10dip"
         android:paddingLeft="5dip"
         android:paddingRight="5dip" 
-        android:textSize="16dip"
+        android:textSize="16sp"
         android:layout_height="wrap_content" 
         android:layout_width="wrap_content" 
-        android:text="@string/lbConnectToMyLiveTrackerPortal_PortalUsername"
+        android:text="@string/lbMyLiveTrackerPortalConnect_PortalUsername"
         android:textColor="@color/colorText" 
     />
     <LinearLayout 
@@ -39,17 +33,17 @@
 	        android:layout_width="fill_parent" 
 	        android:layout_height="40dip" 
 	        android:text="" 
-	        android:id="@+id/etConnectToMyLiveTrackerPortal_PortalUsername" 
+	        android:id="@+id/etMyLiveTrackerPortalConnect_PortalUsername" 
 	        android:inputType="text" 
 	    />
     </LinearLayout>
     <TextView 
         android:paddingLeft="5dip"
         android:paddingRight="5dip"
-        android:textSize="16dip"
+        android:textSize="16sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" 
-        android:text="@string/lbConnectToMyLiveTrackerPortal_PortalPassword" 
+        android:text="@string/lbMyLiveTrackerPortalConnect_PortalPassword" 
         android:textColor="@color/colorText"
     />
     <LinearLayout 
@@ -60,7 +54,7 @@
 	        android:layout_width="fill_parent" 
 	        android:text="" 
 	        android:layout_height="40dip" 
-	        android:id="@+id/etConnectToMyLiveTrackerPortal_PortalPassword" 
+	        android:id="@+id/etMyLiveTrackerPortalConnect_PortalPassword" 
 	        android:inputType="textPassword" 
 	    />
     </LinearLayout>
@@ -73,7 +67,7 @@
             android:layout_weight="1" 
             android:layout_height="50dip" 
             android:text="@string/btOk" 
-            android:id="@+id/btConnectToMyLiveTrackerPortal_Ok" 
+            android:id="@+id/btMyLiveTrackerPortalConnect_Ok" 
         />
         <Button 
             android:layout_width="fill_parent" 
@@ -81,7 +75,7 @@
             android:layout_weight="1" 
             android:layout_height="50dip" 
             android:text="@string/btCancel" 
-            android:id="@+id/btConnectToMyLiveTrackerPortal_Cancel" 
+            android:id="@+id/btMyLiveTrackerPortalConnect_Cancel" 
         />
     </LinearLayout>   
 </LinearLayout>

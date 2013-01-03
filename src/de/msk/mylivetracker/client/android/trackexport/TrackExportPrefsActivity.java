@@ -63,7 +63,7 @@ public class TrackExportPrefsActivity extends AbstractActivity {
 					R.string.fdTrackExportPrefs_FilenameNextSequenceNumber, 
 					etTrackExportPrefs_FilenameNextSequenceNumber, 
 					true, 
-					1, prefs.getMaxDigitsOfSequenceNumber(), true);			
+					0, prefs.getMaxDigitsOfSequenceNumber(), true);			
 			
 			if (valid) {
 				prefs.setFilenameAppendSequenceNumber(

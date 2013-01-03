@@ -12,16 +12,16 @@ import android.os.Message;
 import android.widget.Button;
 import android.widget.EditText;
 import de.msk.mylivetracker.client.android.App;
-import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.App.ConfigDsc;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractInfoDialog;
 import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
 import de.msk.mylivetracker.client.android.util.listener.OnFinishActivityListener;
 import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
-import de.msk.mylivetracker.commons.rpc.ConnectToMyLiveTrackerPortalRequest;
-import de.msk.mylivetracker.commons.rpc.ConnectToMyLiveTrackerPortalResponse;
+import de.msk.mylivetracker.commons.rpc.RegisterSenderRequest;
+import de.msk.mylivetracker.commons.rpc.RegisterSenderResponse;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;
 import de.msk.mylivetracker.commons.util.md5.MD5;
 
@@ -40,17 +40,17 @@ public class MyLiveTrackerPortalConnectActivity extends AbstractActivity {
 	
 	private static final class OnClickButtonOkListener extends ASafeOnClickListener {
 		private MyLiveTrackerPortalConnectActivity activity;
-		private EditText etConnectToMyLiveTrackerPortal_PortalUsername;
-		private EditText etConnectToMyLiveTrackerPortal_PortalPassword;
+		private EditText etMyLiveTrackerPortalConnect_PortalUsername;
+		private EditText etMyLiveTrackerPortalConnect_PortalPassword;
 		private ProgressDialogHandler progressDialogHandler;
 		
 		public OnClickButtonOkListener(
 			MyLiveTrackerPortalConnectActivity activity,
-			EditText etConnectToMyLiveTrackerPortal_PortalUsername,
-			EditText etConnectToMyLiveTrackerPortal_PortalPassword) {
+			EditText etMyLiveTrackerPortalConnect_PortalUsername,
+			EditText etMyLiveTrackerPortalConnect_PortalPassword) {
 			this.activity = activity;
-			this.etConnectToMyLiveTrackerPortal_PortalUsername = etConnectToMyLiveTrackerPortal_PortalUsername;
-			this.etConnectToMyLiveTrackerPortal_PortalPassword = etConnectToMyLiveTrackerPortal_PortalPassword;		
+			this.etMyLiveTrackerPortalConnect_PortalUsername = etMyLiveTrackerPortalConnect_PortalUsername;
+			this.etMyLiveTrackerPortalConnect_PortalPassword = etMyLiveTrackerPortalConnect_PortalPassword;		
 			this.progressDialogHandler = new ProgressDialogHandler(this.activity);
 		}
 	
@@ -61,41 +61,41 @@ public class MyLiveTrackerPortalConnectActivity extends AbstractActivity {
 			valid = valid && 
 				ValidatorUtils.validateEditTextString(
 					this.activity, 
-					R.string.fdConnectToMyLiveTrackerPortal_PortalUsername, 
-					etConnectToMyLiveTrackerPortal_PortalUsername, 
+					R.string.fdMyLiveTrackerPortalConnect_PortalUsername, 
+					etMyLiveTrackerPortalConnect_PortalUsername, 
 					3, 30, true) &&
 				ValidatorUtils.validateEditTextString(
 					this.activity, 
-					R.string.fdConnectToMyLiveTrackerPortal_PortalPassword, 
-					etConnectToMyLiveTrackerPortal_PortalPassword, 
+					R.string.fdMyLiveTrackerPortalConnect_PortalPassword, 
+					etMyLiveTrackerPortalConnect_PortalPassword, 
 					3, 30, true);	
 							
 			if (valid) {				
 				ProgressDialogHandler.openProgressDialog(
 					this.progressDialogHandler); 
 		        
-				MyLiveTrackerPortalConnectTask connectToMyLiveTrackerTask = 
+				MyLiveTrackerPortalConnectTask myLiveTrackerPortalConnectTask = 
 					new MyLiveTrackerPortalConnectTask(this.progressDialogHandler);
 						
 				String hashedPassword = "";
 				try {
 					MD5 md5 = new MD5();
 					md5.Update(
-						etConnectToMyLiveTrackerPortal_PortalUsername.getText().toString() + ":" +
+						etMyLiveTrackerPortalConnect_PortalUsername.getText().toString() + ":" +
 						ConfigDsc.getRealm() + ":" +
-						etConnectToMyLiveTrackerPortal_PortalPassword.getText().toString(), null);
+						etMyLiveTrackerPortalConnect_PortalPassword.getText().toString(), null);
 					hashedPassword = md5.asHex();
 				} catch (UnsupportedEncodingException e) {
 					throw new RuntimeException(e);
 				}
 
-				ConnectToMyLiveTrackerPortalRequest request = new ConnectToMyLiveTrackerPortalRequest(
+				RegisterSenderRequest request = new RegisterSenderRequest(
             		MainActivity.getLocale().getLanguage(), 
 					App.getDeviceId(), 
 					android.os.Build.MANUFACTURER + " " + android.os.Build.MODEL,
-					etConnectToMyLiveTrackerPortal_PortalUsername.getText().toString(),
+					etMyLiveTrackerPortalConnect_PortalUsername.getText().toString(),
 					hashedPassword, DateTime.TIME_ZONE_GERMANY);
-	            connectToMyLiveTrackerTask.execute(request);				
+				myLiveTrackerPortalConnectTask.execute(request);				
 			}
 		}		
 	}
@@ -115,13 +115,13 @@ public class MyLiveTrackerPortalConnectActivity extends AbstractActivity {
 			if (success) {
 				this.activity.finish();
 			} else {
-				EditText etConnectToMyLiveTrackerPortal_PortalUsername = 
-					(EditText)this.activity.findViewById(R.id.etConnectToMyLiveTrackerPortal_PortalUsername);
-				etConnectToMyLiveTrackerPortal_PortalUsername.setText("");
-				etConnectToMyLiveTrackerPortal_PortalUsername.requestFocus();
-		        EditText etConnectToMyLiveTrackerPortal_PortalPassword = 
-		        	(EditText)this.activity.findViewById(R.id.etConnectToMyLiveTrackerPortal_PortalPassword);
-		        etConnectToMyLiveTrackerPortal_PortalPassword.setText("");
+				EditText etMyLiveTrackerPortalConnect_PortalUsername = 
+					(EditText)this.activity.findViewById(R.id.etMyLiveTrackerPortalConnect_PortalUsername);
+				etMyLiveTrackerPortalConnect_PortalUsername.setText("");
+				etMyLiveTrackerPortalConnect_PortalUsername.requestFocus();
+		        EditText etMyLiveTrackerPortalConnect_PortalPassword = 
+		        	(EditText)this.activity.findViewById(R.id.etMyLiveTrackerPortalConnect_PortalPassword);
+		        etMyLiveTrackerPortalConnect_PortalPassword.setText("");
 			}
 		}		
 	}
@@ -139,7 +139,7 @@ public class MyLiveTrackerPortalConnectActivity extends AbstractActivity {
 	        handler.sendMessage(msg);
 		}
 		public static void closeProgressDialog(
-			ProgressDialogHandler handler, ConnectToMyLiveTrackerPortalResponse response) {
+			ProgressDialogHandler handler, RegisterSenderResponse response) {
 			Message msg = handler.obtainMessage();
 	        msg.what = ProgressDialogHandler.MESSAGE_CLOSE_PROGRESS_DIALOG;
 	        msg.obj = response;
@@ -155,14 +155,14 @@ public class MyLiveTrackerPortalConnectActivity extends AbstractActivity {
             	this.progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             	this.progressDialog.setCancelable(false);
             	this.progressDialog.setMessage(
-            		this.activity.getString(R.string.lbConnectToMyLiveTrackerPortal_ProgressDialog));
+            		this.activity.getString(R.string.lbMyLiveTrackerPortalConnect_ProgressDialog));
             	this.progressDialog.show();
             } else if (code == MESSAGE_CLOSE_PROGRESS_DIALOG){            	
             	this.progressDialog.dismiss();
             	this.progressDialog = null;
-            	ConnectToMyLiveTrackerPortalResponse response = (ConnectToMyLiveTrackerPortalResponse)msg.obj;
+            	RegisterSenderResponse response = (RegisterSenderResponse)msg.obj;
                 String message = this.activity.getString(
-                	R.string.txConnectToMyLiveTrackerPortal_InfoConnectingDone);
+                	R.string.txMyLiveTrackerPortalConnect_InfoConnectingDone);
                 if (!response.getResultCode().isSuccess()) {
 	                message = "[" + response.getResultCode().getCode() + "] " + 
     					response.getResultMessage();
@@ -182,27 +182,27 @@ public class MyLiveTrackerPortalConnectActivity extends AbstractActivity {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.connect_to_mylivetracker_portal);
-        this.setTitle(R.string.tiConnectToMyLiveTrackerPortal);
+        setContentView(R.layout.mylivetrackerportal_connect);
+        this.setTitle(R.string.tiMyLiveTrackerPortalConnect);
         
-        EditText etConnectToMyLiveTrackerPortal_PortalUsername = 
-        	(EditText)findViewById(R.id.etConnectToMyLiveTrackerPortal_PortalUsername);
-        etConnectToMyLiveTrackerPortal_PortalUsername.setText("");
-        etConnectToMyLiveTrackerPortal_PortalUsername.requestFocus();
+        EditText etMyLiveTrackerPortalConnect_PortalUsername = 
+        	(EditText)findViewById(R.id.etMyLiveTrackerPortalConnect_PortalUsername);
+        etMyLiveTrackerPortalConnect_PortalUsername.setText("");
+        etMyLiveTrackerPortalConnect_PortalUsername.requestFocus();
         
-        EditText etConnectToMyLiveTrackerPortal_PortalPassword = 
-        	(EditText)findViewById(R.id.etConnectToMyLiveTrackerPortal_PortalPassword);
-        etConnectToMyLiveTrackerPortal_PortalPassword.setText("");
+        EditText etMyLiveTrackerPortalConnect_PortalPassword = 
+        	(EditText)findViewById(R.id.etMyLiveTrackerPortalConnect_PortalPassword);
+        etMyLiveTrackerPortalConnect_PortalPassword.setText("");
         
-        Button btConnectToMyLiveTrackerPortal_Ok = (Button) findViewById(R.id.btConnectToMyLiveTrackerPortal_Ok);
-        Button btConnectToMyLiveTrackerPortal_Cancel = (Button) findViewById(R.id.btConnectToMyLiveTrackerPortal_Cancel);
+        Button btMyLiveTrackerPortalConnect_Ok = (Button) findViewById(R.id.btMyLiveTrackerPortalConnect_Ok);
+        Button btMyLiveTrackerPortalConnect_Cancel = (Button) findViewById(R.id.btMyLiveTrackerPortalConnect_Cancel);
                     		
-        btConnectToMyLiveTrackerPortal_Ok.setOnClickListener(
+        btMyLiveTrackerPortalConnect_Ok.setOnClickListener(
 			new OnClickButtonOkListener(this, 
-				etConnectToMyLiveTrackerPortal_PortalUsername,
-				etConnectToMyLiveTrackerPortal_PortalPassword));
+				etMyLiveTrackerPortalConnect_PortalUsername,
+				etMyLiveTrackerPortalConnect_PortalPassword));
 		
-        btConnectToMyLiveTrackerPortal_Cancel.setOnClickListener(
+        btMyLiveTrackerPortalConnect_Cancel.setOnClickListener(
 			new OnFinishActivityListener(this));
     }
 }

@@ -33,7 +33,6 @@ import de.msk.mylivetracker.client.android.remoteaccess.RemoteAccessPrefsActivit
 import de.msk.mylivetracker.client.android.server.ServerPrefsActivity;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.trackexport.TrackExportActivity;
-import de.msk.mylivetracker.client.android.util.dialog.AbstractInfoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractProgressDialog;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
@@ -113,18 +112,6 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 		}
 	}
 	
-	private static final class IsProFeatureDialog extends AbstractInfoDialog {
-
-		public IsProFeatureDialog(AbstractMainActivity activity) {
-			super(activity, R.string.txIsProFeature);
-		}
-
-		@Override
-		public void onOk() {
-			// noop.
-		}
-	}
-	
 	public static boolean showStartStopInfoDialogIfInAutoMode() {
 		if (PrefsRegistry.get(AutoPrefs.class).isAutoModeEnabled()) {
 			SimpleInfoDialog.show(MainActivity.get(), 
@@ -146,12 +133,6 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 		}
 	}
 
-	@SuppressWarnings("unused")
-	private void showIsProFeatureDialog() {
-		IsProFeatureDialog dlg = new IsProFeatureDialog(this);
-		dlg.show();
-	}
-	
 	private LocationManager locationManager;
 
 	public LocationManager getLocationManager() {

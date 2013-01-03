@@ -3,8 +3,8 @@ package de.msk.mylivetracker.client.android.mylivetrackerportal;
 import java.net.URL;
 
 import android.os.AsyncTask;
-import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.App.ConfigDsc;
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.account.AccountPrefs;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.mylivetrackerportal.MyLiveTrackerPortalConnectActivity.ProgressDialogHandler;
@@ -14,8 +14,8 @@ import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs.BufferSize;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs.TransferProtocol;
 import de.msk.mylivetracker.client.android.rpc.JsonRpcHttpClient;
 import de.msk.mylivetracker.client.android.server.ServerPrefs;
-import de.msk.mylivetracker.commons.rpc.ConnectToMyLiveTrackerPortalRequest;
-import de.msk.mylivetracker.commons.rpc.ConnectToMyLiveTrackerPortalResponse;
+import de.msk.mylivetracker.commons.rpc.RegisterSenderRequest;
+import de.msk.mylivetracker.commons.rpc.RegisterSenderResponse;
 import de.msk.mylivetracker.commons.rpc.RpcResponse.ResultCode;
 
 /**
@@ -30,7 +30,7 @@ import de.msk.mylivetracker.commons.rpc.RpcResponse.ResultCode;
  * 
  */
 public class MyLiveTrackerPortalConnectTask extends
-	AsyncTask<ConnectToMyLiveTrackerPortalRequest, Integer, ConnectToMyLiveTrackerPortalResponse> {
+	AsyncTask<RegisterSenderRequest, Integer, RegisterSenderResponse> {
 
 	private ProgressDialogHandler progressDialogHandler = null;
 	
@@ -39,8 +39,8 @@ public class MyLiveTrackerPortalConnectTask extends
 	}
 	
 	@Override
-	protected ConnectToMyLiveTrackerPortalResponse doInBackground(ConnectToMyLiveTrackerPortalRequest... requests) {
-		ConnectToMyLiveTrackerPortalResponse response = null;
+	protected RegisterSenderResponse doInBackground(RegisterSenderRequest... requests) {
+		RegisterSenderResponse response = null;
 		ServerPrefs serverPrefs = PrefsRegistry.get(ServerPrefs.class);
 		ProtocolPrefs protocolPrefs = PrefsRegistry.get(ProtocolPrefs.class);
 		try {	
@@ -51,8 +51,9 @@ public class MyLiveTrackerPortalConnectTask extends
 				ConfigDsc.getPortalRpcUrl()));
 			rcpClient.setConnectionTimeoutMillis(10000);
 			rcpClient.setReadTimeoutMillis(5000);
-			response = (ConnectToMyLiveTrackerPortalResponse) rcpClient.invoke("connectToMyLiveTrackerPortal",
-				new Object[] { requests[0] }, ConnectToMyLiveTrackerPortalResponse.class);
+			response = (RegisterSenderResponse) rcpClient.invoke(
+				requests[0].getMethodName(),
+				new Object[] { requests[0] }, RegisterSenderResponse.class);
 			
 			if (response.getResultCode().isSuccess()) {				
 				protocolPrefs.setTransferProtocol(TransferProtocol.mltTcpEncrypted);
@@ -71,14 +72,14 @@ public class MyLiveTrackerPortalConnectTask extends
 	        	PrefsRegistry.save(ServerPrefs.class);
 			}
 		} catch (Throwable e) {
-			response = new ConnectToMyLiveTrackerPortalResponse(MainActivity.getLocale().getLanguage(),
+			response = new RegisterSenderResponse(MainActivity.getLocale().getLanguage(),
 				ResultCode.InternalServerError, e.getMessage());
 		}
 		return response;
 	}
 
 	@Override
-	protected void onPostExecute(ConnectToMyLiveTrackerPortalResponse response) {
+	protected void onPostExecute(RegisterSenderResponse response) {
 		ProgressDialogHandler.closeProgressDialog(
 			progressDialogHandler, response);				
 		super.onPostExecute(response);

@@ -6,32 +6,18 @@
     android:background="@color/colorBackground"
 >
     <LinearLayout 
-        android:paddingTop="20dip"
+        android:paddingTop="10dip"
     	android:layout_height="wrap_content"
     	android:layout_width="fill_parent" 
     	android:orientation="vertical" 
     	android:layout_gravity="center">
         <ImageView 
         	android:src="@drawable/icon" 
-        	android:layout_height="100dp"
+        	android:layout_height="100dip"
         	android:layout_width="wrap_content" 
         	android:layout_gravity="center" 
         	android:contentDescription="@string/app_name"
         />       
-    </LinearLayout>
-    <LinearLayout     
-        android:paddingTop="20dip"
-    	android:layout_width="fill_parent" 
-    	android:layout_height="wrap_content" 
-    	android:orientation="vertical" 
-    	android:layout_gravity="center">
-        <TextView 
-        	android:text="@string/app_name"
-			android:layout_height="wrap_content"  
-			android:layout_width="wrap_content" 
-			android:layout_gravity="center" 
-			android:textColor="@color/colorText"
-		/>       
     </LinearLayout>
     <LinearLayout     
     	android:layout_width="fill_parent" 

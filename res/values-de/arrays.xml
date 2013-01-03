@@ -102,7 +102,9 @@
  	    <item>Laufzeit netto (MSecs)</item>
  	    <item>Laufzeit brutto (MSecs)</item>
  	    <item>Benutzername</item>
- 	    <item>Passwort (verschlüsselt)</item>
+ 	    <item>Passwort (Klartext)</item>
+ 	    <item>Passwort (MD5)</item>
+ 	    <item>Passwort (GpsGate)</item>
  	    <item>Aktuelle HF (Bpm)</item>
  	    <item>Minimale HF (Bpm)</item>
         <item>Maximale HF (Bpm)</item>

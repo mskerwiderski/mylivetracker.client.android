@@ -21,6 +21,7 @@ import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.upload.protocol.HttpProtocolUtils;
 import de.msk.mylivetracker.client.android.upload.protocol.IProtocol;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;
+import de.msk.mylivetracker.commons.util.password.PasswordEncoderForGpsGatePortal;
 
 /**
  * classname: ProtocolEncoder
@@ -147,8 +148,19 @@ public class ProtocolEncoder implements IProtocol {
 		} 
 		if (!StringUtils.isEmpty(accountPrefs.getPassword())) {
 			paramsStr = HttpProtocolUtils.addParam(paramsStr, 
-				params.getParamDsc(ParamId.Password), 
+				params.getParamDsc(ParamId.PasswordPlainText), 
+				accountPrefs.getPassword());
+		}
+		if (!StringUtils.isEmpty(accountPrefs.getPassword())) {
+			paramsStr = HttpProtocolUtils.addParam(paramsStr, 
+				params.getParamDsc(ParamId.PasswordMd5), 
 				accountPrefs.getSeed());
+		}
+		if (!StringUtils.isEmpty(accountPrefs.getPassword())) {
+			paramsStr = HttpProtocolUtils.addParam(paramsStr, 
+				params.getParamDsc(ParamId.PasswordGpsGate), 
+				PasswordEncoderForGpsGatePortal.encode(
+					accountPrefs.getPassword()));
 		}
 		
 		if (heartrateInfo != null) {

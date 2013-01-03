@@ -3,8 +3,6 @@
 	<!-- Application name -->
     <string name="app_name">MyLiveTracker</string>
     
-    <string name="txIsProFeature">This feature is available only in the PRO version of MyLiveTracker!</string>
-        	
     <!-- Welcome message -->
     <string name="welcomeMessage">Welcome to %1$s. If you have questions or need support, please visit our forum at http://forum.mylivetracker.info!</string>
         
@@ -59,20 +57,6 @@
     <string name="mnInfo">Info</string>
     <string name="mnExit">Exit</string>
         
-    <!-- antPlus -->
-    <string name="antPlus_NotSupported">ANT+ not supported!</string>
-    <string name="antPlus_InitError">ANT+ initialization error!</string>
-    <string name="antPlus_InUse">ANT+ radio service in use!</string>
-    <string name="antPlus_Disabled">ANT+ radio service disabled!</string>
-    <string name="antPlus_NotInstalled">ANT+ radio service not installed!</string>
-    <string name="antPlus_Suspended">ANT+ connection suspended!</string>
-    <string name="antPlus_ConnStateIdle">idle</string>
-    <string name="antPlus_ConnStateConnecting">connecting</string>
-    <string name="antPlus_ConnStateConnected">connected</string>
-    <string name="antPlus_ConnStateDisconnecting">disconnecting</string>
-    <string name="antPlus_ConnStateSearching">searching</string>     
-    <string name="antPlus_CountSensorListeners">%d listeners</string>
-    
     <!-- location listener -->
     <string name="locListener_Listening">searching</string>
     <string name="locListener_ProviderNotAvailable">N.A.</string>
@@ -83,74 +67,6 @@
     <string name="txMain_UploadResultInvalid">INV</string>
     <string name="txMain_UploadResultError">ERR</string>
     <string name="txMain_UploadResultMltError">MRR</string>
-    
-    <!-- main -->
-    <string name="tiMain">Track</string>    
-    <string name="tvMain_AutoStartIndicator">A.Start</string>
-    <string name="tvMain_AutoModeIndicator">A.Mode</string>
-    <string name="tvMain_LocalizationIndicator">Pos</string>
-    <string name="tvMain_WirelessLanIndicator">WLAN</string>
-    <string name="tvMain_MobileNetworkIndicator">Data</string>
-    <string name="btMain_LocationListener">Loc.</string>
-    <string name="btMain_Tracking">Tracking</string>    
-    <string name="btMain_ResetTrack">Reset</string>
-    <string name="btMain_AntPlus">ANT+</string>
-    <string name="btMain_SendSos">SOS</string>
-    <string name="btMain_SendMessage">Message</string>
-    <string name="tvMain_Runtime">Runtime</string>
-    <string name="tvMain_Distance">Distance</string>
-    <string name="tvMain_Heartrate">Heartrate</string>
-    <string name="tvMain_Location">Location</string>
-    <string name="tvMain_Uploader">Uploader</string>
-    <string name="txMain_QuestionStartLocalization">Do you really want to start localization?</string>
-    <string name="txMain_QuestionStopLocalization">Do you really want to stop localization?</string>
-    <string name="txMain_QuestionStartTrack">Do you really want to start the track?</string>
-    <string name="txMain_QuestionStopTrack">Do you really want to stop the track?</string>
-    <string name="txMain_InfoStartingTracking">Starting the track&#8230;</string>
-    <string name="txMain_InfoStartTrackDone">Start track done!</string>
-    <string name="txMain_InfoStoppingTracking">Stopping the track&#8230;</string>
-    <string name="txMain_InfoStopTrackDone">Stop track done!</string>
-    <string name="txMain_QuestionStartAntPlus">Do you really want to activate Ant+?</string>
-    <string name="txMain_QuestionStopAntPlus">Do you really want to deactivate Ant+?</string>
-    <string name="txMain_QuestionResetTrack">Do you really want to reset the track?</string>
-    <string name="txMain_InfoResettingTracking">Resetting the track&#8230;</string>
-    <string name="txMain_InfoResetTrackDone">Reset track done!</string>               
-    <string name="txMain_QuestionSendSosSignal">Do you really want to send a SOS signal?</string>    
-    <string name="txMain_InfoSendSosSignalDone">Send SOS signal done!</string>    
-    <string name="txMain_QuestionExit">Do you really want to exit MyLiveTracker?</string>   
-    <string name="txMain_InfoExitApp">MyLiveTracker is terminated&#8230;</string>
-    <string name="txMain_SendMessageNotSupportedByTransferProtocol">Send messages is not supported by selected transfer protocol (%1$s).</string>
-    <string name="txMain_SendEmergencySignalNotSupportedByTransferProtocol">Send SOS signals is not supported by selected transfer protocol (%1$s).</string>
-    
-    <!-- main details -->
-    <string name="tiMainDetails">Details</string>
-    <string name="tvMainDetails_Uploader">Upl</string>
-    <string name="tvMainDetails_UploaderCountUploaded">Count</string>
-    <string name="tvMainDetails_UploaderRealInterval">Intv</string>
-    <string name="tvMainDetails_UploaderAverageUploadTime">Utime</string>
-    <string name="tvMainDetails_UploaderPositionsInBuffer">Buffer</string>    
-    <string name="tvMainDetails_Battery">Batt</string>
-    <string name="tvMainDetails_BatteryStatus">Status</string>
-    <string name="tvMainDetails_BatteryCharged">Charged</string>
-    <string name="tvMainDetails_BatteryPower">Power</string>
-    <string name="tvMainDetails_BatteryTemperature">Temp</string>
-    <string name="tvMainDetails_MobileNetwork">MNw</string>
-    <string name="tvMainDetails_MobileNetworkMCC">MCC</string>
-    <string name="tvMainDetails_MobileNetworkMNC">MNC</string>
-    <string name="tvMainDetails_MobileNetworkLAC">LAC</string>
-    <string name="tvMainDetails_MobileNetworkCellId">Cell</string>
-    <string name="tvMainDetails_Location">Loc</string>
-    <string name="tvMainDetails_LocationSatCount">Sat</string>
-    <string name="tvMainDetails_LocationAccuracy">Acc</string>
-    <string name="tvMainDetails_LocationLatitude">Lat</string>
-    <string name="tvMainDetails_LocationLongitude">Lon</string>
-    <string name="tvMainDetails_Heartrate">HR</string>
-    <string name="tvMainDetails_HeartrateCurrent">Curr</string>
-    <string name="tvMainDetails_HeartrateMinimum">Min</string>
-    <string name="tvMainDetails_HeartrateAverage">Avg</string>
-    <string name="tvMainDetails_HeartrateMaximum">Max</string>
-    <string name="tvMainDetails_Message">Msg</string>
-    <string name="tvMainDetails_Emergency">SOS</string>
     
     <!-- message -->
     <string name="tiMsg">Send message</string>
@@ -165,21 +81,6 @@
     <!-- preferences commons -->
     <string name="txPrefs_InfoAutoModeEnabled">Manual resetting, starting/stopping of tracking, localization or hr-measuring is not possible in auto mode!</string>
     <string name="txPrefs_WarningChangePrefsDuringRunningTrack">Changing the preferences during a running track can lead to an unexpected behavior!</string>
-    
-    <!-- connect to MyLiveTracker Portal -->
-    <string name="tiConnectToMyLiveTrackerPortal">Connect to MyLiveTracker portal</string>
-    <string name="lbConnectToMyLiveTrackerPortal_Info">
-    	Please note:
-    	\n* Connecting to MyLiveTracker portal will override the server and account preferences.
-    	\n* Connecting to MyLiveTracker portal requires a valid MyLiveTracker portal account. 
-		An account can be applied at support@mylivetracker.de.
-    </string>          
-	<string name="lbConnectToMyLiveTrackerPortal_PortalUsername">Portal username</string>
-    <string name="fdConnectToMyLiveTrackerPortal_PortalUsername">Portal username</string>
-    <string name="lbConnectToMyLiveTrackerPortal_PortalPassword">Portal password</string>
-    <string name="fdConnectToMyLiveTrackerPortal_PortalPassword">Portal password</string>
-    <string name="lbConnectToMyLiveTrackerPortal_ProgressDialog">Connecting to MyLiveTracker portal&#8230;</string>  
-    <string name="txConnectToMyLiveTrackerPortal_InfoConnectingDone">Connecting to MyLiveTracker portal successfully done!</string>  
     
     <!-- validators -->
     <string name="validator.locationProviderNotSupported">Location provider %1$s is not supported on this device!</string>

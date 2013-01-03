@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tiMain">Track</string>    
+    <string name="tvMain_AutoStartIndicator">A.Start</string>
+    <string name="tvMain_AutoModeIndicator">A.Mode</string>
+    <string name="tvMain_LocalizationIndicator">Pos</string>
+    <string name="tvMain_WirelessLanIndicator">WLAN</string>
+    <string name="tvMain_MobileNetworkIndicator">Data</string>
+    <string name="btMain_LocationListener">Loc.</string>
+    <string name="btMain_Tracking">Tracking</string>    
+    <string name="btMain_ResetTrack">Reset</string>
+    <string name="btMain_AntPlus">ANT+</string>
+    <string name="btMain_SendSos">SOS</string>
+    <string name="btMain_SendMessage">SMS</string>
+    <string name="tvMain_Runtime">Runtime</string>
+    <string name="tvMain_Distance">Distance</string>
+    <string name="tvMain_Heartrate">Heartrate</string>
+    <string name="tvMain_Location">Location</string>
+    <string name="tvMain_Uploader">Uploader</string>
+    <string name="txMain_QuestionStartLocalization">Do you really want to start localization?</string>
+    <string name="txMain_QuestionStopLocalization">Do you really want to stop localization?</string>
+    <string name="txMain_QuestionStartTrack">Do you really want to start the track?</string>
+    <string name="txMain_QuestionStopTrack">Do you really want to stop the track?</string>
+    <string name="txMain_InfoStartingTracking">Starting the track&#8230;</string>
+    <string name="txMain_InfoStartTrackDone">Start track done!</string>
+    <string name="txMain_InfoStoppingTracking">Stopping the track&#8230;</string>
+    <string name="txMain_InfoStopTrackDone">Stop track done!</string>
+    <string name="txMain_QuestionStartAntPlus">Do you really want to activate Ant+?</string>
+    <string name="txMain_QuestionStopAntPlus">Do you really want to deactivate Ant+?</string>
+    <string name="txMain_QuestionResetTrack">Do you really want to reset the track?</string>
+    <string name="txMain_InfoResettingTracking">Resetting the track&#8230;</string>
+    <string name="txMain_InfoResetTrackDone">Reset track done!</string>               
+    <string name="txMain_QuestionSendSosSignal">Do you really want to send a SOS signal?</string>    
+    <string name="txMain_InfoSendSosSignalDone">Send SOS signal done!</string>    
+    <string name="txMain_QuestionExit">Do you really want to exit MyLiveTracker?</string>   
+    <string name="txMain_InfoExitApp">MyLiveTracker is terminated&#8230;</string>
+    <string name="txMain_SendMessageNotSupportedByTransferProtocol">Send messages is not supported by selected transfer protocol (%1$s).</string>
+    <string name="txMain_SendEmergencySignalNotSupportedByTransferProtocol">Send SOS signals is not supported by selected transfer protocol (%1$s).</string>
+</resources>

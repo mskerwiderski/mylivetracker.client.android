@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tiMyLiveTrackerPortalConnect">Koppeln mit MyLiveTracker Portal</string>
+    <string name="lbMyLiveTrackerPortalConnect_Info">
+    	Hinweis:
+    	\n* Durch das Koppeln mit dem MyLiveTracker Portal, werden die Server- und Zugangseinstellungen überschrieben. 
+    	\n* Eine Koppelung mit dem MyLiveTracker Portal erfordert einen MyLiveTracker Portal-Zugang. 
+		Einen Zugang können Sie unter support@mylivetracker.de anfordern.
+    </string>          
+	<string name="lbMyLiveTrackerPortalConnect_PortalUsername">Portal Benutzername</string>
+    <string name="fdMyLiveTrackerPortalConnect_PortalUsername">Portal Benutzername</string>
+    <string name="lbMyLiveTrackerPortalConnect_PortalPassword">Portal Passwort</string>
+    <string name="fdMyLiveTrackerPortalConnect_PortalPassword">Portal Passwort</string>
+    <string name="lbMyLiveTrackerPortalConnect_ProgressDialog">Die Koppelung mit dem MyLiveTracker Portal wird hergestellt&#8230;</string>  
+    <string name="txMyLiveTrackerPortalConnect_InfoConnectingDone">Die Koppelung mit dem MyLiveTracker Portal wurde erfolgreich hergestellt!</string>  
+</resources>
