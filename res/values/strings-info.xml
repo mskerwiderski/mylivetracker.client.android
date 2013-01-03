@@ -2,9 +2,9 @@
 <resources>
     <string name="tiInfo">Info</string>
     <string name="tvInfo_Mileage">Overall mileage</string>
-    <string name="tvInfo_Copyright1">&#169; 2012 Motomara (Liontrack)</string>
-    <string name="tvInfo_Copyright2">all rights reserved</string>
-    <string name="tvInfo_EmailAddress">support@motomara.com.au</string>
+    <string name="tvInfo_Copyright1">&#169; 2013 Liontrack</string>
+    <string name="tvInfo_Copyright2">All rights reserved</string>
+    <string name="tvInfo_EmailAddress">support@liontrack.net.au</string>
     <string name="tvInfo_ForumUrl"></string>
     <string name="tvInfo_Separator">* * *</string>
 </resources>

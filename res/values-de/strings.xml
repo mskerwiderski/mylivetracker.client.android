@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<!-- Application name -->
-    <string name="app_name">Liontracker</string>
+    <string name="app_name">LionSense</string>
         	 
     <!-- Welcome message -->
     <string name="welcomeMessage">Willkommen zu %1$s. Wenn Sie Fragen haben oder Unterstützung benötigen, kontaktieren Sie uns unter support@motomara.com.au!</string>
        
     <!-- preferences -->
-    <string name="prefsImportedFromV144">Bitte überprüfen Sie die Einstellungen! Die Einstellungen wurden von einer alten Liontracker Version importiert!</string>
-    <string name="prefsCreated">Bitte überprüfen Sie die Einstellungen! Da Sie Liontracker das erste Mal benutzen, wurden alle Einstellungen auf Standardwerte gesetzt!</string>  
-    <string name="prefsUpdated">Bitte überprüfen Sie die Einstellungen! Mit der neuen Version von Liontracker sind evtl. neue Einstellungen hinzugekommen oder haben sich geändert!</string> 
+    <string name="prefsImportedFromV144">Bitte überprüfen Sie die Einstellungen! Die Einstellungen wurden von einer alten LionSense Version importiert!</string>
+    <string name="prefsCreated">Bitte überprüfen Sie die Einstellungen! Da Sie LionSense das erste Mal benutzen, wurden alle Einstellungen auf Standardwerte gesetzt!</string>  
+    <string name="prefsUpdated">Bitte überprüfen Sie die Einstellungen! Mit der neuen Version von LionSense sind evtl. neue Einstellungen hinzugekommen oder haben sich geändert!</string> 
         
     <!-- commons -->
     <string name="btSave">Speichern</string>
@@ -115,8 +115,8 @@
     <string name="txMain_InfoResetTrackDone">Der Track wurde zurückgesetzt!</string>               
     <string name="txMain_QuestionSendSosSignal">Wollen Sie wirklich ein SOS Signal senden?</string>    
     <string name="txMain_InfoSendSosSignalDone">Ein SOS Signal wurde gesendet!</string>    
-    <string name="txMain_QuestionExit">Wollen Sie Liontracker wirklich beenden?</string>    
-    <string name="txMain_InfoExitApp">Liontracker wird beendet&#8230;</string>
+    <string name="txMain_QuestionExit">Wollen Sie LionSense wirklich beenden?</string>    
+    <string name="txMain_InfoExitApp">LionSense wird beendet&#8230;</string>
     <string name="txMain_SendMessageNotSupportedByTransferProtocol">Der Nachrichtenversand wird vom eingestellten Übertragungsprotokoll (%1$s) nicht unterstützt.</string>
     <string name="txMain_SendEmergencySignalNotSupportedByTransferProtocol">Der Versand von Notrufsignalen wird vom eingestellten Übertragungsprotokoll (%1$s) nicht unterstützt.</string>    
     

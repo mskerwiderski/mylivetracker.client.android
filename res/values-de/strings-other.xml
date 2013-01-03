@@ -9,6 +9,6 @@
     <string name="btOtherPrefs_ResetToFactoryDefaults">Auf Werkseinstellungen zurücksetzen</string>
     <string name="txOtherPrefs_QuestionResetToFactoryDefaults">Wollen Sie wirklich auf die Werkseinstellungen zurücksetzen?</string>
     <string name="txOtherPrefs_QuestionResetOverallMileage">Wollen Sie den Kilometerzähler wirklich zurücksetzen?</string>
-    <string name="txOtherPrefs_InfoResetToFactoryDefaultsDone">MyLiveTracker wurde auf die Werkseinstellungen zurückgesetzt! Bitte starten Sie die Anwendung neu!</string>
+    <string name="txOtherPrefs_InfoResetToFactoryDefaultsDone">LionSense wurde auf die Werkseinstellungen zurückgesetzt! Bitte starten Sie die Anwendung neu!</string>
     <string name="txOtherPrefs_InfoResetOverallMileageDone">Der Kilometerzähler wurde zurückgesetzt!</string>
 </resources>

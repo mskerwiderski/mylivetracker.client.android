@@ -22,7 +22,7 @@ public class UploadService extends AbstractService {
 	public NotificationDsc getNotificationDsc() {
 		return new NotificationDsc(
 			100, 
-			R.drawable.icon_notification_red,
+			R.drawable.icon_notification,
 			R.string.app_name,
 			R.string.nfTrackRunning);
 	}

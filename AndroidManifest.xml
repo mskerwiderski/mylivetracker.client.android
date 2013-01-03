@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="de.msk.mylivetracker.client.android.liontrack"
-    android:versionCode="150" 
-    android:versionName="1.5.0.9 RP" 
+    android:versionCode="100" 
+    android:versionName="1.0.0 RP" 
     >       
     <uses-sdk
        android:minSdkVersion="7" 
@@ -76,8 +76,6 @@
 		<activity android:name="de.msk.mylivetracker.client.android.remoteaccess.RemoteAccessPrefsActivity" 
 			android:screenOrientation="portrait" />
 		<activity android:name="de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParamsPrefsActivity" 
-			android:screenOrientation="portrait" />
-		<activity android:name="de.msk.mylivetracker.client.android.mylivetrackerportal.MyLiveTrackerPortalConnectActivity" 
 			android:screenOrientation="portrait" />
 		<activity android:name="de.msk.mylivetracker.client.android.dropbox.DropboxConnectActivity" 
 			android:screenOrientation="portrait" />

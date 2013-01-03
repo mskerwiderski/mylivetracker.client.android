@@ -11,10 +11,10 @@ import android.location.LocationManager;
 import de.msk.mylivetracker.client.android.localization.LocalizationPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.util.FormatUtils;
-import de.msk.mylivetracker.client.android.util.LatLonUtils;
-import de.msk.mylivetracker.client.android.util.LatLonUtils.PosType;
-import de.msk.mylivetracker.client.android.util.LatLonUtils.Wgs84Dsc;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;
+import de.msk.mylivetracker.commons.util.gps.LatLonUtils;
+import de.msk.mylivetracker.commons.util.gps.LatLonUtils.PosType;
+import de.msk.mylivetracker.commons.util.gps.LatLonUtils.Wgs84Dsc;
 
 /**
  * classname: LocationInfo

@@ -82,10 +82,12 @@ public class OnClickButtonStartStopListener extends ASafeOnClickListener {
 							PrefsRegistry.get(OtherPrefs.class).isAntPlusEnabledIfAvailable()) { 
 							OnClickButtonAntPlusListener.
 								startStopAntPlus(activity, true);
+							LogUtils.info("antPlus listener started.");
 						}
 					case TrackingLocalization:
 						OnClickButtonLocationListenerOnOffListener.
 							startStopLocationListener(activity, true);
+						LogUtils.info("antPlus listener started.");
 					case TrackingOnly:
 					default:
 						break;
@@ -101,6 +103,7 @@ public class OnClickButtonStartStopListener extends ASafeOnClickListener {
 		@Override
 		public void doTask(MainActivity activity) {
 			AbstractService.startService(UploadService.class);
+			LogUtils.info("uploadService started.");
 		}
 		@Override
 		public void cleanUp(MainActivity activity) {
@@ -123,6 +126,7 @@ public class OnClickButtonStartStopListener extends ASafeOnClickListener {
 		@Override
 		public void doTask(MainActivity activity) {
 			AbstractService.stopService(UploadService.class);
+			LogUtils.info("uploadService stopped.");
 		}
 		@Override
 		public void cleanUp(MainActivity activity) {
@@ -134,9 +138,11 @@ public class OnClickButtonStartStopListener extends ASafeOnClickListener {
 					case TrackingLocalizationHeartrate:
 						OnClickButtonAntPlusListener.
 							startStopAntPlus(activity, false);
+						LogUtils.info("antPlus listener stopped.");
 					case TrackingLocalization:
 						OnClickButtonLocationListenerOnOffListener.
 							startStopLocationListener(activity, false);
+						LogUtils.info("location listener stopped.");
 					case TrackingOnly:
 					default:
 						break;

@@ -85,6 +85,7 @@
         android:paddingLeft="5dip"
         android:paddingRight="5dip"
         android:textSize="16sp"
+        android:id="@+id/tvAccountPrefs_TrackName"
         android:text="@string/lbAccountPrefs_TrackName"
         android:textColor="@color/colorText"
         android:layout_height="wrap_content"

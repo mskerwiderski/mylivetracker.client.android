@@ -1,8 +1,10 @@
 package de.msk.mylivetracker.client.android.account;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import de.msk.mylivetracker.client.android.liontrack.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
@@ -108,9 +110,15 @@ public class AccountPrefsActivity extends AbstractActivity {
         EditText etAccountPrefs_Password = (EditText)
     		findViewById(R.id.etAccountPrefs_Password);
         etAccountPrefs_Password.setText(String.valueOf(prefs.getPassword()));
+
+        // Liontrack customization.
+        TextView tvAccountPrefs_TrackName = (TextView)
+        		findViewById(R.id.tvAccountPrefs_TrackName);
+        tvAccountPrefs_TrackName.setVisibility(View.GONE);
         EditText etAccountPrefs_TrackName = (EditText)
     		findViewById(R.id.etAccountPrefs_TrackName);
-        etAccountPrefs_TrackName.setText(String.valueOf(prefs.getTrackName()));
+        etAccountPrefs_TrackName.setVisibility(View.GONE);
+        
         EditText etAccountPrefs_PhoneNumber = (EditText)
         	findViewById(R.id.etAccountPrefs_PhoneNumber);
         etAccountPrefs_PhoneNumber.setText(String.valueOf(prefs.getPhoneNumber()));
