@@ -4,7 +4,7 @@
     <string name="app_name">LionSense</string>
         	 
     <!-- Welcome message -->
-    <string name="welcomeMessage">Willkommen zu %1$s. Wenn Sie Fragen haben oder Unterstützung benötigen, kontaktieren Sie uns unter support@motomara.com.au!</string>
+    <string name="welcomeMessage">Willkommen zu %1$s. Wenn Sie Fragen haben oder Unterstützung benötigen, kontaktieren Sie uns unter support@liontrack.net.au!</string>
        
     <!-- preferences -->
     <string name="prefsImportedFromV144">Bitte überprüfen Sie die Einstellungen! Die Einstellungen wurden von einer alten LionSense Version importiert!</string>
@@ -117,7 +117,7 @@
     <string name="txMain_InfoSendSosSignalDone">Ein SOS Signal wurde gesendet!</string>    
     <string name="txMain_QuestionExit">Wollen Sie LionSense wirklich beenden?</string>    
     <string name="txMain_InfoExitApp">LionSense wird beendet&#8230;</string>
-    <string name="txMain_SendMessageNotSupportedByTransferProtocol">Der Nachrichtenversand wird vom eingestellten Übertragungsprotokoll (%1$s) nicht unterstützt.</string>
+    <string name="txMain_SendMessageNotSupportedByTransferProtocol">Der Nachrichtenversand ist nur in der Pro version von LionSense verfügbar. Bei Interesse, kontaktieren Sie bitte den Support!</string>
     <string name="txMain_SendEmergencySignalNotSupportedByTransferProtocol">Der Versand von Notrufsignalen wird vom eingestellten Übertragungsprotokoll (%1$s) nicht unterstützt.</string>    
     
     <!-- main details -->

@@ -4,7 +4,7 @@
     <string name="app_name">LionSense</string>
     
     <!-- Welcome message -->
-    <string name="welcomeMessage">Welcome to %1$s. If you have questions or need support, please write an email to support@motomara.com.au!</string>
+    <string name="welcomeMessage">Welcome to %1$s. If you have questions or need support, please write an email to  support@liontrack.net.au!</string>
         
     <!-- preferences -->
     <string name="prefsImportedFromV144">Please check the preferences! Because preferences have been imported from old LionSense version!</string>
@@ -117,7 +117,7 @@
     <string name="txMain_InfoSendSosSignalDone">Send SOS signal done!</string>    
     <string name="txMain_QuestionExit">Do you really want to exit LionSense?</string>   
     <string name="txMain_InfoExitApp">LionSense is terminated&#8230;</string>
-    <string name="txMain_SendMessageNotSupportedByTransferProtocol">Send messages is not supported by selected transfer protocol (%1$s).</string>
+    <string name="txMain_SendMessageNotSupportedByTransferProtocol">Send messages only available in Pro version of LionSense. Please Contact Support.</string>
     <string name="txMain_SendEmergencySignalNotSupportedByTransferProtocol">Send SOS signals is not supported by selected transfer protocol (%1$s).</string>
     
     <!-- main details -->

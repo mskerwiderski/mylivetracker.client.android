@@ -621,7 +621,7 @@
 		android:gravity="center_vertical|center_horizontal" >		
 		<TableRow android:layout_height="fill_parent" android:layout_width="fill_parent" android:layout_gravity="bottom" >
 			<TextView
-	        	android:text="@string/tvMainDetails_Heartrate"
+	        	android:text="BT"
 	        	android:textSize="6pt"
 	        	android:textColor="#000000"
 	        	android:background="#fff4bf" 
@@ -695,7 +695,7 @@
 		android:gravity="center_vertical|center_horizontal" >		
 		<TableRow android:layout_height="fill_parent" android:layout_width="fill_parent" android:layout_gravity="bottom" >
 			<TextView
-	        	android:text="bpm"
+	        	android:text="temp"
 	        	android:textSize="6pt"
 	        	android:textColor="#000000"
 	        	android:background="#d4d0c8" 
