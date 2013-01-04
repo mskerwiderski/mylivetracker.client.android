@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tiMsg">Nachrichtenversand</string>
+    <string name="lbMsg_Message">Individueller Nachrichtentext:</string>
+   	<string name="fdMsg_Message">Nachricht</string>
+   	<string name="txMsg_QuestionSendMessage">Wollen Sie die Nachricht wirklich senden?</string>
+    <string name="txMsg_InfoSendMessageDone">Die Nachricht wurde versendet!</string>
+    <string name="btMsg_MessagePrefs">Konfiguration des Nachrichtenversands</string>
+    <string name="lbMsg_SelectMessageTemplate">Text-Vorlage:</string>
+    <string name="lbMsgPrefs_MessageTemplate_1">Text-Vorlage Nr. 1</string>
+    <string name="lbMsgPrefs_MessageTemplate_2">Text-Vorlage Nr. 2</string>
+    <string name="lbMsgPrefs_MessageTemplate_3">Text-Vorlage Nr. 3</string>
+    <string name="lbMsgPrefs_MessageTemplate_4">Text-Vorlage Nr. 4</string>
+    <string name="lbMsgPrefs_MessageTemplate_5">Text-Vorlage Nr. 5</string>
+    <string name="txMsgPrefs_MessageTemplate_1_Def">Ich brauche Hilfe!</string>
+</resources>

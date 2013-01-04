@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tiMsg">Send message</string>
+    <string name="lbMsg_Message">Individual message:</string>
+   	<string name="fdMsg_Message">Message</string>
+   	<string name="txMsg_QuestionSendMessage">Do you really want to send the message?</string>
+    <string name="txMsg_InfoSendMessageDone">Send message done!</string> 
+    <string name="btMsg_MessagePrefs">Message preferences</string>
+    <string name="lbMsg_SelectMessageTemplate">Message template:</string>
+    <string name="lbMsgPrefs_MessageTemplate_1">Message template No. 1</string>
+    <string name="lbMsgPrefs_MessageTemplate_2">Message template No. 2</string>
+    <string name="lbMsgPrefs_MessageTemplate_3">Message template No. 3</string>
+    <string name="lbMsgPrefs_MessageTemplate_4">Message template No. 4</string>
+    <string name="lbMsgPrefs_MessageTemplate_5">Message template No. 5</string>
+    <string name="txMsgPrefs_MessageTemplate_1_Def">I need help!</string>
+</resources>

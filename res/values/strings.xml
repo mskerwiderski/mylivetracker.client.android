@@ -68,13 +68,6 @@
     <string name="txMain_UploadResultError">ERR</string>
     <string name="txMain_UploadResultMltError">MRR</string>
     
-    <!-- message -->
-    <string name="tiMsg">Send message</string>
-    <string name="lbMsg_Message">Enter your message (maximum 80 chars)</string>
-   	<string name="fdMsg_Message">Message</string>
-   	<string name="txMsg_QuestionSendMessage">Do you really want to send the message?</string>
-    <string name="txMsg_InfoSendMessageDone">Send message done!</string>    
-    
     <!-- preferences mylivetracker configuration details -->
     <string name="txPrefs_Def_TrackName">My Track</string>
     

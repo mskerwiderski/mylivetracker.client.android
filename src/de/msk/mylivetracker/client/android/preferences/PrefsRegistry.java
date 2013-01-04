@@ -16,6 +16,7 @@ import de.msk.mylivetracker.client.android.auto.AutoPrefs;
 import de.msk.mylivetracker.client.android.dropbox.DropboxPrefs;
 import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParamsPrefs;
 import de.msk.mylivetracker.client.android.localization.LocalizationPrefs;
+import de.msk.mylivetracker.client.android.message.MessagePrefs;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryPrefs;
 import de.msk.mylivetracker.client.android.preferences.prefsv144.PrefsV144Updater;
@@ -59,6 +60,7 @@ public class PrefsRegistry {
 		new PrefsDsc(DropboxPrefs.class, DropboxPrefs.VERSION),
 		new PrefsDsc(HttpProtocolParamsPrefs.class, HttpProtocolParamsPrefs.VERSION),
 		new PrefsDsc(LocalizationPrefs.class, LocalizationPrefs.VERSION),
+		new PrefsDsc(MessagePrefs.class, MessagePrefs.VERSION),
 		new PrefsDsc(OtherPrefs.class, OtherPrefs.VERSION),
 		new PrefsDsc(PinCodeQueryPrefs.class, PinCodeQueryPrefs.VERSION),
 		new PrefsDsc(ProtocolPrefs.class, ProtocolPrefs.VERSION),
