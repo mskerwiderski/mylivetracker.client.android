@@ -1,16 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tiMsg">Nachrichtenversand</string>
-    <string name="lbMsg_Message">Individueller Nachrichtentext:</string>
+    <string name="tiMsgPrefs">Nachrichtenversand</string>
+    <string name="txMsg_Info">Nachricht an den Server senden (default) und als SMS (optional):</string>
+    <string name="lbMsg_Message">Individueller Nachrichtentext (max. 80 Zeichen):</string>
    	<string name="fdMsg_Message">Nachricht</string>
    	<string name="txMsg_QuestionSendMessage">Wollen Sie die Nachricht wirklich senden?</string>
     <string name="txMsg_InfoSendMessageDone">Die Nachricht wurde versendet!</string>
     <string name="btMsg_MessagePrefs">Konfiguration des Nachrichtenversands</string>
     <string name="lbMsg_SelectMessageTemplate">Text-Vorlage:</string>
-    <string name="lbMsgPrefs_MessageTemplate_1">Text-Vorlage Nr. 1</string>
-    <string name="lbMsgPrefs_MessageTemplate_2">Text-Vorlage Nr. 2</string>
-    <string name="lbMsgPrefs_MessageTemplate_3">Text-Vorlage Nr. 3</string>
-    <string name="lbMsgPrefs_MessageTemplate_4">Text-Vorlage Nr. 4</string>
-    <string name="lbMsgPrefs_MessageTemplate_5">Text-Vorlage Nr. 5</string>
-    <string name="txMsgPrefs_MessageTemplate_1_Def">Ich brauche Hilfe!</string>
+    <string name="lbMsgPrefs_MessageTemplates">Text-Vorlagen (je max. 40 chars)</string>
+    <string name="lbMsgPrefs_MessageTemplate1">Nr.1</string>
+    <string name="lbMsgPrefs_MessageTemplate2">Nr.2</string>
+    <string name="lbMsgPrefs_MessageTemplate3">Nr.3</string>
+    <string name="lbMsgPrefs_MessageTemplate4">Nr.4</string>
+    <string name="lbMsgPrefs_MessageTemplate5">Nr.5</string>
+    <string name="txMsgPrefs_MessageTemplate0Def">keine Vorlage verwenden</string>
+    <string name="txMsgPrefs_MessageTemplate1Def">Ich brauche Hilfe!</string>
+    <string name="txMsgPrefs_MessageTemplate2Def">Bitte rufe mich an!</string>
+    <string name="txMsgPrefs_MessageTemplate3Def">Ich mache eine Pause!</string>
+    <string name="txMsgPrefs_MessageTemplate4Def">Ich bin angekommen!</string>
+    <string name="txMsgPrefs_MessageTemplate5Def">Ich hatte einen Unfall!</string>
+    <string name="lbMsgPrefs_SendAsGsmSms">Nachricht auch als SMS versenden.</string>
+    <string name="lbMsgPrefs_Receiver">SMS Empfänger</string>
 </resources>

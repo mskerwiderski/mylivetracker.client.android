@@ -1,16 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tiMsg">Send message</string>
-    <string name="lbMsg_Message">Individual message:</string>
+    <string name="tiMsgPrefs">Send message</string>
+    <string name="txMsg_Info">Send message to server (default) and as SMS (optional):</string>
+    <string name="lbMsg_Message">Individual message (max. 80 chars):</string>
    	<string name="fdMsg_Message">Message</string>
    	<string name="txMsg_QuestionSendMessage">Do you really want to send the message?</string>
     <string name="txMsg_InfoSendMessageDone">Send message done!</string> 
     <string name="btMsg_MessagePrefs">Message preferences</string>
     <string name="lbMsg_SelectMessageTemplate">Message template:</string>
-    <string name="lbMsgPrefs_MessageTemplate_1">Message template No. 1</string>
-    <string name="lbMsgPrefs_MessageTemplate_2">Message template No. 2</string>
-    <string name="lbMsgPrefs_MessageTemplate_3">Message template No. 3</string>
-    <string name="lbMsgPrefs_MessageTemplate_4">Message template No. 4</string>
-    <string name="lbMsgPrefs_MessageTemplate_5">Message template No. 5</string>
-    <string name="txMsgPrefs_MessageTemplate_1_Def">I need help!</string>
+    <string name="lbMsgPrefs_MessageTemplates">Message templates (each max. 40 chars)</string>
+    <string name="lbMsgPrefs_MessageTemplate1">No.1:</string>
+    <string name="lbMsgPrefs_MessageTemplate2">No.2:</string>
+    <string name="lbMsgPrefs_MessageTemplate3">No.3:</string>
+    <string name="lbMsgPrefs_MessageTemplate4">No.4:</string>
+    <string name="lbMsgPrefs_MessageTemplate5">No.5:</string>
+    <string name="txMsgPrefs_MessageTemplate0Def">do not use a template</string>
+    <string name="txMsgPrefs_MessageTemplate1Def">I need help!</string>
+    <string name="txMsgPrefs_MessageTemplate2Def">Please call me!</string>
+    <string name="txMsgPrefs_MessageTemplate3Def">I am taking a break!</string>
+    <string name="txMsgPrefs_MessageTemplate4Def">I have arrived!</string>
+    <string name="txMsgPrefs_MessageTemplate5Def">I had an accident!</string>
+    <string name="lbMsgPrefs_SendAsGsmSms">Send message as SMS too.</string>
+    <string name="lbMsgPrefs_Receiver">SMS Receiver</string>
 </resources>

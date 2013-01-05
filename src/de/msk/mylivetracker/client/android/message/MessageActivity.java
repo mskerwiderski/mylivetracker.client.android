@@ -1,8 +1,16 @@
 package de.msk.mylivetracker.client.android.message;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.Selection;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
@@ -47,15 +55,16 @@ public class MessageActivity extends AbstractActivity {
 	
 	private static final class OnClickButtonSendListener extends ASafeOnClickListener {
 		private MessageActivity activity;
+		private EditText etMsgMessage;
 		
-		private OnClickButtonSendListener(MessageActivity activity) {
-			this.activity = activity;					
+		private OnClickButtonSendListener(MessageActivity activity,
+			EditText etMsgMessage) {
+			this.activity = activity;
+			this.etMsgMessage = etMsgMessage;
 		}
 		
 		@Override
 		public void onClick() {
-			EditText etMsgMessage = (EditText)
-				this.activity.findViewById(R.id.etMsg_Message);
 			String message = etMsgMessage.getText().toString();
 			boolean valid = 
 				ValidatorUtils.validateEditTextString(
@@ -82,18 +91,83 @@ public class MessageActivity extends AbstractActivity {
 			Toast.LENGTH_SHORT).show();	
 	}
 	
+	private static final class OnClickButtonMessagePrefs extends ASafeOnClickListener {
+		private MessageActivity activity;
+		
+		private OnClickButtonMessagePrefs(MessageActivity activity) {
+			this.activity = activity;
+		}
+		
+		@Override
+		public void onClick() {	
+			this.activity.startActivity(
+				new Intent(this.activity, MessagePrefsActivity.class));
+		}		
+	}
+	
+	private static final class OnMessageTemplateItemSelectedListener implements OnItemSelectedListener {
+		private EditText etMsgMessage;
+		
+		public OnMessageTemplateItemSelectedListener(
+			EditText etMsgMessage) {
+			this.etMsgMessage = etMsgMessage;
+		}
+		
+		@Override
+		public void onItemSelected(AdapterView<?> parent, View view,
+			int position, long rowId) {
+			String text = "";
+			if (position != 0) {
+				MessagePrefs prefs = PrefsRegistry.get(MessagePrefs.class);
+				text = prefs.getMessageTemplate(position);
+			}
+			updateMessageField(etMsgMessage, text);
+		}
+		@Override
+		public void onNothingSelected(AdapterView<?> arg0) {
+			// noop.
+		}
+	}
+	
+	private static void updateMessageField(EditText etMsgMessage, String text) {
+		etMsgMessage.setText(text);
+		int position = etMsgMessage.length();
+		Editable etext = etMsgMessage.getText();
+		Selection.setSelection(etext, position);
+	}
+	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.message);
-        
         this.setTitle(R.string.tiMsg);
+        MessagePrefs prefs = PrefsRegistry.get(MessagePrefs.class);
         
+        Spinner spMsg_MessageTemplate = (Spinner)
+        	findViewById(R.id.spMsg_MessageTemplate);
+        ArrayAdapter<String> adapter = 
+        	new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, 
+        		prefs.getMessageTemplatesAsComboboxItems());
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spMsg_MessageTemplate.setAdapter(adapter);
+        spMsg_MessageTemplate.setSelection(0);       
+        
+        EditText etMsgMessage = (EditText)
+			this.findViewById(R.id.etMsg_Message);
+        updateMessageField(etMsgMessage, "");
+        
+        Button btMsg_MessagePrefs = (Button)findViewById(R.id.btMsg_MessagePrefs);
         Button btMsg_Send = (Button)findViewById(R.id.btMsg_Send);  
         Button btMsg_Cancel = (Button) findViewById(R.id.btMsg_Cancel);
         
+        spMsg_MessageTemplate.setOnItemSelectedListener(
+        	new OnMessageTemplateItemSelectedListener(
+        		etMsgMessage));
+        btMsg_MessagePrefs.setOnClickListener(
+			new OnClickButtonMessagePrefs(this));
         btMsg_Send.setOnClickListener(
-			new OnClickButtonSendListener(this));
+			new OnClickButtonSendListener(
+				this, etMsgMessage));
         btMsg_Cancel.setOnClickListener(
 			new OnFinishActivityListener(this));
     }

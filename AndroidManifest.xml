@@ -61,6 +61,8 @@
 			android:screenOrientation="portrait" />
         <activity android:name="de.msk.mylivetracker.client.android.message.MessageActivity" 
 			android:screenOrientation="portrait" />
+        <activity android:name="de.msk.mylivetracker.client.android.message.MessagePrefsActivity" 
+			android:screenOrientation="portrait" />
 		<activity android:name="de.msk.mylivetracker.client.android.server.ServerPrefsActivity" 
 			android:screenOrientation="portrait" />
 		<activity android:name="de.msk.mylivetracker.client.android.protocol.ProtocolPrefsActivity" 

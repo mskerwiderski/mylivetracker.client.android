@@ -10,7 +10,7 @@
         android:paddingLeft="5dip"
         android:paddingRight="5dip"
         android:textSize="16sp"
-        android:text="@string/lbMsgPrefs_MessageTemplate_1"
+        android:text="@string/lbMsgPrefs_MessageTemplates"
         android:textColor="@color/colorText"
        	android:layout_height="wrap_content" 
        	android:layout_width="wrap_content" 
@@ -18,12 +18,21 @@
 	<LinearLayout 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip"
+        android:paddingLeft="2dip"
+        android:paddingRight="2dip"
     >    
-
+		<TextView 
+	        android:paddingTop="4dip"
+	        android:paddingLeft="5dip"
+	        android:paddingRight="5dip"
+	        android:textSize="16sp"
+	        android:text="@string/lbMsgPrefs_MessageTemplate1"
+	        android:textColor="@color/colorText"
+	       	android:layout_height="wrap_content" 
+	       	android:layout_width="wrap_content" 
+	    />
 	    <EditText
-	        android:id="@+id/etMsgPrefs_MessageTemplate_1"
+	        android:id="@+id/etMsgPrefs_MessageTemplate1"
 	        android:layout_width="fill_parent"
 	        android:layout_height="40dip"
 	        android:inputType="text"
@@ -31,11 +40,126 @@
 	        android:text="" />
 
     </LinearLayout>
+    <LinearLayout 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingLeft="2dip"
+        android:paddingRight="2dip"
+    >    
+		<TextView 
+	        android:paddingTop="4dip"
+	        android:paddingLeft="5dip"
+	        android:paddingRight="5dip"
+	        android:textSize="16sp"
+	        android:text="@string/lbMsgPrefs_MessageTemplate2"
+	        android:textColor="@color/colorText"
+	       	android:layout_height="wrap_content" 
+	       	android:layout_width="wrap_content" 
+	    />
+	    <EditText
+	        android:id="@+id/etMsgPrefs_MessageTemplate2"
+	        android:layout_width="fill_parent"
+	        android:layout_height="40dip"
+	        android:inputType="text"
+	        android:singleLine="false"
+	        android:text="" />
+
+    </LinearLayout>
+    <LinearLayout 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingLeft="2dip"
+        android:paddingRight="2dip"
+    >    
+		<TextView 
+	        android:paddingTop="4dip"
+	        android:paddingLeft="5dip"
+	        android:paddingRight="5dip"
+	        android:textSize="16sp"
+	        android:text="@string/lbMsgPrefs_MessageTemplate3"
+	        android:textColor="@color/colorText"
+	       	android:layout_height="wrap_content" 
+	       	android:layout_width="wrap_content" 
+	    />
+	    <EditText
+	        android:id="@+id/etMsgPrefs_MessageTemplate3"
+	        android:layout_width="fill_parent"
+	        android:layout_height="40dip"
+	        android:inputType="text"
+	        android:singleLine="false"
+	        android:text="" />
+
+    </LinearLayout>
+    <LinearLayout 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingLeft="2dip"
+        android:paddingRight="2dip"
+    >    
+		<TextView 
+	        android:paddingTop="4dip"
+	        android:paddingLeft="5dip"
+	        android:paddingRight="5dip"
+	        android:textSize="16sp"
+	        android:text="@string/lbMsgPrefs_MessageTemplate4"
+	        android:textColor="@color/colorText"
+	       	android:layout_height="wrap_content" 
+	       	android:layout_width="wrap_content" 
+	    />
+	    <EditText
+	        android:id="@+id/etMsgPrefs_MessageTemplate4"
+	        android:layout_width="fill_parent"
+	        android:layout_height="40dip"
+	        android:inputType="text"
+	        android:singleLine="false"
+	        android:text="" />
+
+    </LinearLayout>
+    <LinearLayout 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingLeft="2dip"
+        android:paddingRight="2dip"
+    >    
+		<TextView 
+	        android:paddingTop="4dip"
+	        android:paddingLeft="5dip"
+	        android:paddingRight="5dip"
+	        android:textSize="16sp"
+	        android:text="@string/lbMsgPrefs_MessageTemplate5"
+	        android:textColor="@color/colorText"
+	       	android:layout_height="wrap_content" 
+	       	android:layout_width="wrap_content" 
+	    />
+	    <EditText
+	        android:id="@+id/etMsgPrefs_MessageTemplate5"
+	        android:layout_width="fill_parent"
+	        android:layout_height="40dip"
+	        android:inputType="text"
+	        android:singleLine="false"
+	        android:text="" />
+
+    </LinearLayout>	
+    <LinearLayout 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingTop="0dip"
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip"
+    >    
+	    <CheckBox
+            android:id="@+id/cbMsgPrefs_SendAsGsmSms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lbMsgPrefs_SendAsGsmSms" 
+        />
+    </LinearLayout>
     <TextView
+        android:paddingTop="0dip"
         android:paddingLeft="5dip"
         android:paddingRight="5dip"
         android:textSize="16sp"
-        android:text="@string/lbMsgPrefs_MessageTemplate_2" 
+        android:text="@string/lbMsgPrefs_Receiver" 
         android:textColor="@color/colorText"
         android:layout_height="wrap_content" 
         android:layout_width="wrap_content" 
@@ -46,89 +170,14 @@
         android:paddingLeft="5dip"
         android:paddingRight="5dip"
     >    
-
 	    <EditText
-	        android:id="@+id/etMsgPrefs_MessageTemplate_2"
+	        android:id="@+id/etMsgPrefs_Receiver"
 	        android:layout_width="fill_parent"
 	        android:layout_height="40dip"
-	        android:inputType="text"
-	        android:singleLine="false"
+	        android:inputType="phone"
+	        android:singleLine="true"
 	        android:text="" />
-
     </LinearLayout>
-    <TextView
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip"
-        android:textSize="16sp"
-        android:text="@string/lbMsgPrefs_MessageTemplate_3"
-        android:textColor="@color/colorText"
-        android:layout_height="wrap_content" 
-        android:layout_width="wrap_content" 
-    />
-	<LinearLayout 
-        android:layout_height="wrap_content" 
-        android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip"
-    >    
-
-	    <EditText
-	        android:id="@+id/etMsgPrefs_MessageTemplate_3"
-	        android:layout_width="fill_parent"
-	        android:layout_height="40dip"
-	        android:inputType="text"
-	        android:singleLine="false"
-	        android:text="" />
-
-    </LinearLayout>
-    <TextView 
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip"
-        android:textSize="16sp"
-        android:text="@string/lbMsgPrefs_MessageTemplate_4"
-        android:textColor="@color/colorText"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content" 
-    />
-	<LinearLayout 
-        android:layout_height="wrap_content" 
-        android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip"
-    >    
-	    <EditText
-	        android:id="@+id/etMsgPrefs_MessageTemplate_4"
-	        android:layout_width="fill_parent"
-	        android:layout_height="40dip"
-	        android:inputType="text"
-	        android:singleLine="false"
-	        android:text="" />
-
-	</LinearLayout>    
-    <TextView
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip"
-        android:textSize="16sp"
-    	android:text="@string/lbMsgPrefs_MessageTemplate_5" 
-    	android:textColor="@color/colorText"
-    	android:layout_height="wrap_content" 
-    	android:layout_width="wrap_content" 
-    />
-	<LinearLayout 
-        android:layout_height="wrap_content" 
-        android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip"
-    >    
-		<EditText
-		    android:id="@+id/etMsgPrefs_MessageTemplate_5"
-		    android:layout_width="fill_parent"
-		    android:layout_height="40dip"
-		    android:inputType="text"
-		    android:singleLine="false"
-		    android:text="" 
-		/>
-	</LinearLayout>	
     <LinearLayout 
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
@@ -138,7 +187,7 @@
             android:layout_weight="1" 
             android:layout_height="50dip" 
             android:text="@string/btSave" 
-            android:id="@+id/btAccountPrefs_Save" 
+            android:id="@+id/btMsgPrefs_Save" 
         />
         <Button 
             android:layout_width="fill_parent" 
@@ -146,7 +195,7 @@
             android:layout_weight="1" 
             android:layout_height="50dip" 
             android:text="@string/btCancel" 
-            android:id="@+id/btAccountPrefs_Cancel" 
+            android:id="@+id/btMsgPrefs_Cancel" 
         />
     </LinearLayout>   
 </LinearLayout>
