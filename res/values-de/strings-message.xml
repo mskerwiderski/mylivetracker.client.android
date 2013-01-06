@@ -2,7 +2,11 @@
 <resources>
     <string name="tiMsg">Nachrichtenversand</string>
     <string name="tiMsgPrefs">Nachrichtenversand</string>
-    <string name="txMsg_Info">Nachricht an den Server senden (default) und als SMS (optional):</string>
+    <string name="lbMsg_StatusMessageToServer">An Server:</string>
+    <string name="lbMsg_StatusMessageAsSms">Als SMS:</string>
+    <string name="lbMsg_StatusEnabled">aktiviert</string>
+    <string name="lbMsg_StatusDisabled">nicht aktiviert</string>
+    <string name="lbMsg_StatusNotSupportedByProtocol">wird durch das Protokoll nicht unterstützt</string>
     <string name="lbMsg_Message">Individueller Nachrichtentext (max. 80 Zeichen):</string>
    	<string name="fdMsg_Message">Nachricht</string>
    	<string name="txMsg_QuestionSendMessage">Wollen Sie die Nachricht wirklich senden?</string>
@@ -21,6 +25,7 @@
     <string name="txMsgPrefs_MessageTemplate3Def">Ich mache eine Pause!</string>
     <string name="txMsgPrefs_MessageTemplate4Def">Ich bin angekommen!</string>
     <string name="txMsgPrefs_MessageTemplate5Def">Ich hatte einen Unfall!</string>
-    <string name="lbMsgPrefs_SendAsGsmSms">Nachricht auch als SMS versenden.</string>
+    <string name="lbMsgPrefs_SendMessageMode">Nachrichtenversand Modus</string>
+    <string name="fdMsgPrefs_Receiver">SMS Empfänger</string>
     <string name="lbMsgPrefs_Receiver">SMS Empfänger</string>
 </resources>

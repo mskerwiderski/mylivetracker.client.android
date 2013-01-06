@@ -1,4 +1,10 @@
 <resources>
+    <string-array name="sendMessageModes">
+    	<item>Nur zum Server</item>
+        <item>Nur als SMS</item>
+        <item>Zum Server und als SMS</item>
+    </string-array>
+    
     <string-array name="localizationModes">
     	<item>GPS</item>
         <item>Netzwerk</item>

@@ -11,11 +11,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
+import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
+import de.msk.mylivetracker.client.android.remoteaccess.SmsSendUtils;
 import de.msk.mylivetracker.client.android.status.MessageInfo;
 import de.msk.mylivetracker.client.android.upload.Uploader;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
@@ -71,7 +74,7 @@ public class MessageActivity extends AbstractActivity {
 					this.activity, 
 					R.string.fdMsg_Message, 
 					etMsgMessage, 1, 80, true);
-					
+			// TODO check if send message make sense.	
 			if (valid) {
 				if (PrefsRegistry.get(OtherPrefs.class).getConfirmLevel().isMedium()) {
 					SendMessageDialog dlg = new SendMessageDialog(this.activity, message);
@@ -84,8 +87,14 @@ public class MessageActivity extends AbstractActivity {
 	}
 	
 	private static void sendMessage(MessageActivity activity, String message) {
-		MessageInfo.update(message);					
-		Uploader.uploadOneTime();
+		MessagePrefs messagePrefs = PrefsRegistry.get(MessagePrefs.class);
+		if (messagePrefs.isSendMessageModeToServerEnabled()) {
+			MessageInfo.update(message);					
+			Uploader.uploadOneTime();
+		}
+		if (messagePrefs.isSendMessageModeAsSmsEnabled()) {
+			SmsSendUtils.sendSms(messagePrefs.getSmsReceiver(), message);
+		}
 		Toast.makeText(activity.getApplicationContext(), 
 			activity.getString(R.string.txMsg_InfoSendMessageDone),
 			Toast.LENGTH_SHORT).show();	
@@ -137,17 +146,55 @@ public class MessageActivity extends AbstractActivity {
 	}
 	
 	@Override
+	protected void onResume() {
+		super.onResume();
+		this.updateSendMessageModeStati();
+	}
+
+	private void updateSendMessageModeStati() {
+		MessagePrefs messagePrefs = PrefsRegistry.get(MessagePrefs.class);
+		ProtocolPrefs protocolPrefs = PrefsRegistry.get(ProtocolPrefs.class);
+		TextView tvMsg_StatusMessageToServer = (TextView)findViewById(R.id.tvMsg_StatusMessageToServer);
+        TextView tvMsg_StatusMessageAsSms = (TextView)findViewById(R.id.tvMsg_StatusMessageAsSms);
+		if (messagePrefs.isSendMessageModeToServerEnabled() &&
+    		protocolPrefs.getTransferProtocol().supportsSendMessage()) {
+        	tvMsg_StatusMessageToServer.setText(R.string.lbMsg_StatusEnabled);
+        	tvMsg_StatusMessageToServer.setTextColor(
+        		this.getResources().getColor(R.color.colorGreen));
+        } else if (!messagePrefs.isSendMessageModeToServerEnabled() &&
+    		protocolPrefs.getTransferProtocol().supportsSendMessage()) {
+        	tvMsg_StatusMessageToServer.setText(R.string.lbMsg_StatusDisabled);
+        	tvMsg_StatusMessageToServer.setTextColor(
+        		this.getResources().getColor(R.color.colorRed));
+        } else {
+        	tvMsg_StatusMessageToServer.setText(
+        		R.string.lbMsg_StatusNotSupportedByProtocol);
+        	tvMsg_StatusMessageToServer.setTextColor(
+        		this.getResources().getColor(R.color.colorRed));
+        }
+        if (messagePrefs.isSendMessageModeAsSmsEnabled()) {
+        	tvMsg_StatusMessageAsSms.setText(R.string.lbMsg_StatusEnabled);
+        	tvMsg_StatusMessageAsSms.setTextColor(
+        		this.getResources().getColor(R.color.colorGreen));
+        } else {
+        	tvMsg_StatusMessageAsSms.setText(R.string.lbMsg_StatusDisabled);
+        	tvMsg_StatusMessageAsSms.setTextColor(
+        		this.getResources().getColor(R.color.colorRed));
+        }
+	}
+	
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.message);
         this.setTitle(R.string.tiMsg);
-        MessagePrefs prefs = PrefsRegistry.get(MessagePrefs.class);
+        MessagePrefs messagePrefs = PrefsRegistry.get(MessagePrefs.class);
         
         Spinner spMsg_MessageTemplate = (Spinner)
         	findViewById(R.id.spMsg_MessageTemplate);
         ArrayAdapter<String> adapter = 
         	new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, 
-        		prefs.getMessageTemplatesAsComboboxItems());
+        		messagePrefs.getMessageTemplatesAsComboboxItems());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spMsg_MessageTemplate.setAdapter(adapter);
         spMsg_MessageTemplate.setSelection(0);       

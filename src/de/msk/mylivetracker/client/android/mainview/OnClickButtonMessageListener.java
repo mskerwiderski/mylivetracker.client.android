@@ -2,12 +2,7 @@ package de.msk.mylivetracker.client.android.mainview;
 
 import android.app.Activity;
 import android.content.Intent;
-import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.message.MessageActivity;
-import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
-import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs.TransferProtocol;
-import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
 import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
 
 /**
@@ -31,16 +26,6 @@ public class OnClickButtonMessageListener extends ASafeOnClickListener {
 
 	@Override
 	public void onClick() {			
-		final MainActivity mainActivity = MainActivity.get();
-		TransferProtocol transferProtocol = 
-			PrefsRegistry.get(ProtocolPrefs.class).getTransferProtocol();		
-		if (transferProtocol.supportsSendMessage()) {
-			activity.startActivity(new Intent(activity, MessageActivity.class));
-		} else {
-			String protocol = mainActivity.getResources().getStringArray(
-				R.array.transferProtocols)[transferProtocol.ordinal()];
-			SimpleInfoDialog.show(activity, 
-				R.string.txMain_SendMessageNotSupportedByTransferProtocol, protocol);
-		}
+		activity.startActivity(new Intent(activity, MessageActivity.class));
 	}
 }

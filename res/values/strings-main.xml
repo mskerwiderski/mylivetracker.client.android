@@ -11,7 +11,7 @@
     <string name="btMain_ResetTrack">Reset</string>
     <string name="btMain_AntPlus">ANT+</string>
     <string name="btMain_SendSos">SOS</string>
-    <string name="btMain_SendMessage">SMS</string>
+    <string name="btMain_SendMessage">Message</string>
     <string name="tvMain_Runtime">Runtime</string>
     <string name="tvMain_Distance">Distance</string>
     <string name="tvMain_Heartrate">Heartrate</string>

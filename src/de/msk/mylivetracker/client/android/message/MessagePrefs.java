@@ -27,7 +27,27 @@ public class MessagePrefs extends APrefs implements Serializable {
 	public static final int VERSION = 1;
 	
 	private static final int COUNT_MESSAGES = 6;
+	
+	public enum SendMessageMode {
+		OnlyToServer,
+		OnlyAsSms,
+		ToServerAndAsSms;
+		
+		public boolean isModeToServerEnabled() {
+			return 
+				this.equals(SendMessageMode.OnlyToServer) ||
+				this.equals(SendMessageMode.ToServerAndAsSms);
+		}
+		public boolean isModeAsSmsEnabled() {
+			return 
+				this.equals(SendMessageMode.OnlyAsSms) ||
+				this.equals(SendMessageMode.ToServerAndAsSms);
+		}
+	};
+	
 	private String[] messageTemplates;
+	private SendMessageMode sendMessageMode;
+	private String smsReceiver;
 	
 	@Override
 	public int getVersion() {
@@ -49,6 +69,8 @@ public class MessagePrefs extends APrefs implements Serializable {
 			App.get().getResources().getString(R.string.txMsgPrefs_MessageTemplate4Def);
 		this.messageTemplates[idx++] = 
 			App.get().getResources().getString(R.string.txMsgPrefs_MessageTemplate5Def);
+		this.sendMessageMode = SendMessageMode.OnlyToServer;
+		this.smsReceiver = "";
 	}
 	@Override
 	public void initWithValuesOfOldVersion(int foundVersion, String foundGsonStr) {
@@ -62,7 +84,6 @@ public class MessagePrefs extends APrefs implements Serializable {
 		}
 		return messageTemplates[idx];
 	}
-	
 	public void setMessageTemplate(int idx, String messageTemplate) {
 		if ((idx < 0) || (idx > COUNT_MESSAGES)) {
 			throw new IllegalArgumentException(
@@ -83,9 +104,29 @@ public class MessagePrefs extends APrefs implements Serializable {
 		return messageTemplatesAsComboboxItems;
 	}
 	
+	public SendMessageMode getSendMessageMode() {
+		return sendMessageMode;
+	}
+	public void setSendMessageMode(SendMessageMode sendMessageMode) {
+		this.sendMessageMode = sendMessageMode;
+	}
+	public boolean isSendMessageModeToServerEnabled() {
+		return this.sendMessageMode.isModeToServerEnabled();			
+	}
+	public boolean isSendMessageModeAsSmsEnabled() {
+		return this.sendMessageMode.isModeAsSmsEnabled();
+	}
+	public String getSmsReceiver() {
+		return smsReceiver;
+	}
+	public void setSmsReceiver(String smsReceiver) {
+		this.smsReceiver = smsReceiver;
+	}
+
 	@Override
 	public String toString() {
 		return "MessagePrefs [messageTemplates="
-			+ Arrays.toString(messageTemplates) + "]";
+			+ Arrays.toString(messageTemplates) + ", sendMessageMode="
+			+ sendMessageMode + ", smsReceiver=" + smsReceiver + "]";
 	}
 }
