@@ -6,17 +6,9 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 
 import android.util.Log;
-import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.App.VersionDsc;
-import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParams;
-import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParamsPrefsActivity;
-import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.remoteaccess.ASmsCmdExecutor;
-import de.msk.mylivetracker.client.android.remoteaccess.ResponseCreator;
-import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdReceiver;
-import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdTrack;
-import de.msk.mylivetracker.client.android.remoteaccess.SmsSentStatusReceiver;
-import de.msk.mylivetracker.client.android.status.AbstractInfo;
+import de.msk.mylivetracker.client.android.util.sms.SmsSendUtils;
+import de.msk.mylivetracker.client.android.util.sms.SmsSentStatusReceiver;
 
 /**
  * classname: LogUtils
@@ -35,16 +27,17 @@ public class LogUtils {
 	private static Map<Class<?>, Boolean> classes = new HashMap<Class<?>, Boolean>();
 	
 	static {
-		classes.put(PrefsRegistry.class, Boolean.TRUE);
-		classes.put(App.class, Boolean.TRUE);
-		classes.put(AbstractInfo.class, Boolean.TRUE);
-		classes.put(HttpProtocolParams.class, Boolean.TRUE);
-		classes.put(HttpProtocolParamsPrefsActivity.class, Boolean.TRUE);
+		//classes.put(PrefsRegistry.class, Boolean.TRUE);
+		//classes.put(App.class, Boolean.TRUE);
+		//classes.put(AbstractInfo.class, Boolean.TRUE);
+		//classes.put(HttpProtocolParams.class, Boolean.TRUE);
+		//classes.put(HttpProtocolParamsPrefsActivity.class, Boolean.TRUE);
 		classes.put(SmsSentStatusReceiver.class, Boolean.TRUE);
-		classes.put(SmsCmdReceiver.class, Boolean.TRUE);
-		classes.put(ResponseCreator.class, Boolean.TRUE);
-		classes.put(ASmsCmdExecutor.class, Boolean.TRUE);
-		classes.put(SmsCmdTrack.class, Boolean.TRUE);
+		//classes.put(SmsCmdReceiver.class, Boolean.TRUE);
+		//classes.put(ResponseCreator.class, Boolean.TRUE);
+		//classes.put(ASmsCmdExecutor.class, Boolean.TRUE);
+		//classes.put(SmsCmdTrack.class, Boolean.TRUE);
+		classes.put(SmsSendUtils.class, Boolean.TRUE);
 	}
 
 	private static boolean isLogForClassEnabled(Class<?> clazz) {

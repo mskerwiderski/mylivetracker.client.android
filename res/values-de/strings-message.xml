@@ -6,7 +6,8 @@
     <string name="lbMsg_StatusMessageAsSms">Als SMS:</string>
     <string name="lbMsg_StatusEnabled">aktiviert</string>
     <string name="lbMsg_StatusDisabled">nicht aktiviert</string>
-    <string name="lbMsg_StatusNotSupportedByProtocol">wird durch das Protokoll nicht unterstützt</string>
+    <string name="lbMsg_StatusToServerNotSupportedByProtocol">wird durch das Protokoll nicht unterstützt</string>
+    <string name="lbMsg_StatusAsSmsNotSupported">wird nicht unterstützt</string>
     <string name="lbMsg_Message">Individueller Nachrichtentext (max. 80 Zeichen):</string>
    	<string name="fdMsg_Message">Nachricht</string>
    	<string name="txMsg_QuestionSendMessage">Wollen Sie die Nachricht wirklich senden?</string>

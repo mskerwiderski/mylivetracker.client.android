@@ -13,17 +13,18 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
-import de.msk.mylivetracker.client.android.remoteaccess.SmsSendUtils;
 import de.msk.mylivetracker.client.android.status.MessageInfo;
 import de.msk.mylivetracker.client.android.upload.Uploader;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
 import de.msk.mylivetracker.client.android.util.listener.OnFinishActivityListener;
+import de.msk.mylivetracker.client.android.util.sms.SmsSendUtils;
 import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
 
 /**
@@ -168,19 +169,27 @@ public class MessageActivity extends AbstractActivity {
         		this.getResources().getColor(R.color.colorRed));
         } else {
         	tvMsg_StatusMessageToServer.setText(
-        		R.string.lbMsg_StatusNotSupportedByProtocol);
+        		R.string.lbMsg_StatusToServerNotSupportedByProtocol);
         	tvMsg_StatusMessageToServer.setTextColor(
         		this.getResources().getColor(R.color.colorRed));
         }
-        if (messagePrefs.isSendMessageModeAsSmsEnabled()) {
+        if (messagePrefs.isSendMessageModeAsSmsEnabled() &&
+    		App.smsSupported()) {
         	tvMsg_StatusMessageAsSms.setText(R.string.lbMsg_StatusEnabled);
         	tvMsg_StatusMessageAsSms.setTextColor(
         		this.getResources().getColor(R.color.colorGreen));
-        } else {
+        } else if (!messagePrefs.isSendMessageModeAsSmsEnabled() &&
+        	App.smsSupported()) {
         	tvMsg_StatusMessageAsSms.setText(R.string.lbMsg_StatusDisabled);
         	tvMsg_StatusMessageAsSms.setTextColor(
         		this.getResources().getColor(R.color.colorRed));
+        } else {
+        	tvMsg_StatusMessageAsSms.setText(
+        		R.string.lbMsg_StatusAsSmsNotSupported);
+        	tvMsg_StatusMessageAsSms.setTextColor(
+        		this.getResources().getColor(R.color.colorRed));
         }
+        
 	}
 	
 	@Override

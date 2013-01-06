@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.apache.commons.lang.StringUtils;
 
 import de.msk.mylivetracker.client.android.util.LogUtils;
+import de.msk.mylivetracker.client.android.util.sms.SmsSendUtils;
 
 /**
  * classname: ASmsCmdExecutor

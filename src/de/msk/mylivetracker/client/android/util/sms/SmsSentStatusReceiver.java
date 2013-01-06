@@ -1,4 +1,4 @@
-package de.msk.mylivetracker.client.android.remoteaccess;
+package de.msk.mylivetracker.client.android.util.sms;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

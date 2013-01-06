@@ -46,7 +46,7 @@
 				<action android:name="android.provider.Telephony.SMS_RECEIVED" />
 			</intent-filter>
 		</receiver>
-		<receiver android:name="de.msk.mylivetracker.client.android.remoteaccess.SmsSentStatusReceiver" 
+		<receiver android:name="de.msk.mylivetracker.client.android.util.sms.SmsSentStatusReceiver" 
 		    android:exported="false">
 			<intent-filter>
 				<action android:name="de.msk.mylivetracker.intent.action.SMS_SENT" />
