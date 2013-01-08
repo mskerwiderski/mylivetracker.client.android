@@ -2,6 +2,7 @@ package de.msk.mylivetracker.client.android.mainview;
 
 import android.os.SystemClock;
 import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.localization.LocationListener;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
@@ -62,7 +63,7 @@ public class OnClickButtonResetListener extends ASafeOnClickListener {
 		@Override
 		public void cleanUp(MainActivity activity) {
 			activity.getUiChronometer().setBase(SystemClock.elapsedRealtime());
-			activity.stopLocationListener();
+			LocationListener.stop();
 			activity.stopAntPlusHeartrateListener();
 			activity.getUiBtStartStop().setChecked(false);
 			activity.getUiBtLocationListenerOnOff().setChecked(false);

@@ -5,8 +5,8 @@ import java.io.Serializable;
 import android.content.Context;
 import android.location.LocationManager;
 import de.msk.mylivetracker.client.android.App;
-import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.APrefs;
+import de.msk.mylivetracker.client.android.util.LocationManagerUtils;
 
 /**
  * classname: LocalizationPrefs
@@ -47,20 +47,20 @@ public class LocalizationPrefs extends APrefs implements Serializable {
 		public boolean supported() {
 			boolean res = true;
 			if (this.gpsProviderEnabled) {
-				res = res && (MainActivity.get().getLocationManager().getProvider(LocationManager.GPS_PROVIDER) != null);
+				res = res && LocationManagerUtils.gpsProviderSupported();
 			}
 			if (this.networkProviderEnabled) {
-				res = res && (MainActivity.get().getLocationManager().getProvider(LocationManager.NETWORK_PROVIDER) != null);
+				res = res && LocationManagerUtils.networkProviderSupported();
 			}
 			return res;
 		}
 		public boolean neededProvidersEnabled() {
 			boolean res = true;
 			if (this.gpsProviderEnabled) {
-				res = res && MainActivity.get().getLocationManager().isProviderEnabled(LocationManager.GPS_PROVIDER);
+				res = res && LocationManagerUtils.gpsProviderEnabled();
 			}
 			if (this.networkProviderEnabled) {
-				res = res && MainActivity.get().getLocationManager().isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+				res = res && LocationManagerUtils.networkProviderEnabled();
 			}
 			return res;
 		}

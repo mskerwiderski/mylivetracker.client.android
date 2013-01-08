@@ -7,6 +7,7 @@ import android.location.GpsStatus;
 import android.location.GpsStatus.Listener;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.status.GpsStateInfo;
+import de.msk.mylivetracker.client.android.util.LocationManagerUtils;
 
 /**
  * classname: GpsStateListener
@@ -33,7 +34,8 @@ public class GpsStateListener implements Listener {
 	@Override
 	public void onGpsStatusChanged(int event) {
 		int countSatellites = 0;
-		GpsStatus gpsStatus = MainActivity.get().getLocationManager().getGpsStatus(null);
+		GpsStatus gpsStatus = LocationManagerUtils.
+			getLocationManager().getGpsStatus(null);
 		Iterator<GpsSatellite> iterator = gpsStatus.getSatellites().iterator();
 		while (iterator.hasNext()) {
 			GpsSatellite gpsSatellite = iterator.next();

@@ -5,7 +5,6 @@ import java.util.Locale;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -23,10 +22,8 @@ import de.msk.mylivetracker.client.android.antplus.AntPlusHardware;
 import de.msk.mylivetracker.client.android.antplus.AntPlusHeartrateListener;
 import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
 import de.msk.mylivetracker.client.android.auto.AutoService;
-import de.msk.mylivetracker.client.android.listener.GpsStateListener;
-import de.msk.mylivetracker.client.android.listener.LocationListener;
 import de.msk.mylivetracker.client.android.listener.PhoneStateListener;
-import de.msk.mylivetracker.client.android.localization.LocalizationPrefs;
+import de.msk.mylivetracker.client.android.localization.LocationListener;
 import de.msk.mylivetracker.client.android.mainview.updater.MainDetailsViewUpdater;
 import de.msk.mylivetracker.client.android.mainview.updater.MainViewUpdater;
 import de.msk.mylivetracker.client.android.mainview.updater.UpdaterUtils;
@@ -172,7 +169,7 @@ public class MainActivity extends AbstractMainActivity {
 	protected void onDestroy() {
 		AbstractService.stopService(AutoService.class);		
 		AbstractService.stopService(UploadService.class);
-		MainActivity.get().stopLocationListener();
+		LocationListener.stop();
 		MainActivity.get().stopAntPlusHeartrateListener();
 		MainActivity.get().stopBatteryReceiver();
 		MainActivity.get().stopPhoneStateListener();
@@ -208,7 +205,7 @@ public class MainActivity extends AbstractMainActivity {
         checkButtons();
         
 		this.getUiBtStartStop().setChecked(TrackStatus.get().trackIsRunning());
-		this.getUiBtLocationListenerOnOff().setChecked(LocationListener.get().isActive());
+		this.getUiBtLocationListenerOnOff().setChecked(LocationListener.isActive());
 		this.getUiBtConnectDisconnectAnt().setChecked(AntPlusManager.get().hasSensorListeners());
 			
 		this.updateView();				
@@ -347,32 +344,6 @@ public class MainActivity extends AbstractMainActivity {
 			PhoneStateListener.get(), PhoneStateListener.LISTEN_NONE);
 	}
 
-	public boolean localizationEnabled() {
-		return PrefsRegistry.get(LocalizationPrefs.class).
-			getLocalizationMode().neededProvidersEnabled();
-	}
-	
-	public void startLocationListener() {
-		LocalizationPrefs prefs = PrefsRegistry.get(LocalizationPrefs.class);
-		this.getLocationManager().
-			addGpsStatusListener(GpsStateListener.get());
-		if (prefs.getLocalizationMode().gpsProviderEnabled()) {
-			this.getLocationManager().requestLocationUpdates(
-				LocationManager.GPS_PROVIDER, 
-				prefs.getTimeTriggerInSeconds() * 1000, 
-				prefs.getDistanceTriggerInMeter(), 
-				LocationListener.get());
-		}
-		if (prefs.getLocalizationMode().networkProviderEnabled()) {
-			this.getLocationManager().requestLocationUpdates(
-				LocationManager.NETWORK_PROVIDER, 
-				prefs.getTimeTriggerInSeconds() * 1000, 
-				prefs.getDistanceTriggerInMeter(), 
-				LocationListener.get());
-		}
-		LocationListener.get().setActive(true);		
-	}
-	
 	public void startAntPlusHeartrateListener() {
 		AntPlusManager.get().requestSensorUpdates(
 			AntPlusHeartrateListener.get());

@@ -7,7 +7,8 @@ import android.widget.TextView;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
 import de.msk.mylivetracker.client.android.auto.AutoPrefs;
-import de.msk.mylivetracker.client.android.listener.LocationListener;
+import de.msk.mylivetracker.client.android.localization.LocalizationPrefs;
+import de.msk.mylivetracker.client.android.localization.LocationListener;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.status.HeartrateInfo;
@@ -16,6 +17,7 @@ import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.status.UploadInfo;
 import de.msk.mylivetracker.client.android.util.FormatUtils.Unit;
+import de.msk.mylivetracker.client.android.util.LocationManagerUtils;
 
 /**
  * classname: MainViewUpdater
@@ -109,8 +111,8 @@ public class MainViewUpdater implements Runnable {
 		
 		// gps indicator			
 		TextView tvLocalizationIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_LocalizationIndicator);
-		boolean gpsOn = MainActivity.isLocalizationByGpsEnabled();
-		boolean nwOn = MainActivity.isLocalizationByNetworkEnabled();
+		boolean gpsOn = LocationManagerUtils.gpsProviderEnabled();
+		boolean nwOn = LocationManagerUtils.networkProviderEnabled();
 		String locIndStr = UpdaterUtils.getNoValue();
 		if (gpsOn && !nwOn) {
 			locIndStr = "GPS";
@@ -171,19 +173,20 @@ public class MainViewUpdater implements Runnable {
 		
 		// location
 		TextView tvLocation = UpdaterUtils.tv(mainActivity, R.id.tvMain_Location);
-		if (!mainActivity.localizationEnabled()) {
+		if (!PrefsRegistry.get(LocalizationPrefs.class).
+			getLocalizationMode().neededProvidersEnabled()) {
 			tvLocation.setBackgroundColor(res.getColor(R.color.colorLocListNoPosition));
 			tvLocation.setText(R.string.locListener_ProviderNotAvailable);
 		} else {
-			if (LocationListener.get().isActive() && 
+			if (LocationListener.isActive() && 
 				(locationInfo != null) &&  locationInfo.isUpToDate() && locationInfo.isAccurate()) {
 				tvLocation.setBackgroundColor(res.getColor(R.color.colorLocListPosFoundAcc));
 				tvLocation.setText(getLocationAccuracyStr(locationInfo));
-			} else if (LocationListener.get().isActive() && 
+			} else if (LocationListener.isActive() && 
 				(locationInfo != null) && locationInfo.isUpToDate()) {
 				tvLocation.setBackgroundColor(res.getColor(R.color.colorLocListPosFoundNotAcc));
 				tvLocation.setText(getLocationAccuracyStr(locationInfo));
-			} else if (LocationListener.get().isActive()) {
+			} else if (LocationListener.isActive()) {
 				tvLocation.setBackgroundColor(res.getColor(R.color.colorLocListNoPosition));
 				tvLocation.setText(R.string.locListener_Listening);
 			} else {

@@ -3,7 +3,6 @@ package de.msk.mylivetracker.client.android.mainview;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.location.LocationManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,8 +19,6 @@ import de.msk.mylivetracker.client.android.auto.AutoPrefs;
 import de.msk.mylivetracker.client.android.auto.AutoPrefsActivity;
 import de.msk.mylivetracker.client.android.dropbox.DropboxConnectActivity;
 import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParamsPrefsActivity;
-import de.msk.mylivetracker.client.android.listener.GpsStateListener;
-import de.msk.mylivetracker.client.android.listener.LocationListener;
 import de.msk.mylivetracker.client.android.localization.LocalizationPrefsActivity;
 import de.msk.mylivetracker.client.android.mylivetrackerportal.MyLiveTrackerPortalConnectActivity;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
@@ -133,16 +130,6 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 		}
 	}
 
-	private LocationManager locationManager;
-
-	public LocationManager getLocationManager() {
-		if (this.locationManager == null) {
-			this.locationManager = (LocationManager) this
-					.getSystemService(Context.LOCATION_SERVICE);
-		}
-		return this.locationManager;
-	}
-
 	private WifiManager wifiManager;
 	
 	public WifiManager getWifiManager() {
@@ -153,27 +140,10 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 		return this.wifiManager;
 	}
 	
-	public static boolean isLocalizationByGpsEnabled() {
-		LocationManager locationManager = MainActivity.get().getLocationManager();
-		return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-	}
-	
-	public static boolean isLocalizationByNetworkEnabled() {
-		LocationManager locationManager = MainActivity.get().getLocationManager();
-		return locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-	}
-	
 	public static boolean isWifiEnabled() {
 		WifiManager wifiManager = MainActivity.get().getWifiManager();
 		return wifiManager.isWifiEnabled();
 	}
-	
-	public void stopLocationListener() {
-		this.getLocationManager().removeUpdates(LocationListener.get());
-		this.getLocationManager().removeGpsStatusListener(
-				GpsStateListener.get());
-		LocationListener.get().setActive(false);
-	}	
 	
 	public void startActivityWithWarningDlgIfTrackRunning(Class<? extends Activity> activityClassToStart) {
 		if (TrackStatus.get().trackIsRunning()) {

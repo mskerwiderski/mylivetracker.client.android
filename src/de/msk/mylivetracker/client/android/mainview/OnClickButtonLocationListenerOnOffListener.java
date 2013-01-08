@@ -1,7 +1,7 @@
 package de.msk.mylivetracker.client.android.mainview;
 
 import de.msk.mylivetracker.client.android.R;
-import de.msk.mylivetracker.client.android.listener.LocationListener;
+import de.msk.mylivetracker.client.android.localization.LocationListener;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
@@ -26,7 +26,7 @@ public class OnClickButtonLocationListenerOnOffListener extends ASafeOnClickList
 				
 		public StartStopLocationListenerDialog(MainActivity activity) {
 			super(activity,
-				LocationListener.get().isActive() ? 	
+				LocationListener.isActive() ? 	
 				R.string.txMain_QuestionStopLocalization :
 				R.string.txMain_QuestionStartLocalization);
 			this.activity = activity;			
@@ -34,13 +34,13 @@ public class OnClickButtonLocationListenerOnOffListener extends ASafeOnClickList
 
 		@Override
 		public void onYes() {		
-			startStopLocationListener(activity, !LocationListener.get().isActive());							
+			startStopLocationListener(activity, !LocationListener.isActive());							
 		}	
 		
 		@Override
 		public void onNo() {
 			this.activity.getUiBtLocationListenerOnOff().setChecked(
-				LocationListener.get().isActive());
+				LocationListener.isActive());
 		}
 	}
 	
@@ -49,26 +49,25 @@ public class OnClickButtonLocationListenerOnOffListener extends ASafeOnClickList
 		MainActivity activity = MainActivity.get();
 		if (MainActivity.showStartStopInfoDialogIfInAutoMode()) {
 			activity.getUiBtLocationListenerOnOff().setChecked(
-				LocationListener.get().isActive());
+				LocationListener.isActive());
 			return;
 		}
-		
 		if (PrefsRegistry.get(OtherPrefs.class).getConfirmLevel().isHigh()) {
 			StartStopLocationListenerDialog dlg = new StartStopLocationListenerDialog(activity);
 			dlg.show();
 		} else {
-			startStopLocationListener(activity, !LocationListener.get().isActive());
+			startStopLocationListener(activity, !LocationListener.isActive());
 		}
 	}
 	
 	public static void startStopLocationListener(MainActivity activity, boolean start) {
-		if (!start && LocationListener.get().isActive()) {
-			activity.stopLocationListener();						
-		} else if (start && !LocationListener.get().isActive()){
-			activity.startLocationListener();						
+		if (!start && LocationListener.isActive()) {
+			LocationListener.stop();						
+		} else if (start && !LocationListener.isActive()){
+			LocationListener.start();						
 		}
 		activity.getUiBtLocationListenerOnOff().setChecked(
-			LocationListener.get().isActive());
+			LocationListener.isActive());
 		activity.updateView();
 	}
 }

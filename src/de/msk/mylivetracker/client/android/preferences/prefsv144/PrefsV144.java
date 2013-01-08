@@ -149,26 +149,6 @@ public class PrefsV144 {
 		public String getDsc() {
 			return dsc;
 		}
-		public boolean supported() {
-			boolean res = true;
-			if (this.gpsProviderEnabled) {
-				res = res && (MainActivity.get().getLocationManager().getProvider(LocationManager.GPS_PROVIDER) != null);
-			}
-			if (this.networkProviderEnabled) {
-				res = res && (MainActivity.get().getLocationManager().getProvider(LocationManager.NETWORK_PROVIDER) != null);
-			}
-			return res;
-		}
-		public boolean neededProvidersEnabled() {
-			boolean res = true;
-			if (this.gpsProviderEnabled) {
-				res = res && MainActivity.get().getLocationManager().isProviderEnabled(LocationManager.GPS_PROVIDER);
-			}
-			if (this.networkProviderEnabled) {
-				res = res && MainActivity.get().getLocationManager().isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-			}
-			return res;
-		}
 		public boolean gpsProviderEnabled() {
 			return this.gpsProviderEnabled;
 		}
