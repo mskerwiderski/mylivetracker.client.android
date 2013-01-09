@@ -7,6 +7,7 @@ import org.apache.commons.lang.StringUtils;
 
 import android.util.Log;
 import de.msk.mylivetracker.client.android.App.VersionDsc;
+import de.msk.mylivetracker.client.android.localization.LocalizationService;
 import de.msk.mylivetracker.client.android.util.sms.SmsSendUtils;
 import de.msk.mylivetracker.client.android.util.sms.SmsSentStatusReceiver;
 
@@ -38,6 +39,7 @@ public class LogUtils {
 		//classes.put(ASmsCmdExecutor.class, Boolean.TRUE);
 		//classes.put(SmsCmdTrack.class, Boolean.TRUE);
 		classes.put(SmsSendUtils.class, Boolean.TRUE);
+		classes.put(LocalizationService.class, Boolean.TRUE);
 	}
 
 	private static boolean isLogForClassEnabled(Class<?> clazz) {

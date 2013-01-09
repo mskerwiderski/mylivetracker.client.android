@@ -26,6 +26,10 @@
     <string name="txMain_InfoStartTrackDone">Der Track wurde gestartet!</string>
     <string name="txMain_InfoStoppingTracking">Der Track wird gestoppt&#8230;</string>
     <string name="txMain_InfoStopTrackDone">Der Track wurde gestoppt!</string>
+    <string name="txMain_InfoStartingLocalization">Lokalisierung wird gestartet&#8230;</string>
+    <string name="txMain_InfoStartLocalizationDone">Lokalisierung gestartet!</string>
+    <string name="txMain_InfoStoppingLocalization">Lokalisierung wird gestoppt&#8230;</string>
+    <string name="txMain_InfoStopLocalizationDone">Lokalisierung gestoppt!</string>
     <string name="txMain_QuestionStartAntPlus">Wollen Sie Ant+ wirklich aktivieren?</string>
     <string name="txMain_QuestionStopAntPlus">Wollen Sie Ant+ wirklich deaktivieren?</string>
     <string name="txMain_QuestionResetTrack">Wollen Sie den Track wirklich zurücksetzen?</string>

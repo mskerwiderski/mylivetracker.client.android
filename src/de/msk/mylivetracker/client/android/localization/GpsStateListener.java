@@ -1,4 +1,4 @@
-package de.msk.mylivetracker.client.android.listener;
+package de.msk.mylivetracker.client.android.localization;
 
 import java.util.Iterator;
 
@@ -22,29 +22,26 @@ import de.msk.mylivetracker.client.android.util.LocationManagerUtils;
  */
 public class GpsStateListener implements Listener {
 
-	private static GpsStateListener gpsStateListener = null;
-	
-	public static GpsStateListener get() {
-		if (gpsStateListener == null) {
-			gpsStateListener = new GpsStateListener();			
-		} 
-		return gpsStateListener;
-	}
+	private int currentNumberOfSatellites = 0;
 	
 	@Override
 	public void onGpsStatusChanged(int event) {
-		int countSatellites = 0;
+		int numberOfSatellites = 0;
 		GpsStatus gpsStatus = LocationManagerUtils.
 			getLocationManager().getGpsStatus(null);
 		Iterator<GpsSatellite> iterator = gpsStatus.getSatellites().iterator();
 		while (iterator.hasNext()) {
 			GpsSatellite gpsSatellite = iterator.next();
 			if (gpsSatellite.usedInFix()) {
-				countSatellites++;
+				numberOfSatellites++;
 			}
 		}
-		
-		GpsStateInfo.update(countSatellites);
+		GpsStateInfo.update(numberOfSatellites);
+		this.currentNumberOfSatellites = numberOfSatellites;
 		MainActivity.get().updateView();
+	}
+
+	public int getCurrentNumberOfSatellites() {
+		return currentNumberOfSatellites;
 	}
 }

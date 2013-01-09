@@ -85,7 +85,7 @@ public class OnClickButtonStartStopListener extends ASafeOnClickListener {
 						}
 					case TrackingLocalization:
 						OnClickButtonLocationListenerOnOffListener.
-							startStopLocationListener(activity, true);
+							startStopLocationListener(activity, false, true);
 					case TrackingOnly:
 					default:
 						break;
@@ -136,7 +136,7 @@ public class OnClickButtonStartStopListener extends ASafeOnClickListener {
 							startStopAntPlus(activity, false);
 					case TrackingLocalization:
 						OnClickButtonLocationListenerOnOffListener.
-							startStopLocationListener(activity, false);
+							startStopLocationListener(activity, false, false);
 					case TrackingOnly:
 					default:
 						break;

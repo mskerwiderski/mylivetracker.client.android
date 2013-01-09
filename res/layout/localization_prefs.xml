@@ -139,6 +139,27 @@
             android:layout_gravity="center_vertical" 
         />
     </LinearLayout>
+     <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent"
+        android:paddingLeft="5dip"
+       	android:paddingRight="5dip" 
+        >    	
+        <TextView 
+            android:text="@string/lbLocalizationPrefs_MaxWaitingPeriodForGpsFixInSecs" 
+            android:textColor="@color/colorText"
+            android:layout_height="wrap_content" 
+            android:layout_width="0dip" 
+            android:layout_weight="1"
+        />
+        <EditText 
+            android:id="@+id/etLocalizationPrefs_MaxWaitingPeriodForGpsFixInSecs"
+            android:inputType="number"
+            android:text="" 
+            android:layout_height="40dip"
+            android:layout_width="0dp" 
+            android:layout_weight="1"   
+            android:layout_gravity="center_vertical" 
+        />
+    </LinearLayout>
     <LinearLayout 
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"

@@ -8,7 +8,7 @@ import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
 import de.msk.mylivetracker.client.android.auto.AutoPrefs;
 import de.msk.mylivetracker.client.android.localization.LocalizationPrefs;
-import de.msk.mylivetracker.client.android.localization.LocationListener;
+import de.msk.mylivetracker.client.android.localization.LocalizationService;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.status.HeartrateInfo;
@@ -18,6 +18,7 @@ import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.status.UploadInfo;
 import de.msk.mylivetracker.client.android.util.FormatUtils.Unit;
 import de.msk.mylivetracker.client.android.util.LocationManagerUtils;
+import de.msk.mylivetracker.client.android.util.service.AbstractService;
 
 /**
  * classname: MainViewUpdater
@@ -178,15 +179,17 @@ public class MainViewUpdater implements Runnable {
 			tvLocation.setBackgroundColor(res.getColor(R.color.colorLocListNoPosition));
 			tvLocation.setText(R.string.locListener_ProviderNotAvailable);
 		} else {
-			if (LocationListener.isActive() && 
+			boolean localizationActive = 
+				AbstractService.isServiceRunning(LocalizationService.class);
+			if (localizationActive && 
 				(locationInfo != null) &&  locationInfo.isUpToDate() && locationInfo.isAccurate()) {
 				tvLocation.setBackgroundColor(res.getColor(R.color.colorLocListPosFoundAcc));
 				tvLocation.setText(getLocationAccuracyStr(locationInfo));
-			} else if (LocationListener.isActive() && 
+			} else if (localizationActive && 
 				(locationInfo != null) && locationInfo.isUpToDate()) {
 				tvLocation.setBackgroundColor(res.getColor(R.color.colorLocListPosFoundNotAcc));
 				tvLocation.setText(getLocationAccuracyStr(locationInfo));
-			} else if (LocationListener.isActive()) {
+			} else if (localizationActive) {
 				tvLocation.setBackgroundColor(res.getColor(R.color.colorLocListNoPosition));
 				tvLocation.setText(R.string.locListener_Listening);
 			} else {

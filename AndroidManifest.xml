@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="de.msk.mylivetracker.client.android"
     android:versionCode="150" 
-    android:versionName="1.5.0.14 BI" 
+    android:versionName="1.5.0.15 BI" 
     >       
     <uses-sdk
        android:minSdkVersion="7" 
@@ -105,6 +105,9 @@
 		    android:enabled="true"
 		    android:exported="false" />
 		<service android:name="de.msk.mylivetracker.client.android.upload.UploadService"
+		    android:enabled="true"
+		    android:exported="false" />
+		<service android:name="de.msk.mylivetracker.client.android.localization.LocalizationService"
 		    android:enabled="true"
 		    android:exported="false" />
     </application>

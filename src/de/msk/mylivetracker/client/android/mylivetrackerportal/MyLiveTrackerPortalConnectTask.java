@@ -68,6 +68,7 @@ public class MyLiveTrackerPortalConnectTask extends
 	        	protocolPrefs.setCloseConnectionAfterEveryUpload(false);
 	        	protocolPrefs.setFinishEveryUploadWithALinefeed(false);
 	        	protocolPrefs.setUplPositionBufferSize(BufferSize.pos5);
+	        	PrefsRegistry.save(ProtocolPrefs.class);
 	        	PrefsRegistry.save(AccountPrefs.class);
 	        	PrefsRegistry.save(ServerPrefs.class);
 			}

@@ -8,7 +8,7 @@ import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 import android.telephony.gsm.GsmCellLocation;
-import de.msk.mylivetracker.client.android.mainview.MainActivity;
+import de.msk.mylivetracker.client.android.phonestate.PhoneStateListener;
 
 /**
  * classname: PhoneStateInfo
@@ -111,7 +111,7 @@ public class PhoneStateInfo extends AbstractInfo implements Serializable {
 		String networkType = getNetworkTypeAsStr(networkTypeValue);
 		
 		// phType.
-		String phoneType = MainActivity.get().isPhoneTypeGsm() ? "GSM" : "CDMA";
+		String phoneType = PhoneStateListener.isPhoneTypeGsm() ? "GSM" : "CDMA";
 		
 		if (currPhoneStateInfo != null) {
 			if (StringUtils.isEmpty(networkType)) {

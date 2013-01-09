@@ -2,14 +2,16 @@
 <resources>
 	<string name="tiLocalizationPrefs">Einstellungen Lokalisierung</string>
 	<string name="lbLocalizationPrefs_Provider">Art der Positionsbestimmuung</string>
-    <string name="lbLocalizationPrefs_TimeTriggerInSecs">Zeit Trigger (Sek)</string>
+    <string name="lbLocalizationPrefs_TimeTriggerInSecs">Zeit Trigger (Sek.)</string>
     <string name="fdLocalizationPrefs_TimeTriggerInSecs">Zeit Trigger</string>
-    <string name="lbLocalizationPrefs_DistanceTriggerInMtr">Distanz Trigger (Mtr)</string>    
+    <string name="lbLocalizationPrefs_DistanceTriggerInMtr">Distanz Trigger (Mtr.)</string>    
     <string name="fdLocalizationPrefs_DistanceTriggerInMtr">Distanz Trigger</string>
     <string name="fdLocalizationPrefs_LocationAccuracyRequiredInMtr">Min. Genauigkeit</string>
-    <string name="lbLocalizationPrefs_LocationAccuracyRequiredInMtr">Min. Genauigkeit für\ndie Positions-\nvalidierung in Mtr.</string>
+    <string name="lbLocalizationPrefs_LocationAccuracyRequiredInMtr">Min. Genauigkeit für\ndie Positions-\nvalidierung (Mtr.)</string>
     <string name="fdLocalizationPrefs_DistBtwTwoLocsForDistCalcRequiredInCMtr">Min. Distanz</string>
-    <string name="lbLocalizationPrefs_DistBtwTwoLocsForDistCalcRequiredInCMtr">Min. Distanz zwischen\nzwei Positionen für\ndie Distanzber. in cm</string>
+    <string name="lbLocalizationPrefs_DistBtwTwoLocsForDistCalcRequiredInCMtr">Min. Distanz zwischen\nzwei Positionen für\ndie Distanzber. (cm)</string>
+    <string name="fdLocalizationPrefs_MaxWaitingPeriodForGpsFixInSecs">Max. Karenzzeit für GPS Fix</string>
+    <string name="lbLocalizationPrefs_MaxWaitingPeriodForGpsFixInSecs">Max. Karenzzeit für GPS Fix (Sek.)</string>
     <string name="lbLocalizationPrefs_TriggerInfo">Hinweis: Wenn beide Trigger auf 0 gesetzt sind, arbeitet die Lokalisierung ständig.</string>
     <string name="lbLocalizationPrefs_RequiredAccuracyAndDistanceInfo">Hinweis: Sind die Werte auf 0 gesetzt, sind die Checks deaktiviert.</string>
 </resources>

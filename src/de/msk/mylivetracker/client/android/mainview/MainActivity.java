@@ -9,7 +9,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
@@ -22,12 +21,12 @@ import de.msk.mylivetracker.client.android.antplus.AntPlusHardware;
 import de.msk.mylivetracker.client.android.antplus.AntPlusHeartrateListener;
 import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
 import de.msk.mylivetracker.client.android.auto.AutoService;
-import de.msk.mylivetracker.client.android.listener.PhoneStateListener;
-import de.msk.mylivetracker.client.android.localization.LocationListener;
+import de.msk.mylivetracker.client.android.localization.LocalizationService;
 import de.msk.mylivetracker.client.android.mainview.updater.MainDetailsViewUpdater;
 import de.msk.mylivetracker.client.android.mainview.updater.MainViewUpdater;
 import de.msk.mylivetracker.client.android.mainview.updater.UpdaterUtils;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
+import de.msk.mylivetracker.client.android.phonestate.PhoneStateListener;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry.InitResult;
 import de.msk.mylivetracker.client.android.status.BatteryReceiver;
@@ -78,7 +77,7 @@ public class MainActivity extends AbstractMainActivity {
 
         this.onResume();
         
-        this.startPhoneStateListener();
+        PhoneStateListener.start();
         this.startBatteryReceiver();
                 
     	this.getUiBtStartStop().setOnClickListener(
@@ -169,10 +168,10 @@ public class MainActivity extends AbstractMainActivity {
 	protected void onDestroy() {
 		AbstractService.stopService(AutoService.class);		
 		AbstractService.stopService(UploadService.class);
-		LocationListener.stop();
+		AbstractService.stopService(LocalizationService.class);
 		MainActivity.get().stopAntPlusHeartrateListener();
 		MainActivity.get().stopBatteryReceiver();
-		MainActivity.get().stopPhoneStateListener();
+		PhoneStateListener.stop();
 		Chronometer chronometer = MainActivity.get().getUiChronometer();
 		chronometer.stop();			
 		chronometer.setBase(SystemClock.elapsedRealtime());
@@ -205,7 +204,8 @@ public class MainActivity extends AbstractMainActivity {
         checkButtons();
         
 		this.getUiBtStartStop().setChecked(TrackStatus.get().trackIsRunning());
-		this.getUiBtLocationListenerOnOff().setChecked(LocationListener.isActive());
+		this.getUiBtLocationListenerOnOff().setChecked(
+			AbstractService.isServiceRunning(LocalizationService.class));
 		this.getUiBtConnectDisconnectAnt().setChecked(AntPlusManager.get().hasSensorListeners());
 			
 		this.updateView();				
@@ -263,7 +263,6 @@ public class MainActivity extends AbstractMainActivity {
 	}
 	
 	private ConnectivityManager connectivityManager = null;
-	private TelephonyManager telephonyManager = null;	
 	
 	public boolean isDataConnectionActive() {
 		boolean res = false;
@@ -298,25 +297,6 @@ public class MainActivity extends AbstractMainActivity {
 		return this.connectivityManager;
 	}
 	
-	public TelephonyManager getTelephonyManager() {
-		if (this.telephonyManager == null) {
-			this.telephonyManager = (TelephonyManager)
-				this.getApplicationContext().getSystemService(
-					Context.TELEPHONY_SERVICE);
-		}
-		return this.telephonyManager;
-	}
-	
-	private Boolean isPhoneTypeGsm = null;
-	public boolean isPhoneTypeGsm() {
-		if (isPhoneTypeGsm != null) {
-			return isPhoneTypeGsm;
-		}
-		int phoneType = getTelephonyManager().getPhoneType();
-		isPhoneTypeGsm = (phoneType == TelephonyManager.PHONE_TYPE_GSM);
-		return isPhoneTypeGsm();
-	}
-	
 	public void startBatteryReceiver() {
 		IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         this.registerReceiver(BatteryReceiver.get(), filter);
@@ -330,20 +310,6 @@ public class MainActivity extends AbstractMainActivity {
 		}
 	}
 	
-	public void startPhoneStateListener() {
-		this.getTelephonyManager().listen(
-			PhoneStateListener.get(), 
-				PhoneStateListener.LISTEN_SERVICE_STATE |
-				PhoneStateListener.LISTEN_CELL_LOCATION |
-				PhoneStateListener.LISTEN_DATA_CONNECTION_STATE |
-				PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
-	}
-	
-	public void stopPhoneStateListener() {
-		this.getTelephonyManager().listen(
-			PhoneStateListener.get(), PhoneStateListener.LISTEN_NONE);
-	}
-
 	public void startAntPlusHeartrateListener() {
 		AntPlusManager.get().requestSensorUpdates(
 			AntPlusHeartrateListener.get());
