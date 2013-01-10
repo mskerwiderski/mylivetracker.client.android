@@ -16,6 +16,7 @@ import de.msk.mylivetracker.client.android.status.LocationInfo;
 import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.status.UploadInfo;
+import de.msk.mylivetracker.client.android.util.ConnectivityUtils;
 import de.msk.mylivetracker.client.android.util.FormatUtils.Unit;
 import de.msk.mylivetracker.client.android.util.LocationManagerUtils;
 import de.msk.mylivetracker.client.android.util.service.AbstractService;
@@ -139,7 +140,7 @@ public class MainViewUpdater implements Runnable {
 		String mobNwStr = (phoneStateInfo != null ? 
 			phoneStateInfo.getNetworkType(UpdaterUtils.getNoValue()) : UpdaterUtils.getNoValue());
 		setIndicatorTextAndColors(tvMobileNetworkIndicator, mobNwStr, 
-			MainActivity.get().isDataConnectionAvailable() ? IndicatorState.Ok : IndicatorState.NotOk);
+			ConnectivityUtils.isDataConnectionAvailable() ? IndicatorState.Ok : IndicatorState.NotOk);
 		
 		// track distance
 		TextView tvDistance = UpdaterUtils.tv(mainActivity, R.id.tvMain_Distance);

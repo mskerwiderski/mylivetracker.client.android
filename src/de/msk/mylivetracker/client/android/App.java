@@ -1,5 +1,7 @@
 package de.msk.mylivetracker.client.android;
 
+import java.util.Locale;
+
 import org.apache.commons.lang.StringUtils;
 
 import android.app.Application;
@@ -287,4 +289,9 @@ public class App extends Application {
 		return App.getCtx().getPackageManager().
 			hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
   	}
+	
+	public static Locale getLocale() {
+		return App.getCtx().
+			getResources().getConfiguration().locale;
+	}
 }

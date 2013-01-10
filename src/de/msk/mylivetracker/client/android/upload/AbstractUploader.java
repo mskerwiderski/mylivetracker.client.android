@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Date;
 
 import de.msk.mylivetracker.client.android.account.AccountPrefs;
-import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
@@ -16,6 +15,7 @@ import de.msk.mylivetracker.client.android.status.LogInfo;
 import de.msk.mylivetracker.client.android.status.MessageInfo;
 import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
 import de.msk.mylivetracker.client.android.upload.protocol.IProtocol;
+import de.msk.mylivetracker.client.android.util.ConnectivityUtils;
 
 /**
  * classname: AbstractUploader
@@ -91,7 +91,7 @@ public abstract class AbstractUploader {
 	public abstract UploadResult upload(String dataStr);
 	
 	public void checkConnection() throws Exception {
-		if (!MainActivity.get().isDataConnectionActive()) {
+		if (!ConnectivityUtils.isDataConnectionActive()) {
 			throw new IOException("no data connection.");			
 		}		
 	}

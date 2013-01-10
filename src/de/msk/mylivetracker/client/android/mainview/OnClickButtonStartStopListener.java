@@ -2,6 +2,7 @@ package de.msk.mylivetracker.client.android.mainview;
 
 import android.os.SystemClock;
 import android.widget.Chronometer;
+import android.widget.ToggleButton;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.antplus.AntPlusHardware;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
@@ -28,16 +29,25 @@ import de.msk.mylivetracker.client.android.util.service.AbstractService;
  */
 public class OnClickButtonStartStopListener extends ASafeOnClickListener {
 	
+	private ToggleButton btMain_StartStopTrack;
+	
+	public OnClickButtonStartStopListener(ToggleButton btMain_StartStopTrack) {
+		this.btMain_StartStopTrack = btMain_StartStopTrack;
+	}
+
 	private static final class StartStopTrackDialog extends AbstractYesNoDialog {
 
 		private MainActivity activity;
-				
-		public StartStopTrackDialog(MainActivity activity) {
+		private ToggleButton btMain_StartStopTrack;
+		
+		public StartStopTrackDialog(MainActivity activity,
+			ToggleButton btMain_StartStopTrack) {
 			super(activity,
 				TrackStatus.get().trackIsRunning() ? 	
 				R.string.txMain_QuestionStopTrack :
 				R.string.txMain_QuestionStartTrack);
 			this.activity = activity;			
+			this.btMain_StartStopTrack = btMain_StartStopTrack;
 		}
 
 		@Override
@@ -47,7 +57,7 @@ public class OnClickButtonStartStopListener extends ASafeOnClickListener {
 		
 		@Override
 		public void onNo() {
-			this.activity.getUiBtStartStop().setChecked(
+			this.btMain_StartStopTrack.setChecked(
 				TrackStatus.get().trackIsRunning());
 		}
 	}
@@ -56,13 +66,14 @@ public class OnClickButtonStartStopListener extends ASafeOnClickListener {
 	public void onClick() {
 		MainActivity activity = MainActivity.get();
 		if (MainActivity.showStartStopInfoDialogIfInAutoMode()) {
-			activity.getUiBtStartStop().setChecked(
+			this.btMain_StartStopTrack.setChecked(
 				TrackStatus.get().trackIsRunning());
 			return;
 		}
 		
 		if (PrefsRegistry.get(OtherPrefs.class).getConfirmLevel().isHigh()) {
-			StartStopTrackDialog dlg = new StartStopTrackDialog(activity);
+			StartStopTrackDialog dlg = new StartStopTrackDialog(
+				activity, this.btMain_StartStopTrack);
 			dlg.show();
 		} else {
 			startStopTrack(activity, !TrackStatus.get().trackIsRunning(), true);
@@ -70,7 +81,19 @@ public class OnClickButtonStartStopListener extends ASafeOnClickListener {
 	}
 	
 	private static class StartTrackProgressDialog extends AbstractProgressDialog<MainActivity> {
+		private ToggleButton btMain_StartStopTrack;
+		private Chronometer chronometer;
 		private boolean oneTouchMode;
+		
+		public StartTrackProgressDialog(
+			ToggleButton btMain_StartStopTrack,
+			Chronometer chronometer,
+			boolean oneTouchMode) {
+			super();
+			this.btMain_StartStopTrack = btMain_StartStopTrack;
+			this.chronometer = chronometer;
+			this.oneTouchMode = oneTouchMode;
+		}
 		@Override
 		public void beforeTask(MainActivity activity) {
 			if (this.oneTouchMode) {
@@ -91,12 +114,10 @@ public class OnClickButtonStartStopListener extends ASafeOnClickListener {
 						break;
 				}
 			}
-			Chronometer chronometer = 
-				activity.getUiChronometer();
-			chronometer.setBase(
+			this.chronometer.setBase(
 				SystemClock.elapsedRealtime() -
 				TrackStatus.get().getRuntimeInMSecs(false));
-			chronometer.start();
+			this.chronometer.start();
 		}
 		@Override
 		public void doTask(MainActivity activity) {
@@ -104,19 +125,25 @@ public class OnClickButtonStartStopListener extends ASafeOnClickListener {
 		}
 		@Override
 		public void cleanUp(MainActivity activity) {
-			activity.getUiBtStartStop().setChecked(true);
+			this.btMain_StartStopTrack.setChecked(true);
 			activity.updateView();			
-		}
-		public void run(MainActivity activity, 
-			int progressMsgId, int doneMsgId,
-			boolean oneTouchMode) {
-			this.oneTouchMode = oneTouchMode;
-			super.run(activity, progressMsgId, doneMsgId);
 		}
 	}
 	
 	private static class StopTrackProgressDialog extends AbstractProgressDialog<MainActivity> {
+		private ToggleButton btMain_StartStopTrack;
+		private Chronometer chronometer;
 		private boolean oneTouchMode;
+		
+		public StopTrackProgressDialog(
+			ToggleButton btMain_StartStopTrack,
+			Chronometer chronometer,
+			boolean oneTouchMode) {
+			super();
+			this.btMain_StartStopTrack = btMain_StartStopTrack;
+			this.chronometer = chronometer;
+			this.oneTouchMode = oneTouchMode;
+		}
 		@Override
 		public void beforeTask(MainActivity activity) {
 		}
@@ -126,7 +153,7 @@ public class OnClickButtonStartStopListener extends ASafeOnClickListener {
 		}
 		@Override
 		public void cleanUp(MainActivity activity) {
-			activity.getUiChronometer().stop();
+			this.chronometer.stop();
 			if (this.oneTouchMode) {
 				TrackingOneTouchMode mode = PrefsRegistry.get(OtherPrefs.class).
 					getTrackingOneTouchMode();
@@ -142,32 +169,35 @@ public class OnClickButtonStartStopListener extends ASafeOnClickListener {
 						break;
 				}
 			}
-			activity.getUiBtStartStop().setChecked(false);
+			this.btMain_StartStopTrack.setChecked(false);
 			activity.updateView();			
-		}
-		public void run(MainActivity activity, 
-			int progressMsgId, int doneMsgId,
-			boolean oneTouchMode) {
-			this.oneTouchMode = oneTouchMode;
-			super.run(activity, progressMsgId, doneMsgId);
 		}
 	}
 	
 	public static void startStopTrack(final MainActivity activity, boolean start, boolean oneTouchMode) {
+		if (activity == null) {
+			throw new IllegalArgumentException("activity must not be null!");
+		}
+		ToggleButton btMain_StartStopTrack = (ToggleButton)
+			activity.findViewById(R.id.btMain_StartStopTrack);
+		Chronometer chronometer = (Chronometer)
+        	activity.findViewById(R.id.tvMain_Runtime);
 		if (start) {
 			LogUtils.info(OnClickButtonStartStopListener.class, "start button pressed.");
-			StartTrackProgressDialog startTrackDialog = new StartTrackProgressDialog();
+			StartTrackProgressDialog startTrackDialog = 
+				new StartTrackProgressDialog(
+					btMain_StartStopTrack, chronometer, oneTouchMode);
 			startTrackDialog.run(activity, 
 			R.string.txMain_InfoStartingTracking, 
-			R.string.txMain_InfoStartTrackDone,
-			oneTouchMode);
+			R.string.txMain_InfoStartTrackDone);
 		} else {
 			LogUtils.info(OnClickButtonStartStopListener.class, "stop button pressed.");
-			StopTrackProgressDialog stopTrackDialog = new StopTrackProgressDialog();
+			StopTrackProgressDialog stopTrackDialog = 
+				new StopTrackProgressDialog(
+					btMain_StartStopTrack, chronometer, oneTouchMode);
 			stopTrackDialog.run(activity, 
 			R.string.txMain_InfoStoppingTracking, 
-			R.string.txMain_InfoStopTrackDone,
-			oneTouchMode);
+			R.string.txMain_InfoStopTrackDone);
 		}
 	}
 }

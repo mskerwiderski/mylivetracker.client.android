@@ -3,6 +3,7 @@ package de.msk.mylivetracker.client.android.mylivetrackerportal;
 import java.net.URL;
 
 import android.os.AsyncTask;
+import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.App.ConfigDsc;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.account.AccountPrefs;
@@ -14,6 +15,7 @@ import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs.BufferSize;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs.TransferProtocol;
 import de.msk.mylivetracker.client.android.rpc.JsonRpcHttpClient;
 import de.msk.mylivetracker.client.android.server.ServerPrefs;
+import de.msk.mylivetracker.client.android.util.ConnectivityUtils;
 import de.msk.mylivetracker.commons.rpc.RegisterSenderRequest;
 import de.msk.mylivetracker.commons.rpc.RegisterSenderResponse;
 import de.msk.mylivetracker.commons.rpc.RpcResponse.ResultCode;
@@ -44,7 +46,7 @@ public class MyLiveTrackerPortalConnectTask extends
 		ServerPrefs serverPrefs = PrefsRegistry.get(ServerPrefs.class);
 		ProtocolPrefs protocolPrefs = PrefsRegistry.get(ProtocolPrefs.class);
 		try {	
-			if (!MainActivity.get().isDataConnectionActive()) {
+			if (!ConnectivityUtils.isDataConnectionActive()) {
 				throw new RuntimeException(MainActivity.get().getResources().getString(R.string.txErr_NoDataConnection));
 			}
 			JsonRpcHttpClient rcpClient = new JsonRpcHttpClient(new URL(
@@ -73,7 +75,7 @@ public class MyLiveTrackerPortalConnectTask extends
 	        	PrefsRegistry.save(ServerPrefs.class);
 			}
 		} catch (Throwable e) {
-			response = new RegisterSenderResponse(MainActivity.getLocale().getLanguage(),
+			response = new RegisterSenderResponse(App.getLocale().getLanguage(),
 				ResultCode.InternalServerError, e.getMessage());
 		}
 		return response;

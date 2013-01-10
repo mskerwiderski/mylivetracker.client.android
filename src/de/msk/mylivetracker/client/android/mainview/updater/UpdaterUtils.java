@@ -10,7 +10,7 @@ import org.apache.commons.lang.StringUtils;
 
 import android.app.Activity;
 import android.widget.TextView;
-import de.msk.mylivetracker.client.android.mainview.MainActivity;
+import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.util.FormatUtils.Unit;
 
 /**
@@ -89,7 +89,7 @@ public class UpdaterUtils {
 		if (decimalPlaces > 0) {
 			String format = "#,##0." + 
 				StringUtils.repeat("0", decimalPlaces);				
-			DecimalFormat df = (DecimalFormat)NumberFormat.getNumberInstance(MainActivity.getLocale());
+			DecimalFormat df = (DecimalFormat)NumberFormat.getNumberInstance(App.getLocale());
 			df.applyPattern(format);
 			res = df.format(value);
 		} else {

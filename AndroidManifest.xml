@@ -101,6 +101,9 @@
         		<category android:name="android.intent.category.DEFAULT" />
       		</intent-filter>
     	</activity>
+    	<service android:name="de.msk.mylivetracker.client.android.mainview.updater.ViewUpdateService"
+		    android:enabled="true"
+		    android:exported="false" />
 		<service android:name="de.msk.mylivetracker.client.android.auto.AutoService"
 		    android:enabled="true"
 		    android:exported="false" />

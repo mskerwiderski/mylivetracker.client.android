@@ -17,7 +17,11 @@ public class BatteryStateInfo extends AbstractInfo implements Serializable {
 	private static final long serialVersionUID = 1017373978215679750L;
 
 	public enum State {
-		Charging("CHG"), Discharging("DCHG"), NotCharging("NCHG"), Full("FULL"), Unknown("UKWN");
+		Charging("CHG"), 
+		Discharging("DCHG"), 
+		NotCharging("NCHG"), 
+		Full("FULL"), 
+		Unknown("UKWN");
 		String abbr;
 		private State(String abbr) {
 			this.abbr = abbr;
@@ -103,6 +107,13 @@ public class BatteryStateInfo extends AbstractInfo implements Serializable {
 	
 	public State getState() {
 		return state;
+	}
+	
+	public boolean fullOrCharging() {
+		return
+			(state != null) && (	
+				state.equals(State.Charging) || 
+				state.equals(State.Full));
 	}
 	
 	public Integer getPercent() {

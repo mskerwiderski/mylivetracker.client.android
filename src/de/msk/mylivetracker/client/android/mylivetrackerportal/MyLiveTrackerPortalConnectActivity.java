@@ -15,7 +15,6 @@ import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.App.ConfigDsc;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
-import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractInfoDialog;
 import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
 import de.msk.mylivetracker.client.android.util.listener.OnFinishActivityListener;
@@ -90,7 +89,7 @@ public class MyLiveTrackerPortalConnectActivity extends AbstractActivity {
 				}
 
 				RegisterSenderRequest request = new RegisterSenderRequest(
-            		MainActivity.getLocale().getLanguage(), 
+            		App.getLocale().getLanguage(), 
 					App.getDeviceId(), 
 					android.os.Build.MANUFACTURER + " " + android.os.Build.MODEL,
 					etMyLiveTrackerPortalConnect_PortalUsername.getText().toString(),

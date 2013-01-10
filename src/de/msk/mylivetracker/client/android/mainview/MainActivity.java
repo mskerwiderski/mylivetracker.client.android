@@ -1,12 +1,6 @@
 package de.msk.mylivetracker.client.android.mainview;
 
-import java.util.Locale;
-
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.View;
@@ -21,15 +15,14 @@ import de.msk.mylivetracker.client.android.antplus.AntPlusHardware;
 import de.msk.mylivetracker.client.android.antplus.AntPlusHeartrateListener;
 import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
 import de.msk.mylivetracker.client.android.auto.AutoService;
+import de.msk.mylivetracker.client.android.battery.BatteryReceiver;
 import de.msk.mylivetracker.client.android.localization.LocalizationService;
-import de.msk.mylivetracker.client.android.mainview.updater.MainDetailsViewUpdater;
-import de.msk.mylivetracker.client.android.mainview.updater.MainViewUpdater;
 import de.msk.mylivetracker.client.android.mainview.updater.UpdaterUtils;
+import de.msk.mylivetracker.client.android.mainview.updater.ViewUpdateService;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.phonestate.PhoneStateListener;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry.InitResult;
-import de.msk.mylivetracker.client.android.status.BatteryReceiver;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.upload.UploadService;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
@@ -78,18 +71,34 @@ public class MainActivity extends AbstractMainActivity {
         this.onResume();
         
         PhoneStateListener.start();
-        this.startBatteryReceiver();
+        BatteryReceiver.start();
                 
-    	this.getUiBtStartStop().setOnClickListener(
-			new OnClickButtonStartStopListener());
-    	this.getUiBtLocationListenerOnOff().setOnClickListener(
-			new OnClickButtonLocationListenerOnOffListener());
-		this.getUiBtReset().setOnClickListener(
+        ToggleButton btMain_StartStopTrack = (ToggleButton)
+			findViewById(R.id.btMain_StartStopTrack);
+    	btMain_StartStopTrack.setOnClickListener(
+			new OnClickButtonStartStopListener(
+				btMain_StartStopTrack));
+    	
+    	ToggleButton btMain_LocationListenerOnOff = (ToggleButton)
+			findViewById(R.id.btMain_LocationListenerOnOff);
+    	btMain_LocationListenerOnOff.setOnClickListener(
+			new OnClickButtonLocationListenerOnOffListener(
+				btMain_LocationListenerOnOff));
+    	
+    	Button btMain_ResetTrack = (Button)
+			findViewById(R.id.btMain_ResetTrack);
+		btMain_ResetTrack.setOnClickListener(
 			new OnClickButtonResetListener());
-		this.getUiBtConnectDisconnectAnt().setOnClickListener(
-			new OnClickButtonAntPlusListener());
 		
-		checkButtons();
+		ToggleButton btMain_ConnectDisconnectAnt = (ToggleButton)
+			findViewById(R.id.btMain_ConnectDisconnectAnt);
+		btMain_ConnectDisconnectAnt.setOnClickListener(
+			new OnClickButtonAntPlusListener(
+				btMain_ConnectDisconnectAnt));
+		
+		checkButtons(
+			btMain_LocationListenerOnOff,
+			btMain_ConnectDisconnectAnt);
 		
 		((Button)findViewById(R.id.btMain_SendSos)).setOnClickListener(
 			new OnClickButtonSosListener(this));
@@ -162,17 +171,20 @@ public class MainActivity extends AbstractMainActivity {
 		}
 		
 		AbstractService.startService(AutoService.class);
+		AbstractService.startService(ViewUpdateService.class);
     }	
 	
 	@Override
 	protected void onDestroy() {
+		AbstractService.stopService(ViewUpdateService.class);
 		AbstractService.stopService(AutoService.class);		
 		AbstractService.stopService(UploadService.class);
 		AbstractService.stopService(LocalizationService.class);
 		MainActivity.get().stopAntPlusHeartrateListener();
-		MainActivity.get().stopBatteryReceiver();
+		BatteryReceiver.stop();
 		PhoneStateListener.stop();
-		Chronometer chronometer = MainActivity.get().getUiChronometer();
+		Chronometer chronometer = (Chronometer)
+        	this.findViewById(R.id.tvMain_Runtime);
 		chronometer.stop();			
 		chronometer.setBase(SystemClock.elapsedRealtime());
 		TrackStatus.saveTrackStatus();
@@ -182,7 +194,9 @@ public class MainActivity extends AbstractMainActivity {
 	@Override
 	protected void onPause() {		
 		super.onPause();
-		this.getUiChronometer().stop();
+		Chronometer chronometer = (Chronometer)
+        	this.findViewById(R.id.tvMain_Runtime);
+		chronometer.stop();
 		TrackStatus.saveTrackStatus();		
 	}
 	
@@ -194,24 +208,36 @@ public class MainActivity extends AbstractMainActivity {
 		
 		boolean isRunning = trackStatus.trackIsRunning();
 		
-        Chronometer chronometer = (Chronometer)this.findViewById(R.id.tvMain_Runtime);
+        Chronometer chronometer = (Chronometer)
+        	this.findViewById(R.id.tvMain_Runtime);
        	chronometer.setBase(SystemClock.elapsedRealtime() -
 			trackStatus.getRuntimeInMSecs(false));
         if (isRunning) {        
     		chronometer.start();
         }		
         
-        checkButtons();
-        
-		this.getUiBtStartStop().setChecked(TrackStatus.get().trackIsRunning());
-		this.getUiBtLocationListenerOnOff().setChecked(
+        ToggleButton btMain_StartStopTrack = (ToggleButton)
+			findViewById(R.id.btMain_StartStopTrack);
+    	ToggleButton btMain_LocationListenerOnOff = (ToggleButton)
+			findViewById(R.id.btMain_LocationListenerOnOff);
+		ToggleButton btMain_ConnectDisconnectAnt = (ToggleButton)
+			findViewById(R.id.btMain_ConnectDisconnectAnt);
+		
+		checkButtons(
+			btMain_LocationListenerOnOff,
+			btMain_ConnectDisconnectAnt);	
+
+		btMain_StartStopTrack.setChecked(TrackStatus.get().trackIsRunning());
+		btMain_LocationListenerOnOff.setChecked(
 			AbstractService.isServiceRunning(LocalizationService.class));
-		this.getUiBtConnectDisconnectAnt().setChecked(AntPlusManager.get().hasSensorListeners());
+		btMain_ConnectDisconnectAnt.setChecked(AntPlusManager.get().hasSensorListeners());
 			
 		this.updateView();				
 	}
 	
-	private void checkButtons() {
+	private void checkButtons(
+		ToggleButton btMain_LocationListenerOnOff,
+		ToggleButton btMain_ConnectDisconnectAnt) {
 		if (AntPlusHardware.initialized() && 
 			PrefsRegistry.get(OtherPrefs.class).isAntPlusEnabledIfAvailable()) {
 			if (PrefsRegistry.get(OtherPrefs.class).getTrackingOneTouchMode().
@@ -221,14 +247,14 @@ public class MainActivity extends AbstractMainActivity {
 				// one touch mode includes heartrate control
 				// adaption enabled by user
 				// --> hide ANT+ button.
-				this.getUiBtConnectDisconnectAnt().setVisibility(View.GONE);
+				btMain_ConnectDisconnectAnt.setVisibility(View.GONE);
 			} else {
 				// ANT+ supported and enabled by user --> show ANT+ button.
-				this.getUiBtConnectDisconnectAnt().setVisibility(View.VISIBLE);
+				btMain_ConnectDisconnectAnt.setVisibility(View.VISIBLE);
 			}
 		} else {
 			// ANT+ not supported or/and disabled by user --> hide ANT+ button.
-			this.getUiBtConnectDisconnectAnt().setVisibility(View.GONE);
+			btMain_ConnectDisconnectAnt.setVisibility(View.GONE);
 		}
 		LinearLayout llHeartrate = (LinearLayout)this.findViewById(R.id.llMain_Heartrate);
 		if (AntPlusHardware.initialized() && 
@@ -243,12 +269,12 @@ public class MainActivity extends AbstractMainActivity {
 			equals(OtherPrefs.TrackingOneTouchMode.TrackingOnly)) {
 			// one touch mode does not include localization control
 			// --> show localization button.
-			this.getUiBtLocationListenerOnOff().setVisibility(View.VISIBLE);
+			btMain_LocationListenerOnOff.setVisibility(View.VISIBLE);
 		} else if  (PrefsRegistry.get(OtherPrefs.class).isAdaptButtonsForOneTouchMode()) {
 			// one touch mode includes localization control
 			// adaption enabled by user
 			// --> hide localization button.
-			this.getUiBtLocationListenerOnOff().setVisibility(View.GONE);
+			btMain_LocationListenerOnOff.setVisibility(View.GONE);
 		}
 	}
 	
@@ -262,54 +288,6 @@ public class MainActivity extends AbstractMainActivity {
 		startActivity(new Intent(this, MainDetailsActivity.class));
 	}
 	
-	private ConnectivityManager connectivityManager = null;
-	
-	public boolean isDataConnectionActive() {
-		boolean res = false;
-		ConnectivityManager connectivityManager = getConnectivityManager();
-		if (connectivityManager != null) {
-			NetworkInfo nwInfo = connectivityManager.getActiveNetworkInfo();
-			if ((nwInfo != null) && nwInfo.isConnected()) {
-				res = true;
-			}
-		}
-		return res;
-	}
-	
-	public boolean isDataConnectionAvailable() {
-		boolean res = false;
-		ConnectivityManager connectivityManager = getConnectivityManager();
-		if (connectivityManager != null) {
-			NetworkInfo nwInfo = connectivityManager.getActiveNetworkInfo();
-			if ((nwInfo != null) && nwInfo.isAvailable()) {
-				res = true;
-			}
-		}
-		return res;
-	}
-	
-	public ConnectivityManager getConnectivityManager() {
-		if (this.connectivityManager == null) {
-			this.connectivityManager = (ConnectivityManager)
-				this.getApplicationContext().getSystemService(
-					Context.CONNECTIVITY_SERVICE);
-		}
-		return this.connectivityManager;
-	}
-	
-	public void startBatteryReceiver() {
-		IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-        this.registerReceiver(BatteryReceiver.get(), filter);
-        BatteryReceiver.get().setActive(true);
-	}
-	
-	public void stopBatteryReceiver() {
-		if (BatteryReceiver.get().isActive()) {
-			this.unregisterReceiver(BatteryReceiver.get());
-			BatteryReceiver.get().setActive(false);
-		}
-	}
-	
 	public void startAntPlusHeartrateListener() {
 		AntPlusManager.get().requestSensorUpdates(
 			AntPlusHeartrateListener.get());
@@ -321,30 +299,10 @@ public class MainActivity extends AbstractMainActivity {
 	}
 	
 	public void updateView() {
-		if (MainDetailsActivity.get() == null) {
-			this.runOnUiThread(new MainViewUpdater());
-		} else {
-			this.runOnUiThread(new MainDetailsViewUpdater());
-		}
+//		if (MainDetailsActivity.get() == null) {
+//			this.runOnUiThread(new MainViewUpdater());
+//		} else {
+//			this.runOnUiThread(new MainDetailsViewUpdater());
+//		}
 	}
-		
-	public static Locale getLocale() {
-		return MainActivity.get().getResources().getConfiguration().locale;
-	}
-	
-	public Chronometer getUiChronometer() {
-		return (Chronometer)this.findViewById(R.id.tvMain_Runtime);
-	}
-	public ToggleButton getUiBtStartStop() {
-		return (ToggleButton)findViewById(R.id.btMain_StartStopTrack);
-	}
-	public ToggleButton getUiBtLocationListenerOnOff() {
-		return (ToggleButton)findViewById(R.id.btMain_LocationListenerOnOff);
-	}
-	public Button getUiBtReset() {
-		return (Button)findViewById(R.id.btMain_ResetTrack);
-	}
-	public ToggleButton getUiBtConnectDisconnectAnt() {
-		return (ToggleButton)findViewById(R.id.btMain_ConnectDisconnectAnt);
-	}	
 }

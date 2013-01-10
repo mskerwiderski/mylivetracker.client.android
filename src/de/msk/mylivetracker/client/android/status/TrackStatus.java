@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 
 import de.msk.mylivetracker.client.android.App;
+import de.msk.mylivetracker.client.android.battery.BatteryReceiver;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.phonestate.PhoneStateListener;
 import de.msk.mylivetracker.client.android.util.LogUtils;
@@ -146,7 +147,7 @@ public class TrackStatus implements Serializable {
 		float mileageInMtr = (trackStatus != null) ? trackStatus.mileageInMtr : 0.0f;
 		float trackDistanceInMtr = 0.0f;
 		PhoneStateListener.stop();
-		MainActivity.get().stopBatteryReceiver();
+		BatteryReceiver.stop();
 		if ((trackStatus != null) && !StringUtils.isEmpty(trackStatus.logFileName)) {
 			App.get().deleteFile(trackStatus.logFileName);
 		}
@@ -165,7 +166,7 @@ public class TrackStatus implements Serializable {
 		EmergencySignalInfo.reset();
 		MessageInfo.reset();
 		UploadInfo.reset();
-		MainActivity.get().startBatteryReceiver();
+		BatteryReceiver.start();
 		PhoneStateListener.start();			
 		saveTrackStatus();
 	}		
