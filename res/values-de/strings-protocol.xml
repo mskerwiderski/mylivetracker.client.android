@@ -9,6 +9,7 @@
     <string name="lbProtocolPrefs_TriggerLogic">Trigger Logik</string>       
     <string name="lbProtocolPrefs_CloseConnectionAfterEveryUpload">Verbindung nach jeder Übertragung schließen</string>
     <string name="lbProtocolPrefs_FinishEveryUploadWithALinefeed">Jede Übertragung mit einem Zeilenumbruch beenden</string>
+    <string name="lbProtocolPrefs_UploadPositionsOnlyOnce">Positionen nur einmal senden</string>
     <string name="fdProtocolPrefs_MaxPositionBufferSize">Puffer Größe</string>
     <string name="lbProtocolPrefs_MaxPositionBufferSize">Puffergröße um Funklöcher zu überbrücken</string>
     <string name="lbProtocolPrefs_LogTrackData">Trackdaten mitloggen für den späteren Export</string>

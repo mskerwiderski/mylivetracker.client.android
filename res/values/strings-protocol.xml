@@ -9,6 +9,7 @@
     <string name="lbProtocolPrefs_TriggerLogic">Trigger Logic</string>       
     <string name="lbProtocolPrefs_CloseConnectionAfterEveryUpload">Close connection after every upload</string>
     <string name="lbProtocolPrefs_FinishEveryUploadWithALinefeed">Finish every upload with a linefeed</string>
+    <string name="lbProtocolPrefs_UploadPositionsOnlyOnce">Upload positions only once</string>
     <string name="fdProtocolPrefs_MaxPositionBufferSize">Buffer size</string>
     <string name="lbProtocolPrefs_MaxPositionBufferSize">Buffer size to bridge data connection timeouts</string>
     <string name="lbProtocolPrefs_LogTrackData">Log track data for later export</string>
