@@ -36,8 +36,7 @@
     <string name="txMain_InfoResetTrackDone">Reset track done!</string>               
     <string name="txMain_QuestionSendSosSignal">Do you really want to send a SOS signal?</string>    
     <string name="txMain_InfoSendSosSignalDone">Send SOS signal done!</string>    
-    <string name="txMain_QuestionExit">Do you really want to exit MyLiveTracker?</string>   
-    <string name="txMain_InfoExitApp">MyLiveTracker is terminated&#8230;</string>
+    <string name="txMain_QuestionExit">Do you really want to exit %1$s?</string>   
     <string name="txMain_SendMessageNotSupportedByTransferProtocol">Send messages is not supported by selected transfer protocol (%1$s).</string>
     <string name="txMain_SendEmergencySignalNotSupportedByTransferProtocol">Send SOS signals is not supported by selected transfer protocol (%1$s).</string>
 </resources>

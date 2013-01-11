@@ -6,13 +6,13 @@
     android:background="@color/colorBackground"
 >
     <TextView 
+        android:id="@+id/tvPinCodeQueryPrefs_Info"
         android:paddingTop="10dip"
         android:paddingLeft="5dip"
         android:paddingRight="5dip"
         android:textSize="14sp"
         android:layout_height="wrap_content" 
         android:layout_width="wrap_content" 
-        android:text="@string/lbPinCodeQueryPrefs_Info"
         android:textColor="@color/colorText"
     />
     <LinearLayout

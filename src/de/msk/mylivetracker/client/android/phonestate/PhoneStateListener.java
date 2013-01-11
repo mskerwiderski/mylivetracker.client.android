@@ -7,7 +7,6 @@ import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 import android.telephony.gsm.GsmCellLocation;
 import de.msk.mylivetracker.client.android.App;
-import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
 
 /**
@@ -59,30 +58,25 @@ public class PhoneStateListener extends android.telephony.PhoneStateListener {
 	public void onCellLocationChanged(CellLocation location) {
 		if (isPhoneTypeGsm()) {
 			PhoneStateInfo.update(null, (GsmCellLocation)location, null, null);
-			MainActivity.get().updateView();
 		}
 	}
 
 	@Override
 	public void onDataConnectionStateChanged(int state, int networkType) {
 		PhoneStateInfo.update(networkType, null, null, null);
-		MainActivity.get().updateView();
 	}
 
 	@Override
 	public void onDataConnectionStateChanged(int state) {
-		MainActivity.get().updateView();
 	}
 	
 	@Override
 	public void onServiceStateChanged(ServiceState serviceState) {
 		PhoneStateInfo.update(null, null, serviceState, null);
-		MainActivity.get().updateView();
 	}
 
 	@Override
 	public void onSignalStrengthsChanged(SignalStrength signalStrength) {
 		PhoneStateInfo.update(null, null, null, signalStrength);
-		MainActivity.get().updateView();
 	}
 }

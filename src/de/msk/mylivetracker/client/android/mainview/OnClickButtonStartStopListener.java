@@ -126,7 +126,6 @@ public class OnClickButtonStartStopListener extends ASafeOnClickListener {
 		@Override
 		public void cleanUp(MainActivity activity) {
 			this.btMain_StartStopTrack.setChecked(true);
-			activity.updateView();			
 		}
 	}
 	
@@ -170,7 +169,6 @@ public class OnClickButtonStartStopListener extends ASafeOnClickListener {
 				}
 			}
 			this.btMain_StartStopTrack.setChecked(false);
-			activity.updateView();			
 		}
 	}
 	

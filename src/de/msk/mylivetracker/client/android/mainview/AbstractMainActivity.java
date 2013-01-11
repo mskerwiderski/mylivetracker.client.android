@@ -3,7 +3,6 @@ package de.msk.mylivetracker.client.android.mainview;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.InfoActivity;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.account.AccountPrefsActivity;
@@ -47,6 +47,16 @@ import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
  */
 public abstract class AbstractMainActivity extends AbstractActivity {
 
+	public abstract Class<? extends Runnable> getViewUpdater();
+	
+	public void updateView() {
+		try {
+			this.runOnUiThread(getViewUpdater().newInstance());
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
 	private GestureDetector gestureDetector = null;
 
 	@Override
@@ -130,21 +140,6 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 		}
 	}
 
-	private WifiManager wifiManager;
-	
-	public WifiManager getWifiManager() {
-		if (this.wifiManager == null) {
-			this.wifiManager = (WifiManager) this
-					.getSystemService(Context.WIFI_SERVICE);
-		}
-		return this.wifiManager;
-	}
-	
-	public static boolean isWifiEnabled() {
-		WifiManager wifiManager = MainActivity.get().getWifiManager();
-		return wifiManager.isWifiEnabled();
-	}
-	
 	public void startActivityWithWarningDlgIfTrackRunning(Class<? extends Activity> activityClassToStart) {
 		if (TrackStatus.get().trackIsRunning()) {
 			showPrefsWarningDialogIfIsTrackRunning(activityClassToStart);
@@ -157,8 +152,8 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 		
 		private Handler handler;
 		
-		protected ExitYesNoDialog(Context ctx, int question, Handler handler) {
-			super(ctx, question);
+		protected ExitYesNoDialog(Context ctx, Handler handler) {
+			super(ctx, R.string.txMain_QuestionExit, new String[] {App.getAppName()});
 			this.handler = handler;
 		}
 
@@ -239,8 +234,8 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 			startActivity(new Intent(this, InfoActivity.class));
 			return true;
 		case R.id.mnExit:
-			ExitYesNoDialog dlg = new ExitYesNoDialog(this,
-				R.string.txMain_QuestionExit, MainActivity.exitHandler);
+			ExitYesNoDialog dlg = new ExitYesNoDialog(
+				this, MainActivity.exitHandler);
 			dlg.show();
 		default:
 			return super.onOptionsItemSelected(item);

@@ -78,12 +78,11 @@ public class OnClickButtonAntPlusListener extends ASafeOnClickListener {
 		ToggleButton btMain_ConnectDisconnectAnt = (ToggleButton)
 			activity.findViewById(R.id.btMain_ConnectDisconnectAnt);
 		if (!start && AntPlusManager.get().hasSensorListeners()) {
-			activity.stopAntPlusHeartrateListener();
+			AntPlusManager.stop();
 		} else if (start && !AntPlusManager.get().hasSensorListeners()) {
-			activity.startAntPlusHeartrateListener();
+			AntPlusManager.start();
 		}			
 		btMain_ConnectDisconnectAnt.setChecked(
 			AntPlusManager.get().hasSensorListeners());
-		activity.updateView();
 	}
 }

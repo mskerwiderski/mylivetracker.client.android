@@ -90,6 +90,10 @@ public abstract class AbstractService extends Service {
 	
 	public abstract Class<? extends AbstractServiceThread> getServiceThreadClass();
 
+	public AbstractServiceThread createServiceThread() throws Exception {
+		return this.getServiceThreadClass().newInstance();
+	}
+	
 	public static class NotificationDsc {
 		public int notificationId;
 		public int iconId;
@@ -116,7 +120,6 @@ public abstract class AbstractService extends Service {
 			public void handleMessage(Message msg) {
 				onReceiveMessage(msg);
 			}
-		
 	};
 	
 	public void onReceiveMessage(Message msg) {
@@ -159,7 +162,7 @@ public abstract class AbstractService extends Service {
 		}
 		if (this.thread == null) {
 			try {
-				this.thread = this.getServiceThreadClass().newInstance();
+				this.thread = this.createServiceThread();
 				this.thread.initThreadObject(this.messageFromServiceThreadHandler);
 				this.thread.start();
 			} catch (Exception e) {

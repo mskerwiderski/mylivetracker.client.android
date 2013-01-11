@@ -12,16 +12,16 @@ public class ViewUpdateServiceThread extends AbstractServiceThread {
 
 	@Override
 	public void runSinglePass() throws InterruptedException {
-		if (MainDetailsActivity.get() == null) {
-			MainActivity.get().runOnUiThread(new MainViewUpdater());
+		if (MainDetailsActivity.get() != null) {
+			MainDetailsActivity.get().updateView();
 		} else {
-			MainDetailsActivity.get().runOnUiThread(new MainDetailsViewUpdater());
+			MainActivity.get().updateView();
 		}
 	}
 
 	@Override
 	public long getSleepAfterRunSinglePassInMSecs() {
-		return 250;
+		return 200;
 	}
 
 	@Override

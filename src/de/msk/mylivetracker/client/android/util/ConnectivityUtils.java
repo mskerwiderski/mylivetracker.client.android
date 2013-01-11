@@ -1,9 +1,10 @@
 package de.msk.mylivetracker.client.android.util;
 
-import de.msk.mylivetracker.client.android.App;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
+import de.msk.mylivetracker.client.android.App;
 
 /**
  * classname: ConnectivityUtils
@@ -24,7 +25,7 @@ public class ConnectivityUtils {
 		if (connectivityManager != null) {
 			NetworkInfo nwInfo = connectivityManager.getActiveNetworkInfo();
 			if ((nwInfo != null) && nwInfo.isConnected()) {
-				res = true;
+				res = true; 
 			}
 		}
 		return res;
@@ -40,6 +41,18 @@ public class ConnectivityUtils {
 			}
 		}
 		return res;
+	}
+	
+	public static boolean isWifiEnabled() {
+		WifiManager wifiManager = getWifiManager();
+		return (wifiManager != null) && 
+			getWifiManager().isWifiEnabled();
+	}
+	
+	public static WifiManager getWifiManager() {
+		return (WifiManager)
+			App.getCtx().getSystemService(
+				Context.WIFI_SERVICE);
 	}
 	
 	public static ConnectivityManager getConnectivityManager() {

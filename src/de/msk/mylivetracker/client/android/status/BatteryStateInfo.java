@@ -92,9 +92,6 @@ public class BatteryStateInfo extends AbstractInfo implements Serializable {
 		return this.percent <= 10.0d;
 	}	
 	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

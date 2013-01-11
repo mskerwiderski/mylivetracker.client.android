@@ -2,7 +2,6 @@ package de.msk.mylivetracker.client.android.localization;
 
 import android.location.Location;
 import android.os.Bundle;
-import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;
 
@@ -24,7 +23,6 @@ public class LocationListener implements android.location.LocationListener {
 	public void onLocationChanged(Location location) {
 		LocationInfo.update(location);
 		this.lastLocationReceived = new DateTime();
-		MainActivity.get().updateView();		
 	}
 
 	@Override

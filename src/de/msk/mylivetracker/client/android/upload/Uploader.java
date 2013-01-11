@@ -2,7 +2,6 @@ package de.msk.mylivetracker.client.android.upload;
 
 import java.util.Date;
 
-import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs.TransferProtocol;
@@ -147,7 +146,5 @@ public class Uploader {
 			uploadResult.getCountPositions(), 
 			uploadResult.getUploadTimeInMSecs(),
 			LocationInfo.getProviderAbbr(locationInfo));
-		
-		MainActivity.get().updateView();
 	}
 }

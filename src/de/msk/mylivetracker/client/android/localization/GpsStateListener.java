@@ -5,7 +5,6 @@ import java.util.Iterator;
 import android.location.GpsSatellite;
 import android.location.GpsStatus;
 import android.location.GpsStatus.Listener;
-import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.status.GpsStateInfo;
 import de.msk.mylivetracker.client.android.util.LocationManagerUtils;
 
@@ -38,7 +37,6 @@ public class GpsStateListener implements Listener {
 		}
 		GpsStateInfo.update(numberOfSatellites);
 		this.currentNumberOfSatellites = numberOfSatellites;
-		MainActivity.get().updateView();
 	}
 
 	public int getCurrentNumberOfSatellites() {

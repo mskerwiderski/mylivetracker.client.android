@@ -22,6 +22,7 @@
     <string name="tvMainDetails_LocationLatitude">Lat</string>
     <string name="tvMainDetails_LocationLongitude">Lon</string>
     <string name="tvMainDetails_Heartrate">HR</string>
+    <string name="tvMainDetails_HeartrateUnit">bpm</string>
     <string name="tvMainDetails_HeartrateCurrent">Curr</string>
     <string name="tvMainDetails_HeartrateMinimum">Min</string>
     <string name="tvMainDetails_HeartrateAverage">Avg</string>

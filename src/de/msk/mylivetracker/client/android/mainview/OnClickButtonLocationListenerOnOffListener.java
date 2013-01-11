@@ -88,7 +88,6 @@ public class OnClickButtonLocationListenerOnOffListener extends ASafeOnClickList
 		@Override
 		public void cleanUp(MainActivity activity) {
 			this.btMain_LocationListenerOnOff.setChecked(true);
-			activity.updateView();
 		}
 	}
 	
@@ -105,7 +104,6 @@ public class OnClickButtonLocationListenerOnOffListener extends ASafeOnClickList
 		@Override
 		public void cleanUp(MainActivity activity) {
 			this.btMain_LocationListenerOnOff.setChecked(false);
-			activity.updateView();
 		}
 	}
 	
@@ -138,7 +136,6 @@ public class OnClickButtonLocationListenerOnOffListener extends ASafeOnClickList
 			}
 			btMain_LocationListenerOnOff.setChecked(
 				AbstractService.isServiceRunning(LocalizationService.class));
-			activity.updateView();
 		}
 	}
 }

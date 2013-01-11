@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
+import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
@@ -84,6 +86,11 @@ public class PinCodeQueryPrefsActivity extends AbstractActivity {
         this.setTitle(R.string.tiPinCodeQueryPrefs);
         
         PinCodeQueryPrefs prefs = PrefsRegistry.get(PinCodeQueryPrefs.class);
+        
+        TextView tvPinCodeQueryPrefs_Info = 
+        	(TextView)findViewById(R.id.tvPinCodeQueryPrefs_Info);
+        tvPinCodeQueryPrefs_Info.setText(App.getCtx().getString(
+        	R.string.lbPinCodeQueryPrefs_Info, App.getAppName()));
         
         CheckBox cbPinCodeQueryPrefs_Enable = 
         	(CheckBox)findViewById(R.id.cbPinCodeQueryPrefs_Enable);

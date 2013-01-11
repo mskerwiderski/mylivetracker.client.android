@@ -5,6 +5,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
+import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.auto.AutoPrefs.AutoModeResetTrackMode;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
@@ -64,7 +65,13 @@ public class AutoPrefsActivity extends AbstractActivity {
         this.setTitle(R.string.tiAutoPrefs);
         
         AutoPrefs prefs = PrefsRegistry.get(AutoPrefs.class);
-        
+
+        CheckBox cbAutoPrefs_AutoStart = (CheckBox)
+        	findViewById(R.id.cbAutoPrefs_AutoStart);
+        cbAutoPrefs_AutoStart.setText(App.getCtx().getString(
+        	R.string.lbAutoPrefs_AutoStart, App.getAppName()));
+        cbAutoPrefs_AutoStart.setChecked(prefs.isAutoStartEnabled());
+            
         CheckBox cbAutoPrefs_AutoMode = (CheckBox)
         	findViewById(R.id.cbAutoPrefs_AutoMode);
         cbAutoPrefs_AutoMode.setChecked(prefs.isAutoModeEnabled());
@@ -77,10 +84,6 @@ public class AutoPrefsActivity extends AbstractActivity {
         spAutoPrefs_ResetTrackMode.setAdapter(adapter);
         spAutoPrefs_ResetTrackMode.setSelection(
         	prefs.getAutoModeResetTrackMode().ordinal());
-        
-        CheckBox cbAutoPrefs_AutoStart = (CheckBox)
-        	findViewById(R.id.cbAutoPrefs_AutoStart);
-        cbAutoPrefs_AutoStart.setChecked(prefs.isAutoStartEnabled());
         
         Button btnPrefsOther_Save = (Button)
         	findViewById(R.id.btAutoPrefs_Save);

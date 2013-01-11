@@ -12,11 +12,11 @@ import android.widget.ToggleButton;
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.antplus.AntPlusHardware;
-import de.msk.mylivetracker.client.android.antplus.AntPlusHeartrateListener;
 import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
 import de.msk.mylivetracker.client.android.auto.AutoService;
 import de.msk.mylivetracker.client.android.battery.BatteryReceiver;
 import de.msk.mylivetracker.client.android.localization.LocalizationService;
+import de.msk.mylivetracker.client.android.mainview.updater.MainViewUpdater;
 import de.msk.mylivetracker.client.android.mainview.updater.UpdaterUtils;
 import de.msk.mylivetracker.client.android.mainview.updater.ViewUpdateService;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
@@ -180,7 +180,7 @@ public class MainActivity extends AbstractMainActivity {
 		AbstractService.stopService(AutoService.class);		
 		AbstractService.stopService(UploadService.class);
 		AbstractService.stopService(LocalizationService.class);
-		MainActivity.get().stopAntPlusHeartrateListener();
+		AntPlusManager.stop();
 		BatteryReceiver.stop();
 		PhoneStateListener.stop();
 		Chronometer chronometer = (Chronometer)
@@ -231,8 +231,6 @@ public class MainActivity extends AbstractMainActivity {
 		btMain_LocationListenerOnOff.setChecked(
 			AbstractService.isServiceRunning(LocalizationService.class));
 		btMain_ConnectDisconnectAnt.setChecked(AntPlusManager.get().hasSensorListeners());
-			
-		this.updateView();				
 	}
 	
 	private void checkButtons(
@@ -288,21 +286,8 @@ public class MainActivity extends AbstractMainActivity {
 		startActivity(new Intent(this, MainDetailsActivity.class));
 	}
 	
-	public void startAntPlusHeartrateListener() {
-		AntPlusManager.get().requestSensorUpdates(
-			AntPlusHeartrateListener.get());
-	}
-	
-	public void stopAntPlusHeartrateListener() {
-		AntPlusManager.get().removeUpdates(
-			AntPlusHeartrateListener.get());
-	}
-	
-	public void updateView() {
-//		if (MainDetailsActivity.get() == null) {
-//			this.runOnUiThread(new MainViewUpdater());
-//		} else {
-//			this.runOnUiThread(new MainDetailsViewUpdater());
-//		}
+	@Override
+	public Class<? extends Runnable> getViewUpdater() {
+		return MainViewUpdater.class;
 	}
 }

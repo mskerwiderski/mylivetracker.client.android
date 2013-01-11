@@ -6,5 +6,5 @@
    	<string name="fdAutoPrefs_ResetTrackMode">Track-zurücksetzen Modus</string>
 	<string name="txAutoPrefs_ResetTrackMode">Track-zurücksetzen Modus</string>
 	<string name="fdAutoPrefs_AutoStart">Auto Start</string>
-    <string name="lbAutoPrefs_AutoStart">Nach einem Reboot des Smartphones wird das Tracking automatisch gestartet.</string>
+    <string name="lbAutoPrefs_AutoStart">%1$s automatisch nach einem Reboot starten.</string>
 </resources>

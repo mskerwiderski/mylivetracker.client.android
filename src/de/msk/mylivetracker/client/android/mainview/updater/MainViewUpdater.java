@@ -32,7 +32,7 @@ import de.msk.mylivetracker.client.android.util.service.AbstractService;
  * 000	2012-12-29	revised for v1.5.x.
  * 
  */
-public class MainViewUpdater implements Runnable {
+public class MainViewUpdater extends AViewUpdater {
 		
 	private static String getHeartrateCurrentStr(HeartrateInfo heartrateInfo) {
 		if (heartrateInfo == null) return UpdaterUtils.getNoValue();
@@ -80,11 +80,8 @@ public class MainViewUpdater implements Runnable {
 			res.getColor(state.getColor()));
 	}
 	
-	/* (non-Javadoc)
-	 * @see java.lang.Runnable#run()
-	 */
 	@Override
-	public void run() {
+	public void updateView() {
 		AutoPrefs preferences = PrefsRegistry.get(AutoPrefs.class);
 		TrackStatus status = TrackStatus.get();
 		
@@ -128,11 +125,12 @@ public class MainViewUpdater implements Runnable {
 		
 		// wireless lan indicator			
 		TextView tvWirelessLanIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_WirelessLanIndicator);
+		boolean wifiEnabled = ConnectivityUtils.isWifiEnabled();
 		setIndicatorTextAndColors(tvWirelessLanIndicator,
-			(MainActivity.isWifiEnabled() ? 
+			(wifiEnabled ? 
 				res.getText(R.string.tvOn).toString() : 
 				res.getText(R.string.tvOff).toString()),
-				MainActivity.isWifiEnabled() ? IndicatorState.Ok : IndicatorState.Off);
+				wifiEnabled ? IndicatorState.Ok : IndicatorState.Off);
 		
 		// mobile network indicator			
 		TextView tvMobileNetworkIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_MobileNetworkIndicator);

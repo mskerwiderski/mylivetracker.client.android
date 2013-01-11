@@ -4,6 +4,7 @@ import android.os.SystemClock;
 import android.widget.Chronometer;
 import android.widget.ToggleButton;
 import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
 import de.msk.mylivetracker.client.android.localization.LocalizationService;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
@@ -81,13 +82,12 @@ public class OnClickButtonResetListener extends ASafeOnClickListener {
 		public void cleanUp(MainActivity activity) {
 			this.chronometer.setBase(SystemClock.elapsedRealtime());
 			AbstractService.stopService(LocalizationService.class);
-			activity.stopAntPlusHeartrateListener();
+			AntPlusManager.stop();
 			this.btMain_StartStopTrack.setChecked(false);
 			this.btMain_LocationListenerOnOff.setChecked(false);
 			this.btMain_ConnectDisconnectAnt.setChecked(false);
 			this.btMain_StartStopTrack.setChecked(false);
 			TrackStatus.reset();
-			activity.updateView();			
 		}
 	}
 	

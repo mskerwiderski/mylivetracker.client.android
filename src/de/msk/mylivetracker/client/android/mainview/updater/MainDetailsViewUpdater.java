@@ -26,7 +26,7 @@ import de.msk.mylivetracker.client.android.util.FormatUtils.Unit;
  * 000	2012-12-29	revised for v1.5.x.
  * 
  */
-public class MainDetailsViewUpdater implements Runnable {
+public class MainDetailsViewUpdater extends AViewUpdater {
 
 	private static void updateTvUploader(Activity act, UploadInfo uploadInfo) {
 		TextView tvCountUploaded =  UpdaterUtils.tv(act, R.id.tvMainDetails_UploaderCountUploaded);
@@ -182,11 +182,8 @@ public class MainDetailsViewUpdater implements Runnable {
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see java.lang.Runnable#run()
-	 */
 	@Override
-	public void run() {
+	public void updateView() {
 		Activity act = MainDetailsActivity.get();
 		updateTvUploader(act, UploadInfo.get());
 		updateTvBattery(act, BatteryStateInfo.get());
