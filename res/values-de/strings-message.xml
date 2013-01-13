@@ -8,7 +8,7 @@
     <string name="lbMsg_StatusDisabled">nicht aktiviert</string>
     <string name="lbMsg_StatusToServerNotSupportedByProtocol">wird durch das Protokoll nicht unterstützt</string>
     <string name="lbMsg_StatusAsSmsNotSupported">wird nicht unterstützt</string>
-    <string name="lbMsg_Message">Individueller Nachrichtentext (max. 80 Zeichen):</string>
+    <string name="lbMsg_Message">Nachricht (max. 80 Zeichen):</string>
    	<string name="fdMsg_Message">Nachricht</string>
    	<string name="txMsg_QuestionSendMessage">Wollen Sie die Nachricht wirklich senden?</string>
     <string name="txMsg_InfoSendMessageDone">Die Nachricht wurde versendet!</string>
@@ -26,7 +26,7 @@
     <string name="txMsgPrefs_MessageTemplate3Def">Ich mache eine Pause!</string>
     <string name="txMsgPrefs_MessageTemplate4Def">Ich bin angekommen!</string>
     <string name="txMsgPrefs_MessageTemplate5Def">Ich hatte einen Unfall!</string>
-    <string name="lbMsgPrefs_SendMessageMode">Nachrichtenversand Modus</string>
+    <string name="lbMsgPrefs_SendMessageMode">Modus</string>
     <string name="fdMsgPrefs_Receiver">SMS Empfänger</string>
-    <string name="lbMsgPrefs_Receiver">SMS Empfänger</string>
+    <string name="lbMsgPrefs_Receiver">Empf.</string>
 </resources>

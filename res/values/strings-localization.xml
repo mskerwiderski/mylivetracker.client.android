@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="tiLocalizationPrefs">Localization preferences</string>
-	<string name="lbLocalizationPrefs_Provider">Localization mode</string>
+	<string name="lbLocalizationPrefs_Provider">Mode</string>
     <string name="lbLocalizationPrefs_TimeTriggerInSecs">Time trigger (secs)</string>
     <string name="fdLocalizationPrefs_TimeTriggerInSecs">Time trigger</string>
     <string name="lbLocalizationPrefs_DistanceTriggerInMtr">Distance trigger (mtr)</string>    
