@@ -66,7 +66,7 @@ public class MainActivity extends AbstractMainActivity {
         this.setTitle(R.string.tiMain);
         TrackStatus.loadTrackStatus();
         
-        AntPlusHardware.init(this.getLastNonConfigurationInstance(), savedInstanceState);
+        //AntPlusHardware.init(this.getLastNonConfigurationInstance(), savedInstanceState);
 
         this.onResume();
         
@@ -203,6 +203,7 @@ public class MainActivity extends AbstractMainActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		AntPlusHardware.checkConnection();
 		TrackStatus.loadTrackStatus();
 		TrackStatus trackStatus = TrackStatus.get();
 		

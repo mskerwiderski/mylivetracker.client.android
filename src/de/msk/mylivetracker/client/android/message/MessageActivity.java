@@ -157,36 +157,48 @@ public class MessageActivity extends AbstractActivity {
 		ProtocolPrefs protocolPrefs = PrefsRegistry.get(ProtocolPrefs.class);
 		TextView tvMsg_StatusMessageToServer = (TextView)findViewById(R.id.tvMsg_StatusMessageToServer);
         TextView tvMsg_StatusMessageAsSms = (TextView)findViewById(R.id.tvMsg_StatusMessageAsSms);
-		if (messagePrefs.isSendMessageModeToServerEnabled() &&
+        if (messagePrefs.isSendMessageModeToServerEnabled() &&
     		protocolPrefs.getTransferProtocol().supportsSendMessage()) {
         	tvMsg_StatusMessageToServer.setText(R.string.lbMsg_StatusEnabled);
         	tvMsg_StatusMessageToServer.setTextColor(
+        		this.getResources().getColor(R.color.colorBlack));
+        	tvMsg_StatusMessageToServer.setBackgroundColor(
         		this.getResources().getColor(R.color.colorGreen));
         } else if (!messagePrefs.isSendMessageModeToServerEnabled() &&
     		protocolPrefs.getTransferProtocol().supportsSendMessage()) {
         	tvMsg_StatusMessageToServer.setText(R.string.lbMsg_StatusDisabled);
         	tvMsg_StatusMessageToServer.setTextColor(
+        		this.getResources().getColor(R.color.colorWhite));
+        	tvMsg_StatusMessageToServer.setBackgroundColor(
         		this.getResources().getColor(R.color.colorRed));
         } else {
         	tvMsg_StatusMessageToServer.setText(
         		R.string.lbMsg_StatusToServerNotSupportedByProtocol);
         	tvMsg_StatusMessageToServer.setTextColor(
+        		this.getResources().getColor(R.color.colorWhite));
+        	tvMsg_StatusMessageToServer.setBackgroundColor(
         		this.getResources().getColor(R.color.colorRed));
         }
         if (messagePrefs.isSendMessageModeAsSmsEnabled() &&
     		App.smsSupported()) {
         	tvMsg_StatusMessageAsSms.setText(R.string.lbMsg_StatusEnabled);
         	tvMsg_StatusMessageAsSms.setTextColor(
+        		this.getResources().getColor(R.color.colorBlack));
+        	tvMsg_StatusMessageAsSms.setBackgroundColor(
         		this.getResources().getColor(R.color.colorGreen));
         } else if (!messagePrefs.isSendMessageModeAsSmsEnabled() &&
         	App.smsSupported()) {
         	tvMsg_StatusMessageAsSms.setText(R.string.lbMsg_StatusDisabled);
         	tvMsg_StatusMessageAsSms.setTextColor(
+        		this.getResources().getColor(R.color.colorWhite));
+        	tvMsg_StatusMessageAsSms.setBackgroundColor(
         		this.getResources().getColor(R.color.colorRed));
         } else {
         	tvMsg_StatusMessageAsSms.setText(
         		R.string.lbMsg_StatusAsSmsNotSupported);
         	tvMsg_StatusMessageAsSms.setTextColor(
+        		this.getResources().getColor(R.color.colorWhite));
+        	tvMsg_StatusMessageAsSms.setBackgroundColor(
         		this.getResources().getColor(R.color.colorRed));
         }
         

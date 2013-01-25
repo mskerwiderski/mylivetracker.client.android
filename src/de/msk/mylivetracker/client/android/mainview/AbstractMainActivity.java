@@ -26,7 +26,6 @@ import de.msk.mylivetracker.client.android.other.OtherPrefsActivity;
 import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryPrefsActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefsActivity;
-import de.msk.mylivetracker.client.android.remoteaccess.RemoteAccessPrefsActivity;
 import de.msk.mylivetracker.client.android.server.ServerPrefsActivity;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.trackexport.TrackExportActivity;
@@ -221,9 +220,9 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 		case R.id.mnPrefsAuto:
 			startActivityWithWarningDlgIfTrackRunning(AutoPrefsActivity.class);
 			return true;
-		case R.id.mnPrefsRemoteAccess:
-			startActivityWithWarningDlgIfTrackRunning(RemoteAccessPrefsActivity.class);
-			return true;
+//		case R.id.mnPrefsRemoteAccess:
+//			startActivityWithWarningDlgIfTrackRunning(RemoteAccessPrefsActivity.class);
+//			return true;
 		case R.id.mnPrefsHttpProtocolParams:
 			startActivityWithWarningDlgIfTrackRunning(HttpProtocolParamsPrefsActivity.class);
 			return true;
