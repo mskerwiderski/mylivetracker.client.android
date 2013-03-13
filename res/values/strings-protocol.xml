@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tiProtocolPrefs">Protocol preferences</string>
-    <string name="lbProtocolPrefs_TransferProtocol">Transfer protocol</string>
+    <string name="lbProtocolPrefs_TransferProtocol">Protocol</string>
     <string name="fdProtocolPrefs_TimeTriggerInSecs">Time trigger</string>
     <string name="lbProtocolPrefs_TimeTriggerInSecs">Time trigger</string>
     <string name="fdProtocolPrefs_DistanceTriggerInMtr">Distance trigger</string>
@@ -9,7 +9,8 @@
     <string name="lbProtocolPrefs_TriggerLogic">Trigger Logic</string>       
     <string name="lbProtocolPrefs_CloseConnectionAfterEveryUpload">Close connection after every upload</string>
     <string name="lbProtocolPrefs_FinishEveryUploadWithALinefeed">Finish every upload with a linefeed</string>
-    <string name="fdProtocolPrefs_MaxPositionBufferSize">Buffer size</string>
-    <string name="lbProtocolPrefs_MaxPositionBufferSize">Buffer size to bridge data connection timeouts</string>
+    <string name="lbProtocolPrefs_UploadPositionsOnlyOnce">Upload positions only once</string>
+    <string name="fdProtocolPrefs_MaxPositionBufferSize">Buffer</string>
+    <string name="lbProtocolPrefs_MaxPositionBufferSize">Buffer</string>
     <string name="lbProtocolPrefs_LogTrackData">Log track data for later export</string>
 </resources>

@@ -2,7 +2,6 @@ package de.msk.mylivetracker.client.android.upload;
 
 import java.util.Date;
 
-import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs.TransferProtocol;
@@ -77,6 +76,8 @@ public class Uploader {
 	
 	public static void upload(AbstractUploader uploader, LastInfoDsc lastInfoDsc)
 		throws InterruptedException {
+		ProtocolPrefs protocolPrefs = PrefsRegistry.get(ProtocolPrefs.class);
+		
 		Date lastInfoTimestamp = null;
 		PhoneStateInfo phoneStateInfo = PhoneStateInfo.get();
 		BatteryStateInfo batteryStateInfo = BatteryStateInfo.get();
@@ -98,21 +99,24 @@ public class Uploader {
 			updateLastInfoTimestamp(heartrateInfo, lastInfoTimestamp);
 		lastInfoTimestamp = 
 			updateLastInfoTimestamp(emergencySignalInfo, lastInfoTimestamp);
+		lastInfoTimestamp = 
+			updateLastInfoTimestamp(messageInfo, lastInfoTimestamp);
+		
+		if (protocolPrefs.isUploadPositionsOnlyOnce()) {
+			if ((locationInfo != null) && 
+				!locationInfo.isUpToDate(lastInfoDsc.lastLocationInfo)) {
+				locationInfo = null;
+			} 
+		}
 		
 		if ((emergencySignalInfo != null) && 
 			!emergencySignalInfo.isUpToDate(lastInfoDsc.lastEmergencySignalInfo)) {
 			emergencySignalInfo = null;
-		} else {
-			lastInfoTimestamp = 
-				updateLastInfoTimestamp(emergencySignalInfo, lastInfoTimestamp);
-		}
+		} 
 		
 		if ((messageInfo != null) && 
 			!messageInfo.isUpToDate(lastInfoDsc.lastMessageInfo)) {
 			messageInfo = null;
-		} else {
-			lastInfoTimestamp = 
-				updateLastInfoTimestamp(messageInfo, lastInfoTimestamp);
 		}		
 		
 		if (lastInfoTimestamp == null) {
@@ -147,7 +151,5 @@ public class Uploader {
 			uploadResult.getCountPositions(), 
 			uploadResult.getUploadTimeInMSecs(),
 			LocationInfo.getProviderAbbr(locationInfo));
-		
-		MainActivity.get().updateView();
 	}
 }

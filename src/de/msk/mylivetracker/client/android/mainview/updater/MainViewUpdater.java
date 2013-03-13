@@ -7,7 +7,8 @@ import android.widget.TextView;
 import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
 import de.msk.mylivetracker.client.android.auto.AutoPrefs;
 import de.msk.mylivetracker.client.android.liontrack.R;
-import de.msk.mylivetracker.client.android.listener.LocationListener;
+import de.msk.mylivetracker.client.android.localization.LocalizationPrefs;
+import de.msk.mylivetracker.client.android.localization.LocalizationService;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.status.HeartrateInfo;
@@ -15,7 +16,10 @@ import de.msk.mylivetracker.client.android.status.LocationInfo;
 import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.status.UploadInfo;
+import de.msk.mylivetracker.client.android.util.ConnectivityUtils;
 import de.msk.mylivetracker.client.android.util.FormatUtils.Unit;
+import de.msk.mylivetracker.client.android.util.LocationManagerUtils;
+import de.msk.mylivetracker.client.android.util.service.AbstractService;
 
 /**
  * classname: MainViewUpdater
@@ -28,7 +32,7 @@ import de.msk.mylivetracker.client.android.util.FormatUtils.Unit;
  * 000	2012-12-29	revised for v1.5.x.
  * 
  */
-public class MainViewUpdater implements Runnable {
+public class MainViewUpdater extends AViewUpdater {
 		
 	private static String getHeartrateCurrentStr(HeartrateInfo heartrateInfo) {
 		if (heartrateInfo == null) return UpdaterUtils.getNoValue();
@@ -76,11 +80,8 @@ public class MainViewUpdater implements Runnable {
 			res.getColor(state.getColor()));
 	}
 	
-	/* (non-Javadoc)
-	 * @see java.lang.Runnable#run()
-	 */
 	@Override
-	public void run() {
+	public void updateView() {
 		AutoPrefs preferences = PrefsRegistry.get(AutoPrefs.class);
 		TrackStatus status = TrackStatus.get();
 		
@@ -109,8 +110,8 @@ public class MainViewUpdater implements Runnable {
 		
 		// gps indicator			
 		TextView tvLocalizationIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_LocalizationIndicator);
-		boolean gpsOn = MainActivity.isLocalizationByGpsEnabled();
-		boolean nwOn = MainActivity.isLocalizationByNetworkEnabled();
+		boolean gpsOn = LocationManagerUtils.gpsProviderEnabled();
+		boolean nwOn = LocationManagerUtils.networkProviderEnabled();
 		String locIndStr = UpdaterUtils.getNoValue();
 		if (gpsOn && !nwOn) {
 			locIndStr = "GPS";
@@ -124,11 +125,12 @@ public class MainViewUpdater implements Runnable {
 		
 		// wireless lan indicator			
 		TextView tvWirelessLanIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_WirelessLanIndicator);
+		boolean wifiEnabled = ConnectivityUtils.isWifiEnabled();
 		setIndicatorTextAndColors(tvWirelessLanIndicator,
-			(MainActivity.isWifiEnabled() ? 
+			(wifiEnabled ? 
 				res.getText(R.string.tvOn).toString() : 
 				res.getText(R.string.tvOff).toString()),
-				MainActivity.isWifiEnabled() ? IndicatorState.Ok : IndicatorState.Off);
+				wifiEnabled ? IndicatorState.Ok : IndicatorState.Off);
 		
 		// mobile network indicator			
 		TextView tvMobileNetworkIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_MobileNetworkIndicator);
@@ -136,7 +138,7 @@ public class MainViewUpdater implements Runnable {
 		String mobNwStr = (phoneStateInfo != null ? 
 			phoneStateInfo.getNetworkType(UpdaterUtils.getNoValue()) : UpdaterUtils.getNoValue());
 		setIndicatorTextAndColors(tvMobileNetworkIndicator, mobNwStr, 
-			MainActivity.get().isDataConnectionAvailable() ? IndicatorState.Ok : IndicatorState.NotOk);
+			ConnectivityUtils.isDataConnectionAvailable() ? IndicatorState.Ok : IndicatorState.NotOk);
 		
 		// track distance
 		TextView tvDistance = UpdaterUtils.tv(mainActivity, R.id.tvMain_Distance);
@@ -171,19 +173,22 @@ public class MainViewUpdater implements Runnable {
 		
 		// location
 		TextView tvLocation = UpdaterUtils.tv(mainActivity, R.id.tvMain_Location);
-		if (!mainActivity.localizationEnabled()) {
+		if (!PrefsRegistry.get(LocalizationPrefs.class).
+			getLocalizationMode().neededProvidersEnabled()) {
 			tvLocation.setBackgroundColor(res.getColor(R.color.colorLocListNoPosition));
 			tvLocation.setText(R.string.locListener_ProviderNotAvailable);
 		} else {
-			if (LocationListener.get().isActive() && 
+			boolean localizationActive = 
+				AbstractService.isServiceRunning(LocalizationService.class);
+			if (localizationActive && 
 				(locationInfo != null) &&  locationInfo.isUpToDate() && locationInfo.isAccurate()) {
 				tvLocation.setBackgroundColor(res.getColor(R.color.colorLocListPosFoundAcc));
 				tvLocation.setText(getLocationAccuracyStr(locationInfo));
-			} else if (LocationListener.get().isActive() && 
+			} else if (localizationActive && 
 				(locationInfo != null) && locationInfo.isUpToDate()) {
 				tvLocation.setBackgroundColor(res.getColor(R.color.colorLocListPosFoundNotAcc));
 				tvLocation.setText(getLocationAccuracyStr(locationInfo));
-			} else if (LocationListener.get().isActive()) {
+			} else if (localizationActive) {
 				tvLocation.setBackgroundColor(res.getColor(R.color.colorLocListNoPosition));
 				tvLocation.setText(R.string.locListener_Listening);
 			} else {

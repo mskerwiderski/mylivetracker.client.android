@@ -162,6 +162,7 @@ public class ProtocolPrefs extends APrefs implements Serializable {
 	private TransferProtocol transferProtocol;
 	private boolean closeConnectionAfterEveryUpload;
 	private boolean finishEveryUploadWithALinefeed;
+	private boolean uploadPositionsOnlyOnce;
 	private String lineSeparator;
 	private UploadTimeTrigger uplTimeTrigger;
 	private UploadTriggerLogic uplTriggerLogic;
@@ -178,6 +179,7 @@ public class ProtocolPrefs extends APrefs implements Serializable {
 		this.transferProtocol = TransferProtocol.uploadDisabled;
 		this.closeConnectionAfterEveryUpload = false;
 		this.finishEveryUploadWithALinefeed = false;
+		this.uploadPositionsOnlyOnce = false;
 		this.lineSeparator = "\r\n";
 		this.uplTimeTrigger = UploadTimeTrigger.Secs10;
 		this.uplTriggerLogic = UploadTriggerLogic.OR;
@@ -209,6 +211,12 @@ public class ProtocolPrefs extends APrefs implements Serializable {
 	public void setFinishEveryUploadWithALinefeed(
 		boolean finishEveryUploadWithALinefeed) {
 		this.finishEveryUploadWithALinefeed = finishEveryUploadWithALinefeed;
+	}
+	public boolean isUploadPositionsOnlyOnce() {
+		return uploadPositionsOnlyOnce;
+	}
+	public void setUploadPositionsOnlyOnce(boolean uploadPositionsOnlyOnce) {
+		this.uploadPositionsOnlyOnce = uploadPositionsOnlyOnce;
 	}
 	public String getLineSeparator() {
 		return lineSeparator;
@@ -253,11 +261,12 @@ public class ProtocolPrefs extends APrefs implements Serializable {
 			+ ", closeConnectionAfterEveryUpload="
 			+ closeConnectionAfterEveryUpload
 			+ ", finishEveryUploadWithALinefeed="
-			+ finishEveryUploadWithALinefeed + ", lineSeparator="
-			+ lineSeparator + ", uplTimeTrigger=" + uplTimeTrigger
-			+ ", uplTriggerLogic=" + uplTriggerLogic
-			+ ", uplDistanceTrigger=" + uplDistanceTrigger
-			+ ", uplPositionBufferSize=" + uplPositionBufferSize
-			+ ", logTrackData=" + logTrackData + "]";
+			+ finishEveryUploadWithALinefeed + ", uploadPositionsOnlyOnce="
+			+ uploadPositionsOnlyOnce + ", lineSeparator=" + lineSeparator
+			+ ", uplTimeTrigger=" + uplTimeTrigger + ", uplTriggerLogic="
+			+ uplTriggerLogic + ", uplDistanceTrigger="
+			+ uplDistanceTrigger + ", uplPositionBufferSize="
+			+ uplPositionBufferSize + ", logTrackData=" + logTrackData
+			+ "]";
 	}
 }

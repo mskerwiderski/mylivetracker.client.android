@@ -16,7 +16,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 
 import de.msk.mylivetracker.client.android.App;
+import de.msk.mylivetracker.client.android.battery.BatteryReceiver;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
+import de.msk.mylivetracker.client.android.phonestate.PhoneStateListener;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
 /**
@@ -39,6 +41,8 @@ public class TrackStatus implements Serializable {
 	private Float trackDistanceInMtr = 0.0f;
 	private Long markerFirstStarted = null;
 	private Long markerLastStarted = null;
+	private Long markerFirstPositionReceived = null;
+	private Long markerLastPositionReceived = null;
 	private Long runtimeAfterLastStopInMSecs = 0L;	
 	private String antPlusStatus = null;
 	private String antPlusHeartrateStatus = null;
@@ -142,8 +146,8 @@ public class TrackStatus implements Serializable {
 		String lastAntPlusStatus = (trackStatus != null) ? trackStatus.antPlusStatus : null;
 		float mileageInMtr = (trackStatus != null) ? trackStatus.mileageInMtr : 0.0f;
 		float trackDistanceInMtr = 0.0f;
-		MainActivity.get().stopPhoneStateListener();
-		MainActivity.get().stopBatteryReceiver();
+		PhoneStateListener.stop();
+		BatteryReceiver.stop();
 		if ((trackStatus != null) && !StringUtils.isEmpty(trackStatus.logFileName)) {
 			App.get().deleteFile(trackStatus.logFileName);
 		}
@@ -162,8 +166,8 @@ public class TrackStatus implements Serializable {
 		EmergencySignalInfo.reset();
 		MessageInfo.reset();
 		UploadInfo.reset();
-		MainActivity.get().startBatteryReceiver();
-		MainActivity.get().startPhoneStateListener();			
+		BatteryReceiver.start();
+		PhoneStateListener.start();			
 		saveTrackStatus();
 	}		
 
@@ -200,6 +204,26 @@ public class TrackStatus implements Serializable {
 				this.markerLastStarted;			
 			this.markerLastStarted = null;
 		}		
+	}
+
+	public Long getMarkerFirstPositionReceived() {
+		return markerFirstPositionReceived;
+	}
+
+	public Long getMarkerLastPositionReceived() {
+		return markerLastPositionReceived;
+	}
+
+	public void updateMarkersFirstAndLastPositionReceived(LocationInfo locationInfo) {
+		if (locationInfo == null) {
+			throw new IllegalArgumentException("locationInfo must not be null!");
+		}
+		if (this.markerFirstPositionReceived == null) {
+			this.markerFirstPositionReceived = 
+				locationInfo.getTimestamp().getTime();
+		}
+		this.markerLastPositionReceived = 
+			locationInfo.getTimestamp().getTime();
 	}
 
 	public Long getStartedInMSecs() {

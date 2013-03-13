@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="tiLocalizationPrefs">Localization preferences</string>
-	<string name="lbLocalizationPrefs_Provider">Localization mode</string>
+	<string name="lbLocalizationPrefs_Provider">Mode</string>
     <string name="lbLocalizationPrefs_TimeTriggerInSecs">Time trigger (secs)</string>
     <string name="fdLocalizationPrefs_TimeTriggerInSecs">Time trigger</string>
     <string name="lbLocalizationPrefs_DistanceTriggerInMtr">Distance trigger (mtr)</string>    
     <string name="fdLocalizationPrefs_DistanceTriggerInMtr">Distance trigger</string>
     <string name="fdLocalizationPrefs_LocationAccuracyRequiredInMtr">Required accuracy</string>
-    <string name="lbLocalizationPrefs_LocationAccuracyRequiredInMtr">Req. minimum\naccuracy in mtr.\nfor location validation</string>
+    <string name="lbLocalizationPrefs_LocationAccuracyRequiredInMtr">Req. minimum\naccuracy for\nloc. validation (mtr)</string>
     <string name="fdLocalizationPrefs_DistBtwTwoLocsForDistCalcRequiredInCMtr">Required distance</string>
-    <string name="lbLocalizationPrefs_DistBtwTwoLocsForDistCalcRequiredInCMtr">Req. distance between\ntwo locations in cm\nfor distance calculation</string>
+    <string name="lbLocalizationPrefs_DistBtwTwoLocsForDistCalcRequiredInCMtr">Req. distance between\ntwo locations for\ndist. calculation (cm)</string>
+    <string name="fdLocalizationPrefs_MaxWaitingPeriodForGpsFixInSecs">Max. waiting period for GPS fix</string>
+    <string name="lbLocalizationPrefs_MaxWaitingPeriodForGpsFixInSecs">Max. waiting period for GPS fix (secs)</string>
     <string name="lbLocalizationPrefs_TriggerInfo">Note: if both triggers are set to 0, localization is done all the time.</string>
     <string name="lbLocalizationPrefs_RequiredAccuracyAndDistanceInfo">Note: if values are set to 0, checks are disabled.</string>
 </resources>

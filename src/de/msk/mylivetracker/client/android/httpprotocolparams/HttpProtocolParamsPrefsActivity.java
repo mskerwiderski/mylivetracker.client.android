@@ -161,8 +161,12 @@ public class HttpProtocolParamsPrefsActivity extends AbstractActivity {
 		cbHttpProtocolParamsPrefs_EnabledForUploading.setChecked(paramDsc.isEnabled());
 		if (paramDsc.isDisableAllowed()) {
 			cbHttpProtocolParamsPrefs_EnabledForUploading.setClickable(true);
+			cbHttpProtocolParamsPrefs_EnabledForUploading.setFocusable(true);
+			cbHttpProtocolParamsPrefs_EnabledForUploading.setEnabled(true);
 		} else {
 			cbHttpProtocolParamsPrefs_EnabledForUploading.setClickable(false);
+			cbHttpProtocolParamsPrefs_EnabledForUploading.setFocusable(false);
+			cbHttpProtocolParamsPrefs_EnabledForUploading.setEnabled(false);
 		}
 	}
 	

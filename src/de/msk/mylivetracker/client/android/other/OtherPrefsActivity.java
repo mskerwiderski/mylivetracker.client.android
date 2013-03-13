@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import de.msk.mylivetracker.client.android.antplus.AntPlusHardware;
 import de.msk.mylivetracker.client.android.liontrack.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.other.OtherPrefs.ConfirmLevel;
@@ -165,7 +166,11 @@ public class OtherPrefsActivity extends AbstractActivity {
         cbOtherPrefs_AdaptButtonsForOneTouchMode.setChecked(prefs.isAdaptButtonsForOneTouchMode());
         
         CheckBox cbOtherPrefs_EnableAntPlusIfAvailable = (CheckBox)findViewById(R.id.cbOtherPrefs_EnableAntPlusIfAvailable);
-        cbOtherPrefs_EnableAntPlusIfAvailable.setChecked(prefs.isAntPlusEnabledIfAvailable());
+        if (!AntPlusHardware.supported()) {
+        	cbOtherPrefs_EnableAntPlusIfAvailable.setVisibility(View.GONE);
+        } else {
+	        cbOtherPrefs_EnableAntPlusIfAvailable.setChecked(prefs.isAntPlusEnabledIfAvailable());
+        }
         
         Button btOtherPrefs_ResetToFactoryDefaults = (Button)findViewById(R.id.btOtherPrefs_ResetToFactoryDefaults);
         Button btOtherPrefs_ResetOverallMileage = (Button)findViewById(R.id.btOtherPrefs_ResetOverallMileage);

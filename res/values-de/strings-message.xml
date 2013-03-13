@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tiMsg">Nachrichtenversand</string>
+    <string name="tiMsgPrefs">Nachrichtenversand</string>
+    <string name="lbMsg_StatusMessageToServer">An Server:</string>
+    <string name="lbMsg_StatusMessageAsSms">Als SMS:</string>
+    <string name="lbMsg_StatusEnabled">aktiviert</string>
+    <string name="lbMsg_StatusDisabled">nicht aktiviert</string>
+    <string name="lbMsg_StatusToServerNotSupportedByProtocol">wird nicht unterstützt</string>
+    <string name="lbMsg_StatusAsSmsNotSupported">wird nicht unterstützt</string>
+    <string name="lbMsg_Message">Nachricht (max. 80 Zeichen):</string>
+   	<string name="fdMsg_Message">Nachricht</string>
+   	<string name="txMsg_QuestionSendMessage">Wollen Sie die Nachricht wirklich senden?</string>
+    <string name="txMsg_InfoSendMessageDone">Die Nachricht wurde versendet!</string>
+    <string name="btMsg_MessagePrefs">Konfiguration des Nachrichtenversands</string>
+    <string name="lbMsg_SelectMessageTemplate">Text-Vorlage:</string>
+    <string name="lbMsgPrefs_MessageTemplates">Text-Vorlagen (je max. 40 chars)</string>
+    <string name="lbMsgPrefs_MessageTemplate1">Nr.1</string>
+    <string name="lbMsgPrefs_MessageTemplate2">Nr.2</string>
+    <string name="lbMsgPrefs_MessageTemplate3">Nr.3</string>
+    <string name="lbMsgPrefs_MessageTemplate4">Nr.4</string>
+    <string name="lbMsgPrefs_MessageTemplate5">Nr.5</string>
+    <string name="txMsgPrefs_MessageTemplate0Def">keine Vorlage verwenden</string>
+    <string name="txMsgPrefs_MessageTemplate1Def">Ich brauche Hilfe!</string>
+    <string name="txMsgPrefs_MessageTemplate2Def">Bitte rufe mich an!</string>
+    <string name="txMsgPrefs_MessageTemplate3Def">Ich mache eine Pause!</string>
+    <string name="txMsgPrefs_MessageTemplate4Def">Ich bin angekommen!</string>
+    <string name="txMsgPrefs_MessageTemplate5Def">Ich hatte einen Unfall!</string>
+    <string name="lbMsgPrefs_SendMessageMode">Modus</string>
+    <string name="fdMsgPrefs_Receiver">SMS Empfänger</string>
+    <string name="lbMsgPrefs_Receiver">Empf.</string>
+</resources>

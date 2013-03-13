@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tiTrackExport">Track export</string>
+    <string name="lbTrackExport_ExportTo">Export current track to&#8230;</string>
+    <string name="btTrackExport_UploadToDropbox">Dropbox</string>
+    <string name="btTrackExport_ExportToExternalStorage">External storage</string>
+    <string name="btTrackExport_FilenamePrefs">Filename preferences</string>
+    <string name="txTrackExport_NotConnectedToDropbox">There is no connection to Dropbox. Connect to Dropbox first!</string>
+    <string name="txTrackExport_NoTrackExists">No track exists!</string>
+    <string name="txTrackExport_NoExternalStorageAvailable">No external storage is available!</string>
+    <string name="txTrackExport_QuestionUploadTrack">Do you really want to upload the current track to Dropbox?</string>
+    <string name="txTrackExport_QuestionExportTrack">Do you really want to export the current track to external storage?</string>
+    <string name="txTrackExport_QuestionOverwriteExistingFile">File already exists! Do you want to overwrite the existing file?</string>
+    <string name="txTrackExport_InfoExportTrackDone">Current track successfully exported to external storage!</string>
+    <string name="lbTrackExport_ExportProgressDialog">Exporting current track&#8230;</string>
+    <string name="tiTrackExportPrefs">Track export</string> 
+    <string name="lbTrackExportPrefs_FilenameCreationRules">Creation of filename:</string>
+    <string name="fdTrackExportPrefs_FilenamePrefix">Prefix</string>
+    <string name="lbTrackExportPrefs_FilenamePrefix">Prefix</string>    
+    <string name="lbTrackExportPrefs_FilenameAppendTrackName">Append trackname</string>
+    <string name="lbTrackExportPrefs_FilenameAppendTimestampOfFirstPosition">Append timestamp of first position</string>
+    <string name="lbTrackExportPrefs_FilenameAppendTimestampOfLastPosition">Append timestamp of last position</string>
+    <string name="lbTrackExportPrefs_FilenameAppendSequenceNumber">Append sequence number</string>
+    <string name="fdTrackExportPrefs_FilenameNextSequenceNumber">Next sequence number</string>
+    <string name="lbTrackExportPrefs_FilenameNextSequenceNumber">Next sequence number</string>
+    <string name="btTrackExportPrefs_FilenameResetSequenceNumber">Reset</string>
+</resources>

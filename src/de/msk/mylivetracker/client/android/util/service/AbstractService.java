@@ -7,14 +7,17 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 
 import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import de.msk.mylivetracker.client.android.App;
+import de.msk.mylivetracker.client.android.localization.LocalizationService;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
@@ -63,6 +66,15 @@ public abstract class AbstractService extends Service {
 		}
 	}
 
+	public static void startStopService(Class<? extends AbstractService> serviceClass, boolean start) {
+		if (!start && AbstractService.isServiceRunning(LocalizationService.class)) {
+			AbstractService.stopService(LocalizationService.class);						
+		} else if (start && 
+			!AbstractService.isServiceRunning(LocalizationService.class)){
+			AbstractService.startService(LocalizationService.class);				
+		}
+	}
+	
 	public static boolean isServiceRunning(Class<? extends AbstractService> serviceClass) {
 		boolean found = false;
 	    ActivityManager manager = (ActivityManager) App.getCtx().getSystemService(Context.ACTIVITY_SERVICE);
@@ -78,6 +90,10 @@ public abstract class AbstractService extends Service {
 	
 	public abstract Class<? extends AbstractServiceThread> getServiceThreadClass();
 
+	public AbstractServiceThread createServiceThread() throws Exception {
+		return this.getServiceThreadClass().newInstance();
+	}
+	
 	public static class NotificationDsc {
 		public int notificationId;
 		public int iconId;
@@ -94,6 +110,20 @@ public abstract class AbstractService extends Service {
 	}
 	
 	public abstract NotificationDsc getNotificationDsc();
+	
+	protected static class MessageFromServiceThreadHandler extends Handler {
+	}
+	
+	private MessageFromServiceThreadHandler messageFromServiceThreadHandler = 
+		new MessageFromServiceThreadHandler() {
+			@Override
+			public void handleMessage(Message msg) {
+				onReceiveMessage(msg);
+			}
+	};
+	
+	public void onReceiveMessage(Message msg) {
+	}
 	
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -132,7 +162,8 @@ public abstract class AbstractService extends Service {
 		}
 		if (this.thread == null) {
 			try {
-				this.thread = this.getServiceThreadClass().newInstance();
+				this.thread = this.createServiceThread();
+				this.thread.initThreadObject(this.messageFromServiceThreadHandler);
 				this.thread.start();
 			} catch (Exception e) {
 				throw new RuntimeException(e);

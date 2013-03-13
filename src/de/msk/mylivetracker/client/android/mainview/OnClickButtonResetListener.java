@@ -1,7 +1,11 @@
 package de.msk.mylivetracker.client.android.mainview;
 
 import android.os.SystemClock;
+import android.widget.Chronometer;
+import android.widget.ToggleButton;
+import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
 import de.msk.mylivetracker.client.android.liontrack.R;
+import de.msk.mylivetracker.client.android.localization.LocalizationService;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
@@ -51,9 +55,24 @@ public class OnClickButtonResetListener extends ASafeOnClickListener {
 	}	
 	
 	private static class ResetTrackProgressDialog extends AbstractProgressDialog<MainActivity> {
+		private Chronometer chronometer;
+		private ToggleButton btMain_StartStopTrack;
+    	private ToggleButton btMain_LocationListenerOnOff;
+		private ToggleButton btMain_ConnectDisconnectAnt;
+		
+		public ResetTrackProgressDialog(Chronometer chronometer,
+			ToggleButton btMain_StartStopTrack,
+			ToggleButton btMain_LocationListenerOnOff,
+			ToggleButton btMain_ConnectDisconnectAnt) {
+			super();
+			this.chronometer = chronometer;
+			this.btMain_StartStopTrack = btMain_StartStopTrack;
+			this.btMain_LocationListenerOnOff = btMain_LocationListenerOnOff;
+			this.btMain_ConnectDisconnectAnt = btMain_ConnectDisconnectAnt;
+		}
 		@Override
 		public void beforeTask(MainActivity activity) {
-			activity.getUiChronometer().stop();
+			this.chronometer.stop();
 		}
 		@Override
 		public void doTask(MainActivity activity) {
@@ -61,20 +80,35 @@ public class OnClickButtonResetListener extends ASafeOnClickListener {
 		}
 		@Override
 		public void cleanUp(MainActivity activity) {
-			activity.getUiChronometer().setBase(SystemClock.elapsedRealtime());
-			activity.stopLocationListener();
-			activity.stopAntPlusHeartrateListener();
-			activity.getUiBtStartStop().setChecked(false);
-			activity.getUiBtLocationListenerOnOff().setChecked(false);
-			activity.getUiBtConnectDisconnectAnt().setChecked(false);
-			activity.getUiBtStartStop().setChecked(false);
+			this.chronometer.setBase(SystemClock.elapsedRealtime());
+			AbstractService.stopService(LocalizationService.class);
+			AntPlusManager.stop();
+			this.btMain_StartStopTrack.setChecked(false);
+			this.btMain_LocationListenerOnOff.setChecked(false);
+			this.btMain_ConnectDisconnectAnt.setChecked(false);
+			this.btMain_StartStopTrack.setChecked(false);
 			TrackStatus.reset();
-			activity.updateView();			
 		}
 	}
 	
-	public static void resetTrack(final MainActivity activity) {		
-		ResetTrackProgressDialog resetTrackDialog = new ResetTrackProgressDialog();
+	public static void resetTrack(final MainActivity activity) {
+		if (activity == null) {
+			throw new IllegalArgumentException("activity must not be null!");
+		}
+		Chronometer chronometer = (Chronometer)
+        	activity.findViewById(R.id.tvMain_Runtime);
+		ToggleButton btMain_StartStopTrack = (ToggleButton)
+			activity.findViewById(R.id.btMain_StartStopTrack);
+    	ToggleButton btMain_LocationListenerOnOff = (ToggleButton)
+			activity.findViewById(R.id.btMain_LocationListenerOnOff);
+		ToggleButton btMain_ConnectDisconnectAnt = (ToggleButton)
+			activity.findViewById(R.id.btMain_ConnectDisconnectAnt);
+		ResetTrackProgressDialog resetTrackDialog = 
+			new ResetTrackProgressDialog(
+				chronometer,
+				btMain_StartStopTrack,
+				btMain_LocationListenerOnOff,
+				btMain_ConnectDisconnectAnt);
 		resetTrackDialog.run(activity, 
 			R.string.txMain_InfoResettingTracking, 
 			R.string.txMain_InfoResetTrackDone);

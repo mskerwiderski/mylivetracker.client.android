@@ -5,7 +5,7 @@ import java.util.TimeZone;
 import org.apache.commons.lang.StringUtils;
 
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.status.BatteryReceiver;
+import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.util.TrackUtils;
 import de.msk.mylivetracker.client.android.util.service.AbstractServiceThread;
@@ -33,14 +33,17 @@ public class AutoServiceThread extends AbstractServiceThread {
 	public void runSinglePass() throws InterruptedException {
 		AutoPrefs prefs = PrefsRegistry.get(AutoPrefs.class);
 		TrackStatus status = TrackStatus.get();
+		BatteryStateInfo batteryStateInfo = BatteryStateInfo.get();
+		boolean battFullOrCharging = (batteryStateInfo == null) ? false :
+			batteryStateInfo.fullOrCharging();
 		if (prefs.isAutoModeEnabled()) {
-			if (BatteryReceiver.get().isBatteryCharging() &&
+			if (battFullOrCharging &&
 				!status.trackIsRunning()) {
 				if (trackIsExpired()) {
 					TrackUtils.resetTrack();
 				}
 				TrackUtils.startTrack();
-			} else if (!BatteryReceiver.get().isBatteryCharging() && 
+			} else if (!battFullOrCharging && 
 				status.trackIsRunning()) {
 				TrackUtils.stopTrack();
 				status.updateLastAutoModeStopSignalReceived();

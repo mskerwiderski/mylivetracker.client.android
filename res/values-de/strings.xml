@@ -57,20 +57,6 @@
     <string name="mnInfo">Info</string>
     <string name="mnExit">Beenden</string>
     
-    <!-- antPlus -->
-    <string name="antPlus_NotSupported">ANT+ wird nicht unterstützt!</string>
-    <string name="antPlus_InitError">ANT+ Initialisierung fehlgeschlagen</string>
-    <string name="antPlus_InUse">ANT+ Radio Service ist in Gebrauch</string>
-    <string name="antPlus_Disabled">ANT+ Radio Servce ist deaktiviert!</string>
-    <string name="antPlus_NotInstalled">ANT+ Radio Service ist nicht installiert!</string>
-    <string name="antPlus_Suspended">ANT+ Verbindung ist unterbrochen</string>
-    <string name="antPlus_ConnStateIdle">Leerlauf</string>
-    <string name="antPlus_ConnStateConnecting">verbinde</string>
-    <string name="antPlus_ConnStateConnected">verbunden</string>
-    <string name="antPlus_ConnStateDisconnecting">disconnecting</string>
-    <string name="antPlus_ConnStateSearching">suche</string>     
-    <string name="antPlus_CountSensorListeners">%d Listeners</string>
-    
     <!-- location listener -->
     <string name="locListener_Listening">suche</string>
     <string name="locListener_ProviderNotAvailable">N.A.</string>
@@ -82,81 +68,6 @@
     <string name="txMain_UploadResultError">ERR</string>
     <string name="txMain_UploadResultMltError">MRR</string>
     
-    <!-- main -->
-    <string name="tiMain">Track</string>    
-    <string name="tvMain_AutoStartIndicator">A.Start</string>
-    <string name="tvMain_AutoModeIndicator">A.Mode</string>
-    <string name="tvMain_LocalizationIndicator">Pos</string>
-    <string name="tvMain_WirelessLanIndicator">WLAN</string>
-    <string name="tvMain_MobileNetworkIndicator">Daten</string>
-    <string name="btMain_LocationListener">Lok.</string>
-    <string name="btMain_Tracking">Tracking</string>    
-    <string name="btMain_ResetTrack">Reset</string>
-    <string name="btMain_AntPlus">ANT+</string>
-    <string name="btMain_SendSos">SOS</string>
-    <string name="btMain_SendMessage">Nachricht</string>
-    <string name="tvMain_Runtime">Laufzeit</string>
-    <string name="tvMain_Distance">Distanz</string>
-    <string name="tvMain_Heartrate">Puls</string>
-    <string name="tvMain_Location">Position</string>
-    <string name="tvMain_Uploader">Übertr.</string>
-    <string name="txMain_QuestionStartLocalization">Wollen Sie die Lokalisierung wirklich starten?</string>
-    <string name="txMain_QuestionStopLocalization">Wollen Sie die Lokalisierung wirklich stoppen?</string>
-    <string name="txMain_QuestionStartTrack">Wollen Sie den Track wirklich starten?</string>
-    <string name="txMain_QuestionStopTrack">Wollen Sie den Track wirklich stoppen?</string>
-    <string name="txMain_InfoStartingTracking">Der Track wird gestartet&#8230;</string>
-    <string name="txMain_InfoStartTrackDone">Der Track wurde gestartet!</string>
-    <string name="txMain_InfoStoppingTracking">Der Track wird gestoppt&#8230;</string>
-    <string name="txMain_InfoStopTrackDone">Der Track wurde gestoppt!</string>
-    <string name="txMain_QuestionStartAntPlus">Wollen Sie Ant+ wirklich aktivieren?</string>
-    <string name="txMain_QuestionStopAntPlus">Wollen Sie Ant+ wirklich deaktivieren?</string>
-    <string name="txMain_QuestionResetTrack">Wollen Sie den Track wirklich zurücksetzen?</string>
-    <string name="txMain_InfoResettingTracking">Der Track wird zurückgesetzt&#8230;</string>
-    <string name="txMain_InfoResetTrackDone">Der Track wurde zurückgesetzt!</string>               
-    <string name="txMain_QuestionSendSosSignal">Wollen Sie wirklich ein SOS Signal senden?</string>    
-    <string name="txMain_InfoSendSosSignalDone">Ein SOS Signal wurde gesendet!</string>    
-    <string name="txMain_QuestionExit">Wollen Sie LionSense wirklich beenden?</string>    
-    <string name="txMain_InfoExitApp">LionSense wird beendet&#8230;</string>
-    <string name="txMain_SendMessageNotSupportedByTransferProtocol">Der Nachrichtenversand ist nur in der Pro version von LionSense verfügbar. Bei Interesse, kontaktieren Sie bitte den Support!</string>
-    <string name="txMain_SendEmergencySignalNotSupportedByTransferProtocol">Der Versand von Notrufsignalen wird vom eingestellten Übertragungsprotokoll (%1$s) nicht unterstützt.</string>    
-    
-    <!-- main details -->
-    <string name="tiMainDetails">Details</string>
-    <string name="tvMainDetails_Uploader">Upl</string>
-    <string name="tvMainDetails_UploaderCountUploaded">Count</string>
-    <string name="tvMainDetails_UploaderRealInterval">Intv</string>
-    <string name="tvMainDetails_UploaderAverageUploadTime">Utime</string>
-    <string name="tvMainDetails_UploaderPositionsInBuffer">Buffer</string>    
-    <string name="tvMainDetails_Battery">Batt</string>
-    <string name="tvMainDetails_BatteryStatus">Status</string>
-    <string name="tvMainDetails_BatteryCharged">Charged</string>
-    <string name="tvMainDetails_BatteryPower">Power</string>
-    <string name="tvMainDetails_BatteryTemperature">Temp</string>
-    <string name="tvMainDetails_MobileNetwork">MNw</string>
-    <string name="tvMainDetails_MobileNetworkMCC">MCC</string>
-    <string name="tvMainDetails_MobileNetworkMNC">MNC</string>
-    <string name="tvMainDetails_MobileNetworkLAC">LAC</string>
-    <string name="tvMainDetails_MobileNetworkCellId">Cell</string>
-    <string name="tvMainDetails_Location">Loc</string>
-    <string name="tvMainDetails_LocationSatCount">Sat</string>
-    <string name="tvMainDetails_LocationAccuracy">Acc</string>
-    <string name="tvMainDetails_LocationLatitude">Lat</string>
-    <string name="tvMainDetails_LocationLongitude">Lon</string>
-    <string name="tvMainDetails_Heartrate">HR</string>
-    <string name="tvMainDetails_HeartrateCurrent">Curr</string>
-    <string name="tvMainDetails_HeartrateMinimum">Min</string>
-    <string name="tvMainDetails_HeartrateAverage">Avg</string>
-    <string name="tvMainDetails_HeartrateMaximum">Max</string>
-    <string name="tvMainDetails_Message">Msg</string>
-    <string name="tvMainDetails_Emergency">SOS</string>
-    
-    <!-- message -->
-    <string name="tiMsg">Nachrichtenversand</string>
-    <string name="lbMsg_Message">Nachrichtentext (maximal 80 Zeichen lang)</string>
-   	<string name="fdMsg_Message">Nachricht</string>
-   	<string name="txMsg_QuestionSendMessage">Wollen Sie die Nachricht wirklich senden?</string>
-    <string name="txMsg_InfoSendMessageDone">Die Nachricht wurde versendet!</string>    
-    
     <!-- preferences mylivetracker configuration details -->
     <string name="txPrefs_Def_TrackName">Mein Track</string>
     
@@ -164,40 +75,12 @@
     <string name="txPrefs_InfoAutoModeEnabled">Das manuelle Zurücksetzen, Starten/Stoppen des Tracks, der Lokalisierung oder HF-Messung ist im Auto Modus nicht möglich!</string>
     <string name="txPrefs_WarningChangePrefsDuringRunningTrack">Das Verändern der Einstellungen während eines laufenden Tracks kann zu unerwartetem Verhalten führen!</string>
     
-    <!-- connect to MyLiveTracker -->
-    <string name="tiConnectToMyLiveTrackerPortal">Koppeln mit MyLiveTracker Portal</string>
-    <string name="lbConnectToMyLiveTrackerPortal_Info">
-    	Hinweis:
-    	\n* Durch das Koppeln mit dem MyLiveTracker Portal, werden die Server- und Zugangseinstellungen überschrieben. 
-    	\n* Eine Koppelung mit dem MyLiveTracker Portal erfordert einen MyLiveTracker Portal-Zugang. 
-		Einen Zugang können Sie unter support@mylivetracker.de anfordern.
-    </string>          
-	<string name="lbConnectToMyLiveTrackerPortal_PortalUsername">Portal Benutzername</string>
-    <string name="fdConnectToMyLiveTrackerPortal_PortalUsername">Portal Benutzername</string>
-    <string name="lbConnectToMyLiveTrackerPortal_PortalPassword">Portal Passwort</string>
-    <string name="fdConnectToMyLiveTrackerPortal_PortalPassword">Portal Passwort</string>
-    <string name="lbConnectToMyLiveTrackerPortal_ProgressDialog">Die Koppelung mit dem MyLiveTracker Portal wird hergestellt&#8230;</string>  
-    <string name="txConnectToMyLiveTrackerPortal_InfoConnectingDone">Die Koppelung mit dem MyLiveTracker Portal wurde erfolgreich hergestellt!</string>  
-        
-    <!-- track export-->
-    <string name="tiTrackExport">Track export</string>
-    <string name="lbTrackExport_ExportTo">Aktuellen Track exportieren auf&#8230;</string>
-    <string name="btTrackExport_UploadToDropbox">Dropbox</string>
-    <string name="btTrackExport_ExportToExternalStorage">Speicherkarte</string>
-    <string name="txTrackExport_NotConnectedToDropbox">Es ist keine Koppelung zu Dropbox vorhanden. Bitte stellen Sie zuerst eine Koppelung zu Dropbox her!</string>
-    <string name="txTrackExport_NoTrackExists">Es ist kein Track vorhanden!</string>
-    <string name="txTrackExport_NoExternalStorageAvailable">Es ist keine externe Speicherkarte vorhanden!</string>
-    <string name="txTrackExport_QuestionUploadTrack">Wollen Sie wirklich den aktuellen Track in Dropbox hochladen?</string>
-    <string name="txTrackExport_QuestionExportTrack">Wollen Sie wirklich den aktuellen Track auf die Speicherkarte exportieren?</string>
-    <string name="txTrackExport_InfoExportTrackDone">Der aktuelle Track wurde erfolgreich auf die Speicherkarte exportiert!</string>
-    <string name="lbTrackExport_ExportProgressDialog">Der aktuelle Track wird exportiert&#8230;</string>
-        
     <!-- validators -->
     <string name="validator.locationProviderNotSupported">Der Lokalisierungsdienst %1$s ist auf diesem Gerät nicht verfügbar!</string>
     <string name="validator.phoneNumberInvalid">Telefonnummer ist ungültig!</string>
     <string name="validator.valueMustNotBeEmpty">%1$s darf nicht leer sein!</string>
     <string name="validator.valueMustBeANumber">%1$s muss eine Zahl sein!</string>    
-    <string name="validator.valueMustBeInRange">%1$s muss %2$s-%3$s Stellen lang sein!</string>
+    <string name="validator.valueMustBeInRange">%1$s muss im Bereich %2$s-%3$s liegen!</string>
     <string name="validator.valueMayHaveOnlyAlphaChars">%1$s darf nur alphabetische Zeichen beinhalten!</string>
     <string name="validator.valueAlreadyExists">%1$s existiert bereits!</string>
 </resources>

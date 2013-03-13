@@ -5,8 +5,8 @@ import java.io.Serializable;
 import android.content.Context;
 import android.location.LocationManager;
 import de.msk.mylivetracker.client.android.App;
-import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.APrefs;
+import de.msk.mylivetracker.client.android.util.LocationManagerUtils;
 
 /**
  * classname: LocalizationPrefs
@@ -47,20 +47,20 @@ public class LocalizationPrefs extends APrefs implements Serializable {
 		public boolean supported() {
 			boolean res = true;
 			if (this.gpsProviderEnabled) {
-				res = res && (MainActivity.get().getLocationManager().getProvider(LocationManager.GPS_PROVIDER) != null);
+				res = res && LocationManagerUtils.gpsProviderSupported();
 			}
 			if (this.networkProviderEnabled) {
-				res = res && (MainActivity.get().getLocationManager().getProvider(LocationManager.NETWORK_PROVIDER) != null);
+				res = res && LocationManagerUtils.networkProviderSupported();
 			}
 			return res;
 		}
 		public boolean neededProvidersEnabled() {
 			boolean res = true;
 			if (this.gpsProviderEnabled) {
-				res = res && MainActivity.get().getLocationManager().isProviderEnabled(LocationManager.GPS_PROVIDER);
+				res = res && LocationManagerUtils.gpsProviderEnabled();
 			}
 			if (this.networkProviderEnabled) {
-				res = res && MainActivity.get().getLocationManager().isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+				res = res && LocationManagerUtils.networkProviderEnabled();
 			}
 			return res;
 		}
@@ -77,6 +77,7 @@ public class LocalizationPrefs extends APrefs implements Serializable {
 	private int distanceTriggerInMeter;	
 	private int accuracyRequiredInMeter;
 	private int distBtwTwoLocsForDistCalcRequiredInCMtr;
+	private long maxWaitingPeriodForGpsFixInMSecs;
 	
 	@Override
 	public int getVersion() {
@@ -96,6 +97,7 @@ public class LocalizationPrefs extends APrefs implements Serializable {
 		this.distanceTriggerInMeter = 0;
 		this.accuracyRequiredInMeter = 150;
 		this.distBtwTwoLocsForDistCalcRequiredInCMtr = 1650;
+		this.maxWaitingPeriodForGpsFixInMSecs = 180000;
 	}
 	@Override
 	public void initWithValuesOfOldVersion(int foundVersion, String foundGsonStr) {
@@ -133,7 +135,13 @@ public class LocalizationPrefs extends APrefs implements Serializable {
 			int distBtwTwoLocsForDistCalcRequiredInCMtr) {
 		this.distBtwTwoLocsForDistCalcRequiredInCMtr = distBtwTwoLocsForDistCalcRequiredInCMtr;
 	}
-
+	public long getMaxWaitingPeriodForGpsFixInMSecs() {
+		return maxWaitingPeriodForGpsFixInMSecs;
+	}
+	public void setMaxWaitingPeriodForGpsFixInMSecs(
+		long maxWaitingPeriodForGpsFixInMSecs) {
+		this.maxWaitingPeriodForGpsFixInMSecs = maxWaitingPeriodForGpsFixInMSecs;
+	}
 	@Override
 	public String toString() {
 		return "LocalizationPrefs [localizationMode=" + localizationMode
@@ -141,6 +149,8 @@ public class LocalizationPrefs extends APrefs implements Serializable {
 			+ ", distanceTriggerInMeter=" + distanceTriggerInMeter
 			+ ", accuracyRequiredInMeter=" + accuracyRequiredInMeter
 			+ ", distBtwTwoLocsForDistCalcRequiredInCMtr="
-			+ distBtwTwoLocsForDistCalcRequiredInCMtr + "]";
+			+ distBtwTwoLocsForDistCalcRequiredInCMtr
+			+ ", maxWaitingPeriodForGpsFixInMSecs="
+			+ maxWaitingPeriodForGpsFixInMSecs + "]";
 	}
 }

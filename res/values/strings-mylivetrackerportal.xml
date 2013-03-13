@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tiMyLiveTrackerPortalConnect">Connect to MyLiveTracker portal</string>
+    <string name="lbMyLiveTrackerPortalConnect_Info">
+    	Please note:
+    	\n* Connecting to MyLiveTracker portal will override the server and account preferences.
+    	\n* Connecting to MyLiveTracker portal requires a valid MyLiveTracker portal account. 
+		An account can be applied at support@mylivetracker.de.
+    </string>          
+	<string name="lbMyLiveTrackerPortalConnect_PortalUsername">Portal username</string>
+    <string name="fdMyLiveTrackerPortalConnect_PortalUsername">Portal username</string>
+    <string name="lbMyLiveTrackerPortalConnect_PortalPassword">Portal password</string>
+    <string name="fdMyLiveTrackerPortalConnect_PortalPassword">Portal password</string>
+    <string name="lbMyLiveTrackerPortalConnect_ProgressDialog">Connecting to MyLiveTracker portal&#8230;</string>  
+    <string name="txMyLiveTrackerPortalConnect_InfoConnectingDone">Connecting to MyLiveTracker portal successfully done!</string>  
+</resources>

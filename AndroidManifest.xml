@@ -46,7 +46,7 @@
 				<action android:name="android.provider.Telephony.SMS_RECEIVED" />
 			</intent-filter>
 		</receiver>
-		<receiver android:name="de.msk.mylivetracker.client.android.remoteaccess.SmsSentStatusReceiver" 
+		<receiver android:name="de.msk.mylivetracker.client.android.util.sms.SmsSentStatusReceiver" 
 		    android:exported="false">
 			<intent-filter>
 				<action android:name="de.msk.mylivetracker.intent.action.SMS_SENT" />
@@ -60,6 +60,8 @@
         <activity android:name="de.msk.mylivetracker.client.android.mainview.MainDetailsActivity" 
 			android:screenOrientation="portrait" />
         <activity android:name="de.msk.mylivetracker.client.android.message.MessageActivity" 
+			android:screenOrientation="portrait" />
+        <activity android:name="de.msk.mylivetracker.client.android.message.MessagePrefsActivity" 
 			android:screenOrientation="portrait" />
 		<activity android:name="de.msk.mylivetracker.client.android.server.ServerPrefsActivity" 
 			android:screenOrientation="portrait" />
@@ -80,6 +82,8 @@
 		<activity android:name="de.msk.mylivetracker.client.android.dropbox.DropboxConnectActivity" 
 			android:screenOrientation="portrait" />
 		<activity android:name="de.msk.mylivetracker.client.android.trackexport.TrackExportActivity" 
+			android:screenOrientation="portrait" />
+		<activity android:name="de.msk.mylivetracker.client.android.trackexport.TrackExportPrefsActivity" 
 			android:screenOrientation="portrait" />	
 		<activity android:name="de.msk.mylivetracker.client.android.InfoActivity" 
 			android:screenOrientation="portrait" />
@@ -95,10 +99,16 @@
         		<category android:name="android.intent.category.DEFAULT" />
       		</intent-filter>
     	</activity>
+    	<service android:name="de.msk.mylivetracker.client.android.mainview.updater.ViewUpdateService"
+		    android:enabled="true"
+		    android:exported="false" />
 		<service android:name="de.msk.mylivetracker.client.android.auto.AutoService"
 		    android:enabled="true"
 		    android:exported="false" />
 		<service android:name="de.msk.mylivetracker.client.android.upload.UploadService"
+		    android:enabled="true"
+		    android:exported="false" />
+		<service android:name="de.msk.mylivetracker.client.android.localization.LocalizationService"
 		    android:enabled="true"
 		    android:exported="false" />
     </application>

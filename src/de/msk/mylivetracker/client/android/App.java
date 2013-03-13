@@ -1,10 +1,13 @@
 package de.msk.mylivetracker.client.android;
 
+import java.util.Locale;
+
 import org.apache.commons.lang.StringUtils;
 
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.telephony.TelephonyManager;
 import de.msk.mylivetracker.client.android.liontrack.R;
@@ -281,5 +284,15 @@ public class App extends Application {
 	public static String getDeviceId() {
 		return ((TelephonyManager)App.get().getSystemService(
 			Context.TELEPHONY_SERVICE)).getDeviceId();
+	}
+	
+	public static boolean smsSupported() {
+		return App.getCtx().getPackageManager().
+			hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
+  	}
+	
+	public static Locale getLocale() {
+		return App.getCtx().
+			getResources().getConfiguration().locale;
 	}
 }

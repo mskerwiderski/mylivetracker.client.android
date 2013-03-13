@@ -33,6 +33,7 @@ public class LocalizationPrefsActivity extends AbstractActivity {
 		private EditText etLocalizationPrefs_DistanceTriggerInMtr;
 		private EditText etLocalizationPrefs_LocationAccuracyRequiredInMtr;
 		private EditText etLocalizationPrefs_DistBtwTwoLocsForDistCalcRequiredInCMtr;
+		private EditText etLocalizationPrefs_MaxWaitingPeriodForGpsFixInSecs;
 		
 		public OnClickButtonSaveListener(
 			LocalizationPrefsActivity activity,
@@ -40,13 +41,15 @@ public class LocalizationPrefsActivity extends AbstractActivity {
 			EditText etLocalizationPrefs_TimeTriggerInSecs,
 			EditText etLocalizationPrefs_DistanceTriggerInMtr,
 			EditText etLocalizationPrefs_LocationAccuracyRequiredInMtr,
-			EditText etLocalizationPrefs_DistBtwTwoLocsForDistCalcRequiredInCMtr) {
+			EditText etLocalizationPrefs_DistBtwTwoLocsForDistCalcRequiredInCMtr,
+			EditText etLocalizationPrefs_MaxWaitingPeriodForGpsFixInSecs) {
 			this.activity = activity;
 			this.spLocalizationPrefs_LocalizationMode = spLocalizationPrefs_LocalizationMode;
 			this.etLocalizationPrefs_TimeTriggerInSecs = etLocalizationPrefs_TimeTriggerInSecs;
 			this.etLocalizationPrefs_DistanceTriggerInMtr = etLocalizationPrefs_DistanceTriggerInMtr;
 			this.etLocalizationPrefs_LocationAccuracyRequiredInMtr = etLocalizationPrefs_LocationAccuracyRequiredInMtr;
 			this.etLocalizationPrefs_DistBtwTwoLocsForDistCalcRequiredInCMtr = etLocalizationPrefs_DistBtwTwoLocsForDistCalcRequiredInCMtr;
+			this.etLocalizationPrefs_MaxWaitingPeriodForGpsFixInSecs = etLocalizationPrefs_MaxWaitingPeriodForGpsFixInSecs;
 		}
 
 		@Override
@@ -85,7 +88,13 @@ public class LocalizationPrefsActivity extends AbstractActivity {
 					R.string.fdLocalizationPrefs_DistBtwTwoLocsForDistCalcRequiredInCMtr, 
 					etLocalizationPrefs_DistBtwTwoLocsForDistCalcRequiredInCMtr, 
 					true, 
-					0, 10000, true);			
+					0, 10000, true) &&
+				ValidatorUtils.validateEditTextNumber(
+					this.activity, 
+					R.string.fdLocalizationPrefs_MaxWaitingPeriodForGpsFixInSecs, 
+					etLocalizationPrefs_MaxWaitingPeriodForGpsFixInSecs, 
+					true, 
+					0, 900, true);
 			
 			if (valid) {
 				LocalizationPrefs prefs = PrefsRegistry.get(LocalizationPrefs.class);
@@ -98,6 +107,8 @@ public class LocalizationPrefsActivity extends AbstractActivity {
 					Integer.parseInt(etLocalizationPrefs_LocationAccuracyRequiredInMtr.getText().toString()));
 				prefs.setDistBtwTwoLocsForDistCalcRequiredInCMtr(
 					Integer.parseInt(etLocalizationPrefs_DistBtwTwoLocsForDistCalcRequiredInCMtr.getText().toString()));
+				prefs.setMaxWaitingPeriodForGpsFixInMSecs(1000 * 
+					Integer.parseInt(etLocalizationPrefs_MaxWaitingPeriodForGpsFixInSecs.getText().toString()));
 				PrefsRegistry.save(LocalizationPrefs.class);
 				this.activity.finish();
 			}
@@ -134,6 +145,10 @@ public class LocalizationPrefsActivity extends AbstractActivity {
         	(EditText)findViewById(R.id.etLocalizationPrefs_DistBtwTwoLocsForDistCalcRequiredInCMtr);
         etLocalizationPrefs_DistBtwTwoLocsForDistCalcRequiredInCMtr.setText(
         	String.valueOf(prefs.getDistBtwTwoLocsForDistCalcRequiredInCMtr()));
+        EditText etLocalizationPrefs_MaxWaitingPeriodForGpsFixInSecs = 
+        	(EditText)findViewById(R.id.etLocalizationPrefs_MaxWaitingPeriodForGpsFixInSecs);
+        etLocalizationPrefs_MaxWaitingPeriodForGpsFixInSecs.setText(
+        	String.valueOf(prefs.getMaxWaitingPeriodForGpsFixInMSecs() / 1000));
         
     	Button btLocalizationPrefs_Save = (Button)
     		findViewById(R.id.btLocalizationPrefs_Save);
@@ -146,7 +161,8 @@ public class LocalizationPrefsActivity extends AbstractActivity {
 				etLocalizationPrefs_TimeTriggerInSecs,
 				etLocalizationPrefs_DistanceTriggerInMtr,
 				etLocalizationPrefs_LocationAccuracyRequiredInMtr,
-				etLocalizationPrefs_DistBtwTwoLocsForDistCalcRequiredInCMtr));
+				etLocalizationPrefs_DistBtwTwoLocsForDistCalcRequiredInCMtr,
+				etLocalizationPrefs_MaxWaitingPeriodForGpsFixInSecs));
 		
         btLocalizationPrefs_Cancel.setOnClickListener(
 			new OnFinishActivityListener(this));

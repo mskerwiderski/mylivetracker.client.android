@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tiMainDetails">Details</string>
+    <string name="tvMainDetails_Uploader">Upl</string>
+    <string name="tvMainDetails_UploaderCountUploaded">Count</string>
+    <string name="tvMainDetails_UploaderRealInterval">Intv</string>
+    <string name="tvMainDetails_UploaderAverageUploadTime">Utime</string>
+    <string name="tvMainDetails_UploaderPositionsInBuffer">Buffer</string>    
+    <string name="tvMainDetails_Battery">Batt</string>
+    <string name="tvMainDetails_BatteryStatus">Status</string>
+    <string name="tvMainDetails_BatteryCharged">Charged</string>
+    <string name="tvMainDetails_BatteryPower">Power</string>
+    <string name="tvMainDetails_BatteryTemperature">Temp</string>
+    <string name="tvMainDetails_MobileNetwork">MNw</string>
+    <string name="tvMainDetails_MobileNetworkMCC">MCC</string>
+    <string name="tvMainDetails_MobileNetworkMNC">MNC</string>
+    <string name="tvMainDetails_MobileNetworkLAC">LAC</string>
+    <string name="tvMainDetails_MobileNetworkCellId">Cell</string>
+    <string name="tvMainDetails_Location">Loc</string>
+    <string name="tvMainDetails_LocationSatCount">Sat</string>
+    <string name="tvMainDetails_LocationAccuracy">Acc</string>
+    <string name="tvMainDetails_LocationLatitude">Lat</string>
+    <string name="tvMainDetails_LocationLongitude">Lon</string>
+    <string name="tvMainDetails_Heartrate">HR</string>
+    <string name="tvMainDetails_HeartrateUnit">bpm</string>
+    <string name="tvMainDetails_HeartrateCurrent">Curr</string>
+    <string name="tvMainDetails_HeartrateMinimum">Min</string>
+    <string name="tvMainDetails_HeartrateAverage">Avg</string>
+    <string name="tvMainDetails_HeartrateMaximum">Max</string>
+    <string name="tvMainDetails_Message">Msg</string>
+    <string name="tvMainDetails_Emergency">SOS</string>
+</resources>

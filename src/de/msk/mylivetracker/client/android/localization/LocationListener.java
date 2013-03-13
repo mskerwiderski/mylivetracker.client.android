@@ -1,9 +1,9 @@
-package de.msk.mylivetracker.client.android.listener;
+package de.msk.mylivetracker.client.android.localization;
 
 import android.location.Location;
 import android.os.Bundle;
-import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
+import de.msk.mylivetracker.commons.util.datetime.DateTime;
 
 /**
  * classname: LocationListener
@@ -17,29 +17,12 @@ import de.msk.mylivetracker.client.android.status.LocationInfo;
  * 
  */
 public class LocationListener implements android.location.LocationListener {
+	private DateTime lastLocationReceived = new DateTime();
 	
-	private static LocationListener locationListener = null;
-	private boolean active = false;
-	
-	public static LocationListener get() {
-		if (locationListener == null) {
-			locationListener = new LocationListener();			
-		} 
-		return locationListener;
-	}
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-
 	@Override
 	public void onLocationChanged(Location location) {
 		LocationInfo.update(location);
-		MainActivity.get().updateView();		
+		this.lastLocationReceived = new DateTime();
 	}
 
 	@Override
@@ -52,5 +35,9 @@ public class LocationListener implements android.location.LocationListener {
 
 	@Override
 	public void onProviderDisabled(String provider) {
+	}
+
+	public DateTime getLastLocationReceived() {
+		return lastLocationReceived;
 	}	
 }

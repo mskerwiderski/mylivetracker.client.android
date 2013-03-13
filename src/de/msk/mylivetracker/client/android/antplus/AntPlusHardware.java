@@ -13,6 +13,8 @@ import com.wahoofitness.api.WFHardwareConnector;
 
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.liontrack.R;
+import de.msk.mylivetracker.client.android.other.OtherPrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 
 /**
@@ -38,17 +40,39 @@ public class AntPlusHardware {
 		return antPlusHwConnector != null;
 	}
 	
-	public static WFHardwareConnector getConn() {
+	protected static WFHardwareConnector getConn() {
 		return antPlusHwConnector;
 	}
 	
-	public static void init(Object lastAntPlusHwConnector, Bundle savedInstanceState) {
+	private static void release() {
+		if (antPlusHwConnector != null) {
+    		antPlusHwConnector.destroy();
+    	}
+		antPlusHwConnector = null;
+	}
+	
+	public static void checkConnection() {
+		if (!supported()) return;
+		boolean enabled = PrefsRegistry.get(
+			OtherPrefs.class).isAntPlusEnabledIfAvailable();
+		if (enabled && !initialized()) {
+			init();
+		} else if (!enabled && initialized()) {
+			release();
+		}
+	}
+	
+	private static void init() {
+		init(null, null);
+	}
+	
+	private static void init(Object lastAntPlusHwConnector, Bundle savedInstanceState) {
 		Context context = App.getCtx();
 		AntPlusManager antPlusListener = AntPlusManager.get();
 		
 		String statusStr = null;
-		// check for ANT hardware support.
-        if (supported()) {
+		// check for ANT hardware support and if it is enabled.
+        if (supported() && PrefsRegistry.get(OtherPrefs.class).isAntPlusEnabledIfAvailable()) {
 	        try {
 	        	boolean bResumed = false;
 	        	// attempt to retrieve the previously suspended WFHardwareConnector instance.
@@ -108,7 +132,7 @@ public class AntPlusHardware {
         }  
         if (!StringUtils.isEmpty(statusStr)) {
         	TrackStatus.get().setAntPlusStatus(statusStr);
-        	antPlusHwConnector = null;
+        	release();
         }                      
 	}
 }

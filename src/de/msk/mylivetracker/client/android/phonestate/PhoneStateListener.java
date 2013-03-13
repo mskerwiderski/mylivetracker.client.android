@@ -1,10 +1,12 @@
-package de.msk.mylivetracker.client.android.listener;
+package de.msk.mylivetracker.client.android.phonestate;
 
+import android.content.Context;
 import android.telephony.CellLocation;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
+import android.telephony.TelephonyManager;
 import android.telephony.gsm.GsmCellLocation;
-import de.msk.mylivetracker.client.android.mainview.MainActivity;
+import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
 
 /**
@@ -19,43 +21,62 @@ import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
  * 
  */
 public class PhoneStateListener extends android.telephony.PhoneStateListener {
+
 	private static PhoneStateListener phoneStateListener = null;
 	
-	public static PhoneStateListener get() {
-		if (phoneStateListener == null) {
-			phoneStateListener = new PhoneStateListener();			
-		} 
-		return phoneStateListener;
+	private static TelephonyManager getTelephonyManager() {
+		return (TelephonyManager)App.getCtx().
+			getSystemService(Context.TELEPHONY_SERVICE);
 	}
-
+	
+	public static boolean isPhoneTypeGsm() {
+		int phoneType = getTelephonyManager().getPhoneType();
+		return (phoneType == TelephonyManager.PHONE_TYPE_GSM);
+	}
+	
+	public static void start() {
+		if (phoneStateListener == null) {
+			phoneStateListener = new PhoneStateListener();
+			getTelephonyManager().listen(
+				phoneStateListener, 
+				PhoneStateListener.LISTEN_SERVICE_STATE |
+				PhoneStateListener.LISTEN_CELL_LOCATION |
+				PhoneStateListener.LISTEN_DATA_CONNECTION_STATE |
+				PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
+		}
+	}
+	
+	public static void stop() {
+		if (phoneStateListener != null) {
+			getTelephonyManager().listen(
+				phoneStateListener, PhoneStateListener.LISTEN_NONE);
+			phoneStateListener = null;
+		}
+	}
+	
 	@Override
 	public void onCellLocationChanged(CellLocation location) {
-		if (MainActivity.get().isPhoneTypeGsm()) {
+		if (isPhoneTypeGsm()) {
 			PhoneStateInfo.update(null, (GsmCellLocation)location, null, null);
-			MainActivity.get().updateView();
 		}
 	}
 
 	@Override
 	public void onDataConnectionStateChanged(int state, int networkType) {
 		PhoneStateInfo.update(networkType, null, null, null);
-		MainActivity.get().updateView();
 	}
 
 	@Override
 	public void onDataConnectionStateChanged(int state) {
-		MainActivity.get().updateView();
 	}
 	
 	@Override
 	public void onServiceStateChanged(ServiceState serviceState) {
 		PhoneStateInfo.update(null, null, serviceState, null);
-		MainActivity.get().updateView();
 	}
 
 	@Override
 	public void onSignalStrengthsChanged(SignalStrength signalStrength) {
 		PhoneStateInfo.update(null, null, null, signalStrength);
-		MainActivity.get().updateView();
 	}
 }

@@ -1,4 +1,4 @@
-package de.msk.mylivetracker.client.android.remoteaccess;
+package de.msk.mylivetracker.client.android.util.sms;
 
 import java.util.ArrayList;
 

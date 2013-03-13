@@ -45,7 +45,6 @@ public class OnClickButtonSosListener extends ASafeOnClickListener {
 					public void onClick(DialogInterface dialog, int id) {
 						EmergencySignalInfo.update(true);
 						Uploader.uploadOneTime();
-						mainActivity.updateView();
 						dialog.cancel();
 						Toast.makeText(activity.getApplicationContext(), 
 								activity.getString(R.string.txMain_InfoSendSosSignalDone),

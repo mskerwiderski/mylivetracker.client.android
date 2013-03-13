@@ -41,6 +41,7 @@ public class DropboxUploadTask extends AsyncTask<Void, Long, Boolean> {
 	private Activity activity;
 	private LabelDsc labelDsc;
 	private DoInBackgroundInitializer doInBackgroundInitializer;
+	private PostProcessor postProcessor;
 	private UploadRequest request;
     private ProgressDialog dialog;
     private String fileName;
@@ -82,21 +83,29 @@ public class DropboxUploadTask extends AsyncTask<Void, Long, Boolean> {
     	public void init(String fileName);
     };
     
+    public interface PostProcessor {
+    	public void postProcess();
+    }
+    
     public static void execute(Activity activity, LabelDsc labelDsc, String fileName,
-    	DoInBackgroundInitializer doInBackgroundInitializer) {
+    	DoInBackgroundInitializer doInBackgroundInitializer,
+    	PostProcessor postProcessor) {
 		DropboxUploadTask dlg = new DropboxUploadTask(
-			activity, labelDsc, fileName, doInBackgroundInitializer);
+			activity, labelDsc, fileName, doInBackgroundInitializer, postProcessor);
 		dlg.execute();
 	}
     
     public DropboxUploadTask(
     	Activity activity, LabelDsc labelDsc, String fileName,
-    	DoInBackgroundInitializer doInBackgroundInitializer) {
-    	this.init(activity, labelDsc, fileName, doInBackgroundInitializer);
+    	DoInBackgroundInitializer doInBackgroundInitializer,
+    	PostProcessor postProcessor) {
+    	this.init(activity, labelDsc, fileName, 
+    		doInBackgroundInitializer, postProcessor);
     }
     
     private void init(Activity activity, LabelDsc labelDsc, String fileName,
-    	DoInBackgroundInitializer doInBackgroundInitializer) {
+    	DoInBackgroundInitializer doInBackgroundInitializer,
+    	PostProcessor postProcessor) {
     	if (activity == null) {
     		throw new IllegalArgumentException("activity must not be null.");
     	}
@@ -111,6 +120,7 @@ public class DropboxUploadTask extends AsyncTask<Void, Long, Boolean> {
     	}
     	this.fileName = fileName;
     	this.doInBackgroundInitializer = doInBackgroundInitializer;
+    	this.postProcessor = postProcessor;
         dialog = new ProgressDialog(this.activity);
         dialog.setMax(100);
         dialog.setMessage(App.getCtx().getText(this.labelDsc.labelIdUploadInProgress));
@@ -197,5 +207,8 @@ public class DropboxUploadTask extends AsyncTask<Void, Long, Boolean> {
             }
         }
         SimpleInfoDialog.show(this.activity, msg);
+        if (this.postProcessor != null) {
+        	this.postProcessor.postProcess();
+        }
     }
 }

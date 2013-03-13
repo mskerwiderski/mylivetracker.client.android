@@ -28,6 +28,16 @@ import de.msk.mylivetracker.client.android.mainview.MainActivity;
  */
 public class AntPlusManager implements Callback {
 
+	public static void start() {
+		AntPlusManager.get().requestSensorUpdates(
+			AntPlusHeartrateListener.get());
+	}
+	
+	public static void stop() {
+		AntPlusManager.get().removeUpdates(
+			AntPlusHeartrateListener.get());
+	}
+	
 	private static class ConnDsc {
 		private WFSensorConnection connection;
 		private IAntPlusSensorListener listener;

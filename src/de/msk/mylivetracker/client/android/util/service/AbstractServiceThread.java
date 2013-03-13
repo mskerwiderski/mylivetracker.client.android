@@ -1,5 +1,6 @@
 package de.msk.mylivetracker.client.android.util.service;
 
+import android.os.Handler;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
 /**
@@ -17,6 +18,15 @@ public abstract class AbstractServiceThread extends Thread {
 
 	private volatile boolean stop = false;
 	private volatile boolean terminated = false;
+	private Handler handler = null;
+	
+	public void sendMessage(int what) {
+		this.handler.sendEmptyMessage(what);
+	}
+	
+	protected void initThreadObject(Handler handler) {
+		this.handler = handler;
+	}
 	
 	public void stopAndWaitUntilTerminated() {
 		if (!this.isAlive() || this.isInterrupted()) {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tiProtocolPrefs">Einstellungen Protokoll</string>
-    <string name="lbProtocolPrefs_TransferProtocol">Transfer Protokoll</string>
+    <string name="lbProtocolPrefs_TransferProtocol">Protokoll</string>
     <string name="fdProtocolPrefs_TimeTriggerInSecs">Zeit Trigger</string>
     <string name="lbProtocolPrefs_TimeTriggerInSecs">Zeit Trigger</string>
     <string name="fdProtocolPrefs_DistanceTriggerInMtr">Distanz Trigger</string>
@@ -9,7 +9,8 @@
     <string name="lbProtocolPrefs_TriggerLogic">Trigger Logik</string>       
     <string name="lbProtocolPrefs_CloseConnectionAfterEveryUpload">Verbindung nach jeder Übertragung schließen</string>
     <string name="lbProtocolPrefs_FinishEveryUploadWithALinefeed">Jede Übertragung mit einem Zeilenumbruch beenden</string>
-    <string name="fdProtocolPrefs_MaxPositionBufferSize">Puffer Größe</string>
-    <string name="lbProtocolPrefs_MaxPositionBufferSize">Puffergröße um Funklöcher zu überbrücken</string>
+    <string name="lbProtocolPrefs_UploadPositionsOnlyOnce">Positionen nur einmal senden</string>
+    <string name="fdProtocolPrefs_MaxPositionBufferSize">Puffer</string>
+    <string name="lbProtocolPrefs_MaxPositionBufferSize">Puffer</string>
     <string name="lbProtocolPrefs_LogTrackData">Trackdaten mitloggen für den späteren Export</string>
 </resources>

@@ -3,7 +3,6 @@ package de.msk.mylivetracker.client.android;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
-import de.msk.mylivetracker.client.android.App.VersionDsc;
 import de.msk.mylivetracker.client.android.liontrack.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.mainview.updater.UpdaterUtils;
@@ -38,7 +37,7 @@ public class InfoActivity extends AbstractActivity {
         TextView tvInfo_Mileage = (TextView)
         	findViewById(R.id.tvInfo_Mileage);
         
-        tvInfo_Version.setText(VersionDsc.getVersionStr());
+        tvInfo_Version.setText(App.getAppNameComplete());
         tvInfo_Mileage.setText(UpdaterUtils.getFltStr(
         	TrackStatus.get().getMileageInMtr() / 1000f, 2, 
         	Unit.Kilometer));

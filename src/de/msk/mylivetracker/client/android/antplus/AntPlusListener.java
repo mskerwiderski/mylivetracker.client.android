@@ -35,7 +35,6 @@ public class AntPlusListener implements IAntPlusListener {
 	public void onAntPlusSensorListenerAdded(int countSensorListeners) {
 		TrackStatus.get().setAntPlusStatus(MainActivity.get().getString(
 			R.string.antPlus_CountSensorListeners, countSensorListeners));		
-		MainActivity.get().updateView();
 	}
 
 	@Override
@@ -46,7 +45,6 @@ public class AntPlusListener implements IAntPlusListener {
 			TrackStatus.get().setAntPlusStatus(MainActivity.get().getString(
 				R.string.antPlus_CountSensorListeners, countSensorListeners));
 		}
-		MainActivity.get().updateView();
 	}
 
 	@Override
@@ -55,7 +53,6 @@ public class AntPlusListener implements IAntPlusListener {
 			case WF_ANT_ERROR_CLAIM_FAILED:
 				TrackStatus.get().setAntPlusStatus(
 					MainActivity.get().getString(R.string.antPlus_InUse));
-				MainActivity.get().updateView();
 			break;
 		default:
 			break;
@@ -87,7 +84,6 @@ public class AntPlusListener implements IAntPlusListener {
 		}
 		if (!StringUtils.isEmpty(statusStr)) {
 			TrackStatus.get().setAntPlusStatus(statusStr);
-			MainActivity.get().updateView();
 		}
 	}
 }

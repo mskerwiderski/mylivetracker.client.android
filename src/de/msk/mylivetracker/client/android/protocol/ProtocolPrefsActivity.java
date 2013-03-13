@@ -38,6 +38,7 @@ public class ProtocolPrefsActivity extends AbstractActivity {
 		private Spinner spProtocolPrefs_DistanceTriggerInMtr;	
 		private CheckBox cbProtocolPrefs_CloseConnectionAfterEveryUpload;
 		private CheckBox cbProtocolPrefs_FinishEveryUploadWithALinefeed;
+		private CheckBox cbProtocolPrefs_UploadPositionOnlyOnce;
 		private Spinner spProtocolPrefs_MaxPositionBufferSize;
 		private CheckBox cbProtocolPrefs_LogTrackData;
 		
@@ -49,6 +50,7 @@ public class ProtocolPrefsActivity extends AbstractActivity {
 			Spinner spProtocolPrefs_DistanceTriggerInMtr,
 			CheckBox cbProtocolPrefs_CloseConnectionAfterEveryUpload,
 			CheckBox cbProtocolPrefs_FinishEveryUploadWithALinefeed,
+			CheckBox cbProtocolPrefs_UploadPositionOnlyOnce,
 			Spinner spProtocolPrefs_MaxPositionBufferSize,
 			CheckBox cbProtocolPrefs_LogTrackData) {
 			this.activity = activity;
@@ -58,6 +60,7 @@ public class ProtocolPrefsActivity extends AbstractActivity {
 			this.spProtocolPrefs_DistanceTriggerInMtr =spProtocolPrefs_DistanceTriggerInMtr;
 			this.cbProtocolPrefs_CloseConnectionAfterEveryUpload = cbProtocolPrefs_CloseConnectionAfterEveryUpload;
 			this.cbProtocolPrefs_FinishEveryUploadWithALinefeed = cbProtocolPrefs_FinishEveryUploadWithALinefeed;
+			this.cbProtocolPrefs_UploadPositionOnlyOnce = cbProtocolPrefs_UploadPositionOnlyOnce;
 			this.spProtocolPrefs_MaxPositionBufferSize = spProtocolPrefs_MaxPositionBufferSize;
 			this.cbProtocolPrefs_LogTrackData = cbProtocolPrefs_LogTrackData;
 		}
@@ -80,6 +83,8 @@ public class ProtocolPrefsActivity extends AbstractActivity {
 					cbProtocolPrefs_CloseConnectionAfterEveryUpload.isChecked());
 				prefs.setFinishEveryUploadWithALinefeed(
 					cbProtocolPrefs_FinishEveryUploadWithALinefeed.isChecked());
+				prefs.setUploadPositionsOnlyOnce(
+					cbProtocolPrefs_UploadPositionOnlyOnce.isChecked());
 				prefs.setUplPositionBufferSize(BufferSize.values()[
                    spProtocolPrefs_MaxPositionBufferSize.getSelectedItemPosition()]);
 				if (prefs.getUplPositionBufferSize().isDisabled()) {
@@ -129,10 +134,15 @@ public class ProtocolPrefsActivity extends AbstractActivity {
         spProtocolPrefs_DistanceTriggerInMtr.setAdapter(adapter);
         spProtocolPrefs_DistanceTriggerInMtr.setSelection(prefs.getUplDistanceTrigger().ordinal());        
                        
-        CheckBox cbProtocolPrefs_CloseConnectionAfterEveryUpload = (CheckBox)findViewById(R.id.cbProtocolPrefs_CloseConnectionAfterEveryUpload);
+        CheckBox cbProtocolPrefs_CloseConnectionAfterEveryUpload = (CheckBox)
+        	findViewById(R.id.cbProtocolPrefs_CloseConnectionAfterEveryUpload);
         cbProtocolPrefs_CloseConnectionAfterEveryUpload.setChecked(prefs.isCloseConnectionAfterEveryUpload());
-		CheckBox cbProtocolPrefs_FinishEveryUploadWithALinefeed = (CheckBox)findViewById(R.id.cbProtocolPrefs_FinishEveryUploadWithALinefeed);
+		CheckBox cbProtocolPrefs_FinishEveryUploadWithALinefeed = (CheckBox)
+			findViewById(R.id.cbProtocolPrefs_FinishEveryUploadWithALinefeed);
 		cbProtocolPrefs_FinishEveryUploadWithALinefeed.setChecked(prefs.isFinishEveryUploadWithALinefeed());
+		CheckBox cbProtocolPrefs_UploadPositionOnlyOnce = (CheckBox)
+			findViewById(R.id.cbProtocolPrefs_UploadPositionOnlyOnce);
+		cbProtocolPrefs_UploadPositionOnlyOnce.setChecked(prefs.isUploadPositionsOnlyOnce());
 		
 		Spinner spProtocolPrefs_MaxPositionBufferSize = 
 			(Spinner)findViewById(R.id.spProtocolPrefs_MaxPositionBufferSize);
@@ -156,6 +166,7 @@ public class ProtocolPrefsActivity extends AbstractActivity {
 				spProtocolPrefs_DistanceTriggerInMtr,
 				cbProtocolPrefs_CloseConnectionAfterEveryUpload,
 				cbProtocolPrefs_FinishEveryUploadWithALinefeed,
+				cbProtocolPrefs_UploadPositionOnlyOnce,
 				spProtocolPrefs_MaxPositionBufferSize,
 				cbProtocolPrefs_LogTrackData));
 		

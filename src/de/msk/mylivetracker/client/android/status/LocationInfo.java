@@ -48,6 +48,8 @@ public class LocationInfo extends AbstractInfo implements Serializable {
 		if (use) {
 			locationInfo = 
 				LocationInfo.createNewLocationInfo(locationInfo, location);
+			TrackStatus.get().
+				updateMarkersFirstAndLastPositionReceived(locationInfo);
 		}
 	}
 	
@@ -134,7 +136,7 @@ public class LocationInfo extends AbstractInfo implements Serializable {
 		}
 		if (trackStatus.trackIsRunning() && 
 			(locationNew != null) &&
-			isAccurate(locationNew.getAccuracy())) {			
+			isAccurate(locationNew.getAccuracy())) {	
 			if ((currLocationInfo == null) || 
 				(currLocationInfo.lastLatLonPos == null)) { 
 				newLastLatLonPos = new LatLonPos(locationNew);

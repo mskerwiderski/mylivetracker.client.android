@@ -47,7 +47,9 @@ public class HttpProtocolParams implements Serializable {
 		RuntimeNet,
 		RuntimeGross,
 		Username,
-		Password,
+		PasswordPlainText,
+		PasswordMd5,
+		PasswordGpsGate,
 		HeartrateCurrent,
 		HeartrateMin,
 		HeartrateMax,
@@ -157,9 +159,17 @@ public class HttpProtocolParams implements Serializable {
 			R.string.txHttpProtocolParamsPrefs_ParamValueExampleUsername, 
 			true));
 		httpProtocolParams.params.add(new HttpProtocolParamDsc(
-			R.string.txHttpProtocolParamsPrefs_ParamNamePassword,
-			R.string.txHttpProtocolParamsPrefs_ParamValueExamplePassword, 
+			R.string.txHttpProtocolParamsPrefs_ParamNamePasswordPlainText,
+			R.string.txHttpProtocolParamsPrefs_ParamValueExamplePasswordPlainText, 
+			false));
+		httpProtocolParams.params.add(new HttpProtocolParamDsc(
+			R.string.txHttpProtocolParamsPrefs_ParamNamePasswordMd5,
+			R.string.txHttpProtocolParamsPrefs_ParamValueExamplePasswordMd5, 
 			true));
+		httpProtocolParams.params.add(new HttpProtocolParamDsc(
+			R.string.txHttpProtocolParamsPrefs_ParamNamePasswordGpsGate,
+			R.string.txHttpProtocolParamsPrefs_ParamValueExamplePasswordGpsGate, 
+			false));
 		httpProtocolParams.params.add(new HttpProtocolParamDsc(
 			R.string.txHttpProtocolParamsPrefs_ParamNameHeartrateCurrent,
 			R.string.txHttpProtocolParamsPrefs_ParamValueExampleHeartrateCurrent, 

@@ -1,11 +1,14 @@
-package de.msk.mylivetracker.client.android.status;
+package de.msk.mylivetracker.client.android.battery;
 
 import org.apache.commons.lang.StringUtils;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.BatteryManager;
+import de.msk.mylivetracker.client.android.App;
+import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
 
 /**
  * classname: BatteryReceiver
@@ -21,20 +24,22 @@ import android.os.BatteryManager;
 public class BatteryReceiver extends BroadcastReceiver {
 
 	private static BatteryReceiver batteryReceiver = null;
-	private boolean active = false;
 	
-	public static BatteryReceiver get() {
+	public static void start() {
 		if (batteryReceiver == null) {
-			batteryReceiver = new BatteryReceiver();			
-		} 
-		return batteryReceiver;
+			batteryReceiver = new BatteryReceiver();
+			IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+	        App.getCtx().registerReceiver(batteryReceiver, filter);
+		}
 	}
 	
-	private boolean batteryCharging = false;
+	public static void stop() {
+		if (batteryReceiver != null) {
+			App.getCtx().unregisterReceiver(batteryReceiver);
+			batteryReceiver = null;
+		}
+	}
 	
-	/* (non-Javadoc)
-	 * @see android.content.BroadcastReceiver#onReceive(android.content.Context, android.content.Intent)
-	 */
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		int istate = intent.getIntExtra(BatteryManager.EXTRA_STATUS, 
@@ -44,19 +49,14 @@ public class BatteryReceiver extends BroadcastReceiver {
         BatteryStateInfo.State state = BatteryStateInfo.State.Unknown;
         if (istate == BatteryManager.BATTERY_STATUS_CHARGING){
         	state = BatteryStateInfo.State.Charging;
-        	batteryCharging = true;
         } else if (istate == BatteryManager.BATTERY_STATUS_DISCHARGING){
         	state = BatteryStateInfo.State.Discharging;
-        	batteryCharging = false;
         } else if (istate == BatteryManager.BATTERY_STATUS_NOT_CHARGING){
         	state = BatteryStateInfo.State.NotCharging;
-        	batteryCharging = false;
         } else if (istate == BatteryManager.BATTERY_STATUS_FULL){
         	state = BatteryStateInfo.State.Full;
-        	batteryCharging = true;
         } else {
         	state = BatteryStateInfo.State.Unknown;
-        	batteryCharging = false;
         }
         Integer percent = null;
         if ((ilevel != -1) && (iscale != -1)) {
@@ -69,7 +69,6 @@ public class BatteryReceiver extends BroadcastReceiver {
         }
         int ivolt = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1);
         
-        // 001
         String voltStr = String.valueOf(ivolt);
         voltStr = StringUtils.rightPad(voltStr, 4, '0');
         ivolt = Integer.valueOf(voltStr);
@@ -80,16 +79,4 @@ public class BatteryReceiver extends BroadcastReceiver {
         }        
         BatteryStateInfo.update(state, percent, temperature, voltage);
 	}
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-
-	public boolean isBatteryCharging() {
-		return batteryCharging;
-	}	
 }

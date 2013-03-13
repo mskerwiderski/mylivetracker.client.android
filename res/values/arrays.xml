@@ -1,4 +1,10 @@
 <resources>
+    <string-array name="sendMessageModes">
+    	<item>Only to server</item>
+        <item>Only as SMS</item>
+        <item>To server and as SMS</item>
+    </string-array>
+    
     <string-array name="localizationModes">
     	<item>GPS</item>
         <item>Network</item>
@@ -102,7 +108,9 @@
  	    <item>Runtime net (msecs)</item>
  	    <item>Runtime gross (msecs)</item>
  	    <item>Username</item>
- 	    <item>Password (encrypted)</item>
+ 	    <item>Password (plain text)</item>
+ 	    <item>Password (MD5)</item>
+ 	    <item>Password (GpsGate)</item>
  	    <item>Current HR (bpm)</item>
  	    <item>Min HR (bpm)</item>
         <item>Max HR (bpm)</item>

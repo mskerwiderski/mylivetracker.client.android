@@ -67,13 +67,11 @@ public class AntPlusHeartrateListener implements IAntPlusSensorListener {
 				break;	
 		}
 		TrackStatus.get().setAntPlusHeartrateStatus(statusStr);
-		MainActivity.get().updateView();
 	}
 
 	@Override
 	public void onDisabled() {
 		TrackStatus.get().setAntPlusHeartrateStatus(null);
-		MainActivity.get().updateView();		
 	}
 
 	@Override
@@ -81,7 +79,6 @@ public class AntPlusHeartrateListener implements IAntPlusSensorListener {
 		WFHeartrateData heartrateData = connection.getHeartrateData();
 		if (heartrateData != null) {
 			HeartrateInfo.update(heartrateData);				
-			MainActivity.get().updateView();
 		}		
 	}
 
@@ -109,6 +106,5 @@ public class AntPlusHeartrateListener implements IAntPlusSensorListener {
 				break;
 		}
 		TrackStatus.get().setAntPlusHeartrateStatus(statusStr);
-		MainActivity.get().updateView();
 	}
 }

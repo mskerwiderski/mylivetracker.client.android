@@ -5,32 +5,122 @@
    	android:orientation="vertical" 
    	android:background="@color/colorBackground"
 >
-    <LinearLayout android:layout_height="20dip" android:layout_width="fill_parent" />       
+	<LinearLayout 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingTop="4dip"
+        android:paddingLeft="5dip"
+       	android:paddingRight="5dip" 
+    >
+        <TextView 
+        	android:text="@string/lbMsg_StatusMessageToServer"
+        	android:textSize="16sp"
+        	android:textColor="@color/colorText"
+        	android:layout_height="wrap_content" 
+        	android:layout_width="80dip"         	 
+        	android:gravity="left" 
+        />
+        <TextView 
+        	android:id="@+id/tvMsg_StatusMessageToServer"
+        	android:textSize="16sp"
+        	android:textColor="@color/colorBlack"
+        	android:paddingLeft="3dip"
+        	android:layout_height="wrap_content" 
+        	android:layout_width="fill_parent"         	 
+        	android:gravity="left" 
+        />
+    </LinearLayout>
+    <LinearLayout 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingLeft="5dip"
+       	android:paddingRight="5dip" 
+    >
+        <TextView 
+        	android:text="@string/lbMsg_StatusMessageAsSms"
+        	android:textSize="16sp"
+        	android:textColor="@color/colorText"
+        	android:layout_height="wrap_content" 
+        	android:layout_width="80dip"         	 
+        	android:gravity="left" 
+        />
+        <TextView 
+        	android:id="@+id/tvMsg_StatusMessageAsSms"
+        	android:textSize="16sp"
+        	android:textColor="@color/colorBlack"
+        	android:paddingLeft="3dip"
+        	android:layout_height="wrap_content" 
+        	android:layout_width="fill_parent"         	 
+        	android:gravity="left" 
+        />
+    </LinearLayout>
+    <LinearLayout 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingTop="10dip"
+        android:paddingLeft="5dip"
+       	android:paddingRight="5dip" 
+    >
+        <TextView 
+        	android:text="@string/lbMsg_SelectMessageTemplate"
+        	android:textSize="16sp"
+        	android:textColor="@color/colorText"
+        	android:layout_weight="1" 
+        	android:layout_height="wrap_content" 
+        	android:layout_width="0dip"         	 
+        	android:gravity="left" 
+        />
+    </LinearLayout>
+    <LinearLayout 
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:paddingLeft="5dip"
+       	android:paddingRight="5dip" 
+    >
+    	<Spinner
+        	android:id="@+id/spMsg_MessageTemplate"         	 
+        	android:layout_height="40dip"
+        	android:layout_width="fill_parent" 
+        />		
+    </LinearLayout>
     <TextView
+        android:paddingTop="4dip"
         android:paddingLeft="5dip"
         android:paddingRight="5dip"
-        android:textSize="16dip"
+        android:textSize="16sp"
         android:text="@string/lbMsg_Message"
         android:textColor="@color/colorText" 
         android:layout_height="wrap_content" 
         android:layout_width="wrap_content" 
     />
-    <LinearLayout android:layout_height="5dip" android:layout_width="fill_parent" />
     <LinearLayout 
+        android:paddingTop="5dip"
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
         android:padding="5dip" 
     >
-
 	    <EditText
 	        android:id="@+id/etMsg_Message"
 	        android:layout_width="fill_parent"
-	        android:layout_height="160dip"
+	        android:layout_height="100dip"
 	        android:inputType="textMultiLine"
-	        android:singleLine="true"
+	        android:singleLine="false"
+	        android:gravity="top"
 	        android:text="" />
-
     </LinearLayout>
+    <LinearLayout
+        android:paddingTop="5dip" 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content">
+    	<Button 
+    		android:id="@+id/btMsg_MessagePrefs"
+    		android:text="@string/btMsg_MessagePrefs"
+    		android:layout_gravity="bottom"
+    		android:layout_weight="1"     		 
+    		android:layout_height="50dip"
+    		android:layout_width="0dip"     		     		 
+    	/>  
+   </LinearLayout>
     <LinearLayout android:layout_height="fill_parent" android:layout_width="fill_parent" >
         <Button
             android:id="@+id/btMsg_Send" 

@@ -2,6 +2,7 @@ package de.msk.mylivetracker.client.android.mainview;
 
 import android.os.Bundle;
 import de.msk.mylivetracker.client.android.liontrack.R;
+import de.msk.mylivetracker.client.android.mainview.updater.MainDetailsViewUpdater;
 
 /**
  * classname: MainDetailsActivity
@@ -42,12 +43,6 @@ public class MainDetailsActivity extends AbstractMainActivity {
 	}
 
 	@Override
-	protected void onResume() {
-		super.onResume();
-		MainActivity.get().updateView();		
-	}	
-	
-	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		mainDetailsActivity = null;
@@ -61,5 +56,10 @@ public class MainDetailsActivity extends AbstractMainActivity {
 	@Override
 	public void onBackPressed() {
 		close();
+	}
+
+	@Override
+	public Class<? extends Runnable> getViewUpdater() {
+		return MainDetailsViewUpdater.class;
 	}
 }

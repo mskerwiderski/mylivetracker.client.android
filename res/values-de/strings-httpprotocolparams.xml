@@ -18,7 +18,7 @@
     <string name="txHttpProtocolParamsPrefs_ParamNameAppVersionName">vna</string>
     <string name="txHttpProtocolParamsPrefs_ParamValueExampleAppVersionName">1.5.0</string>
     <string name="txHttpProtocolParamsPrefs_ParamNameTrackId">tid</string>
-    <string name="txHttpProtocolParamsPrefs_ParamValueExampleTrackId">f2262811-2929-465c-b7e7-1dc06d9828b7</string>   
+    <string name="txHttpProtocolParamsPrefs_ParamValueExampleTrackId">f2262811&#8211;2929&#8211;465c&#8211;b7e7&#8211;1dc06d9828b7</string>   
     <string name="txHttpProtocolParamsPrefs_ParamNameTrackName">trn</string>
     <string name="txHttpProtocolParamsPrefs_ParamValueExampleTrackName">Mein Track</string>   
     <string name="txHttpProtocolParamsPrefs_ParamNamePhoneNumber">phn</string>
@@ -53,8 +53,12 @@
     <string name="txHttpProtocolParamsPrefs_ParamValueExampleRuntimeGross">2569006</string>
     <string name="txHttpProtocolParamsPrefs_ParamNameUsername">usr</string>
     <string name="txHttpProtocolParamsPrefs_ParamValueExampleUsername">max</string>
-    <string name="txHttpProtocolParamsPrefs_ParamNamePassword">pwd</string>
-    <string name="txHttpProtocolParamsPrefs_ParamValueExamplePassword">19042b94e448d328454842d16549f58c</string>
+    <string name="txHttpProtocolParamsPrefs_ParamNamePasswordPlainText">pwd</string>
+    <string name="txHttpProtocolParamsPrefs_ParamValueExamplePasswordPlainText">&lt;Passwort&gt;</string>
+    <string name="txHttpProtocolParamsPrefs_ParamNamePasswordMd5">pwdenc</string>
+    <string name="txHttpProtocolParamsPrefs_ParamValueExamplePasswordMd5">md5("&lt;IMEI&gt;:&lt;Benutzername&gt;:&lt;Passwort&gt;")</string>
+    <string name="txHttpProtocolParamsPrefs_ParamNamePasswordGpsGate">pwdgpsgate</string>
+    <string name="txHttpProtocolParamsPrefs_ParamValueExamplePasswordGpsGate">gpsgate(&lt;Passwort&gt;)</string>
     <string name="txHttpProtocolParamsPrefs_ParamNameHeartrateCurrent">hrt</string>
     <string name="txHttpProtocolParamsPrefs_ParamValueExampleHeartrateCurrent">145</string>
     <string name="txHttpProtocolParamsPrefs_ParamNameHeartrateMin">hrn</string>
@@ -64,7 +68,7 @@
     <string name="txHttpProtocolParamsPrefs_ParamNameHeartrateAvg">hra</string>
     <string name="txHttpProtocolParamsPrefs_ParamValueExampleHeartrateAvg">134</string>
     <string name="txHttpProtocolParamsPrefs_ParamNameSosId">sosid</string>
-    <string name="txHttpProtocolParamsPrefs_ParamValueExampleSosId">f4463821-2929-367c-a7f6-1dc07b9833b7</string>
+    <string name="txHttpProtocolParamsPrefs_ParamValueExampleSosId">f4463821&#8211;2929&#8211;367c&#8211;a7f6&#8211;1dc07b9833b7</string>
     <string name="txHttpProtocolParamsPrefs_ParamNameSosActivated">sos</string>
     <string name="txHttpProtocolParamsPrefs_ParamValueExampleSosActivated">on</string>
     <string name="txHttpProtocolParamsPrefs_ParamNameMessage">msg</string>
