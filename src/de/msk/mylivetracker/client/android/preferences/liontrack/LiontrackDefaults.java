@@ -29,6 +29,7 @@ public class LiontrackDefaults {
 		localizationPrefs.setDistanceTriggerInMeter(0);
 		localizationPrefs.setDistBtwTwoLocsForDistCalcRequiredInCMtr(1650);
 		localizationPrefs.setLocalizationMode(LocalizationPrefs.LocalizationMode.gps);
+		localizationPrefs.setMaxWaitingPeriodForGpsFixInMSecs(1800);
 		localizationPrefs.setTimeTriggerInSeconds(0);
 		
 		OtherPrefs otherPrefs = PrefsRegistry.get(OtherPrefs.class);
