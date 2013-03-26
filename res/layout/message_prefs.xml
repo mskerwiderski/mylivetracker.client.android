@@ -143,28 +143,7 @@
     <LinearLayout 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
-        android:paddingLeft="2dip"
-        android:paddingRight="2dip"
-    >
-	    <TextView 
-	        android:paddingTop="7dip"
-	        android:paddingLeft="5dip"
-	        android:paddingRight="5dip"
-	        android:textSize="16sp"
-	        android:text="@string/lbMsgPrefs_SendMessageMode"
-	        android:textColor="@color/colorText"
-	       	android:layout_height="wrap_content" 
-	       	android:layout_width="wrap_content" 
-	    />
-	    <Spinner
-	    	android:id="@+id/spMsgPrefs_SendMessageMode"
-	    	android:layout_height="40dip" 
-	    	android:layout_width="fill_parent"
-	    />
-    </LinearLayout>	
-	<LinearLayout 
-        android:layout_height="wrap_content" 
-        android:layout_width="fill_parent"
+        android:paddingTop="5dip"
         android:paddingLeft="2dip"
         android:paddingRight="2dip"
     >    
@@ -178,6 +157,13 @@
 	       	android:layout_height="wrap_content" 
 	       	android:layout_width="wrap_content"
 	    />
+    </LinearLayout>
+	<LinearLayout 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingLeft="2dip"
+        android:paddingRight="2dip"
+    >    
 	    <EditText
 	        android:id="@+id/etMsgPrefs_Receiver"
 	        android:layout_width="fill_parent"

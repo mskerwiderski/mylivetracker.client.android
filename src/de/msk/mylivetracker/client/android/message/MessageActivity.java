@@ -18,7 +18,6 @@ import de.msk.mylivetracker.client.android.liontrack.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.status.MessageInfo;
 import de.msk.mylivetracker.client.android.upload.Uploader;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
@@ -154,31 +153,8 @@ public class MessageActivity extends AbstractActivity {
 
 	private void updateSendMessageModeStati() {
 		MessagePrefs messagePrefs = PrefsRegistry.get(MessagePrefs.class);
-		ProtocolPrefs protocolPrefs = PrefsRegistry.get(ProtocolPrefs.class);
-		TextView tvMsg_StatusMessageToServer = (TextView)findViewById(R.id.tvMsg_StatusMessageToServer);
+		
         TextView tvMsg_StatusMessageAsSms = (TextView)findViewById(R.id.tvMsg_StatusMessageAsSms);
-        if (messagePrefs.isSendMessageModeToServerEnabled() &&
-    		protocolPrefs.getTransferProtocol().supportsSendMessage()) {
-        	tvMsg_StatusMessageToServer.setText(R.string.lbMsg_StatusEnabled);
-        	tvMsg_StatusMessageToServer.setTextColor(
-        		this.getResources().getColor(R.color.colorBlack));
-        	tvMsg_StatusMessageToServer.setBackgroundColor(
-        		this.getResources().getColor(R.color.colorGreen));
-        } else if (!messagePrefs.isSendMessageModeToServerEnabled() &&
-    		protocolPrefs.getTransferProtocol().supportsSendMessage()) {
-        	tvMsg_StatusMessageToServer.setText(R.string.lbMsg_StatusDisabled);
-        	tvMsg_StatusMessageToServer.setTextColor(
-        		this.getResources().getColor(R.color.colorWhite));
-        	tvMsg_StatusMessageToServer.setBackgroundColor(
-        		this.getResources().getColor(R.color.colorRed));
-        } else {
-        	tvMsg_StatusMessageToServer.setText(
-        		R.string.lbMsg_StatusToServerNotSupportedByProtocol);
-        	tvMsg_StatusMessageToServer.setTextColor(
-        		this.getResources().getColor(R.color.colorWhite));
-        	tvMsg_StatusMessageToServer.setBackgroundColor(
-        		this.getResources().getColor(R.color.colorRed));
-        }
         if (messagePrefs.isSendMessageModeAsSmsEnabled() &&
     		App.smsSupported()) {
         	tvMsg_StatusMessageAsSms.setText(R.string.lbMsg_StatusEnabled);

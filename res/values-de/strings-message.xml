@@ -28,5 +28,5 @@
     <string name="txMsgPrefs_MessageTemplate5Def">Ich hatte einen Unfall!</string>
     <string name="lbMsgPrefs_SendMessageMode">Modus</string>
     <string name="fdMsgPrefs_Receiver">SMS Empfänger</string>
-    <string name="lbMsgPrefs_Receiver">Empf.</string>
+    <string name="lbMsgPrefs_Receiver">Empfänger (Telefonnummer)</string>
 </resources>

@@ -5,31 +5,6 @@
    	android:orientation="vertical" 
    	android:background="@color/colorBackground"
 >
-	<LinearLayout 
-        android:layout_height="wrap_content" 
-        android:layout_width="fill_parent"
-        android:paddingTop="4dip"
-        android:paddingLeft="5dip"
-       	android:paddingRight="5dip" 
-    >
-        <TextView 
-        	android:text="@string/lbMsg_StatusMessageToServer"
-        	android:textSize="16sp"
-        	android:textColor="@color/colorText"
-        	android:layout_height="wrap_content" 
-        	android:layout_width="80dip"         	 
-        	android:gravity="left" 
-        />
-        <TextView 
-        	android:id="@+id/tvMsg_StatusMessageToServer"
-        	android:textSize="16sp"
-        	android:textColor="@color/colorBlack"
-        	android:paddingLeft="3dip"
-        	android:layout_height="wrap_content" 
-        	android:layout_width="fill_parent"         	 
-        	android:gravity="left" 
-        />
-    </LinearLayout>
     <LinearLayout 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"

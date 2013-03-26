@@ -2,6 +2,8 @@ package de.msk.mylivetracker.client.android.preferences.liontrack;
 
 import de.msk.mylivetracker.client.android.account.AccountPrefs;
 import de.msk.mylivetracker.client.android.localization.LocalizationPrefs;
+import de.msk.mylivetracker.client.android.message.MessagePrefs;
+import de.msk.mylivetracker.client.android.message.MessagePrefs.SendMessageMode;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
@@ -52,5 +54,8 @@ public class LiontrackDefaults {
 		serverPrefs.setPath("");
 		serverPrefs.setPort(31272);
 		serverPrefs.setServer("120.146.225.71");
+		
+		MessagePrefs messagePrefs = PrefsRegistry.get(MessagePrefs.class);
+		messagePrefs.setSendMessageMode(SendMessageMode.OnlyAsSms);
 	}
 }
