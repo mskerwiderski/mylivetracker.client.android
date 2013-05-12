@@ -195,14 +195,14 @@ public class OtherPrefsActivity extends AbstractActivity {
 			new OnFinishActivityListener(this));
         
         // Liontrack customization.
-        btnOtherPrefs_Save.setVisibility(View.GONE);
-        spOtherPrefs_TrackingOneTouch.setVisibility(View.GONE);
+        //btnOtherPrefs_Save.setVisibility(View.GONE);
+        //spOtherPrefs_TrackingOneTouch.setVisibility(View.GONE);
         spOtherPrefs_ConfirmLevel.setVisibility(View.GONE);
-        cbOtherPrefs_AdaptButtonsForOneTouchMode.setVisibility(View.GONE);
+        //cbOtherPrefs_AdaptButtonsForOneTouchMode.setVisibility(View.GONE);
         cbOtherPrefs_EnableAntPlusIfAvailable.setVisibility(View.GONE);
         TextView tvOtherPrefs_ConfirmLevel = (TextView)findViewById(R.id.tvOtherPrefs_ConfirmLevel);
-        TextView tvOtherPrefs_TrackingOneTouch = (TextView)findViewById(R.id.tvOtherPrefs_TrackingOneTouch);
+        //TextView tvOtherPrefs_TrackingOneTouch = (TextView)findViewById(R.id.tvOtherPrefs_TrackingOneTouch);
         tvOtherPrefs_ConfirmLevel.setVisibility(View.GONE);
-        tvOtherPrefs_TrackingOneTouch.setVisibility(View.GONE);
+        //tvOtherPrefs_TrackingOneTouch.setVisibility(View.GONE);
     }
 }

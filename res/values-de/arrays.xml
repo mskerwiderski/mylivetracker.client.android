@@ -21,8 +21,8 @@
     
     <string-array name="trackingOneTouchModes">
     	<item>nur Tracking</item>
-        <item>Tracking, Lokalisierung</item>
-        <item>Tracking, Lokalisierung, Puls</item>
+        <item>Tracking und Lokalisierung</item>
+        <!-- item>Tracking, Lokalisierung, Puls</item -->
     </string-array>
     
     <string-array name="uploadTimeTrigger">

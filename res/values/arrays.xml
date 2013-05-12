@@ -21,8 +21,8 @@
     
     <string-array name="trackingOneTouchModes">
     	<item>Tracking only</item>
-        <item>Tracking, Localization</item>
-        <item>Tracking, Localization, Heartrate</item>
+        <item>Tracking and Localization</item>
+        <!-- item>Tracking, Localization, Heartrate</item -->
     </string-array>
     
     <string-array name="bufferSizes">
