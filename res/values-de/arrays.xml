@@ -40,7 +40,7 @@
         <item>10 Minuten</item>
         <item>20 Minuten</item>
         <item>30 Minuten</item>
-        <item>1 Sunde</item>
+        <item>1 Stunde</item>
     </string-array>
     
     <string-array name="uploadDistanceTrigger">
