@@ -16,6 +16,7 @@
         <item>MLT TCP (verschlüsselt)</item>
         <item>Tk102 Emulator</item>
         <item>Tk5000 Emulator</item>
+        <item>PT350 Emulator</item>
         <item>HTTP (benutzerdefiniert)</item>        
     </string-array>
     

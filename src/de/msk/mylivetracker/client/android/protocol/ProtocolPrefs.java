@@ -26,6 +26,7 @@ public class ProtocolPrefs extends APrefs implements Serializable {
 		mltTcpEncrypted("MLT TCP (encrypted)", true, true),
 		tk102Emulator("Tk102 Emulator", false, true),
 		tk5000Emulator("Tk5000 Emulator", false, true),
+		pt350Emulator("PT350 Emulator", false, true),
 		httpUserDefined("HTTP (user defined)", true, true); 
 		
 		private String dsc;
