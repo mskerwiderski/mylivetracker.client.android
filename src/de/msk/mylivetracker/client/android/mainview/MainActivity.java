@@ -15,6 +15,7 @@ import de.msk.mylivetracker.client.android.antplus.AntPlusHardware;
 import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
 import de.msk.mylivetracker.client.android.auto.AutoService;
 import de.msk.mylivetracker.client.android.battery.BatteryReceiver;
+import de.msk.mylivetracker.client.android.checkpoint.CheckpointService;
 import de.msk.mylivetracker.client.android.localization.LocalizationService;
 import de.msk.mylivetracker.client.android.mainview.updater.MainViewUpdater;
 import de.msk.mylivetracker.client.android.mainview.updater.UpdaterUtils;
@@ -24,6 +25,8 @@ import de.msk.mylivetracker.client.android.phonestate.PhoneStateListener;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry.InitResult;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
+import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
+import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.TrackingMode;
 import de.msk.mylivetracker.client.android.upload.UploadService;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
 import de.msk.mylivetracker.client.android.util.service.AbstractService;
@@ -36,6 +39,7 @@ import de.msk.mylivetracker.client.android.util.service.AbstractService;
  * @since 1.5.0
  * 
  * history:
+ * 001	2014-01-24	checkpoint mode implemented.
  * 000	2012-12-29	revised for v1.5.x.
  * 
  */
@@ -107,19 +111,19 @@ public class MainActivity extends AbstractMainActivity {
 		
 		TextView tvAutoStartIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_AutoStartIndicator);
 		tvAutoStartIndicator.setOnClickListener(
-			new OnClickButtonAutoIndicatorListener());
+			new OnClickButtonTrackingModeIndicatorListener());
 		
 		TextView tvHeadAutoStartIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_HeadAutoStartIndicator);
 		tvHeadAutoStartIndicator.setOnClickListener(
-			new OnClickButtonAutoIndicatorListener());
+			new OnClickButtonTrackingModeIndicatorListener());
 		
-		TextView tvAutoModeIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_AutoModeIndicator);
-		tvAutoModeIndicator.setOnClickListener(
-			new OnClickButtonAutoIndicatorListener());
+		TextView tvTrackingModeIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_TrackingModeIndicator);
+		tvTrackingModeIndicator.setOnClickListener(
+			new OnClickButtonTrackingModeIndicatorListener());
 		
-		TextView tvHeadAutoModeIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_HeadAutoModeIndicator);
-		tvHeadAutoModeIndicator.setOnClickListener(
-			new OnClickButtonAutoIndicatorListener());
+		TextView tvHeadTrackingModeIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_HeadTrackingModeIndicator);
+		tvHeadTrackingModeIndicator.setOnClickListener(
+			new OnClickButtonTrackingModeIndicatorListener());
 		
 		TextView tvLocalizationIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_LocalizationIndicator);
 		tvLocalizationIndicator.setOnClickListener(
@@ -171,12 +175,14 @@ public class MainActivity extends AbstractMainActivity {
 		}
 		
 		AbstractService.startService(AutoService.class);
+		AbstractService.startService(CheckpointService.class);
 		AbstractService.startService(ViewUpdateService.class);
     }	
 	
 	@Override
 	protected void onDestroy() {
 		AbstractService.stopService(ViewUpdateService.class);
+		AbstractService.stopService(CheckpointService.class);
 		AbstractService.stopService(AutoService.class);		
 		AbstractService.stopService(UploadService.class);
 		AbstractService.stopService(LocalizationService.class);
@@ -232,6 +238,16 @@ public class MainActivity extends AbstractMainActivity {
 		btMain_LocationListenerOnOff.setChecked(
 			AbstractService.isServiceRunning(LocalizationService.class));
 		btMain_ConnectDisconnectAnt.setChecked(AntPlusManager.get().hasSensorListeners());
+		
+    	if (PrefsRegistry.get(TrackingModePrefs.class).getTrackingMode().equals(TrackingMode.Checkpoint)) {
+    		btMain_StartStopTrack.setText(R.string.btMain_Checkpoint);
+    		btMain_StartStopTrack.setTextOn(App.getResStr(R.string.btMain_Checkpoint));
+    		btMain_StartStopTrack.setTextOff(App.getResStr(R.string.btMain_Checkpoint));
+    	} else {
+    		btMain_StartStopTrack.setText(R.string.btMain_Tracking);
+    		btMain_StartStopTrack.setTextOn(App.getResStr(R.string.btMain_Tracking));
+    		btMain_StartStopTrack.setTextOff(App.getResStr(R.string.btMain_Tracking));
+    	}
 	}
 	
 	private void checkButtons(

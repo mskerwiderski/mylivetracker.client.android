@@ -15,8 +15,6 @@ import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.InfoActivity;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.account.AccountPrefsActivity;
-import de.msk.mylivetracker.client.android.auto.AutoPrefs;
-import de.msk.mylivetracker.client.android.auto.AutoPrefsActivity;
 import de.msk.mylivetracker.client.android.dropbox.DropboxConnectActivity;
 import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParamsPrefsActivity;
 import de.msk.mylivetracker.client.android.localization.LocalizationPrefsActivity;
@@ -29,6 +27,9 @@ import de.msk.mylivetracker.client.android.protocol.ProtocolPrefsActivity;
 import de.msk.mylivetracker.client.android.server.ServerPrefsActivity;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.trackexport.TrackExportActivity;
+import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
+import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.TrackingMode;
+import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefsActivity;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractProgressDialog;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
@@ -119,7 +120,7 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 	}
 	
 	public static boolean showStartStopInfoDialogIfInAutoMode() {
-		if (PrefsRegistry.get(AutoPrefs.class).isAutoModeEnabled()) {
+		if (PrefsRegistry.get(TrackingModePrefs.class).getTrackingMode().equals(TrackingMode.Auto)) {
 			SimpleInfoDialog.show(MainActivity.get(), 
 				R.string.txPrefs_InfoAutoModeEnabled);
 			return true;
@@ -217,8 +218,8 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 		case R.id.mnPrefsPinCodeQuery:
 			startActivityWithWarningDlgIfTrackRunning(PinCodeQueryPrefsActivity.class);
 			return true;
-		case R.id.mnPrefsAuto:
-			startActivityWithWarningDlgIfTrackRunning(AutoPrefsActivity.class);
+		case R.id.mnPrefsTrackingMode:
+			startActivityWithWarningDlgIfTrackRunning(TrackingModePrefsActivity.class);
 			return true;
 //		case R.id.mnPrefsRemoteAccess:
 //			startActivityWithWarningDlgIfTrackRunning(RemoteAccessPrefsActivity.class);

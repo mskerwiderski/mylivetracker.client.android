@@ -2,12 +2,13 @@
 <resources>
     <string name="tiMain">Track</string>    
     <string name="tvMain_AutoStartIndicator">A.Start</string>
-    <string name="tvMain_AutoModeIndicator">A.Mode</string>
+    <string name="tvMain_TrackingModeIndicator">Tr.Mode</string>
     <string name="tvMain_LocalizationIndicator">Pos</string>
     <string name="tvMain_WirelessLanIndicator">WLAN</string>
     <string name="tvMain_MobileNetworkIndicator">Data</string>
     <string name="btMain_LocationListener">Loc.</string>
-    <string name="btMain_Tracking">Tracking</string>    
+    <string name="btMain_Tracking">Tracking</string>
+    <string name="btMain_Checkpoint">Checkpoint</string>    
     <string name="btMain_ResetTrack">Reset</string>
     <string name="btMain_AntPlus">ANT+</string>
     <string name="btMain_SendSos">SOS</string>

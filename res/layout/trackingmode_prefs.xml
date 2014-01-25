@@ -5,12 +5,13 @@
     android:orientation="vertical" 
     android:background="@color/colorBackground"
 >
-    <LinearLayout
-        android:paddingTop="4dp" 
+ 	<LinearLayout
+        android:paddingTop="15dp" 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent">
         <TextView
-        	android:text="@string/lbHttpProtocolParamsPrefs_Info" 
+            android:textSize="16sp"
+        	android:text="@string/lbTrackingModePrefs_TrackingMode" 
         	android:textColor="@color/colorText"
         	android:layout_weight="1" 
         	android:layout_height="wrap_content" 
@@ -20,7 +21,69 @@
         	android:paddingRight="5dp"
         	android:paddingBottom="3dp"
         />
-    </LinearLayout>       
+    </LinearLayout>
+	<LinearLayout 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+       	android:paddingRight="5dp" 
+    >
+        <Spinner
+        	android:id="@+id/spTrackingModePrefs_TrackingMode"         	 
+        	android:layout_height="40dp"
+        	android:layout_width="fill_parent"
+        />    	    	        
+    </LinearLayout>
+    <LinearLayout
+        android:paddingTop="15dp" 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent">
+        <TextView
+            android:textSize="16sp"
+        	android:text="@string/txTrackingModePrefs_OptionsOnlyForTrackingAutoMode" 
+        	android:textColor="@color/colorText"
+        	android:layout_weight="1" 
+        	android:layout_height="wrap_content" 
+        	android:layout_width="0dp" 
+        	android:gravity="left"
+        	android:paddingLeft="5dp"
+        	android:paddingRight="5dp"
+        	android:paddingBottom="3dp"
+        />
+    </LinearLayout>
+	<LinearLayout 
+        android:paddingTop="4dp"
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingLeft="5dp"
+       	android:paddingRight="5dp" 
+    >
+    	<CheckBox
+		    android:id="@+id/cbTrackingModePrefs_AutoStart"
+		    android:layout_width="0dp"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1"
+		    android:textColor="@color/colorText"
+		    android:paddingLeft="42dp"
+		/>	
+    </LinearLayout>
+    <LinearLayout
+        android:paddingTop="15dp" 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent">
+        <TextView
+            android:textSize="16sp"
+        	android:text="@string/lbTrackingModePrefs_ResetTrackMode" 
+        	android:textColor="@color/colorText"
+        	android:layout_weight="1" 
+        	android:layout_height="wrap_content" 
+        	android:layout_width="0dp" 
+        	android:gravity="left"
+        	android:paddingLeft="5dp"
+        	android:paddingRight="5dp"
+        	android:paddingBottom="3dp"
+        />
+    </LinearLayout>
     <LinearLayout 
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content"
@@ -28,99 +91,17 @@
        	android:paddingRight="5dp" 
     >
         <Spinner
-        	android:id="@+id/spHttpProtocolParamsPrefs_Parameter"         	 
+        	android:id="@+id/spTrackingModePrefs_ResetTrackMode"         	 
         	android:layout_height="40dp"
         	android:layout_width="fill_parent"
         />    	    	        
     </LinearLayout>
-    <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent">
-        <TextView
-            android:textSize="16sp"
-        	android:text="@string/lbHttpProtocolParamsPrefs_ParameterExample" 
-        	android:textColor="@color/colorText"
-        	android:layout_weight="1" 
-        	android:layout_height="wrap_content" 
-        	android:layout_width="0dp" 
-        	android:gravity="left"
-        	android:paddingLeft="5dp"
-        	android:paddingRight="5dp"
-        	android:paddingBottom="3dp"
-        />
-    </LinearLayout>
-    <LinearLayout 
-        android:layout_height="wrap_content" 
-        android:layout_width="fill_parent"
-        android:paddingLeft="5dp"
-       	android:paddingRight="5dp" 
-    >
-		<EditText
-		    android:id="@+id/etHttpProtocolParamsPrefs_ParameterExample"
-		    android:layout_width="0dp"
-		    android:layout_height="wrap_content"
-		    android:layout_weight="1"
-		    android:inputType="none"
-		    android:singleLine="true" >
-        </EditText>
-    </LinearLayout>
-    <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent">
-        <TextView
-            android:textSize="16sp"
-        	android:text="@string/lbHttpProtocolParamsPrefs_ParameterName" 
-        	android:textColor="@color/colorText"
-        	android:layout_weight="1" 
-        	android:layout_height="wrap_content" 
-        	android:layout_width="0dp" 
-        	android:gravity="left"
-        	android:paddingLeft="5dp"
-        	android:paddingRight="5dp"
-        	android:paddingBottom="3dp"
-        />
-    </LinearLayout>
-    <LinearLayout 
-        android:layout_height="wrap_content" 
-        android:layout_width="fill_parent"
-        android:paddingLeft="5dp"
-       	android:paddingRight="5dp" 
-    >
-
-		<EditText
-		    android:id="@+id/etHttpProtocolParamsPrefs_ParameterName"
-		    android:layout_width="0dp"
-		    android:layout_height="wrap_content"
-		    android:layout_weight="1"
-		    android:inputType="text"
-		    android:singleLine="true" >
-
-            <requestFocus />
-        </EditText>
-    </LinearLayout>
-    <LinearLayout 
-        android:layout_height="wrap_content" 
-        android:layout_width="fill_parent"
-        android:paddingLeft="5dp"
-       	android:paddingRight="5dp" 
-    >
-    	<CheckBox
-		    android:id="@+id/cbHttpProtocolParamsPrefs_EnabledForUploading"
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:layout_weight="1"
-		    android:text="@string/lbHttpProtocolParamsPrefs_EnabledForUploading" 
-		    android:textColor="@color/colorText"
-		    android:paddingLeft="42dp"
-		/>	
-		<Button
-    		android:id="@+id/btHttpProtocolParamsPrefs_ResetToDefaults"
-    		android:text="@string/btHttpProtocolParamsPrefs_ResetToDefaults" 
-    		android:layout_gravity="bottom" 
-    		android:layout_weight="1"
-    		android:layout_height="wrap_content" 
-    		android:layout_width="fill_parent" 
-    	/>
-    </LinearLayout>
-	<LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent">        
+	<LinearLayout
+	    android:paddingTop="20dp" 
+	    android:layout_width="fill_parent" 
+	    android:layout_height="fill_parent">        
         <Button
-        	android:id="@+id/btHttpProtocolParamsPrefs_Save" 
+        	android:id="@+id/btTrackingModePrefs_Save" 
         	android:text="@string/btSave"
         	android:layout_height="50dp"
         	android:layout_width="fill_parent"
@@ -128,7 +109,7 @@
 			android:layout_gravity="bottom"
         />
         <Button
-        	android:id="@+id/btHttpProtocolParamsPrefs_Cancel"
+        	android:id="@+id/btTrackingModePrefs_Cancel"
         	android:text="@string/btCancel"
         	android:layout_height="50dp" 
         	android:layout_width="fill_parent"         	

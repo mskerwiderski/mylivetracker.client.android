@@ -4,9 +4,10 @@
     <string name="lbOtherPrefs_ConfirmLevel">Sicherheitsabfragen um ungewollte Aktionen zu verhindern</string>       
     <string name="lbOtherPrefs_TrackingOneTouch">Tracking One-Touch Modus</string> 
     <string name="lbOtherPrefs_EnableAntPlusIfAvailable">ANT+ aktivieren (falls verfügbar)</string>
+    <string name="lbOtherPrefs_SwitchToCheckpointMode">In den Checkpoint Modus wechseln</string>
     <string name="lbOtherPrefs_AdaptButtonsForOneTouchMode">Buttons für One-Touch Modus anpassen</string>
     <string name="btOtherPrefs_ResetOverallMileage">Km-Zähler zurücksetzen</string>
-    <string name="btOtherPrefs_ResetToFactoryDefaults">Auf Werkseinstellungen zurücksetzen</string>
+    <string name="btOtherPrefs_ResetToFactoryDefaults">Werkseinstellungen</string>
     <string name="txOtherPrefs_QuestionResetToFactoryDefaults">Wollen Sie wirklich auf die Werkseinstellungen zurücksetzen?</string>
     <string name="txOtherPrefs_QuestionResetOverallMileage">Wollen Sie den Kilometerzähler wirklich zurücksetzen?</string>
     <string name="txOtherPrefs_InfoResetToFactoryDefaultsDone">MyLiveTracker wurde auf die Werkseinstellungen zurückgesetzt! Bitte starten Sie die Anwendung neu!</string>

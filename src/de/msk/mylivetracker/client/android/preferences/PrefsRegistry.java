@@ -12,18 +12,17 @@ import com.google.gson.Gson;
 
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.account.AccountPrefs;
-import de.msk.mylivetracker.client.android.auto.AutoPrefs;
 import de.msk.mylivetracker.client.android.dropbox.DropboxPrefs;
 import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParamsPrefs;
 import de.msk.mylivetracker.client.android.localization.LocalizationPrefs;
 import de.msk.mylivetracker.client.android.message.MessagePrefs;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryPrefs;
-import de.msk.mylivetracker.client.android.preferences.prefsv144.PrefsV144Updater;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.remoteaccess.RemoteAccessPrefs;
 import de.msk.mylivetracker.client.android.server.ServerPrefs;
 import de.msk.mylivetracker.client.android.trackexport.TrackExportPrefs;
+import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
 import de.msk.mylivetracker.client.android.util.FileUtils;
 import de.msk.mylivetracker.client.android.util.FileUtils.PathType;
 import de.msk.mylivetracker.client.android.util.LogUtils;
@@ -56,7 +55,7 @@ public class PrefsRegistry {
 	
 	private static PrefsDsc[] prefsDscArr = new PrefsDsc[] {
 		new PrefsDsc(AccountPrefs.class, AccountPrefs.VERSION),	
-		new PrefsDsc(AutoPrefs.class, AutoPrefs.VERSION),
+		new PrefsDsc(TrackingModePrefs.class, TrackingModePrefs.VERSION),
 		new PrefsDsc(DropboxPrefs.class, DropboxPrefs.VERSION),
 		new PrefsDsc(HttpProtocolParamsPrefs.class, HttpProtocolParamsPrefs.VERSION),
 		new PrefsDsc(LocalizationPrefs.class, LocalizationPrefs.VERSION),
@@ -85,11 +84,6 @@ public class PrefsRegistry {
 			reset();
 			initResult = InitResult.PrefsCreated;
 			LogUtils.infoMethodState(PrefsRegistry.class, "init", "initResult", initResult);
-			if (PrefsV144Updater.run()) {
-				saveAllInternal();
-				initResult = InitResult.PrefsImportedFromV144;
-				LogUtils.infoMethodState(PrefsRegistry.class, "init", "initResult", initResult);
-			}
 		} else {
 			SharedPreferences sharedPrefs = App.getCtx().
 				getSharedPreferences(App.getPrefsFileName(false), 0);

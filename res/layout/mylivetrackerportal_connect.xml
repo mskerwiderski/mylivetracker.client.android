@@ -6,9 +6,9 @@
     android:background="@color/colorBackground"
 >
     <TextView 
-        android:paddingTop="10dip"
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip"
+        android:paddingTop="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:textSize="14sp"
         android:layout_height="wrap_content" 
         android:layout_width="wrap_content" 
@@ -16,9 +16,9 @@
         android:textColor="@color/colorText" 
     />
     <TextView
-        android:paddingTop="10dip"
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip" 
+        android:paddingTop="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" 
         android:textSize="16sp"
         android:layout_height="wrap_content" 
         android:layout_width="wrap_content" 
@@ -27,19 +27,19 @@
     />
     <LinearLayout 
         android:layout_width="fill_parent" 
-        android:layout_height="45dip"
-        android:padding="5dip">
+        android:layout_height="45dp"
+        android:padding="5dp">
 	    <EditText 
 	        android:layout_width="fill_parent" 
-	        android:layout_height="40dip" 
+	        android:layout_height="40dp" 
 	        android:text="" 
 	        android:id="@+id/etMyLiveTrackerPortalConnect_PortalUsername" 
 	        android:inputType="text" 
 	    />
     </LinearLayout>
     <TextView 
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:textSize="16sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" 
@@ -48,12 +48,12 @@
     />
     <LinearLayout 
         android:layout_width="fill_parent" 
-        android:layout_height="45dip"
-        android:padding="5dip">
+        android:layout_height="45dp"
+        android:padding="5dp">
 	    <EditText 
 	        android:layout_width="fill_parent" 
 	        android:text="" 
-	        android:layout_height="40dip" 
+	        android:layout_height="40dp" 
 	        android:id="@+id/etMyLiveTrackerPortalConnect_PortalPassword" 
 	        android:inputType="textPassword" 
 	    />
@@ -65,7 +65,7 @@
             android:layout_gravity="bottom" 
             android:layout_width="fill_parent" 
             android:layout_weight="1" 
-            android:layout_height="50dip" 
+            android:layout_height="50dp" 
             android:text="@string/btOk" 
             android:id="@+id/btMyLiveTrackerPortalConnect_Ok" 
         />
@@ -73,7 +73,7 @@
             android:layout_width="fill_parent" 
             android:layout_gravity="bottom" 
             android:layout_weight="1" 
-            android:layout_height="50dip" 
+            android:layout_height="50dp" 
             android:text="@string/btCancel" 
             android:id="@+id/btMyLiveTrackerPortalConnect_Cancel" 
         />

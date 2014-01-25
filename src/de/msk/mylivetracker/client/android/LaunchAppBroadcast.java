@@ -3,9 +3,10 @@ package de.msk.mylivetracker.client.android;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import de.msk.mylivetracker.client.android.auto.AutoPrefs;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
+import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
+import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.TrackingMode;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
 /**
@@ -24,8 +25,8 @@ public class LaunchAppBroadcast extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent unused) {
 		LogUtils.info(LaunchAppBroadcast.class, "onReceive called.");
-		AutoPrefs prefs = PrefsRegistry.get(AutoPrefs.class);
-		if (prefs.isAutoStartEnabled()) {
+		TrackingModePrefs prefs = PrefsRegistry.get(TrackingModePrefs.class);
+		if (prefs.getTrackingMode().equals(TrackingMode.Auto) && prefs.isAutoStartEnabled()) {
 			// start MainActivity.
 			Intent intent = new Intent(context, MainActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

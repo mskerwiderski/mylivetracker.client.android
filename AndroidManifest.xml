@@ -73,7 +73,7 @@
 			android:screenOrientation="portrait" />
 		<activity android:name="de.msk.mylivetracker.client.android.other.OtherPrefsActivity" 
 			android:screenOrientation="portrait" />
-		<activity android:name="de.msk.mylivetracker.client.android.auto.AutoPrefsActivity" 
+		<activity android:name="de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefsActivity" 
 			android:screenOrientation="portrait" />
 		<activity android:name="de.msk.mylivetracker.client.android.remoteaccess.RemoteAccessPrefsActivity" 
 			android:screenOrientation="portrait" />
@@ -105,6 +105,9 @@
 		    android:enabled="true"
 		    android:exported="false" />
 		<service android:name="de.msk.mylivetracker.client.android.auto.AutoService"
+		    android:enabled="true"
+		    android:exported="false" />
+		<service android:name="de.msk.mylivetracker.client.android.checkpoint.CheckpointService"
 		    android:enabled="true"
 		    android:exported="false" />
 		<service android:name="de.msk.mylivetracker.client.android.upload.UploadService"

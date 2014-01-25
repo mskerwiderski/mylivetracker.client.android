@@ -8,106 +8,122 @@
     <LinearLayout 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
-        android:paddingTop="4dip"
-        android:paddingLeft="5dip"
-       	android:paddingRight="5dip" 
+        android:paddingTop="4dp"
+        android:paddingLeft="5dp"
+       	android:paddingRight="5dp" 
     >
         <TextView
         	android:text="@string/lbOtherPrefs_ConfirmLevel" 
         	android:textColor="@color/colorText"
         	android:layout_weight="1" 
         	android:layout_height="wrap_content" 
-        	android:layout_width="0dip" 
+        	android:layout_width="0dp" 
         	android:gravity="left"
         />
     </LinearLayout>
     <LinearLayout 
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content"
-        android:paddingLeft="5dip"
-       	android:paddingRight="5dip" 
+        android:paddingLeft="5dp"
+       	android:paddingRight="5dp" 
     >
         <Spinner
         	android:id="@+id/spOtherPrefs_ConfirmLevel"         	 
-        	android:layout_height="40dip"
+        	android:layout_height="40dp"
         	android:layout_width="fill_parent" 
         />    	    	        
     </LinearLayout>
     <LinearLayout 
       	android:layout_height="wrap_content" 
       	android:layout_width="fill_parent"
-      	android:paddingLeft="5dip"
-       	android:paddingRight="5dip" 
+      	android:paddingLeft="5dp"
+       	android:paddingRight="5dp" 
     >
         <TextView
         	android:text="@string/lbOtherPrefs_TrackingOneTouch" 
         	android:textColor="@color/colorText"
         	android:layout_weight="1" 
         	android:layout_height="wrap_content" 
-        	android:layout_width="0dip" 
+        	android:layout_width="0dp" 
         	android:gravity="left"
         />
     </LinearLayout>
     <LinearLayout 
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content"
-        android:paddingLeft="5dip"
-       	android:paddingRight="5dip" 
+        android:paddingLeft="5dp"
+       	android:paddingRight="5dp" 
     >
         <Spinner
         	android:id="@+id/spOtherPrefs_TrackingOneTouch"         	 
-        	android:layout_height="40dip"
+        	android:layout_height="40dp"
         	android:layout_width="fill_parent" 
         />    	    	        
     </LinearLayout>
     <LinearLayout 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-       	android:paddingRight="5dip" 
+        android:paddingLeft="5dp"
+       	android:paddingRight="5dp" 
     >
 	    <CheckBox
 	    	android:id="@+id/cbOtherPrefs_AdaptButtonsForOneTouchMode"
 	    	android:text="@string/lbOtherPrefs_AdaptButtonsForOneTouchMode"
 	    	android:textColor="@color/colorText"
-	    	android:layout_height="40dip" 
+	    	android:layout_height="40dp" 
 	    	android:layout_width="wrap_content"
-	    	android:paddingLeft="42dip"
-	       	android:paddingRight="5dip" 
+	    	android:paddingLeft="42dp"
+	       	android:paddingRight="5dp" 
 	    />
 	</LinearLayout>
     <LinearLayout 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-       	android:paddingRight="5dip" 
+        android:paddingLeft="5dp"
+       	android:paddingRight="5dp" 
     >
 	    <CheckBox
 	    	android:id="@+id/cbOtherPrefs_EnableAntPlusIfAvailable"
 	    	android:text="@string/lbOtherPrefs_EnableAntPlusIfAvailable"
 	    	android:textColor="@color/colorText"
-	    	android:layout_height="40dip" 
+	    	android:layout_height="40dp" 
 	    	android:layout_width="wrap_content"
-	    	android:paddingLeft="42dip"
-	       	android:paddingRight="5dip" 
+	    	android:paddingLeft="42dp"
+	       	android:paddingRight="5dp" 
+	    />
+	</LinearLayout>
+	<LinearLayout 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingLeft="5dp"
+       	android:paddingRight="5dp" 
+    >
+	    <CheckBox
+	    	android:id="@+id/cbOtherPrefs_SwitchToCheckpointMode"
+	    	android:text="@string/lbOtherPrefs_SwitchToCheckpointMode"
+	    	android:textColor="@color/colorText"
+	    	android:layout_height="40dp" 
+	    	android:layout_width="wrap_content"
+	    	android:paddingLeft="42dp"
+	       	android:paddingRight="5dp" 
 	    />
 	</LinearLayout>
     <LinearLayout 
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content"
-        android:paddingTop="5dip">
+        android:paddingTop="5dp">
     	<Button 
     		android:id="@+id/btOtherPrefs_ResetOverallMileage"
     		android:text="@string/btOtherPrefs_ResetOverallMileage"
     		android:layout_gravity="bottom"
     		android:layout_weight="1"     		 
-    		android:layout_height="70dip"
-    		android:layout_width="0dip"     		     		 
+    		android:layout_height="50dp"
+    		android:layout_width="0dp"     		     		 
     	/>
     	<Button
     	    android:id="@+id/btOtherPrefs_ResetToFactoryDefaults"
-    	    android:layout_width="0dip"
-    	    android:layout_height="70dip"
+    	    android:layout_width="0dp"
+    	    android:layout_height="50dp"
     	    android:layout_weight="1"
     	    android:text="@string/btOtherPrefs_ResetToFactoryDefaults" />
 
@@ -115,14 +131,14 @@
     <LinearLayout 
 	    android:layout_height="fill_parent" 
 	    android:layout_width="fill_parent" 
-	    android:paddingTop="5dip"
+	    android:paddingTop="5dp"
 	>
         <Button
         	android:id="@+id/btOtherPrefs_Save"
         	android:text="@string/btSave"  
         	android:layout_gravity="bottom" 
         	android:layout_weight="1"
-        	android:layout_height="50dip" 
+        	android:layout_height="50dp" 
         	android:layout_width="fill_parent"         	 
         />
         <Button
@@ -130,7 +146,7 @@
         	android:text="@string/btCancel"
         	android:layout_gravity="bottom" 
         	android:layout_weight="1" 
-        	android:layout_height="50dip" 
+        	android:layout_height="50dp" 
         	android:layout_width="fill_parent" 
         />
     </LinearLayout>       

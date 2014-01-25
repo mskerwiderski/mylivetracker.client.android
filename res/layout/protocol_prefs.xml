@@ -6,25 +6,25 @@
     android:background="@color/colorBackground"
 >
     <LinearLayout
-        android:paddingTop="4dip" 
+        android:paddingTop="4dp" 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-       	android:paddingRight="5dip" 
+        android:paddingLeft="5dp"
+       	android:paddingRight="5dp" 
     >
 	    <TextView
-	        android:paddingLeft="5dip"
-	        android:paddingRight="5dip"
+	        android:paddingLeft="5dp"
+	        android:paddingRight="5dp"
 	        android:text="@string/lbProtocolPrefs_TransferProtocol"
 	        android:textColor="@color/colorText"
-	        android:layout_height="40dip"
+	        android:layout_height="40dp"
     		android:layout_width="fill_parent" 
     		android:layout_weight="3"
 	        android:gravity="center"
 	    />
 	    <Spinner
 	        android:id="@+id/spProtocolPrefs_TransferProtocol"
-	        android:layout_height="40dip"
+	        android:layout_height="40dp"
     		android:layout_width="fill_parent" 
     		android:layout_weight="1"
 	        android:nextFocusDown="@+id/etProtocolPrefs_ServerAddress" 
@@ -33,22 +33,22 @@
     <LinearLayout 
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-       	android:paddingRight="5dip" 
+        android:paddingLeft="5dp"
+       	android:paddingRight="5dp" 
     >
         <TextView
-            android:paddingLeft="5dip"
-	       	android:paddingRight="5dip" 
+            android:paddingLeft="5dp"
+	       	android:paddingRight="5dp" 
 	    	android:text="@string/lbProtocolPrefs_MaxPositionBufferSize"
 	    	android:textColor="@color/colorText"
-	    	android:layout_height="40dip"
+	    	android:layout_height="40dp"
     		android:layout_width="fill_parent" 
     		android:layout_weight="3"
 	        android:gravity="center"     	
 	    />
     	<Spinner
         	android:id="@+id/spProtocolPrefs_MaxPositionBufferSize"         	 
-        	android:layout_height="40dip"
+        	android:layout_height="40dp"
     		android:layout_width="fill_parent" 
     		android:layout_weight="1" 
         />		
@@ -85,26 +85,26 @@
     <LinearLayout 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-       	android:paddingRight="5dip" 
+        android:paddingLeft="5dp"
+       	android:paddingRight="5dp" 
     >
         <Spinner
 	    	android:id="@+id/spProtocolPrefs_TimeTriggerInSecs"
-	    	android:layout_height="40dip" 
+	    	android:layout_height="40dp" 
 	    	android:layout_width="fill_parent"
 	    	android:layout_weight="1" 
 	    	android:nextFocusDown="@+id/spProtocolPrefs_TriggerLogic" 
     	/>
         <Spinner
 	    	android:id="@+id/spProtocolPrefs_TriggerLogic"
-	    	android:layout_height="40dip" 
+	    	android:layout_height="40dp" 
 	    	android:layout_width="fill_parent"
 	    	android:layout_weight="1" 
 	    	android:nextFocusDown="@+id/spProtocolPrefs_DistanceTriggerInMtr" 
     	/>
         <Spinner
 	    	android:id="@+id/spProtocolPrefs_DistanceTriggerInMtr"
-	    	android:layout_height="40dip" 
+	    	android:layout_height="40dp" 
 	    	android:layout_width="fill_parent"
 	    	android:layout_weight="1" 
 	    	android:nextFocusDown="@+id/cbProtocolPrefs_CloseConnectionAfterEveryUpload" 
@@ -113,72 +113,72 @@
     <LinearLayout 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-       	android:paddingRight="5dip" 
+        android:paddingLeft="5dp"
+       	android:paddingRight="5dp" 
     >
 	    <CheckBox
 	    	android:id="@+id/cbProtocolPrefs_CloseConnectionAfterEveryUpload"
 	    	android:text="@string/lbProtocolPrefs_CloseConnectionAfterEveryUpload"
 	    	android:textColor="@color/colorText"
-	    	android:layout_height="40dip" 
+	    	android:layout_height="40dp" 
 	    	android:layout_width="wrap_content"
-	    	android:paddingLeft="42dip"
-	       	android:paddingRight="5dip" 
+	    	android:paddingLeft="42dp"
+	       	android:paddingRight="5dp" 
 	    />
 	</LinearLayout>
 	<LinearLayout 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-       	android:paddingRight="5dip" 
+        android:paddingLeft="5dp"
+       	android:paddingRight="5dp" 
     >    
 	    <CheckBox
 	    	android:id="@+id/cbProtocolPrefs_FinishEveryUploadWithALinefeed"
 	    	android:text="@string/lbProtocolPrefs_FinishEveryUploadWithALinefeed"   
 	    	android:textColor="@color/colorText" 	
-	    	android:layout_height="40dip" 
+	    	android:layout_height="40dp" 
 	    	android:layout_width="wrap_content"
-	    	android:paddingLeft="42dip"
-	       	android:paddingRight="5dip" 
+	    	android:paddingLeft="42dp"
+	       	android:paddingRight="5dp" 
 	    />
 	</LinearLayout>    
 	<LinearLayout 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-       	android:paddingRight="5dip" 
+        android:paddingLeft="5dp"
+       	android:paddingRight="5dp" 
     >    
 	    <CheckBox
 	    	android:id="@+id/cbProtocolPrefs_UploadPositionOnlyOnce"
 	    	android:text="@string/lbProtocolPrefs_UploadPositionsOnlyOnce"   
 	    	android:textColor="@color/colorText" 	
-	    	android:layout_height="40dip" 
+	    	android:layout_height="40dp" 
 	    	android:layout_width="wrap_content"
-	    	android:paddingLeft="42dip"
-	       	android:paddingRight="5dip" 
+	    	android:paddingLeft="42dp"
+	       	android:paddingRight="5dp" 
 	    />
 	</LinearLayout> 
     <LinearLayout 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-       	android:paddingRight="5dip" 
+        android:paddingLeft="5dp"
+       	android:paddingRight="5dp" 
     >
 	    <CheckBox
 	    	android:id="@+id/cbProtocolPrefs_LogTrackData"
 	    	android:text="@string/lbProtocolPrefs_LogTrackData"
 	    	android:textColor="@color/colorText"
-	    	android:layout_height="40dip" 
+	    	android:layout_height="40dp" 
 	    	android:layout_width="wrap_content"
-	    	android:paddingLeft="42dip"
-	       	android:paddingRight="5dip" 
+	    	android:paddingLeft="42dp"
+	       	android:paddingRight="5dp" 
 	    />
 	</LinearLayout>
     <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent">        
         <Button
         	android:id="@+id/btProtocolPrefs_Save" 
         	android:text="@string/btSave"
-        	android:layout_height="50dip"
+        	android:layout_height="50dp"
         	android:layout_width="fill_parent"
         	android:layout_weight="1" 
 			android:layout_gravity="bottom"
@@ -186,7 +186,7 @@
         <Button
         	android:id="@+id/btProtocolPrefs_Cancel"
         	android:text="@string/btCancel"
-        	android:layout_height="50dip" 
+        	android:layout_height="50dp" 
         	android:layout_width="fill_parent"         	
         	android:layout_weight="1" 
        	 	android:layout_gravity="bottom"

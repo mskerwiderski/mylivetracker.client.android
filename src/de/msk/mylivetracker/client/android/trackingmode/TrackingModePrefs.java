@@ -1,25 +1,33 @@
-package de.msk.mylivetracker.client.android.auto;
+package de.msk.mylivetracker.client.android.trackingmode;
 
 import java.io.Serializable;
 
 import de.msk.mylivetracker.client.android.preferences.APrefs;
 
 /**
- * classname: AutoPrefs
+ * classname: TrackingModePrefs
  * 
- * @author michael skerwiderski, (c)2012
+ * @author michael skerwiderski, (c)2014
  * @version 000
- * @since 1.5.0
+ * @since 1.6.0
  * 
  * history:
- * 000	2012-12-29	revised for v1.5.x.
+ * 000	2014-01-25	origin.
  * 
  */
-public class AutoPrefs extends APrefs implements Serializable {
+public class TrackingModePrefs extends APrefs implements Serializable {
 	
-	private static final long serialVersionUID = 5728625066768301415L;
-
+	private static final long serialVersionUID = -283740449679486205L;
+	
 	public static final int VERSION = 1;
+	
+	public enum TrackingMode {
+		Auto,
+		Checkpoint,
+		Standard;
+	}
+	
+	private TrackingMode trackingMode;
 	
 	public enum AutoModeResetTrackMode {
 		Never("never", 0),
@@ -45,7 +53,6 @@ public class AutoPrefs extends APrefs implements Serializable {
 		}
 	};
 	
-	private boolean autoModeEnabled;
 	private AutoModeResetTrackMode autoModeResetTrackMode;
 	private boolean autoStartEnabled;
 	
@@ -55,7 +62,7 @@ public class AutoPrefs extends APrefs implements Serializable {
 	}	
 	@Override
 	public void initWithDefaults() {
-		this.autoModeEnabled = false;
+		this.trackingMode = TrackingMode.Standard;
 		this.autoModeResetTrackMode = AutoModeResetTrackMode.NextDay;
 		this.autoStartEnabled = false;
 	}
@@ -64,11 +71,11 @@ public class AutoPrefs extends APrefs implements Serializable {
 		// noop.
 	}
 	
-	public boolean isAutoModeEnabled() {
-		return autoModeEnabled;
+	public TrackingMode getTrackingMode() {
+		return trackingMode;
 	}
-	public void setAutoModeEnabled(boolean autoModeEnabled) {
-		this.autoModeEnabled = autoModeEnabled;
+	public void setTrackingMode(TrackingMode trackingMode) {
+		this.trackingMode = trackingMode;
 	}
 	public AutoModeResetTrackMode getAutoModeResetTrackMode() {
 		return autoModeResetTrackMode;
@@ -86,8 +93,8 @@ public class AutoPrefs extends APrefs implements Serializable {
 
 	@Override
 	public String toString() {
-		return "AutoPrefs [autoModeEnabled=" + autoModeEnabled
-			+ ", autoModeResetTrackMode=" + autoModeResetTrackMode
-			+ ", autoStartEnabled=" + autoStartEnabled + "]";
+		return "TrackingModePrefs [trackingMode=" + trackingMode
+				+ ", autoModeResetTrackMode=" + autoModeResetTrackMode
+				+ ", autoStartEnabled=" + autoStartEnabled + "]";
 	}
 }

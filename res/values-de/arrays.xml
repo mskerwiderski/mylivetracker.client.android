@@ -76,7 +76,19 @@
         <item>hoch</item>               
     </string-array>
     
-    <string-array name="autoModeResetTrackMode">
+    <string-array name="trackingMode">
+    	<item>Auto</item>
+    	<item>Checkpoint</item>
+        <item>Standard</item>
+    </string-array>
+    
+    <string-array name="trackingModeAbbr">
+    	<item>Auto</item>
+    	<item>Chk.pt.</item>
+        <item>Std.</item>
+    </string-array>
+    
+    <string-array name="trackingModeAutoResetTrackMode">
     	<item>nie</item>
     	<item>am nächsten Tag</item>
         <item>nach 1 Stunde Pause</item>

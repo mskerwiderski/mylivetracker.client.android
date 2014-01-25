@@ -7,6 +7,8 @@ import org.apache.commons.lang.StringUtils;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
+import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
+import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.TrackingMode;
 import de.msk.mylivetracker.client.android.util.TrackUtils;
 import de.msk.mylivetracker.client.android.util.service.AbstractServiceThread;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;
@@ -31,12 +33,12 @@ public class AutoServiceThread extends AbstractServiceThread {
 
 	@Override
 	public void runSinglePass() throws InterruptedException {
-		AutoPrefs prefs = PrefsRegistry.get(AutoPrefs.class);
+		TrackingModePrefs prefs = PrefsRegistry.get(TrackingModePrefs.class);
 		TrackStatus status = TrackStatus.get();
 		BatteryStateInfo batteryStateInfo = BatteryStateInfo.get();
 		boolean battFullOrCharging = (batteryStateInfo == null) ? false :
 			batteryStateInfo.fullOrCharging();
-		if (prefs.isAutoModeEnabled()) {
+		if (prefs.getTrackingMode().equals(TrackingMode.Auto)) {
 			if (battFullOrCharging &&
 				!status.trackIsRunning()) {
 				if (trackIsExpired()) {
@@ -65,7 +67,7 @@ public class AutoServiceThread extends AbstractServiceThread {
 
 	private boolean trackIsExpired() {
 		boolean res = false;
-		AutoPrefs prefs = PrefsRegistry.get(AutoPrefs.class);
+		TrackingModePrefs prefs = PrefsRegistry.get(TrackingModePrefs.class);
 		Long lastStopSignal = TrackStatus.get().getLastAutoModeStopSignalReceived();
 		if (lastStopSignal == null) return res;
 		int resetTrackMode = prefs.getAutoModeResetTrackMode().getVal();
