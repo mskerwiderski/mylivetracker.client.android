@@ -3,12 +3,13 @@
     <!-- main -->
     <string name="tiMain">Track</string>    
     <string name="tvMain_AutoStartIndicator">A.Start</string>
-    <string name="tvMain_AutoModeIndicator">A.Mode</string>
+    <string name="tvMain_TrackingModeIndicator">Tr.Modus</string>
     <string name="tvMain_LocalizationIndicator">Pos</string>
     <string name="tvMain_WirelessLanIndicator">WLAN</string>
     <string name="tvMain_MobileNetworkIndicator">Daten</string>
     <string name="btMain_LocationListener">Lok.</string>
-    <string name="btMain_Tracking">Tracking</string>    
+    <string name="btMain_Tracking">Tracking</string>   
+    <string name="btMain_Checkpoint">Checkpt.</string> 
     <string name="btMain_ResetTrack">Reset</string>
     <string name="btMain_AntPlus">ANT+</string>
     <string name="btMain_SendSos">SOS</string>
@@ -26,6 +27,12 @@
     <string name="txMain_InfoStartTrackDone">Der Track wurde gestartet!</string>
     <string name="txMain_InfoStoppingTracking">Der Track wird gestoppt&#8230;</string>
     <string name="txMain_InfoStopTrackDone">Der Track wurde gestoppt!</string>
+    <string name="txMain_QuestionStartCheckpoint">Wollen Sie wirklich einen Checkpoint setzen?</string>
+    <string name="txMain_QuestionStopCheckpoint">Wollen Sie wirklich das Setzen des Checkpoints abbrechen?</string>
+    <string name="txMain_InfoStartingCheckpoint">Setzen des Checkpoints wird gestartet&#8230;</string>
+    <string name="txMain_InfoStartCheckpointDone">Setzen des Checkpoints wurde gestartet!</string>
+    <string name="txMain_InfoStoppingCheckpoint">Setzen des Checkpoints wird beendet/abgebrochen&#8230;</string>
+    <string name="txMain_InfoStopCheckpointDone">Setzen des Checkpoints wurde beendet/abgebrochen!</string>
     <string name="txMain_InfoStartingLocalization">Lokalisierung wird gestartet&#8230;</string>
     <string name="txMain_InfoStartLocalizationDone">Lokalisierung gestartet!</string>
     <string name="txMain_InfoStoppingLocalization">Lokalisierung wird gestoppt&#8230;</string>

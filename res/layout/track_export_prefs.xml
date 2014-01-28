@@ -6,9 +6,9 @@
     android:background="@color/colorBackground"
 >    
    <TextView
-        android:paddingTop="4dip"
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip" 
+        android:paddingTop="4dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" 
         android:textSize="18sp"
         android:layout_height="wrap_content" 
         android:layout_width="wrap_content" 
@@ -17,11 +17,11 @@
     />
    <LinearLayout 
         android:layout_width="fill_parent" 
-        android:layout_height="45dip"
-        android:padding="5dip">
+        android:layout_height="45dp"
+        android:padding="5dp">
     	<TextView
-	        android:paddingLeft="5dip"
-	        android:paddingRight="5dip" 
+	        android:paddingLeft="5dp"
+	        android:paddingRight="5dp" 
 	        android:textSize="16sp"
 	        android:layout_height="wrap_content" 
 	        android:layout_width="wrap_content" 
@@ -31,7 +31,7 @@
 	    <EditText
 	        android:id="@+id/etTrackExportPrefs_FilenamePrefix"
 	        android:layout_width="fill_parent"
-	        android:layout_height="40dip"
+	        android:layout_height="40dp"
 	        android:inputType="text"
 	        android:singleLine="true"
 	        android:text="" />
@@ -39,71 +39,71 @@
     <LinearLayout 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-       	android:paddingRight="5dip" 
+        android:paddingLeft="5dp"
+       	android:paddingRight="5dp" 
     >
 	    <CheckBox
 	    	android:id="@+id/cbTrackExportPrefs_FilenameAppendTrackName"
 	    	android:text="@string/lbTrackExportPrefs_FilenameAppendTrackName"
 	    	android:textColor="@color/colorText"
-	    	android:layout_height="40dip" 
+	    	android:layout_height="40dp" 
 	    	android:layout_width="wrap_content"
-	    	android:paddingLeft="42dip"
-	       	android:paddingRight="5dip" 
+	    	android:paddingLeft="42dp"
+	       	android:paddingRight="5dp" 
 	    />
 	</LinearLayout>
 	<LinearLayout 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-       	android:paddingRight="5dip" 
+        android:paddingLeft="5dp"
+       	android:paddingRight="5dp" 
     >
 	    <CheckBox
 	    	android:id="@+id/cbTrackExportPrefs_FilenameAppendTimestampOfFirstPosition"
 	    	android:text="@string/lbTrackExportPrefs_FilenameAppendTimestampOfFirstPosition"
 	    	android:textColor="@color/colorText"
-	    	android:layout_height="40dip" 
+	    	android:layout_height="40dp" 
 	    	android:layout_width="wrap_content"
-	    	android:paddingLeft="42dip"
-	       	android:paddingRight="5dip" 
+	    	android:paddingLeft="42dp"
+	       	android:paddingRight="5dp" 
 	    />
 	</LinearLayout>
 	<LinearLayout 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-       	android:paddingRight="5dip" 
+        android:paddingLeft="5dp"
+       	android:paddingRight="5dp" 
     >
 	    <CheckBox
 	    	android:id="@+id/cbTrackExportPrefs_FilenameAppendTimestampOfLastPosition"
 	    	android:text="@string/lbTrackExportPrefs_FilenameAppendTimestampOfLastPosition"
 	    	android:textColor="@color/colorText"
-	    	android:layout_height="40dip" 
+	    	android:layout_height="40dp" 
 	    	android:layout_width="wrap_content"
-	    	android:paddingLeft="42dip"
-	       	android:paddingRight="5dip" 
+	    	android:paddingLeft="42dp"
+	       	android:paddingRight="5dp" 
 	    />
 	</LinearLayout>
 	<LinearLayout 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-       	android:paddingRight="5dip" 
+        android:paddingLeft="5dp"
+       	android:paddingRight="5dp" 
     >
 	    <CheckBox
 	    	android:id="@+id/cbTrackExportPrefs_FilenameAppendSequenceNumber"
 	    	android:text="@string/lbTrackExportPrefs_FilenameAppendSequenceNumber"
 	    	android:textColor="@color/colorText"
-	    	android:layout_height="40dip" 
+	    	android:layout_height="40dp" 
 	    	android:layout_width="wrap_content"
-	    	android:paddingLeft="42dip"
-	       	android:paddingRight="5dip" 
+	    	android:paddingLeft="42dp"
+	       	android:paddingRight="5dp" 
 	    />
 	</LinearLayout>
 	<TextView
-        android:paddingTop="5dip"
-        android:paddingLeft="10dip"
-        android:paddingRight="5dip" 
+        android:paddingTop="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="5dp" 
         android:textSize="16sp"
         android:layout_height="wrap_content" 
         android:layout_width="wrap_content" 
@@ -112,12 +112,12 @@
     />
 	<LinearLayout 
         android:layout_width="fill_parent" 
-        android:layout_height="45dip"
-        android:padding="5dip">
+        android:layout_height="45dp"
+        android:padding="5dp">
 	    <EditText
 	        android:id="@+id/etTrackExportPrefs_FilenameNextSequenceNumber"
 	        android:layout_width="fill_parent"
-	        android:layout_height="40dip"
+	        android:layout_height="40dp"
 	        android:layout_weight="1"
 	        android:inputType="number"
 	        android:singleLine="true"
@@ -127,7 +127,7 @@
 	    <Button
 	        android:id="@+id/btTrackExportPrefs_FilenameResetSequenceNumber"
 	        android:layout_width="fill_parent"
-	        android:layout_height="40dip"
+	        android:layout_height="40dp"
 	        android:layout_weight="1"
 	        android:text="@string/btTrackExportPrefs_FilenameResetSequenceNumber" 
 	    />
@@ -136,7 +136,7 @@
         <Button
         	android:id="@+id/btTrackExportPrefs_Save" 
         	android:text="@string/btSave"
-        	android:layout_height="50dip"
+        	android:layout_height="50dp"
         	android:layout_width="fill_parent"
         	android:layout_weight="1" 
 			android:layout_gravity="bottom"
@@ -144,7 +144,7 @@
         <Button
         	android:id="@+id/btTrackExportPrefs_Cancel"
         	android:text="@string/btCancel"
-        	android:layout_height="50dip" 
+        	android:layout_height="50dp" 
         	android:layout_width="fill_parent"         	
         	android:layout_weight="1" 
        	 	android:layout_gravity="bottom"

@@ -4,8 +4,8 @@ import org.apache.commons.lang.StringUtils;
 
 import android.content.res.Resources;
 import android.widget.TextView;
+import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
-import de.msk.mylivetracker.client.android.auto.AutoPrefs;
 import de.msk.mylivetracker.client.android.liontrack.R;
 import de.msk.mylivetracker.client.android.localization.LocalizationPrefs;
 import de.msk.mylivetracker.client.android.localization.LocalizationService;
@@ -16,6 +16,8 @@ import de.msk.mylivetracker.client.android.status.LocationInfo;
 import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.status.UploadInfo;
+import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
+import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.TrackingMode;
 import de.msk.mylivetracker.client.android.util.ConnectivityUtils;
 import de.msk.mylivetracker.client.android.util.FormatUtils.Unit;
 import de.msk.mylivetracker.client.android.util.LocationManagerUtils;
@@ -82,7 +84,7 @@ public class MainViewUpdater extends AViewUpdater {
 	
 	@Override
 	public void updateView() {
-		AutoPrefs preferences = PrefsRegistry.get(AutoPrefs.class);
+		TrackingModePrefs preferences = PrefsRegistry.get(TrackingModePrefs.class);
 		TrackStatus status = TrackStatus.get();
 		
 		MainActivity mainActivity = MainActivity.get();					
@@ -100,13 +102,12 @@ public class MainViewUpdater extends AViewUpdater {
 				res.getText(R.string.tvOff).toString()), 
 			preferences.isAutoStartEnabled() ? IndicatorState.Ok : IndicatorState.Off);
 				
-		// auto mode indicator
-		TextView tvAutoModeIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_AutoModeIndicator);
-		setIndicatorTextAndColors(tvAutoModeIndicator, 
-			(preferences.isAutoModeEnabled() ? 
-				res.getText(R.string.tvOn).toString() : 
-				res.getText(R.string.tvOff).toString()), 
-			preferences.isAutoModeEnabled() ? IndicatorState.Ok : IndicatorState.Off);
+		// tracking mode indicator
+		TextView tvAutoModeIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_TrackingModeIndicator);
+		setIndicatorTextAndColors(tvAutoModeIndicator,
+			App.getCtx().getResources().getStringArray(R.array.trackingModeAbbr)[preferences.getTrackingMode().ordinal()],	
+			preferences.getTrackingMode().equals(TrackingMode.Auto) ? 
+				IndicatorState.Ok : IndicatorState.Off);
 		
 		// gps indicator			
 		TextView tvLocalizationIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_LocalizationIndicator);

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tiTrackingModePrefs">Einstellungen Tracking Modus</string>
+    <string name="fdTrackingModePrefs_TrackingMode">Tracking Modus</string>
+    <string name="lbTrackingModePrefs_TrackingMode">Tracking Modus</string>
+    <string name="txTrackingModePrefs_OptionsOnlyForTrackingCheckpointMode">Folgende Optionen sind nur im Tracking Modus \'Checkpoint\' relevant:</string>
+    <string name="fdTrackingModePrefs_CheckpointMessage">Checkpoint Nachricht</string>
+	<string name="lbTrackingModePrefs_CheckpointMessage">Checkpoint Nachricht</string>
+    <string name="txTrackingModePrefs_OptionsOnlyForTrackingAutoMode">Folgende Optionen sind nur im Tracking Modus \'Auto\' relevant:</string>
+   	<string name="fdTrackingModePrefs_ResetTrackMode">Track-zurücksetzen Modus</string>
+	<string name="lbTrackingModePrefs_ResetTrackMode">Track-zurücksetzen Modus</string>
+	<string name="fdTrackingModePrefs_AutoStart">Auto Start</string>
+    <string name="lbTrackingModePrefs_AutoStart">%1$s automatisch nach einem Reboot starten.</string>
+</resources>

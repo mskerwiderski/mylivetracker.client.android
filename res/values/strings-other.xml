@@ -4,6 +4,7 @@
     <string name="lbOtherPrefs_ConfirmLevel">Confirmation level to prevent unintended actions</string>  
     <string name="lbOtherPrefs_TrackingOneTouch">Tracking one-touch mode</string>
     <string name="lbOtherPrefs_EnableAntPlusIfAvailable">Enable ANT+ (if available)</string>
+    <string name="lbOtherPrefs_SwitchToCheckpointMode">Switch to checkpoint mode</string>
     <string name="lbOtherPrefs_AdaptButtonsForOneTouchMode">Adapt buttons for one-touch mode</string>
 	<string name="btOtherPrefs_ResetOverallMileage">Reset mileage</string>
     <string name="btOtherPrefs_ResetToFactoryDefaults">Factory defaults</string>

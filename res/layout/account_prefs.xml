@@ -6,9 +6,9 @@
     android:background="@color/colorBackground"
 >
     <TextView 
-        android:paddingTop="4dip"
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip"
+        android:paddingTop="4dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:textSize="16sp"
         android:text="@string/lbAccountPrefs_DeviceId"
         android:textColor="@color/colorText"
@@ -18,22 +18,22 @@
 	<LinearLayout 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
     >    
 
 	    <EditText
 	        android:id="@+id/etAccountPrefs_DeviceId"
 	        android:layout_width="fill_parent"
-	        android:layout_height="40dip"
+	        android:layout_height="40dp"
 	        android:inputType="none"
 	        android:singleLine="true"
 	        android:text="" />
 
     </LinearLayout>
     <TextView
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:textSize="16sp"
         android:text="@string/lbAccountPrefs_Username" 
         android:textColor="@color/colorText"
@@ -43,22 +43,22 @@
 	<LinearLayout 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
     >    
 
 	    <EditText
 	        android:id="@+id/etAccountPrefs_Username"
 	        android:layout_width="fill_parent"
-	        android:layout_height="40dip"
+	        android:layout_height="40dp"
 	        android:inputType="text"
 	        android:singleLine="true"
 	        android:text="" />
 
     </LinearLayout>
     <TextView
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:textSize="16sp"
         android:text="@string/lbAccountPrefs_Password"
         android:textColor="@color/colorText"
@@ -68,22 +68,22 @@
 	<LinearLayout 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
     >    
 
 	    <EditText
 	        android:id="@+id/etAccountPrefs_Password"
 	        android:layout_width="fill_parent"
-	        android:layout_height="40dip"
+	        android:layout_height="40dp"
 	        android:inputType="textPassword"
 	        android:singleLine="true"
 	        android:text="" />
 
     </LinearLayout>
     <TextView 
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:textSize="16sp"
         android:id="@+id/tvAccountPrefs_TrackName"
         android:text="@string/lbAccountPrefs_TrackName"
@@ -94,21 +94,21 @@
 	<LinearLayout 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
     >    
 	    <EditText
 	        android:id="@+id/etAccountPrefs_TrackName"
 	        android:layout_width="fill_parent"
-	        android:layout_height="40dip"
+	        android:layout_height="40dp"
 	        android:inputType="text"
 	        android:singleLine="true"
 	        android:text="" />
 
 	</LinearLayout>    
     <TextView
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:textSize="16sp"
     	android:text="@string/lbAccountPrefs_PhoneNumber" 
     	android:textColor="@color/colorText"
@@ -118,14 +118,14 @@
 	<LinearLayout 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
     >    
 
 		<EditText
 		    android:id="@+id/etAccountPrefs_PhoneNumber"
 		    android:layout_width="fill_parent"
-		    android:layout_height="40dip"
+		    android:layout_height="40dp"
 		    android:inputType="phone"
 		    android:singleLine="true"
 		    android:text="" />
@@ -138,7 +138,7 @@
             android:layout_gravity="bottom" 
             android:layout_width="fill_parent" 
             android:layout_weight="1" 
-            android:layout_height="50dip" 
+            android:layout_height="50dp" 
             android:text="@string/btSave" 
             android:id="@+id/btAccountPrefs_Save" 
         />
@@ -146,7 +146,7 @@
             android:layout_width="fill_parent" 
             android:layout_gravity="bottom" 
             android:layout_weight="1" 
-            android:layout_height="50dip" 
+            android:layout_height="50dp" 
             android:text="@string/btCancel" 
             android:id="@+id/btAccountPrefs_Cancel" 
         />

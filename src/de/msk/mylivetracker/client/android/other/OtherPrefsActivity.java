@@ -171,7 +171,7 @@ public class OtherPrefsActivity extends AbstractActivity {
         } else {
 	        cbOtherPrefs_EnableAntPlusIfAvailable.setChecked(prefs.isAntPlusEnabledIfAvailable());
         }
-        
+     
         Button btOtherPrefs_ResetToFactoryDefaults = (Button)findViewById(R.id.btOtherPrefs_ResetToFactoryDefaults);
         Button btOtherPrefs_ResetOverallMileage = (Button)findViewById(R.id.btOtherPrefs_ResetOverallMileage);
         Button btnOtherPrefs_Save = (Button) findViewById(R.id.btOtherPrefs_Save);

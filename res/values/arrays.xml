@@ -16,6 +16,7 @@
         <item>MLT TCP (encrypted)</item>
         <item>Tk102 Emulator</item>
         <item>Tk5000 Emulator</item>
+        <item>PT350 Emulator</item>
         <item>HTTP (user defined)</item>        
     </string-array>
     
@@ -75,7 +76,19 @@
         <item>high</item>               
     </string-array>
     
-   	<string-array name="autoModeResetTrackMode">
+    <string-array name="trackingMode">
+    	<item>Auto</item>
+    	<item>Checkpoint</item>
+        <item>Standard</item>
+    </string-array>
+    
+    <string-array name="trackingModeAbbr">
+    	<item>Auto</item>
+    	<item>Chk.pt.</item>
+        <item>Std.</item>
+    </string-array>
+    
+   	<string-array name="trackingModeAutoResetTrackMode">
     	<item>never</item>
     	<item>the next day</item>
         <item>after 1 hour pause</item>

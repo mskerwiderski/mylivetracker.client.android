@@ -14,6 +14,7 @@ import de.msk.mylivetracker.client.android.status.LocationInfo;
 import de.msk.mylivetracker.client.android.status.MessageInfo;
 import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
 import de.msk.mylivetracker.client.android.status.UploadInfo;
+import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
 import de.msk.mylivetracker.client.android.upload.AbstractUploader.UploadResult;
 import de.msk.mylivetracker.client.android.upload.protocol.Protocols;
 
@@ -21,10 +22,11 @@ import de.msk.mylivetracker.client.android.upload.protocol.Protocols;
  * classname: Uploader
  * 
  * @author michael skerwiderski, (c)2012
- * @version 000
+ * @version 001
  * @since 1.5.0
  * 
  * history:
+ * 001	2014-01-03  createUploader extended for gatorPt350.
  * 000	2012-12-29	revised for v1.5.x.
  * 
  */
@@ -48,6 +50,8 @@ public class Uploader {
 			uploader = new TcpUploader(Protocols.createProtocolXexunTk102(), false);
 		} else if (transferProtocol.equals(TransferProtocol.tk5000Emulator)) {
 			uploader = new TcpUploader(Protocols.createProtocolIncutexTk5000(), false);
+		} else if (transferProtocol.equals(TransferProtocol.pt350Emulator)) {
+			uploader = new TcpUploader(Protocols.createProtocolGatorPt350(), false);
 		} else {
 			throw new RuntimeException();
 		}
@@ -121,6 +125,13 @@ public class Uploader {
 		
 		if (lastInfoTimestamp == null) {
 			lastInfoTimestamp = new Date();
+		}
+		
+		if (TrackingModePrefs.isCheckpoint() && 
+			TrackingModePrefs.hasCheckpointMessage() &&
+			messageInfo == null) {
+			MessageInfo.update(PrefsRegistry.get(TrackingModePrefs.class).getCheckpointMessage());
+			messageInfo = MessageInfo.get();
 		}
 		
 		UploadResult uploadResult = 

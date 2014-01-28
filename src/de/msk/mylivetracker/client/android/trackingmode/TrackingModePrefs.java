@@ -1,25 +1,36 @@
-package de.msk.mylivetracker.client.android.auto;
+package de.msk.mylivetracker.client.android.trackingmode;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang.StringUtils;
+
 import de.msk.mylivetracker.client.android.preferences.APrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 
 /**
- * classname: AutoPrefs
+ * classname: TrackingModePrefs
  * 
- * @author michael skerwiderski, (c)2012
+ * @author michael skerwiderski, (c)2014
  * @version 000
- * @since 1.5.0
+ * @since 1.6.0
  * 
  * history:
- * 000	2012-12-29	revised for v1.5.x.
+ * 000	2014-01-25	origin.
  * 
  */
-public class AutoPrefs extends APrefs implements Serializable {
+public class TrackingModePrefs extends APrefs implements Serializable {
 	
-	private static final long serialVersionUID = 5728625066768301415L;
-
+	private static final long serialVersionUID = -283740449679486205L;
+	
 	public static final int VERSION = 1;
+	
+	public enum TrackingMode {
+		Auto,
+		Checkpoint,
+		Standard;
+	}
+	
+	private TrackingMode trackingMode;
 	
 	public enum AutoModeResetTrackMode {
 		Never("never", 0),
@@ -45,7 +56,10 @@ public class AutoPrefs extends APrefs implements Serializable {
 		}
 	};
 	
-	private boolean autoModeEnabled;
+	// only for trackingmode checkpoint.
+	private String checkpointMessage;
+	
+	// only for trackingmode auto.
 	private AutoModeResetTrackMode autoModeResetTrackMode;
 	private boolean autoStartEnabled;
 	
@@ -55,7 +69,8 @@ public class AutoPrefs extends APrefs implements Serializable {
 	}	
 	@Override
 	public void initWithDefaults() {
-		this.autoModeEnabled = false;
+		this.trackingMode = TrackingMode.Standard;
+		this.checkpointMessage = null;
 		this.autoModeResetTrackMode = AutoModeResetTrackMode.NextDay;
 		this.autoStartEnabled = false;
 	}
@@ -63,12 +78,25 @@ public class AutoPrefs extends APrefs implements Serializable {
 	public void initWithValuesOfOldVersion(int foundVersion, String foundGsonStr) {
 		// noop.
 	}
-	
-	public boolean isAutoModeEnabled() {
-		return autoModeEnabled;
+	public static boolean isCheckpoint() {
+		return PrefsRegistry.get(TrackingModePrefs.class).
+			getTrackingMode().equals(TrackingMode.Checkpoint);
 	}
-	public void setAutoModeEnabled(boolean autoModeEnabled) {
-		this.autoModeEnabled = autoModeEnabled;
+	public static boolean hasCheckpointMessage() {
+		return !StringUtils.isEmpty(PrefsRegistry.get(TrackingModePrefs.class).
+			getCheckpointMessage());
+	}
+	public TrackingMode getTrackingMode() {
+		return trackingMode;
+	}
+	public void setTrackingMode(TrackingMode trackingMode) {
+		this.trackingMode = trackingMode;
+	}
+	public String getCheckpointMessage() {
+		return checkpointMessage;
+	}
+	public void setCheckpointMessage(String checkpointMessage) {
+		this.checkpointMessage = checkpointMessage;
 	}
 	public AutoModeResetTrackMode getAutoModeResetTrackMode() {
 		return autoModeResetTrackMode;
@@ -83,10 +111,10 @@ public class AutoPrefs extends APrefs implements Serializable {
 	public void setAutoStartEnabled(boolean autoStartEnabled) {
 		this.autoStartEnabled = autoStartEnabled;
 	}
-
 	@Override
 	public String toString() {
-		return "AutoPrefs [autoModeEnabled=" + autoModeEnabled
+		return "TrackingModePrefs [trackingMode=" + trackingMode
+			+ ", checkpointMessage=" + checkpointMessage
 			+ ", autoModeResetTrackMode=" + autoModeResetTrackMode
 			+ ", autoStartEnabled=" + autoStartEnabled + "]";
 	}

@@ -8,23 +8,23 @@
     <LinearLayout 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
-        android:paddingTop="4dip"
-        android:paddingLeft="5dip"
-       	android:paddingRight="5dip" 
+        android:paddingTop="4dp"
+        android:paddingLeft="5dp"
+       	android:paddingRight="5dp" 
     >
     	<TextView
-	        android:paddingLeft="5dip"
-	        android:paddingRight="5dip"
+	        android:paddingLeft="5dp"
+	        android:paddingRight="5dp"
 	        android:text="@string/lbLocalizationPrefs_Provider"
 	        android:textColor="@color/colorText"
-	        android:layout_height="40dip"
+	        android:layout_height="40dp"
     		android:layout_width="fill_parent" 
     		android:layout_weight="4"
 	        android:gravity="center"
 	    />
     	<Spinner
 	    	android:id="@+id/spLocalizationPrefs_LocalizationMode"
-	    	android:layout_height="40dip"
+	    	android:layout_height="40dp"
     		android:layout_width="fill_parent" 
     		android:layout_weight="1"
 	    	android:nextFocusDown="@+id/etLocalizationPrefs_TimeTriggerInSecs" 
@@ -33,8 +33,8 @@
     <LinearLayout 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-       	android:paddingRight="5dip"
+        android:paddingLeft="5dp"
+       	android:paddingRight="5dp"
     >
         <TextView 
             android:text="@string/lbLocalizationPrefs_TimeTriggerInSecs" 
@@ -56,14 +56,14 @@
     <LinearLayout 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-       	android:paddingRight="5dip"
+        android:paddingLeft="5dp"
+       	android:paddingRight="5dp"
     >
         <EditText 
             android:id="@+id/etLocalizationPrefs_TimeTriggerInSecs"
             android:inputType="number"
             android:text=""
-            android:layout_height="40dip"
+            android:layout_height="40dp"
             android:layout_width="wrap_content"
             android:layout_weight="1" 
             android:nextFocusDown="@+id/etLocalizationPrefs_DistanceTriggerInMtr"
@@ -72,7 +72,7 @@
             android:id="@+id/etLocalizationPrefs_DistanceTriggerInMtr"
             android:inputType="number"
             android:text=""
-            android:layout_height="40dip" 
+            android:layout_height="40dp" 
             android:layout_width="wrap_content"
             android:layout_weight="1"
             android:nextFocusDown="@+id/etLocalizationPrefs_LocationAccuracyRequiredInMtr" 
@@ -81,8 +81,8 @@
     <LinearLayout 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-       	android:paddingRight="5dip"
+        android:paddingLeft="5dp"
+       	android:paddingRight="5dp"
     >
         <TextView
             android:layout_width="wrap_content"
@@ -94,14 +94,14 @@
     <LinearLayout 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
-        android:paddingTop="5dip"
-        android:paddingLeft="5dip"
-       	android:paddingRight="5dip"
+        android:paddingTop="5dp"
+        android:paddingLeft="5dp"
+       	android:paddingRight="5dp"
         >
     	<TextView 
     	    android:text="@string/lbLocalizationPrefs_LocationAccuracyRequiredInMtr"
     	    android:textColor="@color/colorText"
-    	    android:layout_height="60dip"  
+    	    android:layout_height="60dp"  
     	    android:layout_width="0dp" 
     	    android:layout_weight="1"
     	    android:layout_gravity="center_vertical" 
@@ -109,21 +109,21 @@
     	<TextView 
     	    android:text="@string/lbLocalizationPrefs_DistBtwTwoLocsForDistCalcRequiredInCMtr"
     	    android:textColor="@color/colorText"
-    	    android:layout_height="60dip"  
+    	    android:layout_height="60dp"  
     	    android:layout_width="0dp" 
     	    android:layout_weight="1"
     	    android:layout_gravity="center_vertical" 
     	/>
     </LinearLayout>
     <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-       	android:paddingRight="5dip" 
+        android:paddingLeft="5dp"
+       	android:paddingRight="5dp" 
         >    	
         <EditText 
             android:id="@+id/etLocalizationPrefs_LocationAccuracyRequiredInMtr"
             android:inputType="number"
             android:text="" 
-            android:layout_height="40dip"   
+            android:layout_height="40dp"   
             android:layout_width="0dp" 
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
@@ -133,28 +133,28 @@
             android:id="@+id/etLocalizationPrefs_DistBtwTwoLocsForDistCalcRequiredInCMtr"
             android:inputType="number"
             android:text="" 
-            android:layout_height="40dip"
+            android:layout_height="40dp"
             android:layout_width="0dp" 
             android:layout_weight="1"   
             android:layout_gravity="center_vertical" 
         />
     </LinearLayout>
      <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-       	android:paddingRight="5dip" 
+        android:paddingLeft="5dp"
+       	android:paddingRight="5dp" 
         >    	
         <TextView 
             android:text="@string/lbLocalizationPrefs_MaxWaitingPeriodForGpsFixInSecs" 
             android:textColor="@color/colorText"
             android:layout_height="wrap_content" 
-            android:layout_width="0dip" 
+            android:layout_width="0dp" 
             android:layout_weight="1"
         />
         <EditText 
             android:id="@+id/etLocalizationPrefs_MaxWaitingPeriodForGpsFixInSecs"
             android:inputType="number"
             android:text="" 
-            android:layout_height="40dip"
+            android:layout_height="40dp"
             android:layout_width="0dp" 
             android:layout_weight="1"   
             android:layout_gravity="center_vertical" 
@@ -163,8 +163,8 @@
     <LinearLayout 
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:paddingLeft="5dip"
-       	android:paddingRight="5dip" 
+        android:paddingLeft="5dp"
+       	android:paddingRight="5dp" 
     >
         <TextView 
             android:text="@string/lbLocalizationPrefs_RequiredAccuracyAndDistanceInfo" 
@@ -177,7 +177,7 @@
         <Button 
             android:id="@+id/btLocalizationPrefs_Save"
             android:text="@string/btSave" 
-            android:layout_height="50dip" 
+            android:layout_height="50dp" 
             android:layout_width="fill_parent"
             android:layout_weight="1" 
             android:layout_gravity="bottom" 
@@ -185,7 +185,7 @@
         <Button 
             android:id="@+id/btLocalizationPrefs_Cancel"
             android:text="@string/btCancel" 
-            android:layout_height="50dip" 
+            android:layout_height="50dp" 
             android:layout_width="fill_parent"
             android:layout_weight="1" 
             android:layout_gravity="bottom"  

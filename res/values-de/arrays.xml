@@ -16,6 +16,7 @@
         <item>MLT TCP (verschlüsselt)</item>
         <item>Tk102 Emulator</item>
         <item>Tk5000 Emulator</item>
+        <item>PT350 Emulator</item>
         <item>HTTP (benutzerdefiniert)</item>        
     </string-array>
     
@@ -40,7 +41,7 @@
         <item>10 Minuten</item>
         <item>20 Minuten</item>
         <item>30 Minuten</item>
-        <item>1 Sunde</item>
+        <item>1 Stunde</item>
     </string-array>
     
     <string-array name="uploadDistanceTrigger">
@@ -75,7 +76,19 @@
         <item>hoch</item>               
     </string-array>
     
-    <string-array name="autoModeResetTrackMode">
+    <string-array name="trackingMode">
+    	<item>Auto</item>
+    	<item>Checkpoint</item>
+        <item>Standard</item>
+    </string-array>
+    
+    <string-array name="trackingModeAbbr">
+    	<item>Auto</item>
+    	<item>Chk.pt.</item>
+        <item>Std.</item>
+    </string-array>
+    
+    <string-array name="trackingModeAutoResetTrackMode">
     	<item>nie</item>
     	<item>am nächsten Tag</item>
         <item>nach 1 Stunde Pause</item>

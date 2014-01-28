@@ -173,10 +173,10 @@ public class LogInfo {
 		if (!StringUtils.isEmpty(name)) {
 			attr += StringUtils.replace(ATTR_NAME_TEMPLATE, "$NAME", name);
 		}
-		attr += StringUtils.replace(ATTR_TIME_TEMPLATE, "$TIME", timestamp);
 		if (!StringUtils.isEmpty(alt)) {
 			attr += StringUtils.replace(ATTR_ALTITUDE_TEMPLATE, "$ALTITUDE", alt);
 		}
+		attr += StringUtils.replace(ATTR_TIME_TEMPLATE, "$TIME", timestamp);
 		pointStr = StringUtils.replace(pointStr, "$ATTR", attr);
 		return pointStr;
 	}

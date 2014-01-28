@@ -96,9 +96,9 @@ public class OtherPrefs extends APrefs implements Serializable {
 	@Override
 	public String toString() {
 		return "OtherPrefs [confirmLevel=" + confirmLevel
-			+ ", trackingOneTouchMode=" + trackingOneTouchMode
-			+ ", adaptButtonsForOneTouchMode="
-			+ adaptButtonsForOneTouchMode + ", antPlusEnabledIfAvailable="
-			+ antPlusEnabledIfAvailable + "]";
+				+ ", trackingOneTouchMode=" + trackingOneTouchMode
+				+ ", adaptButtonsForOneTouchMode="
+				+ adaptButtonsForOneTouchMode + ", antPlusEnabledIfAvailable="
+				+ antPlusEnabledIfAvailable + "]";
 	}
 }

@@ -47,7 +47,7 @@
     <!-- menu items for 'system' -->
     <string name="mnCatSystem">System</string>
     <string name="mnPrefsPinCodeQuery">PIN Code Abfrage</string>
-    <string name="mnPrefsAuto">Auto</string>
+    <string name="mnPrefsTrackingMode">Tracking Modus</string>
     <string name="mnPrefsRemoteAccess">Fernzugriff</string>
     <string name="mnPrefsHttpProtocolParams">HTTP Parameter</string>
     <string name="mnPrefsOther">Sonstiges</string>

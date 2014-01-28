@@ -241,6 +241,9 @@ public class App extends Application {
 	public static Context getCtx() {
         return context;
     }
+	public static String getResStr(int resStrId) {
+		return context.getString(resStrId);
+	}
 	public static VersionDsc getVersionDsc() {
         return versionDsc;
     }
