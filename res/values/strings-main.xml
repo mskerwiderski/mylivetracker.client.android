@@ -26,6 +26,12 @@
     <string name="txMain_InfoStartTrackDone">Start track done!</string>
     <string name="txMain_InfoStoppingTracking">Stopping the track&#8230;</string>
     <string name="txMain_InfoStopTrackDone">Stop track done!</string>
+    <string name="txMain_QuestionStartCheckpoint">Do you really want to set a checkpoint?</string>
+    <string name="txMain_QuestionStopCheckpoint">Do you really want to cancel setting a checkpoint?</string>
+    <string name="txMain_InfoStartingCheckpoint">Start setting a checkpoint&#8230;</string>
+    <string name="txMain_InfoStartCheckpointDone">Start setting a checkpoint done!</string>
+    <string name="txMain_InfoStoppingCheckpoint">Stop/cancel setting a checkpoint&#8230;</string>
+    <string name="txMain_InfoStopCheckpointDone">Stop/cancel setting a checkpoint done!</string>
     <string name="txMain_InfoStartingLocalization">Starting localization&#8230;</string>
     <string name="txMain_InfoStartLocalizationDone">Start localization done!</string>
     <string name="txMain_InfoStoppingLocalization">Stopping localization&#8230;</string>

@@ -3,6 +3,9 @@
     <string name="tiTrackingModePrefs">Tracking mode preferences</string>
     <string name="fdTrackingModePrefs_TrackingMode">Tracking mode</string>
     <string name="lbTrackingModePrefs_TrackingMode">Tracking mode</string>
+    <string name="txTrackingModePrefs_OptionsOnlyForTrackingCheckpointMode">Following options are only used in tracking mode \'Checkpoint\':</string>
+    <string name="fdTrackingModePrefs_CheckpointMessage">Checkpoint message</string>
+	<string name="lbTrackingModePrefs_CheckpointMessage">Checkpoint message</string>
     <string name="txTrackingModePrefs_OptionsOnlyForTrackingAutoMode">Following options are only used in tracking mode \'Auto\':</string>
    	<string name="fdTrackingModePrefs_ResetTrackMode">Reset-track mode</string>
 	<string name="lbTrackingModePrefs_ResetTrackMode">Reset-track mode</string>

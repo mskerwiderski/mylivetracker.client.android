@@ -2,7 +2,10 @@ package de.msk.mylivetracker.client.android.trackingmode;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang.StringUtils;
+
 import de.msk.mylivetracker.client.android.preferences.APrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 
 /**
  * classname: TrackingModePrefs
@@ -53,6 +56,10 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 		}
 	};
 	
+	// only for trackingmode checkpoint.
+	private String checkpointMessage;
+	
+	// only for trackingmode auto.
 	private AutoModeResetTrackMode autoModeResetTrackMode;
 	private boolean autoStartEnabled;
 	
@@ -63,6 +70,7 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 	@Override
 	public void initWithDefaults() {
 		this.trackingMode = TrackingMode.Standard;
+		this.checkpointMessage = null;
 		this.autoModeResetTrackMode = AutoModeResetTrackMode.NextDay;
 		this.autoStartEnabled = false;
 	}
@@ -70,12 +78,25 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 	public void initWithValuesOfOldVersion(int foundVersion, String foundGsonStr) {
 		// noop.
 	}
-	
+	public static boolean isCheckpoint() {
+		return PrefsRegistry.get(TrackingModePrefs.class).
+			getTrackingMode().equals(TrackingMode.Checkpoint);
+	}
+	public static boolean hasCheckpointMessage() {
+		return !StringUtils.isEmpty(PrefsRegistry.get(TrackingModePrefs.class).
+			getCheckpointMessage());
+	}
 	public TrackingMode getTrackingMode() {
 		return trackingMode;
 	}
 	public void setTrackingMode(TrackingMode trackingMode) {
 		this.trackingMode = trackingMode;
+	}
+	public String getCheckpointMessage() {
+		return checkpointMessage;
+	}
+	public void setCheckpointMessage(String checkpointMessage) {
+		this.checkpointMessage = checkpointMessage;
 	}
 	public AutoModeResetTrackMode getAutoModeResetTrackMode() {
 		return autoModeResetTrackMode;
@@ -90,11 +111,11 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 	public void setAutoStartEnabled(boolean autoStartEnabled) {
 		this.autoStartEnabled = autoStartEnabled;
 	}
-
 	@Override
 	public String toString() {
 		return "TrackingModePrefs [trackingMode=" + trackingMode
-				+ ", autoModeResetTrackMode=" + autoModeResetTrackMode
-				+ ", autoStartEnabled=" + autoStartEnabled + "]";
+			+ ", checkpointMessage=" + checkpointMessage
+			+ ", autoModeResetTrackMode=" + autoModeResetTrackMode
+			+ ", autoStartEnabled=" + autoStartEnabled + "]";
 	}
 }

@@ -14,6 +14,7 @@ import de.msk.mylivetracker.client.android.status.LocationInfo;
 import de.msk.mylivetracker.client.android.status.MessageInfo;
 import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
 import de.msk.mylivetracker.client.android.status.UploadInfo;
+import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
 import de.msk.mylivetracker.client.android.upload.AbstractUploader.UploadResult;
 import de.msk.mylivetracker.client.android.upload.protocol.Protocols;
 
@@ -124,6 +125,13 @@ public class Uploader {
 		
 		if (lastInfoTimestamp == null) {
 			lastInfoTimestamp = new Date();
+		}
+		
+		if (TrackingModePrefs.isCheckpoint() && 
+			TrackingModePrefs.hasCheckpointMessage() &&
+			messageInfo == null) {
+			MessageInfo.update(PrefsRegistry.get(TrackingModePrefs.class).getCheckpointMessage());
+			messageInfo = MessageInfo.get();
 		}
 		
 		UploadResult uploadResult = 

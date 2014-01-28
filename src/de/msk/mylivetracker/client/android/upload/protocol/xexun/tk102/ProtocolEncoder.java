@@ -61,7 +61,9 @@ public class ProtocolEncoder implements IProtocol {
 			dataStr += "help me" + SEPERATOR;
 		} else if ((batteryStateInfo != null) && batteryStateInfo.isBatteryLow()) {
 			dataStr += "low battery" + SEPERATOR;
-		}		
+		} else if (messageInfo != null) {
+			dataStr += messageInfo.getMessage() + SEPERATOR;
+		}
 		dataStr += "imei:" + accountPrefs.getDeviceId() + SEPERATOR;
 		dataStr += ((gpsStateInfo != null) ? 
 			StringUtils.leftPad(gpsStateInfo.getCountSatellites().toString(), 2, '0') : "0") + 

@@ -57,7 +57,9 @@ public class CheckpointServiceThread extends AbstractServiceThread {
 				validPositionFound = true;
 			}
 			String currTrackId = TrackStatus.get().getTrackId();
-			Integer currCountUploaded = UploadInfo.get().getCountUploaded();
+			UploadInfo uploadInfo = UploadInfo.get();
+			Integer currCountUploaded = (uploadInfo == null) ? 
+				null : uploadInfo.getCountUploaded();
 			if (!StringUtils.equals(currTrackId, lastTrackId) && 
 				(currCountUploaded != null) && 
 				(currCountUploaded > 0)) {
@@ -80,7 +82,7 @@ public class CheckpointServiceThread extends AbstractServiceThread {
 
 	@Override
 	public long getSleepAfterRunSinglePassInMSecs() {
-		return 5000;
+		return 1000;
 	}
 
 	@Override

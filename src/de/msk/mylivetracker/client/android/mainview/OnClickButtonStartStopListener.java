@@ -9,6 +9,8 @@ import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.other.OtherPrefs.TrackingOneTouchMode;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
+import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
+import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.TrackingMode;
 import de.msk.mylivetracker.client.android.upload.UploadService;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractProgressDialog;
@@ -44,8 +46,12 @@ public class OnClickButtonStartStopListener extends ASafeOnClickListener {
 			ToggleButton btMain_StartStopTrack) {
 			super(activity,
 				TrackStatus.get().trackIsRunning() ? 	
-				R.string.txMain_QuestionStopTrack :
-				R.string.txMain_QuestionStartTrack);
+				(TrackingModePrefs.isCheckpoint() ? 
+					R.string.txMain_QuestionStopCheckpoint : 
+					R.string.txMain_QuestionStopTrack) :
+				(TrackingModePrefs.isCheckpoint() ?
+					R.string.txMain_QuestionStartCheckpoint :
+					R.string.txMain_QuestionStartTrack));
 			this.activity = activity;			
 			this.btMain_StartStopTrack = btMain_StartStopTrack;
 		}
@@ -176,6 +182,17 @@ public class OnClickButtonStartStopListener extends ASafeOnClickListener {
 		if (activity == null) {
 			throw new IllegalArgumentException("activity must not be null!");
 		}
+		TrackingModePrefs trackingModePrefs = PrefsRegistry.get(TrackingModePrefs.class);
+		int txIdStarting = R.string.txMain_InfoStartingTracking;
+		int txIdStartingDone = R.string.txMain_InfoStartTrackDone;
+		int txIdStopping = R.string.txMain_InfoStoppingTracking;
+		int txIdStoppingDone = R.string.txMain_InfoStopTrackDone;
+		if (trackingModePrefs.getTrackingMode().equals(TrackingMode.Checkpoint)) {
+			txIdStarting = R.string.txMain_InfoStartingCheckpoint;
+			txIdStartingDone = R.string.txMain_InfoStartCheckpointDone;
+			txIdStopping = R.string.txMain_InfoStoppingCheckpoint;
+			txIdStoppingDone = R.string.txMain_InfoStopCheckpointDone;
+		}
 		ToggleButton btMain_StartStopTrack = (ToggleButton)
 			activity.findViewById(R.id.btMain_StartStopTrack);
 		Chronometer chronometer = (Chronometer)
@@ -186,16 +203,14 @@ public class OnClickButtonStartStopListener extends ASafeOnClickListener {
 				new StartTrackProgressDialog(
 					btMain_StartStopTrack, chronometer, oneTouchMode);
 			startTrackDialog.run(activity, 
-			R.string.txMain_InfoStartingTracking, 
-			R.string.txMain_InfoStartTrackDone);
+				txIdStarting, txIdStartingDone);
 		} else {
 			LogUtils.info(OnClickButtonStartStopListener.class, "stop button pressed.");
 			StopTrackProgressDialog stopTrackDialog = 
 				new StopTrackProgressDialog(
 					btMain_StartStopTrack, chronometer, oneTouchMode);
 			stopTrackDialog.run(activity, 
-			R.string.txMain_InfoStoppingTracking, 
-			R.string.txMain_InfoStopTrackDone);
+				txIdStopping, txIdStoppingDone);
 		}
 	}
 }

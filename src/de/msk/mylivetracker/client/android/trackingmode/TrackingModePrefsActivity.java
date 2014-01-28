@@ -1,9 +1,14 @@
 package de.msk.mylivetracker.client.android.trackingmode;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.R;
@@ -11,8 +16,10 @@ import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.AutoModeResetTrackMode;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.TrackingMode;
+import de.msk.mylivetracker.client.android.util.LogUtils;
 import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
 import de.msk.mylivetracker.client.android.util.listener.OnFinishActivityListener;
+import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
 
 /**
  * classname: TrackingModePrefsActivity
@@ -27,19 +34,48 @@ import de.msk.mylivetracker.client.android.util.listener.OnFinishActivityListene
  */
 public class TrackingModePrefsActivity extends AbstractActivity {
 
+	private static final class OnTrackingModeItemSelectedListener implements OnItemSelectedListener {
+		private TrackingModePrefsActivity activity;
+		
+		public OnTrackingModeItemSelectedListener(
+			TrackingModePrefsActivity activity) {
+			this.activity = activity;
+		}
+		
+		@Override
+		public void onItemSelected(AdapterView<?> parent, View view,
+			int position, long rowId) {
+			LogUtils.infoMethodIn(TrackingModePrefsActivity.class, "onItemSelected", position);
+			if (position != currSelectedModeId) {
+				currSelectedModeId = position;
+				this.activity.viewOrHideOptionFiels();
+			}
+			LogUtils.infoMethodOut(TrackingModePrefsActivity.class, "onItemSelected", currSelectedModeId);
+		}
+		@Override
+		public void onNothingSelected(AdapterView<?> arg0) {
+			// noop.
+		}
+	}
+	
+	private volatile static int currSelectedModeId = 0;
+	
 	private static final class OnClickButtonSaveListener extends ASafeOnClickListener {
 		private TrackingModePrefsActivity activity;
 		private Spinner spTrackingModePrefs_TrackingMode;
+		private EditText etTrackingModePrefs_CheckpointMessage;
 		private Spinner spTrackingModePrefs_ResetTrackMode;
 		private CheckBox cbTrackingModePrefs_AutoStart;
 		
 		public OnClickButtonSaveListener(
 			TrackingModePrefsActivity activity,
 			Spinner spTrackingModePrefs_TrackingMode,
+			EditText etTrackingModePrefs_CheckpointMessage,
 			Spinner spTrackingModePrefs_ResetTrackMode,
 			CheckBox cbTrackingModePrefs_AutoStart) {
 			this.activity = activity;
 			this.spTrackingModePrefs_TrackingMode = spTrackingModePrefs_TrackingMode;
+			this.etTrackingModePrefs_CheckpointMessage = etTrackingModePrefs_CheckpointMessage;
 			this.spTrackingModePrefs_ResetTrackMode = spTrackingModePrefs_ResetTrackMode;
 			this.cbTrackingModePrefs_AutoStart = cbTrackingModePrefs_AutoStart;
 		}
@@ -50,12 +86,40 @@ public class TrackingModePrefsActivity extends AbstractActivity {
 			if (valid) {
 				TrackingModePrefs prefs = PrefsRegistry.get(TrackingModePrefs.class);
 				prefs.setTrackingMode(TrackingMode.values()[spTrackingModePrefs_TrackingMode.getSelectedItemPosition()]);
-				prefs.setAutoModeResetTrackMode(AutoModeResetTrackMode.values()[spTrackingModePrefs_ResetTrackMode.getSelectedItemPosition()]);
-				prefs.setAutoStartEnabled(cbTrackingModePrefs_AutoStart.isChecked());
+				if (prefs.getTrackingMode().equals(TrackingMode.Checkpoint)) {
+					if (ValidatorUtils.validateEditTextString(
+						this.activity, 
+						R.string.fdTrackingModePrefs_CheckpointMessage, 
+						etTrackingModePrefs_CheckpointMessage, 
+						0, 15, true)) {
+						prefs.setCheckpointMessage(etTrackingModePrefs_CheckpointMessage.getText().toString());
+					}
+				} else if (prefs.getTrackingMode().equals(TrackingMode.Auto)) {
+					prefs.setAutoModeResetTrackMode(AutoModeResetTrackMode.values()[
+                        spTrackingModePrefs_ResetTrackMode.getSelectedItemPosition()]);
+					prefs.setAutoStartEnabled(cbTrackingModePrefs_AutoStart.isChecked());
+				} 
 				PrefsRegistry.save(TrackingModePrefs.class);
 				this.activity.finish();
 			}			
 		}		
+	}
+	
+	private void viewOrHideOptionFiels() {
+		LogUtils.infoMethodIn(TrackingModePrefsActivity.class, "viewOrHideOptionFiels", currSelectedModeId);
+		int viewCheckpointState = (TrackingMode.Checkpoint.ordinal() == currSelectedModeId) ? View.VISIBLE : View.GONE;
+		int viewAutoState = (TrackingMode.Auto.ordinal() == currSelectedModeId) ? View.VISIBLE : View.GONE;
+		LogUtils.infoMethodState(TrackingModePrefsActivity.class, "viewOrHideOptionFiels", 
+			"viewCheckpointState=" + viewCheckpointState, "viewAutoState=" + viewAutoState);	
+		((LinearLayout)findViewById(R.id.llTrackingModePrefs_OptionsOnlyForTrackingCheckpointMode)).setVisibility(viewCheckpointState);
+    	((LinearLayout)findViewById(R.id.llTrackingModePrefs_etCheckpointMessage)).setVisibility(viewCheckpointState);
+    	((LinearLayout)findViewById(R.id.llTrackingModePrefs_tvCheckpointMessage)).setVisibility(viewCheckpointState);
+    	
+    	((LinearLayout)findViewById(R.id.llTrackingModePrefs_OptionsOnlyForTrackingAutoMode)).setVisibility(viewAutoState);
+    	((LinearLayout)findViewById(R.id.llTrackingModePrefs_AutoStart)).setVisibility(viewAutoState);
+    	((LinearLayout)findViewById(R.id.llTrackingModePrefs_tvResetTrackMode)).setVisibility(viewAutoState);
+    	((LinearLayout)findViewById(R.id.llTrackingModePrefs_cbResetTrackMode)).setVisibility(viewAutoState);
+    	LogUtils.infoMethodOut(TrackingModePrefsActivity.class, "viewOrHideOptionFiels", currSelectedModeId);
 	}
 	
 	@Override
@@ -67,21 +131,28 @@ public class TrackingModePrefsActivity extends AbstractActivity {
         
         TrackingModePrefs prefs = PrefsRegistry.get(TrackingModePrefs.class);
 
+        currSelectedModeId = prefs.getTrackingMode().ordinal();
+        
         Spinner spTrackingModePrefs_TrackingMode = (Spinner)
         	findViewById(R.id.spTrackingModePrefs_TrackingMode);
         ArrayAdapter<?> adapterTrackingMode = ArrayAdapter.createFromResource(
             this, R.array.trackingMode, android.R.layout.simple_spinner_item);
         adapterTrackingMode.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spTrackingModePrefs_TrackingMode.setAdapter(adapterTrackingMode);
-        spTrackingModePrefs_TrackingMode.setSelection(
-        	prefs.getTrackingMode().ordinal());
-            
+        spTrackingModePrefs_TrackingMode.setSelection(currSelectedModeId);
+        
+        // options for trackingmode checkpoint.
+        EditText etTrackingModePrefs_CheckpointMessage = 
+        	(EditText)findViewById(R.id.etTrackingModePrefs_CheckpointMessage);
+        etTrackingModePrefs_CheckpointMessage.setText(prefs.getCheckpointMessage());
+
+        // options for trackingmode auto.
         CheckBox cbTrackingModePrefs_AutoStart = (CheckBox)
         	findViewById(R.id.cbTrackingModePrefs_AutoStart);
         cbTrackingModePrefs_AutoStart.setText(App.getCtx().getString(
         	R.string.lbTrackingModePrefs_AutoStart, App.getAppName()));
         cbTrackingModePrefs_AutoStart.setChecked(prefs.isAutoStartEnabled());
-            
+        
         Spinner spTrackingModePrefs_ResetTrackMode = (Spinner)
         	findViewById(R.id.spTrackingModePrefs_ResetTrackMode);
         ArrayAdapter<?> adapterResetTrackMode = ArrayAdapter.createFromResource(
@@ -91,6 +162,9 @@ public class TrackingModePrefsActivity extends AbstractActivity {
         spTrackingModePrefs_ResetTrackMode.setSelection(
         	prefs.getAutoModeResetTrackMode().ordinal());
         
+        spTrackingModePrefs_TrackingMode.setOnItemSelectedListener(
+    		new OnTrackingModeItemSelectedListener(this));
+        
         Button btnPrefsOther_Save = (Button)
         	findViewById(R.id.btTrackingModePrefs_Save);
         Button btnPrefsOther_Cancel = (Button)
@@ -99,9 +173,12 @@ public class TrackingModePrefsActivity extends AbstractActivity {
         btnPrefsOther_Save.setOnClickListener(
 			new OnClickButtonSaveListener(this, 
 				spTrackingModePrefs_TrackingMode,
+				etTrackingModePrefs_CheckpointMessage,
 				spTrackingModePrefs_ResetTrackMode,
 				cbTrackingModePrefs_AutoStart));		
         btnPrefsOther_Cancel.setOnClickListener(
 			new OnFinishActivityListener(this));
+        
+        viewOrHideOptionFiels();
     }
 }
