@@ -4,6 +4,7 @@ import java.util.Date;
 
 import de.msk.mylivetracker.client.android.App.VersionDsc;
 import de.msk.mylivetracker.client.android.account.AccountPrefs;
+import de.msk.mylivetracker.client.android.emergency.EmergencyPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
 import de.msk.mylivetracker.client.android.status.EmergencySignalInfo;
@@ -123,8 +124,9 @@ public class ProtocolEncoder extends EncDecoder implements IProtocol {
 		if (emergencySignalInfo != null) {
 			data.setSosActivated(emergencySignalInfo.activated);
 			data.setSosId(emergencySignalInfo.getId());
+			data.setMessage(EmergencyPrefs.getEmergencyMessageText());
 		}
-		if (messageInfo != null) {
+		if ((messageInfo != null) && (emergencySignalInfo != null)) {
 			data.setMessage(messageInfo.getMessage());
 		}
 		if (phoneStateInfo != null) {

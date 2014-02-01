@@ -10,6 +10,7 @@
 		    <!-- item android:id="@+id/mnPrefsProtocol" android:title="@string/mnPrefsProtocol" / -->
 		    <!-- item android:id="@+id/mnPrefsLocalization" android:title="@string/mnPrefsLocalization" / -->
 		    <!-- item android:id="@+id/mnTrackExport" android:title="@string/mnTrackExport" / -->
+		    <item android:id="@+id/mnPrefsEmergency" android:title="@string/mnPrefsEmergency" />
 	    </menu> 
     </item>
    	<!-- Liontrack customization. -->

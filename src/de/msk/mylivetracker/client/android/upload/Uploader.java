@@ -17,6 +17,7 @@ import de.msk.mylivetracker.client.android.status.UploadInfo;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
 import de.msk.mylivetracker.client.android.upload.AbstractUploader.UploadResult;
 import de.msk.mylivetracker.client.android.upload.protocol.Protocols;
+import de.msk.mylivetracker.client.android.util.LogUtils;
 
 /**
  * classname: Uploader
@@ -91,6 +92,8 @@ public class Uploader {
 		EmergencySignalInfo emergencySignalInfo = EmergencySignalInfo.get();
 		MessageInfo messageInfo = MessageInfo.get();
 		
+		LogUtils.infoMethodState(Uploader.class, "upload", "emergencySignalInfo", emergencySignalInfo);
+		
 		lastInfoTimestamp = 
 			updateLastInfoTimestamp(phoneStateInfo, lastInfoTimestamp);
 		lastInfoTimestamp = 
@@ -113,10 +116,14 @@ public class Uploader {
 			} 
 		}
 		
+		LogUtils.infoMethodState(Uploader.class, "upload", "last emergencySignalInfo was", lastInfoDsc.lastEmergencySignalInfo);
 		if ((emergencySignalInfo != null) && 
 			!emergencySignalInfo.isUpToDate(lastInfoDsc.lastEmergencySignalInfo)) {
+			LogUtils.infoMethodState(Uploader.class, "upload", "emergencySignalInfo is NOT up to date", emergencySignalInfo);
 			emergencySignalInfo = null;
-		} 
+		} else {
+			LogUtils.infoMethodState(Uploader.class, "upload", "emergencySignalInfo is up to date", emergencySignalInfo);
+		}
 		
 		if ((messageInfo != null) && 
 			!messageInfo.isUpToDate(lastInfoDsc.lastMessageInfo)) {
@@ -146,11 +153,13 @@ public class Uploader {
 				messageInfo);
 		
 		if (uploadResult.isUploaded() || uploadResult.isBuffered()) {
+			LogUtils.infoMethodState(Uploader.class, "upload", "upload or buffering was successful");
 			if (locationInfo != null) {
 				lastInfoDsc.lastLocationInfo = locationInfo;
 			}
 			if (emergencySignalInfo != null) {
 				lastInfoDsc.lastEmergencySignalInfo = emergencySignalInfo;
+				LogUtils.infoMethodState(Uploader.class, "upload", "lastEmergencySignalInfo updated", lastInfoDsc.lastEmergencySignalInfo);
 			}
 			if (messageInfo != null) {
 				lastInfoDsc.lastMessageInfo = messageInfo;

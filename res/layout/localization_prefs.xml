@@ -139,7 +139,7 @@
             android:layout_gravity="center_vertical" 
         />
     </LinearLayout>
-     <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent"
+    <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent"
         android:paddingLeft="5dp"
        	android:paddingRight="5dp" 
         >    	

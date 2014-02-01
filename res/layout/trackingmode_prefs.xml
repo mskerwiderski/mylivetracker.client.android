@@ -55,6 +55,31 @@
         />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/llTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs"
+        android:paddingTop="15dp"
+        android:paddingLeft="5dp"
+       	android:paddingRight="5dp" 
+       	android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        >    	
+        <TextView 
+            android:text="@string/lbTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs" 
+            android:textColor="@color/colorText"
+            android:layout_height="wrap_content" 
+            android:layout_width="0dp" 
+            android:layout_weight="1"
+        />
+        <EditText 
+            android:id="@+id/etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs"
+            android:inputType="number"
+            android:text="" 
+            android:layout_height="40dp"
+            android:layout_width="0dp" 
+            android:layout_weight="1"   
+            android:layout_gravity="center_vertical" 
+        />
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/llTrackingModePrefs_tvCheckpointMessage"
         android:paddingTop="15dp" 
         android:layout_height="wrap_content" 

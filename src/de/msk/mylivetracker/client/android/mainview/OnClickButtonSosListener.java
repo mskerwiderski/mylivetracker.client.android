@@ -9,6 +9,7 @@ import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs.TransferProtocol;
 import de.msk.mylivetracker.client.android.status.EmergencySignalInfo;
+import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.upload.Uploader;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
 import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
@@ -21,6 +22,7 @@ import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
  * @since 1.5.0
  * 
  * history:
+ * 001	2014-02-01	bugfix: call 'Uploader.uploadOneTime()' only if track is not already running.
  * 000	2012-12-29	revised for v1.5.x.
  * 
  */
@@ -44,7 +46,9 @@ public class OnClickButtonSosListener extends ASafeOnClickListener {
 					new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						EmergencySignalInfo.update(true);
-						Uploader.uploadOneTime();
+						if (!TrackStatus.get().trackIsRunning()) {
+							Uploader.uploadOneTime();
+						}
 						dialog.cancel();
 						Toast.makeText(activity.getApplicationContext(), 
 								activity.getString(R.string.txMain_InfoSendSosSignalDone),

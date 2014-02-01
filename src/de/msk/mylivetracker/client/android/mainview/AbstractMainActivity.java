@@ -14,6 +14,7 @@ import android.view.MotionEvent;
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.InfoActivity;
 import de.msk.mylivetracker.client.android.account.AccountPrefsActivity;
+import de.msk.mylivetracker.client.android.emergency.EmergencyPrefsActivity;
 import de.msk.mylivetracker.client.android.liontrack.R;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.other.OtherPrefsActivity;
@@ -209,7 +210,10 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 //			return true;
 //		case R.id.mnDropboxConnect:
 //			startActivityWithWarningDlgIfTrackRunning(DropboxConnectActivity.class);
-//			return true;	
+//			return true;
+		case R.id.mnPrefsEmergency:
+			startActivityWithWarningDlgIfTrackRunning(EmergencyPrefsActivity.class);
+			return true;
 		case R.id.mnPrefsPinCodeQuery:
 			startActivityWithWarningDlgIfTrackRunning(PinCodeQueryPrefsActivity.class);
 			return true;

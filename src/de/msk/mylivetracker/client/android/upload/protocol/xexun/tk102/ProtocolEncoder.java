@@ -7,6 +7,7 @@ import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 
 import de.msk.mylivetracker.client.android.account.AccountPrefs;
+import de.msk.mylivetracker.client.android.emergency.EmergencyPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
 import de.msk.mylivetracker.client.android.status.EmergencySignalInfo;
@@ -58,7 +59,7 @@ public class ProtocolEncoder implements IProtocol {
 		}
 		dataStr += (locValid ? "F" : "L") + SEPERATOR;
 		if ((emergencySignalInfo != null) && emergencySignalInfo.isActivated()) {
-			dataStr += "help me" + SEPERATOR;
+			dataStr += EmergencyPrefs.getEmergencyMessageText() + SEPERATOR;
 		} else if ((batteryStateInfo != null) && batteryStateInfo.isBatteryLow()) {
 			dataStr += "low battery" + SEPERATOR;
 		} else if (messageInfo != null) {

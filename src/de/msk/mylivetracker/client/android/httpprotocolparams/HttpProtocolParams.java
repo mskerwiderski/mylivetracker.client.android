@@ -56,6 +56,7 @@ public class HttpProtocolParams implements Serializable {
 		HeartrateAvg,
 		SosId,
 		SosActivated,
+		SosMessage,
 		Message,
 		PhoneType,
 		NetworkType,
@@ -193,6 +194,10 @@ public class HttpProtocolParams implements Serializable {
 		httpProtocolParams.params.add(new HttpProtocolParamDsc(
 			R.string.txHttpProtocolParamsPrefs_ParamNameSosActivated,
 			R.string.txHttpProtocolParamsPrefs_ParamValueExampleSosActivated, 
+			true));
+		httpProtocolParams.params.add(new HttpProtocolParamDsc(
+			R.string.txHttpProtocolParamsPrefs_ParamNameSosMessage,
+			R.string.txHttpProtocolParamsPrefs_ParamValueExampleSosMessage, 
 			true));
 		httpProtocolParams.params.add(new HttpProtocolParamDsc(
 			R.string.txHttpProtocolParamsPrefs_ParamNameMessage,

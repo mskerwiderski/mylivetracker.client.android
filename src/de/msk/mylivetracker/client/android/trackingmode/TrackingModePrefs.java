@@ -57,6 +57,7 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 	};
 	
 	// only for trackingmode checkpoint.
+	private long maxCheckpointPeriodInSecs;
 	private String checkpointMessage;
 	
 	// only for trackingmode auto.
@@ -70,6 +71,7 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 	@Override
 	public void initWithDefaults() {
 		this.trackingMode = TrackingMode.Standard;
+		this.maxCheckpointPeriodInSecs = 180;
 		this.checkpointMessage = null;
 		this.autoModeResetTrackMode = AutoModeResetTrackMode.NextDay;
 		this.autoStartEnabled = false;
@@ -91,6 +93,12 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 	}
 	public void setTrackingMode(TrackingMode trackingMode) {
 		this.trackingMode = trackingMode;
+	}
+	public long getMaxCheckpointPeriodInSecs() {
+		return maxCheckpointPeriodInSecs;
+	}
+	public void setMaxCheckpointPeriodInSecs(long maxCheckpointPeriodInSecs) {
+		this.maxCheckpointPeriodInSecs = maxCheckpointPeriodInSecs;
 	}
 	public String getCheckpointMessage() {
 		return checkpointMessage;
@@ -114,6 +122,7 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 	@Override
 	public String toString() {
 		return "TrackingModePrefs [trackingMode=" + trackingMode
+			+ ", maxCheckpointPeriodInSecs=" + maxCheckpointPeriodInSecs
 			+ ", checkpointMessage=" + checkpointMessage
 			+ ", autoModeResetTrackMode=" + autoModeResetTrackMode
 			+ ", autoStartEnabled=" + autoStartEnabled + "]";
