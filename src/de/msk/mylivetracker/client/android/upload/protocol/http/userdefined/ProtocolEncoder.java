@@ -6,6 +6,7 @@ import org.apache.commons.lang.StringUtils;
 
 import de.msk.mylivetracker.client.android.App.VersionDsc;
 import de.msk.mylivetracker.client.android.account.AccountPrefs;
+import de.msk.mylivetracker.client.android.emergency.EmergencyPrefs;
 import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParams;
 import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParams.ParamId;
 import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParamsPrefs;
@@ -185,6 +186,9 @@ public class ProtocolEncoder implements IProtocol {
 			paramsStr = HttpProtocolUtils.addParam(paramsStr, 
 				params.getParamDsc(ParamId.SosId), 
 				emergencySignalInfo.getId());
+			paramsStr = HttpProtocolUtils.addParam(paramsStr, 
+				params.getParamDsc(ParamId.SosMessage), 
+				EmergencyPrefs.getEmergencyMessageText());
 		}
 		
 		if (messageInfo != null) {

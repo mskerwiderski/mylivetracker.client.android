@@ -49,12 +49,11 @@ public class EmergencySignalInfo extends AbstractInfo implements Serializable {
 	public boolean isActivated() {
 		return activated;
 	}
-	
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("EmergencySignalInfo [activated=").append(activated)
-			.append("]");
-		return builder.toString();
+		return "EmergencySignalInfo [activated=" + activated + ", getId()="
+			+ getId() + ", getTimestamp()=" + getTimestamp() + "]";
 	}
+	
+	
 }

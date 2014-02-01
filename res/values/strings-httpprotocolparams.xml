@@ -71,6 +71,8 @@
     <string name="txHttpProtocolParamsPrefs_ParamValueExampleSosId">f4463821&#8211;2929&#8211;367c&#8211;a7f6&#8211;1dc07b9833b7</string>
     <string name="txHttpProtocolParamsPrefs_ParamNameSosActivated">sos</string>
     <string name="txHttpProtocolParamsPrefs_ParamValueExampleSosActivated">on</string>
+    <string name="txHttpProtocolParamsPrefs_ParamNameSosMessage">sosMsg</string>
+    <string name="txHttpProtocolParamsPrefs_ParamValueExampleSosMessage">SOS</string>
     <string name="txHttpProtocolParamsPrefs_ParamNameMessage">msg</string>
     <string name="txHttpProtocolParamsPrefs_ParamValueExampleMessage">Please call me!</string>
     <string name="txHttpProtocolParamsPrefs_ParamNamePhoneType">pht</string>

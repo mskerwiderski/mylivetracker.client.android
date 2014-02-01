@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tiEmergencyPrefs">Emergency preferences</string>
+    <string name="txEmergencyPrefs_MessageText">Note: SOS message is not supported by every protocol.</string>
+	<string name="lbEmergencyPrefs_MessageText">SOS message</string>
+	<string name="fdEmergencyPrefs_MessageText">SOS message</string>
+</resources>

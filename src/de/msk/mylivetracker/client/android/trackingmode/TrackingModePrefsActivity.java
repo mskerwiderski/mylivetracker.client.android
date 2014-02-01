@@ -63,6 +63,7 @@ public class TrackingModePrefsActivity extends AbstractActivity {
 	private static final class OnClickButtonSaveListener extends ASafeOnClickListener {
 		private TrackingModePrefsActivity activity;
 		private Spinner spTrackingModePrefs_TrackingMode;
+		private EditText etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs;
 		private EditText etTrackingModePrefs_CheckpointMessage;
 		private Spinner spTrackingModePrefs_ResetTrackMode;
 		private CheckBox cbTrackingModePrefs_AutoStart;
@@ -70,11 +71,13 @@ public class TrackingModePrefsActivity extends AbstractActivity {
 		public OnClickButtonSaveListener(
 			TrackingModePrefsActivity activity,
 			Spinner spTrackingModePrefs_TrackingMode,
+			EditText etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs,
 			EditText etTrackingModePrefs_CheckpointMessage,
 			Spinner spTrackingModePrefs_ResetTrackMode,
 			CheckBox cbTrackingModePrefs_AutoStart) {
 			this.activity = activity;
 			this.spTrackingModePrefs_TrackingMode = spTrackingModePrefs_TrackingMode;
+			this.etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs = etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs;
 			this.etTrackingModePrefs_CheckpointMessage = etTrackingModePrefs_CheckpointMessage;
 			this.spTrackingModePrefs_ResetTrackMode = spTrackingModePrefs_ResetTrackMode;
 			this.cbTrackingModePrefs_AutoStart = cbTrackingModePrefs_AutoStart;
@@ -83,25 +86,35 @@ public class TrackingModePrefsActivity extends AbstractActivity {
 		@Override
 		public void onClick() {
 			boolean valid = true;
-			if (valid) {
-				TrackingModePrefs prefs = PrefsRegistry.get(TrackingModePrefs.class);
-				prefs.setTrackingMode(TrackingMode.values()[spTrackingModePrefs_TrackingMode.getSelectedItemPosition()]);
-				if (prefs.getTrackingMode().equals(TrackingMode.Checkpoint)) {
-					if (ValidatorUtils.validateEditTextString(
+			TrackingModePrefs prefs = PrefsRegistry.get(TrackingModePrefs.class);
+			prefs.setTrackingMode(TrackingMode.values()[spTrackingModePrefs_TrackingMode.getSelectedItemPosition()]);
+			if (prefs.getTrackingMode().equals(TrackingMode.Checkpoint)) {
+				valid = 
+					ValidatorUtils.validateEditTextNumber(
+						this.activity, 
+						R.string.fdTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs, 
+						etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs, 
+						true, 10, 600, true) &&
+					ValidatorUtils.validateEditTextString(
 						this.activity, 
 						R.string.fdTrackingModePrefs_CheckpointMessage, 
 						etTrackingModePrefs_CheckpointMessage, 
-						0, 15, true)) {
-						prefs.setCheckpointMessage(etTrackingModePrefs_CheckpointMessage.getText().toString());
-					}
-				} else if (prefs.getTrackingMode().equals(TrackingMode.Auto)) {
-					prefs.setAutoModeResetTrackMode(AutoModeResetTrackMode.values()[
-                        spTrackingModePrefs_ResetTrackMode.getSelectedItemPosition()]);
-					prefs.setAutoStartEnabled(cbTrackingModePrefs_AutoStart.isChecked());
-				} 
+						0, 15, true);	
+				if (valid) {
+					prefs.setMaxCheckpointPeriodInSecs(Integer.parseInt(
+						etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs.getText().toString()));
+					prefs.setCheckpointMessage(etTrackingModePrefs_CheckpointMessage.getText().toString());
+				}
+			} else if (prefs.getTrackingMode().equals(TrackingMode.Auto)) {
+				prefs.setAutoModeResetTrackMode(AutoModeResetTrackMode.values()[
+                    spTrackingModePrefs_ResetTrackMode.getSelectedItemPosition()]);
+				prefs.setAutoStartEnabled(cbTrackingModePrefs_AutoStart.isChecked());
+			} 
+			
+			if (valid) {
 				PrefsRegistry.save(TrackingModePrefs.class);
 				this.activity.finish();
-			}			
+			}
 		}		
 	}
 	
@@ -112,6 +125,7 @@ public class TrackingModePrefsActivity extends AbstractActivity {
 		LogUtils.infoMethodState(TrackingModePrefsActivity.class, "viewOrHideOptionFiels", 
 			"viewCheckpointState=" + viewCheckpointState, "viewAutoState=" + viewAutoState);	
 		((LinearLayout)findViewById(R.id.llTrackingModePrefs_OptionsOnlyForTrackingCheckpointMode)).setVisibility(viewCheckpointState);
+		((LinearLayout)findViewById(R.id.llTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs)).setVisibility(viewCheckpointState);
     	((LinearLayout)findViewById(R.id.llTrackingModePrefs_etCheckpointMessage)).setVisibility(viewCheckpointState);
     	((LinearLayout)findViewById(R.id.llTrackingModePrefs_tvCheckpointMessage)).setVisibility(viewCheckpointState);
     	
@@ -142,6 +156,10 @@ public class TrackingModePrefsActivity extends AbstractActivity {
         spTrackingModePrefs_TrackingMode.setSelection(currSelectedModeId);
         
         // options for trackingmode checkpoint.
+        EditText etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs = 
+        	(EditText)findViewById(R.id.etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs);
+        etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs.setText(
+        	String.valueOf(prefs.getMaxCheckpointPeriodInSecs()));
         EditText etTrackingModePrefs_CheckpointMessage = 
         	(EditText)findViewById(R.id.etTrackingModePrefs_CheckpointMessage);
         etTrackingModePrefs_CheckpointMessage.setText(prefs.getCheckpointMessage());
@@ -173,6 +191,7 @@ public class TrackingModePrefsActivity extends AbstractActivity {
         btnPrefsOther_Save.setOnClickListener(
 			new OnClickButtonSaveListener(this, 
 				spTrackingModePrefs_TrackingMode,
+				etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs,
 				etTrackingModePrefs_CheckpointMessage,
 				spTrackingModePrefs_ResetTrackMode,
 				cbTrackingModePrefs_AutoStart));		

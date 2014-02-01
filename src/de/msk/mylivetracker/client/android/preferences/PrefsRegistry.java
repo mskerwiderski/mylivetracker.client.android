@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.account.AccountPrefs;
 import de.msk.mylivetracker.client.android.dropbox.DropboxPrefs;
+import de.msk.mylivetracker.client.android.emergency.EmergencyPrefs;
 import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParamsPrefs;
 import de.msk.mylivetracker.client.android.localization.LocalizationPrefs;
 import de.msk.mylivetracker.client.android.message.MessagePrefs;
@@ -57,6 +58,7 @@ public class PrefsRegistry {
 		new PrefsDsc(AccountPrefs.class, AccountPrefs.VERSION),	
 		new PrefsDsc(TrackingModePrefs.class, TrackingModePrefs.VERSION),
 		new PrefsDsc(DropboxPrefs.class, DropboxPrefs.VERSION),
+		new PrefsDsc(EmergencyPrefs.class, EmergencyPrefs.VERSION),
 		new PrefsDsc(HttpProtocolParamsPrefs.class, HttpProtocolParamsPrefs.VERSION),
 		new PrefsDsc(LocalizationPrefs.class, LocalizationPrefs.VERSION),
 		new PrefsDsc(MessagePrefs.class, MessagePrefs.VERSION),

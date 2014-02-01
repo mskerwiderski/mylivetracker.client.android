@@ -230,6 +230,10 @@ public class TrackStatus implements Serializable {
 		return markerFirstStarted;
 	}
 
+	public Long getLastStartedInMSecs() {
+		return this.markerLastStarted;
+	}
+	
 	public Long getRuntimeInMSecs(boolean pausesIncluded) {
 		Long runtimeInMSecs = 0L;
 		if (!pausesIncluded) {

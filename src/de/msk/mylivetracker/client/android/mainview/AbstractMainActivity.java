@@ -16,6 +16,7 @@ import de.msk.mylivetracker.client.android.InfoActivity;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.account.AccountPrefsActivity;
 import de.msk.mylivetracker.client.android.dropbox.DropboxConnectActivity;
+import de.msk.mylivetracker.client.android.emergency.EmergencyPrefsActivity;
 import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParamsPrefsActivity;
 import de.msk.mylivetracker.client.android.localization.LocalizationPrefsActivity;
 import de.msk.mylivetracker.client.android.mylivetrackerportal.MyLiveTrackerPortalConnectActivity;
@@ -205,6 +206,9 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 			return true;	
 		case R.id.mnPrefsLocalization:
 			startActivityWithWarningDlgIfTrackRunning(LocalizationPrefsActivity.class);
+			return true;
+		case R.id.mnPrefsEmergency:
+			startActivityWithWarningDlgIfTrackRunning(EmergencyPrefsActivity.class);
 			return true;
 		case R.id.mnTrackExport:
 			startActivityWithWarningDlgIfTrackRunning(TrackExportActivity.class);

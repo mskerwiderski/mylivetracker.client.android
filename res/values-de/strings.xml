@@ -38,6 +38,7 @@
     <string name="mnPrefsAccount">Zugang</string>
     <string name="mnPrefsProtocol">Protokoll</string>
     <string name="mnTrackExport">Export</string>
+    <string name="mnPrefsEmergency">Notruf</string>
         
     <!-- menu items for 'connect' -->
     <string name="mnCatConnect">Koppeln</string>
