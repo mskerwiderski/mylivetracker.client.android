@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.account.AccountPrefs;
+import de.msk.mylivetracker.client.android.auto.AutoPrefs;
 import de.msk.mylivetracker.client.android.dropbox.DropboxPrefs;
 import de.msk.mylivetracker.client.android.emergency.EmergencyPrefs;
 import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParamsPrefs;
@@ -19,6 +20,8 @@ import de.msk.mylivetracker.client.android.localization.LocalizationPrefs;
 import de.msk.mylivetracker.client.android.message.MessagePrefs;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryPrefs;
+import de.msk.mylivetracker.client.android.preferences.prefsv144.PrefsV144Updater;
+import de.msk.mylivetracker.client.android.preferences.prefsv150.PrefsV150Updater;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.remoteaccess.RemoteAccessPrefs;
 import de.msk.mylivetracker.client.android.server.ServerPrefs;
@@ -39,6 +42,7 @@ import de.msk.mylivetracker.client.android.util.LogUtils;
  * 000	2012-12-29	revised for v1.5.x.
  * 
  */
+@SuppressWarnings("deprecation")
 public class PrefsRegistry {
 	private static final String PREFS_VERSION_VAR_PREFIX = "version-";
 	
@@ -55,6 +59,8 @@ public class PrefsRegistry {
 	}
 	
 	private static PrefsDsc[] prefsDscArr = new PrefsDsc[] {
+		new PrefsDsc(MainPrefs.class, MainPrefs.VERSION),
+		new PrefsDsc(AutoPrefs.class, AutoPrefs.VERSION),
 		new PrefsDsc(AccountPrefs.class, AccountPrefs.VERSION),	
 		new PrefsDsc(TrackingModePrefs.class, TrackingModePrefs.VERSION),
 		new PrefsDsc(DropboxPrefs.class, DropboxPrefs.VERSION),
@@ -72,6 +78,7 @@ public class PrefsRegistry {
 
 	public enum InitResult {
 		PrefsImportedFromV144,
+		PrefsUpdatedFromV150,
 		PrefsCreated, 
 		PrefsUpdated, 
 		PrefsLoaded, 
@@ -80,16 +87,27 @@ public class PrefsRegistry {
 	public static InitResult init() {
 		LogUtils.infoMethodIn(PrefsRegistry.class, "init");
 		prefsReg.clear();
-		InitResult initResult = InitResult.PrefsLoaded;
+		InitResult initResult = null;
 		
 		if (!FileUtils.fileExists(App.getPrefsFileName(true), PathType.AppSharedPrefsDir)) {
 			reset();
 			initResult = InitResult.PrefsCreated;
 			LogUtils.infoMethodState(PrefsRegistry.class, "init", "initResult", initResult);
+			if (PrefsV144Updater.run()) {
+				saveAllInternal();
+				initResult = InitResult.PrefsImportedFromV144;
+				LogUtils.infoMethodState(PrefsRegistry.class, "init", "initResult", initResult);
+			}
 		} else {
 			SharedPreferences sharedPrefs = App.getCtx().
 				getSharedPreferences(App.getPrefsFileName(false), 0);
-		
+
+			int mainPrefsVersion = sharedPrefs.getInt(getVersionVar(MainPrefs.class), -1);
+			
+			if (mainPrefsVersion == -1) {
+				initResult = InitResult.PrefsUpdatedFromV150;
+			}
+			
 			for (PrefsDsc prefsDsc : prefsDscArr) {
 				APrefs prefs = null;
 				boolean doSave = false;
@@ -118,8 +136,16 @@ public class PrefsRegistry {
 				prefsReg.put(prefsDsc.prefsClass, prefs);
 				if (doSave) {
 					save(prefsDsc.prefsClass);
-					initResult = InitResult.PrefsUpdated;
+					if (initResult == null) {
+						initResult = InitResult.PrefsUpdated;
+					}
 				}
+			}
+			
+			if (initResult == null) {
+				initResult = InitResult.PrefsLoaded;
+			} else if (initResult.equals(InitResult.PrefsUpdatedFromV150)) {
+				PrefsV150Updater.run();
 			}
 		}
 		

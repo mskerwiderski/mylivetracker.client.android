@@ -163,6 +163,8 @@ public class MainActivity extends AbstractMainActivity {
 		
 		if (App.getInitPrefsResult().equals(InitResult.PrefsImportedFromV144)) {
 			SimpleInfoDialog.show(this, R.string.prefsImportedFromV144);
+		} else if (App.getInitPrefsResult().equals(InitResult.PrefsUpdatedFromV150)) {
+			SimpleInfoDialog.show(this, R.string.prefsUpdated);
 		} else if (App.getInitPrefsResult().equals(InitResult.PrefsCreated)) {
 			SimpleInfoDialog.show(this, R.string.prefsCreated);
 		} else if (App.getInitPrefsResult().equals(InitResult.PrefsUpdated)) {
