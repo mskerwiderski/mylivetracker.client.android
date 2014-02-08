@@ -99,7 +99,7 @@ public class TrackingModePrefsActivity extends AbstractActivity {
 						this.activity, 
 						R.string.fdTrackingModePrefs_CheckpointMessage, 
 						etTrackingModePrefs_CheckpointMessage, 
-						0, 15, true);	
+						0, 20, true);	
 				if (valid) {
 					prefs.setMaxCheckpointPeriodInSecs(Integer.parseInt(
 						etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs.getText().toString()));
