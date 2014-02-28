@@ -19,22 +19,39 @@ import de.msk.mylivetracker.commons.util.datetime.DateTime;
  * classname: SmsCmdTrack
  * 
  * @author michael skerwiderski, (c)2012
- * @version 000
+ * @version 001
  * @since 1.5.0
  * 
  * history:
+ * 001	2014-02-28	revised for v1.6.0.
  * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public class SmsCmdTrack extends ASmsCmdExecutor {
 
-	public SmsCmdTrack(String cmdName, String sender, String... params) {
-		super(cmdName, sender, params);
-	}
+	public static String NAME = "track";
+	
+	public static class CmdDsc extends ACmdDsc {
 
-	@Override
-	public CmdDsc getCmdDsc() {
-		return new CmdDsc("<reset|start|stop|info>", 1, 1);
+		public CmdDsc() {
+			super(NAME, "reset|start|stop|info", 1, 1);
+		}
+
+		@Override
+		public boolean matchesSyntax(String[] params) {
+			boolean matches = (params.length == 1);
+			matches = 
+				StringUtils.equals(params[0], "reset") ||
+				StringUtils.equals(params[0], "start") ||
+				StringUtils.equals(params[0], "stop") ||
+				StringUtils.equals(params[0], "info");
+			return matches;
+		}
+		
+	}
+	
+	public SmsCmdTrack(String sender, String... params) {
+		super(new CmdDsc(), sender, params);
 	}
 
 	@Override

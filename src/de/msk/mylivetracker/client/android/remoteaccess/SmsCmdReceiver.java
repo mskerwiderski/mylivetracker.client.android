@@ -17,17 +17,17 @@ import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsMessage;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.remoteaccess.ASmsCmdExecutor.CmdDsc;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
 /**
  * classname: SmsCmdReceiver
  * 
  * @author michael skerwiderski, (c)2012
- * @version 000
+ * @version 001
  * @since 1.5.0
  * 
  * history:
+ * 001	2014-02-28	revised for v1.6.0.
  * 000	2012-12-29	revised for v1.5.x.
  * 
  */
@@ -37,9 +37,9 @@ public class SmsCmdReceiver extends BroadcastReceiver {
 		new HashMap<String, Class<? extends ASmsCmdExecutor>>();
 	
 	static {
-		cmdRegistry.put(StringUtils.lowerCase("getversion"), SmsCmdGetAppVersion.class);
-		cmdRegistry.put(StringUtils.lowerCase("getlocation"), SmsCmdGetLocation.class);
-		cmdRegistry.put(StringUtils.lowerCase("track"), SmsCmdTrack.class);
+		cmdRegistry.put(SmsCmdGetAppVersion.NAME, SmsCmdGetAppVersion.class);
+		cmdRegistry.put(SmsCmdGetLocation.NAME, SmsCmdGetLocation.class);
+		cmdRegistry.put(SmsCmdTrack.NAME, SmsCmdTrack.class);
 	}
 	
 	private static boolean smsCmdExecutorExists(String cmdName) {
@@ -117,14 +117,14 @@ public class SmsCmdReceiver extends BroadcastReceiver {
 						Class<? extends ASmsCmdExecutor> smsCmdExecutorClass = 
 							getSmsCmdExecutor(messageParts[2]);
 						Constructor<? extends ASmsCmdExecutor> smsCmdExecutorConstructor = 
-							smsCmdExecutorClass.getConstructor(String.class, String.class, String[].class);
-						ASmsCmdExecutor smsCmdExecutor = smsCmdExecutorConstructor.newInstance(cmdName, sender, params);
-						CmdDsc cmdDsc = smsCmdExecutor.getCmdDsc();
+							smsCmdExecutorClass.getConstructor(String.class, String[].class);
+						ASmsCmdExecutor smsCmdExecutor = smsCmdExecutorConstructor.newInstance(sender, params);
+						ACmdDsc cmdDsc = smsCmdExecutor.getCmdDsc();
 						if ((params.length < cmdDsc.getMinParams()) || 
 							(params.length > cmdDsc.getMaxParams())) {
 							response = SMS_CMD_ERROR_COMMAND_SYNTAX_INVALID;
 							response = StringUtils.replace(response, "$SYNTAX", 
-								cmdName + " " + cmdDsc.getParamSyntax());
+								cmdName + " " + cmdDsc.getParamDsc());
 						} else {
 							executorService.execute(smsCmdExecutor);
 							response = null;

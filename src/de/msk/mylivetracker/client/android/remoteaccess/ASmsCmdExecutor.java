@@ -11,27 +11,28 @@ import de.msk.mylivetracker.client.android.util.sms.SmsSendUtils;
  * classname: ASmsCmdExecutor
  * 
  * @author michael skerwiderski, (c)2012
- * @version 000
+ * @version 001
  * @since 1.5.0
  * 
  * history:
+ * 001	2014-02-28	revised for v1.6.0.
  * 000	2012-12-29	revised for v1.5.x.
  * 
  */
 public abstract class ASmsCmdExecutor implements Runnable {
 	
-	private String cmdName;
+	private ACmdDsc cmdDsc;
 	private String sender;
 	private String[] params;
 
-	public ASmsCmdExecutor(String cmdName, String sender, String... params) {
-		if (StringUtils.isEmpty(cmdName)) {
-			throw new IllegalArgumentException("cmdName must not be null.");
+	public ASmsCmdExecutor(ACmdDsc cmdDsc, String sender, String... params) {
+		if (cmdDsc == null) {
+			throw new IllegalArgumentException("cmdDsc must not be null.");
 		}
 		if (StringUtils.isEmpty(sender)) {
-			throw new IllegalArgumentException("sender must not be null.");
+			throw new IllegalArgumentException("sender must not be empty.");
 		}
-		this.cmdName = cmdName;
+		this.cmdDsc = cmdDsc;
 		this.sender = sender;
 		this.params = params;
 	}
@@ -42,7 +43,11 @@ public abstract class ASmsCmdExecutor implements Runnable {
 		String smsResponse = SmsCmdReceiver.SMS_CMD_ERROR_PREFIX + "internal command error: ";
 		try {
 			LogUtils.infoMethodState(this.getClass(), "run", "params", Arrays.toString(this.params));
-			smsResponse = this.executeCmdAndCreateSmsResponse(this.params);
+			if (!this.cmdDsc.matchesSyntax(params)) {
+				smsResponse = "command does not match syntax '" + this.cmdDsc.getSyntax() + "'";
+			} else {
+				smsResponse = this.executeCmdAndCreateSmsResponse(this.params);
+			}
 		} catch (Exception e) {
 			smsResponse += e.toString();
 			LogUtils.infoMethodState(this.getClass(), "run", "run failed", e.toString());
@@ -56,39 +61,9 @@ public abstract class ASmsCmdExecutor implements Runnable {
 		LogUtils.infoMethodOut(this.getClass(), "run");
 	}
 	
-	public static class CmdDsc {
-		private String paramDsc;
-		private int minParams;
-		private int maxParams;
-		public CmdDsc(String paramDsc, int minParams, int maxParams) {
-			if (paramDsc == null) {
-				throw new IllegalArgumentException("paramDsc must not be null.");
-			}
-			if ((minParams < 0) || (maxParams < 0)) {
-				throw new IllegalArgumentException("minParams and maxParams must not be less than or equals 0.");
-			}
-			if (maxParams < minParams) {
-				throw new IllegalArgumentException("maxParams must not be less than minParams.");
-			}
-			this.paramDsc = paramDsc;
-			this.minParams = minParams;
-			this.maxParams = maxParams;
-		}
-		public String getParamSyntax() {
-			return paramDsc;
-		}
-		public int getMinParams() {
-			return minParams;
-		}
-		public int getMaxParams() {
-			return maxParams;
-		}
+	public ACmdDsc getCmdDsc() {
+		return this.cmdDsc;
 	}
-
-	public String getCmdName() {
-		return cmdName;
-	}
-
-	public abstract CmdDsc getCmdDsc();
+	
 	public abstract String executeCmdAndCreateSmsResponse(String... params);
 }
