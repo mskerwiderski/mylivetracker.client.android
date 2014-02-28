@@ -23,7 +23,6 @@ import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
  * 000	2012-12-29	revised for v1.5.x.
  * 
  */
-@SuppressWarnings("deprecation")
 public class DropboxUtils {
 
 	final static private String DROPBOX_APP_KEY = "a73z7br0b53qrbj";
