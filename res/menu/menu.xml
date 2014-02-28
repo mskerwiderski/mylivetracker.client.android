@@ -26,7 +26,7 @@
         <menu>  
 		    <item android:id="@+id/mnPrefsPinCodeQuery" android:title="@string/mnPrefsPinCodeQuery" />
 		    <item android:id="@+id/mnPrefsTrackingMode" android:title="@string/mnPrefsTrackingMode" />
-		    <!-- item android:id="@+id/mnPrefsRemoteAccess" android:title="@string/mnPrefsRemoteAccess" / -->
+		    <item android:id="@+id/mnPrefsRemoteAccess" android:title="@string/mnPrefsRemoteAccess" />
 		    <item android:id="@+id/mnPrefsHttpProtocolParams" android:title="@string/mnPrefsHttpProtocolParams" />
 		    <item android:id="@+id/mnPrefsOther" android:title="@string/mnPrefsOther" />
 	    </menu> 
