@@ -41,7 +41,10 @@ public class SmsCmdReceiver extends BroadcastReceiver {
 		cmdRegistry.put(SmsCmdGetLocation.NAME, SmsCmdGetLocation.class);
 		cmdRegistry.put(SmsCmdSetConfig.NAME, SmsCmdSetConfig.class);
 		cmdRegistry.put(SmsCmdTrack.NAME, SmsCmdTrack.class);
-		
+		cmdRegistry.put(SmsCmdTrack.NAME, SmsCmdGetConfig.class);
+		cmdRegistry.put(SmsCmdTrack.NAME, SmsCmdSetConfig.class);
+		cmdRegistry.put(SmsCmdTrack.NAME, SmsCmdUploadConfig.class);
+		cmdRegistry.put(SmsCmdTrack.NAME, SmsCmdUploadTrack.class);
 	}
 	
 	private static boolean smsCmdExecutorExists(String cmdName) {
