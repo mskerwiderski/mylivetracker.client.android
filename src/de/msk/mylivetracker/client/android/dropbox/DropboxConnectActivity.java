@@ -50,7 +50,7 @@ public class DropboxConnectActivity extends AbstractActivity {
 		@Override
 		public void onClick() {
 			DropboxPrefs prefs = PrefsRegistry.get(DropboxPrefs.class);
-			if (prefs.hasValidAccountAndTokens()) {
+			if (prefs.hasValidAccountAndToken()) {
 				SimpleInfoDialog.show(this.activity, 
 					R.string.txDropboxConnect_ConnectionExists);
 			} else {
@@ -85,7 +85,7 @@ public class DropboxConnectActivity extends AbstractActivity {
 		@Override
 		public void onClick() {
 			DropboxPrefs prefs = PrefsRegistry.get(DropboxPrefs.class);
-			if (!prefs.hasValidAccountAndTokens()) {
+			if (!prefs.hasValidAccountAndToken()) {
 				SimpleInfoDialog.show(this.activity, 
 					R.string.txDropboxConnect_NoConnectionExists);
 			} else {
@@ -110,7 +110,7 @@ public class DropboxConnectActivity extends AbstractActivity {
 		DropboxPrefs prefs = PrefsRegistry.get(DropboxPrefs.class);
 		EditText etDropboxConnect_Status = 
         	(EditText)activity.findViewById(R.id.etDropboxConnect_Status);
-		if (prefs.hasValidAccountAndTokens()) {
+		if (prefs.hasValidAccountAndToken()) {
 			etDropboxConnect_Status.setText(
 				App.getCtx().getString(
 					R.string.txDropboxConnect_StatusConnected,

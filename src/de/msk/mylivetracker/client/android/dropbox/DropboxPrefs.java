@@ -21,11 +21,10 @@ public class DropboxPrefs extends APrefs implements Serializable {
 	
 	private static final long serialVersionUID = 617837667667614881L;
 
-	public static final int VERSION = 1;
+	public static final int VERSION = 2;
 	
 	private String account;
-	private String tokenKey;
-	private String tokenSecret;
+	private String tokenOAuth2;
 	
 	@Override
 	public int getVersion() {
@@ -33,50 +32,46 @@ public class DropboxPrefs extends APrefs implements Serializable {
 	}	
 	@Override
 	public void initWithDefaults() {
-		this.resetAccountAndTokens();
+		this.resetAccountAndToken();
 	}
 	@Override
 	public void initWithValuesOfOldVersion(int foundVersion, String foundGsonStr) {
 		// noop.
 	}
 	
-	public void setAccountAndTokens(String account, String key, String secret) {
+	public void setAccountAndToken(String account, String tokenOAuth2) {
 		if (StringUtils.isEmpty(account)) {
 			throw new IllegalArgumentException("account must not be empty!");
 		}
-		if (StringUtils.isEmpty(key) || StringUtils.isEmpty(secret)) {
-			throw new IllegalArgumentException("invalid tokens!");
+		if (StringUtils.isEmpty(tokenOAuth2)) {
+			throw new IllegalArgumentException("invalid tokenOAuth2!");
 		}
 		this.account = account;
-		this.tokenKey = key;
-		this.tokenSecret = secret;
+		this.tokenOAuth2 = tokenOAuth2;
 	}
-	public void resetAccountAndTokens() {
+	public void resetAccountAndToken() {
 		this.account = null;
-		this.tokenKey = null;
-		this.tokenSecret = null;
+		this.tokenOAuth2 = null;
 	}
-	public boolean hasValidAccountAndTokens() {
+	public boolean hasValidAccountAndToken() {
 		return (!StringUtils.isEmpty(this.account) ||
-			!StringUtils.isEmpty(this.tokenKey) || 
-			!StringUtils.isEmpty(this.tokenSecret));
+			!StringUtils.isEmpty(this.tokenOAuth2));
 	}
-	public String[] getTokens() {
-		if (!hasValidAccountAndTokens()) {
-			throw new IllegalArgumentException("invalid details!");
+	public String getTokenOAuth2() {
+		if (!hasValidAccountAndToken()) {
+			throw new IllegalStateException("invalid details!");
 		}
-		return new String[] { this.tokenKey, this.tokenSecret };
+		return this.tokenOAuth2;
 	}
 	public String getAccount() {
-		if (!hasValidAccountAndTokens()) {
-			throw new IllegalArgumentException("invalid details!");
+		if (!hasValidAccountAndToken()) {
+			throw new IllegalStateException("invalid details");
 		}
 		return account;
 	}
-
 	@Override
 	public String toString() {
-		return "DropboxPrefs [account=" + account + ", tokenKey=" + tokenKey
-			+ ", tokenSecret=" + tokenSecret + "]";
+		return "DropboxPrefs [account=" + account + ", tokenOAuth2="
+				+ tokenOAuth2 + "]";
 	}
 }
