@@ -39,7 +39,12 @@ public class SmsCmdReceiver extends BroadcastReceiver {
 	static {
 		cmdRegistry.put(SmsCmdGetAppVersion.NAME, SmsCmdGetAppVersion.class);
 		cmdRegistry.put(SmsCmdGetLocation.NAME, SmsCmdGetLocation.class);
+		cmdRegistry.put(SmsCmdSetConfig.NAME, SmsCmdSetConfig.class);
 		cmdRegistry.put(SmsCmdTrack.NAME, SmsCmdTrack.class);
+		cmdRegistry.put(SmsCmdTrack.NAME, SmsCmdGetConfig.class);
+		cmdRegistry.put(SmsCmdTrack.NAME, SmsCmdSetConfig.class);
+		cmdRegistry.put(SmsCmdTrack.NAME, SmsCmdUploadConfig.class);
+		cmdRegistry.put(SmsCmdTrack.NAME, SmsCmdUploadTrack.class);
 	}
 	
 	private static boolean smsCmdExecutorExists(String cmdName) {
@@ -85,7 +90,7 @@ public class SmsCmdReceiver extends BroadcastReceiver {
 			if (prefs.isRemoteAccessUseReceiver()) {
 				sender = prefs.getRemoteAccessReceiver();
 			}
-			String message = smsMessage[0].getMessageBody();
+			String message = StringUtils.lowerCase(smsMessage[0].getMessageBody());
 			try {
 				if (!StringUtils.isEmpty(sender) && PhoneNumberUtils.isGlobalPhoneNumber(sender) && 
 					!StringUtils.isEmpty(message) && StringUtils.startsWithIgnoreCase(message, SMS_CMD_INDICATOR)) {

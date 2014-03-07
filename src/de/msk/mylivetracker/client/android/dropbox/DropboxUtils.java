@@ -5,9 +5,7 @@ import android.app.Activity;
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.android.AndroidAuthSession;
 import com.dropbox.client2.exception.DropboxException;
-import com.dropbox.client2.session.AccessTokenPair;
 import com.dropbox.client2.session.AppKeyPair;
-import com.dropbox.client2.session.Session.AccessType;
 
 import de.msk.mylivetracker.client.android.liontrack.R;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
@@ -27,7 +25,6 @@ public class DropboxUtils {
 
 	final static private String DROPBOX_APP_KEY = "a73z7br0b53qrbj";
 	final static private String DROPBOX_APP_SECRET = "vk6i3bpo6uv1ra6";
-	final static private AccessType DROPBOX_ACCESS_TYPE = AccessType.APP_FOLDER;
 
 	private static AppKeyPair appKeys = new AppKeyPair(
 		DROPBOX_APP_KEY, DROPBOX_APP_SECRET);
@@ -37,12 +34,9 @@ public class DropboxUtils {
 	private static AndroidAuthSession dropboxAuthSession = null;
 	static {
 		DropboxPrefs prefs = PrefsRegistry.get(DropboxPrefs.class);
-		dropboxAuthSession = 
-			new AndroidAuthSession(appKeys, DROPBOX_ACCESS_TYPE);
-		if (prefs.hasValidAccountAndTokens()) {
-			String[] tokens = prefs.getTokens();
-			dropboxAuthSession.setAccessTokenPair(
-				new AccessTokenPair(tokens[0], tokens[1]));
+		dropboxAuthSession = new AndroidAuthSession(appKeys);
+		if (prefs.hasValidAccountAndToken()) {
+			dropboxAuthSession.setOAuth2AccessToken(prefs.getTokenOAuth2());
 		}
 	}
 	
@@ -57,7 +51,7 @@ public class DropboxUtils {
 	
 	public static void releaseConnection() {
 		dropboxAuthSession.unlink();
-		PrefsRegistry.get(DropboxPrefs.class).resetAccountAndTokens();
+		PrefsRegistry.get(DropboxPrefs.class).resetAccountAndToken();
 		PrefsRegistry.save(DropboxPrefs.class);
 	}
 	
@@ -66,7 +60,7 @@ public class DropboxUtils {
 			throw new IllegalArgumentException("activity must not be null.");
 		}
 		dropboxAuthSession.unlink();
-		dropboxAuthSession.startAuthentication(activity);
+		dropboxAuthSession.startOAuth2Authentication(activity);
 		authenticationStarted = true;
 	}
 	
@@ -77,10 +71,9 @@ public class DropboxUtils {
 				DropboxPrefs prefs = PrefsRegistry.get(DropboxPrefs.class);
 		        try {
 		        	dropboxAuthSession.finishAuthentication();
-		        	AccessTokenPair dropboxTokenPair = dropboxAuthSession.getAccessTokenPair();
-		        	prefs.setAccountAndTokens(
-		        		dropboxApi.accountInfo().displayName, 
-		        		dropboxTokenPair.key, dropboxTokenPair.secret);
+		        	String tokenOAuth2 = dropboxAuthSession.getOAuth2AccessToken();
+		        	prefs.setAccountAndToken(
+		        		dropboxApi.accountInfo().displayName, tokenOAuth2);
 		        	PrefsRegistry.save(DropboxPrefs.class);
 		        	infoMsgId = R.string.txDropboxConnect_InfoConnectingDone;
 		        } catch (DropboxException e) {

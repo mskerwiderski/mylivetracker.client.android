@@ -1,5 +1,7 @@
 package de.msk.mylivetracker.client.android.remoteaccess;
 
+import java.util.Date;
+
 import org.apache.commons.lang.StringUtils;
 
 import de.msk.mylivetracker.client.android.localization.LocalizationService;
@@ -26,7 +28,7 @@ public class SmsCmdGetLocation extends ASmsCmdExecutor {
 	public static class CmdDsc extends ACmdDsc {
 
 		public CmdDsc() {
-			super(NAME, "[detect [timeout in secs]]", 0, 2);
+			super(NAME, "[detect [<timeout in secs>]]", 0, 2);
 		}
 
 		@Override
@@ -66,6 +68,35 @@ public class SmsCmdGetLocation extends ASmsCmdExecutor {
 		boolean detect = (params.length > 0);
 		int timeoutInSecs = ((params.length == 2) ? Integer.valueOf(params[1]) : 180);
 		
+		if (detect) {
+			boolean localizationFoundActive = 
+				AbstractService.isServiceRunning(LocalizationService.class);
+			
+			if (!localizationFoundActive) {
+				LocalizationUtils.startLocalization();
+			}
+			
+			long curr = (new Date()).getTime();
+			long stop = curr + timeoutInSecs * 1000L;
+			boolean cancel = false;
+			while (!cancel && (curr < stop)) {
+				try {
+					Thread.sleep(1000L);
+				} catch (InterruptedException e) {
+					cancel = true;
+				}
+				LocationInfo locationInfo = LocationInfo.get();
+				if ((locationInfo != null) && locationInfo.hasValidLatLon() && 
+					locationInfo.isUpToDate() && locationInfo.isAccurate()) {
+					cancel = true;
+				}
+				curr = (new Date()).getTime();
+			}
+			
+			if (!localizationFoundActive) {
+				LocalizationUtils.stopLocalization();
+			}
+		}
 		LocationInfo locationInfo = LocationInfo.get();
 		if ((locationInfo != null) && locationInfo.hasValidLatLon()) {
 			response = ResponseCreator.getLocationInfoValues(locationInfo);

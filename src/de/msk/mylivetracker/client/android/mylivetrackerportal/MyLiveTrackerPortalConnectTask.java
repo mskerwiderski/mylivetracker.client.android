@@ -3,6 +3,9 @@ package de.msk.mylivetracker.client.android.mylivetrackerportal;
 import java.net.URL;
 
 import android.os.AsyncTask;
+
+import com.googlecode.jsonrpc4j.JsonRpcHttpClient;
+
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.App.ConfigDsc;
 import de.msk.mylivetracker.client.android.account.AccountPrefs;
@@ -13,7 +16,6 @@ import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs.BufferSize;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs.TransferProtocol;
-import de.msk.mylivetracker.client.android.rpc.JsonRpcHttpClient;
 import de.msk.mylivetracker.client.android.server.ServerPrefs;
 import de.msk.mylivetracker.client.android.util.ConnectivityUtils;
 import de.msk.mylivetracker.commons.rpc.RegisterSenderRequest;

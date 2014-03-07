@@ -46,9 +46,8 @@ public class ResponseCreator {
 		str = ResponseCreator.getTimestampValue(locationInfo.getTimestamp());
 		str = ResponseCreator.addLatLonValue(str, locationInfo);
 		str = ResponseCreator.addFloatValue(str, ACCURACY, locationInfo.getAccuracyInMtr(), 0, Unit.Meter);
-		str = ResponseCreator.addFloatValue(str, BEARING, locationInfo.getBearingInDegree(), 0, Unit.Degree);
-		// TODO check if there is no speed!
-		str = ResponseCreator.addFloatValue(str, SPEED, locationInfo.getSpeedInMtrPerSecs() * 3.6f, 1, Unit.KilometerPerHour);
+		str = ResponseCreator.addFloatValue(str, BEARING, locationInfo.getBearingInDegree(), 0, Unit.DegreeAsTxt);
+		str = ResponseCreator.addFloatValue(str, SPEED, locationInfo.getSpeedInMtrPerSecs(), 0, Unit.MeterPerSec);
 		str = ResponseCreator.addDoubleValue(str, ALTITUDE, locationInfo.getAltitudeInMtr(), 0, Unit.Meter);
 		str = ResponseCreator.addGoogleLatLonUrl(str, locationInfo);
 		return str;

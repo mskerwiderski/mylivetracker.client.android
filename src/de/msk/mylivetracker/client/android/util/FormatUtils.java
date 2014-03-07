@@ -22,6 +22,7 @@ public class FormatUtils {
 	public enum Unit {
 		Percent("%"), 
 		Volt("V"), 
+		DegreeAsTxt("deg"),
 		Degree("¡"),
 		DegreeCelsius("¡C"),
 		Seconds("s"),
@@ -29,6 +30,7 @@ public class FormatUtils {
 		Kilometer("km"),
 		KilometerPerHour("km/h"),
 		Meter("m"),
+		MeterPerSec("m/s"),
 		BeatsPerMinute("bpm");
 		
 		private String txt;

@@ -59,16 +59,16 @@ public class SmsCmdTrack extends ASmsCmdExecutor {
 		LogUtils.infoMethodIn(this.getClass(), "executeCmdAndCreateSmsResponse", Arrays.toString(params));
 		String cmd = params[0];
 		String response = "'" + cmd + "' not supported."; 
-		if (StringUtils.equalsIgnoreCase(cmd, "reset")) {
+		if (StringUtils.equals(cmd, "reset")) {
 			TrackUtils.resetTrack();
 			response = "track resetted.";
-		} else if (StringUtils.equalsIgnoreCase(cmd, "start")) {
+		} else if (StringUtils.equals(cmd, "start")) {
 			boolean started = TrackUtils.startTrack();
 			response = (started ? "track started." : "track already running.");
-		} else if (StringUtils.equalsIgnoreCase(cmd, "stop")) {
+		} else if (StringUtils.equals(cmd, "stop")) {
 			boolean stopped = TrackUtils.stopTrack();
 			response = (stopped ? "track stopped." : "track not running.");
-		}  else if (StringUtils.equalsIgnoreCase(cmd, "info")) {
+		}  else if (StringUtils.equals(cmd, "info")) {
 			TrackStatus status = TrackStatus.get();
 			response = "track is " + (status.trackIsRunning() ? "running, " : "not running, ");
 			DecimalFormat decimalFmt = 
@@ -87,7 +87,9 @@ public class SmsCmdTrack extends ASmsCmdExecutor {
 				response += "unknown.";
 			} else {
 				DateTime dateTime = new DateTime(locationInfo.getTimestamp().getTime());
-				response += dateTime.getAsStr(TimeZone.getTimeZone(DateTime.TIME_ZONE_UTC), DateTime.INTERNAL_DATE_TIME_FMT) + ".";
+				response += dateTime.getAsStr(
+					TimeZone.getTimeZone(DateTime.TIME_ZONE_UTC), 
+					DateTime.INTERNAL_DATE_TIME_FMT) + ".";
 			}
 		}
 		

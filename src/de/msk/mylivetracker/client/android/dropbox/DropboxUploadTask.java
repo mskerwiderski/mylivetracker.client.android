@@ -145,6 +145,7 @@ public class DropboxUploadTask extends AsyncTask<Void, Long, Boolean> {
         	}
         	this.fileLength = FileUtils.getFileLength(fileName, PathType.AppDataDir);
             fis = App.get().openFileInput(fileName);
+            
             this.request = DropboxUtils.getDropboxApi().putFileOverwriteRequest(
             	"/" + fileName, fis, this.fileLength,
                 new ProgressListener() {

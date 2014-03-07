@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>MLT Doku DE</title></head><body><h1>Fernzugriff</h1>Auf
+die MLT App kann per SMS von außerhalb zugegriffen werden. D.h. die MLT
+App lässt sich&nbsp;per SMS fernsteuern (z.B. Starten und Stoppen des
+Trackings) und es können per SMS Daten (z.B. Positionsdaten) abgerufen
+werden.<br>Voraussetzung: Die MLT App muss aktiv sein und der Fernzugriff muss aktiviert und entsprechend konfiguriert sein.<br><br>Die Aktivierung und Konfiguration des Fernzugriffs erfolgt über die Einstellungen unter Menu --&gt; System --&gt; Fernzugriff:<br><ul><li>Die Option "<span style="font-weight: bold; font-style: italic;">Fernzugriff aktivieren</span>" muss aktiviert sein.</li><li>Aus
+Sicherheitsgründen muss ein Passwort definiert werden um einen nicht
+autorisierten Fernzugriff zu verhindern. Das Passwort darf dabei keine
+Leerzeichen enthalten.</li><li>Die Option "<span style="font-weight: bold; font-style: italic;">Sende Antworten an angegeben Empfänmger ...</span>"
+sollte dann aktiviert werden, wenn die Antwort-SMS der MLT App an eine
+andere Empfängernummer zugestellt werden soll - also nicht an die
+Empfängernummer von der die ursprünglich Anfrage-SMS kam. Das macht
+z.B. dann Sinn, wenn man einen Web-SMS-Dienst für das Versenden von
+Anfrage-SMS verwenden will, der selbst keine Möglichkeit bietet SMS zu
+empfangen.</li><li>Wird die Option "<span style="font-weight: bold; font-style: italic;">Sende Antworten an angegeben Empfänmger ...</span>" aktiviert, erwartet die MLT App die Angabe eines "<span style="font-weight: bold; font-style: italic;">Empfängers</span>", also einer gültigen Telefonnummer.&nbsp;</li></ul>Folgende SMS-Kommandos stehen bei aktiviertem Fernzugriff zur Verfügung:<br><ul><li><span style="font-weight: bold; font-style: italic;">getversion</span> --&gt; Abfrage der Versionsnummer der MLT App<span style="font-weight: bold; font-style: italic;"></span></li><li><span style="font-weight: bold; font-style: italic;">getlocation [detect] &lt;timeout&gt;</span> --&gt; Abfrage der aktuellen und gültigen Position</li><ul><li><span style="font-weight: bold; font-style: italic;">detect &lt;timeout&gt; </span>- Lokalisierung starten, sofern keine aktuelle und gültige Position bekannt ist</li></ul><li><span style="font-style: italic; font-weight: bold;">track [reset|start|stop|info]</span> --&gt;&nbsp;</li><ul><li><span style="font-style: italic; font-weight: bold;">reset </span><span style="font-style: italic;"></span>-<span style="font-style: italic; font-weight: bold;"> </span>Reset des aktuellen Tracks (Alle Aktivitäten werden gestoppt und der aktuelle Track zurückgesetzt)</li></ul><ul><li><span style="font-weight: bold; font-style: italic;">start</span> - Starten des Trackings&nbsp; (Das Tracking wird gestartet, sofern das Tracking noch nicht aktiv ist)</li></ul><ul><li><span style="font-weight: bold; font-style: italic;">stop</span> - Stoppen des Trackings&nbsp; (Das Tracking wird gestoppt, sofern das Tracking noch aktiv ist)</li></ul><ul><li><span style="font-weight: bold; font-style: italic;">info</span> - Informationabfrage zum aktuellen Track (wie z.B. zurückgelegte Distanz, letzte Positionsbestimmung, etc.)</li></ul></ul>Jedes SMS-Kommando muss dabei folgender Syntax entsprechen:<br><br><span style="font-weight: bold; font-style: italic;">#mlt &lt;Passwort&gt; &lt;Kommando&gt; [&lt;Parameter&gt;]<br><br>#mlt</span><span style="font-weight: bold;"></span>
+ist der Indikator anhand dessen die MLT App eine SMS-Nachricht als
+Kommando erkennt. SMS Nachrichten ohne diesen Indikator werden von der
+MLT App nicht als SMS-Kommandos erkannt und deswegen auch nicht weiter
+verarbeitet, bzw. von der MLT App ignoriert. SMS-Kommandos mit gültigem
+Indikator, aber mit ungültiger Syntax (z.B. unbekanntes Kommando,
+ungültige Parameter) werden von der MLT-App mit der Antwort-SMS "<span style="font-weight: bold; font-style: italic;">FAILED: invalid command.</span>"
+quittiert. SMS-Kommandos mit gültigem Indikator, aber mit ungültigem
+Passwort werden ignoriert, also nicht beantwortet, um
+Trial-and-Error-Attacken zu erschweren.<br> <span style="font-style: italic;"><span style="font-weight: bold;"></span></span><span style="font-weight: bold; font-style: italic;"><br></span>Es folgen nun Beispiele gültiger SMS-Kommandos unter der Annahme dass das Passwort "<span style="font-weight: bold; font-style: italic;">123456</span>" lautet:<br><ul><li><span style="font-weight: bold; font-style: italic;">#mlt 123456 getversion</span><br>Die MLT-App antwortet z.B. mit: "<span style="font-weight: bold; font-style: italic;">v1.6.0 RP</span>"<br></li><li><span style="font-weight: bold; font-style: italic;">#mlt 123456 getlocation</span><br><span style="font-weight: bold; font-style: italic;"></span>Abfrage
+der aktuellen und gültigen Position. Hat die MLT-App aktuell keine
+gültige Position, da z.B. die Lokalisierung oder das Tracking
+ausgeschaltet sind, antwortet die MLT-App mit "<span style="font-weight: bold; font-style: italic;">no valid location found.</span>" Ist hingegen eine gültige Position bekannt, antwortet die MLT-App z.B. mit<br>"<span style="font-weight: bold;">timestamp=UTC2014-02-28 17:30:10.123,</span><br style="font-weight: bold;"><span style="font-weight: bold;">latLon=48.368509,10.883196,</span><br style="font-weight: bold;"><span style="font-weight: bold;">accuracy=7,</span><br style="font-weight: bold;"><span style="font-weight: bold;">bearing=151,</span><br style="font-weight: bold;"><span style="font-weight: bold;">speed=50.4,</span><br style="font-weight: bold;"><span style="font-weight: bold;">altitude=532,</span><br style="font-weight: bold;"><span style="font-weight: bold;">googleLatLonUrl=https...</span>" <br>Wichtig:
+Es wird hier nur eine Statusabfrage vorgenommen. Ist also keine
+Position vorhanden, wird auch keine zurückgemeldet. Der Modus ist also:
+"Gib mir die Position die Du gerade hast."<br>Will man mit dem SMS-Kommando "<span style="font-weight: bold; font-style: italic;">getlocation</span>" auch die Positionsermittlung anstossen, muss das Kommando mit dem Parameter "<span style="font-weight: bold; font-style: italic;">detect</span>" ergänzt werden, wie in folgendem Beispiel:&nbsp; &nbsp; </li></ul><ul><li><span style="font-weight: bold; font-style: italic;">#mlt 123456 getlocation detect 120</span><br><span style="font-weight: bold; font-style: italic;"></span>Abfrage
+der aktuellen und gültigen Position: Die MLT App hat dabei 120 Sekunden
+Zeit eine gültige Position zu bestimmen, falls noch keine gültige
+Position vorhanden ist. Der Modus lautet in diesem Beispiel: "Gib mir
+die aktuelle Position. Wenn Du noch keine aktuelle und gültige Position
+hast, hast Du 120 Sekunden Zeit eine zu ermitteln." Das bedeutet, dass
+die MLT-App u.U. selbstständig die Lokalisierung aktiviert, sofern sie
+ausgeschaltet ist.<br></li><li>s</li></ul><h2>Aktivierung und Konfiguration des Fernzugriffs</h2>Die Aktivierung und Konfiguration des Fernzugriffs </body></html>
