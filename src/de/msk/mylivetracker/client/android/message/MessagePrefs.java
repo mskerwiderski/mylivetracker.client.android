@@ -3,6 +3,7 @@ package de.msk.mylivetracker.client.android.message;
 import java.io.Serializable;
 import java.util.Arrays;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
 import de.msk.mylivetracker.client.android.App;
@@ -126,11 +127,12 @@ public class MessagePrefs extends APrefs implements Serializable {
 	}
 	@Override
 	public PrefsDump getPrefsDump() {
-		return new PrefsDump("message", 
+		return new PrefsDump("MessagePrefs", 
 			new ConfigPair[] {
-				new ConfigPair("send mode", this.sendMessageMode.name()),
-				new ConfigPair("templates", this.messageTemplates.toString()),
-				new ConfigPair("sms receiver", this.smsReceiver),
+				new ConfigPair("sendMessageMode", this.sendMessageMode.name()),
+				new ConfigPair("messageTemplates", 
+					ArrayUtils.toString(this.messageTemplates.toString())),
+				new ConfigPair("smsReceiver", this.smsReceiver),
 		});
 	}
 	@Override

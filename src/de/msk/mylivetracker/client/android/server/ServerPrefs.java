@@ -63,7 +63,7 @@ public class ServerPrefs extends APrefs implements Serializable {
 
 	@Override
 	public PrefsDump getPrefsDump() {
-		return new PrefsDump("server", 
+		return new PrefsDump("ServerPrefs", 
 			new ConfigPair[] {
 				new ConfigPair("server", this.server),
 				new ConfigPair("port", String.valueOf(this.port)),

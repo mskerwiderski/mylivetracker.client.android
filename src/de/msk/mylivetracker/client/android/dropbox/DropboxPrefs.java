@@ -5,6 +5,9 @@ import java.io.Serializable;
 import org.apache.commons.lang.StringUtils;
 
 import de.msk.mylivetracker.client.android.preferences.APrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.ConfigPair;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.PrefsDump;
 
 /**
  * classname: DropboxPrefs
@@ -68,6 +71,14 @@ public class DropboxPrefs extends APrefs implements Serializable {
 			throw new IllegalStateException("invalid details");
 		}
 		return account;
+	}
+	@Override
+	public PrefsDump getPrefsDump() {
+		return new PrefsDump("DropboxPrefs", 
+			new ConfigPair[] {
+				new ConfigPair("account", this.account),
+				new ConfigPair("tokenOAuth2", PrefsDumper.PASSWORD_MASK),
+		});
 	}
 	@Override
 	public String toString() {

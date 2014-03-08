@@ -1,9 +1,12 @@
 package de.msk.mylivetracker.client.android.preferences;
 
+import java.util.TimeZone;
+
 import org.apache.commons.lang.StringUtils;
 
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry.PrefsDsc;
+import de.msk.mylivetracker.commons.util.datetime.DateTime;
 
 /**
  * classname: PrefsDumper
@@ -20,6 +23,8 @@ public class PrefsDumper {
 	public static final String LINE_SEP = "\n";
 	public static final String EMPTY = "<empty>";
 
+	public static final String PASSWORD_MASK = "********";
+	
 	private static String getSimpleLine(int cnt) {
 		return StringUtils.repeat("-", cnt);
 	}
@@ -50,14 +55,14 @@ public class PrefsDumper {
 	public static String getDump() {
 		String dump = 
 			getDoubleLine(80) + LINE_SEP +
-			"Timestamp" + LINE_SEP +
+			"Dump created=" + (new DateTime()).getAsStr(
+				TimeZone.getTimeZone(DateTime.TIME_ZONE_UTC), 
+				"'UTC'yyyy-MM-dd'T'HH-mm-ss-SSS'Z'") + LINE_SEP +
 			"AppNameComplete=" + App.getAppNameComplete() + LINE_SEP +
 			"DeviceId=" + App.getDeviceId() + LINE_SEP +
 			"DeviceModel=" + App.getDeviceModel() + LINE_SEP +
 			"DeviceLanguage=" + App.getLocale().getDisplayLanguage() + LINE_SEP +
 			getDoubleLine(80) + LINE_SEP + LINE_SEP;
-		
-			
 		for (PrefsDsc prefsDsc : PrefsRegistry.prefsDscArr) {
 			if (prefsDsc.id > 0) {
 				dump += getPrefsDumpAsStr(prefsDsc.id, prefsDsc.version,
@@ -65,7 +70,6 @@ public class PrefsDumper {
 					LINE_SEP;
 			}
 		}
-		
 		return dump;
 	}
 	

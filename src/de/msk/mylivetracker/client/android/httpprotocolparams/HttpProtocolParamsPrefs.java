@@ -3,6 +3,8 @@ package de.msk.mylivetracker.client.android.httpprotocolparams;
 import java.io.Serializable;
 
 import de.msk.mylivetracker.client.android.preferences.APrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.ConfigPair;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.PrefsDump;
 
 /**
  * classname: HttpProtocolParamsPrefs
@@ -42,7 +44,13 @@ public class HttpProtocolParamsPrefs extends APrefs implements Serializable {
 	public void setHttpProtocolParams(HttpProtocolParams httpProtocolParams) {
 		this.httpProtocolParams = httpProtocolParams;
 	}
-
+	@Override
+	public PrefsDump getPrefsDump() {
+		return new PrefsDump("HttpProtocolParamsPrefs", 
+			new ConfigPair[] {
+				new ConfigPair("httpProtocolParams", this.httpProtocolParams.toString()),
+		});
+	}
 	@Override
 	public String toString() {
 		return "HttpProtocolParamsPrefs [httpProtocolParams="

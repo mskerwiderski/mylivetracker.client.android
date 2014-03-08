@@ -99,14 +99,14 @@ public class OtherPrefs extends APrefs implements Serializable {
 	}
 	@Override
 	public PrefsDump getPrefsDump() {
-		return new PrefsDump("other", 
+		return new PrefsDump("OtherPrefs", 
 			new ConfigPair[] {
-				new ConfigPair("confirm level", this.confirmLevel.getDsc()),
-				new ConfigPair("tracking one-touch mode", this.trackingOneTouchMode.name()),
-				new ConfigPair("adapt buttons for one-touch mode", 
-					BooleanUtils.toStringOnOff(this.adaptButtonsForOneTouchMode)),
-				new ConfigPair("ant plus enabled if available", 
-					BooleanUtils.toStringYesNo(this.antPlusEnabledIfAvailable)),
+				new ConfigPair("confirmLevel", this.confirmLevel.name()),
+				new ConfigPair("trackingOneTouchMode", this.trackingOneTouchMode.name()),
+				new ConfigPair("adaptButtonsForOneTouchMode", 
+					BooleanUtils.toStringTrueFalse(this.adaptButtonsForOneTouchMode)),
+				new ConfigPair("antPlusEnabledIfAvailable", 
+					BooleanUtils.toStringTrueFalse(this.antPlusEnabledIfAvailable)),
 		});
 	}
 	@Override

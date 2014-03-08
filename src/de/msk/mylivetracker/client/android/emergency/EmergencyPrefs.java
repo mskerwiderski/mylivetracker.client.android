@@ -58,9 +58,9 @@ public class EmergencyPrefs extends APrefs implements Serializable {
 	}
 	@Override
 	public PrefsDump getPrefsDump() {
-		return new PrefsDump("emergency", 
+		return new PrefsDump("EmergencyPrefs", 
 			new ConfigPair[] {
-				new ConfigPair("message text", this.messageText),
+				new ConfigPair("messageText", this.messageText),
 		});
 	}
 	@Override
