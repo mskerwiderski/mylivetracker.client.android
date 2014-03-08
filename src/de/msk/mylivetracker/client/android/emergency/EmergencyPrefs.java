@@ -5,6 +5,8 @@ import java.io.Serializable;
 import org.apache.commons.lang.StringUtils;
 
 import de.msk.mylivetracker.client.android.preferences.APrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.ConfigPair;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.PrefsDump;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 
 /**
@@ -53,6 +55,13 @@ public class EmergencyPrefs extends APrefs implements Serializable {
 	}
 	public void setMessageText(String messageText) {
 		this.messageText = messageText;
+	}
+	@Override
+	public PrefsDump getPrefsDump() {
+		return new PrefsDump("emergency", 
+			new ConfigPair[] {
+				new ConfigPair("message text", this.messageText),
+		});
 	}
 	@Override
 	public String toString() {

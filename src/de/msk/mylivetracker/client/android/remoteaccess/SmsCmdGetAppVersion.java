@@ -17,11 +17,12 @@ import de.msk.mylivetracker.client.android.App.VersionDsc;
 public class SmsCmdGetAppVersion extends ASmsCmdExecutor {
 
 	public static String NAME = "getversion";
+	public static String SYNTAX = "";
 	
 	public static class CmdDsc extends ACmdDsc {
 
 		public CmdDsc() {
-			super(NAME, "", 0, 0);
+			super(NAME, SYNTAX, 0, 0);
 		}
 
 		@Override

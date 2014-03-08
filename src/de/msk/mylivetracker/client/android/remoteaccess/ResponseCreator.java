@@ -5,6 +5,7 @@ import java.util.TimeZone;
 
 import org.apache.commons.lang.StringUtils;
 
+import de.msk.mylivetracker.client.android.dropbox.DropboxUtils.UploadFileResult;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
 import de.msk.mylivetracker.client.android.util.FormatUtils;
 import de.msk.mylivetracker.client.android.util.FormatUtils.Unit;
@@ -33,17 +34,38 @@ public class ResponseCreator {
 	public static final String GOOGLE_LATLON_URL = "googleLatLonUrl";
 	public static final String DATE_TIME_FORMAT = "'UTC' yyyy-MM-dd HH:mm:ss.SSS";
 	
+	public static String getResultOfError(String errorMsg) {
+		if (StringUtils.isEmpty(errorMsg)) {
+			errorMsg = "unknown";
+		}
+		return "failed:" + errorMsg;
+	}
 	
-	/*
-	 * location infos.
-	 */
+	public static String getResultNotSupported() {
+		return getResultOfError("currently not supported");
+	}
+
+	public static String getResultOfNotConnectedToDropbox() {
+		return getResultOfError("device is not connected to dropbox");
+	}
 	
-	public static String getLocationInfoValues(LocationInfo locationInfo) {
+	public static String getResultOfUploadFile(UploadFileResult uploadFileResult) {
+		String result = "";
+		if (!uploadFileResult.success) {
+			result = addParamValue(result, "error", uploadFileResult.error);
+		} else {
+			result = addParamValue(result, "revid", uploadFileResult.revisionId);
+			result = addParamValue(result, "size", uploadFileResult.sizeStr);
+		}
+		return result;
+	}
+	
+	public static String getResultOfGetLocation(LocationInfo locationInfo) {
 		return addLocationInfoValues(null, locationInfo);
 	}
 	
 	public static String addLocationInfoValues(String str, LocationInfo locationInfo) {
-		str = ResponseCreator.getTimestampValue(locationInfo.getTimestamp());
+		str = ResponseCreator.addTimestampValue(str, locationInfo.getTimestamp());
 		str = ResponseCreator.addLatLonValue(str, locationInfo);
 		str = ResponseCreator.addFloatValue(str, ACCURACY, locationInfo.getAccuracyInMtr(), 0, Unit.Meter);
 		str = ResponseCreator.addFloatValue(str, BEARING, locationInfo.getBearingInDegree(), 0, Unit.DegreeAsTxt);

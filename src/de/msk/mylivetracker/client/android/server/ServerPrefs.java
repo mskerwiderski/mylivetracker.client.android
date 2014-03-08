@@ -3,6 +3,8 @@ package de.msk.mylivetracker.client.android.server;
 import java.io.Serializable;
 
 import de.msk.mylivetracker.client.android.preferences.APrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.ConfigPair;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.PrefsDump;
 
 /**
  * classname: ServerPrefs
@@ -57,6 +59,16 @@ public class ServerPrefs extends APrefs implements Serializable {
 	}
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+	@Override
+	public PrefsDump getPrefsDump() {
+		return new PrefsDump("server", 
+			new ConfigPair[] {
+				new ConfigPair("server", this.server),
+				new ConfigPair("port", String.valueOf(this.port)),
+				new ConfigPair("path", this.path),
+		});
 	}
 
 	@Override

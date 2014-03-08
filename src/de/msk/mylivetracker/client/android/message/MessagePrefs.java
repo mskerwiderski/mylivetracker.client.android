@@ -8,6 +8,8 @@ import org.apache.commons.lang.StringUtils;
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.preferences.APrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.ConfigPair;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.PrefsDump;
 
 /**
  * classname: MessagePrefs
@@ -122,7 +124,15 @@ public class MessagePrefs extends APrefs implements Serializable {
 	public void setSmsReceiver(String smsReceiver) {
 		this.smsReceiver = smsReceiver;
 	}
-
+	@Override
+	public PrefsDump getPrefsDump() {
+		return new PrefsDump("message", 
+			new ConfigPair[] {
+				new ConfigPair("send mode", this.sendMessageMode.name()),
+				new ConfigPair("templates", this.messageTemplates.toString()),
+				new ConfigPair("sms receiver", this.smsReceiver),
+		});
+	}
 	@Override
 	public String toString() {
 		return "MessagePrefs [messageTemplates="

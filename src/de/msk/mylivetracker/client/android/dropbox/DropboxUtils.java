@@ -1,14 +1,20 @@
 package de.msk.mylivetracker.client.android.dropbox;
 
+import java.io.FileInputStream;
+
 import android.app.Activity;
 
 import com.dropbox.client2.DropboxAPI;
+import com.dropbox.client2.DropboxAPI.Entry;
 import com.dropbox.client2.android.AndroidAuthSession;
 import com.dropbox.client2.exception.DropboxException;
 import com.dropbox.client2.session.AppKeyPair;
 
+import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
+import de.msk.mylivetracker.client.android.util.FileUtils;
+import de.msk.mylivetracker.client.android.util.FileUtils.PathType;
 
 /**
  * classname: DropboxUtils
@@ -87,5 +93,31 @@ public class DropboxUtils {
 			authenticationStarted = false;
 		}
 		return infoMsgId;
+	}
+	
+	public static class UploadFileResult {
+		public boolean success = false;
+		public String revisionId = null;
+		public long size = -1;
+		public String sizeStr = null;
+		public String error = null;
+	}
+	
+	public static UploadFileResult uploadFile(String fileName) {
+		UploadFileResult uploadFileResult = new UploadFileResult();
+		try {
+			FileInputStream fis = App.get().openFileInput(fileName);
+			long fileLength = FileUtils.getFileLength(fileName, PathType.AppDataDir);
+			Entry response = dropboxApi.putFile("/" + fileName, fis, fileLength, null, null);
+			uploadFileResult.success = true;
+			uploadFileResult.revisionId = response.rev;
+			uploadFileResult.size = response.bytes;
+			uploadFileResult.sizeStr = response.size;
+			FileUtils.closeStream(fis);
+		} catch (Exception e) {
+			uploadFileResult.success = false;
+			uploadFileResult.error = e.getMessage();
+		}
+		return uploadFileResult;
 	}
 }

@@ -40,20 +40,23 @@ public abstract class ASmsCmdExecutor implements Runnable {
 	@Override
 	public void run() {
 		LogUtils.infoMethodIn(this.getClass(), "run");
-		String smsResponse = SmsCmdReceiver.SMS_CMD_ERROR_PREFIX + "internal command error: ";
+		String smsResponse = "";
 		try {
 			LogUtils.infoMethodState(this.getClass(), "run", "params", Arrays.toString(this.params));
 			if (!this.cmdDsc.matchesSyntax(params)) {
-				smsResponse = "command does not match syntax '" + this.cmdDsc.getSyntax() + "'";
+				smsResponse = ResponseCreator.getResultOfError( 
+					"command does not match syntax '" + this.cmdDsc.getSyntax() + "'");
 			} else {
 				smsResponse = this.executeCmdAndCreateSmsResponse(this.params);
 			}
 		} catch (Exception e) {
-			smsResponse += e.toString();
+			smsResponse = ResponseCreator.getResultOfError(e.getMessage());
 			LogUtils.infoMethodState(this.getClass(), "run", "run failed", e.toString());
 		} finally {
 			try {
+				smsResponse = "[" + this.getCmdDsc().getName() + "]:" + smsResponse;
 				SmsSendUtils.sendSms(this.sender, smsResponse);
+				LogUtils.infoMethodState(this.getClass(), "run", "sms response", smsResponse);
 			} catch (Exception e) {
 				LogUtils.infoMethodState(this.getClass(), "run", "send sms", e.toString());
 			}

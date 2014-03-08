@@ -1,5 +1,8 @@
 package de.msk.mylivetracker.client.android.preferences;
 
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.ConfigPair;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.PrefsDump;
+
 /**
  * classname: APrefs
  * 
@@ -14,5 +17,13 @@ package de.msk.mylivetracker.client.android.preferences;
 public abstract class APrefs implements IPrefs {
 	protected void onSave() {
 		// noop.
+	}
+
+	@Override
+	public PrefsDump getPrefsDump() {
+		return new PrefsDump(this.getClass().getSimpleName(), 
+			new ConfigPair[] {
+				new ConfigPair("all", this.toString()),
+		});
 	}
 }

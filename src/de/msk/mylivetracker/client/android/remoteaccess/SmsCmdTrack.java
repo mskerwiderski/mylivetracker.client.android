@@ -30,11 +30,12 @@ import de.msk.mylivetracker.commons.util.datetime.DateTime;
 public class SmsCmdTrack extends ASmsCmdExecutor {
 
 	public static String NAME = "track";
+	public static String SYNTAX = "reset|start|stop|info";
 	
 	public static class CmdDsc extends ACmdDsc {
 
 		public CmdDsc() {
-			super(NAME, "reset|start|stop|info", 1, 1);
+			super(NAME, SYNTAX, 1, 1);
 		}
 
 		@Override

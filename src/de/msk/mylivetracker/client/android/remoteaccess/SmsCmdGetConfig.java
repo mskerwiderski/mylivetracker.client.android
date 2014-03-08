@@ -15,16 +15,17 @@ package de.msk.mylivetracker.client.android.remoteaccess;
 public class SmsCmdGetConfig extends ASmsCmdExecutor {
 
 	public static String NAME = "getconfig";
+	public static String SYNTAX = "server";
 	
 	public static class CmdDsc extends ACmdDsc {
 
 		public CmdDsc() {
-			super(NAME, "<param> <value>", 2, 2);
+			super(NAME, SYNTAX, 1, 1);
 		}
 
 		@Override
 		public boolean matchesSyntax(String[] params) {
-			return (params.length == 2);
+			return (params.length == 1);
 		}
 		
 	}
@@ -35,6 +36,9 @@ public class SmsCmdGetConfig extends ASmsCmdExecutor {
 
 	@Override
 	public String executeCmdAndCreateSmsResponse(String... params) {
-		return "not supported";
+		if (params[0].equals("server")) {
+			
+		}
+		return ResponseCreator.getResultNotSupported();
 	}
 }

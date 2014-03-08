@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="de.msk.mylivetracker.client.android"
     android:versionCode="160" 
-    android:versionName="1.6.0 RP" 
+    android:versionName="1.6.0 BP" 
     >       
     <uses-sdk
        android:minSdkVersion="7" 

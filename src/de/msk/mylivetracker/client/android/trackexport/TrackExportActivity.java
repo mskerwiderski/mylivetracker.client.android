@@ -7,6 +7,7 @@ import android.widget.Button;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.dropbox.DropboxUploadTask;
 import de.msk.mylivetracker.client.android.dropbox.DropboxUploadTask.DoInBackgroundInitializer;
+import de.msk.mylivetracker.client.android.dropbox.DropboxUploadTask.PostProcessor;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.status.LogInfo;
 import de.msk.mylivetracker.client.android.util.FileUtils;
@@ -25,6 +26,7 @@ import de.msk.mylivetracker.client.android.util.listener.OnFinishActivityListene
  * @since 1.5.0
  * 
  * history:
+ * 001	2014-03-08	delete gpx file after upload.
  * 000	2012-12-29	revised for v1.5.x.
  * 
  */
@@ -49,7 +51,12 @@ public class TrackExportActivity extends AbstractActivity {
 						LogInfo.createGpxFileOfCurrentTrack(gpxFileName);
 					}
 				},
-				null
+				new PostProcessor() {
+					@Override
+					public void postProcess() {
+						FileUtils.fileDelete(gpxFileName, PathType.AppDataDir);
+					}
+				}
 			);
 		}	
 		

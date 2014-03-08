@@ -2,7 +2,11 @@ package de.msk.mylivetracker.client.android.other;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang.BooleanUtils;
+
 import de.msk.mylivetracker.client.android.preferences.APrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.ConfigPair;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.PrefsDump;
 
 /**
  * classname: OtherPrefs
@@ -92,6 +96,18 @@ public class OtherPrefs extends APrefs implements Serializable {
 	}
 	public void setAntPlusEnabledIfAvailable(boolean antPlusEnabledIfAvailable) {
 		this.antPlusEnabledIfAvailable = antPlusEnabledIfAvailable;
+	}
+	@Override
+	public PrefsDump getPrefsDump() {
+		return new PrefsDump("other", 
+			new ConfigPair[] {
+				new ConfigPair("confirm level", this.confirmLevel.getDsc()),
+				new ConfigPair("tracking one-touch mode", this.trackingOneTouchMode.name()),
+				new ConfigPair("adapt buttons for one-touch mode", 
+					BooleanUtils.toStringOnOff(this.adaptButtonsForOneTouchMode)),
+				new ConfigPair("ant plus enabled if available", 
+					BooleanUtils.toStringYesNo(this.antPlusEnabledIfAvailable)),
+		});
 	}
 	@Override
 	public String toString() {

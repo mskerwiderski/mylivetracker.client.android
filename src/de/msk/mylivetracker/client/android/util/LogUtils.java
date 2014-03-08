@@ -7,7 +7,16 @@ import org.apache.commons.lang.StringUtils;
 
 import android.util.Log;
 import de.msk.mylivetracker.client.android.App.VersionDsc;
-import de.msk.mylivetracker.client.android.upload.Uploader;
+import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdError;
+import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdGetAppVersion;
+import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdGetConfig;
+import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdGetHelp;
+import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdGetLocation;
+import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdReceiver;
+import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdSetConfig;
+import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdTrack;
+import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdUploadConfig;
+import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdUploadTrack;
 
 /**
  * classname: LogUtils
@@ -39,7 +48,17 @@ public class LogUtils {
 		//classes.put(SmsSendUtils.class, Boolean.TRUE);
 		//classes.put(LocalizationService.class, Boolean.TRUE);
 		//classes.put(TrackingModePrefsActivity.class, Boolean.TRUE);
-		classes.put(Uploader.class, Boolean.TRUE);
+		//classes.put(Uploader.class, Boolean.TRUE);
+		classes.put(SmsCmdReceiver.class, Boolean.TRUE);
+		classes.put(SmsCmdError.class, Boolean.TRUE);
+		classes.put(SmsCmdGetAppVersion.class, Boolean.TRUE);
+		classes.put(SmsCmdGetConfig.class, Boolean.TRUE);
+		classes.put(SmsCmdGetHelp.class, Boolean.TRUE);
+		classes.put(SmsCmdGetLocation.class, Boolean.TRUE);
+		classes.put(SmsCmdSetConfig.class, Boolean.TRUE);
+		classes.put(SmsCmdTrack.class, Boolean.TRUE);
+		classes.put(SmsCmdUploadConfig.class, Boolean.TRUE);
+		classes.put(SmsCmdUploadTrack.class, Boolean.TRUE);
 	}
 
 	private static boolean isLogForClassEnabled(Class<?> clazz) {

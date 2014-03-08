@@ -1,5 +1,7 @@
 package de.msk.mylivetracker.client.android.preferences;
 
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.PrefsDump;
+
 /**
  * classname: IPrefs
  * 
@@ -15,4 +17,5 @@ public interface IPrefs {
 	public int getVersion();
 	public void initWithDefaults();
 	public void initWithValuesOfOldVersion(int foundVersion, String foundGsonStr);
+	public PrefsDump getPrefsDump();
 }

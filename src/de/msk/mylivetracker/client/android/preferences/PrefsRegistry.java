@@ -49,31 +49,33 @@ public class PrefsRegistry {
 	private static Map<Class<? extends APrefs>, APrefs> prefsReg = 
 		new HashMap<Class<? extends APrefs>, APrefs>();
 	
-	private static class PrefsDsc {
-		private Class<? extends APrefs> prefsClass;
-		private int version;
-		public PrefsDsc(Class<? extends APrefs> prefsClass, int version) {
+	protected static class PrefsDsc {
+		protected int id;
+		protected Class<? extends APrefs> prefsClass;
+		protected int version;
+		public PrefsDsc(int id, Class<? extends APrefs> prefsClass, int version) {
+			this.id = id;
 			this.prefsClass = prefsClass;
 			this.version = version;
 		}
 	}
 	
-	private static PrefsDsc[] prefsDscArr = new PrefsDsc[] {
-		new PrefsDsc(MainPrefs.class, MainPrefs.VERSION),
-		new PrefsDsc(AutoPrefs.class, AutoPrefs.VERSION),
-		new PrefsDsc(AccountPrefs.class, AccountPrefs.VERSION),	
-		new PrefsDsc(TrackingModePrefs.class, TrackingModePrefs.VERSION),
-		new PrefsDsc(DropboxPrefs.class, DropboxPrefs.VERSION),
-		new PrefsDsc(EmergencyPrefs.class, EmergencyPrefs.VERSION),
-		new PrefsDsc(HttpProtocolParamsPrefs.class, HttpProtocolParamsPrefs.VERSION),
-		new PrefsDsc(LocalizationPrefs.class, LocalizationPrefs.VERSION),
-		new PrefsDsc(MessagePrefs.class, MessagePrefs.VERSION),
-		new PrefsDsc(OtherPrefs.class, OtherPrefs.VERSION),
-		new PrefsDsc(PinCodeQueryPrefs.class, PinCodeQueryPrefs.VERSION),
-		new PrefsDsc(ProtocolPrefs.class, ProtocolPrefs.VERSION),
-		new PrefsDsc(RemoteAccessPrefs.class, RemoteAccessPrefs.VERSION),
-		new PrefsDsc(ServerPrefs.class, ServerPrefs.VERSION),
-		new PrefsDsc(TrackExportPrefs.class, TrackExportPrefs.VERSION),
+	protected static PrefsDsc[] prefsDscArr = new PrefsDsc[] {
+		new PrefsDsc(1, MainPrefs.class, MainPrefs.VERSION),
+		new PrefsDsc(-1, AutoPrefs.class, AutoPrefs.VERSION),
+		new PrefsDsc(2, AccountPrefs.class, AccountPrefs.VERSION),	
+		new PrefsDsc(3, TrackingModePrefs.class, TrackingModePrefs.VERSION),
+		new PrefsDsc(4, DropboxPrefs.class, DropboxPrefs.VERSION),
+		new PrefsDsc(5, EmergencyPrefs.class, EmergencyPrefs.VERSION),
+		new PrefsDsc(6, HttpProtocolParamsPrefs.class, HttpProtocolParamsPrefs.VERSION),
+		new PrefsDsc(7, LocalizationPrefs.class, LocalizationPrefs.VERSION),
+		new PrefsDsc(8, MessagePrefs.class, MessagePrefs.VERSION),
+		new PrefsDsc(9, OtherPrefs.class, OtherPrefs.VERSION),
+		new PrefsDsc(10, PinCodeQueryPrefs.class, PinCodeQueryPrefs.VERSION),
+		new PrefsDsc(11, ProtocolPrefs.class, ProtocolPrefs.VERSION),
+		new PrefsDsc(12, RemoteAccessPrefs.class, RemoteAccessPrefs.VERSION),
+		new PrefsDsc(13, ServerPrefs.class, ServerPrefs.VERSION),
+		new PrefsDsc(14, TrackExportPrefs.class, TrackExportPrefs.VERSION),
 	};
 
 	public enum InitResult {

@@ -1,5 +1,13 @@
 package de.msk.mylivetracker.client.android.remoteaccess;
 
+import de.msk.mylivetracker.client.android.dropbox.DropboxPrefs;
+import de.msk.mylivetracker.client.android.dropbox.DropboxUtils;
+import de.msk.mylivetracker.client.android.dropbox.DropboxUtils.UploadFileResult;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
+import de.msk.mylivetracker.client.android.status.LogInfo;
+import de.msk.mylivetracker.client.android.util.FileUtils;
+import de.msk.mylivetracker.client.android.util.FileUtils.PathType;
+
 
 /**
  * classname: SmsCmdUploadTrack
@@ -15,11 +23,12 @@ package de.msk.mylivetracker.client.android.remoteaccess;
 public class SmsCmdUploadTrack extends ASmsCmdExecutor {
 
 	public static String NAME = "upltrack";
+	public static String SYNTAX = "";
 	
 	public static class CmdDsc extends ACmdDsc {
 
 		public CmdDsc() {
-			super(NAME, "", 0, 0);
+			super(NAME, SYNTAX, 0, 0);
 		}
 
 		@Override
@@ -35,6 +44,18 @@ public class SmsCmdUploadTrack extends ASmsCmdExecutor {
 
 	@Override
 	public String executeCmdAndCreateSmsResponse(String... params) {
-		return "not supported";
+		String result = "";
+		if (!PrefsRegistry.get(DropboxPrefs.class).hasValidAccountAndToken()) {
+			result = ResponseCreator.getResultOfNotConnectedToDropbox();
+		} else if (LogInfo.logFileExists()) {
+			result = ResponseCreator.getResultOfError("no track file exists");
+		} else {
+			String gpxFileName = LogInfo.createGpxFileNameOfCurrentTrack();
+			LogInfo.createGpxFileOfCurrentTrack(gpxFileName);
+			UploadFileResult uploadFileResult = DropboxUtils.uploadFile(gpxFileName);
+			result = ResponseCreator.getResultOfUploadFile(uploadFileResult);
+			FileUtils.fileDelete(gpxFileName, PathType.AppDataDir);
+		}
+		return result;
 	}
 }

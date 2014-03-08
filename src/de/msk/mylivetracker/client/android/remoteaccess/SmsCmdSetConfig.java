@@ -15,11 +15,12 @@ package de.msk.mylivetracker.client.android.remoteaccess;
 public class SmsCmdSetConfig extends ASmsCmdExecutor {
 
 	public static String NAME = "setconfig";
+	public static String SYNTAX = "<param> <value>";
 	
 	public static class CmdDsc extends ACmdDsc {
 
 		public CmdDsc() {
-			super(NAME, "<param> <value>", 2, 2);
+			super(NAME, SYNTAX, 2, 2);
 		}
 
 		@Override

@@ -23,12 +23,13 @@ import de.msk.mylivetracker.client.android.util.service.AbstractService;
  */
 public class SmsCmdGetLocation extends ASmsCmdExecutor {
 
-	public static String NAME = "getlocation";
+	public static String NAME = "getloc";
+	public static String SYNTAX = "[detect [<timeout in secs>]]";
 	
 	public static class CmdDsc extends ACmdDsc {
 
 		public CmdDsc() {
-			super(NAME, "[detect [<timeout in secs>]]", 0, 2);
+			super(NAME, SYNTAX, 0, 2);
 		}
 
 		@Override
@@ -100,7 +101,7 @@ public class SmsCmdGetLocation extends ASmsCmdExecutor {
 		
 		LocationInfo locationInfo = LocationInfo.get();
 		if ((locationInfo != null) && locationInfo.hasValidLatLon()) {
-			response = ResponseCreator.getLocationInfoValues(locationInfo);
+			response = ResponseCreator.getResultOfGetLocation(locationInfo);
 		}
 		
 		return response;

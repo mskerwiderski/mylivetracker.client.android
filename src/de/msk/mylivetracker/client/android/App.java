@@ -283,6 +283,10 @@ public class App extends Application {
 	 * other util stuff.
 	 */
 	
+	public static String getDeviceModel() {
+		return android.os.Build.MANUFACTURER + " " + android.os.Build.MODEL;
+	}
+	
 	public static String getDeviceId() {
 		return ((TelephonyManager)App.get().getSystemService(
 			Context.TELEPHONY_SERVICE)).getDeviceId();

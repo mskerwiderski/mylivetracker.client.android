@@ -14,14 +14,26 @@ package de.msk.mylivetracker.client.android.remoteaccess;
  */
 public class SmsCmdError extends ASmsCmdExecutor {
 
+	public static String NAME = "error";
+	public static String SYNTAX = "";
+	
+	public static class CmdDsc extends ACmdDsc {
+
+		public CmdDsc() {
+			super(NAME, SYNTAX, 0, 0);
+		}
+
+		@Override
+		public boolean matchesSyntax(String[] params) {
+			return true;
+		}
+		
+	}
+	
 	public SmsCmdError(String sender, String... params) {
-		super(new SimpleCmdDsc(), sender, params);
+		super(new CmdDsc(), sender, params);
 	}
 
-	@Override
-	public ACmdDsc getCmdDsc() {
-		return null;
-	}
 
 	@Override
 	public String executeCmdAndCreateSmsResponse(String... params) {
