@@ -73,7 +73,8 @@
     <string-array name="confirmLevels">
     	<item>niedrig</item>
         <item>normal</item>
-        <item>hoch</item>               
+        <item>hoch</item>  
+        <item>maximum</item>             
     </string-array>
     
     <string-array name="trackingMode">

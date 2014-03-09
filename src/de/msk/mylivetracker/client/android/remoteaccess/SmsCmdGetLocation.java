@@ -64,8 +64,6 @@ public class SmsCmdGetLocation extends ASmsCmdExecutor {
 	
 	@Override
 	public String executeCmdAndCreateSmsResponse(String... params) {
-		String response = "no valid location found.";
-		
 		boolean detect = (params.length > 0);
 		int timeoutInSecs = ((params.length == 2) ? Integer.valueOf(params[1]) : 180);
 		
@@ -99,11 +97,6 @@ public class SmsCmdGetLocation extends ASmsCmdExecutor {
 			}
 		}
 		
-		LocationInfo locationInfo = LocationInfo.get();
-		if ((locationInfo != null) && locationInfo.hasValidLatLon()) {
-			response = ResponseCreator.getResultOfGetLocation(locationInfo);
-		}
-		
-		return response;
+		return ResponseCreator.getResultOfGetLocation(LocationInfo.get());
 	}
 }

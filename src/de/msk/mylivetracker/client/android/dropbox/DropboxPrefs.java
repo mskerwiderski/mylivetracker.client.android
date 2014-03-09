@@ -73,6 +73,10 @@ public class DropboxPrefs extends APrefs implements Serializable {
 		return account;
 	}
 	@Override
+	public String getShortName() {
+		return "dropbox";
+	}
+	@Override
 	public PrefsDump getPrefsDump() {
 		return new PrefsDump("DropboxPrefs", 
 			new ConfigPair[] {

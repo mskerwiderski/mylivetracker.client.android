@@ -54,6 +54,10 @@ public class PinCodeQueryPrefs extends APrefs implements Serializable {
 		this.pinCode = pinCode;
 	}
 	@Override
+	public String getShortName() {
+		return "pincode";
+	}
+	@Override
 	public PrefsDump getPrefsDump() {
 		return new PrefsDump("PinCodeQueryPrefs", 
 			new ConfigPair[] {

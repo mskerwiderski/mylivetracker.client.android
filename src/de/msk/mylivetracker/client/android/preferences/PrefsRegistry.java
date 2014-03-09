@@ -49,6 +49,9 @@ public class PrefsRegistry {
 	private static Map<Class<? extends APrefs>, APrefs> prefsReg = 
 		new HashMap<Class<? extends APrefs>, APrefs>();
 	
+	public static Map<String, APrefs> prefsMap = 
+		new HashMap<String, APrefs>();
+	
 	protected static class PrefsDsc {
 		protected int id;
 		protected Class<? extends APrefs> prefsClass;
@@ -61,7 +64,7 @@ public class PrefsRegistry {
 	}
 	
 	protected static PrefsDsc[] prefsDscArr = new PrefsDsc[] {
-		new PrefsDsc(1, MainPrefs.class, MainPrefs.VERSION),
+		new PrefsDsc(0, MainPrefs.class, MainPrefs.VERSION),
 		new PrefsDsc(-1, AutoPrefs.class, AutoPrefs.VERSION),
 		new PrefsDsc(2, AccountPrefs.class, AccountPrefs.VERSION),	
 		new PrefsDsc(3, TrackingModePrefs.class, TrackingModePrefs.VERSION),
@@ -89,6 +92,7 @@ public class PrefsRegistry {
 	public static InitResult init() {
 		LogUtils.infoMethodIn(PrefsRegistry.class, "init");
 		prefsReg.clear();
+		prefsMap.clear();
 		InitResult initResult = null;
 		
 		if (!FileUtils.fileExists(App.getPrefsFileName(true), PathType.AppSharedPrefsDir)) {
@@ -136,6 +140,7 @@ public class PrefsRegistry {
 					throw new RuntimeException("prefs must not be null!");
 				}
 				prefsReg.put(prefsDsc.prefsClass, prefs);
+				prefsMap.put(prefs.getShortName(), prefs);
 				if (doSave) {
 					save(prefsDsc.prefsClass);
 					if (initResult == null) {
@@ -158,12 +163,14 @@ public class PrefsRegistry {
 	public static void reset() {
 		LogUtils.infoMethodIn(PrefsRegistry.class, "reset");
 		prefsReg.clear();
+		prefsMap.clear();
 		FileUtils.fileDelete(
 			App.getPrefsFileName(true),
 			PathType.AppSharedPrefsDir);
 		for (PrefsDsc prefsDsc : prefsDscArr) {
 			APrefs prefs = create(prefsDsc.prefsClass);
 			prefsReg.put(prefsDsc.prefsClass, prefs);
+			prefsMap.put(prefs.getShortName(), prefs);
 		}
 		saveAllInternal();
 		LogUtils.infoMethodOut(PrefsRegistry.class, "reset");
@@ -182,6 +189,14 @@ public class PrefsRegistry {
 		return prefs;
 	}
 
+	@SuppressWarnings("unchecked")
+	public static <T extends APrefs> T get(String prefsShortName) {
+		if (StringUtils.isEmpty(prefsShortName)) {
+			throw new IllegalArgumentException("prefsShortName must not be empty!");
+		}
+		return (T)prefsMap.get(prefsShortName);
+	}
+	
 	public static <T extends APrefs> void save(Class<T> prefsClass) {
 		if (prefsClass == null) {
 			throw new IllegalArgumentException("prefsClass must not be null!");

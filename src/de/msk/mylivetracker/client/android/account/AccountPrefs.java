@@ -96,6 +96,10 @@ public class AccountPrefs extends APrefs implements Serializable {
 		this.phoneNumber = phoneNumber;
 	}
 	@Override
+	public String getShortName() {
+		return "account";
+	}
+	@Override
 	public PrefsDump getPrefsDump() {
 		return new PrefsDump("AccountPrefs", 
 			new ConfigPair[] {

@@ -35,6 +35,10 @@ public class InternalPrefs extends APrefs implements Serializable {
 		// noop.
 	}
 	@Override
+	public String getShortName() {
+		return "internal";
+	}
+	@Override
 	public PrefsDump getPrefsDump() {
 		return new PrefsDump("InternalPrefs", 
 			new ConfigPair[] {

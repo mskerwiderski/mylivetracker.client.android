@@ -69,6 +69,10 @@ public class HttpProtocolParams implements Serializable {
 	
 	public List<HttpProtocolParamDsc> params = new ArrayList<HttpProtocolParamDsc>();
 	
+	protected List<HttpProtocolParamDsc> getParams() {
+		return params;
+	}
+
 	public static HttpProtocolParams create() {
 		HttpProtocolParams httpProtocolParams = new HttpProtocolParams();
 		httpProtocolParams.params.add(new HttpProtocolParamDsc(

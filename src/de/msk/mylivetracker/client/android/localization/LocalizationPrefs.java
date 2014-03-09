@@ -145,6 +145,10 @@ public class LocalizationPrefs extends APrefs implements Serializable {
 		this.maxWaitingPeriodForGpsFixInMSecs = maxWaitingPeriodForGpsFixInMSecs;
 	}
 	@Override
+	public String getShortName() {
+		return "localization";
+	}
+	@Override
 	public PrefsDump getPrefsDump() {
 		return new PrefsDump("LocalizationPrefs", 
 			new ConfigPair[] {

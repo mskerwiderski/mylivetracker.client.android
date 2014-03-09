@@ -40,6 +40,7 @@ public class SmsCmdReceiver extends BroadcastReceiver {
 		cmdRegistry.put(SmsCmdGetHelp.NAME, SmsCmdGetHelp.class);
 		cmdRegistry.put(SmsCmdGetAppVersion.NAME, SmsCmdGetAppVersion.class);
 		cmdRegistry.put(SmsCmdGetLocation.NAME, SmsCmdGetLocation.class);
+		cmdRegistry.put(SmsCmdGetHeartrate.NAME, SmsCmdGetHeartrate.class);
 		cmdRegistry.put(SmsCmdTrack.NAME, SmsCmdTrack.class);
 		cmdRegistry.put(SmsCmdGetConfig.NAME, SmsCmdGetConfig.class);
 		cmdRegistry.put(SmsCmdSetConfig.NAME, SmsCmdSetConfig.class);

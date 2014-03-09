@@ -126,12 +126,16 @@ public class MessagePrefs extends APrefs implements Serializable {
 		this.smsReceiver = smsReceiver;
 	}
 	@Override
+	public String getShortName() {
+		return "message";
+	}
+	@Override
 	public PrefsDump getPrefsDump() {
 		return new PrefsDump("MessagePrefs", 
 			new ConfigPair[] {
 				new ConfigPair("sendMessageMode", this.sendMessageMode.name()),
 				new ConfigPair("messageTemplates", 
-					ArrayUtils.toString(this.messageTemplates.toString())),
+					ArrayUtils.toString(this.messageTemplates)),
 				new ConfigPair("smsReceiver", this.smsReceiver),
 		});
 	}

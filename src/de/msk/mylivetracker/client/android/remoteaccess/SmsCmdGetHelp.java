@@ -20,7 +20,6 @@ public class SmsCmdGetHelp extends ASmsCmdExecutor {
 	public static String SYNTAX = "";
 	
 	public static class CmdDsc extends ACmdDsc {
-
 		public CmdDsc() {
 			super(NAME, SYNTAX, 0, 0);
 		}
@@ -29,7 +28,6 @@ public class SmsCmdGetHelp extends ASmsCmdExecutor {
 		public boolean matchesSyntax(String[] params) {
 			return (params.length == 0);
 		}
-		
 	}
 	
 	public SmsCmdGetHelp(String sender, String... params) {
@@ -51,6 +49,7 @@ public class SmsCmdGetHelp extends ASmsCmdExecutor {
 		helpStr = addCommandSyntax(helpStr, SmsCmdGetHelp.NAME, SmsCmdGetHelp.SYNTAX, true);
 		helpStr = addCommandSyntax(helpStr, SmsCmdGetAppVersion.NAME, SmsCmdGetAppVersion.SYNTAX, true);
 		helpStr = addCommandSyntax(helpStr, SmsCmdGetLocation.NAME, SmsCmdGetLocation.SYNTAX, true);
+		helpStr = addCommandSyntax(helpStr, SmsCmdGetHeartrate.NAME, SmsCmdGetHeartrate.SYNTAX, true);
 		helpStr = addCommandSyntax(helpStr, SmsCmdTrack.NAME, SmsCmdTrack.SYNTAX, true);
 		helpStr = addCommandSyntax(helpStr, SmsCmdGetConfig.NAME, SmsCmdGetConfig.SYNTAX, true);
 		helpStr = addCommandSyntax(helpStr, SmsCmdSetConfig.NAME, SmsCmdSetConfig.SYNTAX, true);

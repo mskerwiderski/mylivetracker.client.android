@@ -72,6 +72,10 @@ public class RemoteAccessPrefs extends APrefs implements Serializable {
 		this.remoteAccessReceiver = remoteAccessReceiver;
 	}
 	@Override
+	public String getShortName() {
+		return "remoteaccess";
+	}
+	@Override
 	public PrefsDump getPrefsDump() {
 		return new PrefsDump("RemoteAccessPrefs", 
 			new ConfigPair[] {

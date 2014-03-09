@@ -123,6 +123,10 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 		this.autoStartEnabled = autoStartEnabled;
 	}
 	@Override
+	public String getShortName() {
+		return "trackingmode";
+	}
+	@Override
 	public PrefsDump getPrefsDump() {
 		return new PrefsDump("TrackingModePrefs", 
 			new ConfigPair[] {

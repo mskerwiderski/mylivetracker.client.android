@@ -301,4 +301,9 @@ public class App extends Application {
 		return App.getCtx().
 			getResources().getConfiguration().locale;
 	}
+	
+	public static String getAndroidVersion() {
+		return android.os.Build.VERSION.CODENAME + 
+			" (" + android.os.Build.VERSION.RELEASE + ")";
+	}
 }

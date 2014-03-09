@@ -260,6 +260,10 @@ public class ProtocolPrefs extends APrefs implements Serializable {
 		this.logTrackData = logTrackData;
 	}
 	@Override
+	public String getShortName() {
+		return "protocol";
+	}
+	@Override
 	public PrefsDump getPrefsDump() {
 		return new PrefsDump("ProtocolPrefs", 
 			new ConfigPair[] {

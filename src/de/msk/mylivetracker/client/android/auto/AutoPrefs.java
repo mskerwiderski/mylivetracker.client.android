@@ -98,6 +98,10 @@ public class AutoPrefs extends APrefs implements Serializable {
 		this.autoStartEnabled = autoStartEnabled;
 	}
 	@Override
+	public String getShortName() {
+		return "auto";
+	}
+	@Override
 	public PrefsDump getPrefsDump() {
 		return new PrefsDump("AutoPrefs", 
 			new ConfigPair[] {

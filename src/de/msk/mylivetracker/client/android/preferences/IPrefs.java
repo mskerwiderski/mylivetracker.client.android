@@ -17,5 +17,6 @@ public interface IPrefs {
 	public int getVersion();
 	public void initWithDefaults();
 	public void initWithValuesOfOldVersion(int foundVersion, String foundGsonStr);
+	public String getShortName();
 	public PrefsDump getPrefsDump();
 }

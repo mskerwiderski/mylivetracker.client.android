@@ -105,6 +105,10 @@ public class TrackExportPrefs extends APrefs implements Serializable {
 		this.filenameNextSequenceNumber = filenameNextSequenceNumber;
 	}
 	@Override
+	public String getShortName() {
+		return "trackexport";
+	}
+	@Override
 	public PrefsDump getPrefsDump() {
 		return new PrefsDump("TrackExportPrefs", 
 			new ConfigPair[] {

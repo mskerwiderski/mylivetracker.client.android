@@ -32,6 +32,10 @@ public class MainPrefs extends APrefs implements Serializable {
 	}
 
 	@Override
+	public String getShortName() {
+		return "main";
+	}
+	@Override
 	public PrefsDump getPrefsDump() {
 		return new PrefsDump("main", 
 			new ConfigPair[] {
@@ -39,7 +43,6 @@ public class MainPrefs extends APrefs implements Serializable {
 					String.valueOf(this.getVersion())),
 		});
 	}
-
 	@Override
 	public void initWithValuesOfOldVersion(int foundVersion, String foundGsonStr) {
 		// noop.

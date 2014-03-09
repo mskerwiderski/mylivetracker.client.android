@@ -60,7 +60,10 @@ public class ServerPrefs extends APrefs implements Serializable {
 	public void setPath(String path) {
 		this.path = path;
 	}
-
+	@Override
+	public String getShortName() {
+		return "server";
+	}
 	@Override
 	public PrefsDump getPrefsDump() {
 		return new PrefsDump("ServerPrefs", 
@@ -70,7 +73,6 @@ public class ServerPrefs extends APrefs implements Serializable {
 				new ConfigPair("path", this.path),
 		});
 	}
-
 	@Override
 	public String toString() {
 		return "ServerPrefs [server=" + server + ", port=" + port + ", path="
