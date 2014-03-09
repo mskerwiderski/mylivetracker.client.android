@@ -285,16 +285,12 @@ public class MainActivity extends AbstractMainActivity {
 			// ANT+ not supported or/and disabled by user --> hide heartrate info.
 			llHeartrate.setVisibility(View.GONE);
 		}
-		if (PrefsRegistry.get(OtherPrefs.class).getTrackingOneTouchMode().
-			equals(OtherPrefs.TrackingOneTouchMode.TrackingOnly)) {
-			// one touch mode does not include localization control
-			// --> show localization button.
-			btMain_LocationListenerOnOff.setVisibility(View.VISIBLE);
-		} else if  (PrefsRegistry.get(OtherPrefs.class).isAdaptButtonsForOneTouchMode()) {
-			// one touch mode includes localization control
-			// adaption enabled by user
-			// --> hide localization button.
+		if (!PrefsRegistry.get(OtherPrefs.class).getTrackingOneTouchMode().
+			equals(OtherPrefs.TrackingOneTouchMode.TrackingOnly) &&
+			PrefsRegistry.get(OtherPrefs.class).isAdaptButtonsForOneTouchMode()) {
 			btMain_LocationListenerOnOff.setVisibility(View.GONE);
+		} else {
+			btMain_LocationListenerOnOff.setVisibility(View.VISIBLE);
 		}
 	}
 	

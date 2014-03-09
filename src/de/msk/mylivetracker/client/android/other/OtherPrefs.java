@@ -2,7 +2,11 @@ package de.msk.mylivetracker.client.android.other;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang.BooleanUtils;
+
 import de.msk.mylivetracker.client.android.preferences.APrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.ConfigPair;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.PrefsDump;
 
 /**
  * classname: OtherPrefs
@@ -19,10 +23,13 @@ public class OtherPrefs extends APrefs implements Serializable {
 	
 	private static final long serialVersionUID = 7732687590338383772L;
 
-	public static final int VERSION = 1;
+	public static final int VERSION = 2;
 	
 	public enum ConfirmLevel {
-		low("low"), medium("medium"), high("high");
+		low("low"), 
+		medium("medium"), 
+		high("high"), 
+		max("maximum");
 		private String dsc;				
 		private ConfirmLevel(String dsc) {
 			this.dsc = dsc;
@@ -39,8 +46,10 @@ public class OtherPrefs extends APrefs implements Serializable {
 		public boolean isHigh() {
 			return this.ordinal() >= (high.ordinal());
 		}
+		public boolean isMax() {
+			return this.ordinal() >= (max.ordinal());
+		}
 	}
-	
 	
 	public enum TrackingOneTouchMode {
 		TrackingOnly, 
@@ -92,6 +101,22 @@ public class OtherPrefs extends APrefs implements Serializable {
 	}
 	public void setAntPlusEnabledIfAvailable(boolean antPlusEnabledIfAvailable) {
 		this.antPlusEnabledIfAvailable = antPlusEnabledIfAvailable;
+	}
+	@Override
+	public String getShortName() {
+		return "other";
+	}
+	@Override
+	public PrefsDump getPrefsDump() {
+		return new PrefsDump("OtherPrefs", 
+			new ConfigPair[] {
+				new ConfigPair("confirmLevel", this.confirmLevel.name()),
+				new ConfigPair("trackingOneTouchMode", this.trackingOneTouchMode.name()),
+				new ConfigPair("adaptButtonsForOneTouchMode", 
+					BooleanUtils.toStringTrueFalse(this.adaptButtonsForOneTouchMode)),
+				new ConfigPair("antPlusEnabledIfAvailable", 
+					BooleanUtils.toStringTrueFalse(this.antPlusEnabledIfAvailable)),
+		});
 	}
 	@Override
 	public String toString() {

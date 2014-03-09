@@ -1,5 +1,11 @@
 package de.msk.mylivetracker.client.android.preferences;
 
+import org.apache.commons.lang.StringUtils;
+
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.ConfigPair;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.PrefsDump;
+
+
 /**
  * classname: APrefs
  * 
@@ -14,5 +20,42 @@ package de.msk.mylivetracker.client.android.preferences;
 public abstract class APrefs implements IPrefs {
 	protected void onSave() {
 		// noop.
+	}
+	
+	public String getPrefsDumpAsStr(boolean oneLine) {
+		PrefsDump prefsDump = this.getPrefsDump();
+		String res = prefsDump.name +
+			" (version " + this.getVersion() + ")";
+		
+		if (oneLine) {
+			res += ":";
+			if (prefsDump.configPairs == null) {
+				res += PrefsDumper.EMPTY;
+			} else {
+				for (ConfigPair configPair : prefsDump.configPairs) {
+					res += configPair.param+ "=" + 
+						(!StringUtils.isEmpty(configPair.value) ? 
+							configPair.value : PrefsDumper.NOT_SET) + 
+						", ";
+				}
+				res = StringUtils.chop(res);
+			}
+		} else {
+			res += PrefsDumper.LINE_SEP + 
+				PrefsDumper.getSimpleLine(res.length()) + 
+				PrefsDumper.LINE_SEP;
+			if (prefsDump.configPairs == null) {
+				res += PrefsDumper.EMPTY + PrefsDumper.LINE_SEP;
+			} else {
+				for (ConfigPair configPair : prefsDump.configPairs) {
+					res += ">: " + 
+						configPair.param + " = " + PrefsDumper.QUOTE + 
+						(!StringUtils.isEmpty(configPair.value) ? 
+							configPair.value : PrefsDumper.NOT_SET) + 
+						PrefsDumper.QUOTE + PrefsDumper.LINE_SEP;
+				}
+			}
+		}
+		return res;
 	}
 }

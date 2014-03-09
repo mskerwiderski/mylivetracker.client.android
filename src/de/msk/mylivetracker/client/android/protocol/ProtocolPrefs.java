@@ -2,7 +2,11 @@ package de.msk.mylivetracker.client.android.protocol;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang.BooleanUtils;
+
 import de.msk.mylivetracker.client.android.preferences.APrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.ConfigPair;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.PrefsDump;
 
 /**
  * classname: ProtocolPrefs
@@ -255,7 +259,29 @@ public class ProtocolPrefs extends APrefs implements Serializable {
 	public void setLogTrackData(boolean logTrackData) {
 		this.logTrackData = logTrackData;
 	}
-
+	@Override
+	public String getShortName() {
+		return "protocol";
+	}
+	@Override
+	public PrefsDump getPrefsDump() {
+		return new PrefsDump("ProtocolPrefs", 
+			new ConfigPair[] {
+				new ConfigPair("transferProtocol", this.transferProtocol.name()),
+				new ConfigPair("uplPositionBufferSize", this.uplPositionBufferSize.name()),
+				new ConfigPair("uplPositionBufferSize", this.uplTimeTrigger.name()),
+				new ConfigPair("uplPositionBufferSize", this.uplTriggerLogic.name()),
+				new ConfigPair("uplPositionBufferSize", this.uplDistanceTrigger.name()),
+				new ConfigPair("closeConnectionAfterEveryUpload", 
+					BooleanUtils.toStringTrueFalse(this.closeConnectionAfterEveryUpload)),
+				new ConfigPair("finishEveryUploadWithALinefeed", 
+					BooleanUtils.toStringTrueFalse(this.finishEveryUploadWithALinefeed)),
+				new ConfigPair("uploadPositionsOnlyOnce", 
+					BooleanUtils.toStringTrueFalse(this.uploadPositionsOnlyOnce)),
+				new ConfigPair("logTrackData", 
+					BooleanUtils.toStringTrueFalse(this.logTrackData)),
+		});
+	}
 	@Override
 	public String toString() {
 		return "ProtocolPrefs [transferProtocol=" + transferProtocol

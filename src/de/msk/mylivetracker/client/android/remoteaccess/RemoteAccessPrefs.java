@@ -2,7 +2,12 @@ package de.msk.mylivetracker.client.android.remoteaccess;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang.BooleanUtils;
+
 import de.msk.mylivetracker.client.android.preferences.APrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.ConfigPair;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.PrefsDump;
 
 /**
  * classname: RemoteAccessPrefs
@@ -66,7 +71,22 @@ public class RemoteAccessPrefs extends APrefs implements Serializable {
 	public void setRemoteAccessReceiver(String remoteAccessReceiver) {
 		this.remoteAccessReceiver = remoteAccessReceiver;
 	}
-
+	@Override
+	public String getShortName() {
+		return "remoteaccess";
+	}
+	@Override
+	public PrefsDump getPrefsDump() {
+		return new PrefsDump("RemoteAccessPrefs", 
+			new ConfigPair[] {
+				new ConfigPair("remoteAccessEnabled", 
+					BooleanUtils.toStringTrueFalse(this.remoteAccessEnabled)),
+				new ConfigPair("remoteAccessPassword", PrefsDumper.PASSWORD_MASK),
+				new ConfigPair("remoteAccessUseReceiver", 
+					BooleanUtils.toStringTrueFalse(this.remoteAccessUseReceiver)),
+				new ConfigPair("remoteAccessReceiver", this.remoteAccessReceiver),
+		});
+	}
 	@Override
 	public String toString() {
 		return "RemoteAccessPrefs [remoteAccessEnabled=" + remoteAccessEnabled

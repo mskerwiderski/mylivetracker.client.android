@@ -2,7 +2,10 @@ package de.msk.mylivetracker.client.android.httpprotocolparams;
 
 import java.io.Serializable;
 
+import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParams.ParamId;
 import de.msk.mylivetracker.client.android.preferences.APrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.ConfigPair;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.PrefsDump;
 
 /**
  * classname: HttpProtocolParamsPrefs
@@ -42,7 +45,19 @@ public class HttpProtocolParamsPrefs extends APrefs implements Serializable {
 	public void setHttpProtocolParams(HttpProtocolParams httpProtocolParams) {
 		this.httpProtocolParams = httpProtocolParams;
 	}
-
+	@Override
+	public PrefsDump getPrefsDump() {
+		ConfigPair[] configPairs = new ConfigPair[this.httpProtocolParams.getParams().size()];
+		for (int idx=0; idx < this.httpProtocolParams.getParams().size(); idx++) {
+			HttpProtocolParamDsc paramDsc = this.getHttpProtocolParams().getParamDsc(idx);
+			configPairs[idx] = new ConfigPair(ParamId.values()[idx].name(), paramDsc.getName());
+		}
+		return new PrefsDump("HttpProtocolParamsPrefs", configPairs);
+	}
+	@Override
+	public String getShortName() {
+		return "httpprotocolparams";
+	}
 	@Override
 	public String toString() {
 		return "HttpProtocolParamsPrefs [httpProtocolParams="

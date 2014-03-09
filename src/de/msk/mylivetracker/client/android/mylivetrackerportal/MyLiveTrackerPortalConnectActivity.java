@@ -91,7 +91,7 @@ public class MyLiveTrackerPortalConnectActivity extends AbstractActivity {
 				RegisterSenderRequest request = new RegisterSenderRequest(
             		App.getLocale().getLanguage(), 
 					App.getDeviceId(), 
-					android.os.Build.MANUFACTURER + " " + android.os.Build.MODEL,
+					App.getDeviceModel(),
 					etMyLiveTrackerPortalConnect_PortalUsername.getText().toString(),
 					hashedPassword, DateTime.TIME_ZONE_GERMANY);
 				myLiveTrackerPortalConnectTask.execute(request);				

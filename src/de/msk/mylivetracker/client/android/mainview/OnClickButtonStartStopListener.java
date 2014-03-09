@@ -77,7 +77,12 @@ public class OnClickButtonStartStopListener extends ASafeOnClickListener {
 			return;
 		}
 		
-		if (PrefsRegistry.get(OtherPrefs.class).getConfirmLevel().isHigh()) {
+		if ((PrefsRegistry.get(TrackingModePrefs.class).
+				getTrackingMode().equals(TrackingMode.Checkpoint) &&
+			PrefsRegistry.get(OtherPrefs.class).getConfirmLevel().isMax()) ||
+			(PrefsRegistry.get(TrackingModePrefs.class).
+				getTrackingMode().equals(TrackingMode.Standard) &&
+			PrefsRegistry.get(OtherPrefs.class).getConfirmLevel().isHigh())) {
 			StartStopTrackDialog dlg = new StartStopTrackDialog(
 				activity, this.btMain_StartStopTrack);
 			dlg.show();

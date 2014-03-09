@@ -1,22 +1,21 @@
 package de.msk.mylivetracker.client.android.remoteaccess;
 
-import de.msk.mylivetracker.client.android.App.VersionDsc;
+import de.msk.mylivetracker.client.android.status.HeartrateInfo;
 
 /**
- * classname: SmsCmdGetAppVersion
+ * classname: SmsCmdGetHeartrate
  * 
- * @author michael skerwiderski, (c)2012
+ * @author michael skerwiderski, (c)2014
  * @version 001
- * @since 1.5.0
+ * @since 1.6.0
  * 
  * history:
- * 001	2014-02-28	revised for v1.6.0.
- * 000	2012-12-29	revised for v1.5.x.
+ * 001	2014-03-09	origin.
  * 
  */
-public class SmsCmdGetAppVersion extends ASmsCmdExecutor {
+public class SmsCmdGetHeartrate extends ASmsCmdExecutor {
 
-	public static String NAME = "getversion";
+	public static String NAME = "getheartrate";
 	public static String SYNTAX = "";
 	
 	public static class CmdDsc extends ACmdDsc {
@@ -32,12 +31,12 @@ public class SmsCmdGetAppVersion extends ASmsCmdExecutor {
 		
 	}
 	
-	public SmsCmdGetAppVersion(String sender, String... params) {
+	public SmsCmdGetHeartrate(String sender, String... params) {
 		super(new CmdDsc(), sender, params);
 	}
-
+	
 	@Override
 	public String executeCmdAndCreateSmsResponse(String... params) {
-		return VersionDsc.getVersionStr();
+		return ResponseCreator.getResultOfGetHeartrate(HeartrateInfo.get());
 	}
 }

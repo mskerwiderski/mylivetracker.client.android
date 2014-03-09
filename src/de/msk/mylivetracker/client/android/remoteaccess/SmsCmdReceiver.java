@@ -37,16 +37,17 @@ public class SmsCmdReceiver extends BroadcastReceiver {
 		new HashMap<String, Class<? extends ASmsCmdExecutor>>();
 	
 	static {
+		cmdRegistry.put(SmsCmdGetHelp.NAME, SmsCmdGetHelp.class);
 		cmdRegistry.put(SmsCmdGetAppVersion.NAME, SmsCmdGetAppVersion.class);
 		cmdRegistry.put(SmsCmdGetLocation.NAME, SmsCmdGetLocation.class);
-		cmdRegistry.put(SmsCmdSetConfig.NAME, SmsCmdSetConfig.class);
+		cmdRegistry.put(SmsCmdGetHeartrate.NAME, SmsCmdGetHeartrate.class);
 		cmdRegistry.put(SmsCmdTrack.NAME, SmsCmdTrack.class);
-		cmdRegistry.put(SmsCmdTrack.NAME, SmsCmdGetConfig.class);
-		cmdRegistry.put(SmsCmdTrack.NAME, SmsCmdSetConfig.class);
-		cmdRegistry.put(SmsCmdTrack.NAME, SmsCmdUploadConfig.class);
-		cmdRegistry.put(SmsCmdTrack.NAME, SmsCmdUploadTrack.class);
+		cmdRegistry.put(SmsCmdGetConfig.NAME, SmsCmdGetConfig.class);
+		cmdRegistry.put(SmsCmdSetConfig.NAME, SmsCmdSetConfig.class);
+		cmdRegistry.put(SmsCmdUploadConfig.NAME, SmsCmdUploadConfig.class);
+		cmdRegistry.put(SmsCmdUploadTrack.NAME, SmsCmdUploadTrack.class);
 	}
-	
+
 	private static boolean smsCmdExecutorExists(String cmdName) {
 		if (StringUtils.isEmpty(cmdName)) {
 			throw new IllegalArgumentException("cmdName must not be empty.");
@@ -71,9 +72,6 @@ public class SmsCmdReceiver extends BroadcastReceiver {
 	private static ExecutorService executorService = Executors.newSingleThreadExecutor();
 	
 	public static final String SMS_CMD_INDICATOR = "#mlt";
-	public static final String SMS_CMD_ERROR_PREFIX = "FAILED: ";
-	public static final String SMS_CMD_ERROR_COMMAND_INVALID = "invalid command.";
-	public static final String SMS_CMD_ERROR_COMMAND_SYNTAX_INVALID = "invalid command syntax. correct syntax is: '$SYNTAX'";
 	
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -107,9 +105,8 @@ public class SmsCmdReceiver extends BroadcastReceiver {
 						// do not send a response in case of a wrong password.
 						response = null;
 					} else if (!smsCmdExecutorExists(messageParts[2])) {
-						response = SMS_CMD_ERROR_COMMAND_INVALID;
+						response = ResponseCreator.getResultOfError("unknown command '" + messageParts[2] + "'");
 					} else {
-						String cmdName = messageParts[2];
 						String[] params = new String[0];
 						if (messageParts.length > 3) {
 							String[] paramsCs = (String[])ArrayUtils.subarray(messageParts, 3, messageParts.length);
@@ -124,24 +121,16 @@ public class SmsCmdReceiver extends BroadcastReceiver {
 						Constructor<? extends ASmsCmdExecutor> smsCmdExecutorConstructor = 
 							smsCmdExecutorClass.getConstructor(String.class, String[].class);
 						ASmsCmdExecutor smsCmdExecutor = smsCmdExecutorConstructor.newInstance(sender, params);
-						ACmdDsc cmdDsc = smsCmdExecutor.getCmdDsc();
-						if ((params.length < cmdDsc.getMinParams()) || 
-							(params.length > cmdDsc.getMaxParams())) {
-							response = SMS_CMD_ERROR_COMMAND_SYNTAX_INVALID;
-							response = StringUtils.replace(response, "$SYNTAX", 
-								cmdName + " " + cmdDsc.getParamDsc());
-						} else {
-							executorService.execute(smsCmdExecutor);
-							response = null;
-							LogUtils.infoMethodState(this.getClass(), "onReceive", "command executed");
-						}
+						executorService.execute(smsCmdExecutor);
+						response = null;
+						LogUtils.infoMethodState(this.getClass(), "onReceive", "command executed");
 					}
 				}
 			} catch (Exception e) {
-				response = e.toString();
+				response = ResponseCreator.getResultOfError(e.getMessage());
 			} finally {
 				if (!StringUtils.isEmpty(response)) {
-					SmsCmdError smsCmdError = new SmsCmdError(sender, SMS_CMD_ERROR_PREFIX, response);
+					SmsCmdError smsCmdError = new SmsCmdError(sender, response);
 					executorService.execute(smsCmdError);
 					LogUtils.infoMethodState(this.getClass(), "onReceive", "command failed", sender, response);
 				}

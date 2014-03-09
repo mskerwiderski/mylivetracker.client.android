@@ -23,12 +23,13 @@ import de.msk.mylivetracker.client.android.util.service.AbstractService;
  */
 public class SmsCmdGetLocation extends ASmsCmdExecutor {
 
-	public static String NAME = "getlocation";
+	public static String NAME = "getloc";
+	public static String SYNTAX = "[detect [<timeout in secs>]]";
 	
 	public static class CmdDsc extends ACmdDsc {
 
 		public CmdDsc() {
-			super(NAME, "[detect [<timeout in secs>]]", 0, 2);
+			super(NAME, SYNTAX, 0, 2);
 		}
 
 		@Override
@@ -63,8 +64,6 @@ public class SmsCmdGetLocation extends ASmsCmdExecutor {
 	
 	@Override
 	public String executeCmdAndCreateSmsResponse(String... params) {
-		String response = "no valid location found.";
-		
 		boolean detect = (params.length > 0);
 		int timeoutInSecs = ((params.length == 2) ? Integer.valueOf(params[1]) : 180);
 		
@@ -97,28 +96,6 @@ public class SmsCmdGetLocation extends ASmsCmdExecutor {
 				LocalizationUtils.stopLocalization();
 			}
 		}
-		LocationInfo locationInfo = LocationInfo.get();
-		if ((locationInfo != null) && locationInfo.hasValidLatLon()) {
-			response = ResponseCreator.getLocationInfoValues(locationInfo);
-		} else if (detect) {
-			boolean localizationFoundActive = 
-				AbstractService.isServiceRunning(LocalizationService.class);
-			
-			if (!localizationFoundActive) {
-				LocalizationUtils.startLocalization();
-			}
-			
-			try {
-				this.wait(timeoutInSecs * 1000L);
-			} catch (InterruptedException e) {
-				// noop.
-			}
-			
-			if (!localizationFoundActive) {
-				LocalizationUtils.stopLocalization();
-			}
-		}
-		
-		return response;
+		return ResponseCreator.getResultOfGetLocation(LocationInfo.get());
 	}
 }

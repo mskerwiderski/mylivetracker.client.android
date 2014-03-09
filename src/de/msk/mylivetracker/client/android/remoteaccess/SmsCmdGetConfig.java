@@ -1,5 +1,7 @@
 package de.msk.mylivetracker.client.android.remoteaccess;
 
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
+
 
 /**
  * classname: SmsCmdGetConfig
@@ -15,18 +17,19 @@ package de.msk.mylivetracker.client.android.remoteaccess;
 public class SmsCmdGetConfig extends ASmsCmdExecutor {
 
 	public static String NAME = "getconfig";
+	public static String SYNTAX = "<section>";
 	
 	public static class CmdDsc extends ACmdDsc {
-
 		public CmdDsc() {
-			super(NAME, "<param> <value>", 2, 2);
+			super(NAME, SYNTAX, 1, 1);
 		}
 
 		@Override
 		public boolean matchesSyntax(String[] params) {
-			return (params.length == 2);
+			return 
+				(params.length == 1) && 
+				(PrefsRegistry.get(params[0]) != null);
 		}
-		
 	}
 	
 	public SmsCmdGetConfig(String sender, String... params) {
@@ -35,6 +38,6 @@ public class SmsCmdGetConfig extends ASmsCmdExecutor {
 
 	@Override
 	public String executeCmdAndCreateSmsResponse(String... params) {
-		return "not supported";
+		return PrefsRegistry.get(params[0]).getPrefsDumpAsStr(true);
 	}
 }

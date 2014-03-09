@@ -284,6 +284,10 @@ public class App extends Application {
 	 * other util stuff.
 	 */
 	
+	public static String getDeviceModel() {
+		return android.os.Build.MANUFACTURER + " " + android.os.Build.MODEL;
+	}
+	
 	public static String getDeviceId() {
 		return ((TelephonyManager)App.get().getSystemService(
 			Context.TELEPHONY_SERVICE)).getDeviceId();
@@ -297,5 +301,10 @@ public class App extends Application {
 	public static Locale getLocale() {
 		return App.getCtx().
 			getResources().getConfiguration().locale;
+	}
+	
+	public static String getAndroidVersion() {
+		return android.os.Build.VERSION.CODENAME + 
+			" (" + android.os.Build.VERSION.RELEASE + ")";
 	}
 }

@@ -2,7 +2,8 @@ package de.msk.mylivetracker.client.android.preferences;
 
 import java.io.Serializable;
 
-import de.msk.mylivetracker.client.android.preferences.APrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.ConfigPair;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.PrefsDump;
 
 /**
  * classname: MainPrefs
@@ -30,6 +31,18 @@ public class MainPrefs extends APrefs implements Serializable {
 	public void initWithDefaults() {
 	}
 
+	@Override
+	public String getShortName() {
+		return "main";
+	}
+	@Override
+	public PrefsDump getPrefsDump() {
+		return new PrefsDump("main", 
+			new ConfigPair[] {
+				new ConfigPair("prefs structure version", 
+					String.valueOf(this.getVersion())),
+		});
+	}
 	@Override
 	public void initWithValuesOfOldVersion(int foundVersion, String foundGsonStr) {
 		// noop.

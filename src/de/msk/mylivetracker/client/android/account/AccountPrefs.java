@@ -5,6 +5,9 @@ import java.io.Serializable;
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.liontrack.R;
 import de.msk.mylivetracker.client.android.preferences.APrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.ConfigPair;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.PrefsDump;
 import de.msk.mylivetracker.commons.protocol.ProtocolUtils;
 
 /**
@@ -92,7 +95,21 @@ public class AccountPrefs extends APrefs implements Serializable {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-
+	@Override
+	public String getShortName() {
+		return "account";
+	}
+	@Override
+	public PrefsDump getPrefsDump() {
+		return new PrefsDump("AccountPrefs", 
+			new ConfigPair[] {
+				new ConfigPair("deviceId", this.deviceId),
+				new ConfigPair("username", this.username),
+				new ConfigPair("password", PrefsDumper.PASSWORD_MASK),
+				new ConfigPair("trackname", this.trackName),
+				new ConfigPair("phoneNumber", this.phoneNumber),
+		});
+	}
 	@Override
 	public String toString() {
 		return "AccountPrefs [deviceId=" + deviceId + ", username=" + username

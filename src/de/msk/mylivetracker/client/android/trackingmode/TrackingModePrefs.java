@@ -2,9 +2,12 @@ package de.msk.mylivetracker.client.android.trackingmode;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 
 import de.msk.mylivetracker.client.android.preferences.APrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.ConfigPair;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.PrefsDump;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 
 /**
@@ -118,6 +121,23 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 	}
 	public void setAutoStartEnabled(boolean autoStartEnabled) {
 		this.autoStartEnabled = autoStartEnabled;
+	}
+	@Override
+	public String getShortName() {
+		return "trackingmode";
+	}
+	@Override
+	public PrefsDump getPrefsDump() {
+		return new PrefsDump("TrackingModePrefs", 
+			new ConfigPair[] {
+				new ConfigPair("trackingMode", this.trackingMode.name()),
+				new ConfigPair("maxCheckpointPeriodInSecs", 
+					String.valueOf(this.maxCheckpointPeriodInSecs)),
+				new ConfigPair("checkpointMessage", this.checkpointMessage),
+				new ConfigPair("autoStartEnabled", 
+					BooleanUtils.toStringTrueFalse(this.autoStartEnabled)),
+				new ConfigPair("autoModeResetTrackMode", this.autoModeResetTrackMode.name()),
+		});
 	}
 	@Override
 	public String toString() {

@@ -6,6 +6,8 @@ import android.content.Context;
 import android.location.LocationManager;
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.preferences.APrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.ConfigPair;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.PrefsDump;
 import de.msk.mylivetracker.client.android.util.LocationManagerUtils;
 
 /**
@@ -141,6 +143,24 @@ public class LocalizationPrefs extends APrefs implements Serializable {
 	public void setMaxWaitingPeriodForGpsFixInMSecs(
 		long maxWaitingPeriodForGpsFixInMSecs) {
 		this.maxWaitingPeriodForGpsFixInMSecs = maxWaitingPeriodForGpsFixInMSecs;
+	}
+	@Override
+	public String getShortName() {
+		return "localization";
+	}
+	@Override
+	public PrefsDump getPrefsDump() {
+		return new PrefsDump("LocalizationPrefs", 
+			new ConfigPair[] {
+				new ConfigPair("localizationMode", this.localizationMode.name()),
+				new ConfigPair("timeTriggerInSeconds", String.valueOf(this.timeTriggerInSeconds)),
+				new ConfigPair("distanceTriggerInMeter", String.valueOf(this.distanceTriggerInMeter)),
+				new ConfigPair("accuracyRequiredInMeter", String.valueOf(this.accuracyRequiredInMeter)),
+				new ConfigPair("distBtwTwoLocsForDistCalcRequiredInCMtr", 
+					String.valueOf(this.distBtwTwoLocsForDistCalcRequiredInCMtr)),
+				new ConfigPair("maxWaitingPeriodForGpsFixInMSecs", 
+					String.valueOf(this.maxWaitingPeriodForGpsFixInMSecs)),
+		});
 	}
 	@Override
 	public String toString() {

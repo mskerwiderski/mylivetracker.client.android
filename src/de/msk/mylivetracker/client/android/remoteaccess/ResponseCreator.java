@@ -5,7 +5,13 @@ import java.util.TimeZone;
 
 import org.apache.commons.lang.StringUtils;
 
+import de.msk.mylivetracker.client.android.account.AccountPrefs;
+import de.msk.mylivetracker.client.android.dropbox.DropboxUtils.UploadFileResult;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
+import de.msk.mylivetracker.client.android.status.HeartrateInfo;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
+import de.msk.mylivetracker.client.android.status.TrackStatus;
+import de.msk.mylivetracker.client.android.status.UploadInfo;
 import de.msk.mylivetracker.client.android.util.FormatUtils;
 import de.msk.mylivetracker.client.android.util.FormatUtils.Unit;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;
@@ -33,17 +39,69 @@ public class ResponseCreator {
 	public static final String GOOGLE_LATLON_URL = "googleLatLonUrl";
 	public static final String DATE_TIME_FORMAT = "'UTC' yyyy-MM-dd HH:mm:ss.SSS";
 	
+	public static String getResultOfError(String errorMsg) {
+		if (StringUtils.isEmpty(errorMsg)) {
+			errorMsg = "unknown";
+		}
+		return "failed:" + errorMsg;
+	}
 	
-	/*
-	 * location infos.
-	 */
+	public static String getResultNotSupported() {
+		return getResultOfError("currently not supported");
+	}
+
+	public static String getResultOfNotConnectedToDropbox() {
+		return getResultOfError("device is not connected to dropbox");
+	}
 	
-	public static String getLocationInfoValues(LocationInfo locationInfo) {
-		return addLocationInfoValues(null, locationInfo);
+	public static String getResultOfTrackInfo() {
+		String str = "";
+		TrackStatus status = TrackStatus.get();
+		LocationInfo locationInfo = LocationInfo.get();
+		str = addParamValue(str, "name", PrefsRegistry.get(AccountPrefs.class).getTrackName());
+		str = addParamValue(str, "status", status.trackIsRunning() ? "running" : "not running");
+		str = addFloatValue(str, "distance", 
+			(status.getTrackDistanceInMtr() != null) ? status.getTrackDistanceInMtr()/1000f : 0f, 
+			2, Unit.Kilometer);
+		str = addParamInt(str, "uploaded", 
+			(UploadInfo.get() != null) ? UploadInfo.get().getCountUploaded() : 0, null);
+		str = addTimestampValue(str, "last location update", 
+			(locationInfo != null) ? locationInfo.getTimestamp() : null);
+		return str;
+	}
+	
+	public static String getResultOfUploadFile(UploadFileResult uploadFileResult) {
+		String result = "";
+		if (!uploadFileResult.success) {
+			result = addParamValue(result, "error", uploadFileResult.error);
+		} else {
+			result = addParamValue(result, "revid", uploadFileResult.revisionId);
+			result = addParamValue(result, "size", uploadFileResult.sizeStr);
+		}
+		return result;
+	}
+	
+	public static String getResultOfGetHeartrate(HeartrateInfo heartrateInfo) {
+		String str = "no heartrate info available";
+		if (heartrateInfo != null) {
+			str = addParamLong(str, "current hr", heartrateInfo.getHrInBpm(), Unit.BeatsPerMinute);
+			str = addParamLong(str, "average hr", heartrateInfo.getHrAvgInBpm(), Unit.BeatsPerMinute);
+			str = addParamLong(str, "min hr", heartrateInfo.getHrMinInBpm(), Unit.BeatsPerMinute);
+			str = addParamLong(str, "max hr", heartrateInfo.getHrMaxInBpm(), Unit.BeatsPerMinute);
+		}
+		return str;
+	}
+	
+	public static String getResultOfGetLocation(LocationInfo locationInfo) {
+		String str = "no valid location found";
+		if ((locationInfo != null) && locationInfo.hasValidLatLon()) {
+			str = addLocationInfoValues(null, locationInfo);
+		}
+		return str;
 	}
 	
 	public static String addLocationInfoValues(String str, LocationInfo locationInfo) {
-		str = ResponseCreator.getTimestampValue(locationInfo.getTimestamp());
+		str = ResponseCreator.addTimestampValue(str, locationInfo.getTimestamp());
 		str = ResponseCreator.addLatLonValue(str, locationInfo);
 		str = ResponseCreator.addFloatValue(str, ACCURACY, locationInfo.getAccuracyInMtr(), 0, Unit.Meter);
 		str = ResponseCreator.addFloatValue(str, BEARING, locationInfo.getBearingInDegree(), 0, Unit.DegreeAsTxt);
@@ -90,11 +148,20 @@ public class ResponseCreator {
 	}
 	
 	public static String getTimestampValue(Date javaDateTime) {
-		return addTimestampValue(null, javaDateTime);
+		return addTimestampValue(null, javaDateTime);	
 	}
 	
 	public static String addTimestampValue(String str, Date javaDateTime) {
-		return addParamValue(str, TIMESTAMP, fmtDateTime(javaDateTime));
+		return addTimestampValue(str, TIMESTAMP, javaDateTime);
+	}
+	
+	public static String addTimestampValue(String str, String param, Date javaDateTime) {
+		if (javaDateTime != null) {
+			str = addParamValue(str, param, fmtDateTime(javaDateTime));
+		} else {
+			str = addParamValue(str, param, UNKNOWN);
+		}
+		return str;
 	}
 	
 	public static String addFloatValue(String str, String param, Float value, int decimalPositions, Unit unit) {
@@ -117,6 +184,24 @@ public class ResponseCreator {
 	
 	public static String getParamValue(String param, String value) {
 		return addParamValue(null, param, value);
+	}
+	
+	public static String addParamInt(String str, String param, Integer value, Unit unit) {
+		String longAsInt = UNKNOWN;
+		if (value != null) {
+			longAsInt = String.valueOf(value);
+			longAsInt += ((unit == null) ? "" : unit.getTxt());
+		}
+		return addParamValue(str, param, longAsInt);
+	}
+	
+	public static String addParamLong(String str, String param, Long value, Unit unit) {
+		String longAsStr = UNKNOWN;
+		if (value != null) {
+			longAsStr = String.valueOf(value);
+			longAsStr += ((unit == null) ? "" : unit.getTxt());
+		}
+		return addParamValue(str, param, longAsStr);
 	}
 	
 	public static String addParamValue(String str, String param, String value) {

@@ -2,7 +2,11 @@ package de.msk.mylivetracker.client.android.trackexport;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang.BooleanUtils;
+
 import de.msk.mylivetracker.client.android.preferences.APrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.ConfigPair;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.PrefsDump;
 
 /**
  * classname: TrackExportPrefs
@@ -100,7 +104,27 @@ public class TrackExportPrefs extends APrefs implements Serializable {
 	public void setFilenameNextSequenceNumber(int filenameNextSequenceNumber) {
 		this.filenameNextSequenceNumber = filenameNextSequenceNumber;
 	}
-
+	@Override
+	public String getShortName() {
+		return "trackexport";
+	}
+	@Override
+	public PrefsDump getPrefsDump() {
+		return new PrefsDump("TrackExportPrefs", 
+			new ConfigPair[] {
+				new ConfigPair("filenamePrefix", this.filenamePrefix),
+				new ConfigPair("filenameAppendTrackName", 
+					BooleanUtils.toStringTrueFalse(this.filenameAppendTrackName)),
+				new ConfigPair("filenameAppendTimestampOfFirstPosition", 
+					BooleanUtils.toStringTrueFalse(this.filenameAppendTimestampOfFirstPosition)),
+				new ConfigPair("filenameAppendTimestampOfLastPosition", 
+					BooleanUtils.toStringTrueFalse(this.filenameAppendTimestampOfLastPosition)),
+				new ConfigPair("filenameAppendSequenceNumber", 
+					BooleanUtils.toStringTrueFalse(this.filenameAppendSequenceNumber)),
+				new ConfigPair("filenameNextSequenceNumber", 
+					String.valueOf(this.filenameNextSequenceNumber)),
+		});
+	}
 	@Override
 	public String toString() {
 		return "TrackExportPrefs [filenamePrefix=" + filenamePrefix

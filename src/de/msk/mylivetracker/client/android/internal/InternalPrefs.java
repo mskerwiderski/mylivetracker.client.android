@@ -3,6 +3,8 @@ package de.msk.mylivetracker.client.android.internal;
 import java.io.Serializable;
 
 import de.msk.mylivetracker.client.android.preferences.APrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.ConfigPair;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.PrefsDump;
 
 /**
  * classname: InternalPrefs
@@ -31,5 +33,15 @@ public class InternalPrefs extends APrefs implements Serializable {
 	@Override
 	public void initWithValuesOfOldVersion(int foundVersion, String foundGsonStr) {
 		// noop.
+	}
+	@Override
+	public String getShortName() {
+		return "internal";
+	}
+	@Override
+	public PrefsDump getPrefsDump() {
+		return new PrefsDump("InternalPrefs", 
+			new ConfigPair[] {
+		});
 	}
 }

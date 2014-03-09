@@ -2,7 +2,11 @@ package de.msk.mylivetracker.client.android.auto;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang.BooleanUtils;
+
 import de.msk.mylivetracker.client.android.preferences.APrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.ConfigPair;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.PrefsDump;
 
 /**
  * classname: AutoPrefs
@@ -93,7 +97,22 @@ public class AutoPrefs extends APrefs implements Serializable {
 	public void setAutoStartEnabled(boolean autoStartEnabled) {
 		this.autoStartEnabled = autoStartEnabled;
 	}
-
+	@Override
+	public String getShortName() {
+		return "auto";
+	}
+	@Override
+	public PrefsDump getPrefsDump() {
+		return new PrefsDump("AutoPrefs", 
+			new ConfigPair[] {
+				new ConfigPair("autoStartEnabled", 
+					BooleanUtils.toStringTrueFalse(this.autoStartEnabled)),
+				new ConfigPair("autoModeEnabled", 
+					BooleanUtils.toStringTrueFalse(this.autoModeEnabled)),
+				new ConfigPair("autoModeResetTrackMode", 
+					this.autoModeResetTrackMode.name()),
+		});
+	}
 	@Override
 	public String toString() {
 		return "AutoPrefs [autoModeEnabled=" + autoModeEnabled

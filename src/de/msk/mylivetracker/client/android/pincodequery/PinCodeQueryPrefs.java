@@ -2,7 +2,11 @@ package de.msk.mylivetracker.client.android.pincodequery;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang.BooleanUtils;
+
 import de.msk.mylivetracker.client.android.preferences.APrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.ConfigPair;
+import de.msk.mylivetracker.client.android.preferences.PrefsDumper.PrefsDump;
 
 /**
  * classname: PinCodeQueryPrefs
@@ -49,7 +53,19 @@ public class PinCodeQueryPrefs extends APrefs implements Serializable {
 	public void setPinCode(String pinCode) {
 		this.pinCode = pinCode;
 	}
-
+	@Override
+	public String getShortName() {
+		return "pincode";
+	}
+	@Override
+	public PrefsDump getPrefsDump() {
+		return new PrefsDump("PinCodeQueryPrefs", 
+			new ConfigPair[] {
+				new ConfigPair("pinCodeQueryEnabled", 
+					BooleanUtils.toStringTrueFalse(this.pinCodeQueryEnabled)),
+				new ConfigPair("pinCode", this.pinCode),
+		});
+	}
 	@Override
 	public String toString() {
 		return "PinCodeQueryPrefs [pinCodeQueryEnabled=" + pinCodeQueryEnabled
