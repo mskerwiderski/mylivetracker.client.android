@@ -3,7 +3,7 @@
 	package="de.msk.mylivetracker.client.android.liontrack"
     android:versionCode="220" 
     android:versionName="2.2.0 RP" 
-    >       
+>       
     <uses-sdk
        android:minSdkVersion="7" 
        android:targetSdkVersion="17"

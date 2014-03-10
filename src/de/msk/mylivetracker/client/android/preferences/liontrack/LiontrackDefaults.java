@@ -17,6 +17,7 @@ import de.msk.mylivetracker.client.android.server.ServerPrefs;
  * @since 1.5.0
  * 
  * history:
+ * 001	2014-03-10	bugfix: maxWaitingPeriodForGpsFixInMSecs was to small
  * 000	2012-12-30	revised for v1.5.x.
  * 
  */
@@ -31,7 +32,7 @@ public class LiontrackDefaults {
 		localizationPrefs.setDistanceTriggerInMeter(0);
 		localizationPrefs.setDistBtwTwoLocsForDistCalcRequiredInCMtr(1650);
 		localizationPrefs.setLocalizationMode(LocalizationPrefs.LocalizationMode.gps);
-		localizationPrefs.setMaxWaitingPeriodForGpsFixInMSecs(1800);
+		localizationPrefs.setMaxWaitingPeriodForGpsFixInMSecs(180000);
 		localizationPrefs.setTimeTriggerInSeconds(0);
 		
 		OtherPrefs otherPrefs = PrefsRegistry.get(OtherPrefs.class);

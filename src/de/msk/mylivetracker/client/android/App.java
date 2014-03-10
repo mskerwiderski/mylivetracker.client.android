@@ -285,12 +285,18 @@ public class App extends Application {
 	 */
 	
 	public static String getDeviceModel() {
-		return android.os.Build.MANUFACTURER + " " + android.os.Build.MODEL;
+		return android.os.Build.MANUFACTURER + " " + 
+			android.os.Build.MODEL + " (" +
+			android.os.Build.BRAND + ")";
 	}
 	
 	public static String getDeviceId() {
 		return ((TelephonyManager)App.get().getSystemService(
 			Context.TELEPHONY_SERVICE)).getDeviceId();
+	}
+	
+	public static String getDeviceBoard() {
+		return android.os.Build.BOARD;
 	}
 	
 	public static boolean smsSupported() {
