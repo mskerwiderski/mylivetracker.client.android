@@ -82,12 +82,14 @@ public class ResponseCreator {
 	}
 	
 	public static String getResultOfGetHeartrate(HeartrateInfo heartrateInfo) {
-		String str = "no heartrate info available";
+		String str = "";
 		if (heartrateInfo != null) {
 			str = addParamLong(str, "current hr", heartrateInfo.getHrInBpm(), Unit.BeatsPerMinute);
 			str = addParamLong(str, "average hr", heartrateInfo.getHrAvgInBpm(), Unit.BeatsPerMinute);
 			str = addParamLong(str, "min hr", heartrateInfo.getHrMinInBpm(), Unit.BeatsPerMinute);
 			str = addParamLong(str, "max hr", heartrateInfo.getHrMaxInBpm(), Unit.BeatsPerMinute);
+		} else {
+			str = "no heartrate info available";
 		}
 		return str;
 	}

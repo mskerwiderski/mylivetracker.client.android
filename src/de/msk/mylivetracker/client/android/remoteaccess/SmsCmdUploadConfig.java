@@ -49,7 +49,8 @@ public class SmsCmdUploadConfig extends ASmsCmdExecutor {
 	}
 
 	public static String createFileNameOfConfigFileDump() {
-		String fileName = "configdump_"; 
+		String fileName = "MLT_CFG_" + 
+			App.getDeviceId() + "_"; 
 		DateTime dateTime = new DateTime();
 		fileName += "_" + dateTime.getAsStr(
 			TimeZone.getTimeZone(DateTime.TIME_ZONE_UTC), 

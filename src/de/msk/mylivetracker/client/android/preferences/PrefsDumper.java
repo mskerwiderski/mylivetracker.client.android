@@ -65,6 +65,7 @@ public class PrefsDumper {
 			"AppNameComplete = " + QUOTE + App.getAppNameComplete() + QUOTE + LINE_SEP +
 			"DeviceId = " + QUOTE + App.getDeviceId() + QUOTE + LINE_SEP +
 			"DeviceModel = " + QUOTE + App.getDeviceModel() + QUOTE + LINE_SEP +
+			"DeviceBoard = " + QUOTE + App.getDeviceBoard() + QUOTE + LINE_SEP +
 			"DeviceLanguage = " + QUOTE + App.getLocale().getDisplayLanguage() + QUOTE + LINE_SEP +
 			"smsSupported = " + QUOTE + 
 				BooleanUtils.toStringTrueFalse(App.smsSupported()) + QUOTE + LINE_SEP +

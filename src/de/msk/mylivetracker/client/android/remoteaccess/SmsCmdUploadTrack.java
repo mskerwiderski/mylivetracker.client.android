@@ -47,7 +47,7 @@ public class SmsCmdUploadTrack extends ASmsCmdExecutor {
 		String result = "";
 		if (!PrefsRegistry.get(DropboxPrefs.class).hasValidAccountAndToken()) {
 			result = ResponseCreator.getResultOfNotConnectedToDropbox();
-		} else if (LogInfo.logFileExists()) {
+		} else if (!LogInfo.logFileExists()) {
 			result = ResponseCreator.getResultOfError("no track file exists");
 		} else {
 			String gpxFileName = LogInfo.createGpxFileNameOfCurrentTrack();
