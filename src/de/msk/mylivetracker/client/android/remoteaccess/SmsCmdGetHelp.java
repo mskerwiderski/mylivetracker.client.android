@@ -48,9 +48,9 @@ public class SmsCmdGetHelp extends ASmsCmdExecutor {
 		String helpStr = "";
 		helpStr = addCommandSyntax(helpStr, SmsCmdGetHelp.NAME, SmsCmdGetHelp.SYNTAX, true);
 		helpStr = addCommandSyntax(helpStr, SmsCmdGetAppVersion.NAME, SmsCmdGetAppVersion.SYNTAX, true);
-		helpStr = addCommandSyntax(helpStr, SmsCmdGetLocation.NAME, SmsCmdGetLocation.SYNTAX, true);
+		helpStr = addCommandSyntax(helpStr, SmsCmdLocalization.NAME, SmsCmdLocalization.SYNTAX, true);
 		helpStr = addCommandSyntax(helpStr, SmsCmdGetHeartrate.NAME, SmsCmdGetHeartrate.SYNTAX, true);
-		helpStr = addCommandSyntax(helpStr, SmsCmdTrack.NAME, SmsCmdTrack.SYNTAX, true);
+		helpStr = addCommandSyntax(helpStr, SmsCmdTracking.NAME, SmsCmdTracking.SYNTAX, true);
 		helpStr = addCommandSyntax(helpStr, SmsCmdGetConfig.NAME, SmsCmdGetConfig.SYNTAX, true);
 		helpStr = addCommandSyntax(helpStr, SmsCmdSetConfig.NAME, SmsCmdSetConfig.SYNTAX, true);
 		helpStr = addCommandSyntax(helpStr, SmsCmdUploadConfig.NAME, SmsCmdUploadConfig.SYNTAX, true);

@@ -103,6 +103,10 @@ public class HeartrateInfo extends AbstractInfo implements Serializable {
 		return newHeartrateInfo;
 	}
 	
+	public boolean hasValidHrData() {
+		return (this.hrInBpm != null) && (this.hrInBpm > 0L);
+	}
+	
 	public boolean isUpToDate() {
 		if ((this.hrInBpm == null) || (this.getTimestamp() == null)) return false;
 		int periodOfRestInSecs = 5;

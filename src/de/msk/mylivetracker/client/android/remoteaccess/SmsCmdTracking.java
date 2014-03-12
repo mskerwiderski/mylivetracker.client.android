@@ -8,7 +8,7 @@ import de.msk.mylivetracker.client.android.util.LogUtils;
 import de.msk.mylivetracker.client.android.util.TrackUtils;
 
 /**
- * classname: SmsCmdTrack
+ * classname: SmsCmdTracking
  * 
  * @author michael skerwiderski, (c)2012
  * @version 001
@@ -19,7 +19,7 @@ import de.msk.mylivetracker.client.android.util.TrackUtils;
  * 000	2012-12-29	revised for v1.5.x.
  * 
  */
-public class SmsCmdTrack extends ASmsCmdExecutor {
+public class SmsCmdTracking extends ASmsCmdExecutor {
 
 	public static String NAME = "track";
 	public static String SYNTAX = "reset|start|stop|info";
@@ -43,7 +43,7 @@ public class SmsCmdTrack extends ASmsCmdExecutor {
 		
 	}
 	
-	public SmsCmdTrack(String sender, String... params) {
+	public SmsCmdTracking(String sender, String... params) {
 		super(new CmdDsc(), sender, params);
 	}
 
