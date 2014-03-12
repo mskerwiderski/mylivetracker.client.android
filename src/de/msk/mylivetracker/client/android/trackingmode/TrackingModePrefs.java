@@ -2,7 +2,6 @@ package de.msk.mylivetracker.client.android.trackingmode;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 
 import de.msk.mylivetracker.client.android.preferences.APrefs;
@@ -65,7 +64,6 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 	
 	// only for trackingmode auto.
 	private AutoModeResetTrackMode autoModeResetTrackMode;
-	private boolean autoStartEnabled;
 	
 	@Override
 	public int getVersion() {
@@ -77,11 +75,14 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 		this.maxCheckpointPeriodInSecs = 180;
 		this.checkpointMessage = null;
 		this.autoModeResetTrackMode = AutoModeResetTrackMode.NextDay;
-		this.autoStartEnabled = false;
 	}
 	@Override
 	public void initWithValuesOfOldVersion(int foundVersion, String foundGsonStr) {
 		// noop.
+	}
+	public static boolean isAuto() {
+		return PrefsRegistry.get(TrackingModePrefs.class).
+			getTrackingMode().equals(TrackingMode.Auto);
 	}
 	public static boolean isCheckpoint() {
 		return PrefsRegistry.get(TrackingModePrefs.class).
@@ -115,13 +116,7 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 	public void setAutoModeResetTrackMode(
 			AutoModeResetTrackMode autoModeResetTrackMode) {
 		this.autoModeResetTrackMode = autoModeResetTrackMode;
-	}
-	public boolean isAutoStartEnabled() {
-		return autoStartEnabled;
-	}
-	public void setAutoStartEnabled(boolean autoStartEnabled) {
-		this.autoStartEnabled = autoStartEnabled;
-	}
+	}	
 	@Override
 	public String getShortName() {
 		return "trackingmode";
@@ -134,8 +129,6 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 				new ConfigPair("maxCheckpointPeriodInSecs", 
 					String.valueOf(this.maxCheckpointPeriodInSecs)),
 				new ConfigPair("checkpointMessage", this.checkpointMessage),
-				new ConfigPair("autoStartEnabled", 
-					BooleanUtils.toStringTrueFalse(this.autoStartEnabled)),
 				new ConfigPair("autoModeResetTrackMode", this.autoModeResetTrackMode.name()),
 		});
 	}
@@ -144,7 +137,6 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 		return "TrackingModePrefs [trackingMode=" + trackingMode
 			+ ", maxCheckpointPeriodInSecs=" + maxCheckpointPeriodInSecs
 			+ ", checkpointMessage=" + checkpointMessage
-			+ ", autoModeResetTrackMode=" + autoModeResetTrackMode
-			+ ", autoStartEnabled=" + autoStartEnabled + "]";
+			+ ", autoModeResetTrackMode=" + autoModeResetTrackMode + "]";
 	}
 }

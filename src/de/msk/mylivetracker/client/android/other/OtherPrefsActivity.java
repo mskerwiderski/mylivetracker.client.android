@@ -40,18 +40,21 @@ public class OtherPrefsActivity extends AbstractActivity {
 		private Spinner spOtherPrefs_ConfirmLevel;
 		private CheckBox cbOtherPrefs_AdaptButtonsForOneTouchMode;
 		private CheckBox cbOtherPrefs_EnableAntPlusIfAvailable;
+		private CheckBox cbOtherPrefs_AutoStartApp;
 		
 		public OnClickButtonSaveListener(
 			OtherPrefsActivity activity,
 			Spinner spOtherPrefs_TrackingOneTouch,
 			Spinner spOtherPrefs_ConfirmLevel,
 			CheckBox cbOtherPrefs_AdaptButtonsForOneTouchMode,
-			CheckBox cbOtherPrefs_EnableAntPlusIfAvailable) {
+			CheckBox cbOtherPrefs_EnableAntPlusIfAvailable,
+			CheckBox cbOtherPrefs_AutoStartApp) {
 			this.activity = activity;
 			this.spOtherPrefs_TrackingOneTouch = spOtherPrefs_TrackingOneTouch;
 			this.spOtherPrefs_ConfirmLevel = spOtherPrefs_ConfirmLevel;
 			this.cbOtherPrefs_AdaptButtonsForOneTouchMode = cbOtherPrefs_AdaptButtonsForOneTouchMode;
 			this.cbOtherPrefs_EnableAntPlusIfAvailable = cbOtherPrefs_EnableAntPlusIfAvailable;
+			this.cbOtherPrefs_AutoStartApp = cbOtherPrefs_AutoStartApp;
 		}
 
 		@Override
@@ -67,6 +70,8 @@ public class OtherPrefsActivity extends AbstractActivity {
 					cbOtherPrefs_AdaptButtonsForOneTouchMode.isChecked());
 				prefs.setAntPlusEnabledIfAvailable(
 					cbOtherPrefs_EnableAntPlusIfAvailable.isChecked());
+				prefs.setAutoStartApp(
+					cbOtherPrefs_AutoStartApp.isChecked());
 				PrefsRegistry.save(OtherPrefs.class);
 				this.activity.finish();
 			}			
@@ -171,6 +176,9 @@ public class OtherPrefsActivity extends AbstractActivity {
 	        cbOtherPrefs_EnableAntPlusIfAvailable.setChecked(prefs.isAntPlusEnabledIfAvailable());
         }
      
+        CheckBox cbOtherPrefs_AutoStartApp = (CheckBox)findViewById(R.id.cbOtherPrefs_AutoStartApp);
+        cbOtherPrefs_AutoStartApp.setChecked(prefs.isAutoStartApp());
+        
         Button btOtherPrefs_ResetToFactoryDefaults = (Button)findViewById(R.id.btOtherPrefs_ResetToFactoryDefaults);
         Button btOtherPrefs_ResetOverallMileage = (Button)findViewById(R.id.btOtherPrefs_ResetOverallMileage);
         Button btnOtherPrefs_Save = (Button) findViewById(R.id.btOtherPrefs_Save);
@@ -185,7 +193,8 @@ public class OtherPrefsActivity extends AbstractActivity {
 				spOtherPrefs_TrackingOneTouch,
 				spOtherPrefs_ConfirmLevel,
 				cbOtherPrefs_AdaptButtonsForOneTouchMode,
-				cbOtherPrefs_EnableAntPlusIfAvailable));		
+				cbOtherPrefs_EnableAntPlusIfAvailable,
+				cbOtherPrefs_AutoStartApp));		
         btnOtherPrefs_Cancel.setOnClickListener(
 			new OnFinishActivityListener(this));
     }

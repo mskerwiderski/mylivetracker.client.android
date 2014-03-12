@@ -1,12 +1,13 @@
 package de.msk.mylivetracker.client.android.preferences.prefsv144;
 
 import de.msk.mylivetracker.client.android.account.AccountPrefs;
-import de.msk.mylivetracker.client.android.auto.AutoPrefs;
 import de.msk.mylivetracker.client.android.localization.LocalizationPrefs;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.server.ServerPrefs;
+import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
+import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.TrackingMode;
 
 /**
  * classname: PrefsV144Updater
@@ -19,7 +20,6 @@ import de.msk.mylivetracker.client.android.server.ServerPrefs;
  * 000	2012-12-30	revised for v1.5.x.
  * 
  */
-@SuppressWarnings("deprecation")
 public class PrefsV144Updater {
 
 	public static boolean run() {
@@ -37,25 +37,27 @@ public class PrefsV144Updater {
 		accountPrefs.setPhoneNumber(prefsv144.getPhoneNumber());
 		accountPrefs.setTrackName(prefsv144.getTrackName());
 		
-		AutoPrefs autoPrefs = PrefsRegistry.get(AutoPrefs.class);
-		autoPrefs.setAutoModeEnabled(prefsv144.isAutoModeEnabled());
-		if (prefsv144.getAutoModeResetTrackMode().equals(PrefsV144.AutoModeResetTrackMode.Hour1)) {
-			autoPrefs.setAutoModeResetTrackMode(AutoPrefs.AutoModeResetTrackMode.Hour1);
-		} else if (prefsv144.getAutoModeResetTrackMode().equals(PrefsV144.AutoModeResetTrackMode.Hours2)) {
-			autoPrefs.setAutoModeResetTrackMode(AutoPrefs.AutoModeResetTrackMode.Hours2);
-		} else if (prefsv144.getAutoModeResetTrackMode().equals(PrefsV144.AutoModeResetTrackMode.Hours24)) {
-			autoPrefs.setAutoModeResetTrackMode(AutoPrefs.AutoModeResetTrackMode.Hours24);
-		} else if (prefsv144.getAutoModeResetTrackMode().equals(PrefsV144.AutoModeResetTrackMode.Hours4)) {
-			autoPrefs.setAutoModeResetTrackMode(AutoPrefs.AutoModeResetTrackMode.Hours4);
-		} else if (prefsv144.getAutoModeResetTrackMode().equals(PrefsV144.AutoModeResetTrackMode.Hours8)) {
-			autoPrefs.setAutoModeResetTrackMode(AutoPrefs.AutoModeResetTrackMode.Hours8);
-		} else if (prefsv144.getAutoModeResetTrackMode().equals(PrefsV144.AutoModeResetTrackMode.Never)) {
-			autoPrefs.setAutoModeResetTrackMode(AutoPrefs.AutoModeResetTrackMode.Never);
-		} else if (prefsv144.getAutoModeResetTrackMode().equals(PrefsV144.AutoModeResetTrackMode.NextDay)) {
-			autoPrefs.setAutoModeResetTrackMode(AutoPrefs.AutoModeResetTrackMode.NextDay);
+		TrackingModePrefs trackingModePrefs = PrefsRegistry.get(TrackingModePrefs.class);
+		if (prefsv144.isAutoModeEnabled()) {
+			trackingModePrefs.setTrackingMode(TrackingMode.Auto);
+		} else {
+			trackingModePrefs.setTrackingMode(TrackingMode.Standard);
 		}
-		
-		autoPrefs.setAutoStartEnabled(prefsv144.isAutoStartEnabled());
+		if (prefsv144.getAutoModeResetTrackMode().equals(PrefsV144.AutoModeResetTrackMode.Hour1)) {
+			trackingModePrefs.setAutoModeResetTrackMode(TrackingModePrefs.AutoModeResetTrackMode.Hour1);
+		} else if (prefsv144.getAutoModeResetTrackMode().equals(PrefsV144.AutoModeResetTrackMode.Hours2)) {
+			trackingModePrefs.setAutoModeResetTrackMode(TrackingModePrefs.AutoModeResetTrackMode.Hours2);
+		} else if (prefsv144.getAutoModeResetTrackMode().equals(PrefsV144.AutoModeResetTrackMode.Hours24)) {
+			trackingModePrefs.setAutoModeResetTrackMode(TrackingModePrefs.AutoModeResetTrackMode.Hours24);
+		} else if (prefsv144.getAutoModeResetTrackMode().equals(PrefsV144.AutoModeResetTrackMode.Hours4)) {
+			trackingModePrefs.setAutoModeResetTrackMode(TrackingModePrefs.AutoModeResetTrackMode.Hours4);
+		} else if (prefsv144.getAutoModeResetTrackMode().equals(PrefsV144.AutoModeResetTrackMode.Hours8)) {
+			trackingModePrefs.setAutoModeResetTrackMode(TrackingModePrefs.AutoModeResetTrackMode.Hours8);
+		} else if (prefsv144.getAutoModeResetTrackMode().equals(PrefsV144.AutoModeResetTrackMode.Never)) {
+			trackingModePrefs.setAutoModeResetTrackMode(TrackingModePrefs.AutoModeResetTrackMode.Never);
+		} else if (prefsv144.getAutoModeResetTrackMode().equals(PrefsV144.AutoModeResetTrackMode.NextDay)) {
+			trackingModePrefs.setAutoModeResetTrackMode(TrackingModePrefs.AutoModeResetTrackMode.NextDay);
+		}
 		
 		LocalizationPrefs localizationPrefs = PrefsRegistry.get(LocalizationPrefs.class);
 		localizationPrefs.setAccuracyRequiredInMeter(prefsv144.getLocAccuracyRequiredInMeter());
@@ -85,6 +87,7 @@ public class PrefsV144Updater {
 		} else if (prefsv144.getTrackingOneTouchMode().equals(PrefsV144.TrackingOneTouchMode.TrackingOnly)) {
 			otherPrefs.setTrackingOneTouchMode(OtherPrefs.TrackingOneTouchMode.TrackingOnly);
 		}
+		otherPrefs.setAutoStartApp(prefsv144.isAutoStartEnabled());
 		
 		ProtocolPrefs protocolPrefs = PrefsRegistry.get(ProtocolPrefs.class);
 		protocolPrefs.setCloseConnectionAfterEveryUpload(prefsv144.isCloseConnectionAfterEveryUpload());

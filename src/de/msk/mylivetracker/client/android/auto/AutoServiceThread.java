@@ -8,7 +8,6 @@ import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
-import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.TrackingMode;
 import de.msk.mylivetracker.client.android.util.TrackUtils;
 import de.msk.mylivetracker.client.android.util.service.AbstractServiceThread;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;
@@ -33,12 +32,11 @@ public class AutoServiceThread extends AbstractServiceThread {
 
 	@Override
 	public void runSinglePass() throws InterruptedException {
-		TrackingModePrefs prefs = PrefsRegistry.get(TrackingModePrefs.class);
 		TrackStatus status = TrackStatus.get();
 		BatteryStateInfo batteryStateInfo = BatteryStateInfo.get();
 		boolean battFullOrCharging = (batteryStateInfo == null) ? false :
 			batteryStateInfo.fullOrCharging();
-		if (prefs.getTrackingMode().equals(TrackingMode.Auto)) {
+		if (TrackingModePrefs.isAuto()) {
 			if (battFullOrCharging &&
 				!status.trackIsRunning()) {
 				if (trackIsExpired()) {
@@ -50,9 +48,7 @@ public class AutoServiceThread extends AbstractServiceThread {
 				TrackUtils.stopTrack();
 				status.updateLastAutoModeStopSignalReceived();
 			}
-		} else if (prefs.isAutoStartEnabled() && !status.trackIsRunning()) {
-			TrackUtils.startTrack();
-		}
+		} 
 	}
 
 	@Override

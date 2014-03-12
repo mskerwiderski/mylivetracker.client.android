@@ -6,6 +6,7 @@
     <string name="lbOtherPrefs_EnableAntPlusIfAvailable">ANT+ aktivieren (falls verfügbar)</string>
     <string name="lbOtherPrefs_SwitchToCheckpointMode">In den Checkpoint Modus wechseln</string>
     <string name="lbOtherPrefs_AdaptButtonsForOneTouchMode">Buttons für One-Touch Modus anpassen</string>
+    <string name="lbOtherPrefs_AutoStart">Autostart dieser App nach Reboot</string>
     <string name="btOtherPrefs_ResetOverallMileage">Km-Zähler zurücksetzen</string>
     <string name="btOtherPrefs_ResetToFactoryDefaults">Werkseinstellungen</string>
     <string name="txOtherPrefs_QuestionResetToFactoryDefaults">Wollen Sie wirklich auf die Werkseinstellungen zurücksetzen?</string>

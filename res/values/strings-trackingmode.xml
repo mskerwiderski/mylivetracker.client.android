@@ -10,7 +10,5 @@
 	<string name="lbTrackingModePrefs_CheckpointMessage">Checkpoint message</string>
     <string name="txTrackingModePrefs_OptionsOnlyForTrackingAutoMode">Following options are only used in tracking mode \'Auto\':</string>
    	<string name="fdTrackingModePrefs_ResetTrackMode">Reset-track mode</string>
-	<string name="lbTrackingModePrefs_ResetTrackMode">Reset-track mode</string>
-	<string name="fdTrackingModePrefs_AutoStart">Auto Start</string>
-    <string name="lbTrackingModePrefs_AutoStart">Start %1$s automatically after a reboot.</string>
+	<string name="lbTrackingModePrefs_ResetTrackMode">Reset-track mode</string>	
 </resources>

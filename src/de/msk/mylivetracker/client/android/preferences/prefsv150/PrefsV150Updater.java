@@ -1,6 +1,7 @@
 package de.msk.mylivetracker.client.android.preferences.prefsv150;
 
 import de.msk.mylivetracker.client.android.auto.AutoPrefs;
+import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.TrackingMode;
@@ -23,6 +24,7 @@ public class PrefsV150Updater {
 	public static boolean run() {
 		AutoPrefs autoPrefs = PrefsRegistry.get(AutoPrefs.class);
 		TrackingModePrefs trackingModePrefs = PrefsRegistry.get(TrackingModePrefs.class);
+		OtherPrefs otherPrefs = PrefsRegistry.get(OtherPrefs.class);
 		if (autoPrefs.isAutoModeEnabled()) {
 			trackingModePrefs.setTrackingMode(TrackingMode.Auto);
 		} else {
@@ -31,7 +33,7 @@ public class PrefsV150Updater {
 		trackingModePrefs.setAutoModeResetTrackMode(
 			TrackingModePrefs.AutoModeResetTrackMode.values()[
                   autoPrefs.getAutoModeResetTrackMode().ordinal()]);
-		trackingModePrefs.setAutoStartEnabled(autoPrefs.isAutoStartEnabled());
+		otherPrefs.setAutoStartApp(autoPrefs.isAutoStartEnabled());
 		return true;
 	}
 }

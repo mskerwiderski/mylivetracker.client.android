@@ -4,9 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
+import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
-import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.TrackingMode;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
 /**
@@ -17,6 +16,7 @@ import de.msk.mylivetracker.client.android.util.LogUtils;
  * @since 1.5.0
  * 
  * history:
+ * 001	2014-03-12	start app if autoStartApp is true (whetcher trackingMode is set to auto or not).
  * 000	2012-12-29	revised for v1.5.x.
  * 
  */
@@ -25,8 +25,8 @@ public class LaunchAppBroadcast extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent unused) {
 		LogUtils.info(LaunchAppBroadcast.class, "onReceive called.");
-		TrackingModePrefs prefs = PrefsRegistry.get(TrackingModePrefs.class);
-		if (prefs.getTrackingMode().equals(TrackingMode.Auto) && prefs.isAutoStartEnabled()) {
+		OtherPrefs prefs = PrefsRegistry.get(OtherPrefs.class);
+		if (prefs.isAutoStartApp()) {
 			// start MainActivity.
 			Intent intent = new Intent(context, MainActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

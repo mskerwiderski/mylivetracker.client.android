@@ -16,6 +16,7 @@ import de.msk.mylivetracker.client.android.preferences.PrefsDumper.PrefsDump;
  * @since 1.5.0
  * 
  * history:
+ * 001	2012-03-12	option 'autoStartApp' added.
  * 000	2012-12-29	revised for v1.5.x.
  * 
  */
@@ -61,6 +62,7 @@ public class OtherPrefs extends APrefs implements Serializable {
 	private TrackingOneTouchMode trackingOneTouchMode;
 	private boolean adaptButtonsForOneTouchMode;
 	private boolean antPlusEnabledIfAvailable;
+	private boolean autoStartApp;
 	
 	@Override
 	public int getVersion() {
@@ -102,6 +104,12 @@ public class OtherPrefs extends APrefs implements Serializable {
 	public void setAntPlusEnabledIfAvailable(boolean antPlusEnabledIfAvailable) {
 		this.antPlusEnabledIfAvailable = antPlusEnabledIfAvailable;
 	}
+	public boolean isAutoStartApp() {
+		return autoStartApp;
+	}
+	public void setAutoStartApp(boolean autoStartApp) {
+		this.autoStartApp = autoStartApp;
+	}
 	@Override
 	public String getShortName() {
 		return "other";
@@ -116,14 +124,17 @@ public class OtherPrefs extends APrefs implements Serializable {
 					BooleanUtils.toStringTrueFalse(this.adaptButtonsForOneTouchMode)),
 				new ConfigPair("antPlusEnabledIfAvailable", 
 					BooleanUtils.toStringTrueFalse(this.antPlusEnabledIfAvailable)),
+				new ConfigPair("autoStartApp", 
+					BooleanUtils.toStringTrueFalse(this.autoStartApp)),	
 		});
 	}
 	@Override
 	public String toString() {
 		return "OtherPrefs [confirmLevel=" + confirmLevel
-				+ ", trackingOneTouchMode=" + trackingOneTouchMode
-				+ ", adaptButtonsForOneTouchMode="
-				+ adaptButtonsForOneTouchMode + ", antPlusEnabledIfAvailable="
-				+ antPlusEnabledIfAvailable + "]";
+			+ ", trackingOneTouchMode=" + trackingOneTouchMode
+			+ ", adaptButtonsForOneTouchMode="
+			+ adaptButtonsForOneTouchMode + ", antPlusEnabledIfAvailable="
+			+ antPlusEnabledIfAvailable + ", autoStartApp=" + autoStartApp
+			+ "]";
 	}
 }

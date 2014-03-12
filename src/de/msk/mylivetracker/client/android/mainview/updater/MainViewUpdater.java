@@ -10,6 +10,7 @@ import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
 import de.msk.mylivetracker.client.android.localization.LocalizationPrefs;
 import de.msk.mylivetracker.client.android.localization.LocalizationService;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
+import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.status.HeartrateInfo;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
@@ -84,7 +85,8 @@ public class MainViewUpdater extends AViewUpdater {
 	
 	@Override
 	public void updateView() {
-		TrackingModePrefs preferences = PrefsRegistry.get(TrackingModePrefs.class);
+		TrackingModePrefs trackingModePrefs = PrefsRegistry.get(TrackingModePrefs.class);
+		OtherPrefs otherPrefs = PrefsRegistry.get(OtherPrefs.class);
 		TrackStatus status = TrackStatus.get();
 		
 		MainActivity mainActivity = MainActivity.get();					
@@ -97,16 +99,18 @@ public class MainViewUpdater extends AViewUpdater {
 		// auto start indicator
 		TextView tvAutoStartIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_AutoStartIndicator);
 		setIndicatorTextAndColors(tvAutoStartIndicator, 
-			(preferences.isAutoStartEnabled() ? 
+			(otherPrefs.isAutoStartApp() ? 
 				res.getText(R.string.tvOn).toString() : 
 				res.getText(R.string.tvOff).toString()), 
-			preferences.isAutoStartEnabled() ? IndicatorState.Ok : IndicatorState.Off);
+			otherPrefs.isAutoStartApp() ? 
+				IndicatorState.Ok : IndicatorState.Off);
 				
 		// tracking mode indicator
 		TextView tvAutoModeIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_TrackingModeIndicator);
 		setIndicatorTextAndColors(tvAutoModeIndicator,
-			App.getCtx().getResources().getStringArray(R.array.trackingModeAbbr)[preferences.getTrackingMode().ordinal()],	
-			preferences.getTrackingMode().equals(TrackingMode.Auto) ? 
+			App.getCtx().getResources().getStringArray(R.array.trackingModeAbbr)
+				[trackingModePrefs.getTrackingMode().ordinal()],	
+			trackingModePrefs.getTrackingMode().equals(TrackingMode.Auto) ? 
 				IndicatorState.Ok : IndicatorState.Off);
 		
 		// gps indicator			

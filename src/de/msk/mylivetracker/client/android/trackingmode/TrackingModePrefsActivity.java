@@ -6,11 +6,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
@@ -66,21 +64,18 @@ public class TrackingModePrefsActivity extends AbstractActivity {
 		private EditText etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs;
 		private EditText etTrackingModePrefs_CheckpointMessage;
 		private Spinner spTrackingModePrefs_ResetTrackMode;
-		private CheckBox cbTrackingModePrefs_AutoStart;
 		
 		public OnClickButtonSaveListener(
 			TrackingModePrefsActivity activity,
 			Spinner spTrackingModePrefs_TrackingMode,
 			EditText etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs,
 			EditText etTrackingModePrefs_CheckpointMessage,
-			Spinner spTrackingModePrefs_ResetTrackMode,
-			CheckBox cbTrackingModePrefs_AutoStart) {
+			Spinner spTrackingModePrefs_ResetTrackMode) {
 			this.activity = activity;
 			this.spTrackingModePrefs_TrackingMode = spTrackingModePrefs_TrackingMode;
 			this.etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs = etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs;
 			this.etTrackingModePrefs_CheckpointMessage = etTrackingModePrefs_CheckpointMessage;
 			this.spTrackingModePrefs_ResetTrackMode = spTrackingModePrefs_ResetTrackMode;
-			this.cbTrackingModePrefs_AutoStart = cbTrackingModePrefs_AutoStart;
 		}
 
 		@Override
@@ -108,7 +103,6 @@ public class TrackingModePrefsActivity extends AbstractActivity {
 			} else if (prefs.getTrackingMode().equals(TrackingMode.Auto)) {
 				prefs.setAutoModeResetTrackMode(AutoModeResetTrackMode.values()[
                     spTrackingModePrefs_ResetTrackMode.getSelectedItemPosition()]);
-				prefs.setAutoStartEnabled(cbTrackingModePrefs_AutoStart.isChecked());
 			} 
 			
 			if (valid) {
@@ -130,7 +124,6 @@ public class TrackingModePrefsActivity extends AbstractActivity {
     	((LinearLayout)findViewById(R.id.llTrackingModePrefs_tvCheckpointMessage)).setVisibility(viewCheckpointState);
     	
     	((LinearLayout)findViewById(R.id.llTrackingModePrefs_OptionsOnlyForTrackingAutoMode)).setVisibility(viewAutoState);
-    	((LinearLayout)findViewById(R.id.llTrackingModePrefs_AutoStart)).setVisibility(viewAutoState);
     	((LinearLayout)findViewById(R.id.llTrackingModePrefs_tvResetTrackMode)).setVisibility(viewAutoState);
     	((LinearLayout)findViewById(R.id.llTrackingModePrefs_cbResetTrackMode)).setVisibility(viewAutoState);
     	LogUtils.infoMethodOut(TrackingModePrefsActivity.class, "viewOrHideOptionFiels", currSelectedModeId);
@@ -164,13 +157,6 @@ public class TrackingModePrefsActivity extends AbstractActivity {
         	(EditText)findViewById(R.id.etTrackingModePrefs_CheckpointMessage);
         etTrackingModePrefs_CheckpointMessage.setText(prefs.getCheckpointMessage());
 
-        // options for trackingmode auto.
-        CheckBox cbTrackingModePrefs_AutoStart = (CheckBox)
-        	findViewById(R.id.cbTrackingModePrefs_AutoStart);
-        cbTrackingModePrefs_AutoStart.setText(App.getCtx().getString(
-        	R.string.lbTrackingModePrefs_AutoStart, App.getAppName()));
-        cbTrackingModePrefs_AutoStart.setChecked(prefs.isAutoStartEnabled());
-        
         Spinner spTrackingModePrefs_ResetTrackMode = (Spinner)
         	findViewById(R.id.spTrackingModePrefs_ResetTrackMode);
         ArrayAdapter<?> adapterResetTrackMode = ArrayAdapter.createFromResource(
@@ -193,8 +179,7 @@ public class TrackingModePrefsActivity extends AbstractActivity {
 				spTrackingModePrefs_TrackingMode,
 				etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs,
 				etTrackingModePrefs_CheckpointMessage,
-				spTrackingModePrefs_ResetTrackMode,
-				cbTrackingModePrefs_AutoStart));		
+				spTrackingModePrefs_ResetTrackMode));		
         btnPrefsOther_Cancel.setOnClickListener(
 			new OnFinishActivityListener(this));
         
