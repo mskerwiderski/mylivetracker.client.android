@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import de.msk.mylivetracker.client.android.App;
+
 import android.content.Context;
 
 /**
@@ -55,7 +57,20 @@ public abstract class ARemoteCmdDsc {
 	public abstract boolean matchesSyntax(String[] params);
 	
 	public String getSyntax() {
-		return name + " " + paramDsc;
+		String syntax = this.name;
+		if (!StringUtils.isEmpty(this.paramDsc)) {
+			syntax += " " + this.paramDsc;
+		}
+		return syntax;
+	}
+	
+	public String getDescription() {
+		String dsc = this.getSyntax();
+		String dscStr = App.getCtx().getString(this.descriptionId);
+		if (!StringUtils.isEmpty(dscStr)) {
+			dsc += " - " + dscStr;
+		}
+		return dsc;
 	}
 	
 	public static <E extends Enum<E>> String createSyntaxStr(Class<E> options) {	

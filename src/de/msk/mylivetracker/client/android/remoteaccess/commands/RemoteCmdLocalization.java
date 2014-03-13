@@ -1,16 +1,20 @@
-package de.msk.mylivetracker.client.android.remoteaccess;
+package de.msk.mylivetracker.client.android.remoteaccess.commands;
 
 import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
 
+import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.localization.LocalizationService;
+import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdDsc;
+import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdExecutor;
+import de.msk.mylivetracker.client.android.remoteaccess.ResponseCreator;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
 import de.msk.mylivetracker.client.android.util.LocalizationUtils;
 import de.msk.mylivetracker.client.android.util.service.AbstractService;
 
 /**
- * classname: SmsCmdLocalization
+ * classname: RemoteCmdLocalization
  * 
  * @author michael skerwiderski, (c)2012
  * @version 001
@@ -21,15 +25,23 @@ import de.msk.mylivetracker.client.android.util.service.AbstractService;
  * 000	2012-12-29	revised for v1.5.x.
  * 
  */
-public class SmsCmdLocalization extends ASmsCmdExecutor {
+public class RemoteCmdLocalization extends ARemoteCmdExecutor {
 
-	public static String NAME = "loc";
-	public static String SYNTAX = "start|stop|(info[detect [<timeout in secs>]])";
+	public static final String NAME = "loc";
+	public static enum Options {
+		start, stop, info, detect;
+	}
+	public static final int DETECT_MAX_TIMEOUT_IN_SECS = 180;
+	public static final String SYNTAX = 
+		Options.start.name() + ARemoteCmdDsc.OPT_SEP + 
+		Options.stop.name() + ARemoteCmdDsc.OPT_SEP +
+		"(" + Options.info.name() + "[detect [<timeout in secs>]])";
 	
 	public static class CmdDsc extends ARemoteCmdDsc {
 
 		public CmdDsc() {
-			super(NAME, SYNTAX, 0, 2);
+			super(NAME, SYNTAX, 1, 3, 
+				R.string.txRemoteCommand_Localization);
 		}
 
 		@Override
@@ -40,24 +52,24 @@ public class SmsCmdLocalization extends ASmsCmdExecutor {
 			}		
 			if (matches) {
 				matches = 
-					(StringUtils.equals(params[0], "start") && 
+					(StringUtils.equals(params[0], Options.start.name()) && 
 						(params.length == 1)) ||
-					(StringUtils.equals(params[0], "stop") && 
+					(StringUtils.equals(params[0], Options.stop.name()) && 
 						(params.length == 1)) ||
-					(StringUtils.equals(params[0], "info") && 
-						((params.length == 1) || (params.length == 3)));
+					(StringUtils.equals(params[0], Options.info.name()) && 
+						(params.length >= 1) && (params.length <= 3));
 			}
 			if (matches && 
-				StringUtils.equals(params[0], "info") && 
+				StringUtils.equals(params[0], Options.info.name()) && 
 				(params.length > 1)) {
-				if (!StringUtils.equals(params[1], "detect")) {
+				if (!StringUtils.equals(params[1], Options.detect.name())) {
 					matches = false;
 				} else if (params.length == 3) {
-					if (!StringUtils.isNumeric(params[1])) {
+					if (!StringUtils.isNumeric(params[2])) {
 						matches = false;
 					} else {
-						int timeoutInSecs = Integer.valueOf(params[1]);
-						if (timeoutInSecs > 180) {
+						int timeoutInSecs = Integer.valueOf(params[2]);
+						if (timeoutInSecs > DETECT_MAX_TIMEOUT_IN_SECS) {
 							matches = false;
 						}
 					}
@@ -67,7 +79,7 @@ public class SmsCmdLocalization extends ASmsCmdExecutor {
 		}
 	}
 	
-	public SmsCmdLocalization(String sender, String... params) {
+	public RemoteCmdLocalization(String sender, String... params) {
 		super(new CmdDsc(), sender, params);
 	}
 
@@ -77,23 +89,24 @@ public class SmsCmdLocalization extends ASmsCmdExecutor {
 		String response = "";
 		boolean localizationFoundActive = 
 			AbstractService.isServiceRunning(LocalizationService.class);
-		if (StringUtils.equals(params[0], "start")) {
+		if (StringUtils.equals(params[0], Options.start.name())) {
 			if (!localizationFoundActive) {
 				LocalizationUtils.startLocalization();
 				response = "localization started";
 			} else {
 				response = "localization already running";
 			}
-		} else if (StringUtils.equals(params[0], "stop")) {
+		} else if (StringUtils.equals(params[0], Options.stop.name())) {
 			if (localizationFoundActive) {
 				LocalizationUtils.stopLocalization();
 				response = "localization stopped";
 			} else {
 				response = "localization already stopped";
 			}
-		} else if (StringUtils.equals(params[0], "info")) {
+		} else if (StringUtils.equals(params[0], Options.info.name())) {
 			boolean detect = (params.length > 1);
-			int timeoutInSecs = ((params.length == 2) ? Integer.valueOf(params[2]) : 180);
+			int timeoutInSecs = ((params.length == 3) ? 
+				Integer.valueOf(params[2]) : DETECT_MAX_TIMEOUT_IN_SECS);
 			
 			if (detect) {
 				if (!localizationFoundActive) {

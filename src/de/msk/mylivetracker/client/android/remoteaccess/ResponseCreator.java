@@ -54,6 +54,14 @@ public class ResponseCreator {
 		return getResultOfError("device is not connected to dropbox");
 	}
 	
+	public static String getResultOfHeartrateDetectionNotSupported() {
+		return getResultOfError("heartrate detection not supported on this device");
+	}
+	
+	public static String getResultOfHeartrateDetectionNotEnabled() {
+		return getResultOfError("heartrate detection not enabled on this device");
+	}
+	
 	public static String getResultOfTrackInfo() {
 		String str = "";
 		TrackStatus status = TrackStatus.get();
@@ -73,10 +81,11 @@ public class ResponseCreator {
 	public static String getResultOfUploadFile(UploadFileResult uploadFileResult) {
 		String result = "";
 		if (!uploadFileResult.success) {
-			result = addParamValue(result, "error", uploadFileResult.error);
+			result = getResultOfError(uploadFileResult.error);
 		} else {
 			result = addParamValue(result, "revid", uploadFileResult.revisionId);
 			result = addParamValue(result, "size", uploadFileResult.sizeStr);
+			result = "successful:" + result;
 		}
 		return result;
 	}

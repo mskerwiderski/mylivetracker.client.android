@@ -7,13 +7,13 @@ import org.apache.commons.lang3.StringUtils;
 
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdDsc;
-import de.msk.mylivetracker.client.android.remoteaccess.ASmsCmdExecutor;
+import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdExecutor;
 import de.msk.mylivetracker.client.android.remoteaccess.ResponseCreator;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 import de.msk.mylivetracker.client.android.util.TrackUtils;
 
 /**
- * classname: SmsCmdTracking
+ * classname: RemoteCmdTracking
  * 
  * @author michael skerwiderski, (c)2012
  * @version 001
@@ -24,17 +24,19 @@ import de.msk.mylivetracker.client.android.util.TrackUtils;
  * 000	2012-12-29	revised for v1.5.x.
  * 
  */
-public class RemoteCmdTrack extends ASmsCmdExecutor {
+public class RemoteCmdTracking extends ARemoteCmdExecutor {
 
 	public static final String NAME = "track";
 	public static enum Options {
 		reset, start, stop, info;
 	}
+	public static final String SYNTAX = 
+		CmdDsc.createSyntaxStr(Options.class); 
 	
 	public static class CmdDsc extends ARemoteCmdDsc {
 		public CmdDsc() {
 			super(NAME, 
-				createSyntaxStr(Options.class), 1, 1, 
+				SYNTAX, 1, 1, 
 				R.string.txRemoteCommand_Tracking);
 		}
 
@@ -48,7 +50,7 @@ public class RemoteCmdTrack extends ASmsCmdExecutor {
 		
 	}
 	
-	public RemoteCmdTrack(String sender, String... params) {
+	public RemoteCmdTracking(String sender, String... params) {
 		super(new CmdDsc(), sender, params);
 	}
 

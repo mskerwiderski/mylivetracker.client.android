@@ -3,7 +3,9 @@ package de.msk.mylivetracker.client.android.remoteaccess;
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -17,13 +19,18 @@ import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsMessage;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdTrack;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdConfig;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdError;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdHeartrate;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdHelp;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdLocalization;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdTracking;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdUpload;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdVersion;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
 /**
- * classname: SmsCmdReceiver
+ * classname: RemoteCmdReceiver
  * 
  * @author michael skerwiderski, (c)2012
  * @version 001
@@ -34,39 +41,82 @@ import de.msk.mylivetracker.client.android.util.LogUtils;
  * 000	2012-12-29	revised for v1.5.x.
  * 
  */
-public class SmsCmdReceiver extends BroadcastReceiver {
+public class RemoteCmdReceiver extends BroadcastReceiver {
 
-	private static Map<String, Class<? extends ASmsCmdExecutor>> cmdRegistry = 
-		new HashMap<String, Class<? extends ASmsCmdExecutor>>();
+	private static class CmdPackage {
+		public ARemoteCmdDsc dsc;
+		public Class<? extends ARemoteCmdExecutor> executor;
+		public CmdPackage(ARemoteCmdDsc dsc,
+			Class<? extends ARemoteCmdExecutor> executor) {
+			this.dsc = dsc;
+			this.executor = executor;
+		}
+	}
+	
+	private static Map<String, CmdPackage> cmdRegistry = new HashMap<String, CmdPackage>();
 	
 	static {
-		cmdRegistry.put(SmsCmdGetHelp.NAME, SmsCmdGetHelp.class);
-		cmdRegistry.put(RemoteCmdVersion.NAME, RemoteCmdVersion.class);
-		cmdRegistry.put(SmsCmdLocalization.NAME, SmsCmdLocalization.class);
-		cmdRegistry.put(SmsCmdGetHeartrate.NAME, SmsCmdGetHeartrate.class);
-		cmdRegistry.put(RemoteCmdTrack.NAME, RemoteCmdTrack.class);
-		cmdRegistry.put(SmsCmdGetConfig.NAME, SmsCmdGetConfig.class);
-		cmdRegistry.put(RemoteCmdUpload.NAME, RemoteCmdUpload.class);
+		cmdRegistry.put(StringUtils.lowerCase(RemoteCmdHelp.NAME), 
+			new CmdPackage(new RemoteCmdHelp.CmdDsc(), RemoteCmdHelp.class));
+		cmdRegistry.put(StringUtils.lowerCase(RemoteCmdVersion.NAME), 
+			new CmdPackage(new RemoteCmdVersion.CmdDsc(), RemoteCmdVersion.class));
+		cmdRegistry.put(StringUtils.lowerCase(RemoteCmdLocalization.NAME), 
+			new CmdPackage(new RemoteCmdLocalization.CmdDsc(), RemoteCmdLocalization.class));
+		cmdRegistry.put(StringUtils.lowerCase(RemoteCmdHeartrate.NAME), 
+			new CmdPackage(new RemoteCmdHeartrate.CmdDsc(), RemoteCmdHeartrate.class));
+		cmdRegistry.put(StringUtils.lowerCase(RemoteCmdTracking.NAME), 
+			new CmdPackage(new RemoteCmdTracking.CmdDsc(), RemoteCmdTracking.class));
+		cmdRegistry.put(StringUtils.lowerCase(RemoteCmdConfig.NAME), 
+			new CmdPackage(new RemoteCmdConfig.CmdDsc(), RemoteCmdConfig.class));
+		cmdRegistry.put(StringUtils.lowerCase(RemoteCmdUpload.NAME), 
+			new CmdPackage(new RemoteCmdUpload.CmdDsc(), RemoteCmdUpload.class));
 	}
 
+	public static boolean containsCommand(String commandStr) {
+		return cmdRegistry.containsKey(commandStr);
+	}
+	
+	public static String getCommandsAsStr() {
+		String commandsAsStr = "";
+		Set<String> commands = cmdRegistry.keySet();
+		for (Iterator<String> it=commands.iterator(); it.hasNext();) {
+			commandsAsStr += it.next();
+			if (it.hasNext()) {
+				commandsAsStr += ", ";
+			}
+		}
+		return commandsAsStr;
+	}
+	
+	public static String getCommandSyntax(String commandStr) {
+		if (StringUtils.isEmpty(commandStr)) {
+			throw new IllegalArgumentException("commandStr must not be empty.");
+		}
+		if (!cmdRegistry.containsKey(commandStr)) {
+			throw new IllegalArgumentException("unknown commandStr.");
+		}
+		CmdPackage cmdPackage = cmdRegistry.get(commandStr);
+		return cmdPackage.dsc.getDescription();
+	}
+	
 	private static boolean smsCmdExecutorExists(String cmdName) {
 		if (StringUtils.isEmpty(cmdName)) {
 			throw new IllegalArgumentException("cmdName must not be empty.");
 		}
-		LogUtils.infoMethodIn(SmsCmdReceiver.class, "smsCmdExecutorExists", cmdName);
+		LogUtils.infoMethodIn(RemoteCmdReceiver.class, "smsCmdExecutorExists", cmdName);
 		boolean res = cmdRegistry.containsKey(StringUtils.lowerCase(cmdName));
-		LogUtils.infoMethodOut(SmsCmdReceiver.class, "smsCmdExecutorExists", res);
+		LogUtils.infoMethodOut(RemoteCmdReceiver.class, "smsCmdExecutorExists", res);
 		return res;
 	}
 	
-	private static Class<? extends ASmsCmdExecutor> getSmsCmdExecutor(String cmdName) {
+	private static Class<? extends ARemoteCmdExecutor> getSmsCmdExecutor(String cmdName) {
 		if (StringUtils.isEmpty(cmdName)) {
 			throw new IllegalArgumentException("cmdName must not be empty.");
 		}
-		LogUtils.infoMethodIn(SmsCmdReceiver.class, "getSmsCmdExecutor", cmdName);
-		Class<? extends ASmsCmdExecutor> res = 
-			cmdRegistry.get(StringUtils.lowerCase(cmdName));
-		LogUtils.infoMethodOut(SmsCmdReceiver.class, "getSmsCmdExecutor", res);
+		LogUtils.infoMethodIn(RemoteCmdReceiver.class, "getSmsCmdExecutor", cmdName);
+		Class<? extends ARemoteCmdExecutor> res = 
+			cmdRegistry.get(StringUtils.lowerCase(cmdName)).executor;
+		LogUtils.infoMethodOut(RemoteCmdReceiver.class, "getSmsCmdExecutor", res);
 		return res;
 	}
 	
@@ -117,11 +167,11 @@ public class SmsCmdReceiver extends BroadcastReceiver {
 							}
 						}
 						LogUtils.infoMethodState(this.getClass(), "onReceive", "params", Arrays.toString(params));
-						Class<? extends ASmsCmdExecutor> smsCmdExecutorClass = 
+						Class<? extends ARemoteCmdExecutor> smsCmdExecutorClass = 
 							getSmsCmdExecutor(messageParts[2]);
-						Constructor<? extends ASmsCmdExecutor> smsCmdExecutorConstructor = 
+						Constructor<? extends ARemoteCmdExecutor> smsCmdExecutorConstructor = 
 							smsCmdExecutorClass.getConstructor(String.class, String[].class);
-						ASmsCmdExecutor smsCmdExecutor = smsCmdExecutorConstructor.newInstance(sender, params);
+						ARemoteCmdExecutor smsCmdExecutor = smsCmdExecutorConstructor.newInstance(sender, params);
 						executorService.execute(smsCmdExecutor);
 						response = null;
 						LogUtils.infoMethodState(this.getClass(), "onReceive", "command executed");
@@ -131,7 +181,7 @@ public class SmsCmdReceiver extends BroadcastReceiver {
 				response = ResponseCreator.getResultOfError(e.getMessage());
 			} finally {
 				if (!StringUtils.isEmpty(response)) {
-					SmsCmdError smsCmdError = new SmsCmdError(sender, response);
+					RemoteCmdError smsCmdError = new RemoteCmdError(sender, response);
 					executorService.execute(smsCmdError);
 					LogUtils.infoMethodState(this.getClass(), "onReceive", "command failed", sender, response);
 				}

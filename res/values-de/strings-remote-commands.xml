@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="txRemoteCommand_Help">gibt diese Befehlsbeschreibungen zurück</string>
+    <string name="txRemoteCommand_Version">gibt die Versionskennung dieser Anwendung zurück</string>
+    <string name="txRemoteCommand_Upload">lädt den aktuellen Track oder die Konfigurationsdaten der Anwendung in die Dropbox hoch</string>
+    <string name="txRemoteCommand_Tracking">startet, stoppt oder setzt den aktuellen Track zurück oder gibt die Informationen des aktuellen Tracks zurück</string>
+    <string name="txRemoteCommand_Localization">startet oder stoppt die Lokalisierung oder gibt Informationen über die letzte oder aktuelle Position zurück</string>
+    <string name="txRemoteCommand_Heartrate">startet oder stoppt die Herzfrequenzerkennung oder gibt Informationen über die letzte oder aktuelle Herzfrequenzmessung zurück</string>
+    <string name="txRemoteCommand_Config">gibt die gewünschten gesetzten Einstellungen zurück</string>
+    <string name="txRemoteCommand_Error">Fehler</string>
+</resources>

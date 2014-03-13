@@ -2,7 +2,7 @@ package de.msk.mylivetracker.client.android.remoteaccess.commands;
 
 import de.msk.mylivetracker.client.android.App.VersionDsc;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdDsc;
-import de.msk.mylivetracker.client.android.remoteaccess.ASmsCmdExecutor;
+import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdExecutor;
 import de.msk.mylivetracker.client.android.R;
 
 /**
@@ -17,7 +17,7 @@ import de.msk.mylivetracker.client.android.R;
  * 000	2012-12-29	revised for v1.5.x.
  * 
  */
-public class RemoteCmdVersion extends ASmsCmdExecutor {
+public class RemoteCmdVersion extends ARemoteCmdExecutor {
 
 	public static final String NAME = "version";
 	public static final String SYNTAX = "";

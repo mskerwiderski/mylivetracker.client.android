@@ -8,7 +8,7 @@ import de.msk.mylivetracker.client.android.util.LogUtils;
 import de.msk.mylivetracker.client.android.util.sms.SmsSendUtils;
 
 /**
- * classname: ASmsCmdExecutor
+ * classname: ARemoteCmdExecutor
  * 
  * @author michael skerwiderski, (c)2012
  * @version 001
@@ -19,13 +19,13 @@ import de.msk.mylivetracker.client.android.util.sms.SmsSendUtils;
  * 000	2012-12-29	revised for v1.5.x.
  * 
  */
-public abstract class ASmsCmdExecutor implements Runnable {
+public abstract class ARemoteCmdExecutor implements Runnable {
 	
 	private ARemoteCmdDsc cmdDsc;
 	private String sender;
 	private String[] params;
 
-	public ASmsCmdExecutor(ARemoteCmdDsc cmdDsc, String sender, String... params) {
+	public ARemoteCmdExecutor(ARemoteCmdDsc cmdDsc, String sender, String... params) {
 		if (cmdDsc == null) {
 			throw new IllegalArgumentException("cmdDsc must not be null.");
 		}

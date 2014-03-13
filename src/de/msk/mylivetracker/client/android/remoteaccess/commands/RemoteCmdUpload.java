@@ -15,7 +15,7 @@ import de.msk.mylivetracker.client.android.dropbox.DropboxUtils.UploadFileResult
 import de.msk.mylivetracker.client.android.preferences.PrefsDumper;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdDsc;
-import de.msk.mylivetracker.client.android.remoteaccess.ASmsCmdExecutor;
+import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdExecutor;
 import de.msk.mylivetracker.client.android.remoteaccess.ResponseCreator;
 import de.msk.mylivetracker.client.android.status.LogInfo;
 import de.msk.mylivetracker.client.android.util.FileUtils;
@@ -33,19 +33,18 @@ import de.msk.mylivetracker.commons.util.datetime.DateTime;
  * 000	2014-03-06	origin.
  * 
  */
-public class RemoteCmdUpload extends ASmsCmdExecutor {
+public class RemoteCmdUpload extends ARemoteCmdExecutor {
 
 	public static final String NAME = "upload";
 	public static enum Options {
 		track, config;
 	}
-	public static String SYNTAX = 
-		Options.track.name() + ARemoteCmdDsc.OPT_SEP + 
-		Options.config.name();
+	public static final String SYNTAX = 
+		CmdDsc.createSyntaxStr(Options.class);
 	
 	public static class CmdDsc extends ARemoteCmdDsc {
 		public CmdDsc() {
-			super(NAME, createSyntaxStr(Options.class), 0, 0, 
+			super(NAME, SYNTAX, 1, 1, 
 				R.string.txRemoteCommand_Upload);
 		}
 
@@ -109,8 +108,7 @@ public class RemoteCmdUpload extends ASmsCmdExecutor {
 		String result = "";
 		if (!PrefsRegistry.get(DropboxPrefs.class).hasValidAccountAndToken()) {
 			result = ResponseCreator.getResultOfNotConnectedToDropbox();
-		} 
-		if (StringUtils.equals(params[0], Options.track.name())) {
+		} else if (StringUtils.equals(params[0], Options.track.name())) {
 			result = this.uploadTrack();
 		} else if (StringUtils.equals(params[0], Options.config.name())) {
 			result = this.uploadConfig();

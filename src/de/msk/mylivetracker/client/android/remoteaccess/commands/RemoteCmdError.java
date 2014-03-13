@@ -1,7 +1,11 @@
-package de.msk.mylivetracker.client.android.remoteaccess;
+package de.msk.mylivetracker.client.android.remoteaccess.commands;
+
+import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdDsc;
+import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdExecutor;
 
 /**
- * classname: SmsCmdError
+ * classname: RemoteCmdError
  * 
  * @author michael skerwiderski, (c)2012
  * @version 001
@@ -12,7 +16,7 @@ package de.msk.mylivetracker.client.android.remoteaccess;
  * 000	2012-12-29	revised for v1.5.x.
  * 
  */
-public class SmsCmdError extends ASmsCmdExecutor {
+public class RemoteCmdError extends ARemoteCmdExecutor {
 
 	public static String NAME = "error";
 	public static String SYNTAX = "";
@@ -20,20 +24,19 @@ public class SmsCmdError extends ASmsCmdExecutor {
 	public static class CmdDsc extends ARemoteCmdDsc {
 
 		public CmdDsc() {
-			super(NAME, SYNTAX, 0, 0);
+			super(NAME, SYNTAX, 0, 0, 
+				R.string.txRemoteCommand_Error);
 		}
 
 		@Override
 		public boolean matchesSyntax(String[] params) {
 			return true;
 		}
-		
 	}
 	
-	public SmsCmdError(String sender, String... params) {
+	public RemoteCmdError(String sender, String... params) {
 		super(new CmdDsc(), sender, params);
 	}
-
 
 	@Override
 	public String executeCmdAndCreateSmsResponse(String... params) {

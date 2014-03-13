@@ -197,6 +197,13 @@ public class PrefsRegistry {
 		return (T)prefsMap.get(prefsShortName);
 	}
 	
+	public static boolean contains(String prefsShortName) {
+		if (StringUtils.isEmpty(prefsShortName)) {
+			throw new IllegalArgumentException("prefsShortName must not be empty!");
+		}
+		return prefsMap.containsKey(prefsShortName);
+	}
+	
 	public static <T extends APrefs> void save(Class<T> prefsClass) {
 		if (prefsClass == null) {
 			throw new IllegalArgumentException("prefsClass must not be null!");

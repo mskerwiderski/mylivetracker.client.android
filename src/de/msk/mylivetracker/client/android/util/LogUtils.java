@@ -7,12 +7,13 @@ import org.apache.commons.lang3.StringUtils;
 
 import android.util.Log;
 import de.msk.mylivetracker.client.android.App.VersionDsc;
-import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdError;
-import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdGetConfig;
-import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdGetHelp;
-import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdLocalization;
-import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdReceiver;
-import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdTrack;
+import de.msk.mylivetracker.client.android.remoteaccess.RemoteCmdReceiver;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdConfig;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdError;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdHeartrate;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdHelp;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdLocalization;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdTracking;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdUpload;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdVersion;
 
@@ -33,28 +34,15 @@ public class LogUtils {
 	private static Map<Class<?>, Boolean> classes = new HashMap<Class<?>, Boolean>();
 	
 	static {
-		//classes.put(PrefsRegistry.class, Boolean.TRUE);
-		//classes.put(App.class, Boolean.TRUE);
-		//classes.put(AbstractInfo.class, Boolean.TRUE);
-		//classes.put(HttpProtocolParams.class, Boolean.TRUE);
-		//classes.put(HttpProtocolParamsPrefsActivity.class, Boolean.TRUE);
-		//classes.put(SmsSentStatusReceiver.class, Boolean.TRUE);
-		//classes.put(SmsCmdReceiver.class, Boolean.TRUE);
-		//classes.put(ResponseCreator.class, Boolean.TRUE);
-		//classes.put(ASmsCmdExecutor.class, Boolean.TRUE);
-		//classes.put(SmsCmdTrack.class, Boolean.TRUE);
-		//classes.put(SmsSendUtils.class, Boolean.TRUE);
-		//classes.put(LocalizationService.class, Boolean.TRUE);
-		//classes.put(TrackingModePrefsActivity.class, Boolean.TRUE);
-		//classes.put(Uploader.class, Boolean.TRUE);
-		classes.put(SmsCmdReceiver.class, Boolean.TRUE);
-		classes.put(SmsCmdError.class, Boolean.TRUE);
+		classes.put(RemoteCmdReceiver.class, Boolean.TRUE);
+		classes.put(RemoteCmdError.class, Boolean.TRUE);
 		classes.put(RemoteCmdVersion.class, Boolean.TRUE);
-		classes.put(SmsCmdGetConfig.class, Boolean.TRUE);
-		classes.put(SmsCmdGetHelp.class, Boolean.TRUE);
-		classes.put(SmsCmdLocalization.class, Boolean.TRUE);
-		classes.put(RemoteCmdTrack.class, Boolean.TRUE);
+		classes.put(RemoteCmdConfig.class, Boolean.TRUE);
+		classes.put(RemoteCmdHelp.class, Boolean.TRUE);
+		classes.put(RemoteCmdLocalization.class, Boolean.TRUE);
+		classes.put(RemoteCmdTracking.class, Boolean.TRUE);
 		classes.put(RemoteCmdUpload.class, Boolean.TRUE);
+		classes.put(RemoteCmdHeartrate.class, Boolean.TRUE);
 	}
 
 	private static boolean isLogForClassEnabled(Class<?> clazz) {
