@@ -3,8 +3,8 @@ package de.msk.mylivetracker.client.android.upload.protocol.xexun.tk102;
 import java.util.Date;
 import java.util.TimeZone;
 
-import org.apache.commons.lang.BooleanUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import de.msk.mylivetracker.client.android.account.AccountPrefs;
 import de.msk.mylivetracker.client.android.emergency.EmergencyPrefs;

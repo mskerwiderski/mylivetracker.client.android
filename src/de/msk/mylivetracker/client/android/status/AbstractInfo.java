@@ -2,7 +2,7 @@ package de.msk.mylivetracker.client.android.status;
 
 import java.util.Date;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import android.content.SharedPreferences;
 

@@ -2,7 +2,7 @@ package de.msk.mylivetracker.client.android.remoteaccess;
 
 import java.util.Date;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
 import de.msk.mylivetracker.client.android.status.HeartrateInfo;
@@ -20,10 +20,10 @@ import de.msk.mylivetracker.client.android.status.HeartrateInfo;
  */
 public class SmsCmdGetHeartrate extends ASmsCmdExecutor {
 
-	public static String NAME = "getheartrate";
-	public static String SYNTAX = "[detect [<timeout in secs>]]";
+	public static String NAME = "hr";
+	public static String SYNTAX = "start|stop|(info[detect [<timeout in secs>]])";
 	
-	public static class CmdDsc extends ACmdDsc {
+	public static class CmdDsc extends ARemoteCmdDsc {
 
 		public CmdDsc() {
 			super(NAME, SYNTAX, 0, 0);

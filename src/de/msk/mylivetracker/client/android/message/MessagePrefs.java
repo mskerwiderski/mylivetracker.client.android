@@ -3,8 +3,8 @@ package de.msk.mylivetracker.client.android.message;
 import java.io.Serializable;
 import java.util.Arrays;
 
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.R;

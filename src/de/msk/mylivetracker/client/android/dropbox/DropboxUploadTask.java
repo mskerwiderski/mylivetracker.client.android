@@ -3,7 +3,7 @@ package de.msk.mylivetracker.client.android.dropbox;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import android.app.Activity;
 import android.app.ProgressDialog;

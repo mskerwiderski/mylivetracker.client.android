@@ -1,9 +1,14 @@
-package de.msk.mylivetracker.client.android.remoteaccess;
+package de.msk.mylivetracker.client.android.remoteaccess.commands;
 
 import java.util.Arrays;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.EnumUtils;
+import org.apache.commons.lang3.StringUtils;
 
+import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdDsc;
+import de.msk.mylivetracker.client.android.remoteaccess.ASmsCmdExecutor;
+import de.msk.mylivetracker.client.android.remoteaccess.ResponseCreator;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 import de.msk.mylivetracker.client.android.util.TrackUtils;
 
@@ -19,31 +24,31 @@ import de.msk.mylivetracker.client.android.util.TrackUtils;
  * 000	2012-12-29	revised for v1.5.x.
  * 
  */
-public class SmsCmdTracking extends ASmsCmdExecutor {
+public class RemoteCmdTrack extends ASmsCmdExecutor {
 
-	public static String NAME = "track";
-	public static String SYNTAX = "reset|start|stop|info";
+	public static final String NAME = "track";
+	public static enum Options {
+		reset, start, stop, info;
+	}
 	
-	public static class CmdDsc extends ACmdDsc {
-
+	public static class CmdDsc extends ARemoteCmdDsc {
 		public CmdDsc() {
-			super(NAME, SYNTAX, 1, 1);
+			super(NAME, 
+				createSyntaxStr(Options.class), 1, 1, 
+				R.string.txRemoteCommand_Tracking);
 		}
 
 		@Override
 		public boolean matchesSyntax(String[] params) {
 			boolean matches = (params.length == 1);
-			matches = 
-				StringUtils.equals(params[0], "reset") ||
-				StringUtils.equals(params[0], "start") ||
-				StringUtils.equals(params[0], "stop") ||
-				StringUtils.equals(params[0], "info");
+			matches = EnumUtils.isValidEnum(
+				Options.class, params[0]);
 			return matches;
 		}
 		
 	}
 	
-	public SmsCmdTracking(String sender, String... params) {
+	public RemoteCmdTrack(String sender, String... params) {
 		super(new CmdDsc(), sender, params);
 	}
 
@@ -52,16 +57,16 @@ public class SmsCmdTracking extends ASmsCmdExecutor {
 		LogUtils.infoMethodIn(this.getClass(), "executeCmdAndCreateSmsResponse", Arrays.toString(params));
 		String cmd = params[0];
 		String response = null; 
-		if (StringUtils.equals(cmd, "reset")) {
+		if (StringUtils.equals(cmd, Options.reset.name())) {
 			TrackUtils.resetTrack();
 			response = "track resetted";
-		} else if (StringUtils.equals(cmd, "start")) {
+		} else if (StringUtils.equals(cmd, Options.start.name())) {
 			boolean started = TrackUtils.startTrack();
 			response = (started ? "track started" : "track already running");
-		} else if (StringUtils.equals(cmd, "stop")) {
+		} else if (StringUtils.equals(cmd, Options.stop.name())) {
 			boolean stopped = TrackUtils.stopTrack();
 			response = (stopped ? "track stopped" : "track not running");
-		}  else if (StringUtils.equals(cmd, "info")) {
+		}  else if (StringUtils.equals(cmd, Options.info.name())) {
 			response = ResponseCreator.getResultOfTrackInfo();
 		}
 		LogUtils.infoMethodOut(this.getClass(), "executeCmdAndCreateSmsResponse", response);

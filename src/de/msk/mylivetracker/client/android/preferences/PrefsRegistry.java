@@ -3,7 +3,7 @@ package de.msk.mylivetracker.client.android.preferences;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import android.content.Context;
 import android.content.SharedPreferences;

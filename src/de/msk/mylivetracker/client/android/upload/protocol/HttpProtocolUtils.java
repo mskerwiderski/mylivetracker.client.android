@@ -3,8 +3,8 @@ package de.msk.mylivetracker.client.android.upload.protocol;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-import org.apache.commons.lang.BooleanUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParamDsc;
 

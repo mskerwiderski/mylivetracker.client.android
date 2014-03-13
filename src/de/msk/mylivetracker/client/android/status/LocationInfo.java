@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.TimeZone;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import android.location.Location;
 import android.location.LocationManager;

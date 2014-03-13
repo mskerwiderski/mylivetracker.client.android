@@ -2,7 +2,7 @@ package de.msk.mylivetracker.client.android.auto;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang.BooleanUtils;
+import org.apache.commons.lang3.BooleanUtils;
 
 import de.msk.mylivetracker.client.android.preferences.APrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsDumper.ConfigPair;

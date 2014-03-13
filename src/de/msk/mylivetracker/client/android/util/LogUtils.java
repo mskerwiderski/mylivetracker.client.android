@@ -3,20 +3,18 @@ package de.msk.mylivetracker.client.android.util;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import android.util.Log;
 import de.msk.mylivetracker.client.android.App.VersionDsc;
 import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdError;
-import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdGetAppVersion;
 import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdGetConfig;
 import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdGetHelp;
 import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdLocalization;
 import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdReceiver;
-import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdSetConfig;
-import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdTracking;
-import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdUploadConfig;
-import de.msk.mylivetracker.client.android.remoteaccess.SmsCmdUploadTrack;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdTrack;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdUpload;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdVersion;
 
 /**
  * classname: LogUtils
@@ -51,14 +49,12 @@ public class LogUtils {
 		//classes.put(Uploader.class, Boolean.TRUE);
 		classes.put(SmsCmdReceiver.class, Boolean.TRUE);
 		classes.put(SmsCmdError.class, Boolean.TRUE);
-		classes.put(SmsCmdGetAppVersion.class, Boolean.TRUE);
+		classes.put(RemoteCmdVersion.class, Boolean.TRUE);
 		classes.put(SmsCmdGetConfig.class, Boolean.TRUE);
 		classes.put(SmsCmdGetHelp.class, Boolean.TRUE);
 		classes.put(SmsCmdLocalization.class, Boolean.TRUE);
-		classes.put(SmsCmdSetConfig.class, Boolean.TRUE);
-		classes.put(SmsCmdTracking.class, Boolean.TRUE);
-		classes.put(SmsCmdUploadConfig.class, Boolean.TRUE);
-		classes.put(SmsCmdUploadTrack.class, Boolean.TRUE);
+		classes.put(RemoteCmdTrack.class, Boolean.TRUE);
+		classes.put(RemoteCmdUpload.class, Boolean.TRUE);
 	}
 
 	private static boolean isLogForClassEnabled(Class<?> clazz) {

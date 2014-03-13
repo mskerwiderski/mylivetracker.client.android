@@ -16,10 +16,10 @@ import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
  */
 public class SmsCmdGetConfig extends ASmsCmdExecutor {
 
-	public static String NAME = "getconfig";
+	public static String NAME = "config";
 	public static String SYNTAX = "<section>";
 	
-	public static class CmdDsc extends ACmdDsc {
+	public static class CmdDsc extends ARemoteCmdDsc {
 		public CmdDsc() {
 			super(NAME, SYNTAX, 1, 1);
 		}

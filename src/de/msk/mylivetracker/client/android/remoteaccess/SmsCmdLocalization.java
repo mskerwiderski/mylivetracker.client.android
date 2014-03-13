@@ -2,7 +2,7 @@ package de.msk.mylivetracker.client.android.remoteaccess;
 
 import java.util.Date;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import de.msk.mylivetracker.client.android.localization.LocalizationService;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
@@ -26,7 +26,7 @@ public class SmsCmdLocalization extends ASmsCmdExecutor {
 	public static String NAME = "loc";
 	public static String SYNTAX = "start|stop|(info[detect [<timeout in secs>]])";
 	
-	public static class CmdDsc extends ACmdDsc {
+	public static class CmdDsc extends ARemoteCmdDsc {
 
 		public CmdDsc() {
 			super(NAME, SYNTAX, 0, 2);
@@ -81,14 +81,16 @@ public class SmsCmdLocalization extends ASmsCmdExecutor {
 			if (!localizationFoundActive) {
 				LocalizationUtils.startLocalization();
 				response = "localization started";
+			} else {
+				response = "localization already running";
 			}
-			response = "localization already running";
 		} else if (StringUtils.equals(params[0], "stop")) {
 			if (localizationFoundActive) {
 				LocalizationUtils.stopLocalization();
 				response = "localization stopped";
+			} else {
+				response = "localization already stopped";
 			}
-			response = "localization already stopped";
 		} else if (StringUtils.equals(params[0], "info")) {
 			boolean detect = (params.length > 1);
 			int timeoutInSecs = ((params.length == 2) ? Integer.valueOf(params[2]) : 180);

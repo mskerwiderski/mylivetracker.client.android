@@ -1,6 +1,6 @@
 package de.msk.mylivetracker.client.android.pincodequery;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import android.os.Bundle;
 import android.widget.Button;

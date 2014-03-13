@@ -1,6 +1,6 @@
 package de.msk.mylivetracker.client.android.preferences;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import de.msk.mylivetracker.client.android.preferences.PrefsDumper.ConfigPair;
 import de.msk.mylivetracker.client.android.preferences.PrefsDumper.PrefsDump;

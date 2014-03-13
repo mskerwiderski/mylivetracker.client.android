@@ -2,7 +2,7 @@ package de.msk.mylivetracker.client.android.mylivetrackerportal;
 
 import java.io.UnsupportedEncodingException;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import android.app.ProgressDialog;
 import android.content.Context;

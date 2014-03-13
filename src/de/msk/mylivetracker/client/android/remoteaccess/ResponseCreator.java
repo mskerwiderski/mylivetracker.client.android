@@ -3,7 +3,7 @@ package de.msk.mylivetracker.client.android.remoteaccess;
 import java.util.Date;
 import java.util.TimeZone;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import de.msk.mylivetracker.client.android.account.AccountPrefs;
 import de.msk.mylivetracker.client.android.dropbox.DropboxUtils.UploadFileResult;

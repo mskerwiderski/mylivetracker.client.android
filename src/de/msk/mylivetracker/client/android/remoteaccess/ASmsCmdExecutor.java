@@ -2,7 +2,7 @@ package de.msk.mylivetracker.client.android.remoteaccess;
 
 import java.util.Arrays;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import de.msk.mylivetracker.client.android.util.LogUtils;
 import de.msk.mylivetracker.client.android.util.sms.SmsSendUtils;
@@ -21,11 +21,11 @@ import de.msk.mylivetracker.client.android.util.sms.SmsSendUtils;
  */
 public abstract class ASmsCmdExecutor implements Runnable {
 	
-	private ACmdDsc cmdDsc;
+	private ARemoteCmdDsc cmdDsc;
 	private String sender;
 	private String[] params;
 
-	public ASmsCmdExecutor(ACmdDsc cmdDsc, String sender, String... params) {
+	public ASmsCmdExecutor(ARemoteCmdDsc cmdDsc, String sender, String... params) {
 		if (cmdDsc == null) {
 			throw new IllegalArgumentException("cmdDsc must not be null.");
 		}
@@ -64,7 +64,7 @@ public abstract class ASmsCmdExecutor implements Runnable {
 		LogUtils.infoMethodOut(this.getClass(), "run");
 	}
 	
-	public ACmdDsc getCmdDsc() {
+	public ARemoteCmdDsc getCmdDsc() {
 		return this.cmdDsc;
 	}
 	

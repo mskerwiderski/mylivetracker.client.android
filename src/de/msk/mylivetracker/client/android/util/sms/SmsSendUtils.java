@@ -2,7 +2,7 @@ package de.msk.mylivetracker.client.android.util.sms;
 
 import java.util.ArrayList;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import android.app.PendingIntent;
 import android.content.Intent;

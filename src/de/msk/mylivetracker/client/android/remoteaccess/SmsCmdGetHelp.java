@@ -1,6 +1,10 @@
 package de.msk.mylivetracker.client.android.remoteaccess;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdTrack;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdUpload;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdVersion;
 
 
 /**
@@ -16,10 +20,10 @@ import org.apache.commons.lang.StringUtils;
  */
 public class SmsCmdGetHelp extends ASmsCmdExecutor {
 
-	public static String NAME = "gethelp";
+	public static String NAME = "help";
 	public static String SYNTAX = "";
 	
-	public static class CmdDsc extends ACmdDsc {
+	public static class CmdDsc extends ARemoteCmdDsc {
 		public CmdDsc() {
 			super(NAME, SYNTAX, 0, 0);
 		}
@@ -47,14 +51,13 @@ public class SmsCmdGetHelp extends ASmsCmdExecutor {
 	private static String getHelpStr() {
 		String helpStr = "";
 		helpStr = addCommandSyntax(helpStr, SmsCmdGetHelp.NAME, SmsCmdGetHelp.SYNTAX, true);
-		helpStr = addCommandSyntax(helpStr, SmsCmdGetAppVersion.NAME, SmsCmdGetAppVersion.SYNTAX, true);
+		helpStr = addCommandSyntax(helpStr, RemoteCmdVersion.NAME, RemoteCmdVersion.SYNTAX, true);
 		helpStr = addCommandSyntax(helpStr, SmsCmdLocalization.NAME, SmsCmdLocalization.SYNTAX, true);
 		helpStr = addCommandSyntax(helpStr, SmsCmdGetHeartrate.NAME, SmsCmdGetHeartrate.SYNTAX, true);
-		helpStr = addCommandSyntax(helpStr, SmsCmdTracking.NAME, SmsCmdTracking.SYNTAX, true);
+		helpStr = addCommandSyntax(helpStr, RemoteCmdTrack.NAME, RemoteCmdTrack.SYNTAX, true);
 		helpStr = addCommandSyntax(helpStr, SmsCmdGetConfig.NAME, SmsCmdGetConfig.SYNTAX, true);
-		helpStr = addCommandSyntax(helpStr, SmsCmdSetConfig.NAME, SmsCmdSetConfig.SYNTAX, true);
 		helpStr = addCommandSyntax(helpStr, SmsCmdUploadConfig.NAME, SmsCmdUploadConfig.SYNTAX, true);
-		helpStr = addCommandSyntax(helpStr, SmsCmdUploadTrack.NAME, SmsCmdUploadTrack.SYNTAX, false);
+		helpStr = addCommandSyntax(helpStr, RemoteCmdUpload.NAME, RemoteCmdUpload.SYNTAX, false);
 		return helpStr;
 	}
 	

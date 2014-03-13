@@ -2,7 +2,7 @@ package de.msk.mylivetracker.client.android.upload.protocol.http.userdefined;
 
 import java.util.Date;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import de.msk.mylivetracker.client.android.App.VersionDsc;
 import de.msk.mylivetracker.client.android.account.AccountPrefs;

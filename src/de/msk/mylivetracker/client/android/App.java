@@ -2,7 +2,7 @@ package de.msk.mylivetracker.client.android;
 
 import java.util.Locale;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import android.app.Application;
 import android.content.Context;

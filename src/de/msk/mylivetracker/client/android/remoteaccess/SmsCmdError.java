@@ -17,7 +17,7 @@ public class SmsCmdError extends ASmsCmdExecutor {
 	public static String NAME = "error";
 	public static String SYNTAX = "";
 	
-	public static class CmdDsc extends ACmdDsc {
+	public static class CmdDsc extends ARemoteCmdDsc {
 
 		public CmdDsc() {
 			super(NAME, SYNTAX, 0, 0);

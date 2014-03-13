@@ -2,8 +2,8 @@ package de.msk.mylivetracker.client.android.preferences;
 
 import java.util.TimeZone;
 
-import org.apache.commons.lang.BooleanUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.antplus.AntPlusHardware;

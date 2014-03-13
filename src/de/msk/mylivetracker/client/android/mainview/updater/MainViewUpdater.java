@@ -1,6 +1,6 @@
 package de.msk.mylivetracker.client.android.mainview.updater;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import android.content.res.Resources;
 import android.widget.TextView;

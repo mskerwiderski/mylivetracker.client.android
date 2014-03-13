@@ -2,7 +2,7 @@ package de.msk.mylivetracker.client.android.status;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;

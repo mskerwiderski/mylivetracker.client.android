@@ -1,9 +1,14 @@
 package de.msk.mylivetracker.client.android.remoteaccess;
 
-import org.apache.commons.lang.StringUtils;
+import java.util.List;
+
+import org.apache.commons.lang3.EnumUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import android.content.Context;
 
 /**
- * classname: ACmdDsc
+ * classname: ARemoteCmdDsc
  * 
  * @author michael skerwiderski, (c)2014
  * @version 000
@@ -13,14 +18,18 @@ import org.apache.commons.lang.StringUtils;
  * 000	2014-02-28	origin.
  * 
  */
-public abstract class ACmdDsc {
+public abstract class ARemoteCmdDsc {
 
+	public static final String OPT_SEP = "|";
+	
 	private String name;
 	private String paramDsc;
 	private int minParams;
 	private int maxParams;
+	private int descriptionId;
 	
-	public ACmdDsc(String name, String paramDsc, int minParams, int maxParams) {
+	public ARemoteCmdDsc(String name, String paramDsc, 
+		int minParams, int maxParams, int descriptionId) {
 		if (StringUtils.isEmpty(name)) {
 			throw new IllegalArgumentException("name must not be empty.");
 		}
@@ -32,11 +41,15 @@ public abstract class ACmdDsc {
 		}
 		if (maxParams < minParams) {
 			throw new IllegalArgumentException("maxParams must not be less than minParams.");
+		}		
+		if (descriptionId <= 0) {
+			throw new IllegalArgumentException("descriptionId not valid.");
 		}
 		this.name = name;
 		this.paramDsc = paramDsc;
 		this.minParams = minParams;
 		this.maxParams = maxParams;
+		this.descriptionId = descriptionId;
 	}
 	
 	public abstract boolean matchesSyntax(String[] params);
@@ -44,6 +57,19 @@ public abstract class ACmdDsc {
 	public String getSyntax() {
 		return name + " " + paramDsc;
 	}
+	
+	public static <E extends Enum<E>> String createSyntaxStr(Class<E> options) {	
+		String syntax = "";
+		List<E> enumList = EnumUtils.getEnumList(options);
+		for (Enum<?> e : enumList) {
+			if (!StringUtils.isEmpty(syntax)) {
+				syntax += OPT_SEP;
+			}
+			syntax += e.name();
+		}
+		return syntax;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -55,5 +81,15 @@ public abstract class ACmdDsc {
 	}
 	public int getMaxParams() {
 		return maxParams;
+	}
+	public int getDescriptionId() {
+		return descriptionId;
+	}
+	public String getDescriptionStr(Context ctx) {
+		String str = ctx.getString(this.descriptionId);
+		if (StringUtils.isEmpty(str)) {
+			throw new IllegalStateException("description string not found.");
+		}
+		return str;
 	}
 }

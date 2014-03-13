@@ -1,6 +1,6 @@
 package de.msk.mylivetracker.client.android.battery;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

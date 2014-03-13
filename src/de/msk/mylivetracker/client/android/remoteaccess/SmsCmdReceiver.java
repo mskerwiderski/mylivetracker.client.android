@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -17,6 +17,9 @@ import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsMessage;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdTrack;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdUpload;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdVersion;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
 /**
@@ -38,14 +41,12 @@ public class SmsCmdReceiver extends BroadcastReceiver {
 	
 	static {
 		cmdRegistry.put(SmsCmdGetHelp.NAME, SmsCmdGetHelp.class);
-		cmdRegistry.put(SmsCmdGetAppVersion.NAME, SmsCmdGetAppVersion.class);
+		cmdRegistry.put(RemoteCmdVersion.NAME, RemoteCmdVersion.class);
 		cmdRegistry.put(SmsCmdLocalization.NAME, SmsCmdLocalization.class);
 		cmdRegistry.put(SmsCmdGetHeartrate.NAME, SmsCmdGetHeartrate.class);
-		cmdRegistry.put(SmsCmdTracking.NAME, SmsCmdTracking.class);
+		cmdRegistry.put(RemoteCmdTrack.NAME, RemoteCmdTrack.class);
 		cmdRegistry.put(SmsCmdGetConfig.NAME, SmsCmdGetConfig.class);
-		cmdRegistry.put(SmsCmdSetConfig.NAME, SmsCmdSetConfig.class);
-		cmdRegistry.put(SmsCmdUploadConfig.NAME, SmsCmdUploadConfig.class);
-		cmdRegistry.put(SmsCmdUploadTrack.NAME, SmsCmdUploadTrack.class);
+		cmdRegistry.put(RemoteCmdUpload.NAME, RemoteCmdUpload.class);
 	}
 
 	private static boolean smsCmdExecutorExists(String cmdName) {
