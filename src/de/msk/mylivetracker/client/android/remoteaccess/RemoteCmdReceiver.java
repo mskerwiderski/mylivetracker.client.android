@@ -24,6 +24,7 @@ import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdError;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdHeartrate;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdHelp;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdLocalization;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdStatus;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdTracking;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdUpload;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdVersion;
@@ -51,6 +52,10 @@ public class RemoteCmdReceiver extends BroadcastReceiver {
 			this.dsc = dsc;
 			this.executor = executor;
 		}
+		@Override
+		public String toString() {
+			return "CmdPackage [dsc=" + dsc + ", executor=" + executor + "]";
+		}
 	}
 	
 	private static Map<String, CmdPackage> cmdRegistry = new HashMap<String, CmdPackage>();
@@ -70,6 +75,8 @@ public class RemoteCmdReceiver extends BroadcastReceiver {
 			new CmdPackage(new RemoteCmdConfig.CmdDsc(), RemoteCmdConfig.class));
 		cmdRegistry.put(StringUtils.lowerCase(RemoteCmdUpload.NAME), 
 			new CmdPackage(new RemoteCmdUpload.CmdDsc(), RemoteCmdUpload.class));
+		cmdRegistry.put(StringUtils.lowerCase(RemoteCmdStatus.NAME), 
+			new CmdPackage(new RemoteCmdStatus.CmdDsc(), RemoteCmdStatus.class));
 	}
 
 	public static boolean containsCommand(String commandStr) {
@@ -99,30 +106,30 @@ public class RemoteCmdReceiver extends BroadcastReceiver {
 		return cmdPackage.dsc.getDescription();
 	}
 	
-	private static boolean smsCmdExecutorExists(String cmdName) {
+	private static boolean cmdExecutorExists(String cmdName) {
 		if (StringUtils.isEmpty(cmdName)) {
 			throw new IllegalArgumentException("cmdName must not be empty.");
 		}
-		LogUtils.infoMethodIn(RemoteCmdReceiver.class, "smsCmdExecutorExists", cmdName);
+		LogUtils.infoMethodIn(RemoteCmdReceiver.class, "cmdExecutorExists", cmdName);
 		boolean res = cmdRegistry.containsKey(StringUtils.lowerCase(cmdName));
-		LogUtils.infoMethodOut(RemoteCmdReceiver.class, "smsCmdExecutorExists", res);
+		LogUtils.infoMethodOut(RemoteCmdReceiver.class, "cmdExecutorExists", res);
 		return res;
 	}
 	
-	private static Class<? extends ARemoteCmdExecutor> getSmsCmdExecutor(String cmdName) {
+	private static CmdPackage getCmdExecutor(String cmdName) {
 		if (StringUtils.isEmpty(cmdName)) {
 			throw new IllegalArgumentException("cmdName must not be empty.");
 		}
-		LogUtils.infoMethodIn(RemoteCmdReceiver.class, "getSmsCmdExecutor", cmdName);
-		Class<? extends ARemoteCmdExecutor> res = 
-			cmdRegistry.get(StringUtils.lowerCase(cmdName)).executor;
-		LogUtils.infoMethodOut(RemoteCmdReceiver.class, "getSmsCmdExecutor", res);
+		LogUtils.infoMethodIn(RemoteCmdReceiver.class, "getCmdExecutor", cmdName);
+		CmdPackage res = 
+			cmdRegistry.get(StringUtils.lowerCase(cmdName));
+		LogUtils.infoMethodOut(RemoteCmdReceiver.class, "getCmdExecutor", res);
 		return res;
 	}
 	
 	private static ExecutorService executorService = Executors.newSingleThreadExecutor();
 	
-	public static final String SMS_CMD_INDICATOR = "#mlt";
+	public static final String CMD_INDICATOR = "#mlt";
 	
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -142,7 +149,7 @@ public class RemoteCmdReceiver extends BroadcastReceiver {
 			String message = StringUtils.lowerCase(smsMessage[0].getMessageBody());
 			try {
 				if (!StringUtils.isEmpty(sender) && PhoneNumberUtils.isGlobalPhoneNumber(sender) && 
-					!StringUtils.isEmpty(message) && StringUtils.startsWithIgnoreCase(message, SMS_CMD_INDICATOR)) {
+					!StringUtils.isEmpty(message) && StringUtils.startsWithIgnoreCase(message, CMD_INDICATOR)) {
 					LogUtils.infoMethodState(this.getClass(), "onReceive", "sms details", sender, message);
 					String[] messageParts = StringUtils.split(message, ' ');
 					LogUtils.infoMethodState(this.getClass(), "onReceive", "message parts", Arrays.toString(messageParts));
@@ -155,7 +162,7 @@ public class RemoteCmdReceiver extends BroadcastReceiver {
 						LogUtils.infoMethodState(this.getClass(), "onReceive", "sms message check", "invalid password");
 						// do not send a response in case of a wrong password.
 						response = null;
-					} else if (!smsCmdExecutorExists(messageParts[2])) {
+					} else if (!cmdExecutorExists(messageParts[2])) {
 						response = ResponseCreator.getResultOfError("unknown command '" + messageParts[2] + "'");
 					} else {
 						String[] params = new String[0];
@@ -167,12 +174,11 @@ public class RemoteCmdReceiver extends BroadcastReceiver {
 							}
 						}
 						LogUtils.infoMethodState(this.getClass(), "onReceive", "params", Arrays.toString(params));
-						Class<? extends ARemoteCmdExecutor> smsCmdExecutorClass = 
-							getSmsCmdExecutor(messageParts[2]);
-						Constructor<? extends ARemoteCmdExecutor> smsCmdExecutorConstructor = 
-							smsCmdExecutorClass.getConstructor(String.class, String[].class);
-						ARemoteCmdExecutor smsCmdExecutor = smsCmdExecutorConstructor.newInstance(sender, params);
-						executorService.execute(smsCmdExecutor);
+						CmdPackage cmdPackage = getCmdExecutor(messageParts[2]);
+						Constructor<? extends ARemoteCmdExecutor> cmdExecutorConstructor = cmdPackage.executor.getConstructor();
+						ARemoteCmdExecutor cmdExecutor = cmdExecutorConstructor.newInstance();
+						cmdExecutor.init(cmdPackage.dsc, sender, params);
+						executorService.execute(cmdExecutor);
 						response = null;
 						LogUtils.infoMethodState(this.getClass(), "onReceive", "command executed");
 					}
@@ -181,8 +187,9 @@ public class RemoteCmdReceiver extends BroadcastReceiver {
 				response = ResponseCreator.getResultOfError(e.getMessage());
 			} finally {
 				if (!StringUtils.isEmpty(response)) {
-					RemoteCmdError smsCmdError = new RemoteCmdError(sender, response);
-					executorService.execute(smsCmdError);
+					RemoteCmdError cmdError = new RemoteCmdError();
+					cmdError.init(new RemoteCmdError.CmdDsc(), sender, response);
+					executorService.execute(cmdError);
 					LogUtils.infoMethodState(this.getClass(), "onReceive", "command failed", sender, response);
 				}
 			}

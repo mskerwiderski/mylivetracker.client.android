@@ -25,7 +25,7 @@ public abstract class ARemoteCmdExecutor implements Runnable {
 	private String sender;
 	private String[] params;
 
-	public ARemoteCmdExecutor(ARemoteCmdDsc cmdDsc, String sender, String... params) {
+	public void init(ARemoteCmdDsc cmdDsc, String sender, String... params) {
 		if (cmdDsc == null) {
 			throw new IllegalArgumentException("cmdDsc must not be null.");
 		}
@@ -69,4 +69,10 @@ public abstract class ARemoteCmdExecutor implements Runnable {
 	}
 	
 	public abstract String executeCmdAndCreateSmsResponse(String... params);
+
+	@Override
+	public String toString() {
+		return "ARemoteCmdExecutor [cmdDsc=" + cmdDsc + ", sender=" + sender
+			+ ", params=" + Arrays.toString(params) + "]";
+	}
 }

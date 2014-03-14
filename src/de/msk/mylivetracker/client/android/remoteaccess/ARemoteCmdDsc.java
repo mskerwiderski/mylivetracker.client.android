@@ -107,4 +107,11 @@ public abstract class ARemoteCmdDsc {
 		}
 		return str;
 	}
+
+	@Override
+	public String toString() {
+		return "ARemoteCmdDsc [name=" + name + ", paramDsc=" + paramDsc
+			+ ", minParams=" + minParams + ", maxParams=" + maxParams
+			+ ", descriptionId=" + descriptionId + "]";
+	}
 }

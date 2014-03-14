@@ -35,10 +35,6 @@ public class RemoteCmdVersion extends ARemoteCmdExecutor {
 		
 	}
 	
-	public RemoteCmdVersion(String sender, String... params) {
-		super(new CmdDsc(), sender, params);
-	}
-
 	@Override
 	public String executeCmdAndCreateSmsResponse(String... params) {
 		return VersionDsc.getVersionStr();

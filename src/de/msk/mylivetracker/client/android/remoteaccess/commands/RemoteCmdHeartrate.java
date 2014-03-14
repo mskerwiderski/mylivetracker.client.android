@@ -79,10 +79,6 @@ public class RemoteCmdHeartrate extends ARemoteCmdExecutor {
 		}
 	}
 	
-	public RemoteCmdHeartrate(String sender, String... params) {
-		super(new CmdDsc(), sender, params);
-	}
-	
 	@Override
 	public String executeCmdAndCreateSmsResponse(String... params) {
 		String response = "";

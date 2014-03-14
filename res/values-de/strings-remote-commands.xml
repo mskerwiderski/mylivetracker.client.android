@@ -7,5 +7,6 @@
     <string name="txRemoteCommand_Localization">startet oder stoppt die Lokalisierung oder gibt Informationen über die letzte oder aktuelle Position zurück</string>
     <string name="txRemoteCommand_Heartrate">startet oder stoppt die Herzfrequenzerkennung oder gibt Informationen über die letzte oder aktuelle Herzfrequenzmessung zurück</string>
     <string name="txRemoteCommand_Config">gibt die gewünschten gesetzten Einstellungen zurück</string>
+    <string name="txRemoteCommand_Status">gibt den Status der Services zurück (Tracking, Lokalisierung, Herzfrequenzerkennung)</string>
     <string name="txRemoteCommand_Error">Fehler</string>
 </resources>

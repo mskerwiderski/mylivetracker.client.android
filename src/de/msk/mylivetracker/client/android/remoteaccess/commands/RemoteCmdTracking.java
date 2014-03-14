@@ -49,10 +49,6 @@ public class RemoteCmdTracking extends ARemoteCmdExecutor {
 		}
 		
 	}
-	
-	public RemoteCmdTracking(String sender, String... params) {
-		super(new CmdDsc(), sender, params);
-	}
 
 	@Override
 	public String executeCmdAndCreateSmsResponse(String... params) {

@@ -6,7 +6,11 @@ import java.util.TimeZone;
 import org.apache.commons.lang3.StringUtils;
 
 import de.msk.mylivetracker.client.android.account.AccountPrefs;
+import de.msk.mylivetracker.client.android.antplus.AntPlusHardware;
+import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
 import de.msk.mylivetracker.client.android.dropbox.DropboxUtils.UploadFileResult;
+import de.msk.mylivetracker.client.android.localization.LocalizationService;
+import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.status.HeartrateInfo;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
@@ -14,6 +18,7 @@ import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.status.UploadInfo;
 import de.msk.mylivetracker.client.android.util.FormatUtils;
 import de.msk.mylivetracker.client.android.util.FormatUtils.Unit;
+import de.msk.mylivetracker.client.android.util.service.AbstractService;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;
 
 /**
@@ -60,6 +65,22 @@ public class ResponseCreator {
 	
 	public static String getResultOfHeartrateDetectionNotEnabled() {
 		return getResultOfError("heartrate detection not enabled on this device");
+	}
+	
+	public static String getResultOfStatusOfServices() {
+		String res = "tracking=" +
+			(TrackStatus.get().trackIsRunning() ? "running" : "idle");
+		res += ",localization=" + 
+			(AbstractService.isServiceRunning(LocalizationService.class) ? "running" : "idle");
+		if (AntPlusHardware.initialized()) {
+			res += ",heartrate detection=";
+			if (!PrefsRegistry.get(OtherPrefs.class).isAntPlusEnabledIfAvailable()) {
+				res += "disabled (maybe ANT+ driver not installed)";
+			} else {
+				res += (AntPlusManager.get().hasSensorListeners() ? "running" : "idle"); 
+			}
+		} 
+		return res;
 	}
 	
 	public static String getResultOfTrackInfo() {

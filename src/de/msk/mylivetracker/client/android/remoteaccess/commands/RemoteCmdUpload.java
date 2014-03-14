@@ -56,10 +56,6 @@ public class RemoteCmdUpload extends ARemoteCmdExecutor {
 		}
 	}
 	
-	public RemoteCmdUpload(String sender, String... params) {
-		super(new CmdDsc(), sender, params);
-	}
-
 	private String uploadTrack() {
 		String result;
 		if (!LogInfo.logFileExists()) {

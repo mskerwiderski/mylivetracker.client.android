@@ -7,5 +7,6 @@
     <string name="txRemoteCommand_Localization">start or stop localization or get details about last or current location information</string>
     <string name="txRemoteCommand_Heartrate">start or stop heartrate detection or get details about last or current heartrate information</string>
     <string name="txRemoteCommand_Config">get specified config data</string>
+    <string name="txRemoteCommand_Status">get status of services (tracking, localization, heartrate detection)</string>
     <string name="txRemoteCommand_Error">error</string>
 </resources>
