@@ -35,7 +35,7 @@ public class RemoteCmdError extends ARemoteCmdExecutor {
 	}
 	
 	@Override
-	public String executeCmdAndCreateSmsResponse(String... params) {
+	public String executeCmdAndCreateResponse(String... params) {
 		String res = "<reason unknown>";
 		if (params.length > 0) {
 			res = "";

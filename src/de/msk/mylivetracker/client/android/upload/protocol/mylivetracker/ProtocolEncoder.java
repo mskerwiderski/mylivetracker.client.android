@@ -126,7 +126,7 @@ public class ProtocolEncoder extends EncDecoder implements IProtocol {
 			data.setSosId(emergencySignalInfo.getId());
 			data.setMessage(EmergencyPrefs.getEmergencyMessageText());
 		}
-		if ((messageInfo != null) && (emergencySignalInfo != null)) {
+		if ((messageInfo != null) && (emergencySignalInfo == null)) {
 			data.setMessage(messageInfo.getMessage());
 		}
 		if (phoneStateInfo != null) {

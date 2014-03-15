@@ -80,7 +80,7 @@ public class RemoteCmdLocalization extends ARemoteCmdExecutor {
 	}
 	
 	@Override
-	public String executeCmdAndCreateSmsResponse(String... params) {
+	public String executeCmdAndCreateResponse(String... params) {
 		String response = "";
 		boolean localizationFoundActive = 
 			AbstractService.isServiceRunning(LocalizationService.class);

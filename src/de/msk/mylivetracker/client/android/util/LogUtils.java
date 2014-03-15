@@ -7,7 +7,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import android.util.Log;
 import de.msk.mylivetracker.client.android.App.VersionDsc;
-import de.msk.mylivetracker.client.android.remoteaccess.RemoteCmdReceiver;
+import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdReceiver;
+import de.msk.mylivetracker.client.android.remoteaccess.ARemoteMessageCmdReceiver;
+import de.msk.mylivetracker.client.android.remoteaccess.RemoteSmsCmdReceiver;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdConfig;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdError;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdHeartrate;
@@ -34,7 +36,9 @@ public class LogUtils {
 	private static Map<Class<?>, Boolean> classes = new HashMap<Class<?>, Boolean>();
 	
 	static {
-		classes.put(RemoteCmdReceiver.class, Boolean.TRUE);
+		classes.put(ARemoteCmdReceiver.class, Boolean.TRUE);
+		classes.put(ARemoteMessageCmdReceiver.class, Boolean.TRUE);
+		classes.put(RemoteSmsCmdReceiver.class, Boolean.TRUE);
 		classes.put(RemoteCmdError.class, Boolean.TRUE);
 		classes.put(RemoteCmdVersion.class, Boolean.TRUE);
 		classes.put(RemoteCmdConfig.class, Boolean.TRUE);

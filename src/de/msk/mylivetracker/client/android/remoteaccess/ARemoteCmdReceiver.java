@@ -13,12 +13,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.telephony.PhoneNumberUtils;
-import android.telephony.SmsMessage;
-import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdConfig;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdError;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdHeartrate;
@@ -31,7 +25,7 @@ import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdVersio
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
 /**
- * classname: RemoteCmdReceiver
+ * classname: ARemoteCmdReceiver
  * 
  * @author michael skerwiderski, (c)2012
  * @version 001
@@ -42,7 +36,7 @@ import de.msk.mylivetracker.client.android.util.LogUtils;
  * 000	2012-12-29	revised for v1.5.x.
  * 
  */
-public class RemoteCmdReceiver extends BroadcastReceiver {
+public abstract class ARemoteCmdReceiver extends BroadcastReceiver {
 
 	private static class CmdPackage {
 		public ARemoteCmdDsc dsc;
@@ -110,9 +104,9 @@ public class RemoteCmdReceiver extends BroadcastReceiver {
 		if (StringUtils.isEmpty(cmdName)) {
 			throw new IllegalArgumentException("cmdName must not be empty.");
 		}
-		LogUtils.infoMethodIn(RemoteCmdReceiver.class, "cmdExecutorExists", cmdName);
+		LogUtils.infoMethodIn(ARemoteCmdReceiver.class, "cmdExecutorExists", cmdName);
 		boolean res = cmdRegistry.containsKey(StringUtils.lowerCase(cmdName));
-		LogUtils.infoMethodOut(RemoteCmdReceiver.class, "cmdExecutorExists", res);
+		LogUtils.infoMethodOut(ARemoteCmdReceiver.class, "cmdExecutorExists", res);
 		return res;
 	}
 	
@@ -120,81 +114,58 @@ public class RemoteCmdReceiver extends BroadcastReceiver {
 		if (StringUtils.isEmpty(cmdName)) {
 			throw new IllegalArgumentException("cmdName must not be empty.");
 		}
-		LogUtils.infoMethodIn(RemoteCmdReceiver.class, "getCmdExecutor", cmdName);
+		LogUtils.infoMethodIn(ARemoteCmdReceiver.class, "getCmdExecutor", cmdName);
 		CmdPackage res = 
 			cmdRegistry.get(StringUtils.lowerCase(cmdName));
-		LogUtils.infoMethodOut(RemoteCmdReceiver.class, "getCmdExecutor", res);
+		LogUtils.infoMethodOut(ARemoteCmdReceiver.class, "getCmdExecutor", res);
 		return res;
 	}
 	
 	private static ExecutorService executorService = Executors.newSingleThreadExecutor();
 	
-	public static final String CMD_INDICATOR = "#mlt";
-	
-	@Override
-	public void onReceive(Context context, Intent intent) {
-		RemoteAccessPrefs prefs = PrefsRegistry.get(RemoteAccessPrefs.class);
-		if (!prefs.isRemoteAccessEnabled()) return;
-		LogUtils.infoMethodIn(this.getClass(), "onReceive");
-		Bundle bundle = intent.getExtras();
-		Object messages[] = (Object[]) bundle.get("pdus");
-		SmsMessage smsMessage[] = new SmsMessage[messages.length];
-		for (int n = 0; n < messages.length; n++) {
-			String response = null;
-			smsMessage[n] = SmsMessage.createFromPdu((byte[]) messages[n]);
-			String sender = smsMessage[0].getOriginatingAddress();
-			if (prefs.isRemoteAccessUseReceiver()) {
-				sender = prefs.getRemoteAccessReceiver();
-			}
-			String message = StringUtils.lowerCase(smsMessage[0].getMessageBody());
-			try {
-				if (!StringUtils.isEmpty(sender) && PhoneNumberUtils.isGlobalPhoneNumber(sender) && 
-					!StringUtils.isEmpty(message) && StringUtils.startsWithIgnoreCase(message, CMD_INDICATOR)) {
-					LogUtils.infoMethodState(this.getClass(), "onReceive", "sms details", sender, message);
-					String[] messageParts = StringUtils.split(message, ' ');
-					LogUtils.infoMethodState(this.getClass(), "onReceive", "message parts", Arrays.toString(messageParts));
-					if (messageParts.length < 3) {
-						// do not send a response in case of an error before password has been checked.
-						LogUtils.infoMethodState(this.getClass(), "onReceive", "sms message check", "invalid syntax");
-						response = null;
-					} else if (!StringUtils.equals(messageParts[1], 
-						prefs.getRemoteAccessPassword())) {
-						LogUtils.infoMethodState(this.getClass(), "onReceive", "sms message check", "invalid password");
-						// do not send a response in case of a wrong password.
-						response = null;
-					} else if (!cmdExecutorExists(messageParts[2])) {
-						response = ResponseCreator.getResultOfError("unknown command '" + messageParts[2] + "'");
-					} else {
-						String[] params = new String[0];
-						if (messageParts.length > 3) {
-							String[] paramsCs = (String[])ArrayUtils.subarray(messageParts, 3, messageParts.length);
-							params = new String[paramsCs.length];
-							for (int i=0; i < paramsCs.length; i++) {
-								params[i] = StringUtils.lowerCase(paramsCs[i]);
-							}
-						}
-						LogUtils.infoMethodState(this.getClass(), "onReceive", "params", Arrays.toString(params));
-						CmdPackage cmdPackage = getCmdExecutor(messageParts[2]);
-						Constructor<? extends ARemoteCmdExecutor> cmdExecutorConstructor = cmdPackage.executor.getConstructor();
-						ARemoteCmdExecutor cmdExecutor = cmdExecutorConstructor.newInstance();
-						cmdExecutor.init(cmdPackage.dsc, sender, params);
-						executorService.execute(cmdExecutor);
-						response = null;
-						LogUtils.infoMethodState(this.getClass(), "onReceive", "command executed");
+	public void onProcessRemoteCmd(String sender, String[] messageParts) {
+		LogUtils.infoMethodIn(this.getClass(), "onProcessRemoteCmd");
+		String response = null;
+		if (StringUtils.isEmpty(sender)) {
+			throw new IllegalArgumentException("sender must not be empty.");
+		}
+		if (messageParts == null) {
+			throw new IllegalArgumentException("messageParts must not be null.");
+		}
+		try {
+			LogUtils.infoMethodState(this.getClass(), "onProcessCmd", "message parts", Arrays.toString(messageParts));
+			if (!cmdExecutorExists(messageParts[0])) {
+				response = ResponseCreator.getResultOfError("unknown command '" + messageParts[0] + "'");
+			} else {
+				String[] params = new String[0];
+				if (messageParts.length > 1) {
+					String[] paramsCs = (String[])ArrayUtils.subarray(messageParts, 1, messageParts.length);
+					params = new String[paramsCs.length];
+					for (int i=0; i < paramsCs.length; i++) {
+						params[i] = StringUtils.lowerCase(paramsCs[i]);
 					}
 				}
-			} catch (Exception e) {
-				response = ResponseCreator.getResultOfError(e.getMessage());
-			} finally {
-				if (!StringUtils.isEmpty(response)) {
-					RemoteCmdError cmdError = new RemoteCmdError();
-					cmdError.init(new RemoteCmdError.CmdDsc(), sender, response);
-					executorService.execute(cmdError);
-					LogUtils.infoMethodState(this.getClass(), "onReceive", "command failed", sender, response);
-				}
+				LogUtils.infoMethodState(this.getClass(), "onProcessCmd", "params", Arrays.toString(params));
+				CmdPackage cmdPackage = getCmdExecutor(messageParts[0]);
+				Constructor<? extends ARemoteCmdExecutor> cmdExecutorConstructor = cmdPackage.executor.getConstructor();
+				ARemoteCmdExecutor cmdExecutor = cmdExecutorConstructor.newInstance();
+				cmdExecutor.init(cmdPackage.dsc, sender, params, this.getResponseSender());
+				executorService.execute(cmdExecutor);
+				response = null;
+				LogUtils.infoMethodState(this.getClass(), "onProcessCmd", "command executed");
+			}
+		} catch (Exception e) {
+			response = ResponseCreator.getResultOfError(e.getMessage());
+		} finally {
+			if (!StringUtils.isEmpty(response)) {
+				RemoteCmdError cmdError = new RemoteCmdError();
+				cmdError.init(new RemoteCmdError.CmdDsc(), sender, response, this.getResponseSender());
+				executorService.execute(cmdError);
+				LogUtils.infoMethodState(this.getClass(), "onProcessCmd", "command failed", sender, response);
 			}
 		}
-
-		LogUtils.infoMethodOut(this.getClass(), "onReceive");
+		LogUtils.infoMethodOut(this.getClass(), "onProcessRemoteCmd");
 	}
+	
+	public abstract IResponseSender getResponseSender();
 }	

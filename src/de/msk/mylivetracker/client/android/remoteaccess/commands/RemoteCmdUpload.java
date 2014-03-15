@@ -100,7 +100,7 @@ public class RemoteCmdUpload extends ARemoteCmdExecutor {
 	}
 	
 	@Override
-	public String executeCmdAndCreateSmsResponse(String... params) {
+	public String executeCmdAndCreateResponse(String... params) {
 		String result = "";
 		if (!PrefsRegistry.get(DropboxPrefs.class).hasValidAccountAndToken()) {
 			result = ResponseCreator.getResultOfNotConnectedToDropbox();

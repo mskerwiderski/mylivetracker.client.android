@@ -80,7 +80,7 @@ public class RemoteCmdHeartrate extends ARemoteCmdExecutor {
 	}
 	
 	@Override
-	public String executeCmdAndCreateSmsResponse(String... params) {
+	public String executeCmdAndCreateResponse(String... params) {
 		String response = "";
 		if (!AntPlusHardware.initialized()) {
 			response = ResponseCreator.getResultOfHeartrateDetectionNotSupported();

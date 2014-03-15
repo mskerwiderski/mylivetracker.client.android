@@ -3,7 +3,7 @@ package de.msk.mylivetracker.client.android.remoteaccess.commands;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdDsc;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdExecutor;
-import de.msk.mylivetracker.client.android.remoteaccess.RemoteCmdReceiver;
+import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdReceiver;
 
 
 /**
@@ -34,19 +34,19 @@ public class RemoteCmdHelp extends ARemoteCmdExecutor {
 				(params.length == 0) || (params.length == 1);
 			if (params.length == 1) {
 				matches = matches && 
-					RemoteCmdReceiver.containsCommand(params[0]);
+					ARemoteCmdReceiver.containsCommand(params[0]);
 			}
 			return matches;
 		}
 	}
 	
 	@Override
-	public String executeCmdAndCreateSmsResponse(String... params) {
+	public String executeCmdAndCreateResponse(String... params) {
 		String response = null;
 		if (params.length == 0) {
-			response = RemoteCmdReceiver.getCommandsAsStr();
+			response = ARemoteCmdReceiver.getCommandsAsStr();
 		} else {
-			response = RemoteCmdReceiver.getCommandSyntax(params[0]);
+			response = ARemoteCmdReceiver.getCommandSyntax(params[0]);
 		}
 		return response;
 	}

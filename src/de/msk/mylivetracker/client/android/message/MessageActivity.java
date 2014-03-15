@@ -20,6 +20,7 @@ import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.status.MessageInfo;
+import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.upload.Uploader;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
@@ -90,8 +91,10 @@ public class MessageActivity extends AbstractActivity {
 	private static void sendMessage(MessageActivity activity, String message) {
 		MessagePrefs messagePrefs = PrefsRegistry.get(MessagePrefs.class);
 		if (messagePrefs.isSendMessageModeToServerEnabled()) {
-			MessageInfo.update(message);					
-			Uploader.uploadOneTime();
+			MessageInfo.update(message);	
+			if (!TrackStatus.get().trackIsRunning()) {
+				Uploader.uploadOneTime();
+			}
 		}
 		if (messagePrefs.isSendMessageModeAsSmsEnabled()) {
 			SmsSendUtils.sendSms(messagePrefs.getSmsReceiver(), message);

@@ -51,7 +51,7 @@ public class RemoteCmdTracking extends ARemoteCmdExecutor {
 	}
 
 	@Override
-	public String executeCmdAndCreateSmsResponse(String... params) {
+	public String executeCmdAndCreateResponse(String... params) {
 		LogUtils.infoMethodIn(this.getClass(), "executeCmdAndCreateSmsResponse", Arrays.toString(params));
 		String cmd = params[0];
 		String response = null; 
