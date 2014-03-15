@@ -52,11 +52,26 @@ public class ResponseCreator {
 		return res;
 	}
 	
-	public static String getResultOfError(String errorMsg) {
-		if (StringUtils.isEmpty(errorMsg)) {
-			errorMsg = "unknown";
+	public static String getResultOfError(Exception ex) {
+		String res = "failed:";
+		if (ex == null) {
+			res += "unknown";
+		} else if (StringUtils.isEmpty(ex.getMessage())) {
+			res += ex.toString();
+		} else {
+			res += ex.getMessage();
 		}
-		return "failed:" + errorMsg;
+		return res;
+	}
+	
+	public static String getResultOfError(String errMsg) {
+		String res = "failed:";
+		if (StringUtils.isEmpty(errMsg)) {
+			res += "unknown";
+		} else {
+			res += errMsg;
+		}
+		return res;
 	}
 	
 	public static String getResultNotSupported() {

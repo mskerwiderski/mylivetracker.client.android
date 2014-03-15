@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -121,8 +120,6 @@ public abstract class ARemoteCmdReceiver extends BroadcastReceiver {
 		return res;
 	}
 	
-	private static ExecutorService executorService = Executors.newSingleThreadExecutor();
-	
 	public void onProcessRemoteCmd(String sender, String[] messageParts) {
 		LogUtils.infoMethodIn(this.getClass(), "onProcessRemoteCmd");
 		String response = null;
@@ -150,17 +147,17 @@ public abstract class ARemoteCmdReceiver extends BroadcastReceiver {
 				Constructor<? extends ARemoteCmdExecutor> cmdExecutorConstructor = cmdPackage.executor.getConstructor();
 				ARemoteCmdExecutor cmdExecutor = cmdExecutorConstructor.newInstance();
 				cmdExecutor.init(cmdPackage.dsc, sender, params, this.getResponseSender());
-				executorService.execute(cmdExecutor);
+				this.getExecutorService().execute(cmdExecutor);
 				response = null;
 				LogUtils.infoMethodState(this.getClass(), "onProcessCmd", "command executed");
 			}
 		} catch (Exception e) {
-			response = ResponseCreator.getResultOfError(e.getMessage());
+			response = ResponseCreator.getResultOfError(e);
 		} finally {
 			if (!StringUtils.isEmpty(response)) {
 				RemoteCmdError cmdError = new RemoteCmdError();
 				cmdError.init(new RemoteCmdError.CmdDsc(), sender, response, this.getResponseSender());
-				executorService.execute(cmdError);
+				this.getExecutorService().execute(cmdError);
 				LogUtils.infoMethodState(this.getClass(), "onProcessCmd", "command failed", sender, response);
 			}
 		}
@@ -168,4 +165,5 @@ public abstract class ARemoteCmdReceiver extends BroadcastReceiver {
 	}
 	
 	public abstract IResponseSender getResponseSender();
+	public abstract ExecutorService getExecutorService();
 }	

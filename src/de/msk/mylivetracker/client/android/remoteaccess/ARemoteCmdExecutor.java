@@ -59,7 +59,7 @@ public abstract class ARemoteCmdExecutor implements Runnable {
 					this.executeCmdAndCreateResponse(this.params));
 			}
 		} catch (Exception e) {
-			response = ResponseCreator.getResultOfError(e.getMessage());
+			response = ResponseCreator.getResultOfError(e);
 			LogUtils.infoMethodState(this.getClass(), "run", "run failed", e.toString());
 		} finally {
 			try {

@@ -1,5 +1,8 @@
 package de.msk.mylivetracker.client.android.remoteaccess;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import org.apache.commons.lang3.StringUtils;
 
 import android.content.Context;
@@ -66,8 +69,17 @@ public class RemoteSmsCmdReceiver extends ARemoteMessageCmdReceiver {
 		}
 	}
 
+	private static ExecutorService executorService = Executors.newSingleThreadExecutor();
+	
+	@Override
+	public ExecutorService getExecutorService() {
+		return executorService;
+	}
+
+	private static IResponseSender responseSender = new SmsResponseSender();
+	
 	@Override
 	public IResponseSender getResponseSender() {
-		return new SmsResponseSender();
+		return responseSender;
 	}
 }
