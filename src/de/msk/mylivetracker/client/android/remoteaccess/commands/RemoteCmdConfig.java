@@ -42,7 +42,8 @@ public class RemoteCmdConfig extends ARemoteCmdExecutor {
 	}
 	
 	@Override
-	public String executeCmdAndCreateResponse(String... params) {
-		return PrefsRegistry.get(params[1]).getPrefsDumpAsStr(true);
+	public Result executeCmdAndCreateResponse(String... params) {
+		return new Result(true,
+			PrefsRegistry.get(params[1]).getPrefsDumpAsStr(true));
 	}
 }

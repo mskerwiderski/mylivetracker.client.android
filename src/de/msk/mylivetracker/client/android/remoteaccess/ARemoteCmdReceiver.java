@@ -13,7 +13,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import android.content.BroadcastReceiver;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdConfig;
-import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdError;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdHeartrate;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdHelp;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdLocalization;
@@ -132,7 +131,7 @@ public abstract class ARemoteCmdReceiver extends BroadcastReceiver {
 		try {
 			LogUtils.infoMethodState(this.getClass(), "onProcessCmd", "message parts", Arrays.toString(messageParts));
 			if (!cmdExecutorExists(messageParts[0])) {
-				response = ResponseCreator.getResultOfError("unknown command '" + messageParts[0] + "'");
+				response = "unknown command";
 			} else {
 				String[] params = new String[0];
 				if (messageParts.length > 1) {
@@ -152,16 +151,33 @@ public abstract class ARemoteCmdReceiver extends BroadcastReceiver {
 				LogUtils.infoMethodState(this.getClass(), "onProcessCmd", "command executed");
 			}
 		} catch (Exception e) {
-			response = ResponseCreator.getResultOfError(e);
+			response = "failed:internal error";
 		} finally {
 			if (!StringUtils.isEmpty(response)) {
-				RemoteCmdError cmdError = new RemoteCmdError();
-				cmdError.init(new RemoteCmdError.CmdDsc(), sender, response, this.getResponseSender());
-				this.getExecutorService().execute(cmdError);
-				LogUtils.infoMethodState(this.getClass(), "onProcessCmd", "command failed", sender, response);
+				response = "["+ messageParts[0] +"]:failed:" + response;
+				this.getExecutorService().execute(new ErrorResponse(sender, this.getResponseSender(), response));
+				LogUtils.infoMethodState(this.getClass(), "onProcessCmd", "sendResponse", response);
 			}
 		}
 		LogUtils.infoMethodOut(this.getClass(), "onProcessRemoteCmd");
+	}
+	
+	private class ErrorResponse implements Runnable {
+
+		private String sender;
+		private IResponseSender responseSender;
+		private String response;
+		
+		public ErrorResponse(String sender, IResponseSender responseSender, String response) {
+			this.sender = sender;
+			this.responseSender = responseSender;
+			this.response = response;
+		}
+
+		@Override
+		public void run() {
+			this.responseSender.sendResponse(this.sender, response);			
+		}
 	}
 	
 	public abstract IResponseSender getResponseSender();

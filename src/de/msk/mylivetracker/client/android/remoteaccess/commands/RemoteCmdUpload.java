@@ -56,22 +56,27 @@ public class RemoteCmdUpload extends ARemoteCmdExecutor {
 		}
 	}
 	
-	private String uploadTrack() {
-		String result;
+	private Result uploadTrack() {
+		boolean success = true;
+		String response;
 		if (!LogInfo.logFileExists()) {
-			result = ResponseCreator.getResultOfError("no track file exists");
+			success = false;
+			response = "no track file exists";
 		} else {
 			String gpxFileName = LogInfo.createGpxFileNameOfCurrentTrack();
 			LogInfo.createGpxFileOfCurrentTrack(gpxFileName);
 			UploadFileResult uploadFileResult = DropboxUtils.uploadFile(gpxFileName);
-			result = ResponseCreator.getResultOfUploadFile(uploadFileResult);
+			Result result = ResponseCreator.getResultOfUploadFile(uploadFileResult);
+			success = result.isSuccess();
+			response = result.getResponse();
 			FileUtils.fileDelete(gpxFileName, PathType.AppDataDir);
 		}
-		return result;
+		return new Result(success, response);
 	}
 	
-	private String uploadConfig() {
-		String result;
+	private Result uploadConfig() {
+		boolean success = true;
+		String response;
 		String filename = "MLT_CFG_" + 
 				App.getDeviceId() + "_"; 
 		DateTime dateTime = new DateTime();
@@ -90,20 +95,24 @@ public class RemoteCmdUpload extends ARemoteCmdExecutor {
 			
 			UploadFileResult uploadFileResult = 
 				DropboxUtils.uploadFile(filename);
-			result = ResponseCreator.getResultOfUploadFile(uploadFileResult);			
+			Result result = ResponseCreator.getResultOfUploadFile(uploadFileResult);
+			success = result.isSuccess();
+			response = result.getResponse();
 		} catch (Exception e) {
-			result = ResponseCreator.getResultOfError(e.getMessage());
+			success = false;
+			response = "upload was not successful";
 		} finally {
 			FileUtils.fileDelete(filename, PathType.AppDataDir);
 		}
-		return result;
+		return new Result(success, response);
 	}
 	
 	@Override
-	public String executeCmdAndCreateResponse(String... params) {
-		String result = "";
+	public Result executeCmdAndCreateResponse(String... params) {
+		Result result = null;
 		if (!PrefsRegistry.get(DropboxPrefs.class).hasValidAccountAndToken()) {
-			result = ResponseCreator.getResultOfNotConnectedToDropbox();
+			result = new Result(false, 
+				ResponseCreator.getResultOfNotConnectedToDropbox());
 		} else if (StringUtils.equals(params[0], Options.track.name())) {
 			result = this.uploadTrack();
 		} else if (StringUtils.equals(params[0], Options.config.name())) {

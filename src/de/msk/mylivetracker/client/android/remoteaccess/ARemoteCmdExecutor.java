@@ -52,14 +52,16 @@ public abstract class ARemoteCmdExecutor implements Runnable {
 		try {
 			LogUtils.infoMethodState(this.getClass(), "run", "params", Arrays.toString(this.params));
 			if (!this.cmdDsc.matchesSyntax(params)) {
-				response = ResponseCreator.getResultOfError( 
-					"command does not match syntax '" + this.cmdDsc.getSyntax() + "'");
+				response = "failed:command does not match syntax '" + this.cmdDsc.getSyntax() + "'";
 			} else {
-				response = ResponseCreator.getResultOfSuccess(
-					this.executeCmdAndCreateResponse(this.params));
+				Result result = this.executeCmdAndCreateResponse(this.params);
+				response += result.isSuccess() ? "ok" : "failed";
+				if (!StringUtils.isEmpty(result.getResponse())) {
+					response += ":" + result.getResponse();
+				}
 			}
 		} catch (Exception e) {
-			response = ResponseCreator.getResultOfError(e);
+			response = "failed:internal error";
 			LogUtils.infoMethodState(this.getClass(), "run", "run failed", e.toString());
 		} finally {
 			try {
@@ -67,7 +69,7 @@ public abstract class ARemoteCmdExecutor implements Runnable {
 				this.responseSender.sendResponse(sender, response);
 				LogUtils.infoMethodState(this.getClass(), "run", "sendResponse", response);
 			} catch (Exception e) {
-				LogUtils.infoMethodState(this.getClass(), "run", "sendResponse", e.toString());
+				LogUtils.infoMethodState(this.getClass(), "run", "exception", e.toString());
 			}
 		}
 		LogUtils.infoMethodOut(this.getClass(), "run");
@@ -77,7 +79,27 @@ public abstract class ARemoteCmdExecutor implements Runnable {
 		return this.cmdDsc;
 	}
 	
-	public abstract String executeCmdAndCreateResponse(String... params);
+	public static class Result {
+		private boolean success;
+		private String response;
+		public Result(boolean success, String response) {
+			this.success = success;
+			this.response = response;
+		}
+		public boolean isSuccess() {
+			return success;
+		}
+		public String getResponse() {
+			return response;
+		}
+		@Override
+		public String toString() {
+			return "Result [success=" + success + ", response=" + response
+				+ "]";
+		}
+	}
+	
+	public abstract Result executeCmdAndCreateResponse(String... params);
 
 	@Override
 	public String toString() {

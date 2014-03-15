@@ -34,7 +34,7 @@ public class RemoteCmdStatus extends ARemoteCmdExecutor {
 	}
 	
 	@Override
-	public String executeCmdAndCreateResponse(String... params) {
-		return ResponseCreator.getResultOfStatusOfServices();
+	public Result executeCmdAndCreateResponse(String... params) {
+		return new Result(true, ResponseCreator.getResultOfStatusOfServices());
 	}
 }

@@ -51,7 +51,7 @@ public class RemoteCmdTracking extends ARemoteCmdExecutor {
 	}
 
 	@Override
-	public String executeCmdAndCreateResponse(String... params) {
+	public Result executeCmdAndCreateResponse(String... params) {
 		LogUtils.infoMethodIn(this.getClass(), "executeCmdAndCreateSmsResponse", Arrays.toString(params));
 		String cmd = params[0];
 		String response = null; 
@@ -68,6 +68,6 @@ public class RemoteCmdTracking extends ARemoteCmdExecutor {
 			response = ResponseCreator.getResultOfTrackInfo();
 		}
 		LogUtils.infoMethodOut(this.getClass(), "executeCmdAndCreateSmsResponse", response);
-		return response;
+		return new Result(true, response);
 	}
 }

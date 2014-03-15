@@ -12,6 +12,7 @@ import de.msk.mylivetracker.client.android.dropbox.DropboxUtils.UploadFileResult
 import de.msk.mylivetracker.client.android.localization.LocalizationService;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
+import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdExecutor.Result;
 import de.msk.mylivetracker.client.android.status.HeartrateInfo;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
@@ -44,50 +45,20 @@ public class ResponseCreator {
 	public static final String GOOGLE_LATLON_URL = "googleLatLonUrl";
 	public static final String DATE_TIME_FORMAT = "'UTC' yyyy-MM-dd HH:mm:ss.SSS";
 	
-	public static String getResultOfSuccess(String response) {
-		String res = "ok";
-		if (!StringUtils.isEmpty(response)) {
-			res += ":" + response;
-		}
-		return res;
-	}
-	
-	public static String getResultOfError(Exception ex) {
-		String res = "failed:";
-		if (ex == null) {
-			res += "unknown";
-		} else if (StringUtils.isEmpty(ex.getMessage())) {
-			res += ex.toString();
-		} else {
-			res += ex.getMessage();
-		}
-		return res;
-	}
-	
-	public static String getResultOfError(String errMsg) {
-		String res = "failed:";
-		if (StringUtils.isEmpty(errMsg)) {
-			res += "unknown";
-		} else {
-			res += errMsg;
-		}
-		return res;
-	}
-	
 	public static String getResultNotSupported() {
-		return getResultOfError("currently not supported");
+		return "currently not supported";
 	}
 
 	public static String getResultOfNotConnectedToDropbox() {
-		return getResultOfError("device is not connected to dropbox");
+		return "device is not connected to dropbox";
 	}
 	
 	public static String getResultOfHeartrateDetectionNotSupported() {
-		return getResultOfError("heartrate detection not supported on this device");
+		return "heartrate detection not supported on this device";
 	}
 	
 	public static String getResultOfHeartrateDetectionNotEnabled() {
-		return getResultOfError("heartrate detection not enabled on this device");
+		return "heartrate detection not enabled on this device";
 	}
 	
 	public static String getResultOfStatusOfServices() {
@@ -122,16 +93,18 @@ public class ResponseCreator {
 		return str;
 	}
 	
-	public static String getResultOfUploadFile(UploadFileResult uploadFileResult) {
-		String result = "";
+	public static Result getResultOfUploadFile(UploadFileResult uploadFileResult) {
+		boolean success = true;
+		String response = "";
 		if (!uploadFileResult.success) {
-			result = getResultOfError(uploadFileResult.error);
+			success = false;
+			response = uploadFileResult.error;
 		} else {
-			result = addParamValue(result, "revid", uploadFileResult.revisionId);
-			result = addParamValue(result, "size", uploadFileResult.sizeStr);
-			result = "successful:" + result;
+			response = addParamValue(response, "revid", uploadFileResult.revisionId);
+			response = addParamValue(response, "size", uploadFileResult.sizeStr);
+			response = "successful:" + response;
 		}
-		return result;
+		return new Result(success, response);
 	}
 	
 	public static String getResultOfGetHeartrate(HeartrateInfo heartrateInfo) {

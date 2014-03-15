@@ -81,7 +81,7 @@ public class RemoteCmdLocalization extends ARemoteCmdExecutor {
 	}
 	
 	@Override
-	public String executeCmdAndCreateResponse(String... params) {
+	public Result executeCmdAndCreateResponse(String... params) {
 		String response = "";
 		boolean localizationFoundActive = 
 			AbstractService.isServiceRunning(LocalizationService.class);
@@ -132,6 +132,6 @@ public class RemoteCmdLocalization extends ARemoteCmdExecutor {
 			}
 			response = ResponseCreator.getResultOfGetLocation(LocationInfo.get());
 		}
-		return response;
+		return new Result(true, response);
 	}
 }

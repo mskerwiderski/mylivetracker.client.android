@@ -80,12 +80,15 @@ public class RemoteCmdHeartrate extends ARemoteCmdExecutor {
 	}
 	
 	@Override
-	public String executeCmdAndCreateResponse(String... params) {
+	public Result executeCmdAndCreateResponse(String... params) {
+		boolean success = true;
 		String response = "";
 		if (!AntPlusHardware.initialized()) {
 			response = ResponseCreator.getResultOfHeartrateDetectionNotSupported();
+			success = false;
 		} else if (!PrefsRegistry.get(OtherPrefs.class).isAntPlusEnabledIfAvailable()) {
 			response = ResponseCreator.getResultOfHeartrateDetectionNotEnabled();
+			success = false;
 		} else {
 			boolean antPlusFoundActive = 
 				AntPlusManager.get().hasSensorListeners();
@@ -135,6 +138,6 @@ public class RemoteCmdHeartrate extends ARemoteCmdExecutor {
 				response = ResponseCreator.getResultOfGetHeartrate(HeartrateInfo.get());
 			}
 		}			
-		return response;
+		return new Result(success, response);
 	}
 }

@@ -41,13 +41,13 @@ public class RemoteCmdHelp extends ARemoteCmdExecutor {
 	}
 	
 	@Override
-	public String executeCmdAndCreateResponse(String... params) {
+	public Result executeCmdAndCreateResponse(String... params) {
 		String response = null;
 		if (params.length == 0) {
 			response = ARemoteCmdReceiver.getCommandsAsStr();
 		} else {
 			response = ARemoteCmdReceiver.getCommandSyntax(params[0]);
 		}
-		return response;
+		return new Result(true, response);
 	}
 }

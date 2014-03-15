@@ -11,7 +11,6 @@ import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdReceiver;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteMessageCmdReceiver;
 import de.msk.mylivetracker.client.android.remoteaccess.RemoteSmsCmdReceiver;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdConfig;
-import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdError;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdHeartrate;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdHelp;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdLocalization;
@@ -40,7 +39,6 @@ public class LogUtils {
 		classes.put(ARemoteCmdReceiver.class, Boolean.TRUE);
 		classes.put(ARemoteMessageCmdReceiver.class, Boolean.TRUE);
 		classes.put(RemoteSmsCmdReceiver.class, Boolean.TRUE);
-		classes.put(RemoteCmdError.class, Boolean.TRUE);
 		classes.put(RemoteCmdVersion.class, Boolean.TRUE);
 		classes.put(RemoteCmdConfig.class, Boolean.TRUE);
 		classes.put(RemoteCmdHelp.class, Boolean.TRUE);

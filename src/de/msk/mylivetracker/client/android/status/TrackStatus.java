@@ -17,7 +17,6 @@ import com.google.gson.JsonParseException;
 
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.battery.BatteryReceiver;
-import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.phonestate.PhoneStateListener;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
@@ -72,7 +71,7 @@ public class TrackStatus implements Serializable {
 
 	public static void saveTrackStatus() {
 		if (trackStatus == null) return;				
-		SharedPreferences prefs = MainActivity.get().
+		SharedPreferences prefs = App.get().
 			getSharedPreferences(App.getStatusFileName(false), 0);
 		SharedPreferences.Editor editor = prefs.edit();
 		TrackStatus temp = trackStatus.deepCopy();
@@ -97,8 +96,7 @@ public class TrackStatus implements Serializable {
 	public static void loadTrackStatus() {
 		if (trackStatus != null) return;
 		try {
-			MainActivity mainActivity = MainActivity.get();
-			SharedPreferences prefs = mainActivity.
+			SharedPreferences prefs = App.get().
 				getSharedPreferences(App.getStatusFileName(false), 0);		
 			long trackVersion = prefs.getLong(TRACK_STATUS_VERSION_VAR, -1);
 			if (trackVersion != serialVersionUID) {
