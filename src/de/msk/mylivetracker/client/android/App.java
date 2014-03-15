@@ -220,12 +220,12 @@ public class App extends Application {
 	}
 	
 	@Override
-    public void onCreate(){
-        super.onCreate();
+    public void onCreate() {
+		super.onCreate();
         app = this;
         context = getApplicationContext();
         VersionDsc.get();
-        initPrefsResult = PrefsRegistry.init();
+        initPrefsResult = PrefsRegistry.getInitResult();
     }
     @Override
 	public void onTerminate() {

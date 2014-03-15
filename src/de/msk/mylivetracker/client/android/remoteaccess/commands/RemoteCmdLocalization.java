@@ -31,7 +31,8 @@ public class RemoteCmdLocalization extends ARemoteCmdExecutor {
 	public static enum Options {
 		start, stop, info, detect;
 	}
-	public static final int DETECT_MAX_TIMEOUT_IN_SECS = 180;
+	public static final int DETECT_DEF_TIMEOUT_IN_SECS = 60;
+	public static final int DETECT_MAX_TIMEOUT_IN_SECS = 300;
 	public static final String SYNTAX = 
 		Options.start.name() + ARemoteCmdDsc.OPT_SEP + 
 		Options.stop.name() + ARemoteCmdDsc.OPT_SEP +
@@ -101,7 +102,7 @@ public class RemoteCmdLocalization extends ARemoteCmdExecutor {
 		} else if (StringUtils.equals(params[0], Options.info.name())) {
 			boolean detect = (params.length > 1);
 			int timeoutInSecs = ((params.length == 3) ? 
-				Integer.valueOf(params[2]) : DETECT_MAX_TIMEOUT_IN_SECS);
+				Integer.valueOf(params[2]) : DETECT_DEF_TIMEOUT_IN_SECS);
 			
 			if (detect) {
 				if (!localizationFoundActive) {

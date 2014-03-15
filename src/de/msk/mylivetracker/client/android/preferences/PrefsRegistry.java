@@ -89,7 +89,13 @@ public class PrefsRegistry {
 		PrefsLoaded, 
 	}
 	
-	public static InitResult init() {
+	private static InitResult initResult = init();
+
+	public static final InitResult getInitResult() {
+		return initResult;
+	}
+	
+	private static InitResult init() {
 		LogUtils.infoMethodIn(PrefsRegistry.class, "init");
 		prefsReg.clear();
 		prefsMap.clear();

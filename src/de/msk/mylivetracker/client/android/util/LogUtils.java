@@ -15,6 +15,7 @@ import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdError;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdHeartrate;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdHelp;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdLocalization;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdStatus;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdTracking;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdUpload;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdVersion;
@@ -47,6 +48,7 @@ public class LogUtils {
 		classes.put(RemoteCmdTracking.class, Boolean.TRUE);
 		classes.put(RemoteCmdUpload.class, Boolean.TRUE);
 		classes.put(RemoteCmdHeartrate.class, Boolean.TRUE);
+		classes.put(RemoteCmdStatus.class, Boolean.TRUE);
 	}
 
 	private static boolean isLogForClassEnabled(Class<?> clazz) {

@@ -44,6 +44,14 @@ public class ResponseCreator {
 	public static final String GOOGLE_LATLON_URL = "googleLatLonUrl";
 	public static final String DATE_TIME_FORMAT = "'UTC' yyyy-MM-dd HH:mm:ss.SSS";
 	
+	public static String getResultOfSuccess(String response) {
+		String res = "ok";
+		if (!StringUtils.isEmpty(response)) {
+			res += ":" + response;
+		}
+		return res;
+	}
+	
 	public static String getResultOfError(String errorMsg) {
 		if (StringUtils.isEmpty(errorMsg)) {
 			errorMsg = "unknown";

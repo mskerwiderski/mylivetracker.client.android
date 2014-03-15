@@ -55,7 +55,8 @@ public abstract class ARemoteCmdExecutor implements Runnable {
 				response = ResponseCreator.getResultOfError( 
 					"command does not match syntax '" + this.cmdDsc.getSyntax() + "'");
 			} else {
-				response = this.executeCmdAndCreateResponse(this.params);
+				response = ResponseCreator.getResultOfSuccess(
+					this.executeCmdAndCreateResponse(this.params));
 			}
 		} catch (Exception e) {
 			response = ResponseCreator.getResultOfError(e.getMessage());
