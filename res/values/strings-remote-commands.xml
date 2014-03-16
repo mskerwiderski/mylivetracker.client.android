@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="txRemoteCommand_Help">get these command descroptions</string>
-    <string name="txRemoteCommand_Version">get version string of this app</string>
+    <string name="txRemoteCommand_Help">get a list of supported commands or the syntax of one command</string>
+    <string name="txRemoteCommand_Version">get version string of the application</string>
     <string name="txRemoteCommand_Upload">upload current track or config data to dropbox</string>
     <string name="txRemoteCommand_Tracking">start, stop or reset track or get details about current track information</string>
     <string name="txRemoteCommand_Localization">start or stop localization or get details about last or current location information</string>
     <string name="txRemoteCommand_Heartrate">start or stop heartrate detection or get details about last or current heartrate information</string>
-    <string name="txRemoteCommand_Config">get specified config data</string>
+    <string name="txRemoteCommand_Config">get specified config settings of a section</string>
     <string name="txRemoteCommand_Status">get status of services (tracking, localization, heartrate detection)</string>
-    <string name="txRemoteCommand_Error">error</string>
 </resources>

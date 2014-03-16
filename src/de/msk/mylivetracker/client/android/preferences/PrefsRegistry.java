@@ -1,6 +1,7 @@
 package de.msk.mylivetracker.client.android.preferences;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -208,6 +209,17 @@ public class PrefsRegistry {
 			throw new IllegalArgumentException("prefsShortName must not be empty!");
 		}
 		return prefsMap.containsKey(prefsShortName);
+	}
+	
+	public static String getSupportedPrefsAsPrettyStr() {
+		String res = "";
+		for (Iterator<String> it=prefsMap.keySet().iterator(); it.hasNext(); ) {
+			res += it.next();
+			if (it.hasNext()) {
+				res += ", ";
+			}
+		}
+		return res;
 	}
 	
 	public static <T extends APrefs> void save(Class<T> prefsClass) {

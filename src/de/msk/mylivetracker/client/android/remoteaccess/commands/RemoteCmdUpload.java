@@ -35,9 +35,9 @@ import de.msk.mylivetracker.commons.util.datetime.DateTime;
  */
 public class RemoteCmdUpload extends ARemoteCmdExecutor {
 
-	public static final String NAME = "upload";
+	public static final String NAME = "upl";
 	public static enum Options {
-		track, config;
+		track, cfg;
 	}
 	public static final String SYNTAX = 
 		CmdDsc.createSyntaxStr(Options.class);
@@ -115,7 +115,7 @@ public class RemoteCmdUpload extends ARemoteCmdExecutor {
 				ResponseCreator.getResultOfNotConnectedToDropbox());
 		} else if (StringUtils.equals(params[0], Options.track.name())) {
 			result = this.uploadTrack();
-		} else if (StringUtils.equals(params[0], Options.config.name())) {
+		} else if (StringUtils.equals(params[0], Options.cfg.name())) {
 			result = this.uploadConfig();
 		}
 		return result;

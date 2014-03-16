@@ -27,7 +27,7 @@ public class SmsSendUtils {
 	public static final String SEND_SMS_STATUS_SMS_SENT = "de.msk.mylivetracker.intent.action.SMS_SENT";
 	public static final String SEND_SMS_STATUS_SMS_DELIVERED = "de.msk.mylivetracker.intent.action.SMS_DELIVERED";
 
-	private static final int MAX_SMS_MESSAGE_LENGTH = 160;
+	private static final int MAX_SMS_MESSAGE_LENGTH = 140;
 	private static final int MAX_SMS_MESSAGE_COUNT = 3;
 
 	public static void sendSms(String phoneNumber, String message) {

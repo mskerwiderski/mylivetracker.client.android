@@ -19,7 +19,7 @@ import de.msk.mylivetracker.client.android.R;
  */
 public class RemoteCmdVersion extends ARemoteCmdExecutor {
 
-	public static final String NAME = "version";
+	public static final String NAME = "ver";
 	public static final String SYNTAX = "";
 	
 	public static class CmdDsc extends ARemoteCmdDsc {

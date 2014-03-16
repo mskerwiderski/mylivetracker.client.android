@@ -20,12 +20,12 @@ import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdExecutor;
  */
 public class RemoteCmdConfig extends ARemoteCmdExecutor {
 
-	public static String NAME = "config";
+	public static String NAME = "cfg";
 	public static enum Options {
 		get;
 	}
 	public static String SYNTAX = 
-		Options.get.name() + " <section>";
+		Options.get.name() + " [<section>]";
 	
 	public static class CmdDsc extends ARemoteCmdDsc {
 		public CmdDsc() {
@@ -35,15 +35,22 @@ public class RemoteCmdConfig extends ARemoteCmdExecutor {
 		@Override
 		public boolean matchesSyntax(String[] params) {
 			return 
-				(params.length == 2) &&
-				EnumUtils.isValidEnum(Options.class, params[0]) &&
-				PrefsRegistry.contains(params[1]);
+				(params.length == 1) || 
+				((params.length == 2) &&
+				 EnumUtils.isValidEnum(Options.class, params[0]) &&
+				 PrefsRegistry.contains(params[1]));
 		}
 	}
 	
 	@Override
 	public Result executeCmdAndCreateResponse(String... params) {
-		return new Result(true,
-			PrefsRegistry.get(params[1]).getPrefsDumpAsStr(true));
+		Result result = null;
+		if (params.length == 1) {
+			result = new Result(true, PrefsRegistry.getSupportedPrefsAsPrettyStr());
+		} else {
+			result = new Result(true,
+				PrefsRegistry.get(params[1]).getPrefsDumpAsStr(true));
+		}
+		return result;
 	}
 }

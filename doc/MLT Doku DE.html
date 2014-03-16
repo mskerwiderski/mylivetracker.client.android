@@ -1,37 +1,315 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>MLT Doku DE</title></head><body><h1>Fernzugriff</h1>Auf
+<html><head>
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>MLT Doku DE</title></head><body><h1>Fernzugriff</h1>Auf
 die MLT App kann per SMS von außerhalb zugegriffen werden. D.h. die MLT
 App lässt sich&nbsp;per SMS fernsteuern (z.B. Starten und Stoppen des
 Trackings) und es können per SMS Daten (z.B. Positionsdaten) abgerufen
-werden.<br>Voraussetzung: Die MLT App muss aktiv sein und der Fernzugriff muss aktiviert und entsprechend konfiguriert sein.<br><br>Die Aktivierung und Konfiguration des Fernzugriffs erfolgt über die Einstellungen unter Menu --&gt; System --&gt; Fernzugriff:<br><ul><li>Die Option "<span style="font-weight: bold; font-style: italic;">Fernzugriff aktivieren</span>" muss aktiviert sein.</li><li>Aus
+werden.<br>Voraussetzung: Die MLT App muss aktiv sein und der Fernzugriff muss aktiviert und entsprechend konfiguriert sein.<br><br>Die Aktivierung und Konfiguration des Fernzugriffs erfolgt über die Einstellungen unter <span style="font-style: italic; font-weight: bold;">Menu --&gt; System --&gt; Fernzugriff</span>:<br><ul><li>Die Option "<span style="font-weight: bold; font-style: italic;">Fernzugriff aktivieren"</span> muss aktiviert sein.</li><li>Aus
 Sicherheitsgründen muss ein Passwort definiert werden um einen nicht
 autorisierten Fernzugriff zu verhindern. Das Passwort darf dabei keine
-Leerzeichen enthalten.</li><li>Die Option "<span style="font-weight: bold; font-style: italic;">Sende Antworten an angegeben Empfänmger ...</span>"
+Leerzeichen enthalten.</li><li>Die Option "<span style="font-weight: bold; font-style: italic;">Sende Antworten an angegeben Empfänger ...</span>"
 sollte dann aktiviert werden, wenn die Antwort-SMS der MLT App an eine
 andere Empfängernummer zugestellt werden soll - also nicht an die
 Empfängernummer von der die ursprünglich Anfrage-SMS kam. Das macht
 z.B. dann Sinn, wenn man einen Web-SMS-Dienst für das Versenden von
 Anfrage-SMS verwenden will, der selbst keine Möglichkeit bietet SMS zu
-empfangen.</li><li>Wird die Option "<span style="font-weight: bold; font-style: italic;">Sende Antworten an angegeben Empfänmger ...</span>" aktiviert, erwartet die MLT App die Angabe eines "<span style="font-weight: bold; font-style: italic;">Empfängers</span>", also einer gültigen Telefonnummer.&nbsp;</li></ul>Folgende SMS-Kommandos stehen bei aktiviertem Fernzugriff zur Verfügung:<br><ul><li><span style="font-weight: bold; font-style: italic;">getversion</span> --&gt; Abfrage der Versionsnummer der MLT App<span style="font-weight: bold; font-style: italic;"></span></li><li><span style="font-weight: bold; font-style: italic;">getlocation [detect] &lt;timeout&gt;</span> --&gt; Abfrage der aktuellen und gültigen Position</li><ul><li><span style="font-weight: bold; font-style: italic;">detect &lt;timeout&gt; </span>- Lokalisierung starten, sofern keine aktuelle und gültige Position bekannt ist</li></ul><li><span style="font-style: italic; font-weight: bold;">track [reset|start|stop|info]</span> --&gt;&nbsp;</li><ul><li><span style="font-style: italic; font-weight: bold;">reset </span><span style="font-style: italic;"></span>-<span style="font-style: italic; font-weight: bold;"> </span>Reset des aktuellen Tracks (Alle Aktivitäten werden gestoppt und der aktuelle Track zurückgesetzt)</li></ul><ul><li><span style="font-weight: bold; font-style: italic;">start</span> - Starten des Trackings&nbsp; (Das Tracking wird gestartet, sofern das Tracking noch nicht aktiv ist)</li></ul><ul><li><span style="font-weight: bold; font-style: italic;">stop</span> - Stoppen des Trackings&nbsp; (Das Tracking wird gestoppt, sofern das Tracking noch aktiv ist)</li></ul><ul><li><span style="font-weight: bold; font-style: italic;">info</span> - Informationabfrage zum aktuellen Track (wie z.B. zurückgelegte Distanz, letzte Positionsbestimmung, etc.)</li></ul></ul>Jedes SMS-Kommando muss dabei folgender Syntax entsprechen:<br><br><span style="font-weight: bold; font-style: italic;">#mlt &lt;Passwort&gt; &lt;Kommando&gt; [&lt;Parameter&gt;]<br><br>#mlt</span><span style="font-weight: bold;"></span>
+empfangen.</li><li>Wird die Option "<span style="font-weight: bold; font-style: italic;">Sende Antworten an angegeben Empfänger ...</span>" aktiviert, erwartet die MLT App die Angabe eines Empfängers, bzw. einer gültigen Telefonnummer unter "<span style="font-weight: bold; font-style: italic;">Empfänger</span>".&nbsp;</li></ul>Folgende SMS-Kommandos stehen bei aktiviertem Fernzugriff zur Verfügung:<br><ul>
+  <li><span style="font-weight: bold; font-style: italic;">help</span> --&gt; gibt die Liste der unterstützen Kommandos oder die Syntax eines Kommandos zurück<br>
+<span style="font-weight: bold; font-style: italic;"></span></li>
+  <li><span style="font-weight: bold; font-style: italic;">ver</span> --&gt; gibt die Versionskennung der Anwendung zurück</li>
+  <li><span style="font-weight: bold; font-style: italic;">stat</span> --&gt; gibt den Status der Services zurück (Tracking, Lokalisierung, Herzfrequenzerkennung)</li>
+  <li><span style="font-weight: bold; font-style: italic;">track</span> --&gt; startet, stoppt oder setzt den aktuellen Track zurück oder gibt die Informationen des aktuellen Tracks zurück<br>
+  </li>
+<li><span style="font-weight: bold; font-style: italic;">loc</span> --&gt; startet oder stoppt die Lokalisierung oder gibt Informationen über die letzte oder aktuelle Position zurück</li>
+  <li><span style="font-weight: bold; font-style: italic;">cfg</span> --&gt; gibt die gesetzten Einstellungen einer Sektion zurück</li>
+  <li><span style="font-weight: bold; font-style: italic;">upl</span> --&gt; lädt den aktuellen Track oder die Konfigurationsdaten der Anwendung in die Dropbox hoch</li>
+  <li><span style="font-weight: bold; font-style: italic;">hr</span> --&gt;
+startet oder stoppt die Herzfrequenzerkennung oder gibt Informationen
+über die letzte oder aktuelle Herzfrequenzmessung zurück</li>
+</ul>Jedes SMS-Kommando muss dabei folgender Syntax entsprechen:<br><br><span style="font-weight: bold; font-style: italic;">#mlt &lt;Passwort&gt; &lt;Kommando&gt; [&lt;Parameter&gt; .. </span><span style="font-weight: bold; font-style: italic;">&lt;Parameter&gt;</span><span style="font-weight: bold; font-style: italic;">]<br><br>#mlt</span><span style="font-weight: bold;"></span>
 ist der Indikator anhand dessen die MLT App eine SMS-Nachricht als
 Kommando erkennt. SMS Nachrichten ohne diesen Indikator werden von der
 MLT App nicht als SMS-Kommandos erkannt und deswegen auch nicht weiter
 verarbeitet, bzw. von der MLT App ignoriert. SMS-Kommandos mit gültigem
 Indikator, aber mit ungültiger Syntax (z.B. unbekanntes Kommando,
-ungültige Parameter) werden von der MLT-App mit der Antwort-SMS "<span style="font-weight: bold; font-style: italic;">FAILED: invalid command.</span>"
+ungültige Parameter) werden von der MLT-App mit der Antwort-SMS "<span style="font-style: italic;"><span style="font-weight: bold;">failed</span></span><span style="font-weight: bold; font-style: italic;">:unknown command</span>" bzw. "<span style="font-style: italic;"><span style="font-weight: bold;">failed</span></span><span style="font-weight: bold; font-style: italic;">:command does not match syntax</span>"
 quittiert. SMS-Kommandos mit gültigem Indikator, aber mit ungültigem
-Passwort werden ignoriert, also nicht beantwortet, um
-Trial-and-Error-Attacken zu erschweren.<br> <span style="font-style: italic;"><span style="font-weight: bold;"></span></span><span style="font-weight: bold; font-style: italic;"><br></span>Es folgen nun Beispiele gültiger SMS-Kommandos unter der Annahme dass das Passwort "<span style="font-weight: bold; font-style: italic;">123456</span>" lautet:<br><ul><li><span style="font-weight: bold; font-style: italic;">#mlt 123456 getversion</span><br>Die MLT-App antwortet z.B. mit: "<span style="font-weight: bold; font-style: italic;">v1.6.0 RP</span>"<br></li><li><span style="font-weight: bold; font-style: italic;">#mlt 123456 getlocation</span><br><span style="font-weight: bold; font-style: italic;"></span>Abfrage
-der aktuellen und gültigen Position. Hat die MLT-App aktuell keine
-gültige Position, da z.B. die Lokalisierung oder das Tracking
-ausgeschaltet sind, antwortet die MLT-App mit "<span style="font-weight: bold; font-style: italic;">no valid location found.</span>" Ist hingegen eine gültige Position bekannt, antwortet die MLT-App z.B. mit<br>"<span style="font-weight: bold;">timestamp=UTC2014-02-28 17:30:10.123,</span><br style="font-weight: bold;"><span style="font-weight: bold;">latLon=48.368509,10.883196,</span><br style="font-weight: bold;"><span style="font-weight: bold;">accuracy=7,</span><br style="font-weight: bold;"><span style="font-weight: bold;">bearing=151,</span><br style="font-weight: bold;"><span style="font-weight: bold;">speed=50.4,</span><br style="font-weight: bold;"><span style="font-weight: bold;">altitude=532,</span><br style="font-weight: bold;"><span style="font-weight: bold;">googleLatLonUrl=https...</span>" <br>Wichtig:
-Es wird hier nur eine Statusabfrage vorgenommen. Ist also keine
-Position vorhanden, wird auch keine zurückgemeldet. Der Modus ist also:
-"Gib mir die Position die Du gerade hast."<br>Will man mit dem SMS-Kommando "<span style="font-weight: bold; font-style: italic;">getlocation</span>" auch die Positionsermittlung anstossen, muss das Kommando mit dem Parameter "<span style="font-weight: bold; font-style: italic;">detect</span>" ergänzt werden, wie in folgendem Beispiel:&nbsp; &nbsp; </li></ul><ul><li><span style="font-weight: bold; font-style: italic;">#mlt 123456 getlocation detect 120</span><br><span style="font-weight: bold; font-style: italic;"></span>Abfrage
-der aktuellen und gültigen Position: Die MLT App hat dabei 120 Sekunden
-Zeit eine gültige Position zu bestimmen, falls noch keine gültige
-Position vorhanden ist. Der Modus lautet in diesem Beispiel: "Gib mir
-die aktuelle Position. Wenn Du noch keine aktuelle und gültige Position
-hast, hast Du 120 Sekunden Zeit eine zu ermitteln." Das bedeutet, dass
-die MLT-App u.U. selbstständig die Lokalisierung aktiviert, sofern sie
-ausgeschaltet ist.<br></li><li>s</li></ul><h2>Aktivierung und Konfiguration des Fernzugriffs</h2>Die Aktivierung und Konfiguration des Fernzugriffs </body></html>
+Passwort werden immer ignoriert, also nicht beantwortet, um
+Trial-and-Error-Attacken zu erschweren.<br> <span style="font-style: italic;"><span style="font-weight: bold;"></span></span><span style="font-weight: bold; font-style: italic;"><br>
+</span>Jedes SMS-Kommando mit gültigem Indikator und gültigem Passwort
+wird von der App mit einer Antwort-SMS im folgendes Format quittiert:<span style="font-weight: bold; font-style: italic;"><br>
+<br>
+[&lt;ursprüngliche Kommando&gt;]:ok|failed:&lt;Antworttext&gt;<br>
+<br></span>Es folgen nun Beispiele gültiger SMS-Kommandos unter der Annahme dass das gültige Passwort "<span style="font-weight: bold; font-style: italic;">123456</span>" lautet:<br>
+<br>
+<table style="text-align: left; width: 958px; height: 860px;" border="0" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top; white-space: nowrap; text-align: center; width: 183px; background-color: rgb(153, 153, 153); color: white;"><span style="font-weight: bold;">Kommando</span><br>
+      </th>
+      <th style="vertical-align: top; text-align: center; width: 372px; background-color: rgb(153, 153, 153);"><span style="font-weight: bold; color: white;">Antwort</span><br>
+      </th>
+      <th style="vertical-align: top; text-align: center; width: 329px; background-color: rgb(153, 153, 153);"><span style="font-weight: bold; color: white;">Anmerkungen</span><br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; white-space: nowrap; font-weight: bold; font-style: italic; width: 183px; background-color: rgb(204, 204, 204);">#mlt 123456 help<br>
+      </td>
+      <td style="vertical-align: top; white-space: nowrap; font-weight: bold; font-style: italic; width: 372px; background-color: rgb(204, 204, 204);">[help]:ok:hr, help, upl, track, loc, cfg, ver, stat<br>
+      </td>
+      <td style="vertical-align: top; width: 329px; background-color: rgb(204, 204, 204);">Die Liste aller unterstützen Kommandos wurden zurückgegeben.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 183px; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">#mlt 123456 help loc</span><br>
+      </td>
+      <td style="vertical-align: top; width: 372px; background-color: rgb(204, 204, 204);">[<span style="font-weight: bold; font-style: italic;">help]:ok:loc
+start|stop|(info[detect [accurate] [&lt;timeout in secs&gt;]]) - start
+or stop localization or get details about last or current location
+information</span><br>
+      </td>
+      <td style="vertical-align: top; width: 329px; background-color: rgb(204, 204, 204);">Die Syntax incl. Kommandobeschreibung des Kommandos <span style="font-weight: bold; font-style: italic;">loc</span> wurde zurückgegeben. <br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; white-space: nowrap; width: 183px; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">#mlt 123456 ver</span></td>
+      <td style="vertical-align: top; white-space: nowrap; width: 372px; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">[ver]:ok:v1.6.0 RP</span><br>
+      </td>
+      <td style="vertical-align: top; width: 329px; background-color: rgb(204, 204, 204);">Die aktuelle Versionsnummer lautet v1.6.0 RP.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 183px; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">#mlt 123456 stat<br>
+      </span></td>
+      <td style="vertical-align: top; width: 372px; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">[stat]:ok:tracking=running,localization=running</span><br>
+      </td>
+      <td style="vertical-align: top; width: 329px; background-color: rgb(204, 204, 204);">Die Trackaufzeichnung und der Lokalisierungsservice sind aktiv.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; white-space: nowrap; width: 183px; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">#mlt 123456 track start<br>
+      </span></td>
+      <td style="vertical-align: top; width: 372px; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">[track]:ok:track already running</span><br>
+      </td>
+      <td style="vertical-align: top; width: 329px; background-color: rgb(204, 204, 204);">Die Trackaufzeichnung ist bereits aktiv.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 183px; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">#mlt 123456 track stop</span></td>
+      <td style="vertical-align: top; width: 372px; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">[track]:ok:track stopped<br>
+      </span></td>
+      <td style="vertical-align: top; width: 329px; background-color: rgb(204, 204, 204);">Die Trackaufzeichnung wurde gestoppt.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 183px; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">#mlt 123456 track reset<br>
+      </span></td>
+      <td style="vertical-align: top; width: 372px; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">[track]:ok:track resetted<br>
+      </span></td>
+      <td style="vertical-align: top; width: 329px; background-color: rgb(204, 204, 204);">Die Trackaufzeichnung wurde zurückgesetzt.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 183px; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">#mlt 123456 track info<br>
+      </span></td>
+      <td style="vertical-align: top; width: 372px; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">[track]:failed:no track information recorded</span><br>
+      </td>
+      <td style="vertical-align: top; width: 329px; background-color: rgb(204, 204, 204);">Die Trackaufzeichnung war bisher noch nicht aktiv, es sind noch keine Aufzeichnungsdaten vorhanden.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 183px; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">#mlt 123456 track info</span></td>
+      <td style="vertical-align: top; width: 372px; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">[track]:ok:name=My
+Track, status=running, runtime (overall)=02:12:21, runtime
+(netto)=01:30:42, distance=10.53km, uploaded=3, last location
+update=UTC 2014-03-16 14:15:28.822</span><br>
+      </td>
+      <td style="vertical-align: top; width: 329px; background-color: rgb(204, 204, 204);">Die Trackaufzeichnung ist noch aktiv, der aktuelle Status wie Laufzeit, zurückgelegte Distanz, etc., wurden zurückgegeben.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 183px; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">#mlt 123456 loc start<br>
+      </span></td>
+      <td style="vertical-align: top; width: 372px; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">[loc]:ok:localization already running</span><br>
+      </td>
+      <td style="vertical-align: top; width: 329px; background-color: rgb(204, 204, 204);">Der Lokalisierungsservice ist bereits aktiv.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 183px; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">#mlt 123456 loc stop</span></td>
+      <td style="vertical-align: top; width: 372px; background-color: rgb(204, 204, 204);"><span style="font-style: italic; font-weight: bold;">[loc]:ok:localization stopped</span><br>
+      </td>
+      <td style="vertical-align: top; width: 329px; background-color: rgb(204, 204, 204);">Der Lokalisierungsservice wurde gestoppt.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 183px; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">#mlt 123456 loc info</span></td>
+      <td style="vertical-align: top; font-weight: bold; font-style: italic; width: 372px; background-color: rgb(204, 204, 204);">[loc]:ok:timestamp=UTC
+2014-03-16 14:20:29.404, latLon=48.184392, 11.605862,
+accuracy=&lt;./.&gt;, bearing=&lt;./.&gt;, speed=&lt;./.&gt;,
+altitude=0m,
+googleLatLonUrl=https://maps.google.de/maps?q=48.184392,11.605862<br>
+      </td>
+      <td style="vertical-align: top; width: 329px; background-color: rgb(204, 204, 204);">Die letzte bestimmte Position wurde zurückgegeben. Unter Umständen sind diese Positionsdaten schon älter. Mit dem Kommando <span style="font-weight: bold; font-style: italic;">loc info</span> wird also lediglich die bereits bekannte Position zurückgegeben.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; white-space: nowrap; width: 183px; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">#mlt 123456 loc info detect<br>
+      </span></td>
+      <td style="vertical-align: top; font-weight: bold; font-style: italic; width: 372px; background-color: rgb(204, 204, 204);">[loc]:ok:timestamp=UTC
+2014-03-16 14:28:12.574, latLon=48.209813, 11.474930,
+accuracy=&lt;./.&gt;, bearing=&lt;./.&gt;, speed=&lt;./.&gt;,
+altitude=0m,
+googleLatLonUrl=https://maps.google.de/maps?q=48.209813,11.474930</td>
+      <td style="vertical-align: top; width: 329px; background-color: rgb(204, 204, 204);">Es konnte eine aktuelle Position bestimmt und zurückgegeben werden. <br>
+      <br>
+      <span style="font-weight: bold;">Wichtig</span>: Ist zum
+Zeitpunkt der Kommandobearbeitung keine aktuelle Position bekannt, wird
+der Lokalisierungsservice aktiviert um innhalb von 60 Sekunden eine
+aktuelle Position zu bestimmen.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; white-space: nowrap; width: 183px; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">#mlt 123456 loc info detect acc<br>
+      </span></td>
+      <td style="vertical-align: top; width: 372px; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">[loc]:failed:no valid location found</span><br>
+      </td>
+      <td style="vertical-align: top; width: 329px; background-color: rgb(204, 204, 204);">Es konnte keine aktuelle und akkurate Position bestimmt und zurückgegeben werden.<br>
+      <br>
+      <span style="font-weight: bold;">Wichtig</span>: Ist zum Zeitpunkt der Kommandobearbeitung keine aktuelle
+Position bekannt, wird der Lokalisierungsservice aktiviert um innhalb
+von 60 Sekunden eine aktuelle Position zu bestimmen.<br>
+      <br>
+Mit dem Parameter <span style="font-weight: bold; font-style: italic;">acc</span>
+wird nur dann eine Position zurückgegeben, wenn diese eine
+Mindest-Genauigkeit hat (wie in der App unter Lokalisierung
+konfiguriert).<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; white-space: nowrap; width: 183px; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">#mlt 123456 loc info detect acc 300<br>
+      </span></td>
+      <td style="vertical-align: top; font-weight: bold; font-style: italic; width: 372px; background-color: rgb(204, 204, 204);">[loc]:ok:timestamp=UTC 2014-03-16 14:28:12.574, latLon=48.209813,
+11.474930, accuracy=3m, bearing=&lt;./.&gt;,
+speed=&lt;./.&gt;, altitude=0m,
+googleLatLonUrl=https://maps.google.de/maps?q=48.209813,11.474930</td>
+      <td style="vertical-align: top; width: 329px; background-color: rgb(204, 204, 204);">Es konnte eine aktuelle und akkurate Position bestimmt und zurückgegeben werden.<br>
+
+      <br>
+
+      <span style="font-weight: bold;">Wichtig</span>: Ist zum Zeitpunkt der Kommandobearbeitung keine aktuelle
+Position bekannt, wird der Lokalisierungsservice aktiviert um innhalb
+von 300 Sekunden eine aktuelle Position zu bestimmen.<br>
+
+      <br>
+
+Mit dem Parameter <span style="font-weight: bold; font-style: italic;">acc</span>
+wird nur dann eine Position zurückgegeben, wenn diese eine
+Mindest-Genauigkeit hat (wie in der App unter Lokalisierung
+konfiguriert).<br>
+      <br>
+Mit dem letzten optionalen Parameter wird der Timeout-Wert für den
+Lokalisierungsservice zur Bestimmung einer gültigen und ggf. akkuraten
+Position in Sekunden angegeben. In diesem Beispiel hat der
+Lokalisierungsservice also 5 Minuten Zeit für eine aktuelle und genaue
+Positionsbestimmung.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">#mlt 123456 cfg get </span></td>
+      <td style="vertical-align: top; font-weight: bold; font-style: italic; background-color: rgb(204, 204, 204);">[cfg]:ok:protocol,
+remoteaccess, other, localization, emergency, httpprotocolparams, main,
+pincode, message, dropbox, trackingmode, account, auto, server,
+trackexport<br>
+      </td>
+      <td style="vertical-align: top; background-color: rgb(204, 204, 204);">Wird keine Konfigurationssektion angegeben, werden alle unterstützen Konfigurationssektionen zurückgegeben.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; width: 183px; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">#mlt 123456 cfg get server<br>
+      </span></td>
+      <td style="vertical-align: top; width: 372px; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">[cfg]:ok:ServerPrefs (version 1):server=portal.mylivetracker.de, port=51395, path=&lt;not set&gt;</span><br>
+      </td>
+      <td style="vertical-align: top; width: 329px; background-color: rgb(204, 204, 204);">Die aktuellen Konfigurationparameter für den verwendeten Server wurden zurückgegeben.<span style="font-weight: bold; font-style: italic;"><br>
+      </span></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">#mlt 123456 upl track<br>
+      </span></td>
+      <td style="vertical-align: top; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">[upl]:ok:revid=b81d29b412, size=24.3 KB</span><br>
+      </td>
+      <td style="vertical-align: top; background-color: rgb(204, 204, 204);">Die aktuelle Trackaufzeichnung wurde als GPX-Datei zur Dropbox des gekoppelten Benutzers hochgeladen.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">#mlt 123456 upl cfg<br>
+      </span></td>
+      <td style="vertical-align: top; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">[upl]:ok:revid=b90a29c411, size=3.9 KB</span><br>
+      </td>
+      <td style="vertical-align: top; background-color: rgb(204, 204, 204);">Ein Dump der aktuelle Konfigurationseinstellungen wurde zur Dropbox des gekoppelten Benutzers hochgeladen.</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">#mlt 123456 hr info</span></td>
+      <td style="vertical-align: top; background-color: rgb(204, 204, 204);"><span style="font-weight: bold; font-style: italic;">[hr]:failed:heartrate detection not supported on this device</span><br>
+      </td>
+      <td style="vertical-align: top; background-color: rgb(204, 204, 204);">Das Smartphone unterstützt kein ANT+ und kann deswegen auch keine Herzfrequenzdaten zurückgeben.<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>Abschliessend die Liste aller unterstützen Kommandos incl. genauer Syntaxbeschreibung:<span style="font-style: italic;"><span style="font-weight: bold;"><br>
+<br>
+</span></span>
+<table style="text-align: left; width: 956px; height: 332px;" border="0" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top; text-align: center; background-color: rgb(153, 153, 153); height: 2px; width: 394px;"><span style="font-weight: bold;">Kommandosyntax</span><br>
+      </th>
+      <th style="vertical-align: top; text-align: center; background-color: rgb(153, 153, 153); height: 2px; width: 542px;"><span style="font-weight: bold;">Beschreibung</span><br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold; font-style: italic; height: 54px; background-color: rgb(204, 204, 204); width: 394px;">help [&lt;command&gt;]<br>
+      </td>
+      <td style="vertical-align: top; height: 54px; background-color: rgb(204, 204, 204); width: 542px;">Gibt die Liste der unterstützen Kommandos oder die Syntax eines Kommandos zurück.</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold; font-style: italic; background-color: rgb(204, 204, 204); width: 394px;">ver<br>
+      </td>
+      <td style="vertical-align: top; background-color: rgb(204, 204, 204); width: 542px;">Gibt die Versionskennung der Anwendung zurück.</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold; font-style: italic; background-color: rgb(204, 204, 204); width: 394px;">stat<br>
+      </td>
+      <td style="vertical-align: top; background-color: rgb(204, 204, 204); width: 542px;">Gibt den Status der Services zurück (Tracking, Lokalisierung, Herzfrequenzerkennung).</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold; font-style: italic; background-color: rgb(204, 204, 204); width: 394px;">track reset|start|stop|info<br>
+      </td>
+      <td style="vertical-align: top; background-color: rgb(204, 204, 204); width: 542px;">Startet, stoppt oder setzt den aktuellen Track zurück oder gibt die Informationen des aktuellen Tracks zurück.</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold; font-style: italic; background-color: rgb(204, 204, 204); width: 394px;">loc start|stop|(info[detect [accurate] [&lt;timeout in secs&gt;]])<br>
+      </td>
+      <td style="vertical-align: top; background-color: rgb(204, 204, 204); width: 542px;">Startet oder stoppt die Lokalisierung oder gibt Informationen über die letzte oder aktuelle Position zurück.</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold; font-style: italic; background-color: rgb(204, 204, 204); width: 394px;">cfg [&lt;section&gt;]<br>
+      </td>
+      <td style="vertical-align: top; background-color: rgb(204, 204, 204); width: 542px;">Gibt die gesetzten Einstellungen einer Sektion zurück.</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold; font-style: italic; background-color: rgb(204, 204, 204); width: 394px;">upl track|cfg<br>
+      </td>
+      <td style="vertical-align: top; background-color: rgb(204, 204, 204); width: 542px;">Lädt den aktuellen Track oder die Konfigurationsdaten der Anwendung in die Dropbox hoch.</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold; font-style: italic; background-color: rgb(204, 204, 204); width: 394px;">hr start|stop|(info[detect [&lt;timeout in secs&gt;]])<br>
+      </td>
+      <td style="vertical-align: top; background-color: rgb(204, 204, 204); width: 542px;">Startet oder stoppt die Herzfrequenzerkennung oder gibt Informationen
+über die letzte oder aktuelle Herzfrequenzmessung zurück.</td>
+    </tr>
+  </tbody>
+</table>
+<span style="font-style: italic;"><span style="font-weight: bold;"><br>
+</span></span> </body></html>

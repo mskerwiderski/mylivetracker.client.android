@@ -19,7 +19,7 @@ import de.msk.mylivetracker.client.android.remoteaccess.ResponseCreator;
  */
 public class RemoteCmdStatus extends ARemoteCmdExecutor {
 
-	public static String NAME = "status";
+	public static String NAME = "stat";
 	
 	public static class CmdDsc extends ARemoteCmdDsc {
 		public CmdDsc() {

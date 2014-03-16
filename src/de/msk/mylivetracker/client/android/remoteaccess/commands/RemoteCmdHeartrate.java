@@ -41,7 +41,7 @@ public class RemoteCmdHeartrate extends ARemoteCmdExecutor {
 
 		public CmdDsc() {
 			super(NAME, SYNTAX, 1, 3, 
-				R.string.txRemoteCommand_Localization);
+				R.string.txRemoteCommand_Heartrate);
 		}
 
 		@Override

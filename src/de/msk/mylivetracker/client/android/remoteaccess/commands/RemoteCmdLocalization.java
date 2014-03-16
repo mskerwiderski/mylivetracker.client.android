@@ -29,7 +29,7 @@ public class RemoteCmdLocalization extends ARemoteCmdExecutor {
 
 	public static final String NAME = "loc";
 	public static enum Options {
-		start, stop, info, detect, accurate;
+		start, stop, info, detect, acc;
 	}
 	public static final int DETECT_DEF_TIMEOUT_IN_SECS = 60;
 	public static final int DETECT_MAX_TIMEOUT_IN_SECS = 300;
@@ -75,7 +75,7 @@ public class RemoteCmdLocalization extends ARemoteCmdExecutor {
 						}
 					}
 				} else if (params.length == 4) {
-					if (!StringUtils.equals(params[2], Options.accurate.name()) || 
+					if (!StringUtils.equals(params[2], Options.acc.name()) || 
 						!StringUtils.isNumeric(params[3])) {
 						matches = false;
 					} else {
@@ -112,7 +112,7 @@ public class RemoteCmdLocalization extends ARemoteCmdExecutor {
 		} else if (StringUtils.equals(params[0], Options.info.name())) {
 			boolean detect = (params.length > 1);
 			boolean accurate = (params.length > 2) && 
-				StringUtils.equals(params[2], Options.accurate.name());
+				StringUtils.equals(params[2], Options.acc.name());
 			int timeoutInSecs = DETECT_DEF_TIMEOUT_IN_SECS;
 			if (!accurate && (params.length == 3)) { 
 				timeoutInSecs = Integer.valueOf(params[2]);
