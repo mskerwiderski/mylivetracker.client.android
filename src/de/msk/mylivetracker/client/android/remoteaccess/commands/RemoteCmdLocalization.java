@@ -29,14 +29,14 @@ public class RemoteCmdLocalization extends ARemoteCmdExecutor {
 
 	public static final String NAME = "loc";
 	public static enum Options {
-		start, stop, info, detect;
+		start, stop, info, detect, accurate;
 	}
 	public static final int DETECT_DEF_TIMEOUT_IN_SECS = 60;
 	public static final int DETECT_MAX_TIMEOUT_IN_SECS = 300;
 	public static final String SYNTAX = 
 		Options.start.name() + ARemoteCmdDsc.OPT_SEP + 
 		Options.stop.name() + ARemoteCmdDsc.OPT_SEP +
-		"(" + Options.info.name() + "[detect [<timeout in secs>]])";
+		"(" + Options.info.name() + "[detect [accurate] [<timeout in secs>]])";
 	
 	public static class CmdDsc extends ARemoteCmdDsc {
 
@@ -48,7 +48,7 @@ public class RemoteCmdLocalization extends ARemoteCmdExecutor {
 		@Override
 		public boolean matchesSyntax(String[] params) {
 			boolean matches = true;
-			if ((params.length < 1) || (params.length > 3)) {
+			if ((params.length < 1) || (params.length > 4)) {
 				matches = false;
 			}		
 			if (matches) {
@@ -58,7 +58,7 @@ public class RemoteCmdLocalization extends ARemoteCmdExecutor {
 					(StringUtils.equals(params[0], Options.stop.name()) && 
 						(params.length == 1)) ||
 					(StringUtils.equals(params[0], Options.info.name()) && 
-						(params.length >= 1) && (params.length <= 3));
+						(params.length >= 1) && (params.length <= 4));
 			}
 			if (matches && 
 				StringUtils.equals(params[0], Options.info.name()) && 
@@ -74,6 +74,16 @@ public class RemoteCmdLocalization extends ARemoteCmdExecutor {
 							matches = false;
 						}
 					}
+				} else if (params.length == 4) {
+					if (!StringUtils.equals(params[2], Options.accurate.name()) || 
+						!StringUtils.isNumeric(params[3])) {
+						matches = false;
+					} else {
+						int timeoutInSecs = Integer.valueOf(params[3]);
+						if (timeoutInSecs > DETECT_MAX_TIMEOUT_IN_SECS) {
+							matches = false;
+						}
+					}
 				}
 			}
 			return matches;
@@ -82,27 +92,33 @@ public class RemoteCmdLocalization extends ARemoteCmdExecutor {
 	
 	@Override
 	public Result executeCmdAndCreateResponse(String... params) {
-		String response = "";
+		Result result = null;
 		boolean localizationFoundActive = 
 			AbstractService.isServiceRunning(LocalizationService.class);
 		if (StringUtils.equals(params[0], Options.start.name())) {
 			if (!localizationFoundActive) {
 				LocalizationUtils.startLocalization();
-				response = "localization started";
+				result = new Result(true, "localization started");
 			} else {
-				response = "localization already running";
+				result = new Result(true, "localization already running");
 			}
 		} else if (StringUtils.equals(params[0], Options.stop.name())) {
 			if (localizationFoundActive) {
 				LocalizationUtils.stopLocalization();
-				response = "localization stopped";
+				result = new Result(true, "localization stopped");
 			} else {
-				response = "localization already stopped";
+				result = new Result(true, "localization already stopped");
 			}
 		} else if (StringUtils.equals(params[0], Options.info.name())) {
 			boolean detect = (params.length > 1);
-			int timeoutInSecs = ((params.length == 3) ? 
-				Integer.valueOf(params[2]) : DETECT_DEF_TIMEOUT_IN_SECS);
+			boolean accurate = (params.length > 2) && 
+				StringUtils.equals(params[2], Options.accurate.name());
+			int timeoutInSecs = DETECT_DEF_TIMEOUT_IN_SECS;
+			if (!accurate && (params.length == 3)) { 
+				timeoutInSecs = Integer.valueOf(params[2]);
+			} else if (accurate && (params.length == 4)) { 
+				timeoutInSecs = Integer.valueOf(params[3]);
+			}
 			
 			if (detect) {
 				if (!localizationFoundActive) {
@@ -119,8 +135,10 @@ public class RemoteCmdLocalization extends ARemoteCmdExecutor {
 						cancel = true;
 					}
 					LocationInfo locationInfo = LocationInfo.get();
+					
 					if ((locationInfo != null) && locationInfo.hasValidLatLon() && 
-						locationInfo.isUpToDate() && locationInfo.isAccurate()) {
+						locationInfo.isUpToDate() && 
+						(!accurate || locationInfo.isAccurate())) {
 						cancel = true;
 					}
 					curr = (new Date()).getTime();
@@ -130,8 +148,8 @@ public class RemoteCmdLocalization extends ARemoteCmdExecutor {
 					LocalizationUtils.stopLocalization();
 				}			
 			}
-			response = ResponseCreator.getResultOfGetLocation(LocationInfo.get());
+			result = ResponseCreator.getResultOfGetLocation(LocationInfo.get(), accurate);
 		}
-		return new Result(true, response);
+		return result;
 	}
 }

@@ -39,6 +39,7 @@ public abstract class APrefs implements IPrefs {
 						", ";
 				}
 				res = StringUtils.chop(res);
+				res = StringUtils.chop(res);
 			}
 		} else {
 			res += PrefsDumper.LINE_SEP + 

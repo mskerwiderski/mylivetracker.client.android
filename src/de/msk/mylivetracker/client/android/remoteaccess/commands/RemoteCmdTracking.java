@@ -54,20 +54,20 @@ public class RemoteCmdTracking extends ARemoteCmdExecutor {
 	public Result executeCmdAndCreateResponse(String... params) {
 		LogUtils.infoMethodIn(this.getClass(), "executeCmdAndCreateSmsResponse", Arrays.toString(params));
 		String cmd = params[0];
-		String response = null; 
+		Result result = null; 
 		if (StringUtils.equals(cmd, Options.reset.name())) {
 			TrackUtils.resetTrack();
-			response = "track resetted";
+			result = new Result(true, "track resetted");
 		} else if (StringUtils.equals(cmd, Options.start.name())) {
 			boolean started = TrackUtils.startTrack();
-			response = (started ? "track started" : "track already running");
+			result = new Result(true, (started ? "track started" : "track already running"));
 		} else if (StringUtils.equals(cmd, Options.stop.name())) {
 			boolean stopped = TrackUtils.stopTrack();
-			response = (stopped ? "track stopped" : "track not running");
+			result = new Result(true, (stopped ? "track stopped" : "track not running"));
 		}  else if (StringUtils.equals(cmd, Options.info.name())) {
-			response = ResponseCreator.getResultOfTrackInfo();
+			result = ResponseCreator.getResultOfTrackInfo();
 		}
-		LogUtils.infoMethodOut(this.getClass(), "executeCmdAndCreateSmsResponse", response);
-		return new Result(true, response);
+		LogUtils.infoMethodOut(this.getClass(), "executeCmdAndCreateSmsResponse", result);
+		return result;
 	}
 }

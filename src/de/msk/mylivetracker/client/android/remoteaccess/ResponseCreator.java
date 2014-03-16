@@ -77,20 +77,28 @@ public class ResponseCreator {
 		return res;
 	}
 	
-	public static String getResultOfTrackInfo() {
+	public static Result getResultOfTrackInfo() {
+		boolean success = true;
 		String str = "";
 		TrackStatus status = TrackStatus.get();
-		LocationInfo locationInfo = LocationInfo.get();
-		str = addParamValue(str, "name", PrefsRegistry.get(AccountPrefs.class).getTrackName());
-		str = addParamValue(str, "status", status.trackIsRunning() ? "running" : "not running");
-		str = addFloatValue(str, "distance", 
-			(status.getTrackDistanceInMtr() != null) ? status.getTrackDistanceInMtr()/1000f : 0f, 
-			2, Unit.Kilometer);
-		str = addParamInt(str, "uploaded", 
-			(UploadInfo.get() != null) ? UploadInfo.get().getCountUploaded() : 0, null);
-		str = addTimestampValue(str, "last location update", 
-			(locationInfo != null) ? locationInfo.getTimestamp() : null);
-		return str;
+		if (status.getRuntimeInMSecs(true).longValue() == 0L) {
+			success = false;
+			str = "no track information recorded";
+		} else {
+			LocationInfo locationInfo = LocationInfo.get();
+			str = addParamValue(str, "name", PrefsRegistry.get(AccountPrefs.class).getTrackName());
+			str = addParamValue(str, "status", status.trackIsRunning() ? "running" : "not running");
+			str = addParamValue(str, "runtime (overall)", status.getRuntimeAsPrettyStr(true));
+			str = addParamValue(str, "runtime (netto)", status.getRuntimeAsPrettyStr(false));
+			str = addFloatValue(str, "distance", 
+				(status.getTrackDistanceInMtr() != null) ? status.getTrackDistanceInMtr()/1000f : 0f, 
+				2, Unit.Kilometer);
+			str = addParamInt(str, "uploaded", 
+				(UploadInfo.get() != null) ? UploadInfo.get().getCountUploaded() : 0, null);
+			str = addTimestampValue(str, "last location update", 
+				(locationInfo != null) ? locationInfo.getTimestamp() : null);
+		}
+		return new Result(success, str);
 	}
 	
 	public static Result getResultOfUploadFile(UploadFileResult uploadFileResult) {
@@ -102,7 +110,6 @@ public class ResponseCreator {
 		} else {
 			response = addParamValue(response, "revid", uploadFileResult.revisionId);
 			response = addParamValue(response, "size", uploadFileResult.sizeStr);
-			response = "successful:" + response;
 		}
 		return new Result(success, response);
 	}
@@ -120,12 +127,15 @@ public class ResponseCreator {
 		return str;
 	}
 	
-	public static String getResultOfGetLocation(LocationInfo locationInfo) {
-		String str = "no valid location found";
-		if ((locationInfo != null) && locationInfo.hasValidLatLon()) {
-			str = addLocationInfoValues(null, locationInfo);
+	public static Result getResultOfGetLocation(LocationInfo locationInfo, boolean accurate) {
+		boolean success = false;
+		String response = "no valid location found";
+		if ((locationInfo != null) && locationInfo.hasValidLatLon() && 
+			(!accurate || locationInfo.isAccurate())) {
+			success = true;
+			response = addLocationInfoValues(null, locationInfo);
 		}
-		return str;
+		return new Result(success, response);
 	}
 	
 	public static String addLocationInfoValues(String str, LocationInfo locationInfo) {

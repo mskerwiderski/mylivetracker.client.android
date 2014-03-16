@@ -253,6 +253,19 @@ public class TrackStatus implements Serializable {
 		return runtimeInMSecs;
 	}
 
+	public String getRuntimeAsPrettyStr(boolean pausesIncluded) {
+		long msecs = this.getRuntimeInMSecs(pausesIncluded);
+		long secs = msecs / 1000L;
+		long mins = secs / 60L;
+		long hours = mins / 60L;
+		long restOfSecs = secs - (mins * 60L);
+		long restOfMins = mins - (hours * 60L);
+		return 
+			StringUtils.leftPad(String.valueOf(hours), 2, '0') + ":" +
+			StringUtils.leftPad(String.valueOf(restOfMins), 2, '0') + ":" +
+			StringUtils.leftPad(String.valueOf(restOfSecs), 2, '0');
+	}
+	
 	public String getAntPlusStatus() {
 		return antPlusStatus;
 	}
