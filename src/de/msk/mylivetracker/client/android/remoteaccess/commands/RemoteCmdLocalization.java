@@ -36,7 +36,8 @@ public class RemoteCmdLocalization extends ARemoteCmdExecutor {
 	public static final String SYNTAX = 
 		Options.start.name() + ARemoteCmdDsc.OPT_SEP + 
 		Options.stop.name() + ARemoteCmdDsc.OPT_SEP +
-		"(" + Options.info.name() + "[detect [accurate] [<timeout in secs>]])";
+		"(" + Options.info.name() + "[" + Options.detect + 
+		"[" + Options.acc + "] [<timeout in secs>]])";
 	
 	public static class CmdDsc extends ARemoteCmdDsc {
 
@@ -62,26 +63,29 @@ public class RemoteCmdLocalization extends ARemoteCmdExecutor {
 			}
 			if (matches && 
 				StringUtils.equals(params[0], Options.info.name()) && 
-				(params.length > 1)) {
+				(params.length >= 2)) {
 				if (!StringUtils.equals(params[1], Options.detect.name())) {
 					matches = false;
-				} else if (params.length == 3) {
-					if (!StringUtils.isNumeric(params[2])) {
-						matches = false;
-					} else {
-						int timeoutInSecs = Integer.valueOf(params[2]);
-						if (timeoutInSecs > DETECT_MAX_TIMEOUT_IN_SECS) {
+				} else {
+					if (params.length == 3) {
+						if (!StringUtils.equals(params[2], Options.acc.name()) && 
+							!StringUtils.isNumeric(params[2])) {
 							matches = false;
+						} else if (StringUtils.isNumeric(params[2])) {
+							int timeoutInSecs = Integer.valueOf(params[2]);
+							if (timeoutInSecs > DETECT_MAX_TIMEOUT_IN_SECS) {
+								matches = false;
+							}	
 						}
-					}
-				} else if (params.length == 4) {
-					if (!StringUtils.equals(params[2], Options.acc.name()) || 
-						!StringUtils.isNumeric(params[3])) {
-						matches = false;
-					} else {
-						int timeoutInSecs = Integer.valueOf(params[3]);
-						if (timeoutInSecs > DETECT_MAX_TIMEOUT_IN_SECS) {
+					} else if (params.length == 4) {
+						if (!StringUtils.equals(params[2], Options.acc.name()) || 
+							!StringUtils.isNumeric(params[3])) {
 							matches = false;
+						} else if (StringUtils.isNumeric(params[3])) {
+							int timeoutInSecs = Integer.valueOf(params[3]);
+							if (timeoutInSecs > DETECT_MAX_TIMEOUT_IN_SECS) {
+								matches = false;
+							}	
 						}
 					}
 				}

@@ -8,4 +8,5 @@
     <string name="txRemoteCommand_Heartrate">startet oder stoppt die Herzfrequenzerkennung oder gibt Informationen über die letzte oder aktuelle Herzfrequenzmessung zurück</string>
     <string name="txRemoteCommand_Config">gibt die gesetzten Einstellungen einer Sektion zurück</string>
     <string name="txRemoteCommand_Status">gibt den Status der Services zurück (Tracking, Lokalisierung, Herzfrequenzerkennung)</string>
+    <string name="txRemoteCommand_Exit">beendet die Anwendung (Hinweis: Die Anwendung kann über den Fernzugriff nicht erneut gestartet werden)</string>
 </resources>

@@ -1,6 +1,7 @@
 package de.msk.mylivetracker.client.android.remoteaccess;
 
 import java.util.Arrays;
+import java.util.concurrent.ExecutorService;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -24,12 +25,16 @@ public abstract class ARemoteCmdExecutor implements Runnable {
 	private String sender;
 	private String[] params;
 	private IResponseSender responseSender;
+	private ExecutorService executorService;
 
-	public void init(ARemoteCmdDsc cmdDsc, String sender, String param, IResponseSender responseSender) {
-		init(cmdDsc, sender, new String[]{param}, responseSender);
+	public void init(ARemoteCmdDsc cmdDsc, String sender, String param, 
+		IResponseSender responseSender, ExecutorService executorService) {
+		init(cmdDsc, sender, new String[]{param}, 
+			responseSender, executorService);
 	}
 	
-	public void init(ARemoteCmdDsc cmdDsc, String sender, String[] params, IResponseSender responseSender) {
+	public void init(ARemoteCmdDsc cmdDsc, String sender, String[] params, 
+		IResponseSender responseSender, ExecutorService executorService) {
 		if (cmdDsc == null) {
 			throw new IllegalArgumentException("cmdDsc must not be null.");
 		}
@@ -43,6 +48,7 @@ public abstract class ARemoteCmdExecutor implements Runnable {
 		this.sender = sender;
 		this.params = params;
 		this.responseSender = responseSender;
+		this.executorService = executorService;
 	}
 	
 	@Override
@@ -99,6 +105,10 @@ public abstract class ARemoteCmdExecutor implements Runnable {
 		}
 	}
 	
+	protected ExecutorService getExecutorService() {
+		return executorService;
+	}
+
 	public abstract Result executeCmdAndCreateResponse(String... params);
 
 	@Override

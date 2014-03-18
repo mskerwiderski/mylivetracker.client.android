@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import android.content.BroadcastReceiver;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdConfig;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdExit;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdHeartrate;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdHelp;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdLocalization;
@@ -69,6 +70,8 @@ public abstract class ARemoteCmdReceiver extends BroadcastReceiver {
 			new CmdPackage(new RemoteCmdUpload.CmdDsc(), RemoteCmdUpload.class));
 		cmdRegistry.put(StringUtils.lowerCase(RemoteCmdStatus.NAME), 
 			new CmdPackage(new RemoteCmdStatus.CmdDsc(), RemoteCmdStatus.class));
+		cmdRegistry.put(StringUtils.lowerCase(RemoteCmdExit.NAME), 
+			new CmdPackage(new RemoteCmdExit.CmdDsc(), RemoteCmdExit.class));
 	}
 
 	public static boolean containsCommand(String commandStr) {
@@ -145,7 +148,8 @@ public abstract class ARemoteCmdReceiver extends BroadcastReceiver {
 				CmdPackage cmdPackage = getCmdExecutor(messageParts[0]);
 				Constructor<? extends ARemoteCmdExecutor> cmdExecutorConstructor = cmdPackage.executor.getConstructor();
 				ARemoteCmdExecutor cmdExecutor = cmdExecutorConstructor.newInstance();
-				cmdExecutor.init(cmdPackage.dsc, sender, params, this.getResponseSender());
+				cmdExecutor.init(cmdPackage.dsc, sender, params, 
+					this.getResponseSender(), this.getExecutorService());
 				this.getExecutorService().execute(cmdExecutor);
 				response = null;
 				LogUtils.infoMethodState(this.getClass(), "onProcessCmd", "command executed");
