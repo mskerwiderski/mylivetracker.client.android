@@ -1,9 +1,16 @@
 package de.msk.mylivetracker.client.android.remoteaccess.commands;
 
 import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.antplus.AntPlusHardware;
+import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
+import de.msk.mylivetracker.client.android.localization.LocalizationService;
+import de.msk.mylivetracker.client.android.other.OtherPrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdDsc;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdExecutor;
 import de.msk.mylivetracker.client.android.remoteaccess.ResponseCreator;
+import de.msk.mylivetracker.client.android.status.TrackStatus;
+import de.msk.mylivetracker.client.android.util.service.AbstractService;
 
 
 /**
@@ -35,6 +42,16 @@ public class RemoteCmdStatus extends ARemoteCmdExecutor {
 	
 	@Override
 	public Result executeCmdAndCreateResponse(String... params) {
-		return new Result(true, ResponseCreator.getResultOfStatusOfServices());
+		String res = ResponseCreator.addParamValue("", "tracking", 
+			(TrackStatus.get().trackIsRunning() ? "running" : "idle"));
+		res = ResponseCreator.addParamValue(res, "localization", 
+			(AbstractService.isServiceRunning(LocalizationService.class) ? "running" : "idle"));
+		if (AntPlusHardware.initialized()) {
+			res = ResponseCreator.addParamValue(res, "heartrate detection",
+				(!PrefsRegistry.get(OtherPrefs.class).isAntPlusEnabledIfAvailable()) ? 
+					"disabled (maybe ANT+ driver not installed)" : 
+					(AntPlusManager.get().hasSensorListeners() ? "running" : "idle"));
+		} 
+		return new Result(true, res);
 	}
 }

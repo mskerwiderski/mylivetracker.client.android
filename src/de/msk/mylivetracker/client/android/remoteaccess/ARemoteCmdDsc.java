@@ -29,9 +29,24 @@ public abstract class ARemoteCmdDsc {
 	private int minParams;
 	private int maxParams;
 	private int descriptionId;
+	private boolean needsAppRunning;
 	
 	public ARemoteCmdDsc(String name, String paramDsc, 
 		int minParams, int maxParams, int descriptionId) {
+		this.init(name, paramDsc, minParams, maxParams, 
+			descriptionId, true);
+	}
+	
+	public ARemoteCmdDsc(String name, String paramDsc, 
+		int minParams, int maxParams, int descriptionId,
+		boolean needsAppRunning) {
+		this.init(name, paramDsc, minParams, maxParams, 
+			descriptionId, needsAppRunning);
+	}
+	
+	private void init(String name, String paramDsc, 
+		int minParams, int maxParams, int descriptionId,
+		boolean needsAppRunning) {
 		if (StringUtils.isEmpty(name)) {
 			throw new IllegalArgumentException("name must not be empty.");
 		}
@@ -52,6 +67,7 @@ public abstract class ARemoteCmdDsc {
 		this.minParams = minParams;
 		this.maxParams = maxParams;
 		this.descriptionId = descriptionId;
+		this.needsAppRunning = needsAppRunning;
 	}
 	
 	public abstract boolean matchesSyntax(String[] params);
@@ -108,10 +124,15 @@ public abstract class ARemoteCmdDsc {
 		return str;
 	}
 
+	public boolean isNeedsAppRunning() {
+		return needsAppRunning;
+	}
+
 	@Override
 	public String toString() {
 		return "ARemoteCmdDsc [name=" + name + ", paramDsc=" + paramDsc
 			+ ", minParams=" + minParams + ", maxParams=" + maxParams
-			+ ", descriptionId=" + descriptionId + "]";
+			+ ", descriptionId=" + descriptionId + ", needsAppRunning="
+			+ needsAppRunning + "]";
 	}
 }

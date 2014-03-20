@@ -61,22 +61,6 @@ public class ResponseCreator {
 		return "heartrate detection not enabled on this device";
 	}
 	
-	public static String getResultOfStatusOfServices() {
-		String res = "tracking=" +
-			(TrackStatus.get().trackIsRunning() ? "running" : "idle");
-		res += ",localization=" + 
-			(AbstractService.isServiceRunning(LocalizationService.class) ? "running" : "idle");
-		if (AntPlusHardware.initialized()) {
-			res += ",heartrate detection=";
-			if (!PrefsRegistry.get(OtherPrefs.class).isAntPlusEnabledIfAvailable()) {
-				res += "disabled (maybe ANT+ driver not installed)";
-			} else {
-				res += (AntPlusManager.get().hasSensorListeners() ? "running" : "idle"); 
-			}
-		} 
-		return res;
-	}
-	
 	public static Result getResultOfTrackInfo() {
 		boolean success = true;
 		String str = "";

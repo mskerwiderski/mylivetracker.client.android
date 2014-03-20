@@ -6,10 +6,12 @@ import org.apache.commons.lang3.StringUtils;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.telephony.TelephonyManager;
+import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry.InitResult;
 import de.msk.mylivetracker.client.android.util.LogUtils;
@@ -251,6 +253,14 @@ public class App extends Application {
 	}
 	public static String getAppNameComplete() {
 		return appNameComplete;
+	}
+	public static void start() {
+		Intent intent = new Intent(context, MainActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		context.startActivity(intent);
+	}
+	public static boolean running() {
+		return (MainActivity.exists());
 	}
 	private static final String VERSION_CODE_VAR = "versionCode";
 	public static boolean wasStartedForTheFirstTime() {

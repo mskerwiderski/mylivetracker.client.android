@@ -8,5 +8,5 @@
     <string name="txRemoteCommand_Heartrate">start or stop heartrate detection or get details about last or current heartrate information</string>
     <string name="txRemoteCommand_Config">get specified config settings of a section</string>
     <string name="txRemoteCommand_Status">get status of services (tracking, localization, heartrate detection)</string>
-    <string name="txRemoteCommand_Exit">exit the application (note: application cannot be restarted remotely)</string>
+    <string name="txRemoteCommand_App">start or stop the application or get status of application</string>
 </resources>

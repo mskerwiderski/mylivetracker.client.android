@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,6 +15,7 @@ import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.account.AccountPrefsActivity;
 import de.msk.mylivetracker.client.android.dropbox.DropboxConnectActivity;
 import de.msk.mylivetracker.client.android.emergency.EmergencyPrefsActivity;
+import de.msk.mylivetracker.client.android.exit.ExitService;
 import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParamsPrefsActivity;
 import de.msk.mylivetracker.client.android.localization.LocalizationPrefsActivity;
 import de.msk.mylivetracker.client.android.mylivetrackerportal.MyLiveTrackerPortalConnectActivity;
@@ -32,7 +31,6 @@ import de.msk.mylivetracker.client.android.trackexport.TrackExportActivity;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.TrackingMode;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefsActivity;
-import de.msk.mylivetracker.client.android.util.dialog.AbstractProgressDialog;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
 
@@ -150,49 +148,19 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 		}
 	}
 	
+	
 	private static class ExitYesNoDialog extends AbstractYesNoDialog {
 		
-		private Handler handler;
-		
-		protected ExitYesNoDialog(Context ctx, Handler handler) {
+		protected ExitYesNoDialog(Context ctx) {
 			super(ctx, R.string.txMain_QuestionExit, new String[] {App.getAppName()});
-			this.handler = handler;
 		}
 
 		@Override
 		public void onYes() {
-			handler.sendEmptyMessage(0);
+			ExitService.markAsExit(0);
 		}
 	}
 
-	private static class ExitProgressDialog extends AbstractProgressDialog<AbstractMainActivity> {
-		@Override
-		public void beforeTask(AbstractMainActivity activity) {
-		}
-		@Override
-		public void doTask(AbstractMainActivity activity) {
-			if (MainDetailsActivity.isActive()) {
-				MainDetailsActivity.close();
-				while (MainDetailsActivity.isActive()) {
-					try { Thread.sleep(50); } catch(Exception e) {};
-				}
-			}
-		}
-		@Override
-		public void cleanUp(AbstractMainActivity activity) {
-			MainActivity.exit();
-		}
-	}
-	
-	public static Handler exitHandler = new Handler() {
-		public void handleMessage(Message msg) {
-			ExitProgressDialog exitDialog = new ExitProgressDialog();
-			exitDialog.run(
-				MainDetailsActivity.isActive() ? 
-					MainDetailsActivity.get() : MainActivity.get());
-	    }
-	};
-	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -239,8 +207,7 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 			startActivity(new Intent(this, InfoActivity.class));
 			return true;
 		case R.id.mnExit:
-			ExitYesNoDialog dlg = new ExitYesNoDialog(
-				this, MainActivity.exitHandler);
+			ExitYesNoDialog dlg = new ExitYesNoDialog(this);
 			dlg.show();
 		default:
 			return super.onOptionsItemSelected(item);

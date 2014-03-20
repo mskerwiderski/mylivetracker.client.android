@@ -12,8 +12,9 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import android.content.BroadcastReceiver;
+import de.msk.mylivetracker.client.android.App;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdApp;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdConfig;
-import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdExit;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdHeartrate;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdHelp;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdLocalization;
@@ -70,8 +71,8 @@ public abstract class ARemoteCmdReceiver extends BroadcastReceiver {
 			new CmdPackage(new RemoteCmdUpload.CmdDsc(), RemoteCmdUpload.class));
 		cmdRegistry.put(StringUtils.lowerCase(RemoteCmdStatus.NAME), 
 			new CmdPackage(new RemoteCmdStatus.CmdDsc(), RemoteCmdStatus.class));
-		cmdRegistry.put(StringUtils.lowerCase(RemoteCmdExit.NAME), 
-			new CmdPackage(new RemoteCmdExit.CmdDsc(), RemoteCmdExit.class));
+		cmdRegistry.put(StringUtils.lowerCase(RemoteCmdApp.NAME), 
+			new CmdPackage(new RemoteCmdApp.CmdDsc(), RemoteCmdApp.class));
 	}
 
 	public static boolean containsCommand(String commandStr) {
@@ -136,23 +137,27 @@ public abstract class ARemoteCmdReceiver extends BroadcastReceiver {
 			if (!cmdExecutorExists(messageParts[0])) {
 				response = "unknown command";
 			} else {
-				String[] params = new String[0];
-				if (messageParts.length > 1) {
-					String[] paramsCs = (String[])ArrayUtils.subarray(messageParts, 1, messageParts.length);
-					params = new String[paramsCs.length];
-					for (int i=0; i < paramsCs.length; i++) {
-						params[i] = StringUtils.lowerCase(paramsCs[i]);
-					}
-				}
-				LogUtils.infoMethodState(this.getClass(), "onProcessCmd", "params", Arrays.toString(params));
 				CmdPackage cmdPackage = getCmdExecutor(messageParts[0]);
-				Constructor<? extends ARemoteCmdExecutor> cmdExecutorConstructor = cmdPackage.executor.getConstructor();
-				ARemoteCmdExecutor cmdExecutor = cmdExecutorConstructor.newInstance();
-				cmdExecutor.init(cmdPackage.dsc, sender, params, 
-					this.getResponseSender(), this.getExecutorService());
-				this.getExecutorService().execute(cmdExecutor);
-				response = null;
-				LogUtils.infoMethodState(this.getClass(), "onProcessCmd", "command executed");
+				if (cmdPackage.dsc.isNeedsAppRunning() && !App.running()) {
+					response = "command needs app running (please start app first)";
+				} else {
+					String[] params = new String[0];
+					if (messageParts.length > 1) {
+						String[] paramsCs = (String[])ArrayUtils.subarray(messageParts, 1, messageParts.length);
+						params = new String[paramsCs.length];
+						for (int i=0; i < paramsCs.length; i++) {
+							params[i] = StringUtils.lowerCase(paramsCs[i]);
+						}
+					}
+					LogUtils.infoMethodState(this.getClass(), "onProcessCmd", "params", Arrays.toString(params));
+					Constructor<? extends ARemoteCmdExecutor> cmdExecutorConstructor = cmdPackage.executor.getConstructor();
+					ARemoteCmdExecutor cmdExecutor = cmdExecutorConstructor.newInstance();
+					cmdExecutor.init(cmdPackage.dsc, sender, params, 
+						this.getResponseSender(), this.getExecutorService());
+					this.getExecutorService().execute(cmdExecutor);
+					response = null;
+					LogUtils.infoMethodState(this.getClass(), "onProcessCmd", "command executed");
+				}
 			}
 		} catch (Exception e) {
 			response = "failed:internal error";

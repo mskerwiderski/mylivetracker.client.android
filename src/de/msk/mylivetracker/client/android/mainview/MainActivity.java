@@ -16,6 +16,7 @@ import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
 import de.msk.mylivetracker.client.android.auto.AutoService;
 import de.msk.mylivetracker.client.android.battery.BatteryReceiver;
 import de.msk.mylivetracker.client.android.checkpoint.CheckpointService;
+import de.msk.mylivetracker.client.android.exit.ExitService;
 import de.msk.mylivetracker.client.android.localization.LocalizationService;
 import de.msk.mylivetracker.client.android.mainview.updater.MainViewUpdater;
 import de.msk.mylivetracker.client.android.mainview.updater.UpdaterUtils;
@@ -53,13 +54,6 @@ public class MainActivity extends AbstractMainActivity {
 
 	public static boolean exists() {
 		return mainActivity != null;
-	}
-	
-	public static void exit() {
-		if (mainActivity != null) {
-			mainActivity.onDestroy();
-		}
-		System.exit(0);	
 	}
 	
 	@Override
@@ -179,10 +173,19 @@ public class MainActivity extends AbstractMainActivity {
 		AbstractService.startService(AutoService.class);
 		AbstractService.startService(CheckpointService.class);
 		AbstractService.startService(ViewUpdateService.class);
+		AbstractService.startService(ExitService.class);
     }	
+	
+	public static void destroy() {
+		MainActivity mainActivity = MainActivity.get();
+		if (mainActivity != null) {
+			mainActivity.onDestroy();
+		}
+	}
 	
 	@Override
 	protected void onDestroy() {
+		AbstractService.stopService(ExitService.class);
 		AbstractService.stopService(ViewUpdateService.class);
 		AbstractService.stopService(CheckpointService.class);
 		AbstractService.stopService(AutoService.class);		

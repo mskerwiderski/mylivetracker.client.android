@@ -6,7 +6,7 @@ import de.msk.mylivetracker.client.android.util.service.AbstractServiceThread;
 /**
  * classname: CheckpointService
  * 
- * @author michael skerwiderski, (c)2012
+ * @author michael skerwiderski, (c)2014
  * @version 000
  * @since 1.6.0
  * 
