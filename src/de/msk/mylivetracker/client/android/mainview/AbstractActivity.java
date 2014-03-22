@@ -1,7 +1,12 @@
 package de.msk.mylivetracker.client.android.mainview;
 
+import java.util.Stack;
+
+import org.apache.commons.lang3.ArrayUtils;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryActivity;
 import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryPrefs;
@@ -21,7 +26,27 @@ import de.msk.mylivetracker.client.android.util.LogUtils;
  */
 public class AbstractActivity extends Activity {
 
-	private static int activityActiveCounter = 0;
+	private static Integer visibleActivitiesCounter = 0;
+	private static Stack<AbstractActivity> activityStack = 
+		new Stack<AbstractActivity>();
+
+	public static AbstractActivity[] getActivityArray() {
+		if (activityStack.empty()) return null;
+		return activityStack.toArray(new AbstractActivity[0]);
+	}
+	
+	public static AbstractActivity getActive() {
+		if (activityStack.empty()) return null;
+		return activityStack.lastElement();
+	}
+	
+	public static boolean activityExists(AbstractActivity activity) {
+		if (activity == null) {
+			throw new IllegalArgumentException("activity must not be null.");
+		}
+		return activityStack.contains(activity);
+	}
+	
 	private static boolean pinCodeValid = false;
 	
 	protected static boolean isPinCodeValid() {
@@ -45,26 +70,48 @@ public class AbstractActivity extends Activity {
 	}
 
 	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		activityStack.push(this);
+		LogUtils.infoMethodState(AbstractActivity.class, "onCreate", 
+			"activityStack", ArrayUtils.toString(activityStack.toArray()));
+		super.onCreate(savedInstanceState);
+	}
+
+	@Override
 	protected void onStart() {
-		LogUtils.info(this.getClass(), "onStart");
+		LogUtils.infoMethodIn(AbstractActivity.class, "onStart", this.getClass());
 		if (PrefsRegistry.get(PinCodeQueryPrefs.class).isPinCodeQueryEnabled() && 
-			(activityActiveCounter == 0)) {
-			LogUtils.info(this.getClass(), "pinCodeQuery");
+			(visibleActivitiesCounter == 0)) {
+			LogUtils.info(AbstractActivity.class, "start pinCodeQuery");
 			this.startActivity(new Intent(this, PinCodeQueryActivity.class));
 		}
-		activityActiveCounter++;
+		visibleActivitiesCounter++;		
 		super.onStart();
+		LogUtils.infoMethodState(AbstractActivity.class, "onStart",
+			"visibleActivitiesCounter", visibleActivitiesCounter);
+		LogUtils.infoMethodOut(AbstractActivity.class, "onStart", this.getClass());
 	}
 
 	@Override
 	protected void onStop() {
-		LogUtils.info(this.getClass(), "onStop");
-		activityActiveCounter--;
+		LogUtils.infoMethodIn(AbstractActivity.class, "onStop", this.getClass());
+		visibleActivitiesCounter--;
 		if (PrefsRegistry.get(PinCodeQueryPrefs.class).isPinCodeQueryEnabled() && 
-			(activityActiveCounter == 0)) {
+			(visibleActivitiesCounter == 0)) {
 			pinCodeValid = false;
-			LogUtils.info(this.getClass(), "pinCode invalidated");
+			LogUtils.info(AbstractActivity.class, "pinCode invalidated");
 		}
 		super.onStop();
+		LogUtils.infoMethodState(AbstractActivity.class, "onStop",
+			"visibleActivitiesCounter", visibleActivitiesCounter);
+		LogUtils.infoMethodOut(AbstractActivity.class, "onStop", this.getClass());
+	}
+
+	@Override
+	protected void onDestroy() {
+		activityStack.pop();
+		LogUtils.infoMethodState(AbstractActivity.class, "onDestroy", 
+			"activityStack", ArrayUtils.toString(activityStack.toArray()));
+		super.onDestroy();
 	}
 }

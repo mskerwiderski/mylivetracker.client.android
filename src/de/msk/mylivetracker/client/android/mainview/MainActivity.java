@@ -1,5 +1,7 @@
 package de.msk.mylivetracker.client.android.mainview;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -29,6 +31,7 @@ import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.TrackingMode;
 import de.msk.mylivetracker.client.android.upload.UploadService;
+import de.msk.mylivetracker.client.android.util.dialog.AbstractInfoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
 import de.msk.mylivetracker.client.android.util.service.AbstractService;
 
@@ -54,6 +57,32 @@ public class MainActivity extends AbstractMainActivity {
 
 	public static boolean exists() {
 		return mainActivity != null;
+	}
+	
+	private static class StartInfoDialog extends AbstractInfoDialog {
+
+		private StartInfoDialog(Context ctx, int message, Object[] args) {
+			super(ctx, ctx.getString(message, args));
+		}
+
+		public static void show(Context ctx, int message, Object... args) {
+			StartInfoDialog dlg = new StartInfoDialog(ctx, message, args);
+			dlg.show();
+		}
+
+		@Override
+		public void onOk() {
+			Activity activity = MainActivity.get();
+			if (App.getInitPrefsResult().equals(InitResult.PrefsImportedFromV144)) {
+				SimpleInfoDialog.show(activity, R.string.prefsImportedFromV144);
+			} else if (App.getInitPrefsResult().equals(InitResult.PrefsUpdatedFromV150)) {
+				SimpleInfoDialog.show(activity, R.string.prefsUpdated);
+			} else if (App.getInitPrefsResult().equals(InitResult.PrefsCreated)) {
+				SimpleInfoDialog.show(activity, R.string.prefsCreated);
+			} else if (App.getInitPrefsResult().equals(InitResult.PrefsUpdated)) {
+				SimpleInfoDialog.show(activity, R.string.prefsUpdated);
+			}
+		}
 	}
 	
 	@Override
@@ -155,18 +184,8 @@ public class MainActivity extends AbstractMainActivity {
 		tvUploader.setOnClickListener(
 			new OnClickButtonNetworkListener());
 		
-		if (App.getInitPrefsResult().equals(InitResult.PrefsImportedFromV144)) {
-			SimpleInfoDialog.show(this, R.string.prefsImportedFromV144);
-		} else if (App.getInitPrefsResult().equals(InitResult.PrefsUpdatedFromV150)) {
-			SimpleInfoDialog.show(this, R.string.prefsUpdated);
-		} else if (App.getInitPrefsResult().equals(InitResult.PrefsCreated)) {
-			SimpleInfoDialog.show(this, R.string.prefsCreated);
-		} else if (App.getInitPrefsResult().equals(InitResult.PrefsUpdated)) {
-			SimpleInfoDialog.show(this, R.string.prefsUpdated);
-		}
-		
 		if (App.wasStartedForTheFirstTime()) {
-			SimpleInfoDialog.show(this, 
+			StartInfoDialog.show(this, 
 				R.string.welcomeMessage, App.getAppNameComplete());
 		}
 		

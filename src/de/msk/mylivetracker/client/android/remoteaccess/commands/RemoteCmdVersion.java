@@ -25,7 +25,8 @@ public class RemoteCmdVersion extends ARemoteCmdExecutor {
 	public static class CmdDsc extends ARemoteCmdDsc {
 
 		public CmdDsc() {
-			super(NAME, SYNTAX, 0, 0, R.string.txRemoteCommand_Version);
+			super(NAME, SYNTAX, 0, 0, 
+				R.string.txRemoteCommand_Version, false);
 		}
 
 		@Override

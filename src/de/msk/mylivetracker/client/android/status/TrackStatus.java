@@ -132,6 +132,9 @@ public class TrackStatus implements Serializable {
 	}
 	
 	public static TrackStatus get() {
+		if (trackStatus == null) {
+			TrackStatus.loadTrackStatus();
+		}
 		return trackStatus;
 	}
 	

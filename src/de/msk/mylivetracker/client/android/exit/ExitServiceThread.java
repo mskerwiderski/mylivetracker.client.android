@@ -2,9 +2,10 @@ package de.msk.mylivetracker.client.android.exit;
 
 import android.os.Handler;
 import android.os.Message;
-import de.msk.mylivetracker.client.android.mainview.AbstractMainActivity;
+import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
-import de.msk.mylivetracker.client.android.mainview.MainDetailsActivity;
+import de.msk.mylivetracker.client.android.util.LogUtils;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractProgressDialog;
 import de.msk.mylivetracker.client.android.util.service.AbstractServiceThread;
 
@@ -21,21 +22,34 @@ import de.msk.mylivetracker.client.android.util.service.AbstractServiceThread;
  */
 public class ExitServiceThread extends AbstractServiceThread {
 
-	private static class ExitProgressDialog extends AbstractProgressDialog<AbstractMainActivity> {
+	public static class ExitProgressDialog extends AbstractProgressDialog<AbstractActivity> {
 		@Override
-		public void beforeTask(AbstractMainActivity activity) {
+		public void beforeTask(AbstractActivity unused) {
 		}
 		@Override
-		public void doTask(AbstractMainActivity activity) {
-			if (MainDetailsActivity.isActive()) {
-				MainDetailsActivity.close();
-				while (MainDetailsActivity.isActive()) {
-					try { Thread.sleep(50); } catch(Exception e) {};
+		public void doTask(AbstractActivity unused) {
+			LogUtils.infoMethodIn(this.getClass(), "doTask");
+			AbstractActivity[] activities = AbstractActivity.getActivityArray();
+			for (int idx = activities.length-1; idx > 0; idx--) {
+				AbstractActivity activity = activities[idx];
+				if (activity != null) {
+					LogUtils.infoMethodState(this.getClass(), "doTask", "destroy", activity.getClass());
+					activity.finish(); 
+					while (AbstractActivity.activityExists(activity)) {
+						try { 
+							Thread.sleep(500); 
+							LogUtils.infoMethodState(this.getClass(), "doTask", "still exists", activity.getClass());
+						} catch(Exception e) 
+						{};
+					}
+					LogUtils.infoMethodState(this.getClass(), "doTask", "destroyed");
 				}
 			}
+			LogUtils.infoMethodOut(this.getClass(), "doTask");
 		}
 		@Override
-		public void cleanUp(AbstractMainActivity activity) {
+		public void cleanUp(AbstractActivity unused) {
+			LogUtils.infoMethodState(this.getClass(), "cleanUp", "destroy and exit MainActivity");
 			MainActivity.destroy();
 			System.exit(0);	
 		}
@@ -44,9 +58,9 @@ public class ExitServiceThread extends AbstractServiceThread {
 	public static Handler exitHandler = new Handler() {
 		public void handleMessage(Message msg) {
 			ExitProgressDialog dlg = new ExitProgressDialog();
-			dlg.run(
-				MainDetailsActivity.isActive() ? 
-					MainDetailsActivity.get() : MainActivity.get());
+			LogUtils.infoMethodState(ExitProgressDialog.class, "handleMessage", 
+				"active", AbstractActivity.getActive().getClass());
+			dlg.run(AbstractActivity.getActive(), R.string.exitProgressMessage);
 	    }
 	};
 	
@@ -59,6 +73,7 @@ public class ExitServiceThread extends AbstractServiceThread {
 	public void runSinglePass() throws InterruptedException {
 		if (ExitService.isMarkedAsExit()) {
 			sleep(ExitService.getExitMarker().getTimeoutMSecs());
+			ExitService.resetExitMarker();
 			exitHandler.sendEmptyMessage(0);
 		}
 	}

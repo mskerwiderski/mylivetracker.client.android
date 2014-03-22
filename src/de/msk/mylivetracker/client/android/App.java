@@ -14,7 +14,10 @@ import android.telephony.TelephonyManager;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry.InitResult;
+import de.msk.mylivetracker.client.android.status.TrackStatus;
+import de.msk.mylivetracker.client.android.util.FileUtils;
 import de.msk.mylivetracker.client.android.util.LogUtils;
+import de.msk.mylivetracker.client.android.util.FileUtils.PathType;
 
 /**
  * classname: App
@@ -263,11 +266,20 @@ public class App extends Application {
 		return (MainActivity.exists());
 	}
 	private static final String VERSION_CODE_VAR = "versionCode";
+	public static void resetApp() {
+		FileUtils.fileDelete(getAppFileName(true), 
+			PathType.AppSharedPrefsDir);
+		FileUtils.fileDelete(getPrefsFileName(true),
+			PathType.AppSharedPrefsDir);
+		FileUtils.fileDelete(getStatusFileName(true),
+			PathType.AppSharedPrefsDir);
+		TrackStatus.resetMileage();
+		TrackStatus.reset();
+	}
 	public static boolean wasStartedForTheFirstTime() {
 		boolean startedForTheFirstTime = false;
-		String fileName = fileNamePrefix + "_app";
 		SharedPreferences sharedPrefs = App.getCtx().
-			getSharedPreferences(fileName, Context.MODE_PRIVATE);
+			getSharedPreferences(getAppFileName(false), Context.MODE_PRIVATE);
 		int foundVersionCode = sharedPrefs.getInt(VERSION_CODE_VAR, -1);
 		if (foundVersionCode != VersionDsc.getCode()) {
 			startedForTheFirstTime = true;
@@ -279,6 +291,10 @@ public class App extends Application {
 	}
 	public static InitResult getInitPrefsResult() {
 		return initPrefsResult;
+	}
+	private static String getAppFileName(boolean extensionIncl) {
+		return fileNamePrefix + "_app" +
+			(extensionIncl ? ".xml" : "");
 	}
 	public static String getPrefsFileName(boolean extensionIncl) {
 		return fileNamePrefix + "_prefs" +

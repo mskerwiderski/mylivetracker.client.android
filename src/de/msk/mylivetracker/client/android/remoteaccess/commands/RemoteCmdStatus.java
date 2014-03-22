@@ -31,7 +31,7 @@ public class RemoteCmdStatus extends ARemoteCmdExecutor {
 	public static class CmdDsc extends ARemoteCmdDsc {
 		public CmdDsc() {
 			super(NAME, "", 0, 0, 
-				R.string.txRemoteCommand_Status);
+				R.string.txRemoteCommand_Status, false);
 		}
 
 		@Override

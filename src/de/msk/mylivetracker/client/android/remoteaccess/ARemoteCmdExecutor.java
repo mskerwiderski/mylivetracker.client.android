@@ -68,7 +68,7 @@ public abstract class ARemoteCmdExecutor implements Runnable {
 			}
 		} catch (Exception e) {
 			response = "failed:internal error";
-			LogUtils.infoMethodState(this.getClass(), "run", "run failed", e.toString());
+			LogUtils.infoMethodState(this.getClass(), "run", "run failed", (Object[])e.getStackTrace());
 		} finally {
 			try {
 				response = "[" + this.getCmdDsc().getName() + "]:" + response;

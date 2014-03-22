@@ -167,7 +167,7 @@ public class PrefsRegistry {
 		return initResult;
 	}
 	
-	public static void reset() {
+	private static void reset() {
 		LogUtils.infoMethodIn(PrefsRegistry.class, "reset");
 		prefsReg.clear();
 		prefsMap.clear();

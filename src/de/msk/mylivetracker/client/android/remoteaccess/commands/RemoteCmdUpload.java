@@ -45,7 +45,7 @@ public class RemoteCmdUpload extends ARemoteCmdExecutor {
 	public static class CmdDsc extends ARemoteCmdDsc {
 		public CmdDsc() {
 			super(NAME, SYNTAX, 1, 1, 
-				R.string.txRemoteCommand_Upload);
+				R.string.txRemoteCommand_Upload, false);
 		}
 
 		@Override

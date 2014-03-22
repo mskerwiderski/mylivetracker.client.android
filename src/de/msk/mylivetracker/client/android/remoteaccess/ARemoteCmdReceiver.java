@@ -1,11 +1,12 @@
 package de.msk.mylivetracker.client.android.remoteaccess;
 
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -81,7 +82,8 @@ public abstract class ARemoteCmdReceiver extends BroadcastReceiver {
 	
 	public static String getCommandsAsStr() {
 		String commandsAsStr = "";
-		Set<String> commands = cmdRegistry.keySet();
+		List<String> commands = new ArrayList<String>(cmdRegistry.keySet());
+		java.util.Collections.sort(commands);
 		for (Iterator<String> it=commands.iterator(); it.hasNext();) {
 			commandsAsStr += it.next();
 			if (it.hasNext()) {

@@ -7,6 +7,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import android.util.Log;
 import de.msk.mylivetracker.client.android.App.VersionDsc;
+import de.msk.mylivetracker.client.android.exit.ExitServiceThread.ExitProgressDialog;
+import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdReceiver;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteMessageCmdReceiver;
 import de.msk.mylivetracker.client.android.remoteaccess.RemoteSmsCmdReceiver;
@@ -37,6 +39,8 @@ public class LogUtils {
 	private static Map<Class<?>, Boolean> classes = new HashMap<Class<?>, Boolean>();
 	
 	static {
+		classes.put(ExitProgressDialog.class, Boolean.TRUE);
+		classes.put(AbstractActivity.class, Boolean.TRUE);
 		classes.put(ARemoteCmdReceiver.class, Boolean.TRUE);
 		classes.put(ARemoteMessageCmdReceiver.class, Boolean.TRUE);
 		classes.put(RemoteSmsCmdReceiver.class, Boolean.TRUE);

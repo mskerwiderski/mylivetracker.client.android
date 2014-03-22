@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.Toast;
+import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.antplus.AntPlusHardware;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
@@ -17,7 +18,7 @@ import de.msk.mylivetracker.client.android.other.OtherPrefs.TrackingOneTouchMode
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
-import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
+import de.msk.mylivetracker.client.android.util.dialog.ExitInfoDialog;
 import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
 import de.msk.mylivetracker.client.android.util.listener.OnFinishActivityListener;
 
@@ -89,10 +90,8 @@ public class OtherPrefsActivity extends AbstractActivity {
 
 		@Override
 		public void onYes() {
-			TrackStatus.reset();
-			TrackStatus.resetMileage();
-			PrefsRegistry.reset();
-			SimpleInfoDialog.show(this.activity, 
+			App.resetApp();
+			ExitInfoDialog.show(this.activity, 
 				R.string.txOtherPrefs_InfoResetToFactoryDefaultsDone);
 		}	
 	}

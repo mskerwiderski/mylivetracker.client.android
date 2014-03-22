@@ -28,7 +28,6 @@ public class ExitService extends AbstractService {
 		}
 	}
 	
-	
 	public static void markAsExit(long timeoutMSecs) {
 		exitMarker = new ExitMarker(timeoutMSecs);
 	}
@@ -39,6 +38,10 @@ public class ExitService extends AbstractService {
 	
 	protected static ExitMarker getExitMarker() {
 		return exitMarker;
+	}
+
+	protected static void resetExitMarker() {
+		exitMarker = null;
 	}
 	
 	@Override

@@ -22,17 +22,7 @@ public class MainDetailsActivity extends AbstractMainActivity {
 	public static MainDetailsActivity get() {
 		return mainDetailsActivity;
 	}
-	
-	public static boolean isActive() {
-		return mainDetailsActivity != null;
-	}
-	
-	public static void close() {
-		if (mainDetailsActivity != null) {
-			mainDetailsActivity.finish();
-		}
-	}
-	
+		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -50,12 +40,12 @@ public class MainDetailsActivity extends AbstractMainActivity {
 
 	@Override
 	public void onSwitchToView(boolean next) {
-		close();
+		this.finish();
 	}	
 	
 	@Override
 	public void onBackPressed() {
-		close();
+		this.finish();
 	}
 
 	@Override

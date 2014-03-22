@@ -25,7 +25,8 @@ public class RemoteCmdHelp extends ARemoteCmdExecutor {
 	public static class CmdDsc extends ARemoteCmdDsc {
 		public CmdDsc() {
 			super(NAME, SYNTAX, 0, 1, 
-				R.string.txRemoteCommand_Help);
+				R.string.txRemoteCommand_Help,
+				false);
 		}
 
 		@Override

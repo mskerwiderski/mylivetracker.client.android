@@ -6,6 +6,9 @@
     <!-- Welcome message -->
     <string name="welcomeMessage">Willkommen zu %1$s. Wenn Sie Fragen haben oder Unterstützung benötigen, besuchen Sie uns doch im Forum unter http://forum.mylivetracker.info!</string>
        
+    <!-- Exit progress message -->
+    <string name="exitProgressMessage">Anwendung wird beendet&#8230;</string>
+    
     <!-- preferences -->
     <string name="prefsImportedFromV144">Bitte überprüfen Sie die Einstellungen! Die Einstellungen wurden von einer alten MyLiveTracker Version importiert!</string>
     <string name="prefsCreated">Bitte überprüfen Sie die Einstellungen! Da Sie MyLiveTracker das erste Mal benutzen, wurden alle Einstellungen auf Standardwerte gesetzt!</string>  

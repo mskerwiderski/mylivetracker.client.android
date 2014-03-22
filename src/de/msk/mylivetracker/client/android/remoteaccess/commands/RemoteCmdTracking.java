@@ -37,7 +37,7 @@ public class RemoteCmdTracking extends ARemoteCmdExecutor {
 		public CmdDsc() {
 			super(NAME, 
 				SYNTAX, 1, 1, 
-				R.string.txRemoteCommand_Tracking);
+				R.string.txRemoteCommand_Tracking, true);
 		}
 
 		@Override
