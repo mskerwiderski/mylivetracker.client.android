@@ -18,6 +18,7 @@ import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
 import de.msk.mylivetracker.client.android.upload.AbstractUploader.UploadResult;
 import de.msk.mylivetracker.client.android.upload.protocol.Protocols;
 import de.msk.mylivetracker.client.android.util.LogUtils;
+import de.msk.mylivetracker.client.android.util.service.AbstractService;
 
 /**
  * classname: Uploader
@@ -33,8 +34,7 @@ import de.msk.mylivetracker.client.android.util.LogUtils;
  */
 public class Uploader {
 	public static void uploadOneTime() {
-		UploadServiceThread thread = new UploadServiceThread(true);
-		thread.start();
+		AbstractService.runServiceOnlyOnce(UploadService.class);
 	}
 	
 	public static AbstractUploader createUploader() {

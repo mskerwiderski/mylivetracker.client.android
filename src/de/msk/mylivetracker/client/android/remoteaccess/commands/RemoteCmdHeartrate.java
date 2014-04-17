@@ -5,10 +5,8 @@ import java.util.Date;
 import org.apache.commons.lang3.StringUtils;
 
 import de.msk.mylivetracker.client.android.R;
-import de.msk.mylivetracker.client.android.antplus.AntPlusHardware;
 import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
-import de.msk.mylivetracker.client.android.other.OtherPrefs;
-import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
+import de.msk.mylivetracker.client.android.appcontrol.AppControl;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdDsc;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdExecutor;
 import de.msk.mylivetracker.client.android.remoteaccess.ResponseCreator;
@@ -41,7 +39,8 @@ public class RemoteCmdHeartrate extends ARemoteCmdExecutor {
 
 		public CmdDsc() {
 			super(NAME, SYNTAX, 1, 3, 
-				R.string.txRemoteCommand_Heartrate);
+				R.string.txRemoteCommand_Heartrate,
+				false);
 		}
 
 		@Override
@@ -83,25 +82,22 @@ public class RemoteCmdHeartrate extends ARemoteCmdExecutor {
 	public Result executeCmdAndCreateResponse(String... params) {
 		boolean success = true;
 		String response = "";
-		if (!AntPlusHardware.initialized()) {
-			response = ResponseCreator.getResultOfHeartrateDetectionNotSupported();
-			success = false;
-		} else if (!PrefsRegistry.get(OtherPrefs.class).isAntPlusEnabledIfAvailable()) {
-			response = ResponseCreator.getResultOfHeartrateDetectionNotEnabled();
+		if (!AppControl.antPlusDetectionIsAvailable()) {
+			response = "heartrate detection not supported or disabled";
 			success = false;
 		} else {
 			boolean antPlusFoundActive = 
-				AntPlusManager.get().hasSensorListeners();
+				AppControl.antPlusDetectionIsRunning();
 			if (StringUtils.equals(params[0], Options.start.name())) {
 				if (!antPlusFoundActive) {
-					AntPlusManager.start();
+					AppControl.startAntPlusDetection();
 					response = "heartrate detection started";
 				} else {
 					response = "heartrate detection already running";
 				}
 			} else if (StringUtils.equals(params[0], Options.stop.name())) {
 				if (antPlusFoundActive) {
-					AntPlusManager.stop();
+					AppControl.stopAntPlusDetection();
 					response = "heartrate detection stopped";
 				} else {
 					response = "heartrate detection already stopped";

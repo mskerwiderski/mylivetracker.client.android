@@ -23,6 +23,7 @@ import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryPrefs;
 import de.msk.mylivetracker.client.android.preferences.prefsv144.PrefsV144Updater;
 import de.msk.mylivetracker.client.android.preferences.prefsv150.PrefsV150Updater;
+import de.msk.mylivetracker.client.android.preferences.prefsv160.PrefsV160Updater;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.remoteaccess.RemoteAccessPrefs;
 import de.msk.mylivetracker.client.android.server.ServerPrefs;
@@ -85,6 +86,7 @@ public class PrefsRegistry {
 	public enum InitResult {
 		PrefsImportedFromV144,
 		PrefsUpdatedFromV150,
+		PrefsUpdatedFromV160,
 		PrefsCreated, 
 		PrefsUpdated, 
 		PrefsLoaded, 
@@ -119,6 +121,8 @@ public class PrefsRegistry {
 			
 			if (mainPrefsVersion == -1) {
 				initResult = InitResult.PrefsUpdatedFromV150;
+			} else if (mainPrefsVersion == 160) {
+				initResult = InitResult.PrefsUpdatedFromV160;
 			}
 			
 			for (PrefsDsc prefsDsc : prefsDscArr) {
@@ -142,6 +146,9 @@ public class PrefsRegistry {
 					} else {
 						prefs = deserialize(prefsDsc.prefsClass, prefsStr);
 					}
+					if (!prefs.checkIfValid()) {
+						prefs.initWithDefaults();
+					}
 				}
 				if (prefs == null) {
 					throw new RuntimeException("prefs must not be null!");
@@ -160,6 +167,8 @@ public class PrefsRegistry {
 				initResult = InitResult.PrefsLoaded;
 			} else if (initResult.equals(InitResult.PrefsUpdatedFromV150)) {
 				PrefsV150Updater.run();
+			} else if (initResult.equals(InitResult.PrefsUpdatedFromV160)) {
+				PrefsV160Updater.run();
 			}
 		}
 		

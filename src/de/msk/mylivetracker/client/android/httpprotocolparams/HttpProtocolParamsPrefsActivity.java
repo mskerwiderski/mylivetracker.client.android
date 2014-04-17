@@ -143,6 +143,7 @@ public class HttpProtocolParamsPrefsActivity extends AbstractActivity {
 			if (valid) {
 				PrefsRegistry.get(HttpProtocolParamsPrefs.class).
 					setHttpProtocolParams(httpProtocolParamsCopy);
+				PrefsRegistry.save(HttpProtocolParamsPrefs.class);
 				this.activity.finish();
 			}			
 		}		

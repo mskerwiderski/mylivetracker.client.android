@@ -4,11 +4,7 @@ import java.io.Serializable;
 
 import org.apache.commons.lang3.StringUtils;
 
-import android.telephony.ServiceState;
-import android.telephony.SignalStrength;
-import android.telephony.TelephonyManager;
-import android.telephony.gsm.GsmCellLocation;
-import de.msk.mylivetracker.client.android.phonestate.PhoneStateListener;
+import de.msk.mylivetracker.client.android.phonestate.PhoneStateData;
 
 /**
  * classname: PhoneStateInfo
@@ -27,13 +23,11 @@ public class PhoneStateInfo extends AbstractInfo implements Serializable {
 	private static PhoneStateInfo phoneStateInfo = null;
 	
 	public static void update(
-		Integer networkType, GsmCellLocation gsmCellLocation,
-		ServiceState serviceState, SignalStrength signalStrength) {
+		PhoneStateData phoneStateData) {
+		if (TrackStatus.isInResettingState()) return;
 		phoneStateInfo = 
 			PhoneStateInfo.createNewPhoneStateInfo(
-				phoneStateInfo, 
-				networkType, gsmCellLocation,
-				serviceState, signalStrength);
+				phoneStateInfo, phoneStateData);
 	}
 	public static PhoneStateInfo get() {
 		return phoneStateInfo;
@@ -71,48 +65,16 @@ public class PhoneStateInfo extends AbstractInfo implements Serializable {
 	
 	public static PhoneStateInfo createNewPhoneStateInfo(
 		PhoneStateInfo currPhoneStateInfo,
-		Integer networkTypeValue,
-		GsmCellLocation gsmCellLocation,
-		ServiceState serviceState, 
-		SignalStrength signalStrength) {
+		PhoneStateData phoneStateData) {
 		
-		// mnc.
-		String nwOpCode = null;
-		String mobileNetworkName = null;
-		if (serviceState != null) {
-			nwOpCode = serviceState.getOperatorNumeric();
-			if (StringUtils.length(nwOpCode) < 5) {
-				nwOpCode = null;
-			}
-			mobileNetworkName = serviceState.getOperatorAlphaLong();
-		}
-		
-		// mcc, mnc.
-		String mobileCountryCode = null;
-		String mobileNetworkCode = null;
-		if (nwOpCode != null) {
-			mobileCountryCode = StringUtils.left(nwOpCode, 3);
-			mobileNetworkCode = StringUtils.substring(nwOpCode, 3);
-		}
-		
-		// lac, cid.
-		String localAreaCode = null;
-		String cellId = null;
-		if (gsmCellLocation != null) {
-			if (gsmCellLocation.getLac() != -1) {
-				cellId = String.valueOf(gsmCellLocation.getLac());
-			}
-			if (gsmCellLocation.getCid() != -1) {
-				localAreaCode = String.valueOf(gsmCellLocation.getCid());
-			}
-		}
-		
-		// nwType.
-		String networkType = getNetworkTypeAsStr(networkTypeValue);
-		
-		// phType.
-		String phoneType = PhoneStateListener.isPhoneTypeGsm() ? "GSM" : "CDMA";
-		
+		String mobileCountryCode = phoneStateData.getMobileCountryCode();
+		String mobileNetworkCode = phoneStateData.getMobileNetworkCode();
+		String mobileNetworkName = phoneStateData.getMobileNetworkName();
+		String localAreaCode = phoneStateData.getLocalAreaCode();
+		String cellId = phoneStateData.getCellId();
+		String networkType = phoneStateData.getNetworkType();
+		String phoneType = phoneStateData.getPhoneType();
+				
 		if (currPhoneStateInfo != null) {
 			if (StringUtils.isEmpty(networkType)) {
 				networkType = currPhoneStateInfo.networkType;
@@ -139,35 +101,7 @@ public class PhoneStateInfo extends AbstractInfo implements Serializable {
 			localAreaCode, cellId, networkType, phoneType);
 	}
 	
-	private static String getNetworkTypeAsStr(Integer networkTypeValue) {
-		String networkType = null;
-		if (networkTypeValue != null) {			
-			switch (networkTypeValue) {
-			case TelephonyManager.NETWORK_TYPE_EDGE:
-				networkType = "EDGE";
-				break;
-			case TelephonyManager.NETWORK_TYPE_GPRS:
-				networkType = "GPRS";
-				break;
-			case TelephonyManager.NETWORK_TYPE_UMTS:
-				networkType = "UMTS";
-				break;
-			case TelephonyManager.NETWORK_TYPE_HSDPA:
-				networkType = "HSDPA";
-				break;	
-			case TelephonyManager.NETWORK_TYPE_HSPA:
-				networkType = "HSPA";
-				break;	
-			case TelephonyManager.NETWORK_TYPE_HSUPA:
-				networkType = "HSUPA";
-				break;	
-			default:
-				networkType = null;
-				break;
-			}
-		}
-		return networkType;
-	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

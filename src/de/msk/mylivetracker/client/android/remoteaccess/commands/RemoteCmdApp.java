@@ -5,7 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.R;
-import de.msk.mylivetracker.client.android.exit.ExitService;
+import de.msk.mylivetracker.client.android.appcontrol.AppControl;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdDsc;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdExecutor;
@@ -77,7 +77,7 @@ public class RemoteCmdApp extends ARemoteCmdExecutor {
 			}
 		} else if (StringUtils.equals(params[0], Options.status.name())) {
 			result = new Result(true, ResponseCreator.addParamValue(
-				"", "application", (App.running() ? "running" : "not running")));
+				"", "application", (AppControl.appRunning() ? "running" : "not running")));
 		} else if (StringUtils.equals(params[0], Options.stop.name())) {
 			if (!MainActivity.exists()) {
 				result = new Result(false, "application already stopped");
@@ -86,7 +86,7 @@ public class RemoteCmdApp extends ARemoteCmdExecutor {
 				if (params.length == 2) { 
 					timeoutInSecs = Integer.valueOf(params[1]);
 				} 
-				ExitService.markAsExit(timeoutInSecs * 1000L);
+				AppControl.exitApp(timeoutInSecs * 1000);
 				result = new Result(true, "application stopped");
 			}
 		}

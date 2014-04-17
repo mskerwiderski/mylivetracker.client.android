@@ -1,7 +1,7 @@
 package de.msk.mylivetracker.client.android.upload;
 
+import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.R;
-import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.upload.protocol.IProtocol;
 
 /**
@@ -36,6 +36,6 @@ public class DummyUploader extends AbstractUploader {
 			Thread.currentThread().interrupt();				
 		}
 		return new UploadResult(true, SIMULATED_UPLOAD_TIME_IN_MSECS, 1, 
-			MainActivity.get().getString(R.string.txMain_UploadResultOk));
+			App.getCtx().getString(R.string.txMain_UploadResultOk));
 	}
 }

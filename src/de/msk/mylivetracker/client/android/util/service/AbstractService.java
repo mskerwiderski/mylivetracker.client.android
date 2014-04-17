@@ -1,8 +1,6 @@
 package de.msk.mylivetracker.client.android.util.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -34,34 +32,38 @@ import de.msk.mylivetracker.client.android.util.LogUtils;
  */
 public abstract class AbstractService extends Service {
 
+	private static final String RUN_SERVICE_ONLY_ONCE = "RUN_SERVICE_ONLY_ONCE";
+	
 	private AbstractServiceThread thread = null;
 	
-	private static Map<Class<? extends AbstractService>, Boolean> serviceStatus = 
-		new HashMap<Class<? extends AbstractService>, Boolean>();
-	
-	public static void startService(Class<? extends AbstractService> serviceClass) {
-		if (((serviceStatus.get(serviceClass) != null) && serviceStatus.get(serviceClass)) || 
-			isServiceRunning(serviceClass)) {
+	private static void startServiceAux(Class<? extends AbstractService> serviceClass, 
+		boolean runServiceOnlyOnce) {
+		if (isServiceRunning(serviceClass)) {
 			LogUtils.info(serviceClass, "service is already running.");
 		} else {
-			App.getCtx().startService(
-				new Intent(App.getCtx(), serviceClass));
+			Intent serviceIntent = new Intent(App.getCtx(), serviceClass);
+			serviceIntent.putExtra(RUN_SERVICE_ONLY_ONCE, runServiceOnlyOnce);
+			App.getCtx().startService(serviceIntent);
 			waitStartStopServiceDone(serviceClass, true);
-			serviceStatus.put(serviceClass, Boolean.TRUE);
 			LogUtils.info(serviceClass, "service successfully started.");
 		}
 	}
 	
+	public static void runServiceOnlyOnce(Class<? extends AbstractService> serviceClass) {
+		startServiceAux(serviceClass, true);
+	}
+	
+	public static void startService(Class<? extends AbstractService> serviceClass) {
+		startServiceAux(serviceClass, false);
+	}
+	
 	public static void stopService(Class<? extends AbstractService> serviceClass) {
-		if ((serviceStatus.get(serviceClass) == null) || 
-			!serviceStatus.get(serviceClass) || 
-			!isServiceRunning(serviceClass)) {
+		if (!isServiceRunning(serviceClass)) {
 			LogUtils.info(serviceClass, "service is not running.");
 		} else {
 			App.getCtx().stopService(
 				new Intent(App.getCtx(), serviceClass));
 			waitStartStopServiceDone(serviceClass, false);
-			serviceStatus.put(serviceClass, Boolean.FALSE);
 			LogUtils.info(serviceClass, "service successfully stopped.");
 		}
 	}
@@ -88,10 +90,12 @@ public abstract class AbstractService extends Service {
 	    return found;
 	}
 	
-	public abstract Class<? extends AbstractServiceThread> getServiceThreadClass();
+	protected abstract Class<? extends AbstractServiceThread> getServiceThreadClass();
 
-	public AbstractServiceThread createServiceThread() throws Exception {
-		return this.getServiceThreadClass().newInstance();
+	protected AbstractServiceThread createServiceThread(boolean runOnlyOnce) throws Exception {
+		AbstractServiceThread serviceThread = this.getServiceThreadClass().newInstance();
+		serviceThread.setRunOnlyOnce(runOnlyOnce);
+		return serviceThread;
 	}
 	
 	public static class NotificationDsc {
@@ -113,12 +117,16 @@ public abstract class AbstractService extends Service {
 	
 	protected static class MessageFromServiceThreadHandler extends Handler {
 	}
-	
+
+	protected static final int MSG_STOP_SERVICE = -1;
 	private MessageFromServiceThreadHandler messageFromServiceThreadHandler = 
 		new MessageFromServiceThreadHandler() {
 			@Override
 			public void handleMessage(Message msg) {
 				onReceiveMessage(msg);
+				if ((msg != null) && (msg.what == MSG_STOP_SERVICE)) {
+					stopSelf();
+				}
 			}
 	};
 	
@@ -147,7 +155,8 @@ public abstract class AbstractService extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		NotificationDsc notificationDsc = getNotificationDsc();
-		if (notificationDsc != null) {
+		MainActivity activity = MainActivity.get();
+		if ((activity != null) && (notificationDsc != null)) {
 			Context ctx = App.getCtx();
 			CharSequence contentTitle = ctx.getText(notificationDsc.titleId);
 			CharSequence contentText = ctx.getText(notificationDsc.messageId);
@@ -159,10 +168,11 @@ public abstract class AbstractService extends Service {
 				MainActivity.get(), 0, notificationIntent, 0);
 			notification.setLatestEventInfo(ctx, contentTitle, contentText, contentIntent);
 			this.startForeground(notificationDsc.notificationId, notification);
-		}
+		} 
 		if (this.thread == null) {
 			try {
-				this.thread = this.createServiceThread();
+				this.thread = this.createServiceThread(
+					intent.getExtras().getBoolean(RUN_SERVICE_ONLY_ONCE, false));
 				this.thread.initThreadObject(this.messageFromServiceThreadHandler);
 				this.thread.start();
 			} catch (Exception e) {

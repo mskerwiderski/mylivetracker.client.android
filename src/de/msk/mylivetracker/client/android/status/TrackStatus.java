@@ -16,8 +16,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 
 import de.msk.mylivetracker.client.android.App;
-import de.msk.mylivetracker.client.android.battery.BatteryReceiver;
-import de.msk.mylivetracker.client.android.phonestate.PhoneStateListener;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
 /**
@@ -93,7 +91,7 @@ public class TrackStatus implements Serializable {
 		editor.commit();			
 	}
 	
-	public static void loadTrackStatus() {
+	private static void loadTrackStatus() {
 		if (trackStatus != null) return;
 		try {
 			SharedPreferences prefs = App.get().
@@ -143,12 +141,17 @@ public class TrackStatus implements Serializable {
 		saveTrackStatus();
 	}
 	
+	private static boolean inResettingState = false;
+	
+	public static boolean isInResettingState() {
+		return inResettingState;
+	}
+	
 	public static void reset() {
+		inResettingState = true;
 		String lastAntPlusStatus = (trackStatus != null) ? trackStatus.antPlusStatus : null;
 		float mileageInMtr = (trackStatus != null) ? trackStatus.mileageInMtr : 0.0f;
 		float trackDistanceInMtr = 0.0f;
-		PhoneStateListener.stop();
-		BatteryReceiver.stop();
 		if ((trackStatus != null) && !StringUtils.isEmpty(trackStatus.logFileName)) {
 			App.get().deleteFile(trackStatus.logFileName);
 		}
@@ -167,9 +170,8 @@ public class TrackStatus implements Serializable {
 		EmergencySignalInfo.reset();
 		MessageInfo.reset();
 		UploadInfo.reset();
-		BatteryReceiver.start();
-		PhoneStateListener.start();			
 		saveTrackStatus();
+		inResettingState = false;
 	}		
 
 	public String getTrackId() {

@@ -1,5 +1,7 @@
 package de.msk.mylivetracker.client.android.util;
 
+import org.apache.commons.lang3.StringUtils;
+
 import android.content.Context;
 import android.location.LocationManager;
 import de.msk.mylivetracker.client.android.App;
@@ -22,23 +24,33 @@ public class LocationManagerUtils {
 			getSystemService(Context.LOCATION_SERVICE);
 	}
 	
+	private static boolean providerAvailable(String provider, boolean checkEnabled) {
+		if (StringUtils.isEmpty(provider)) {
+			throw new IllegalArgumentException("provider must not be empty.");
+		}
+		boolean result = false;
+		LocationManager locationManager = (LocationManager)
+			App.get().getSystemService(Context.LOCATION_SERVICE);
+		if ((locationManager != null) && 
+			(locationManager.getProvider(provider) != null)) {
+			result = checkEnabled ? locationManager.isProviderEnabled(provider) : true;
+		}
+		return result;
+	}
+	
 	public static boolean networkProviderSupported() {
-		return (getLocationManager().getProvider(
-			LocationManager.NETWORK_PROVIDER) != null); 
+		return providerAvailable(LocationManager.NETWORK_PROVIDER, false); 
 	}
 	
 	public static boolean gpsProviderSupported() {
-		return (getLocationManager().getProvider(
-			LocationManager.GPS_PROVIDER) != null); 
+		return providerAvailable(LocationManager.GPS_PROVIDER, false); 
 	}
 	
 	public static boolean networkProviderEnabled() {
-		return getLocationManager().isProviderEnabled(
-			LocationManager.NETWORK_PROVIDER); 
+		return providerAvailable(LocationManager.NETWORK_PROVIDER, true); 
 	}
 	
 	public static boolean gpsProviderEnabled() {
-		return getLocationManager().isProviderEnabled(
-			LocationManager.GPS_PROVIDER); 
+		return providerAvailable(LocationManager.GPS_PROVIDER, true); 
 	}
 }

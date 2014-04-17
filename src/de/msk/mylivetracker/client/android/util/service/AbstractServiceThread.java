@@ -16,8 +16,7 @@ import de.msk.mylivetracker.client.android.util.LogUtils;
  */
 public abstract class AbstractServiceThread extends Thread {
 
-	private volatile boolean stop = false;
-	private volatile boolean terminated = false;
+	private boolean runOnlyOnce = false;
 	private Handler handler = null;
 	
 	public void sendMessage(int what) {
@@ -28,13 +27,15 @@ public abstract class AbstractServiceThread extends Thread {
 		this.handler = handler;
 	}
 	
+	private volatile boolean stopThread = false;
+	
 	public void stopAndWaitUntilTerminated() {
 		if (!this.isAlive() || this.isInterrupted()) {
 			return;
 		}
 		LogUtils.info(this.getClass(), "stopAndWaitUntilTerminated...");
-		this.stop = true;
 		boolean interrupted = false;
+		this.stopThread = true;
 		while (this.isAlive() && !interrupted) {
 			try {
 				Thread.sleep(50);
@@ -47,45 +48,43 @@ public abstract class AbstractServiceThread extends Thread {
 
 	@Override
 	public void run() {
-		if (this.terminated) {
-			throw new RuntimeException("thread already terminated.");
-		}
-		if (!this.stop) {
+		if (!this.stopThread) {
 			try {
 				this.init();
 			} catch (InterruptedException e) {
-				this.stop = true;
+				this.stopThread = true;
 				LogUtils.info(this.getClass(), "init interrupted.");
 			}
 		}
-		if (!this.stop) {
-			try {
-				while (!this.stop) {
-					this.runSinglePass();
-					if (this.runOnlyOneSinglePass()) {
-						this.stop = true;
-					} else {
-						Thread.sleep(this.getSleepAfterRunSinglePassInMSecs());
-					}
-				}
-			} catch (InterruptedException e) {
-				this.stop = true;
-				LogUtils.info(this.getClass(), "runSinglePass interrupted.");
-			} finally {
-				this.stop = true;
-				this.cleanUp();
-				LogUtils.info(this.getClass(), "cleanUp executed.");
+		int loopCounter = 0;
+		try {
+			while (!this.stopThread && !this.doStopService() && 
+				!(this.runOnlyOnce && (loopCounter > 0))) {
+				this.runSinglePass();
+				loopCounter++;
+				Thread.sleep(this.getSleepAfterRunSinglePassInMSecs());
 			}
+		} catch (InterruptedException e) {
+			LogUtils.info(this.getClass(), "runSinglePass interrupted.");
+		} finally {
+			this.cleanUp();
+			LogUtils.info(this.getClass(), "cleanUp executed.");
 		}
 		
-		this.terminated = true;
+		this.sendMessage(AbstractService.MSG_STOP_SERVICE);
 	}
 	
 	public abstract void init() throws InterruptedException;
 	public abstract void runSinglePass() throws InterruptedException;
 	public abstract long getSleepAfterRunSinglePassInMSecs();
 	public abstract void cleanUp();
-	public boolean runOnlyOneSinglePass() {
+	public boolean doStopService() {
 		return false;
+	}
+	protected void setRunOnlyOnce(boolean runOnlyOnce) {
+		this.runOnlyOnce = runOnlyOnce;
+	}
+	protected boolean isRunOnlyOnce() {
+		return runOnlyOnce;
 	}
 }

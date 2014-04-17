@@ -22,6 +22,11 @@ public abstract class APrefs implements IPrefs {
 		// noop.
 	}
 	
+	@Override
+	public boolean checkIfValid() {
+		return true;
+	}
+
 	public String getPrefsDumpAsStr(boolean oneLine) {
 		PrefsDump prefsDump = this.getPrefsDump();
 		String res = prefsDump.name +

@@ -4,13 +4,13 @@ import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
 
+import de.msk.mylivetracker.client.android.appcontrol.AppControl;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.status.UploadInfo;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.TrackingMode;
-import de.msk.mylivetracker.client.android.util.TrackUtils;
 import de.msk.mylivetracker.client.android.util.service.AbstractServiceThread;
 
 /**
@@ -52,7 +52,7 @@ public class CheckpointServiceThread extends AbstractServiceThread {
 		boolean validPositionFound = false;
 		boolean uploadDone = false;
 		
-		if (status.trackIsRunning() && 
+		if (AppControl.trackIsRunning() && 
 			trackingModePrefs.getTrackingMode().equals(TrackingMode.Checkpoint)) {
 			// check if maximum period time for getting a valid position has been expired.
 			if ((new Date()).getTime() >
@@ -86,7 +86,7 @@ public class CheckpointServiceThread extends AbstractServiceThread {
 			}
 			
 			if (periodExpired || (validPositionFound && uploadDone)) {
-				TrackUtils.stopTrack();
+				AppControl.stopTrack();
 			}
 			
 			this.init();

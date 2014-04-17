@@ -25,18 +25,10 @@ public class UploadServiceThread extends AbstractServiceThread {
 	private boolean doUpload;
 	private long lastUploaded;
 	private LastInfoDsc lastInfoDsc;
-	private boolean runOnlyOneSinglePass;
-	
-	public UploadServiceThread() {
-		this.runOnlyOneSinglePass = false;
-	}
-	public UploadServiceThread(boolean runOnlyOneSinglePass) {
-		this.runOnlyOneSinglePass = runOnlyOneSinglePass;
-	}
 	
 	@Override
 	public void init() throws InterruptedException {
-		if (!this.runOnlyOneSinglePass) {
+		if (!this.isRunOnlyOnce()) {
 			TrackStatus.get().markAsStarted();
 		}
 		this.uploader = Uploader.createUploader();
@@ -49,7 +41,7 @@ public class UploadServiceThread extends AbstractServiceThread {
 	public void runSinglePass() throws InterruptedException {
 		ProtocolPrefs prefs = PrefsRegistry.get(ProtocolPrefs.class);
 		LocationInfo locationInfo = LocationInfo.get();
-		if (!this.doUpload && this.runOnlyOneSinglePass) {
+		if (!this.doUpload && this.isRunOnlyOnce()) {
 			this.doUpload = true;
 		}
 		if (!this.doUpload && 
@@ -105,13 +97,14 @@ public class UploadServiceThread extends AbstractServiceThread {
 
 	@Override
 	public void cleanUp() {
-		if (!this.runOnlyOneSinglePass) {
+		if (!this.isRunOnlyOnce()) {
 			TrackStatus.get().markAsStopped();
 		}
 	}
 
 	@Override
-	public boolean runOnlyOneSinglePass() {
-		return runOnlyOneSinglePass;
+	public boolean doStopService() {
+		// TODO Auto-generated method stub
+		return super.doStopService();
 	}
 }

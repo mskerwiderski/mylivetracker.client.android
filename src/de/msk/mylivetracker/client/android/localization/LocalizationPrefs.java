@@ -2,9 +2,6 @@ package de.msk.mylivetracker.client.android.localization;
 
 import java.io.Serializable;
 
-import android.content.Context;
-import android.location.LocationManager;
-import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.preferences.APrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsDumper.ConfigPair;
 import de.msk.mylivetracker.client.android.preferences.PrefsDumper.PrefsDump;
@@ -30,7 +27,8 @@ public class LocalizationPrefs extends APrefs implements Serializable {
 	public enum LocalizationMode {
 		gps("GPS", true, false),
 		network("Network", false, true),
-		gpsAndNetwork("GPS and Network", true, true);
+		gpsAndNetwork("GPS and Network", true, true),
+		none("None", false, false);
 		
 		private String dsc;
 		private boolean gpsProviderEnabled;
@@ -85,15 +83,24 @@ public class LocalizationPrefs extends APrefs implements Serializable {
 	public int getVersion() {
 		return VERSION;
 	}	
+	
+	@Override
+	public boolean checkIfValid() {
+		return this.localizationMode.supported();
+	}
+
 	@Override
 	public void initWithDefaults() {
-		LocationManager locationManager = (LocationManager)
-			App.get().getSystemService(Context.LOCATION_SERVICE);
-		if ((locationManager == null) || 
-			(locationManager.getProvider(LocationManager.GPS_PROVIDER) == null)) {
+		boolean gpsProviderSupported = LocationManagerUtils.gpsProviderSupported();
+		boolean networkProviderSupported = LocationManagerUtils.networkProviderSupported();
+		if (gpsProviderSupported && networkProviderSupported) {
+			this.localizationMode = LocalizationMode.gpsAndNetwork;
+		} else if (gpsProviderSupported) {
+			this.localizationMode = LocalizationMode.gps;
+		} else if (networkProviderSupported) {
 			this.localizationMode = LocalizationMode.network;
 		} else {
-			this.localizationMode = LocalizationMode.gpsAndNetwork;
+			this.localizationMode = LocalizationMode.none;
 		}
 		this.timeTriggerInSeconds = 0;
 		this.distanceTriggerInMeter = 0;

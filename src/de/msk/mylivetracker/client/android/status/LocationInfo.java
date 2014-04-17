@@ -33,6 +33,7 @@ public class LocationInfo extends AbstractInfo implements Serializable {
 	private static LocationInfo locationInfo = null;
 	
 	public static void update(Location location) {
+		if (TrackStatus.isInResettingState()) return;
 		// positions from network provider are only used,
 		// if there is no valid position from gps provider.
 		boolean use = true;
@@ -182,7 +183,7 @@ public class LocationInfo extends AbstractInfo implements Serializable {
 		if (periodOfRestInSecs == 0) {
 			periodOfRestInSecs = 5;
 		} else {
-			int addon = Math.round(periodOfRestInSecs * 1.1f);
+			int addon = Math.round(periodOfRestInSecs * 1.2f);
 			if (addon < 5) {
 				addon = 5;
 			}

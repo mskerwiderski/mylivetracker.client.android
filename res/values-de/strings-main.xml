@@ -39,6 +39,10 @@
     <string name="txMain_InfoStopLocalizationDone">Lokalisierung gestoppt!</string>
     <string name="txMain_QuestionStartAntPlus">Wollen Sie Ant+ wirklich aktivieren?</string>
     <string name="txMain_QuestionStopAntPlus">Wollen Sie Ant+ wirklich deaktivieren?</string>
+    <string name="txMain_InfoStartingAntPlus">Ant+ wird gestartet&#8230;</string>
+    <string name="txMain_InfoStartAntPlusDone">Ant+ gestartet!</string>
+    <string name="txMain_InfoStoppingAntPlus">Ant+ wird gestoppt&#8230;</string>
+    <string name="txMain_InfoStopAntPlusDone">Ant+ gestoppt!</string>
     <string name="txMain_QuestionResetTrack">Wollen Sie den Track wirklich zurücksetzen?</string>
     <string name="txMain_InfoResettingTracking">Der Track wird zurückgesetzt&#8230;</string>
     <string name="txMain_InfoResetTrackDone">Der Track wurde zurückgesetzt!</string>               

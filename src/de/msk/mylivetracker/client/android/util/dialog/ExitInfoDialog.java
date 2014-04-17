@@ -1,7 +1,7 @@
 package de.msk.mylivetracker.client.android.util.dialog;
 
-import de.msk.mylivetracker.client.android.exit.ExitService;
 import android.content.Context;
+import de.msk.mylivetracker.client.android.appcontrol.AppControl;
 
 /**
  * classname: ExitInfoDialog
@@ -45,6 +45,6 @@ public class ExitInfoDialog extends AbstractInfoDialog {
 
 	@Override
 	public void onOk() {
-		ExitService.markAsExit(0);
+		AppControl.exitApp(100);
 	}
 }

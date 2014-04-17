@@ -13,12 +13,13 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import android.content.BroadcastReceiver;
-import de.msk.mylivetracker.client.android.App;
+import de.msk.mylivetracker.client.android.appcontrol.AppControl;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdApp;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdConfig;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdHeartrate;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdHelp;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdLocalization;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdPhoneState;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdStatus;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdTracking;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdUpload;
@@ -72,6 +73,8 @@ public abstract class ARemoteCmdReceiver extends BroadcastReceiver {
 			new CmdPackage(new RemoteCmdUpload.CmdDsc(), RemoteCmdUpload.class));
 		cmdRegistry.put(StringUtils.lowerCase(RemoteCmdStatus.NAME), 
 			new CmdPackage(new RemoteCmdStatus.CmdDsc(), RemoteCmdStatus.class));
+		cmdRegistry.put(StringUtils.lowerCase(RemoteCmdPhoneState.NAME), 
+			new CmdPackage(new RemoteCmdPhoneState.CmdDsc(), RemoteCmdPhoneState.class));
 		cmdRegistry.put(StringUtils.lowerCase(RemoteCmdApp.NAME), 
 			new CmdPackage(new RemoteCmdApp.CmdDsc(), RemoteCmdApp.class));
 	}
@@ -140,7 +143,7 @@ public abstract class ARemoteCmdReceiver extends BroadcastReceiver {
 				response = "unknown command";
 			} else {
 				CmdPackage cmdPackage = getCmdExecutor(messageParts[0]);
-				if (cmdPackage.dsc.isNeedsAppRunning() && !App.running()) {
+				if (cmdPackage.dsc.isNeedsAppRunning() && !AppControl.appRunning()) {
 					response = "command needs app running (please start app first)";
 				} else {
 					String[] params = new String[0];

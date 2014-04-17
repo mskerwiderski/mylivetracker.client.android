@@ -6,11 +6,11 @@ import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.appcontrol.AppControl;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdDsc;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdExecutor;
 import de.msk.mylivetracker.client.android.remoteaccess.ResponseCreator;
 import de.msk.mylivetracker.client.android.util.LogUtils;
-import de.msk.mylivetracker.client.android.util.TrackUtils;
 
 /**
  * classname: RemoteCmdTracking
@@ -37,7 +37,8 @@ public class RemoteCmdTracking extends ARemoteCmdExecutor {
 		public CmdDsc() {
 			super(NAME, 
 				SYNTAX, 1, 1, 
-				R.string.txRemoteCommand_Tracking, true);
+				R.string.txRemoteCommand_Tracking, 
+				false);
 		}
 
 		@Override
@@ -56,14 +57,20 @@ public class RemoteCmdTracking extends ARemoteCmdExecutor {
 		String cmd = params[0];
 		Result result = null; 
 		if (StringUtils.equals(cmd, Options.reset.name())) {
-			TrackUtils.resetTrack();
+			AppControl.resetTrack();
 			result = new Result(true, "track resetted");
 		} else if (StringUtils.equals(cmd, Options.start.name())) {
-			boolean started = TrackUtils.startTrack();
-			result = new Result(true, (started ? "track started" : "track already running"));
+			boolean running = AppControl.trackIsRunning();
+			if (!running) {
+				AppControl.startTrack();
+			}
+			result = new Result(true, (!running ? "track started" : "track already running"));
 		} else if (StringUtils.equals(cmd, Options.stop.name())) {
-			boolean stopped = TrackUtils.stopTrack();
-			result = new Result(true, (stopped ? "track stopped" : "track not running"));
+			boolean running = AppControl.trackIsRunning();
+			if (running) {
+				AppControl.stopTrack();
+			}
+			result = new Result(true, (running ? "track stopped" : "track not running"));
 		}  else if (StringUtils.equals(cmd, Options.info.name())) {
 			result = ResponseCreator.getResultOfTrackInfo();
 		}

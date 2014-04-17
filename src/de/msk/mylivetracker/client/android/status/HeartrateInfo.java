@@ -20,6 +20,7 @@ public class HeartrateInfo extends AbstractInfo implements Serializable {
 	private static final long serialVersionUID = -4613427339180995270L;
 	private static HeartrateInfo heartrateInfo = null;
 	public static void update(WFHeartrateData heartrateData) {
+		if (TrackStatus.isInResettingState()) return;
 		heartrateInfo = 
 			HeartrateInfo.createNewHeartrateInfo(heartrateInfo, heartrateData);
 	}

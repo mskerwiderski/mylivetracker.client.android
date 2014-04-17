@@ -9,6 +9,7 @@
     	<item>GPS</item>
         <item>Network</item>
         <item>GPS and Network as fallback</item>
+        <item>None</item>
     </string-array>
     
     <string-array name="transferProtocols">

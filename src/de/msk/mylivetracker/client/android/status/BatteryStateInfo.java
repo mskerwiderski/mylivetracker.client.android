@@ -34,6 +34,7 @@ public class BatteryStateInfo extends AbstractInfo implements Serializable {
 	private static BatteryStateInfo batteryStateInfo = null;
 	public static void update(State state,
 		Integer percent, Integer degrees, Double voltage) {
+		if (TrackStatus.isInResettingState()) return;
 		batteryStateInfo = 
 			BatteryStateInfo.createNewBatteryStateInfo(
 				batteryStateInfo, state, 

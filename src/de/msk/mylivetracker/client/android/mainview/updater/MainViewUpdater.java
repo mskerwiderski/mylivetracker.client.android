@@ -3,10 +3,14 @@ package de.msk.mylivetracker.client.android.mainview.updater;
 import org.apache.commons.lang3.StringUtils;
 
 import android.content.res.Resources;
+import android.os.SystemClock;
+import android.widget.Chronometer;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
+import de.msk.mylivetracker.client.android.appcontrol.AppControl;
 import de.msk.mylivetracker.client.android.localization.LocalizationPrefs;
 import de.msk.mylivetracker.client.android.localization.LocalizationService;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
@@ -144,6 +148,22 @@ public class MainViewUpdater extends AViewUpdater {
 			phoneStateInfo.getNetworkType(UpdaterUtils.getNoValue()) : UpdaterUtils.getNoValue());
 		setIndicatorTextAndColors(tvMobileNetworkIndicator, mobNwStr, 
 			ConnectivityUtils.isDataConnectionAvailable() ? IndicatorState.Ok : IndicatorState.NotOk);
+		
+		// toggle buttons
+		((ToggleButton)mainActivity.findViewById(R.id.btMain_StartStopTrack)).
+			setChecked(AppControl.trackIsRunning());
+		((ToggleButton)mainActivity.findViewById(R.id.btMain_LocationListenerOnOff)).
+			setChecked(AppControl.localizationIsRunning());
+		if (AppControl.antPlusDetectionIsAvailable()) {
+			((ToggleButton)mainActivity.findViewById(R.id.btMain_ConnectDisconnectAnt)).
+				setChecked(AppControl.antPlusDetectionIsRunning());
+		}
+		
+		// chronometer
+		Chronometer chronometer = (Chronometer)mainActivity.findViewById(R.id.tvMain_Runtime);
+		chronometer.setBase(
+			SystemClock.elapsedRealtime() -
+			TrackStatus.get().getRuntimeInMSecs(false));
 		
 		// track distance
 		TextView tvDistance = UpdaterUtils.tv(mainActivity, R.id.tvMain_Distance);

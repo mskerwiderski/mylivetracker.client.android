@@ -23,30 +23,56 @@ public abstract class AbstractProgressDialog<T extends Activity> {
 	public void doTask(final T activity) {}
 	public void cleanUp(final T activity) {}
 	
-	public void beforeTask() {}
-	public void doTask() {}
-	public void cleanUp() {}
-	
 	private static final int NO_MESSAGE_ID = -1;
 	private static final int SLEEP_BEFORE_RUN_TASK_IN_MSECS = 50;
 	
-	public void run() {
-		this.run(null, NO_MESSAGE_ID, NO_MESSAGE_ID);
+	private static class CleanUpHandler extends Handler {
 	}
 	
-	public void run(final T activity) {
-		this.run(activity, NO_MESSAGE_ID, NO_MESSAGE_ID);
+	private class TaskRunner implements Runnable {
+
+		@SuppressWarnings("rawtypes")
+		private AbstractProgressDialog dialog;
+		private Activity activity;
+		private int progressMsgId;
+		private int doneMsgId;
+
+		@SuppressWarnings({ "rawtypes" })
+		public TaskRunner(AbstractProgressDialog dialog, Activity activity,
+			int progressMsgId, int doneMsgId) {
+			this.dialog = dialog;
+			this.activity = activity;
+			this.progressMsgId = progressMsgId;
+			this.doneMsgId = doneMsgId;
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public void run() {
+			dialog.run(activity, progressMsgId, doneMsgId);
+		}
+		
+	}
+	
+	public void runOnUiThread(final T activity, final int progressMsgId) {
+		this.runOnUiThread(activity, progressMsgId, NO_MESSAGE_ID);
+	}
+	
+	public void runOnUiThread(final T activity, final int progressMsgId, final int doneMsgId) {
+		if (activity == null) {
+			throw new IllegalArgumentException("activity must not be null.");
+		}
+		activity.runOnUiThread(new TaskRunner(this, activity, progressMsgId, doneMsgId));
 	}
 	
 	public void run(final T activity, final int progressMsgId) {
 		this.run(activity, progressMsgId, NO_MESSAGE_ID);
 	}
 	
-	private static class CleanUpHandler extends Handler {
-	}
-	
 	public void run(final T activity, final int progressMsgId, final int doneMsgId) {
-				
+		if (activity == null) {
+			throw new IllegalArgumentException("activity must not be null.");
+		}
 		String progressMessage = 
 			((activity != null) && (progressMsgId != NO_MESSAGE_ID)) ?
 			activity.getText(progressMsgId).toString() : null;		
@@ -61,13 +87,11 @@ public abstract class AbstractProgressDialog<T extends Activity> {
 			public void handleMessage(Message msg) {
 				if (activity != null) {
 					cleanUp(activity);
-				} else {
-					cleanUp();
-				}
+				} 
 				if (dialog != null) {
 					dialog.dismiss();
 				}
-				if ((activity != null) && (doneMsgId != NO_MESSAGE_ID)) {
+				if (doneMsgId != NO_MESSAGE_ID) {
 					Toast.makeText(activity.getApplicationContext(), 
 						activity.getString(doneMsgId),
 						Toast.LENGTH_SHORT).show();
@@ -83,17 +107,11 @@ public abstract class AbstractProgressDialog<T extends Activity> {
 				}
 				if (activity != null) {
 					doTask(activity);
-				} else {
-					doTask();
-				}
+				} 
 				handler.sendEmptyMessage(0);
 		    }
 		};
-		if (activity != null) {
-			this.beforeTask(activity);
-		} else {
-			this.beforeTask();
-		}
+		this.beforeTask(activity);
 		taskThread.start();	
 	}
 }

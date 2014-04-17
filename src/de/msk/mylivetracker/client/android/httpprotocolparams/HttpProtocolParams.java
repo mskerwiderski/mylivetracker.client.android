@@ -74,6 +74,7 @@ public class HttpProtocolParams implements Serializable {
 	}
 
 	public static HttpProtocolParams create() {
+		LogUtils.infoMethodIn(HttpProtocolParams.class, "create");
 		HttpProtocolParams httpProtocolParams = new HttpProtocolParams();
 		httpProtocolParams.params.add(new HttpProtocolParamDsc(
 			R.string.txHttpProtocolParamsPrefs_ParamNameTimestamp,
@@ -235,12 +236,15 @@ public class HttpProtocolParams implements Serializable {
 			R.string.txHttpProtocolParamsPrefs_ParamNameLocalAreaCode,
 			R.string.txHttpProtocolParamsPrefs_ParamValueExampleLocalAreaCode, 
 			true));
+		LogUtils.infoMethodOut(HttpProtocolParams.class, "create", httpProtocolParams.params.size());
 		return httpProtocolParams;
 	}
 	
 	public HttpProtocolParams copy() {
 		LogUtils.infoMethodIn(this.getClass(), "copy");
+		LogUtils.infoMethodState(this.getClass(), "copy", "size of original", this.params.size());
 		HttpProtocolParams httpProtocolParams = new HttpProtocolParams();
+		httpProtocolParams.params.clear();
 		for (HttpProtocolParamDsc dsc : this.params) {
 			httpProtocolParams.params.add(dsc.copy());
 			LogUtils.infoMethodState(this.getClass(), "copy", "param", dsc);

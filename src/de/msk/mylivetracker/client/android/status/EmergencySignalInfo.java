@@ -19,6 +19,7 @@ public class EmergencySignalInfo extends AbstractInfo implements Serializable {
 	private static EmergencySignalInfo emergencySignalInfo = null;
 	
 	public static void update(boolean activated) {
+		if (TrackStatus.isInResettingState()) return;
 		emergencySignalInfo = 
 			EmergencySignalInfo.createNewEmergencySignalInfo(activated);
 	}

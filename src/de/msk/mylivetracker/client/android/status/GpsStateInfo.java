@@ -19,6 +19,7 @@ public class GpsStateInfo extends AbstractInfo implements Serializable {
 	private static GpsStateInfo gpsStateInfo = null;
 	
 	public static void update(int countSatellites) {
+		if (TrackStatus.isInResettingState()) return;
 		gpsStateInfo = 
 			GpsStateInfo.createNewGpsStateInfo(gpsStateInfo, countSatellites);
 	}

@@ -64,6 +64,7 @@ public class PositionBufferInfo extends AbstractInfo implements Serializable {
 	}
 		
 	public void add(String dataStr) {
+		if (TrackStatus.isInResettingState()) return;
 		if (!StringUtils.isEmpty(dataStr)) {
 			this.internalBuffer.add(dataStr);
 			Integer bufferSize = getBufferSize();

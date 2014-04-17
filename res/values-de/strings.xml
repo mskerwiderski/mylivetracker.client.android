@@ -5,7 +5,10 @@
         	 
     <!-- Welcome message -->
     <string name="welcomeMessage">Willkommen zu %1$s. Wenn Sie Fragen haben oder Unterstützung benötigen, besuchen Sie uns doch im Forum unter http://forum.mylivetracker.info!</string>
-       
+    
+    <!-- Location provides not supported -->
+    <string name="locationProvidersNotSupported">Warnung: %1$s kann keinen Lokalisierungsservice finden. Bitte kontaktieren Sie uns unter http://forum.mylivetracker.info!</string>
+    
     <!-- Exit progress message -->
     <string name="exitProgressMessage">Anwendung wird beendet&#8230;</string>
     

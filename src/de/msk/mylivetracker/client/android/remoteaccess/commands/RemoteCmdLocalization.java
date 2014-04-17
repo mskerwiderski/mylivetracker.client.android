@@ -5,13 +5,11 @@ import java.util.Date;
 import org.apache.commons.lang3.StringUtils;
 
 import de.msk.mylivetracker.client.android.R;
-import de.msk.mylivetracker.client.android.localization.LocalizationService;
+import de.msk.mylivetracker.client.android.appcontrol.AppControl;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdDsc;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdExecutor;
 import de.msk.mylivetracker.client.android.remoteaccess.ResponseCreator;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
-import de.msk.mylivetracker.client.android.util.LocalizationUtils;
-import de.msk.mylivetracker.client.android.util.service.AbstractService;
 
 /**
  * classname: RemoteCmdLocalization
@@ -43,7 +41,8 @@ public class RemoteCmdLocalization extends ARemoteCmdExecutor {
 
 		public CmdDsc() {
 			super(NAME, SYNTAX, 1, 3, 
-				R.string.txRemoteCommand_Localization);
+				R.string.txRemoteCommand_Localization, 
+				false);
 		}
 
 		@Override
@@ -98,17 +97,17 @@ public class RemoteCmdLocalization extends ARemoteCmdExecutor {
 	public Result executeCmdAndCreateResponse(String... params) {
 		Result result = null;
 		boolean localizationFoundActive = 
-			AbstractService.isServiceRunning(LocalizationService.class);
+			AppControl.localizationIsRunning();
 		if (StringUtils.equals(params[0], Options.start.name())) {
 			if (!localizationFoundActive) {
-				LocalizationUtils.startLocalization();
+				AppControl.startLocalization();
 				result = new Result(true, "localization started");
 			} else {
 				result = new Result(true, "localization already running");
 			}
 		} else if (StringUtils.equals(params[0], Options.stop.name())) {
 			if (localizationFoundActive) {
-				LocalizationUtils.stopLocalization();
+				AppControl.stopLocalization();
 				result = new Result(true, "localization stopped");
 			} else {
 				result = new Result(true, "localization already stopped");
@@ -126,7 +125,7 @@ public class RemoteCmdLocalization extends ARemoteCmdExecutor {
 			
 			if (detect) {
 				if (!localizationFoundActive) {
-					LocalizationUtils.startLocalization();
+					AppControl.startLocalization();
 				}
 				
 				long curr = (new Date()).getTime();
@@ -149,7 +148,7 @@ public class RemoteCmdLocalization extends ARemoteCmdExecutor {
 				}
 				
 				if (!localizationFoundActive) {
-					LocalizationUtils.stopLocalization();
+					AppControl.stopLocalization();
 				}			
 			}
 			result = ResponseCreator.getResultOfGetLocation(LocationInfo.get(), accurate);

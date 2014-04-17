@@ -16,8 +16,8 @@ import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry.InitResult;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.util.FileUtils;
-import de.msk.mylivetracker.client.android.util.LogUtils;
 import de.msk.mylivetracker.client.android.util.FileUtils.PathType;
+import de.msk.mylivetracker.client.android.util.LogUtils;
 
 /**
  * classname: App
@@ -261,9 +261,6 @@ public class App extends Application {
 		Intent intent = new Intent(context, MainActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(intent);
-	}
-	public static boolean running() {
-		return (MainActivity.exists());
 	}
 	private static final String VERSION_CODE_VAR = "versionCode";
 	public static void resetApp() {

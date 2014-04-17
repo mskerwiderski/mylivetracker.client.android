@@ -23,6 +23,7 @@ public class UploadInfo extends AbstractInfo implements Serializable {
 	public static void update(Boolean status, String resultCode,	
 		Integer positionsUploaded, Long uploadTimeInMSecs,
 		String lastUsedLocationProvider) {
+		if (TrackStatus.isInResettingState()) return;
 		uploadInfo = createNewUploadInfo(uploadInfo, 
 			status, resultCode, positionsUploaded, 
 			uploadTimeInMSecs, lastUsedLocationProvider);

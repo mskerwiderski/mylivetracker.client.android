@@ -25,23 +25,41 @@ public class BatteryReceiver extends BroadcastReceiver {
 
 	private static BatteryReceiver batteryReceiver = null;
 	
-	public static void start() {
-		if (batteryReceiver == null) {
+	public static boolean isRegistered() {
+		return (batteryReceiver != null);
+	}
+	
+	public static void register() {
+		if (isRegistered()) {
+			throw new IllegalStateException("batteryReceiver already registered.");
+		} else {
 			batteryReceiver = new BatteryReceiver();
 			IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
 	        App.getCtx().registerReceiver(batteryReceiver, filter);
 		}
 	}
 	
-	public static void stop() {
-		if (batteryReceiver != null) {
+	public static void unregister() {
+		if (!isRegistered()) {
+			throw new IllegalStateException("batteryReceiver not registered.");
+		} else {
 			App.getCtx().unregisterReceiver(batteryReceiver);
 			batteryReceiver = null;
 		}
 	}
 	
+	public static void updateBatteryStateInfo() {
+		IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+		Intent intent = App.getCtx().registerReceiver(null,filter);
+		updateBatteryStateInfo(intent);
+	}
+	
 	@Override
 	public void onReceive(Context context, Intent intent) {
+		updateBatteryStateInfo(intent);
+	}
+	
+	private static void updateBatteryStateInfo(Intent intent) {
 		int istate = intent.getIntExtra(BatteryManager.EXTRA_STATUS, 
 			BatteryManager.BATTERY_STATUS_UNKNOWN);
 		int ilevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);

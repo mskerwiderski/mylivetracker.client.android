@@ -48,14 +48,6 @@ public class ResponseCreator {
 		return "device is not connected to dropbox";
 	}
 	
-	public static String getResultOfHeartrateDetectionNotSupported() {
-		return "heartrate detection not supported on this device";
-	}
-	
-	public static String getResultOfHeartrateDetectionNotEnabled() {
-		return "heartrate detection not enabled on this device";
-	}
-	
 	public static Result getResultOfTrackInfo() {
 		boolean success = true;
 		String str = "";

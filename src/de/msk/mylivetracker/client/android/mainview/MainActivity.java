@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Chronometer;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -15,22 +13,17 @@ import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.antplus.AntPlusHardware;
 import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
-import de.msk.mylivetracker.client.android.auto.AutoService;
-import de.msk.mylivetracker.client.android.battery.BatteryReceiver;
-import de.msk.mylivetracker.client.android.checkpoint.CheckpointService;
-import de.msk.mylivetracker.client.android.exit.ExitService;
+import de.msk.mylivetracker.client.android.appcontrol.AppControl;
 import de.msk.mylivetracker.client.android.localization.LocalizationService;
 import de.msk.mylivetracker.client.android.mainview.updater.MainViewUpdater;
 import de.msk.mylivetracker.client.android.mainview.updater.UpdaterUtils;
-import de.msk.mylivetracker.client.android.mainview.updater.ViewUpdateService;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
-import de.msk.mylivetracker.client.android.phonestate.PhoneStateListener;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry.InitResult;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.TrackingMode;
-import de.msk.mylivetracker.client.android.upload.UploadService;
+import de.msk.mylivetracker.client.android.util.LocationManagerUtils;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractInfoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
 import de.msk.mylivetracker.client.android.util.service.AbstractService;
@@ -77,6 +70,8 @@ public class MainActivity extends AbstractMainActivity {
 				SimpleInfoDialog.show(activity, R.string.prefsImportedFromV144);
 			} else if (App.getInitPrefsResult().equals(InitResult.PrefsUpdatedFromV150)) {
 				SimpleInfoDialog.show(activity, R.string.prefsUpdated);
+			} else if (App.getInitPrefsResult().equals(InitResult.PrefsUpdatedFromV160)) {
+				SimpleInfoDialog.show(activity, R.string.prefsUpdated);
 			} else if (App.getInitPrefsResult().equals(InitResult.PrefsCreated)) {
 				SimpleInfoDialog.show(activity, R.string.prefsCreated);
 			} else if (App.getInitPrefsResult().equals(InitResult.PrefsUpdated)) {
@@ -91,26 +86,18 @@ public class MainActivity extends AbstractMainActivity {
         setContentView(R.layout.main);
         mainActivity = this;         
         this.setTitle(R.string.tiMain);
-        TrackStatus.loadTrackStatus();
-        
-        //AntPlusHardware.init(this.getLastNonConfigurationInstance(), savedInstanceState);
-
+        AppControl.startApp();
         this.onResume();
         
-        PhoneStateListener.start();
-        BatteryReceiver.start();
-                
         ToggleButton btMain_StartStopTrack = (ToggleButton)
 			findViewById(R.id.btMain_StartStopTrack);
     	btMain_StartStopTrack.setOnClickListener(
-			new OnClickButtonStartStopListener(
-				btMain_StartStopTrack));
+			new OnClickButtonStartStopListener());
     	
     	ToggleButton btMain_LocationListenerOnOff = (ToggleButton)
 			findViewById(R.id.btMain_LocationListenerOnOff);
     	btMain_LocationListenerOnOff.setOnClickListener(
-			new OnClickButtonLocationListenerOnOffListener(
-				btMain_LocationListenerOnOff));
+			new OnClickButtonLocationListenerOnOffListener());
     	
     	Button btMain_ResetTrack = (Button)
 			findViewById(R.id.btMain_ResetTrack);
@@ -189,10 +176,12 @@ public class MainActivity extends AbstractMainActivity {
 				R.string.welcomeMessage, App.getAppNameComplete());
 		}
 		
-		AbstractService.startService(AutoService.class);
-		AbstractService.startService(CheckpointService.class);
-		AbstractService.startService(ViewUpdateService.class);
-		AbstractService.startService(ExitService.class);
+		if (!LocationManagerUtils.gpsProviderSupported() &&
+			!LocationManagerUtils.networkProviderSupported()) {
+			SimpleInfoDialog.show(this, 
+				R.string.locationProvidersNotSupported, 
+				App.getAppName());
+		}
     }	
 	
 	public static void destroy() {
@@ -204,19 +193,6 @@ public class MainActivity extends AbstractMainActivity {
 	
 	@Override
 	protected void onDestroy() {
-		AbstractService.stopService(ExitService.class);
-		AbstractService.stopService(ViewUpdateService.class);
-		AbstractService.stopService(CheckpointService.class);
-		AbstractService.stopService(AutoService.class);		
-		AbstractService.stopService(UploadService.class);
-		AbstractService.stopService(LocalizationService.class);
-		AntPlusManager.stop();
-		BatteryReceiver.stop();
-		PhoneStateListener.stop();
-		Chronometer chronometer = (Chronometer)
-        	this.findViewById(R.id.tvMain_Runtime);
-		chronometer.stop();			
-		chronometer.setBase(SystemClock.elapsedRealtime());
 		TrackStatus.saveTrackStatus();
 		super.onDestroy();
 	}
@@ -224,9 +200,6 @@ public class MainActivity extends AbstractMainActivity {
 	@Override
 	protected void onPause() {		
 		super.onPause();
-		Chronometer chronometer = (Chronometer)
-        	this.findViewById(R.id.tvMain_Runtime);
-		chronometer.stop();
 		TrackStatus.saveTrackStatus();		
 	}
 	
@@ -234,19 +207,7 @@ public class MainActivity extends AbstractMainActivity {
 	protected void onResume() {
 		super.onResume();
 		AntPlusHardware.checkConnection();
-		TrackStatus.loadTrackStatus();
-		TrackStatus trackStatus = TrackStatus.get();
 		
-		boolean isRunning = trackStatus.trackIsRunning();
-		
-        Chronometer chronometer = (Chronometer)
-        	this.findViewById(R.id.tvMain_Runtime);
-       	chronometer.setBase(SystemClock.elapsedRealtime() -
-			trackStatus.getRuntimeInMSecs(false));
-        if (isRunning) {        
-    		chronometer.start();
-        }		
-        
         ToggleButton btMain_StartStopTrack = (ToggleButton)
 			findViewById(R.id.btMain_StartStopTrack);
     	ToggleButton btMain_LocationListenerOnOff = (ToggleButton)

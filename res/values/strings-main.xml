@@ -38,6 +38,10 @@
     <string name="txMain_InfoStopLocalizationDone">Stop localization done!</string>
     <string name="txMain_QuestionStartAntPlus">Do you really want to activate Ant+?</string>
     <string name="txMain_QuestionStopAntPlus">Do you really want to deactivate Ant+?</string>
+    <string name="txMain_InfoStartingAntPlus">Starting Ant+&#8230;</string>
+    <string name="txMain_InfoStartAntPlusDone">Start Ant+ done!</string>
+    <string name="txMain_InfoStoppingAntPlus">Stopping Ant+&#8230;</string>
+    <string name="txMain_InfoStopAntPlusDone">Stop Ant+ done!</string>
     <string name="txMain_QuestionResetTrack">Do you really want to reset the track?</string>
     <string name="txMain_InfoResettingTracking">Resetting the track&#8230;</string>
     <string name="txMain_InfoResetTrackDone">Reset track done!</string>               

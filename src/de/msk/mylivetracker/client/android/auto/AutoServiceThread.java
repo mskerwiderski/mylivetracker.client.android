@@ -4,11 +4,11 @@ import java.util.TimeZone;
 
 import org.apache.commons.lang3.StringUtils;
 
+import de.msk.mylivetracker.client.android.appcontrol.AppControl;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
-import de.msk.mylivetracker.client.android.util.TrackUtils;
 import de.msk.mylivetracker.client.android.util.service.AbstractServiceThread;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;
 
@@ -38,14 +38,14 @@ public class AutoServiceThread extends AbstractServiceThread {
 			batteryStateInfo.fullOrCharging();
 		if (TrackingModePrefs.isAuto()) {
 			if (battFullOrCharging &&
-				!status.trackIsRunning()) {
+				!AppControl.trackIsRunning()) {
 				if (trackIsExpired()) {
-					TrackUtils.resetTrack();
+					AppControl.resetTrack();
 				}
-				TrackUtils.startTrack();
+				AppControl.startTrack();
 			} else if (!battFullOrCharging && 
-				status.trackIsRunning()) {
-				TrackUtils.stopTrack();
+				AppControl.trackIsRunning()) {
+				AppControl.stopTrack();
 				status.updateLastAutoModeStopSignalReceived();
 			}
 		} 

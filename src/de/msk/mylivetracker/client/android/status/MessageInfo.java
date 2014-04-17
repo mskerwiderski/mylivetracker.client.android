@@ -19,6 +19,7 @@ public class MessageInfo extends AbstractInfo implements Serializable {
 	private static MessageInfo messageInfo = null;
 	
 	public static void update(String message) {
+		if (TrackStatus.isInResettingState()) return;
 		messageInfo = 
 			MessageInfo.createNewMessageInfo(
 				messageInfo, message);
