@@ -8,5 +8,7 @@
     <string name="txRemoteCommand_Heartrate">startet oder stoppt die Herzfrequenzerkennung oder gibt Informationen über die letzte oder aktuelle Herzfrequenzmessung zurück</string>
     <string name="txRemoteCommand_Config">gibt die gesetzten Einstellungen einer Sektion zurück</string>
     <string name="txRemoteCommand_Status">gibt den Status der Services zurück (Tracking, Lokalisierung, Herzfrequenzerkennung)</string>
+    <string name="txRemoteCommand_Battery">gibt den Status der Batterie zurück (Status, Kapazität, Spannung und Temperatur)</string>
+    <string name="txRemoteCommand_MobNwCell">gibt Informationen über die genutzte Mobilfunkzelle zurück</string>
     <string name="txRemoteCommand_App">startet oder stoppt die Anwendung oder gibt den Status der Anwendung zurück</string>
 </resources>

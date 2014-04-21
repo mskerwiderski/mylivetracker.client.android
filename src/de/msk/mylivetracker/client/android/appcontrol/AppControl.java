@@ -68,7 +68,8 @@ public class AppControl {
 	private static void resetTrackAux() {
 		AbstractService.stopService(UploadService.class);
 		stopLocalizationAux();
-		if (antPlusDetectionIsAvailable()) {
+		if (antPlusDetectionIsAvailable() && 
+			antPlusDetectionIsRunning()) {
 			stopAntPlusDetectionAux();
 		}
 		TrackStatus.reset();

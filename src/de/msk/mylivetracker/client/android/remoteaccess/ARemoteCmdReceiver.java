@@ -19,7 +19,8 @@ import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdConfig
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdHeartrate;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdHelp;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdLocalization;
-import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdPhoneState;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdBattery;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdMobNwCell;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdStatus;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdTracking;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdUpload;
@@ -73,8 +74,10 @@ public abstract class ARemoteCmdReceiver extends BroadcastReceiver {
 			new CmdPackage(new RemoteCmdUpload.CmdDsc(), RemoteCmdUpload.class));
 		cmdRegistry.put(StringUtils.lowerCase(RemoteCmdStatus.NAME), 
 			new CmdPackage(new RemoteCmdStatus.CmdDsc(), RemoteCmdStatus.class));
-		cmdRegistry.put(StringUtils.lowerCase(RemoteCmdPhoneState.NAME), 
-			new CmdPackage(new RemoteCmdPhoneState.CmdDsc(), RemoteCmdPhoneState.class));
+		cmdRegistry.put(StringUtils.lowerCase(RemoteCmdBattery.NAME), 
+			new CmdPackage(new RemoteCmdBattery.CmdDsc(), RemoteCmdBattery.class));
+		cmdRegistry.put(StringUtils.lowerCase(RemoteCmdMobNwCell.NAME), 
+			new CmdPackage(new RemoteCmdMobNwCell.CmdDsc(), RemoteCmdMobNwCell.class));
 		cmdRegistry.put(StringUtils.lowerCase(RemoteCmdApp.NAME), 
 			new CmdPackage(new RemoteCmdApp.CmdDsc(), RemoteCmdApp.class));
 	}

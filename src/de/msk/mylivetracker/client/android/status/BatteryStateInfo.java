@@ -17,17 +17,22 @@ public class BatteryStateInfo extends AbstractInfo implements Serializable {
 	private static final long serialVersionUID = 1017373978215679750L;
 
 	public enum State {
-		Charging("CHG"), 
-		Discharging("DCHG"), 
-		NotCharging("NCHG"), 
-		Full("FULL"), 
-		Unknown("UKWN");
+		Charging("CHG", "charging"), 
+		Discharging("DCHG", "discharging"), 
+		NotCharging("NCHG", "not charging"), 
+		Full("FULL", "full"), 
+		Unknown("UKWN", "unknown");
 		String abbr;
-		private State(String abbr) {
+		String label;
+		private State(String abbr, String label) {
 			this.abbr = abbr;
+			this.label = label;
 		}
 		public String getAbbr() {
 			return abbr;
+		}
+		public String getLabel() {
+			return label;
 		}
 	};
 	
