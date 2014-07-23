@@ -4,7 +4,6 @@ import android.os.SystemClock;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
-import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.upload.Uploader.LastInfoDsc;
 import de.msk.mylivetracker.client.android.util.service.AbstractServiceThread;
 
@@ -28,9 +27,6 @@ public class UploadServiceThread extends AbstractServiceThread {
 	
 	@Override
 	public void init() throws InterruptedException {
-		if (!this.isRunOnlyOnce()) {
-			TrackStatus.get().markAsStarted();
-		}
 		this.uploader = Uploader.createUploader();
 		this.doUpload = true;
 		this.lastUploaded = SystemClock.elapsedRealtime();
@@ -97,9 +93,6 @@ public class UploadServiceThread extends AbstractServiceThread {
 
 	@Override
 	public void cleanUp() {
-		if (!this.isRunOnlyOnce()) {
-			TrackStatus.get().markAsStopped();
-		}
 	}
 
 	@Override

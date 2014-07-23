@@ -1,5 +1,8 @@
 package de.msk.mylivetracker.client.android.preferences.prefsv160;
 
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
+import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
+
 
 /**
  * classname: PrefsV160Updater
@@ -15,6 +18,8 @@ package de.msk.mylivetracker.client.android.preferences.prefsv160;
 public class PrefsV160Updater {
 
 	public static boolean run() {
+		TrackingModePrefs trackingModePrefs = PrefsRegistry.get(TrackingModePrefs.class);
+		trackingModePrefs.setCountdownInSecs(0);
 		return true;
 	}
 }

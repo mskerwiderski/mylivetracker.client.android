@@ -16,6 +16,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 
 import de.msk.mylivetracker.client.android.App;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
+import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
 /**
@@ -45,6 +47,7 @@ public class TrackStatus implements Serializable {
 	private String antPlusHeartrateStatus = null;
 	private Float mileageInMtr = 0.0f;		
 	private Long lastAutoModeStopSignalReceived = null;
+	private Long markerCountdownStarted = null;
 	
 	private static TrackStatus trackStatus;
 		
@@ -190,6 +193,35 @@ public class TrackStatus implements Serializable {
 		return (new Date()).getTime();
 	}
 	
+	public boolean countdownIsActive() {
+		boolean active = false;
+		if (TrackingModePrefs.isStandard() && 
+			(this.markerCountdownStarted != null)) {
+			active = 
+				(getElapsedTimeInMSecs() - 
+				this.markerCountdownStarted) <=
+				PrefsRegistry.get(TrackingModePrefs.class).
+					getCountdownInSecs() * 1000L;
+		}
+		return active;
+	}
+	
+	public int getCountdownLeftInSecs() {
+		int secs = 0;
+		if (TrackingModePrefs.isStandard() && 
+			(this.markerCountdownStarted != null)) {
+			long msecs = 
+				PrefsRegistry.get(TrackingModePrefs.class).
+				getCountdownInSecs() * 1000L - 
+				(getElapsedTimeInMSecs() - 
+				this.markerCountdownStarted);
+			if (msecs > 0) {
+				secs = (int)(msecs / 1000);
+			}
+		}
+		return secs;
+	}
+	
 	public void markAsStarted() {
 		if (!this.trackIsRunning()) {
 			this.markerLastStarted = getElapsedTimeInMSecs();
@@ -198,6 +230,8 @@ public class TrackStatus implements Serializable {
 					this.markerLastStarted;
 			}
 		}
+		this.markerCountdownStarted = 
+			getElapsedTimeInMSecs();
 	}
 	
 	public void markAsStopped() {

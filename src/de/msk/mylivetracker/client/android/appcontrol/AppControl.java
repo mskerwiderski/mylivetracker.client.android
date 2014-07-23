@@ -127,6 +127,7 @@ public class AppControl {
 			!AbstractService.isServiceRunning(CheckpointService.class)) {
 			AbstractService.startService(CheckpointService.class);
 		}
+		TrackStatus.get().markAsStarted();
 	}
 	
 	public static void startTrack() {
@@ -167,6 +168,7 @@ public class AppControl {
 		if (AbstractService.isServiceRunning(UploadService.class)) {
 			AbstractService.stopService(UploadService.class);
 		}
+		TrackStatus.get().markAsStopped();
 		TrackingOneTouchMode mode = 
 			PrefsRegistry.get(OtherPrefs.class).
 			getTrackingOneTouchMode();

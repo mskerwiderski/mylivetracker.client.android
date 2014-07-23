@@ -103,11 +103,18 @@ public class MainViewUpdater extends AViewUpdater {
 		// auto start indicator
 		TextView tvAutoStartIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_AutoStartIndicator);
 		setIndicatorTextAndColors(tvAutoStartIndicator, 
-			(otherPrefs.isAutoStartApp() ? 
-				res.getText(R.string.tvOn).toString() : 
+			(status.countdownIsActive() ? 
+				String.valueOf(status.getCountdownLeftInSecs()) : 
 				res.getText(R.string.tvOff).toString()), 
-			otherPrefs.isAutoStartApp() ? 
-				IndicatorState.Ok : IndicatorState.Off);
+			status.countdownIsActive() ? 
+				IndicatorState.Ok : IndicatorState.Off);	
+			
+//		setIndicatorTextAndColors(tvAutoStartIndicator, 
+//			(otherPrefs.isAutoStartApp() ? 
+//				res.getText(R.string.tvOn).toString() : 
+//				res.getText(R.string.tvOff).toString()), 
+//			otherPrefs.isAutoStartApp() ? 
+//				IndicatorState.Ok : IndicatorState.Off);
 				
 		// tracking mode indicator
 		TextView tvAutoModeIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_TrackingModeIndicator);

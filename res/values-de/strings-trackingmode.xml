@@ -3,6 +3,9 @@
     <string name="tiTrackingModePrefs">Einstellungen Tracking Modus</string>
     <string name="fdTrackingModePrefs_TrackingMode">Tracking Modus</string>
     <string name="lbTrackingModePrefs_TrackingMode">Tracking Modus</string>
+    <string name="txTrackingModePrefs_OptionsOnlyForTrackingStandardMode">Folgende Optionen sind nur im Tracking Modus \'Standard\' relevant:</string>
+    <string name="fdTrackingModePrefs_CountdownInSecs">Countdown</string>
+    <string name="lbTrackingModePrefs_CountdownInSecs">Countdown (Sek.)</string>
     <string name="txTrackingModePrefs_OptionsOnlyForTrackingCheckpointMode">Folgende Optionen sind nur im Tracking Modus \'Checkpoint\' relevant:</string>
     <string name="fdTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs">Max. Karenzzeit für gültigen Checkpoint</string>
     <string name="lbTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs">Max. Karenzzeit für gültigen Checkpoint (Sek.)</string>
