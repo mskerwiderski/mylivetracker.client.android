@@ -5,7 +5,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
@@ -19,6 +18,7 @@ import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
 import de.msk.mylivetracker.client.android.util.LogUtils;
+import de.msk.mylivetracker.client.android.util.TimeUtils;
 
 /**
  * classname: TrackStatus
@@ -189,21 +189,9 @@ public class TrackStatus implements Serializable {
 		return this.markerLastStarted != null;
 	}
 	
-	private static long getElapsedTimeInMSecs() {
-		return (new Date()).getTime();
-	}
-	
 	public boolean countdownIsActive() {
-		boolean active = false;
-		if (TrackingModePrefs.isStandard() && 
-			(this.markerCountdownStarted != null)) {
-			active = 
-				(getElapsedTimeInMSecs() - 
-				this.markerCountdownStarted) <=
-				PrefsRegistry.get(TrackingModePrefs.class).
-					getCountdownInSecs() * 1000L;
-		}
-		return active;
+		return this.trackIsRunning() && 
+			(getCountdownLeftInSecs() > 0);
 	}
 	
 	public int getCountdownLeftInSecs() {
@@ -213,32 +201,38 @@ public class TrackStatus implements Serializable {
 			long msecs = 
 				PrefsRegistry.get(TrackingModePrefs.class).
 				getCountdownInSecs() * 1000L - 
-				(getElapsedTimeInMSecs() - 
+				(TimeUtils.getElapsedTimeInMSecs() - 
 				this.markerCountdownStarted);
 			if (msecs > 0) {
-				secs = (int)(msecs / 1000);
+				secs = Math.round(msecs / 1000);
 			}
 		}
 		return secs;
 	}
 	
 	public void markAsStarted() {
+		long curr = TimeUtils.getElapsedTimeInMSecs();
 		if (!this.trackIsRunning()) {
-			this.markerLastStarted = getElapsedTimeInMSecs();
+			this.markerLastStarted = 
+				curr + 
+				PrefsRegistry.get(TrackingModePrefs.class).
+				getCountdownInSecs() * 1000L;
 			if (this.markerFirstStarted == null) {
 				this.markerFirstStarted = 
 					this.markerLastStarted;
 			}
 		}
-		this.markerCountdownStarted = 
-			getElapsedTimeInMSecs();
+		this.markerCountdownStarted = curr;
 	}
 	
 	public void markAsStopped() {
 		if (this.trackIsRunning()) {
-			this.runtimeAfterLastStopInMSecs +=
-				getElapsedTimeInMSecs() -
-				this.markerLastStarted;			
+			long curr = TimeUtils.getElapsedTimeInMSecs();
+			// check if countdown was canceled.
+			if (this.markerLastStarted < curr) {
+				this.runtimeAfterLastStopInMSecs +=
+					curr - this.markerLastStarted;
+			}
 			this.markerLastStarted = null;
 		}		
 	}
@@ -278,14 +272,14 @@ public class TrackStatus implements Serializable {
 				this.runtimeAfterLastStopInMSecs;
 			if (this.trackIsRunning()) {
 				runtimeInMSecs += 
-					getElapsedTimeInMSecs() -
+					TimeUtils.getElapsedTimeInMSecs() -
 					this.markerLastStarted;
 			}
 		} else {
 			if ((this.markerFirstStarted != null) && 
 				(this.markerFirstStarted > 0)) {
 				runtimeInMSecs = 
-					getElapsedTimeInMSecs() -
+					TimeUtils.getElapsedTimeInMSecs() -
 					this.markerFirstStarted;
 			} 
 		}
@@ -342,6 +336,7 @@ public class TrackStatus implements Serializable {
 	}
 
 	public void updateLastAutoModeStopSignalReceived() {
-		this.lastAutoModeStopSignalReceived = getElapsedTimeInMSecs();
+		this.lastAutoModeStopSignalReceived = 
+			TimeUtils.getElapsedTimeInMSecs();
 	}
 }

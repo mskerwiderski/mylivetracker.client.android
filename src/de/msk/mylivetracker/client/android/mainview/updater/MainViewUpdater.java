@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import android.content.res.Resources;
 import android.os.SystemClock;
+import android.view.View;
 import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -66,12 +67,13 @@ public class MainViewUpdater extends AViewUpdater {
 			LocationInfo.getProviderAbbr(locationInfo) + ")";
 	}
 	
-	private enum IndicatorState {
+	private enum ColorState {
 		Ok(R.color.colorIndicatorOk), 
 		Off(R.color.colorIndicatorOff), 
-		NotOk(R.color.colorIndicatorNotOk);
+		NotOk(R.color.colorIndicatorNotOk),
+		Attention(R.color.colorYellow);
 		private int color;
-		private IndicatorState(int color) {
+		private ColorState(int color) {
 			this.color = color;
 		}
 		public int getColor() {
@@ -79,12 +81,15 @@ public class MainViewUpdater extends AViewUpdater {
 		}
 	}
 	
-	public static void setIndicatorTextAndColors(TextView tv, String text, IndicatorState state) {
+	public static void setTextAndBackgroundColor(View tv, String text, ColorState state) {
 		MainActivity mainActivity = MainActivity.get();					
 		Resources res = mainActivity.getResources();
-		tv.setText(text);
-		tv.setBackgroundColor(
-			res.getColor(state.getColor()));
+		if (text != null) {
+			((TextView)tv).setText(text);
+		}
+		if (state != null) {
+			tv.setBackgroundColor(res.getColor(state.getColor()));
+		}
 	}
 	
 	@Override
@@ -99,30 +104,23 @@ public class MainViewUpdater extends AViewUpdater {
 		LocationInfo locationInfo = LocationInfo.get();
 		HeartrateInfo heartrateInfo = HeartrateInfo.get();
 		UploadInfo uploadInfo = UploadInfo.get();
-		
+
 		// auto start indicator
 		TextView tvAutoStartIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_AutoStartIndicator);
-		setIndicatorTextAndColors(tvAutoStartIndicator, 
-			(status.countdownIsActive() ? 
-				String.valueOf(status.getCountdownLeftInSecs()) : 
+		setTextAndBackgroundColor(tvAutoStartIndicator, 
+			(otherPrefs.isAutoStartApp() ? 
+				res.getText(R.string.tvOn).toString() : 
 				res.getText(R.string.tvOff).toString()), 
-			status.countdownIsActive() ? 
-				IndicatorState.Ok : IndicatorState.Off);	
-			
-//		setIndicatorTextAndColors(tvAutoStartIndicator, 
-//			(otherPrefs.isAutoStartApp() ? 
-//				res.getText(R.string.tvOn).toString() : 
-//				res.getText(R.string.tvOff).toString()), 
-//			otherPrefs.isAutoStartApp() ? 
-//				IndicatorState.Ok : IndicatorState.Off);
+			otherPrefs.isAutoStartApp() ? 
+				ColorState.Ok : ColorState.Off);
 				
 		// tracking mode indicator
 		TextView tvAutoModeIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_TrackingModeIndicator);
-		setIndicatorTextAndColors(tvAutoModeIndicator,
+		setTextAndBackgroundColor(tvAutoModeIndicator,
 			App.getCtx().getResources().getStringArray(R.array.trackingModeAbbr)
 				[trackingModePrefs.getTrackingMode().ordinal()],	
 			trackingModePrefs.getTrackingMode().equals(TrackingMode.Auto) ? 
-				IndicatorState.Ok : IndicatorState.Off);
+				ColorState.Ok : ColorState.Off);
 		
 		// gps indicator			
 		TextView tvLocalizationIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_LocalizationIndicator);
@@ -136,25 +134,25 @@ public class MainViewUpdater extends AViewUpdater {
 		} else if (gpsOn && nwOn) {
 			locIndStr = "GPS/Nw";
 		}
-		setIndicatorTextAndColors(tvLocalizationIndicator, locIndStr, 
-			!(!gpsOn && !nwOn) ? IndicatorState.Ok : IndicatorState.NotOk);
+		setTextAndBackgroundColor(tvLocalizationIndicator, locIndStr, 
+			!(!gpsOn && !nwOn) ? ColorState.Ok : ColorState.NotOk);
 		
 		// wireless lan indicator			
 		TextView tvWirelessLanIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_WirelessLanIndicator);
 		boolean wifiEnabled = ConnectivityUtils.isWifiEnabled();
-		setIndicatorTextAndColors(tvWirelessLanIndicator,
+		setTextAndBackgroundColor(tvWirelessLanIndicator,
 			(wifiEnabled ? 
 				res.getText(R.string.tvOn).toString() : 
 				res.getText(R.string.tvOff).toString()),
-				wifiEnabled ? IndicatorState.Ok : IndicatorState.Off);
+				wifiEnabled ? ColorState.Ok : ColorState.Off);
 		
 		// mobile network indicator			
 		TextView tvMobileNetworkIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_MobileNetworkIndicator);
 		PhoneStateInfo phoneStateInfo = PhoneStateInfo.get();
 		String mobNwStr = (phoneStateInfo != null ? 
 			phoneStateInfo.getNetworkType(UpdaterUtils.getNoValue()) : UpdaterUtils.getNoValue());
-		setIndicatorTextAndColors(tvMobileNetworkIndicator, mobNwStr, 
-			ConnectivityUtils.isDataConnectionAvailable() ? IndicatorState.Ok : IndicatorState.NotOk);
+		setTextAndBackgroundColor(tvMobileNetworkIndicator, mobNwStr, 
+			ConnectivityUtils.isDataConnectionAvailable() ? ColorState.Ok : ColorState.NotOk);
 		
 		// toggle buttons
 		((ToggleButton)mainActivity.findViewById(R.id.btMain_StartStopTrack)).
@@ -167,11 +165,21 @@ public class MainViewUpdater extends AViewUpdater {
 		}
 		
 		// chronometer
-		Chronometer chronometer = (Chronometer)mainActivity.findViewById(R.id.tvMain_Runtime);
-		chronometer.setBase(
-			SystemClock.elapsedRealtime() -
-			TrackStatus.get().getRuntimeInMSecs(false));
-		
+		View tvRuntime = mainActivity.findViewById(R.id.tvMain_Runtime);
+		if (!status.countdownIsActive()) {
+			Chronometer chronometer = (Chronometer)tvRuntime;
+			chronometer.setBase(
+				SystemClock.elapsedRealtime() -
+				TrackStatus.get().getRuntimeInMSecs(false));
+			setTextAndBackgroundColor(tvRuntime, 
+				null, ColorState.Ok);
+		} else {
+			// countdown indicator
+			setTextAndBackgroundColor(tvRuntime, 
+				String.valueOf(status.getCountdownLeftInSecs()), 
+				ColorState.Attention);
+		}
+
 		// track distance
 		TextView tvDistance = UpdaterUtils.tv(mainActivity, R.id.tvMain_Distance);
 		Float trackDistanceInMtr = status.getTrackDistanceInMtr();

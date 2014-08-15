@@ -4,6 +4,7 @@ import android.os.SystemClock;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
+import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.upload.Uploader.LastInfoDsc;
 import de.msk.mylivetracker.client.android.util.service.AbstractServiceThread;
 
@@ -79,7 +80,7 @@ public class UploadServiceThread extends AbstractServiceThread {
 				this.doUpload = timeConditionFulfilled || distanceConditionFulfilled;
 			}
 		}
-		if (this.doUpload) {
+		if (this.doUpload && !TrackStatus.get().countdownIsActive()) {
 			Uploader.upload(this.uploader, this.lastInfoDsc);
 			lastUploaded = SystemClock.elapsedRealtime();
 			doUpload = false;
