@@ -3,9 +3,7 @@ package de.msk.mylivetracker.client.android.mainview.updater;
 import org.apache.commons.lang3.StringUtils;
 
 import android.content.res.Resources;
-import android.os.SystemClock;
 import android.view.View;
-import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 import de.msk.mylivetracker.client.android.App;
@@ -27,6 +25,7 @@ import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.Tracki
 import de.msk.mylivetracker.client.android.util.ConnectivityUtils;
 import de.msk.mylivetracker.client.android.util.FormatUtils.Unit;
 import de.msk.mylivetracker.client.android.util.LocationManagerUtils;
+import de.msk.mylivetracker.client.android.util.TimeUtils;
 import de.msk.mylivetracker.client.android.util.service.AbstractService;
 
 /**
@@ -68,10 +67,13 @@ public class MainViewUpdater extends AViewUpdater {
 	}
 	
 	private enum ColorState {
-		Ok(R.color.colorIndicatorOk), 
-		Off(R.color.colorIndicatorOff), 
-		NotOk(R.color.colorIndicatorNotOk),
-		Attention(R.color.colorYellow);
+		IndicatorOk(R.color.colorIndicatorOk), 
+		IndicatorOff(R.color.colorIndicatorOff), 
+		IndicatorNotOk(R.color.colorIndicatorNotOk),
+		ChronometerOff(R.color.colorChronometerOff),
+		ChronometerCountdown(R.color.colorChronometerCountdown),
+		ChronometerRunning(R.color.colorChronometerRunning);
+		
 		private int color;
 		private ColorState(int color) {
 			this.color = color;
@@ -112,7 +114,7 @@ public class MainViewUpdater extends AViewUpdater {
 				res.getText(R.string.tvOn).toString() : 
 				res.getText(R.string.tvOff).toString()), 
 			otherPrefs.isAutoStartApp() ? 
-				ColorState.Ok : ColorState.Off);
+				ColorState.IndicatorOk : ColorState.IndicatorOff);
 				
 		// tracking mode indicator
 		TextView tvAutoModeIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_TrackingModeIndicator);
@@ -120,7 +122,7 @@ public class MainViewUpdater extends AViewUpdater {
 			App.getCtx().getResources().getStringArray(R.array.trackingModeAbbr)
 				[trackingModePrefs.getTrackingMode().ordinal()],	
 			trackingModePrefs.getTrackingMode().equals(TrackingMode.Auto) ? 
-				ColorState.Ok : ColorState.Off);
+				ColorState.IndicatorOk : ColorState.IndicatorOff);
 		
 		// gps indicator			
 		TextView tvLocalizationIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_LocalizationIndicator);
@@ -135,7 +137,9 @@ public class MainViewUpdater extends AViewUpdater {
 			locIndStr = "GPS/Nw";
 		}
 		setTextAndBackgroundColor(tvLocalizationIndicator, locIndStr, 
-			!(!gpsOn && !nwOn) ? ColorState.Ok : ColorState.NotOk);
+			!(!gpsOn && !nwOn) ? 
+				ColorState.IndicatorOk : 
+				ColorState.IndicatorNotOk);
 		
 		// wireless lan indicator			
 		TextView tvWirelessLanIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_WirelessLanIndicator);
@@ -144,7 +148,9 @@ public class MainViewUpdater extends AViewUpdater {
 			(wifiEnabled ? 
 				res.getText(R.string.tvOn).toString() : 
 				res.getText(R.string.tvOff).toString()),
-				wifiEnabled ? ColorState.Ok : ColorState.Off);
+				wifiEnabled ? 
+					ColorState.IndicatorOk : 
+					ColorState.IndicatorOff);
 		
 		// mobile network indicator			
 		TextView tvMobileNetworkIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_MobileNetworkIndicator);
@@ -152,7 +158,9 @@ public class MainViewUpdater extends AViewUpdater {
 		String mobNwStr = (phoneStateInfo != null ? 
 			phoneStateInfo.getNetworkType(UpdaterUtils.getNoValue()) : UpdaterUtils.getNoValue());
 		setTextAndBackgroundColor(tvMobileNetworkIndicator, mobNwStr, 
-			ConnectivityUtils.isDataConnectionAvailable() ? ColorState.Ok : ColorState.NotOk);
+			ConnectivityUtils.isDataConnectionAvailable() ? 
+				ColorState.IndicatorOk : 
+				ColorState.IndicatorNotOk);
 		
 		// toggle buttons
 		((ToggleButton)mainActivity.findViewById(R.id.btMain_StartStopTrack)).
@@ -166,20 +174,22 @@ public class MainViewUpdater extends AViewUpdater {
 		
 		// chronometer
 		View tvRuntime = mainActivity.findViewById(R.id.tvMain_Runtime);
-		if (!status.countdownIsActive()) {
-			Chronometer chronometer = (Chronometer)tvRuntime;
-			chronometer.setBase(
-				SystemClock.elapsedRealtime() -
-				TrackStatus.get().getRuntimeInMSecs(false));
+		if (!status.trackIsRunning()) {
 			setTextAndBackgroundColor(tvRuntime, 
-				null, ColorState.Ok);
+				TimeUtils.getTrackTimeFormatted(status.getRuntimeInMSecs(false)),
+				ColorState.ChronometerOff);
 		} else {
-			// countdown indicator
-			setTextAndBackgroundColor(tvRuntime, 
-				String.valueOf(status.getCountdownLeftInSecs()), 
-				ColorState.Attention);
+			if (!status.countdownIsActive()) {
+				setTextAndBackgroundColor(tvRuntime, 
+					TimeUtils.getTrackTimeFormatted(status.getRuntimeInMSecs(false)),
+					ColorState.ChronometerRunning);
+			} else {
+				setTextAndBackgroundColor(tvRuntime, 
+					String.valueOf(status.getCountdownLeftInSecs()), 
+					ColorState.ChronometerCountdown);
+			}
 		}
-
+		
 		// track distance
 		TextView tvDistance = UpdaterUtils.tv(mainActivity, R.id.tvMain_Distance);
 		Float trackDistanceInMtr = status.getTrackDistanceInMtr();

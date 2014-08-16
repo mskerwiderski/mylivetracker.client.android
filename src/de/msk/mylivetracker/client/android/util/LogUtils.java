@@ -61,6 +61,7 @@ public class LogUtils {
 		classes.put(RemoteCmdHeartrate.class, Boolean.TRUE);
 		classes.put(RemoteCmdStatus.class, Boolean.TRUE);
 		classes.put(RemoteCmdApp.class, Boolean.TRUE);
+		//classes.put(TimeUtils.class, Boolean.TRUE);
 	}
 
 	private static boolean isLogForClassEnabled(Class<?> clazz) {

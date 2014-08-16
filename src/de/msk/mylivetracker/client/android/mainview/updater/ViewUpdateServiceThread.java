@@ -21,7 +21,7 @@ public class ViewUpdateServiceThread extends AbstractServiceThread {
 
 	@Override
 	public long getSleepAfterRunSinglePassInMSecs() {
-		return 300;
+		return 250;
 	}
 
 	@Override
