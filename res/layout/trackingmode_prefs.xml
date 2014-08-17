@@ -55,28 +55,36 @@
         />
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/llTrackingModePrefs_CountdownInSecs"
+        android:id="@+id/llTrackingModePrefs_tvCountdownInSecs"
         android:paddingTop="15dp"
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        >    	
+        <TextView 
+            android:id="@+id/tvTrackingModePrefs_CountdownInSecs"
+            android:textSize="16sp"
+        	android:text="@string/lbTrackingModePrefs_CountdownInSecs" 
+        	android:textColor="@color/colorText"
+        	android:layout_weight="1" 
+        	android:layout_height="wrap_content" 
+        	android:layout_width="0dp" 
+        	android:gravity="left"
+        	android:paddingLeft="5dp"
+        	android:paddingRight="5dp"
+        	android:paddingBottom="3dp"
+        />
+     </LinearLayout>
+     <LinearLayout
+        android:id="@+id/llTrackingModePrefs_cbCountdownInSecs"
         android:paddingLeft="5dp"
        	android:paddingRight="5dp" 
        	android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
-        >    	
-        <TextView 
-            android:text="@string/lbTrackingModePrefs_CountdownInSecs" 
-            android:textColor="@color/colorText"
-            android:layout_height="wrap_content" 
-            android:layout_width="0dp" 
-            android:layout_weight="1"
-        />
-        <EditText 
-            android:id="@+id/etTrackingModePrefs_CountdownInSecs"
-            android:inputType="number"
-            android:text="" 
+     	>   
+        <Spinner 
+            android:id="@+id/spTrackingModePrefs_CountdownInSecs"
             android:layout_height="40dp"
-            android:layout_width="0dp" 
-            android:layout_weight="1"   
-            android:layout_gravity="center_vertical" 
+            android:layout_width="fill_parent" 
         />
     </LinearLayout>
     <!-- options for trackingmode checkpoint -->

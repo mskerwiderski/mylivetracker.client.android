@@ -13,6 +13,7 @@ import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.AutoModeResetTrackMode;
+import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.CountdownInSecs;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.TrackingMode;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
@@ -61,7 +62,7 @@ public class TrackingModePrefsActivity extends AbstractActivity {
 	private static final class OnClickButtonSaveListener extends ASafeOnClickListener {
 		private TrackingModePrefsActivity activity;
 		private Spinner spTrackingModePrefs_TrackingMode;
-		private EditText etTrackingModePrefs_CountdownInSecs;
+		private Spinner spTrackingModePrefs_CountdownInSecs;
 		private EditText etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs;
 		private EditText etTrackingModePrefs_CheckpointMessage;
 		private Spinner spTrackingModePrefs_ResetTrackMode;
@@ -69,13 +70,13 @@ public class TrackingModePrefsActivity extends AbstractActivity {
 		public OnClickButtonSaveListener(
 			TrackingModePrefsActivity activity,
 			Spinner spTrackingModePrefs_TrackingMode,
-			EditText etTrackingModePrefs_CountdownInSecs,
+			Spinner spTrackingModePrefs_CountdownInSecs,
 			EditText etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs,
 			EditText etTrackingModePrefs_CheckpointMessage,
 			Spinner spTrackingModePrefs_ResetTrackMode) {
 			this.activity = activity;
 			this.spTrackingModePrefs_TrackingMode = spTrackingModePrefs_TrackingMode;
-			this.etTrackingModePrefs_CountdownInSecs = etTrackingModePrefs_CountdownInSecs;
+			this.spTrackingModePrefs_CountdownInSecs = spTrackingModePrefs_CountdownInSecs;
 			this.etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs = etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs;
 			this.etTrackingModePrefs_CheckpointMessage = etTrackingModePrefs_CheckpointMessage;
 			this.spTrackingModePrefs_ResetTrackMode = spTrackingModePrefs_ResetTrackMode;
@@ -87,16 +88,7 @@ public class TrackingModePrefsActivity extends AbstractActivity {
 			TrackingModePrefs prefs = PrefsRegistry.get(TrackingModePrefs.class);
 			prefs.setTrackingMode(TrackingMode.values()[spTrackingModePrefs_TrackingMode.getSelectedItemPosition()]);
 			if (prefs.getTrackingMode().equals(TrackingMode.Standard)) {
-				valid = 
-					ValidatorUtils.validateEditTextNumber(
-						this.activity, 
-						R.string.fdTrackingModePrefs_CountdownInSecs, 
-						etTrackingModePrefs_CountdownInSecs, 
-						true, 3, 60, true);
-				if (valid) {
-					prefs.setCountdownInSecs(Integer.parseInt(
-						etTrackingModePrefs_CountdownInSecs.getText().toString()));
-				}
+				prefs.setCountdownInSecs(CountdownInSecs.values()[spTrackingModePrefs_CountdownInSecs.getSelectedItemPosition()]);
 			} else if (prefs.getTrackingMode().equals(TrackingMode.Checkpoint)) {
 				valid = 
 					ValidatorUtils.validateEditTextNumber(
@@ -137,7 +129,8 @@ public class TrackingModePrefsActivity extends AbstractActivity {
 			"viewAutoState=" + viewAutoState);	
 		
 		((LinearLayout)findViewById(R.id.llTrackingModePrefs_OptionsOnlyForTrackingStandardMode)).setVisibility(viewStandardState);
-		((LinearLayout)findViewById(R.id.llTrackingModePrefs_CountdownInSecs)).setVisibility(viewStandardState);
+		((LinearLayout)findViewById(R.id.llTrackingModePrefs_tvCountdownInSecs)).setVisibility(viewStandardState);
+		((LinearLayout)findViewById(R.id.llTrackingModePrefs_cbCountdownInSecs)).setVisibility(viewStandardState);
     	
 		((LinearLayout)findViewById(R.id.llTrackingModePrefs_OptionsOnlyForTrackingCheckpointMode)).setVisibility(viewCheckpointState);
 		((LinearLayout)findViewById(R.id.llTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs)).setVisibility(viewCheckpointState);
@@ -170,11 +163,14 @@ public class TrackingModePrefsActivity extends AbstractActivity {
         spTrackingModePrefs_TrackingMode.setSelection(currSelectedModeId);
         
         // options for trackingmode standard.
-        EditText etTrackingModePrefs_CountdownInSecs = 
-        	(EditText)findViewById(R.id.etTrackingModePrefs_CountdownInSecs);
-        etTrackingModePrefs_CountdownInSecs.setText(
-        	String.valueOf(prefs.getCountdownInSecs()));
-            
+        Spinner spTrackingModePrefs_CountdownInSecs = (Spinner)
+        	findViewById(R.id.spTrackingModePrefs_CountdownInSecs);
+        ArrayAdapter<?> adapterCountdownInSecs = ArrayAdapter.createFromResource(
+            this, R.array.countdownInSecs, android.R.layout.simple_spinner_item);
+        adapterCountdownInSecs.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spTrackingModePrefs_CountdownInSecs.setAdapter(adapterCountdownInSecs);
+        spTrackingModePrefs_CountdownInSecs.setSelection(prefs.getCountdownInSecs().ordinal());
+        
         // options for trackingmode checkpoint.
         EditText etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs = 
         	(EditText)findViewById(R.id.etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs);
@@ -205,7 +201,7 @@ public class TrackingModePrefsActivity extends AbstractActivity {
         btnPrefsOther_Save.setOnClickListener(
 			new OnClickButtonSaveListener(this, 
 				spTrackingModePrefs_TrackingMode,
-				etTrackingModePrefs_CountdownInSecs,
+				spTrackingModePrefs_CountdownInSecs,
 				etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs,
 				etTrackingModePrefs_CheckpointMessage,
 				spTrackingModePrefs_ResetTrackMode));		

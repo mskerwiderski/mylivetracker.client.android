@@ -200,7 +200,7 @@ public class TrackStatus implements Serializable {
 			(this.markerCountdownStarted != null)) {
 			long msecs = 
 				PrefsRegistry.get(TrackingModePrefs.class).
-				getCountdownInSecs() * 1000L - 
+				getCountdownInSecs().getVal() * 1000L - 
 				(TimeUtils.getElapsedTimeInMSecs() - 
 				this.markerCountdownStarted);
 			if (msecs > 0) {
@@ -216,7 +216,7 @@ public class TrackStatus implements Serializable {
 			this.markerLastStarted = 
 				curr + 
 				PrefsRegistry.get(TrackingModePrefs.class).
-				getCountdownInSecs() * 1000L;
+				getCountdownInSecs().getVal() * 1000L;
 			if (this.markerFirstStarted == null) {
 				this.markerFirstStarted = 
 					this.markerLastStarted;

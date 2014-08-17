@@ -58,8 +58,33 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 		}
 	};
 	
+	public enum CountdownInSecs {
+		Off("off", 0),
+		Secs5("5 seconds", 5),
+		Secs10("10 seconds", 10),
+		Secs15("15 seconds", 15),
+		Secs20("20 seconds", 20),
+		Secs30("30 seconds", 30),
+		Secs45("45 seconds", 45),
+		Min1("1 minute", 60);
+		
+		private String dsc;
+		private int val;
+		
+		private CountdownInSecs(String dsc, int val) {
+			this.dsc = dsc;
+			this.val = val;
+		}
+		public String getDsc() {
+			return dsc;
+		}
+		public int getVal() {
+			return val;
+		}
+	};
+	
 	// only for trackingmode standard.
-	private int countdownInSecs;
+	private CountdownInSecs countdownInSecs;
 	
 	// only for trackingmode checkpoint.
 	private long maxCheckpointPeriodInSecs;
@@ -75,7 +100,7 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 	@Override
 	public void initWithDefaults() {
 		this.trackingMode = TrackingMode.Standard;
-		this.countdownInSecs = 0;
+		this.countdownInSecs = CountdownInSecs.Off;
 		this.maxCheckpointPeriodInSecs = 180;
 		this.checkpointMessage = null;
 		this.autoModeResetTrackMode = AutoModeResetTrackMode.NextDay;
@@ -106,10 +131,10 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 	public void setTrackingMode(TrackingMode trackingMode) {
 		this.trackingMode = trackingMode;
 	}
-	public int getCountdownInSecs() {
+	public CountdownInSecs getCountdownInSecs() {
 		return countdownInSecs;
 	}
-	public void setCountdownInSecs(int countdownInSecs) {
+	public void setCountdownInSecs(CountdownInSecs countdownInSecs) {
 		this.countdownInSecs = countdownInSecs;
 	}
 	public long getMaxCheckpointPeriodInSecs() {

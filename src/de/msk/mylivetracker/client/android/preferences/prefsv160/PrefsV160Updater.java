@@ -2,6 +2,7 @@ package de.msk.mylivetracker.client.android.preferences.prefsv160;
 
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
+import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.CountdownInSecs;
 
 
 /**
@@ -19,7 +20,7 @@ public class PrefsV160Updater {
 
 	public static boolean run() {
 		TrackingModePrefs trackingModePrefs = PrefsRegistry.get(TrackingModePrefs.class);
-		trackingModePrefs.setCountdownInSecs(0);
+		trackingModePrefs.setCountdownInSecs(CountdownInSecs.Off);
 		return true;
 	}
 }
