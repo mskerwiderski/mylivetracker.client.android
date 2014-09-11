@@ -37,7 +37,7 @@
     <!-- options for trackingmode standard -->
     <LinearLayout
         android:id="@+id/llTrackingModePrefs_OptionsOnlyForTrackingStandardMode"
-        android:paddingTop="15dp" 
+        android:paddingTop="10dp" 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent">
         <TextView
@@ -90,7 +90,7 @@
     <!-- options for trackingmode checkpoint -->
     <LinearLayout
         android:id="@+id/llTrackingModePrefs_OptionsOnlyForTrackingCheckpointMode"
-        android:paddingTop="15dp" 
+        android:paddingTop="10dp" 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent">
         <TextView
@@ -169,7 +169,7 @@
     <!-- options for trackingmode auto -->
     <LinearLayout
         android:id="@+id/llTrackingModePrefs_OptionsOnlyForTrackingAutoMode"
-        android:paddingTop="15dp" 
+        android:paddingTop="10dp" 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent">
         <TextView
@@ -185,10 +185,43 @@
         	android:paddingRight="5dp"
         	android:paddingBottom="3dp"
         />
-    </LinearLayout>    
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/llTrackingModePrefs_cbStartAfterReboot"
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingTop="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+   	>   
+	    <CheckBox
+		    android:id="@+id/cbTrackingModePrefs_StartAfterReboot"
+		    android:text="@string/lbTrackingModePrefs_StartAfterReboot"
+		    android:layout_height="40dp" 
+	    	android:layout_width="wrap_content"
+	    	android:paddingLeft="42dp"
+	       	android:paddingRight="5dp" 
+		/>
+	</LinearLayout>    
+    <LinearLayout
+        android:id="@+id/llTrackingModePrefs_cbRunOnlyIfBattFullOrCharging"
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+   	>   
+	    <CheckBox
+		    android:id="@+id/cbTrackingModePrefs_RunOnlyIfBattFullOrCharging"
+		    android:text="@string/lbTrackingModePrefs_RunOnlyIfBattFullOrCharging"
+		    android:layout_height="40dp" 
+	    	android:layout_width="wrap_content"
+	    	android:paddingLeft="42dp"
+	       	android:paddingRight="5dp" 
+		/>
+	</LinearLayout>
     <LinearLayout
         android:id="@+id/llTrackingModePrefs_tvResetTrackMode"
-        android:paddingTop="15dp" 
+        android:paddingTop="5dp" 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent">
         <TextView

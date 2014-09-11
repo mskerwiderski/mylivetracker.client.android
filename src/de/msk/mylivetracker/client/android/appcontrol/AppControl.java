@@ -6,10 +6,12 @@ import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.antplus.AntPlusHardware;
 import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
+import de.msk.mylivetracker.client.android.auto.AutoService;
 import de.msk.mylivetracker.client.android.battery.BatteryReceiver;
 import de.msk.mylivetracker.client.android.checkpoint.CheckpointService;
 import de.msk.mylivetracker.client.android.localization.LocalizationService;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
+import de.msk.mylivetracker.client.android.mainview.updater.ViewUpdateService;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.other.OtherPrefs.TrackingOneTouchMode;
 import de.msk.mylivetracker.client.android.phonestate.PhoneStateReceiver;
@@ -34,31 +36,103 @@ import de.msk.mylivetracker.client.android.util.service.AbstractService;
  */
 public class AppControl {
 
-	private static boolean appRunning = false;
+	private enum AppStatus {
+		NotRunning, // no activity
+		RunningBase, // listening to phone state and battery, auto service running 
+		RunningComplete, // app is running completely with GUI.
+	}
 	
-	public static boolean appRunning() {
-		return appRunning;
+	private static AppStatus appStatus = AppStatus.NotRunning;
+	
+	public static boolean appNotRunning() {
+		return appStatus.equals(AppStatus.NotRunning);
+	}
+	public static boolean appRunningComplete() {
+		return appStatus.equals(AppStatus.RunningComplete);
+	}
+	public static boolean appRunningBase() {
+		return appStatus.equals(AppStatus.RunningBase);
+	}
+	
+	public static void setAppStatusRunningComplete() {
+		appStatus = AppStatus.RunningComplete;
+	}
+	
+	protected static void stopAllAppsActivities() {
+		AbstractService.stopService(ViewUpdateService.class);
+		AbstractService.stopService(AutoService.class);
+		if (AppControl.trackIsRunning()) {
+			AppControl.stopTrack();
+		}
+		if (AppControl.localizationIsRunning()) {
+			AppControl.stopLocalization();
+		}
+		if (AppControl.antPlusDetectionIsAvailable() && 
+			AppControl.antPlusDetectionIsRunning()) {
+			AppControl.stopAntPlusDetection();
+		}
+		if (PhoneStateReceiver.isRegistered()) {
+			PhoneStateReceiver.unregister();
+		}
+		if (BatteryReceiver.isRegistered()) {
+			BatteryReceiver.unregister();
+		}
 	}
 	
 	public static void exitApp(int timeoutMSecs) {
-		if (!appRunning()) {
+		if (appNotRunning()) {
 			throw new IllegalStateException("application not running");
 		}
-		appRunning = false;
-		Intent intent = new Intent();
-		intent.setAction(AppControlReceiver.ACTION_APP_EXIT);
-		intent.putExtra(AppControlReceiver.ACTION_PARAM_TIMEOUT_MSECS, timeoutMSecs);
-		App.getCtx().sendBroadcast(intent);
+		if (appRunningBase()) {
+			stopAllAppsActivities();
+			appStatus = AppStatus.NotRunning;
+		} else {
+			Intent intent = new Intent();
+			intent.setAction(AppControlReceiver.ACTION_APP_EXIT);
+			intent.putExtra(AppControlReceiver.ACTION_PARAM_TIMEOUT_MSECS, timeoutMSecs);
+			appStatus = AppStatus.NotRunning;
+			App.getCtx().sendBroadcast(intent);
+		}
 	}
 	
 	public static void startApp() {
-		if (appRunning()) {
-			throw new IllegalStateException("application running");
+		if (appRunningComplete()) {
+			throw new IllegalStateException("application already running");
 		}
-		appRunning = true;
-		Intent intent = new Intent();
-		intent.setAction(AppControlReceiver.ACTION_APP_START);
-		App.getCtx().sendBroadcast(intent);
+		Intent intent = new Intent(App.getCtx(), MainActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		App.getCtx().startActivity(intent);
+	}
+	
+	public static void startAppBase() {
+		LogUtils.infoMethodIn(AppControl.class, "startAppBase");
+		if (appRunningComplete() || appRunningBase()) {
+			throw new IllegalStateException("application already running");
+		}
+		ensureAppBaseIsRunning();
+		LogUtils.infoMethodOut(AppControl.class, "startAppBase");
+	}
+	
+	public static void ensureAppBaseIsRunning() {
+		LogUtils.infoMethodIn(AppControl.class, "ensureAppBaseIsRunning");
+		if (!BatteryReceiver.isRegistered()) {
+			BatteryReceiver.register();
+		}
+		if (!PhoneStateReceiver.isRegistered()) {
+			PhoneStateReceiver.register();
+		}
+		if (!AbstractService.isServiceRunning(AutoService.class)) {
+			AbstractService.startService(AutoService.class);
+		}
+		appStatus = AppStatus.RunningBase;
+		if (MainActivity.exists()) {
+			LogUtils.info(AppControl.class, "MainActivity exists, so start ViewUpdateService");
+			if (!AbstractService.isServiceRunning(ViewUpdateService.class)) {
+				AbstractService.startService(ViewUpdateService.class);
+			}
+			appStatus = AppStatus.RunningComplete;
+		}
+		LogUtils.infoMethodOut(AppControl.class, "ensureAppBaseIsRunning");
 	}
 	
 	public static boolean trackIsRunning() {
@@ -100,12 +174,7 @@ public class AppControl {
 		if (trackIsRunning()) {
 			throw new IllegalStateException("track is already running.");
 		}
-		if (!BatteryReceiver.isRegistered()) {
-			BatteryReceiver.register();
-		}
-		if (!PhoneStateReceiver.isRegistered()) {
-			PhoneStateReceiver.register();
-		}
+		ensureAppBaseIsRunning();
 		TrackingOneTouchMode mode = 
 			PrefsRegistry.get(OtherPrefs.class).
 			getTrackingOneTouchMode();
@@ -233,6 +302,7 @@ public class AppControl {
 	}
 	
 	private static void startLocalizationAux() {
+		ensureAppBaseIsRunning();
 		if (!AbstractService.isServiceRunning(LocalizationService.class)) {
 			AbstractService.startService(LocalizationService.class);						
 		}		
@@ -319,6 +389,7 @@ public class AppControl {
 		if (antPlusDetectionIsRunning()) {
 			throw new RuntimeException("antplus already running.");
 		}
+		ensureAppBaseIsRunning();
 		AntPlusManager.start();
 	}
 

@@ -93,21 +93,6 @@
 	    />
 	</LinearLayout>
 	<LinearLayout 
-        android:layout_height="wrap_content" 
-        android:layout_width="fill_parent"
-        android:paddingLeft="5dp"
-       	android:paddingRight="5dp" 
-    >   
-	    <CheckBox
-		    android:id="@+id/cbOtherPrefs_AutoStartApp"
-		    android:text="@string/lbOtherPrefs_AutoStartApp"
-		    android:layout_height="40dp" 
-	    	android:layout_width="wrap_content"
-	    	android:paddingLeft="42dp"
-	       	android:paddingRight="5dp" 
-		/>
-	</LinearLayout>
-    <LinearLayout 
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content"
         android:paddingTop="5dp">

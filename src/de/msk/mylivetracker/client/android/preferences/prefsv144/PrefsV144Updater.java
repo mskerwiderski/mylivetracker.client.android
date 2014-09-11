@@ -22,6 +22,7 @@ import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.Tracki
  */
 public class PrefsV144Updater {
 
+	@SuppressWarnings("deprecation")
 	public static boolean run() {
 		PrefsV144 prefsv144 = PrefsV144.load();
 		if (prefsv144 == null) {

@@ -12,6 +12,10 @@
     <string name="fdTrackingModePrefs_CheckpointMessage">Checkpoint Nachricht</string>
 	<string name="lbTrackingModePrefs_CheckpointMessage">Checkpoint Nachricht</string>
     <string name="txTrackingModePrefs_OptionsOnlyForTrackingAutoMode">Folgende Optionen sind nur im Tracking Modus \'Auto\' relevant:</string>
+    <string name="fdTrackingModePrefs_StartAfterReboot">Start nach Reboot</string>
+	<string name="lbTrackingModePrefs_StartAfterReboot">Start nach Reboot</string>
+    <string name="fdTrackingModePrefs_RunOnlyIfBattFullOrCharging">Tracking nur bei Stromversorgung</string>
+	<string name="lbTrackingModePrefs_RunOnlyIfBattFullOrCharging">Tracking nur bei Stromversorgung</string>
    	<string name="fdTrackingModePrefs_ResetTrackMode">Track-zurücksetzen Modus</string>
 	<string name="lbTrackingModePrefs_ResetTrackMode">Track-zurücksetzen Modus</string>
 </resources>

@@ -6,6 +6,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -65,6 +66,8 @@ public class TrackingModePrefsActivity extends AbstractActivity {
 		private Spinner spTrackingModePrefs_CountdownInSecs;
 		private EditText etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs;
 		private EditText etTrackingModePrefs_CheckpointMessage;
+		private CheckBox cbTrackingModePrefs_StartAfterReboot;
+		private CheckBox cbTrackingModePrefs_RunOnlyIfBattFullOrCharging;
 		private Spinner spTrackingModePrefs_ResetTrackMode;
 		
 		public OnClickButtonSaveListener(
@@ -73,12 +76,16 @@ public class TrackingModePrefsActivity extends AbstractActivity {
 			Spinner spTrackingModePrefs_CountdownInSecs,
 			EditText etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs,
 			EditText etTrackingModePrefs_CheckpointMessage,
+			CheckBox cbTrackingModePrefs_StartAfterReboot,
+			CheckBox cbTrackingModePrefs_RunOnlyIfBattFullOrCharging,
 			Spinner spTrackingModePrefs_ResetTrackMode) {
 			this.activity = activity;
 			this.spTrackingModePrefs_TrackingMode = spTrackingModePrefs_TrackingMode;
 			this.spTrackingModePrefs_CountdownInSecs = spTrackingModePrefs_CountdownInSecs;
 			this.etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs = etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs;
 			this.etTrackingModePrefs_CheckpointMessage = etTrackingModePrefs_CheckpointMessage;
+			this.cbTrackingModePrefs_StartAfterReboot = cbTrackingModePrefs_StartAfterReboot;
+			this.cbTrackingModePrefs_RunOnlyIfBattFullOrCharging = cbTrackingModePrefs_RunOnlyIfBattFullOrCharging;
 			this.spTrackingModePrefs_ResetTrackMode = spTrackingModePrefs_ResetTrackMode;
 		}
 
@@ -107,6 +114,10 @@ public class TrackingModePrefsActivity extends AbstractActivity {
 					prefs.setCheckpointMessage(etTrackingModePrefs_CheckpointMessage.getText().toString());
 				}
 			} else if (prefs.getTrackingMode().equals(TrackingMode.Auto)) {
+				prefs.setStartAfterReboot(
+					cbTrackingModePrefs_StartAfterReboot.isChecked());
+				prefs.setRunOnlyIfBattFullOrCharging(
+					cbTrackingModePrefs_RunOnlyIfBattFullOrCharging.isChecked());
 				prefs.setAutoModeResetTrackMode(AutoModeResetTrackMode.values()[
                     spTrackingModePrefs_ResetTrackMode.getSelectedItemPosition()]);
 			} 
@@ -138,6 +149,8 @@ public class TrackingModePrefsActivity extends AbstractActivity {
     	((LinearLayout)findViewById(R.id.llTrackingModePrefs_tvCheckpointMessage)).setVisibility(viewCheckpointState);
     	
     	((LinearLayout)findViewById(R.id.llTrackingModePrefs_OptionsOnlyForTrackingAutoMode)).setVisibility(viewAutoState);
+    	((LinearLayout)findViewById(R.id.llTrackingModePrefs_cbStartAfterReboot)).setVisibility(viewAutoState);
+    	((LinearLayout)findViewById(R.id.llTrackingModePrefs_cbRunOnlyIfBattFullOrCharging)).setVisibility(viewAutoState);
     	((LinearLayout)findViewById(R.id.llTrackingModePrefs_tvResetTrackMode)).setVisibility(viewAutoState);
     	((LinearLayout)findViewById(R.id.llTrackingModePrefs_cbResetTrackMode)).setVisibility(viewAutoState);
     	LogUtils.infoMethodOut(TrackingModePrefsActivity.class, "viewOrHideOptionFiels", currSelectedModeId);
@@ -181,6 +194,13 @@ public class TrackingModePrefsActivity extends AbstractActivity {
         etTrackingModePrefs_CheckpointMessage.setText(prefs.getCheckpointMessage());
 
         // options for trackingmode auto.
+        CheckBox cbTrackingModePrefs_StartAfterReboot =
+    		(CheckBox)findViewById(R.id.cbTrackingModePrefs_StartAfterReboot);
+        cbTrackingModePrefs_StartAfterReboot.setChecked(prefs.isStartAfterReboot());
+        CheckBox cbTrackingModePrefs_RunOnlyIfBattFullOrCharging =
+        	(CheckBox)findViewById(R.id.cbTrackingModePrefs_RunOnlyIfBattFullOrCharging);
+        cbTrackingModePrefs_RunOnlyIfBattFullOrCharging.setChecked(
+        	prefs.isRunOnlyIfBattFullOrCharging());
         Spinner spTrackingModePrefs_ResetTrackMode = (Spinner)
         	findViewById(R.id.spTrackingModePrefs_ResetTrackMode);
         ArrayAdapter<?> adapterResetTrackMode = ArrayAdapter.createFromResource(
@@ -189,7 +209,6 @@ public class TrackingModePrefsActivity extends AbstractActivity {
         spTrackingModePrefs_ResetTrackMode.setAdapter(adapterResetTrackMode);
         spTrackingModePrefs_ResetTrackMode.setSelection(
         	prefs.getAutoModeResetTrackMode().ordinal());
-        
         spTrackingModePrefs_TrackingMode.setOnItemSelectedListener(
     		new OnTrackingModeItemSelectedListener(this));
         
@@ -204,6 +223,8 @@ public class TrackingModePrefsActivity extends AbstractActivity {
 				spTrackingModePrefs_CountdownInSecs,
 				etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs,
 				etTrackingModePrefs_CheckpointMessage,
+				cbTrackingModePrefs_StartAfterReboot,
+				cbTrackingModePrefs_RunOnlyIfBattFullOrCharging,
 				spTrackingModePrefs_ResetTrackMode));		
         btnPrefsOther_Cancel.setOnClickListener(
 			new OnFinishActivityListener(this));

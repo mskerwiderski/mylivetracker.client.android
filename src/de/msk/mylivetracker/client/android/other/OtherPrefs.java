@@ -62,6 +62,7 @@ public class OtherPrefs extends APrefs implements Serializable {
 	private TrackingOneTouchMode trackingOneTouchMode;
 	private boolean adaptButtonsForOneTouchMode;
 	private boolean antPlusEnabledIfAvailable;
+	@Deprecated
 	private boolean autoStartApp;
 	
 	@Override
@@ -104,9 +105,11 @@ public class OtherPrefs extends APrefs implements Serializable {
 	public void setAntPlusEnabledIfAvailable(boolean antPlusEnabledIfAvailable) {
 		this.antPlusEnabledIfAvailable = antPlusEnabledIfAvailable;
 	}
+	@Deprecated
 	public boolean isAutoStartApp() {
 		return autoStartApp;
 	}
+	@Deprecated
 	public void setAutoStartApp(boolean autoStartApp) {
 		this.autoStartApp = autoStartApp;
 	}

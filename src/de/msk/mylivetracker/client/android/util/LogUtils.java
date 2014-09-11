@@ -7,12 +7,15 @@ import org.apache.commons.lang3.StringUtils;
 
 import android.util.Log;
 import de.msk.mylivetracker.client.android.App.VersionDsc;
+import de.msk.mylivetracker.client.android.LaunchAppBroadcast;
 import de.msk.mylivetracker.client.android.appcontrol.AppControl;
 import de.msk.mylivetracker.client.android.appcontrol.AppControlReceiver;
+import de.msk.mylivetracker.client.android.auto.AutoServiceThread;
 import de.msk.mylivetracker.client.android.battery.BatteryReceiver;
 import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParams;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.phonestate.PhoneStateListener;
+import de.msk.mylivetracker.client.android.phonestate.PhoneStateReceiver;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdReceiver;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteMessageCmdReceiver;
 import de.msk.mylivetracker.client.android.remoteaccess.RemoteSmsCmdReceiver;
@@ -43,7 +46,9 @@ public class LogUtils {
 	private static Map<Class<?>, Boolean> classes = new HashMap<Class<?>, Boolean>();
 	
 	static {
+		classes.put(AppControl.class, Boolean.TRUE);
 		classes.put(HttpProtocolParams.class, Boolean.TRUE);
+		classes.put(PhoneStateReceiver.class, Boolean.TRUE);
 		classes.put(PhoneStateListener.class, Boolean.TRUE);
 		classes.put(BatteryReceiver.class, Boolean.TRUE);
 		classes.put(AppControl.class, Boolean.TRUE);
@@ -61,6 +66,8 @@ public class LogUtils {
 		classes.put(RemoteCmdHeartrate.class, Boolean.TRUE);
 		classes.put(RemoteCmdStatus.class, Boolean.TRUE);
 		classes.put(RemoteCmdApp.class, Boolean.TRUE);
+		classes.put(LaunchAppBroadcast.class, Boolean.TRUE);
+		classes.put(AutoServiceThread.class, Boolean.TRUE);
 		//classes.put(TimeUtils.class, Boolean.TRUE);
 	}
 

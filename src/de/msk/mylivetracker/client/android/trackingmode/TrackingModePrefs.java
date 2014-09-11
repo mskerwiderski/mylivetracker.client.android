@@ -91,6 +91,8 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 	private String checkpointMessage;
 	
 	// only for trackingmode auto.
+	private boolean startAfterReboot;
+	private boolean runOnlyIfBattFullOrCharging;
 	private AutoModeResetTrackMode autoModeResetTrackMode;
 	
 	@Override
@@ -103,6 +105,8 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 		this.countdownInSecs = CountdownInSecs.Off;
 		this.maxCheckpointPeriodInSecs = 180;
 		this.checkpointMessage = null;
+		this.startAfterReboot = false;
+		this.runOnlyIfBattFullOrCharging = true;
 		this.autoModeResetTrackMode = AutoModeResetTrackMode.NextDay;
 	}
 	@Override
@@ -149,6 +153,18 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 	public void setCheckpointMessage(String checkpointMessage) {
 		this.checkpointMessage = checkpointMessage;
 	}
+	public boolean isStartAfterReboot() {
+		return startAfterReboot;
+	}
+	public void setStartAfterReboot(boolean startAfterReboot) {
+		this.startAfterReboot = startAfterReboot;
+	}
+	public boolean isRunOnlyIfBattFullOrCharging() {
+		return runOnlyIfBattFullOrCharging;
+	}
+	public void setRunOnlyIfBattFullOrCharging(boolean runOnlyIfBattFullOrCharging) {
+		this.runOnlyIfBattFullOrCharging = runOnlyIfBattFullOrCharging;
+	}
 	public AutoModeResetTrackMode getAutoModeResetTrackMode() {
 		return autoModeResetTrackMode;
 	}
@@ -168,14 +184,22 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 				new ConfigPair("maxCheckpointPeriodInSecs", 
 					String.valueOf(this.maxCheckpointPeriodInSecs)),
 				new ConfigPair("checkpointMessage", this.checkpointMessage),
+				new ConfigPair("startAfterReboot",
+					String.valueOf(this.startAfterReboot)),
+				new ConfigPair("runOnlyIfBattFullOrCharging",
+					String.valueOf(this.runOnlyIfBattFullOrCharging)),
 				new ConfigPair("autoModeResetTrackMode", this.autoModeResetTrackMode.name()),
 		});
 	}
 	@Override
 	public String toString() {
 		return "TrackingModePrefs [trackingMode=" + trackingMode
+			+ ", countdownInSecs=" + countdownInSecs
 			+ ", maxCheckpointPeriodInSecs=" + maxCheckpointPeriodInSecs
 			+ ", checkpointMessage=" + checkpointMessage
-			+ ", autoModeResetTrackMode=" + autoModeResetTrackMode + "]";
+			+ ", startAfterReboot=" + startAfterReboot
+			+ ", runOnlyIfBattFullOrCharging="
+			+ runOnlyIfBattFullOrCharging + ", autoModeResetTrackMode="
+			+ autoModeResetTrackMode + "]";
 	}
 }

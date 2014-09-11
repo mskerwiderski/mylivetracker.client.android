@@ -13,8 +13,8 @@ import java.net.SocketAddress;
 import org.apache.commons.lang3.StringUtils;
 
 import android.os.SystemClock;
+import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.R;
-import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.server.ServerPrefs;
@@ -98,7 +98,7 @@ public class TcpUploader extends AbstractUploader {
 	        	resultCode = new String(buffer, 0, cntChars);
 	        } else {
 	        	resultCode = 
-	        		MainActivity.get().getString(R.string.txMain_UploadResultOk);
+        			App.getCtx().getString(R.string.txMain_UploadResultOk);
 	        }
 	        countPositionsUploaded = countPositionsToUpload;
 	        if (PositionBufferInfo.isEnabled()) {
@@ -108,7 +108,7 @@ public class TcpUploader extends AbstractUploader {
 	        	this.finish();
 	        }
 		} catch (Exception e) {
-			resultCode = MainActivity.get().getString(R.string.txMain_UploadResultFailed);		
+			resultCode = App.getCtx().getString(R.string.txMain_UploadResultFailed);		
 			this.finish();
 			if (e instanceof InterruptedException) {
 				Thread.currentThread().interrupt();				
@@ -116,19 +116,19 @@ public class TcpUploader extends AbstractUploader {
 		} 
 		long stop = SystemClock.elapsedRealtime();
 		if (!StringUtils.equals(resultCode, 
-				MainActivity.get().getString(R.string.txMain_UploadResultOk)) &&
+				App.getCtx().getString(R.string.txMain_UploadResultOk)) &&
 			!StringUtils.equals(resultCode, 
-				MainActivity.get().getString(R.string.txMain_UploadResultFailed)) &&
+				App.getCtx().getString(R.string.txMain_UploadResultFailed)) &&
 			!StringUtils.equals(resultCode, 
-				MainActivity.get().getString(R.string.txMain_UploadResultInvalid)) &&
+				App.getCtx().getString(R.string.txMain_UploadResultInvalid)) &&
 			!StringUtils.equals(resultCode,
-				MainActivity.get().getString(R.string.txMain_UploadResultError))) {
+				App.getCtx().getString(R.string.txMain_UploadResultError))) {
 			resultCode = 
-				MainActivity.get().getString(R.string.txMain_UploadResultMltError);
+				App.getCtx().getString(R.string.txMain_UploadResultMltError);
 		}	
 		
 		return new UploadResult(StringUtils.equals(resultCode, 
-			MainActivity.get().getString(R.string.txMain_UploadResultOk)),
+			App.getCtx().getString(R.string.txMain_UploadResultOk)),
 			stop - start,
 			PositionBufferInfo.isEnabled(), // buffer is active.
 			countPositionsUploaded, resultCode);

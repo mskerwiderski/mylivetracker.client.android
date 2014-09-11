@@ -6,12 +6,10 @@ import org.apache.commons.lang3.StringUtils;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.telephony.TelephonyManager;
-import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry.InitResult;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
@@ -58,7 +56,7 @@ public class App extends Application {
 			VersionStage res = null;
 			VersionStage[] versionStages = VersionStage.values();
 			for (int i=0; (res == null) && (i < versionStages.length); i++) {
-				if (StringUtils.containsIgnoreCase(
+				if (StringUtils.contains(
 					versionName, versionStages[i].abbr)) {
 					res = versionStages[i];
 				}
@@ -85,7 +83,7 @@ public class App extends Application {
 			VersionType res = null;
 			VersionType[] versionTypes = VersionType.values();
 			for (int i=0; (res == null) && (i < versionTypes.length); i++) {
-				if (StringUtils.containsIgnoreCase(
+				if (StringUtils.contains(
 					versionName, versionTypes[i].abbr)) {
 					res = versionTypes[i];
 				}
@@ -256,11 +254,6 @@ public class App extends Application {
 	}
 	public static String getAppNameComplete() {
 		return appNameComplete;
-	}
-	public static void start() {
-		Intent intent = new Intent(context, MainActivity.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		context.startActivity(intent);
 	}
 	private static final String VERSION_CODE_VAR = "versionCode";
 	public static void resetApp() {

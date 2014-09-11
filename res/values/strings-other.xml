@@ -6,8 +6,7 @@
     <string name="lbOtherPrefs_EnableAntPlusIfAvailable">Enable ANT+ (if available)</string>
     <string name="lbOtherPrefs_SwitchToCheckpointMode">Switch to checkpoint mode</string>
     <string name="lbOtherPrefs_AdaptButtonsForOneTouchMode">Adapt buttons for one-touch mode</string>
-    <string name="lbOtherPrefs_AutoStartApp">Autostart this app after reboot</string>
-	<string name="btOtherPrefs_ResetOverallMileage">Reset mileage</string>
+    <string name="btOtherPrefs_ResetOverallMileage">Reset mileage</string>
     <string name="btOtherPrefs_ResetToFactoryDefaults">Factory defaults</string>
     <string name="txOtherPrefs_QuestionResetToFactoryDefaults">Do you really want to reset to factory defaults?</string>
     <string name="txOtherPrefs_QuestionResetOverallMileage">Do you really want to reset overall mileage?</string>

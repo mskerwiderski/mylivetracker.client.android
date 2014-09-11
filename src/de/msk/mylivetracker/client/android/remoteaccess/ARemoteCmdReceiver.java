@@ -146,7 +146,7 @@ public abstract class ARemoteCmdReceiver extends BroadcastReceiver {
 				response = "unknown command";
 			} else {
 				CmdPackage cmdPackage = getCmdExecutor(messageParts[0]);
-				if (cmdPackage.dsc.isNeedsAppRunning() && !AppControl.appRunning()) {
+				if (cmdPackage.dsc.isNeedsAppRunning() && !AppControl.appRunningComplete()) {
 					response = "command needs app running (please start app first)";
 				} else {
 					String[] params = new String[0];

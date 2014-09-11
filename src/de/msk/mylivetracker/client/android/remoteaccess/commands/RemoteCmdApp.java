@@ -3,13 +3,11 @@ package de.msk.mylivetracker.client.android.remoteaccess.commands;
 import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.appcontrol.AppControl;
-import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdDsc;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdExecutor;
-import de.msk.mylivetracker.client.android.remoteaccess.ResponseCreator;
+import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
 
 
 /**
@@ -27,11 +25,12 @@ public class RemoteCmdApp extends ARemoteCmdExecutor {
 
 	public static String NAME = "app";
 	public static enum Options {
-		start, stop, status;
+		start, exit, auto, status;
 	}
 	public static String SYNTAX = 
 		Options.start.name() + ARemoteCmdDsc.OPT_SEP +
-		Options.stop.name() + " " + "[<timeout in seconds>]" + 
+		Options.exit.name() + " " + "[<timeout in seconds>]" + ARemoteCmdDsc.OPT_SEP +
+		Options.auto.name() + ARemoteCmdDsc.OPT_SEP +
 		ARemoteCmdDsc.OPT_SEP + Options.status.name();
 	
 	public static final int STOP_DEF_TIMEOUT_IN_SECS = 10;
@@ -52,7 +51,7 @@ public class RemoteCmdApp extends ARemoteCmdExecutor {
 			
 			if (params.length == 2) {
 				matches = 
-					StringUtils.equals(params[0], Options.stop.name()) &&
+					StringUtils.equals(params[0], Options.exit.name()) &&
 					StringUtils.isNumeric(params[1]); 
 				if (matches) {
 					int timeoutInSecs = Integer.valueOf(params[1]);
@@ -69,25 +68,41 @@ public class RemoteCmdApp extends ARemoteCmdExecutor {
 	public Result executeCmdAndCreateResponse(String... params) {
 		Result result = null;
 		if (StringUtils.equals(params[0], Options.start.name())) {
-			if (MainActivity.exists()) {
-				result = new Result(false, "application already started");
+			if (AppControl.appRunningComplete()) {
+				result = new Result(false, "application already running");
 			} else {
-				App.start();
+				AppControl.startApp();
 				result = new Result(true, "application started");
 			}
+		} else if (StringUtils.equals(params[0], Options.auto.name())) {
+			if (!TrackingModePrefs.isAuto()) {
+				result = new Result(false, "tracking mode is not set to 'auto'");
+			} else if (AppControl.appRunningComplete() || AppControl.appRunningBase()) {
+				result = new Result(false, "tracking mode 'auto' already running");
+			} else {
+				AppControl.startAppBase();
+				result = new Result(true, "tracking mode 'auto' started");
+			}
 		} else if (StringUtils.equals(params[0], Options.status.name())) {
-			result = new Result(true, ResponseCreator.addParamValue(
-				"", "application", (AppControl.appRunning() ? "running" : "not running")));
-		} else if (StringUtils.equals(params[0], Options.stop.name())) {
-			if (!MainActivity.exists()) {
-				result = new Result(false, "application already stopped");
+			String status = "application ";
+			if (AppControl.appNotRunning()) {
+				status += "not running";
+			} else if (AppControl.appRunningComplete()) {
+				status += "running (completely)";
+			} else if (AppControl.appRunningBase()) {
+				status += "running (without GUI)";
+			}
+			result = new Result(true, status);
+		} else if (StringUtils.equals(params[0], Options.exit.name())) {
+			if (AppControl.appNotRunning()) {
+				result = new Result(false, "application not running");
 			} else {
 				int timeoutInSecs = STOP_DEF_TIMEOUT_IN_SECS;
 				if (params.length == 2) { 
 					timeoutInSecs = Integer.valueOf(params[1]);
 				} 
 				AppControl.exitApp(timeoutInSecs * 1000);
-				result = new Result(true, "application stopped");
+				result = new Result(true, "application has been shutdown");
 			}
 		}
 		return result;

@@ -1,5 +1,6 @@
 package de.msk.mylivetracker.client.android.preferences.prefsv160;
 
+import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.CountdownInSecs;
@@ -18,9 +19,14 @@ import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.Countd
  */
 public class PrefsV160Updater {
 
+	@SuppressWarnings("deprecation")
 	public static boolean run() {
-		TrackingModePrefs trackingModePrefs = PrefsRegistry.get(TrackingModePrefs.class);
+		TrackingModePrefs trackingModePrefs = 
+			PrefsRegistry.get(TrackingModePrefs.class);
 		trackingModePrefs.setCountdownInSecs(CountdownInSecs.Off);
+		trackingModePrefs.setStartAfterReboot(
+			PrefsRegistry.get(OtherPrefs.class).isAutoStartApp());
+		trackingModePrefs.setRunOnlyIfBattFullOrCharging(true);
 		return true;
 	}
 }

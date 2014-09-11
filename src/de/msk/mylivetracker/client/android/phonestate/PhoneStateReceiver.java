@@ -9,7 +9,6 @@ import android.content.IntentFilter;
 import android.os.Looper;
 import android.telephony.TelephonyManager;
 import de.msk.mylivetracker.client.android.App;
-import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
@@ -44,7 +43,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
 			phoneStateReceiver = new PhoneStateReceiver();
 			IntentFilter filter = new IntentFilter(ACTION_PHONE_STATE_CHANGED);
 	        App.getCtx().registerReceiver(phoneStateReceiver, filter);
-        	if (MainActivity.get() == null) {
+        	if (Looper.myLooper() == null) {
 				Looper.prepare();
 			}
 			phoneStateListener = new PhoneStateListener();

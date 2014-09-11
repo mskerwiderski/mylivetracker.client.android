@@ -86,7 +86,8 @@ public class MainActivity extends AbstractMainActivity {
         setContentView(R.layout.main);
         mainActivity = this;         
         this.setTitle(R.string.tiMain);
-        AppControl.startApp();
+        AppControl.ensureAppBaseIsRunning();
+        AppControl.setAppStatusRunningComplete();
         this.onResume();
         
         ToggleButton btMain_StartStopTrack = (ToggleButton)

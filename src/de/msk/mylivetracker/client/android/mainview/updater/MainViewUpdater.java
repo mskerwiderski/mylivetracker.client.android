@@ -13,7 +13,6 @@ import de.msk.mylivetracker.client.android.appcontrol.AppControl;
 import de.msk.mylivetracker.client.android.localization.LocalizationPrefs;
 import de.msk.mylivetracker.client.android.localization.LocalizationService;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
-import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.status.HeartrateInfo;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
@@ -97,7 +96,6 @@ public class MainViewUpdater extends AViewUpdater {
 	@Override
 	public void updateView() {
 		TrackingModePrefs trackingModePrefs = PrefsRegistry.get(TrackingModePrefs.class);
-		OtherPrefs otherPrefs = PrefsRegistry.get(OtherPrefs.class);
 		TrackStatus status = TrackStatus.get();
 		
 		MainActivity mainActivity = MainActivity.get();					
@@ -110,10 +108,10 @@ public class MainViewUpdater extends AViewUpdater {
 		// auto start indicator
 		TextView tvAutoStartIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_AutoStartIndicator);
 		setTextAndBackgroundColor(tvAutoStartIndicator, 
-			(otherPrefs.isAutoStartApp() ? 
+			(trackingModePrefs.isStartAfterReboot() ? 
 				res.getText(R.string.tvOn).toString() : 
 				res.getText(R.string.tvOff).toString()), 
-			otherPrefs.isAutoStartApp() ? 
+			trackingModePrefs.isStartAfterReboot() ? 
 				ColorState.IndicatorOk : ColorState.IndicatorOff);
 				
 		// tracking mode indicator

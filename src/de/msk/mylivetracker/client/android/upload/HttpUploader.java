@@ -9,8 +9,8 @@ import java.net.URLConnection;
 import org.apache.commons.lang3.StringUtils;
 
 import android.os.SystemClock;
+import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.R;
-import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.server.ServerPrefs;
 import de.msk.mylivetracker.client.android.upload.protocol.IProtocol;
@@ -52,7 +52,7 @@ public class HttpUploader extends AbstractUploader {
 			resultCode = bufferedReader.readLine();						
 			countPositionsUploaded = 1;
 		} catch (Exception e) {
-			resultCode = MainActivity.get().getString(R.string.txMain_UploadResultFailed);
+			resultCode = App.getCtx().getString(R.string.txMain_UploadResultFailed);
 			if (e instanceof InterruptedException) {
 				Thread.currentThread().interrupt();				
 			}
@@ -67,19 +67,19 @@ public class HttpUploader extends AbstractUploader {
 		}
 		long stop = SystemClock.elapsedRealtime();
 		if (!StringUtils.equals(resultCode, 
-				MainActivity.get().getString(R.string.txMain_UploadResultOk)) &&
+				App.getCtx().getString(R.string.txMain_UploadResultOk)) &&
 			!StringUtils.equals(resultCode, 
-				MainActivity.get().getString(R.string.txMain_UploadResultFailed)) &&
+				App.getCtx().getString(R.string.txMain_UploadResultFailed)) &&
 			!StringUtils.equals(resultCode, 
-				MainActivity.get().getString(R.string.txMain_UploadResultInvalid)) &&
+				App.getCtx().getString(R.string.txMain_UploadResultInvalid)) &&
 			!StringUtils.equals(resultCode,
-				MainActivity.get().getString(R.string.txMain_UploadResultError))) {
+				App.getCtx().getString(R.string.txMain_UploadResultError))) {
 			resultCode = 
-				MainActivity.get().getString(R.string.txMain_UploadResultMltError);
+				App.getCtx().getString(R.string.txMain_UploadResultMltError);
 		}	
 		
 		return new UploadResult(StringUtils.equals(resultCode, 
-			MainActivity.get().getString(R.string.txMain_UploadResultOk)),
+			App.getCtx().getString(R.string.txMain_UploadResultOk)),
 			stop - start,
 			countPositionsUploaded, resultCode);
 	}
