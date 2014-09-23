@@ -37,9 +37,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
 	
 	public static void register() {
 		LogUtils.infoMethodIn(PhoneStateReceiver.class, "register");
-		if (isRegistered()) {
-			throw new IllegalStateException("phoneStateReceiver already registered.");
-		} else {
+		if (!isRegistered()) {
 			phoneStateReceiver = new PhoneStateReceiver();
 			IntentFilter filter = new IntentFilter(ACTION_PHONE_STATE_CHANGED);
 	        App.getCtx().registerReceiver(phoneStateReceiver, filter);
@@ -59,9 +57,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
 	
 	public static void unregister() {
 		LogUtils.infoMethodIn(PhoneStateReceiver.class, "unregister");
-		if (!isRegistered()) {
-			throw new IllegalStateException("phoneStateReceiver not registered.");
-		} else {
+		if (isRegistered()) {
 			getTelephonyManager().listen(
 				phoneStateListener, PhoneStateListener.LISTEN_NONE);
 			phoneStateListener = null;

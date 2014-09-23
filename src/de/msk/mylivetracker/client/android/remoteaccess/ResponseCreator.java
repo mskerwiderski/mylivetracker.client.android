@@ -64,7 +64,7 @@ public class ResponseCreator {
 			str = addFloatValue(str, "distance", 
 				(status.getTrackDistanceInMtr() != null) ? status.getTrackDistanceInMtr()/1000f : 0f, 
 				2, Unit.Kilometer);
-			str = addParamInt(str, "uploaded", 
+			str = addIntValue(str, "uploaded", 
 				(UploadInfo.get() != null) ? UploadInfo.get().getCountUploaded() : 0, null);
 			str = addTimestampValue(str, "last location update", 
 				(locationInfo != null) ? locationInfo.getTimestamp() : null);
@@ -88,10 +88,10 @@ public class ResponseCreator {
 	public static String getResultOfGetHeartrate(HeartrateInfo heartrateInfo) {
 		String str = "";
 		if (heartrateInfo != null) {
-			str = addParamLong(str, "current hr", heartrateInfo.getHrInBpm(), Unit.BeatsPerMinute);
-			str = addParamLong(str, "average hr", heartrateInfo.getHrAvgInBpm(), Unit.BeatsPerMinute);
-			str = addParamLong(str, "min hr", heartrateInfo.getHrMinInBpm(), Unit.BeatsPerMinute);
-			str = addParamLong(str, "max hr", heartrateInfo.getHrMaxInBpm(), Unit.BeatsPerMinute);
+			str = addLongValue(str, "current hr", heartrateInfo.getHrInBpm(), Unit.BeatsPerMinute);
+			str = addLongValue(str, "average hr", heartrateInfo.getHrAvgInBpm(), Unit.BeatsPerMinute);
+			str = addLongValue(str, "min hr", heartrateInfo.getHrMinInBpm(), Unit.BeatsPerMinute);
+			str = addLongValue(str, "max hr", heartrateInfo.getHrMaxInBpm(), Unit.BeatsPerMinute);
 		} else {
 			str = "no heartrate info available";
 		}
@@ -195,7 +195,7 @@ public class ResponseCreator {
 		return addParamValue(null, param, value);
 	}
 	
-	public static String addParamInt(String str, String param, Integer value, Unit unit) {
+	public static String addIntValue(String str, String param, Integer value, Unit unit) {
 		String longAsInt = UNKNOWN;
 		if (value != null) {
 			longAsInt = String.valueOf(value);
@@ -204,7 +204,7 @@ public class ResponseCreator {
 		return addParamValue(str, param, longAsInt);
 	}
 	
-	public static String addParamLong(String str, String param, Long value, Unit unit) {
+	public static String addLongValue(String str, String param, Long value, Unit unit) {
 		String longAsStr = UNKNOWN;
 		if (value != null) {
 			longAsStr = String.valueOf(value);

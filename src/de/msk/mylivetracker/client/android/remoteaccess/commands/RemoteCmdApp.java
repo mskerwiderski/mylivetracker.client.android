@@ -5,10 +5,11 @@ import org.apache.commons.lang3.StringUtils;
 
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.appcontrol.AppControl;
+import de.msk.mylivetracker.client.android.auto.AutoService;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdDsc;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdExecutor;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
-
+import de.msk.mylivetracker.client.android.util.service.AbstractService;
 
 /**
  * classname: RemoteCmdExit
@@ -68,7 +69,7 @@ public class RemoteCmdApp extends ARemoteCmdExecutor {
 	public Result executeCmdAndCreateResponse(String... params) {
 		Result result = null;
 		if (StringUtils.equals(params[0], Options.start.name())) {
-			if (AppControl.appRunningComplete()) {
+			if (AppControl.appRunningFrontend()) {
 				result = new Result(false, "application already running");
 			} else {
 				AppControl.startApp();
@@ -77,24 +78,26 @@ public class RemoteCmdApp extends ARemoteCmdExecutor {
 		} else if (StringUtils.equals(params[0], Options.auto.name())) {
 			if (!TrackingModePrefs.isAuto()) {
 				result = new Result(false, "tracking mode is not set to 'auto'");
-			} else if (AppControl.appRunningComplete() || AppControl.appRunningBase()) {
+			} else if (AppControl.appRunning()) {
 				result = new Result(false, "tracking mode 'auto' already running");
 			} else {
-				AppControl.startAppBase();
+				AbstractService.startService(AutoService.class);
 				result = new Result(true, "tracking mode 'auto' started");
 			}
 		} else if (StringUtils.equals(params[0], Options.status.name())) {
 			String status = "application ";
-			if (AppControl.appNotRunning()) {
+			if (!AppControl.appRunning()) {
 				status += "not running";
-			} else if (AppControl.appRunningComplete()) {
-				status += "running (completely)";
-			} else if (AppControl.appRunningBase()) {
-				status += "running (without GUI)";
-			}
+			} else {
+				if (AppControl.appRunningFrontend()) {
+					status += "running (frontend)";
+				} else {
+					status += "running (only tracking mode 'auto')";
+				}
+			} 
 			result = new Result(true, status);
 		} else if (StringUtils.equals(params[0], Options.exit.name())) {
-			if (AppControl.appNotRunning()) {
+			if (!AppControl.appRunning()) {
 				result = new Result(false, "application not running");
 			} else {
 				int timeoutInSecs = STOP_DEF_TIMEOUT_IN_SECS;
@@ -102,7 +105,7 @@ public class RemoteCmdApp extends ARemoteCmdExecutor {
 					timeoutInSecs = Integer.valueOf(params[1]);
 				} 
 				AppControl.exitApp(timeoutInSecs * 1000);
-				result = new Result(true, "application has been shutdown");
+				result = new Result(true, "application has been exit");
 			}
 		}
 		return result;

@@ -11,4 +11,5 @@
     <string name="txRemoteCommand_Battery">gibt den Status der Batterie zurück (Status, Kapazität, Spannung und Temperatur)</string>
     <string name="txRemoteCommand_MobNwCell">gibt Informationen über die genutzte Mobilfunkzelle zurück</string>
     <string name="txRemoteCommand_App">startet oder stoppt die Anwendung oder gibt den Status der Anwendung zurück</string>
+    <string name="txRemoteCommand_System">gibt Systeminformationen der Anwendung zurück</string>
 </resources>

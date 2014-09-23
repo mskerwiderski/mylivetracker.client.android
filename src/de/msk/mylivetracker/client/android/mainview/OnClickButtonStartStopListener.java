@@ -4,7 +4,6 @@ import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.appcontrol.AppControl;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
-import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.TrackingMode;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
@@ -27,7 +26,7 @@ public class OnClickButtonStartStopListener extends ASafeOnClickListener {
 	private static final class StartStopTrackDialog extends AbstractYesNoDialog {
 		public StartStopTrackDialog() {
 			super(MainActivity.get(),
-				TrackStatus.get().trackIsRunning() ? 	
+				AppControl.trackIsRunning() ? 	
 				(TrackingModePrefs.isCheckpoint() ? 
 					R.string.txMain_QuestionStopCheckpoint : 
 					R.string.txMain_QuestionStopTrack) :
@@ -36,8 +35,12 @@ public class OnClickButtonStartStopListener extends ASafeOnClickListener {
 					R.string.txMain_QuestionStartTrack));
 		}
 		@Override
-		public void onYes() {		
-			AppControl.startOrStopTrack();							
+		public void onYes() {
+			if (AppControl.trackIsRunning()) {
+				AppControl.stopTrack();
+			} else {
+				AppControl.startTrack();
+			}
 		}	
 	}
 	
@@ -55,7 +58,11 @@ public class OnClickButtonStartStopListener extends ASafeOnClickListener {
 			StartStopTrackDialog dlg = new StartStopTrackDialog();
 			dlg.show();
 		} else {
-			AppControl.startOrStopTrack();
+			if (AppControl.trackIsRunning()) {
+				AppControl.stopTrack();
+			} else {
+				AppControl.startTrack();
+			}
 		}
 	}
 }

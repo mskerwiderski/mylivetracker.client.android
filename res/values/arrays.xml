@@ -18,7 +18,8 @@
         <item>Tk102 Emulator</item>
         <item>Tk5000 Emulator</item>
         <item>PT350 Emulator</item>
-        <item>HTTP (user defined)</item>        
+        <item>HTTP (user defined)</item>   
+        <item>SMS</item>     
     </string-array>
     
     <string-array name="trackingOneTouchModes">

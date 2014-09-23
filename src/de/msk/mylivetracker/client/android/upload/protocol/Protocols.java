@@ -17,6 +17,9 @@ public class Protocols {
 	public static IProtocol createProtocolDummy() {
 		return new de.msk.mylivetracker.client.android.upload.protocol.DummyProtocol();
 	}
+	public static IProtocol createProtocolMltSms() {
+		return new de.msk.mylivetracker.client.android.upload.protocol.sms.ProtocolEncoder();
+	}
 	public static IProtocol createProtocolMltUrlparams() {
 		return new de.msk.mylivetracker.client.android.upload.protocol.http.userdefined.ProtocolEncoder();
 	}

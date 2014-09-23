@@ -5,6 +5,8 @@ import java.util.TimeZone;
 import org.apache.commons.lang3.StringUtils;
 
 import de.msk.mylivetracker.client.android.appcontrol.AppControl;
+import de.msk.mylivetracker.client.android.battery.BatteryReceiver;
+import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
@@ -28,7 +30,10 @@ public class AutoServiceThread extends AbstractServiceThread {
 
 	@Override
 	public void init() throws InterruptedException {
-		// noop.
+		TrackingModePrefs prefs = PrefsRegistry.get(TrackingModePrefs.class);
+		if (prefs.isRunOnlyIfBattFullOrCharging()) {
+			BatteryReceiver.register();
+		}
 	}
 
 	@Override
@@ -47,25 +52,23 @@ public class AutoServiceThread extends AbstractServiceThread {
 			battFullOrCharging;
 		LogUtils.infoMethodState(AutoServiceThread.class, "runSinglePass",
 			"runTracking", runTracking);
-		if (TrackingModePrefs.isAuto()) {
-			if (runTracking &&
-				!AppControl.trackIsRunning()) {
-				if (trackIsExpired()) {
-					AppControl.resetTrack();
-					LogUtils.infoMethodState(AutoServiceThread.class, "runSinglePass",
-						"track", "resetted");
-				}
-				AppControl.startTrack();
+		if (runTracking &&
+			!AppControl.trackIsRunning()) {
+			if (trackIsExpired()) {
+				AppControl.resetTrack();
 				LogUtils.infoMethodState(AutoServiceThread.class, "runSinglePass",
-					"track", "started");
-			} else if (!runTracking && 
-				AppControl.trackIsRunning()) {
-				AppControl.stopTrack();
-				status.updateLastAutoModeStopSignalReceived();
-				LogUtils.infoMethodState(AutoServiceThread.class, "runSinglePass",
-					"track", "stopped");
+					"track", "resetted");
 			}
-		} 
+			AppControl.startTrack();
+			LogUtils.infoMethodState(AutoServiceThread.class, "runSinglePass",
+				"track", "started");
+		} else if (!runTracking && 
+			AppControl.trackIsRunning()) {
+			AppControl.stopTrack();
+			status.updateLastAutoModeStopSignalReceived();
+			LogUtils.infoMethodState(AutoServiceThread.class, "runSinglePass",
+				"track", "stopped");
+		}
 		LogUtils.infoMethodOut(AutoServiceThread.class, "runSinglePass");
 	}
 
@@ -76,7 +79,10 @@ public class AutoServiceThread extends AbstractServiceThread {
 
 	@Override
 	public void cleanUp() {
-		// noop.
+		AppControl.stopTrack();
+		if (!MainActivity.exists()) {
+			BatteryReceiver.unregister();
+		}
 	}
 
 	private boolean trackIsExpired() {

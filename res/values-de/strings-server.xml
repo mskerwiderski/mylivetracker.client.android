@@ -6,4 +6,6 @@
     <string name="fdServerPrefs_ServerPort">Server Port</string>
     <string name="fdServerPrefs_ServerPath">Server Pfad</string>    
     <string name="lbServerPrefs_ServerPath">Server Pfad (nur bei Übertragung via HTTP)</string>
+    <string name="fdServerPrefs_SmsReceivers">SMS Empfänger</string>    
+    <string name="lbServerPrefs_SmsReceivers">SMS Empfänger (nur bei Übertragung via SMS)</string>
 </resources>

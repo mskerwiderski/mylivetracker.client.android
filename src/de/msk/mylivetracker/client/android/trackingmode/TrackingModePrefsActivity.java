@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.auto.AutoService;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.AutoModeResetTrackMode;
@@ -19,6 +20,7 @@ import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.Tracki
 import de.msk.mylivetracker.client.android.util.LogUtils;
 import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
 import de.msk.mylivetracker.client.android.util.listener.OnFinishActivityListener;
+import de.msk.mylivetracker.client.android.util.service.AbstractService;
 import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
 
 /**
@@ -124,6 +126,11 @@ public class TrackingModePrefsActivity extends AbstractActivity {
 			
 			if (valid) {
 				PrefsRegistry.save(TrackingModePrefs.class);
+				if (TrackingModePrefs.isAuto()) {
+		        	AbstractService.startService(AutoService.class);
+		        } else {
+		        	AbstractService.stopService(AutoService.class);
+		        }
 				this.activity.finish();
 			}
 		}		

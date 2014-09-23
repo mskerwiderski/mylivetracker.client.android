@@ -13,15 +13,16 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import android.content.BroadcastReceiver;
-import de.msk.mylivetracker.client.android.appcontrol.AppControl;
+import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdApp;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdBattery;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdConfig;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdHeartrate;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdHelp;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdLocalization;
-import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdBattery;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdMobNwCell;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdStatus;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdSystem;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdTracking;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdUpload;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdVersion;
@@ -80,6 +81,8 @@ public abstract class ARemoteCmdReceiver extends BroadcastReceiver {
 			new CmdPackage(new RemoteCmdMobNwCell.CmdDsc(), RemoteCmdMobNwCell.class));
 		cmdRegistry.put(StringUtils.lowerCase(RemoteCmdApp.NAME), 
 			new CmdPackage(new RemoteCmdApp.CmdDsc(), RemoteCmdApp.class));
+		cmdRegistry.put(StringUtils.lowerCase(RemoteCmdSystem.NAME), 
+			new CmdPackage(new RemoteCmdSystem.CmdDsc(), RemoteCmdSystem.class));
 	}
 
 	public static boolean containsCommand(String commandStr) {
@@ -146,7 +149,7 @@ public abstract class ARemoteCmdReceiver extends BroadcastReceiver {
 				response = "unknown command";
 			} else {
 				CmdPackage cmdPackage = getCmdExecutor(messageParts[0]);
-				if (cmdPackage.dsc.isNeedsAppRunning() && !AppControl.appRunningComplete()) {
+				if (cmdPackage.dsc.isNeedsAppRunning() && !MainActivity.exists()) {
 					response = "command needs app running (please start app first)";
 				} else {
 					String[] params = new String[0];

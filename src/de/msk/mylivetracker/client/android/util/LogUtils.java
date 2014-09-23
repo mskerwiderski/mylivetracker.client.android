@@ -20,14 +20,17 @@ import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdReceiver;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteMessageCmdReceiver;
 import de.msk.mylivetracker.client.android.remoteaccess.RemoteSmsCmdReceiver;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdApp;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdBattery;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdConfig;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdHeartrate;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdHelp;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdLocalization;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdStatus;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdSystem;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdTracking;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdUpload;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdVersion;
+import de.msk.mylivetracker.client.android.upload.protocol.sms.ProtocolEncoder;
 
 /**
  * classname: LogUtils
@@ -47,6 +50,7 @@ public class LogUtils {
 	
 	static {
 		classes.put(AppControl.class, Boolean.TRUE);
+		classes.put(ProtocolEncoder.class, Boolean.TRUE);
 		classes.put(HttpProtocolParams.class, Boolean.TRUE);
 		classes.put(PhoneStateReceiver.class, Boolean.TRUE);
 		classes.put(PhoneStateListener.class, Boolean.TRUE);
@@ -66,6 +70,8 @@ public class LogUtils {
 		classes.put(RemoteCmdHeartrate.class, Boolean.TRUE);
 		classes.put(RemoteCmdStatus.class, Boolean.TRUE);
 		classes.put(RemoteCmdApp.class, Boolean.TRUE);
+		classes.put(RemoteCmdSystem.class, Boolean.TRUE);
+		classes.put(RemoteCmdBattery.class, Boolean.TRUE);
 		classes.put(LaunchAppBroadcast.class, Boolean.TRUE);
 		classes.put(AutoServiceThread.class, Boolean.TRUE);
 		//classes.put(TimeUtils.class, Boolean.TRUE);

@@ -45,6 +45,8 @@ public class Uploader {
 			uploader = new DummyUploader(Protocols.createProtocolDummy());
 		} else if (transferProtocol.equals(TransferProtocol.httpUserDefined)) {
 			uploader = new HttpUploader(Protocols.createProtocolMltUrlparams());
+		} else if (transferProtocol.equals(TransferProtocol.sms)) {
+			uploader = new SmsUploader(Protocols.createProtocolMltSms());
 		} else if (transferProtocol.equals(TransferProtocol.mltTcpEncrypted)) {
 			uploader = new TcpUploader(Protocols.createProtocolMltDatastrEncrypted(), true);
 		} else if (transferProtocol.equals(TransferProtocol.tk102Emulator)) {

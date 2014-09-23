@@ -3,10 +3,11 @@ package de.msk.mylivetracker.client.android;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import de.msk.mylivetracker.client.android.appcontrol.AppControl;
+import de.msk.mylivetracker.client.android.auto.AutoService;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
 import de.msk.mylivetracker.client.android.util.LogUtils;
+import de.msk.mylivetracker.client.android.util.service.AbstractService;
 
 /**
  * classname: LaunchAppBroadcast
@@ -30,8 +31,8 @@ public class LaunchAppBroadcast extends BroadcastReceiver {
 		LogUtils.info(LaunchAppBroadcast.class, "isStartAfterReboot=" + prefs.isStartAfterReboot());
 		if (TrackingModePrefs.isAuto() && prefs.isStartAfterReboot()) {
 			LogUtils.info(LaunchAppBroadcast.class, "starting tracking mode 'auto' ...");
-			AppControl.startAppBase();
-			LogUtils.info(LaunchAppBroadcast.class, "tracking mode 'auto' started.");
+			AbstractService.startService(AutoService.class);
+	    	LogUtils.info(LaunchAppBroadcast.class, "tracking mode 'auto' started.");
 		}
 	}
 }

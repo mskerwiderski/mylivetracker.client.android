@@ -5,7 +5,6 @@ import java.util.Date;
 import org.apache.commons.lang3.StringUtils;
 
 import de.msk.mylivetracker.client.android.R;
-import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
 import de.msk.mylivetracker.client.android.appcontrol.AppControl;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdDsc;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdExecutor;
@@ -108,7 +107,7 @@ public class RemoteCmdHeartrate extends ARemoteCmdExecutor {
 					Integer.valueOf(params[2]) : DETECT_MAX_TIMEOUT_IN_SECS);
 				if (detect) {
 					if (!antPlusFoundActive) {
-						AntPlusManager.start();
+						AppControl.startAntPlusDetection();
 					}
 					
 					long curr = (new Date()).getTime();
@@ -128,7 +127,7 @@ public class RemoteCmdHeartrate extends ARemoteCmdExecutor {
 						curr = (new Date()).getTime();
 					}
 					if (!antPlusFoundActive) {
-						AntPlusManager.stop();
+						AppControl.stopAntPlusDetection();
 					}
 				}
 				response = ResponseCreator.getResultOfGetHeartrate(HeartrateInfo.get());

@@ -26,6 +26,7 @@ public class ServerPrefs extends APrefs implements Serializable {
 	private String server;
 	private int port;
 	private String path;
+	private String smsReceivers;
 	
 	@Override
 	public int getVersion() {
@@ -36,6 +37,7 @@ public class ServerPrefs extends APrefs implements Serializable {
 		this.server = "";
 		this.port = 80;
 		this.path = "";
+		this.smsReceivers = "";
 	}
 	@Override
 	public void initWithValuesOfOldVersion(int foundVersion, String foundGsonStr) {
@@ -60,6 +62,12 @@ public class ServerPrefs extends APrefs implements Serializable {
 	public void setPath(String path) {
 		this.path = path;
 	}
+	public String getSmsReceivers() {
+		return smsReceivers;
+	}
+	public void setSmsReceivers(String smsReceivers) {
+		this.smsReceivers = smsReceivers;
+	}
 	@Override
 	public String getShortName() {
 		return "server";
@@ -71,11 +79,12 @@ public class ServerPrefs extends APrefs implements Serializable {
 				new ConfigPair("server", this.server),
 				new ConfigPair("port", String.valueOf(this.port)),
 				new ConfigPair("path", this.path),
+				new ConfigPair("smsReceivers", this.smsReceivers),
 		});
 	}
 	@Override
 	public String toString() {
 		return "ServerPrefs [server=" + server + ", port=" + port + ", path="
-			+ path + "]";
+			+ path + ", smsReceivers=" + smsReceivers + "]";
 	}
 }

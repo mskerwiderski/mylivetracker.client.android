@@ -15,7 +15,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import de.msk.mylivetracker.client.android.App;
-import de.msk.mylivetracker.client.android.localization.LocalizationService;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
@@ -68,15 +67,6 @@ public abstract class AbstractService extends Service {
 		}
 	}
 
-	public static void startStopService(Class<? extends AbstractService> serviceClass, boolean start) {
-		if (!start && AbstractService.isServiceRunning(LocalizationService.class)) {
-			AbstractService.stopService(LocalizationService.class);						
-		} else if (start && 
-			!AbstractService.isServiceRunning(LocalizationService.class)){
-			AbstractService.startService(LocalizationService.class);				
-		}
-	}
-	
 	public static boolean isServiceRunning(Class<? extends AbstractService> serviceClass) {
 		boolean found = false;
 	    ActivityManager manager = (ActivityManager) App.getCtx().getSystemService(Context.ACTIVITY_SERVICE);

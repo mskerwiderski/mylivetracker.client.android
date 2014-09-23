@@ -42,19 +42,18 @@ public class RemoteCmdBattery extends ARemoteCmdExecutor {
 		BatteryStateInfo batteryStateInfo = BatteryStateInfo.get();
 		String res = ResponseCreator.addParamValue("", 
 			"state", batteryStateInfo.getState().getLabel());
-		res = ResponseCreator.addParamValue(res, 
+		res = ResponseCreator.addIntValue(res, 
 			"capacity", 
-			String.valueOf(batteryStateInfo.getPercent()) + 
-			FormatUtils.Unit.Percent);
-		res = ResponseCreator.addParamValue(res, 
+			batteryStateInfo.getPercent(), 
+			FormatUtils.Unit.PercentAsTxt);
+		res = ResponseCreator.addDoubleValue(res, 
 			"power", 
-			FormatUtils.getDoubleAsSimpleStr(
-				batteryStateInfo.getVoltage(), 2) +
+			batteryStateInfo.getVoltage(), 2,
 			FormatUtils.Unit.Volt);	
-		res = ResponseCreator.addParamValue(res, 
+		res = ResponseCreator.addIntValue(res, 
 			"temp", 
-			String.valueOf(batteryStateInfo.getDegrees()) +
-			FormatUtils.Unit.DegreeAsTxt);
+			batteryStateInfo.getDegrees(),
+			FormatUtils.Unit.DegreeCelsiusAsTxt);
 		return new Result(true, res);
 	}
 }

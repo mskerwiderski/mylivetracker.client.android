@@ -3,6 +3,7 @@ package de.msk.mylivetracker.client.android.mainview;
 import android.widget.ToggleButton;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
+import de.msk.mylivetracker.client.android.appcontrol.AppControl;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
@@ -78,9 +79,9 @@ public class OnClickButtonAntPlusListener extends ASafeOnClickListener {
 		ToggleButton btMain_ConnectDisconnectAnt = (ToggleButton)
 			activity.findViewById(R.id.btMain_ConnectDisconnectAnt);
 		if (!start && AntPlusManager.get().hasSensorListeners()) {
-			AntPlusManager.stop();
+			AppControl.stopAntPlusDetection();
 		} else if (start && !AntPlusManager.get().hasSensorListeners()) {
-			AntPlusManager.start();
+			AppControl.startAntPlusDetection();
 		}			
 		btMain_ConnectDisconnectAnt.setChecked(
 			AntPlusManager.get().hasSensorListeners());

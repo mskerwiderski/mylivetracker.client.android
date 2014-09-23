@@ -38,12 +38,14 @@ public class BatteryStateInfo extends AbstractInfo implements Serializable {
 	
 	private static BatteryStateInfo batteryStateInfo = null;
 	public static void update(State state,
-		Integer percent, Integer degrees, Double voltage) {
+		Integer percent, Integer degrees, Double voltage,
+		Boolean usbCharge, Boolean acCharge) {
 		if (TrackStatus.isInResettingState()) return;
 		batteryStateInfo = 
 			BatteryStateInfo.createNewBatteryStateInfo(
 				batteryStateInfo, state, 
-				percent, degrees, voltage);
+				percent, degrees, voltage,
+				usbCharge, acCharge);
 	}
 	public static BatteryStateInfo get() {
 		return batteryStateInfo;
@@ -59,21 +61,27 @@ public class BatteryStateInfo extends AbstractInfo implements Serializable {
 	private Integer percent;
 	private Integer degrees;
 	private Double voltage;
+	private Boolean usbCharge;
+	private Boolean acCharge;
 	
 	private BatteryStateInfo() {
 	}
 	
 	private BatteryStateInfo(State state,
-		Integer percent, Integer degrees, Double voltage) {
+		Integer percent, Integer degrees, Double voltage,
+		Boolean usbCharge, Boolean acCharge) {
 		this.state = state;
 		this.percent = percent;
 		this.degrees = degrees;
 		this.voltage = voltage;
+		this.usbCharge = usbCharge;
+		this.acCharge = acCharge;
 	}
 
 	public static BatteryStateInfo createNewBatteryStateInfo(
 		BatteryStateInfo currBatteryStateInfo, State state,
-		Integer percent, Integer degrees, Double voltage) {
+		Integer percent, Integer degrees, Double voltage,
+		Boolean usbCharge, Boolean acCharge) {
 		
 		if (currBatteryStateInfo != null) {
 			if (state == null) {
@@ -88,10 +96,16 @@ public class BatteryStateInfo extends AbstractInfo implements Serializable {
 			if (voltage == null) {
 				voltage = currBatteryStateInfo.voltage;
 			}
+			if (usbCharge == null) {
+				usbCharge = currBatteryStateInfo.usbCharge;
+			}
+			if (acCharge == null) {
+				acCharge = currBatteryStateInfo.acCharge;
+			}
 		}
 		
 		return new BatteryStateInfo(state,
-			percent, degrees, voltage); 
+			percent, degrees, voltage, usbCharge, acCharge); 
 	}
 	
 	public boolean isBatteryLow() {
@@ -100,34 +114,37 @@ public class BatteryStateInfo extends AbstractInfo implements Serializable {
 	
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("BatteryStateInfo [state=").append(state)
-			.append(", percent=").append(percent).append(", degrees=")
-			.append(degrees).append(", voltage=").append(voltage)
-			.append("]");
-		return builder.toString();
+		return "BatteryStateInfo [state=" + state + ", percent=" + percent
+				+ ", degrees=" + degrees + ", voltage=" + voltage
+				+ ", usbCharge=" + usbCharge + ", acCharge=" + acCharge + "]";
 	}
-	
+
 	public State getState() {
 		return state;
 	}
 	
 	public boolean fullOrCharging() {
 		return
-			(state != null) && (	
+			((state != null) && (	
 				state.equals(State.Charging) || 
-				state.equals(State.Full));
+				state.equals(State.Full))) ||
+			((usbCharge != null) && usbCharge) ||
+			((acCharge != null) && acCharge);
 	}
 	
 	public Integer getPercent() {
 		return percent;
 	}
-	
 	public Integer getDegrees() {
 		return degrees;
 	}
-	
 	public Double getVoltage() {
 		return voltage;
-	}	
+	}
+	public Boolean getUsbCharge() {
+		return usbCharge;
+	}
+	public Boolean getAcCharge() {
+		return acCharge;
+	}
 }

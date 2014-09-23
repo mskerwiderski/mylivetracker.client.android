@@ -31,7 +31,8 @@ public class ProtocolPrefs extends APrefs implements Serializable {
 		tk102Emulator("Tk102 Emulator", false, true),
 		tk5000Emulator("Tk5000 Emulator", false, true),
 		pt350Emulator("PT350 Emulator", false, true),
-		httpUserDefined("HTTP (user defined)", true, true); 
+		httpUserDefined("HTTP (user defined)", true, true),
+		sms("SMS", true, true); 
 		
 		private String dsc;
 		private boolean supportsSendMessage;

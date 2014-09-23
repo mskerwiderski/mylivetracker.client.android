@@ -32,7 +32,11 @@ public class OnClickButtonLocationListenerOnOffListener extends ASafeOnClickList
 		}
 		@Override
 		public void onYes() {		
-			AppControl.startOrStopLocalization();							
+			if (AppControl.localizationIsRunning()) {
+				AppControl.stopLocalization();
+			} else {
+				AppControl.startLocalization();
+			}
 		}	
 	}
 	
@@ -46,7 +50,11 @@ public class OnClickButtonLocationListenerOnOffListener extends ASafeOnClickList
 				new StartStopLocationListenerDialog();
 			dlg.show();
 		} else {
-			AppControl.startOrStopLocalization();
+			if (AppControl.localizationIsRunning()) {
+				AppControl.stopLocalization();
+			} else {
+				AppControl.startLocalization();
+			}
 		}
 	}
 }

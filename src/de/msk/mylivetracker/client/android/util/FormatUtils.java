@@ -20,11 +20,13 @@ import org.apache.commons.lang3.StringUtils;
 public class FormatUtils {
 
 	public enum Unit {
-		Percent("%"), 
+		Percent("%"),
+		PercentAsTxt("perc"),
 		Volt("V"), 
-		DegreeAsTxt("deg"),
 		Degree("¡"),
+		DegreeAsTxt("deg"),
 		DegreeCelsius("¡C"),
+		DegreeCelsiusAsTxt("degC"),
 		Seconds("s"),
 		Milliseconds("ms"),
 		Kilometer("km"),

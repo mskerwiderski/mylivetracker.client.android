@@ -13,11 +13,14 @@ import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.antplus.AntPlusHardware;
 import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
-import de.msk.mylivetracker.client.android.appcontrol.AppControl;
+import de.msk.mylivetracker.client.android.auto.AutoService;
+import de.msk.mylivetracker.client.android.battery.BatteryReceiver;
 import de.msk.mylivetracker.client.android.localization.LocalizationService;
 import de.msk.mylivetracker.client.android.mainview.updater.MainViewUpdater;
 import de.msk.mylivetracker.client.android.mainview.updater.UpdaterUtils;
+import de.msk.mylivetracker.client.android.mainview.updater.ViewUpdateService;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
+import de.msk.mylivetracker.client.android.phonestate.PhoneStateReceiver;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry.InitResult;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
@@ -86,8 +89,14 @@ public class MainActivity extends AbstractMainActivity {
         setContentView(R.layout.main);
         mainActivity = this;         
         this.setTitle(R.string.tiMain);
-        AppControl.ensureAppBaseIsRunning();
-        AppControl.setAppStatusRunningComplete();
+        
+        PhoneStateReceiver.register();
+        BatteryReceiver.register();
+        AbstractService.startService(ViewUpdateService.class);
+        if (TrackingModePrefs.isAuto()) {
+        	AbstractService.startService(AutoService.class);
+        }
+        
         this.onResume();
         
         ToggleButton btMain_StartStopTrack = (ToggleButton)

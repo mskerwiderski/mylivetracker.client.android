@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.os.BatteryManager;
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
+import de.msk.mylivetracker.client.android.util.LogUtils;
 
 /**
  * classname: BatteryReceiver
@@ -28,21 +29,20 @@ public class BatteryReceiver extends BroadcastReceiver {
 	public static boolean isRegistered() {
 		return (batteryReceiver != null);
 	}
-	
+		
 	public static void register() {
-		if (isRegistered()) {
-			throw new IllegalStateException("batteryReceiver already registered.");
-		} else {
+		if (!isRegistered()) {
 			batteryReceiver = new BatteryReceiver();
-			IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+			IntentFilter filter = new IntentFilter();
+			filter.addAction(Intent.ACTION_BATTERY_CHANGED);
+			filter.addAction(Intent.ACTION_POWER_CONNECTED);
+			filter.addAction(Intent.ACTION_POWER_DISCONNECTED);
 	        App.getCtx().registerReceiver(batteryReceiver, filter);
 		}
 	}
 	
 	public static void unregister() {
-		if (!isRegistered()) {
-			throw new IllegalStateException("batteryReceiver not registered.");
-		} else {
+		if (isRegistered()) {
 			App.getCtx().unregisterReceiver(batteryReceiver);
 			batteryReceiver = null;
 		}
@@ -60,6 +60,8 @@ public class BatteryReceiver extends BroadcastReceiver {
 	}
 	
 	private static void updateBatteryStateInfo(Intent intent) {
+		LogUtils.infoMethodIn(BatteryReceiver.class, 
+			"updateBatteryStateInfo", intent.getAction());
 		int istate = intent.getIntExtra(BatteryManager.EXTRA_STATUS, 
 			BatteryManager.BATTERY_STATUS_UNKNOWN);
 		int ilevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
@@ -95,6 +97,18 @@ public class BatteryReceiver extends BroadcastReceiver {
         if (ivolt != -1) {
         	voltage = Math.round(ivolt / 1000.0d * 100.0d) / 100d;
         }        
-        BatteryStateInfo.update(state, percent, temperature, voltage);
+        int chargePlug = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
+        boolean usbCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_USB;
+        boolean acCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_AC;
+        
+        BatteryStateInfo.update(state, percent, 
+        	temperature, voltage, usbCharge, acCharge);
+
+        LogUtils.infoMethodState(BatteryReceiver.class, 
+    			"updateBatteryStateInfo", "BatteryStateInfo", 
+    			BatteryStateInfo.get().toString());
+            
+        LogUtils.infoMethodOut(BatteryReceiver.class, 
+			"updateBatteryStateInfo", intent.getAction());
 	}
 }
