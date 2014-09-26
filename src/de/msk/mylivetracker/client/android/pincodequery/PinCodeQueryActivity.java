@@ -4,11 +4,13 @@ import org.apache.commons.lang3.StringUtils;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
+import de.msk.mylivetracker.client.android.status.PinCodeStatus;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
 import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
 
@@ -58,9 +60,24 @@ public class PinCodeQueryActivity extends AbstractActivity {
 				SimpleInfoDialog.show(this.activity, 
 					R.string.vdPinCodeQueryPrefs_PinCodeInvalid);
 			} else {
-				AbstractActivity.setPinCodeValid();
+				PinCodeStatus.get().setSuccessful(true);
 				this.activity.finish();
 			}
+		}		
+	}
+	
+	private static final class OnClickButtonCancelListener extends ASafeOnClickListener {
+		private PinCodeQueryActivity activity;
+		
+		public OnClickButtonCancelListener(
+			PinCodeQueryActivity activity) {
+			this.activity = activity;
+		}
+	
+		@Override
+		public void onClick() {
+			PinCodeStatus.get().setCanceled(true);
+			this.activity.finish();
 		}		
 	}
 	
@@ -82,5 +99,12 @@ public class PinCodeQueryActivity extends AbstractActivity {
         btPinCodeQuery_Ok.setOnClickListener(
 			new OnClickButtonOkListener(
 				this, etPinCodeQuery_PinCode));
+        Button btPinCodeQuery_Cancel = (Button) findViewById(R.id.btPinCodeQuery_Cancel);
+        if (PinCodeQueryPrefs.protectEntireAppConfigured()) {
+        	btPinCodeQuery_Cancel.setVisibility(View.GONE);
+        } else {
+        	btPinCodeQuery_Cancel.setOnClickListener(
+    			new OnClickButtonCancelListener(this));
+        }
     }
 }

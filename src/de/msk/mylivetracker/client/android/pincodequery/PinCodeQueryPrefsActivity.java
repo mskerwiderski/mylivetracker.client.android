@@ -112,16 +112,15 @@ public class PinCodeQueryPrefsActivity extends PrefsActivity {
         
         Button btPinCodeQueryPrefs_Ok = 
         	(Button)findViewById(R.id.btPinCodeQueryPrefs_Ok);
-        Button btPinCodeQueryPrefs_Cancel = 
-        	(Button)findViewById(R.id.btPinCodeQueryPrefs_Cancel);
-                    		
         btPinCodeQueryPrefs_Ok.setOnClickListener(
 			new OnClickButtonOkListener(this,
 				cbPinCodeQueryPrefs_Enable,
 				cbPinCodeQueryPrefs_ProtectSettingsOnly,
 				etPinCodeQueryPrefs_PinCode,
 				etPinCodeQueryPrefs_PinCodeReenter));
-		
+
+        Button btPinCodeQueryPrefs_Cancel = 
+        	(Button)findViewById(R.id.btPinCodeQueryPrefs_Cancel);
         btPinCodeQueryPrefs_Cancel.setOnClickListener(
 			new OnFinishActivityListener(this));
     }

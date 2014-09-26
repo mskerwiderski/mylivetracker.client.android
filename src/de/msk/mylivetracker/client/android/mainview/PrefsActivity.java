@@ -1,9 +1,10 @@
 package de.msk.mylivetracker.client.android.mainview;
 
+import android.os.Bundle;
 import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryActivity;
 import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryPrefs;
+import de.msk.mylivetracker.client.android.status.PinCodeStatus;
 import de.msk.mylivetracker.client.android.util.LogUtils;
-
 
 /**
  * classname: PrefsActivity
@@ -18,25 +19,30 @@ import de.msk.mylivetracker.client.android.util.LogUtils;
  */
 public class PrefsActivity extends AbstractActivity {
 
-	private boolean inProtectionMode = 
-		PinCodeQueryPrefs.protectSettingsOnlyConfigured();
-	
 	@Override
 	protected boolean isPrefsActivity() {
 		return true;
 	}
 	
 	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		PinCodeStatus.get().reset();
+		super.onCreate(savedInstanceState);
+	}
+
+	@Override
 	protected void onStart() {
-		LogUtils.infoMethodIn(PrefsActivity.class, "onStart", this.getClass());
-		if (inProtectionMode) {
-			LogUtils.info(PrefsActivity.class, "start pinCodeQuery");
-			PinCodeQueryActivity.runPinCodeQuery();
+		LogUtils.infoMethodIn(PrefsActivity.class, "onStart", "PrefsActivity");
+		if (PinCodeQueryPrefs.protectSettingsOnlyConfigured()) {
+			if (PinCodeStatus.get().isCanceled()) {
+				LogUtils.info(PrefsActivity.class, "finish activity because pin code query failed");
+				this.finish();
+			} else if (!PinCodeStatus.get().isSuccessful()) {
+				LogUtils.info(PrefsActivity.class, "run pinCodeQuery");
+				PinCodeQueryActivity.runPinCodeQuery();
+			}
 		} 
-		inProtectionMode = false;		
 		super.onStart();
-		LogUtils.infoMethodState(PrefsActivity.class, "onStart",
-			"inProtectionMode", inProtectionMode);
-		LogUtils.infoMethodOut(PrefsActivity.class, "onStart", this.getClass());
+		LogUtils.infoMethodOut(PrefsActivity.class, "onStart", "PrefsActivity");
 	}
 }

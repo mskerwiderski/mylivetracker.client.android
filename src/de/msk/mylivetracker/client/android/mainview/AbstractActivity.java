@@ -46,16 +46,6 @@ public abstract class AbstractActivity extends Activity {
 		return activityStack.contains(activity);
 	}
 	
-	private static boolean pinCodeValid = false;
-	
-	protected static boolean isPinCodeValid() {
-		return pinCodeValid;
-	}
-
-	protected static void setPinCodeValid() {
-		AbstractActivity.pinCodeValid = true;
-	}
-
 	protected abstract boolean isPrefsActivity();
 	
 	@Override
@@ -99,7 +89,6 @@ public abstract class AbstractActivity extends Activity {
 		visibleActivitiesCounter--;
 		if (PrefsRegistry.get(PinCodeQueryPrefs.class).isPinCodeQueryEnabled() && 
 			(visibleActivitiesCounter == 0)) {
-			pinCodeValid = false;
 			LogUtils.info(AbstractActivity.class, "pinCode invalidated");
 		}
 		super.onStop();

@@ -14,6 +14,7 @@ import de.msk.mylivetracker.client.android.auto.AutoServiceThread;
 import de.msk.mylivetracker.client.android.battery.BatteryReceiver;
 import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParams;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
+import de.msk.mylivetracker.client.android.mainview.PrefsActivity;
 import de.msk.mylivetracker.client.android.phonestate.PhoneStateListener;
 import de.msk.mylivetracker.client.android.phonestate.PhoneStateReceiver;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdReceiver;
@@ -74,7 +75,7 @@ public class LogUtils {
 		classes.put(RemoteCmdBattery.class, Boolean.TRUE);
 		classes.put(LaunchAppBroadcast.class, Boolean.TRUE);
 		classes.put(AutoServiceThread.class, Boolean.TRUE);
-		//classes.put(TimeUtils.class, Boolean.TRUE);
+		classes.put(PrefsActivity.class, Boolean.TRUE);
 	}
 
 	private static boolean isLogForClassEnabled(Class<?> clazz) {
