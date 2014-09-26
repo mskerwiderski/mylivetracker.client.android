@@ -2,6 +2,7 @@ package de.msk.mylivetracker.client.android.pincodequery;
 
 import org.apache.commons.lang3.StringUtils;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +24,19 @@ import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
  * 
  */
 public class PinCodeQueryActivity extends AbstractActivity {	
+	
+	@Override
+	protected boolean isPrefsActivity() {
+		return false;
+	}
+	
+	public static void runPinCodeQuery() {
+		AbstractActivity act = AbstractActivity.getActive();
+		if (act == null) {
+			throw new IllegalStateException("pincode query cannot run without an active activity.");
+		}
+		act.startActivity(new Intent(act, PinCodeQueryActivity.class));
+	}
 	
 	private static final class OnClickButtonOkListener extends ASafeOnClickListener {
 		private PinCodeQueryActivity activity;

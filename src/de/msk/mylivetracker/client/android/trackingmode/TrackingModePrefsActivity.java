@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.auto.AutoService;
-import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
+import de.msk.mylivetracker.client.android.mainview.PrefsActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.AutoModeResetTrackMode;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.CountdownInSecs;
@@ -34,7 +34,7 @@ import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
  * 000	2014-01-25	origin.
  * 
  */
-public class TrackingModePrefsActivity extends AbstractActivity {
+public class TrackingModePrefsActivity extends PrefsActivity {
 
 	private static final class OnTrackingModeItemSelectedListener implements OnItemSelectedListener {
 		private TrackingModePrefsActivity activity;

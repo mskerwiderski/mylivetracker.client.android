@@ -5,6 +5,7 @@
     <string name="tiPinCodeQueryPrefs">PIN code query preferences</string>
     <string name="lbPinCodeQueryPrefs_Info">Please note: A recovery of a lost PIN is not possible. In such a case you must re-install and re-configure %1$s.</string>
     <string name="lbPinCodeQueryPrefs_Enable">Enable PIN code query</string>
+    <string name="lbPinCodeQueryPrefs_ProtectSettingsOnly">Protect only the settings</string>
     <string name="fdPinCodeQueryPrefs_PinCode">PIN code</string>
     <string name="lbPinCodeQueryPrefs_PinCode">Enter new PIN code:</string>
     <string name="lbPinCodeQueryPrefs_PinCodeReenter">Reenter new PIN code:</string>

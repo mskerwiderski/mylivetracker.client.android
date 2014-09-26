@@ -5,7 +5,6 @@ import java.util.Stack;
 import org.apache.commons.lang3.ArrayUtils;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryActivity;
@@ -24,7 +23,7 @@ import de.msk.mylivetracker.client.android.util.LogUtils;
  * 000	2012-12-29	revised for v1.5.x.
  * 
  */
-public class AbstractActivity extends Activity {
+public abstract class AbstractActivity extends Activity {
 
 	private static Integer visibleActivitiesCounter = 0;
 	private static Stack<AbstractActivity> activityStack = 
@@ -57,6 +56,8 @@ public class AbstractActivity extends Activity {
 		AbstractActivity.pinCodeValid = true;
 	}
 
+	protected abstract boolean isPrefsActivity();
+	
 	@Override
 	public void setTitle(CharSequence title) {
 		super.setTitle(
@@ -80,11 +81,11 @@ public class AbstractActivity extends Activity {
 	@Override
 	protected void onStart() {
 		LogUtils.infoMethodIn(AbstractActivity.class, "onStart", this.getClass());
-		if (PrefsRegistry.get(PinCodeQueryPrefs.class).isPinCodeQueryEnabled() && 
+		if (PinCodeQueryPrefs.protectEntireAppConfigured() && 
 			(visibleActivitiesCounter == 0)) {
 			LogUtils.info(AbstractActivity.class, "start pinCodeQuery");
-			this.startActivity(new Intent(this, PinCodeQueryActivity.class));
-		}
+			PinCodeQueryActivity.runPinCodeQuery();
+		} 
 		visibleActivitiesCounter++;		
 		super.onStart();
 		LogUtils.infoMethodState(AbstractActivity.class, "onStart",

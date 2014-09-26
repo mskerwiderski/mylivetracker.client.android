@@ -6,7 +6,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import de.msk.mylivetracker.client.android.R;
-import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
+import de.msk.mylivetracker.client.android.mainview.PrefsActivity;
 import de.msk.mylivetracker.client.android.message.MessagePrefs.SendMessageMode;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
@@ -24,7 +24,7 @@ import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
  * 000	2013-01-05	revised for v1.5.x.
  * 
  */
-public class MessagePrefsActivity extends AbstractActivity {
+public class MessagePrefsActivity extends PrefsActivity {
 
 	private static final class OnClickButtonSaveListener extends ASafeOnClickListener {
 		private MessagePrefsActivity activity;

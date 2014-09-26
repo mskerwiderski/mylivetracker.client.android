@@ -75,6 +75,32 @@ public class ValidatorUtils {
 		return true;
 	}
 	
+	public static boolean validateIfStringArrayLimitReached(
+			Context ctx, int label, EditText editText,
+			int limit,
+			boolean setFocusIfInvalid) {
+		if (ctx == null) {
+			throw new IllegalArgumentException("ctx must not be null.");
+		}
+		if (editText == null) {
+			throw new IllegalArgumentException("editText must not be null.");
+		}
+		boolean valid = true;
+		String array = editText.getText().toString();
+		if (!StringUtils.isEmpty(array)) {
+			if (StringUtils.split(array, ",").length > limit) {
+				valid = false;
+			}
+		}
+		if (!valid) {
+			String message = 
+				ctx.getString(R.string.validator_tooManyEntries, 
+					ctx.getString(label), limit);
+				SimpleInfoDialog.show(ctx, message);
+		}
+		return valid;
+	}
+	
 	public static boolean validateIfPhoneNumber(
 		Context ctx, int label, EditText editText,
 		boolean setFocusIfInvalid) {
@@ -88,6 +114,35 @@ public class ValidatorUtils {
 		if (!valid) {
 			String message = 
 				ctx.getString(R.string.validator_phoneNumberInvalid, 
+				ctx.getString(label));
+			SimpleInfoDialog.show(ctx, message);
+		}
+		if (!valid && setFocusIfInvalid) {
+			editText.requestFocus();
+		}
+		return valid;
+	}
+	
+	public static boolean validateIfPhoneNumbers(
+		Context ctx, int label, EditText editText,
+		boolean setFocusIfInvalid) {
+		if (ctx == null) {
+			throw new IllegalArgumentException("ctx must not be null.");
+		}
+		if (editText == null) {
+			throw new IllegalArgumentException("editText must not be null.");
+		}
+		boolean valid = true;
+		String phoneNumbers = editText.getText().toString();
+		if (!StringUtils.isEmpty(phoneNumbers)) {
+			String[] phoneNumberArr = StringUtils.split(phoneNumbers, ",");
+			for (int i=0; valid && (i < phoneNumberArr.length); i++) {
+				valid = PhoneNumberUtils.isGlobalPhoneNumber(phoneNumberArr[i]);
+			}
+		}
+		if (!valid) {
+			String message = 
+				ctx.getString(R.string.validator_MinimumOnePhoneNumberInvalid, 
 				ctx.getString(label));
 			SimpleInfoDialog.show(ctx, message);
 		}

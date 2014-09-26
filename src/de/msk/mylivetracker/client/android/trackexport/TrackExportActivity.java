@@ -32,6 +32,11 @@ import de.msk.mylivetracker.client.android.util.listener.OnFinishActivityListene
  */
 public class TrackExportActivity extends AbstractActivity {
 
+	@Override
+	protected boolean isPrefsActivity() {
+		return false;
+	}
+	
 	private static final class UploadToDropboxDialog extends AbstractYesNoDialog {
 		private Activity activity;
 				

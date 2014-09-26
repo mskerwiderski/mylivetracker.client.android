@@ -85,6 +85,8 @@
     <!-- validators -->
     <string name="validator.locationProviderNotSupported">Location provider %1$s is not supported on this device!</string>
     <string name="validator.phoneNumberInvalid">Phone number is invalid!</string>
+    <string name="validator.MinimumOnePhoneNumberInvalid">Minimum one phone number for %1$s is invalid!</string>
+    <string name="validator.tooManyEntries">Too many entries for %1$s (max. %2$s are allowed)!</string>
     <string name="validator.valueMustNotBeEmpty">%1$s must not be empty!</string>
     <string name="validator.valueMustBeANumber">%1$s must be a number!</string>    
     <string name="validator.valueMustBeInRange">%1$s must be in range of %2$s-%3$s!</string>

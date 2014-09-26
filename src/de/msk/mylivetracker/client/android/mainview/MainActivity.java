@@ -44,7 +44,7 @@ import de.msk.mylivetracker.client.android.util.service.AbstractService;
  * 
  */
 public class MainActivity extends AbstractMainActivity {
-    
+
 	private static MainActivity mainActivity = null;	
 	
 	public static MainActivity get() {
@@ -53,6 +53,11 @@ public class MainActivity extends AbstractMainActivity {
 
 	public static boolean exists() {
 		return mainActivity != null;
+	}
+	
+	@Override
+	protected boolean isPrefsActivity() {
+		return false;
 	}
 	
 	private static class StartInfoDialog extends AbstractInfoDialog {

@@ -23,6 +23,11 @@ import de.msk.mylivetracker.client.android.util.listener.OnFinishActivityListene
 public class InfoActivity extends AbstractActivity {
 	
 	@Override
+	protected boolean isPrefsActivity() {
+		return false;
+	}
+	
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.info);

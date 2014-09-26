@@ -22,7 +22,12 @@ public class MainDetailsActivity extends AbstractMainActivity {
 	public static MainDetailsActivity get() {
 		return mainDetailsActivity;
 	}
-		
+	
+	@Override
+	protected boolean isPrefsActivity() {
+		return false;
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

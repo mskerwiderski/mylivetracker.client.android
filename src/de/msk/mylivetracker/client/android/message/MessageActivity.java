@@ -41,6 +41,11 @@ import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
  */
 public class MessageActivity extends AbstractActivity {	
 	
+	@Override
+	protected boolean isPrefsActivity() {
+		return false;
+	}
+	
 	private static final class SendMessageDialog extends AbstractYesNoDialog {
 
 		private MessageActivity activity;

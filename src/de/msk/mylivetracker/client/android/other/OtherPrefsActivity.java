@@ -12,7 +12,7 @@ import android.widget.Toast;
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.antplus.AntPlusHardware;
-import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
+import de.msk.mylivetracker.client.android.mainview.PrefsActivity;
 import de.msk.mylivetracker.client.android.other.OtherPrefs.ConfirmLevel;
 import de.msk.mylivetracker.client.android.other.OtherPrefs.TrackingOneTouchMode;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
@@ -33,7 +33,7 @@ import de.msk.mylivetracker.client.android.util.listener.OnFinishActivityListene
  * 000	2012-12-29	revised for v1.5.x.
  * 
  */
-public class OtherPrefsActivity extends AbstractActivity {
+public class OtherPrefsActivity extends PrefsActivity {
 
 	private static final class OnClickButtonSaveListener extends ASafeOnClickListener {
 		private OtherPrefsActivity activity;

@@ -5,6 +5,7 @@
     <string name="tiPinCodeQueryPrefs">Einstellungen PIN Code Abfrage</string>
     <string name="lbPinCodeQueryPrefs_Info">Wichtig: Eine Wiederherstellung eines vergessenen PINs ist nicht möglich. In diesem Fall ist ein erneutes Installieren und Konfigurieren von %1$s notwendig.</string>
     <string name="lbPinCodeQueryPrefs_Enable">PIN Code Abfrage aktivieren</string>
+    <string name="lbPinCodeQueryPrefs_ProtectSettingsOnly">Nur die Einstellungen schützen</string>
     <string name="fdPinCodeQueryPrefs_PinCode">PIN Code</string>
     <string name="lbPinCodeQueryPrefs_PinCode">Eingabe des neuen PIN Codes:</string>
     <string name="lbPinCodeQueryPrefs_PinCodeReenter">Erneute Eingabe des neuen PIN Codes:</string>

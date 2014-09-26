@@ -5,7 +5,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import de.msk.mylivetracker.client.android.R;
-import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
+import de.msk.mylivetracker.client.android.mainview.PrefsActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
 import de.msk.mylivetracker.client.android.util.listener.OnFinishActivityListener;
@@ -22,7 +22,7 @@ import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
  * 000	2013-01-02	revised for v1.5.x.
  * 
  */
-public class TrackExportPrefsActivity extends AbstractActivity {
+public class TrackExportPrefsActivity extends PrefsActivity {
 
 	private static final class OnClickButtonSaveListener extends ASafeOnClickListener {
 		private TrackExportPrefsActivity activity;

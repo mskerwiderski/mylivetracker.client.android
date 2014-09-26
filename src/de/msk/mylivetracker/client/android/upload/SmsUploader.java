@@ -39,8 +39,10 @@ public class SmsUploader extends AbstractUploader {
 			PrefsRegistry.get(ServerPrefs.class);
 		String[] receivers = StringUtils.split(
 			serverPrefs.getSmsReceivers(), ",");
-		for (String receiver : receivers) {
-			SmsSendUtils.sendSms(receiver, dataStr);
+		if ((receivers != null) && receivers.length > 0) {
+			for (String receiver : receivers) {
+				SmsSendUtils.sendSms(receiver, dataStr);
+			}
 		}
 		long stop = SystemClock.elapsedRealtime();
 		return new UploadResult(true, stop-start, 1, 

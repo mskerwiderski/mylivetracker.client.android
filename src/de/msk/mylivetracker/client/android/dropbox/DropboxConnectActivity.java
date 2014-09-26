@@ -6,7 +6,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.R;
-import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
+import de.msk.mylivetracker.client.android.mainview.PrefsActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
@@ -24,7 +24,7 @@ import de.msk.mylivetracker.client.android.util.listener.OnFinishActivityListene
  * 000	2012-12-29	revised for v1.5.x.
  * 
  */
-public class DropboxConnectActivity extends AbstractActivity {	
+public class DropboxConnectActivity extends PrefsActivity {	
 	
 	private static final class ConnectDialog extends AbstractYesNoDialog {
 		private Activity activity;

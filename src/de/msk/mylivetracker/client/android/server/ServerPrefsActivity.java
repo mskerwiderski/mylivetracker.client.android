@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import de.msk.mylivetracker.client.android.R;
-import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
+import de.msk.mylivetracker.client.android.mainview.PrefsActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
 import de.msk.mylivetracker.client.android.util.listener.OnFinishActivityListener;
@@ -21,7 +21,7 @@ import de.msk.mylivetracker.client.android.util.validation.ValidatorUtils;
  * 000	2012-12-29	revised for v1.5.x.
  * 
  */
-public class ServerPrefsActivity extends AbstractActivity {
+public class ServerPrefsActivity extends PrefsActivity {
 
 	private static final class OnClickButtonSaveListener extends ASafeOnClickListener {
 		private ServerPrefsActivity activity;
@@ -65,14 +65,22 @@ public class ServerPrefsActivity extends AbstractActivity {
 				ValidatorUtils.validateEditTextString(
 					this.activity, 
 					R.string.fdServerPrefs_SmsReceivers, 
-					etServerPrefs_SmsReceivers, 0, 50, true);
+					etServerPrefs_SmsReceivers, 0, 50, true) &&
+				ValidatorUtils.validateIfStringArrayLimitReached(
+					this.activity, 
+					R.string.fdServerPrefs_SmsReceivers, 
+					etServerPrefs_SmsReceivers, 3, true) &&
+				ValidatorUtils.validateIfPhoneNumbers(
+					this.activity, 
+					R.string.fdServerPrefs_SmsReceivers, 
+					etServerPrefs_SmsReceivers, true);
 			
 			if (valid) {
 				ServerPrefs prefs = PrefsRegistry.get(ServerPrefs.class);
 				prefs.setServer(etServerPrefs_ServerAddress.getText().toString());
 				prefs.setPort(Integer.parseInt(etServerPrefs_ServerPort.getText().toString()));
 				prefs.setPath(etServerPrefs_ServerPath.getText().toString());
-				prefs.setPath(etServerPrefs_SmsReceivers.getText().toString());
+				prefs.setSmsReceivers(etServerPrefs_SmsReceivers.getText().toString());
 				PrefsRegistry.save(ServerPrefs.class);
 				this.activity.finish();
 			}
