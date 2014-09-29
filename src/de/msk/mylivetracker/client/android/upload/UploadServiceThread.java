@@ -1,11 +1,13 @@
 package de.msk.mylivetracker.client.android.upload;
 
-import android.os.SystemClock;
+import de.msk.mylivetracker.client.android.appcontrol.AppControl;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
+import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
 import de.msk.mylivetracker.client.android.upload.Uploader.LastInfoDsc;
+import de.msk.mylivetracker.client.android.util.TimeUtils;
 import de.msk.mylivetracker.client.android.util.service.AbstractServiceThread;
 
 /**
@@ -30,63 +32,100 @@ public class UploadServiceThread extends AbstractServiceThread {
 	public void init() throws InterruptedException {
 		this.uploader = Uploader.createUploader();
 		this.doUpload = true;
-		this.lastUploaded = SystemClock.elapsedRealtime();
+		this.lastUploaded = TimeUtils.getElapsedTimeInMSecs();
 		this.lastInfoDsc = new LastInfoDsc();
 	}
 
 	@Override
 	public void runSinglePass() throws InterruptedException {
-		ProtocolPrefs prefs = PrefsRegistry.get(ProtocolPrefs.class);
-		LocationInfo locationInfo = LocationInfo.get();
-		if (!this.doUpload && this.isRunOnlyOnce()) {
-			this.doUpload = true;
+		if (TrackingModePrefs.isStandard() || TrackingModePrefs.isAuto()) {
+			runSinglePassTrackingModeStandardOrAuto();
+		} else if (TrackingModePrefs.isCheckpoint()) {
+			runSinglePassTrackingModeCheckpoint();
+		} else {
+			throw new IllegalStateException("illegal tracking mode: " + 
+				PrefsRegistry.get(TrackingModePrefs.class).getTrackingMode().name());
 		}
-		if (!this.doUpload && 
-			(this.lastInfoDsc.lastLocationInfo == null) && 
-			(locationInfo != null)) {
-			this.doUpload = true;
+	}
+	
+	public void runSinglePassTrackingModeStandardOrAuto() throws InterruptedException {
+		if (!TrackingModePrefs.isStandard()) {
+			throw new IllegalStateException("illegal tracking mode: " + 
+				PrefsRegistry.get(TrackingModePrefs.class).getTrackingMode().name());
 		}
-		int timeTrigger = prefs.getUplTimeTrigger().getSecs();
-		int distanceTrigger = prefs.getUplDistanceTrigger().getMtrs();
-		if (!this.doUpload && (timeTrigger == 0) && (distanceTrigger == 0)) {
-			this.doUpload = true;
-		}
-		if (!this.doUpload) {
-			boolean timeConditionFulfilled = false;
-			if (timeTrigger > 0) {
-				if ((this.lastUploaded + (timeTrigger * 1000)) <=
-					SystemClock.elapsedRealtime()) {
-					timeConditionFulfilled = true;
-				}
+		if (!TrackStatus.get().countdownIsActive()) {
+			ProtocolPrefs prefs = PrefsRegistry.get(ProtocolPrefs.class);
+			LocationInfo locationInfo = LocationInfo.get();
+			if (!this.doUpload && this.isRunOnlyOnce()) {
+				this.doUpload = true;
 			}
-			boolean distanceConditionFulfilled = false;
-			if (distanceTrigger > 0) {					
-				if ((locationInfo != null) && 
-					(this.lastInfoDsc.lastLocationInfo != null)) {
-					if (distanceTrigger <=
-						LocationInfo.distance(locationInfo,
-							this.lastInfoDsc.lastLocationInfo)) {
-						distanceConditionFulfilled = true;
+			if (!this.doUpload && 
+				(this.lastInfoDsc.lastLocationInfo == null) && 
+				(locationInfo != null)) {
+				this.doUpload = true;
+			}
+			int timeTrigger = prefs.getUplTimeTrigger().getSecs();
+			int distanceTrigger = prefs.getUplDistanceTrigger().getMtrs();
+			if (!this.doUpload && (timeTrigger == 0) && (distanceTrigger == 0)) {
+				this.doUpload = true;
+			}
+			if (!this.doUpload) {
+				boolean timeConditionFulfilled = false;
+				if (timeTrigger > 0) {
+					if ((this.lastUploaded + (timeTrigger * 1000)) <=
+						TimeUtils.getElapsedTimeInMSecs()) {
+						timeConditionFulfilled = true;
 					}
 				}
+				boolean distanceConditionFulfilled = false;
+				if (distanceTrigger > 0) {					
+					if ((locationInfo != null) && 
+						(this.lastInfoDsc.lastLocationInfo != null)) {
+						if (distanceTrigger <=
+							LocationInfo.distance(locationInfo,
+								this.lastInfoDsc.lastLocationInfo)) {
+							distanceConditionFulfilled = true;
+						}
+					}
+				}
+				boolean triggerLogicIsAND = prefs.getUplTriggerLogic().AND();
+				if ((timeTrigger == 0) || (distanceTrigger == 0)) {
+					triggerLogicIsAND = false;
+				}
+				if (triggerLogicIsAND) {
+					this.doUpload = timeConditionFulfilled && distanceConditionFulfilled;
+				} else {
+					this.doUpload = timeConditionFulfilled || distanceConditionFulfilled;
+				}
 			}
-			boolean triggerLogicIsAND = prefs.getUplTriggerLogic().AND();
-			if ((timeTrigger == 0) || (distanceTrigger == 0)) {
-				triggerLogicIsAND = false;
+			if (this.doUpload) {
+				Uploader.upload(this.uploader, this.lastInfoDsc);
+				lastUploaded = TimeUtils.getElapsedTimeInMSecs();
+				doUpload = false;
 			}
-			if (triggerLogicIsAND) {
-				this.doUpload = timeConditionFulfilled && distanceConditionFulfilled;
-			} else {
-				this.doUpload = timeConditionFulfilled || distanceConditionFulfilled;
-			}
-		}
-		if (this.doUpload && !TrackStatus.get().countdownIsActive()) {
-			Uploader.upload(this.uploader, this.lastInfoDsc);
-			lastUploaded = SystemClock.elapsedRealtime();
-			doUpload = false;
 		}
 	}
 
+	public void runSinglePassTrackingModeCheckpoint() throws InterruptedException {
+		if (!TrackingModePrefs.isCheckpoint()) {
+			throw new IllegalStateException("illegal tracking mode: " + 
+				PrefsRegistry.get(TrackingModePrefs.class).getTrackingMode().name());
+		}
+		Long lastStartedInMSecs = TrackStatus.get().getLastStartedInMSecs();
+		if (AppControl.trackIsRunning()) {
+			TrackingModePrefs prefs = PrefsRegistry.get(TrackingModePrefs.class);
+			LocationInfo locationInfo = LocationInfo.get();
+			if ((locationInfo != null) && locationInfo.isAccurate()) {
+				Uploader.upload(this.uploader, this.lastInfoDsc);
+				AppControl.stopTrack();
+			} else if ((TimeUtils.getElapsedTimeInMSecs() - 
+				lastStartedInMSecs) > 
+				prefs.getMaxCheckpointPeriodInSecs() * 1000L) {
+				AppControl.stopTrack();
+			}
+		}
+	}
+	
 	@Override
 	public long getSleepAfterRunSinglePassInMSecs() {
 		return 50;
@@ -94,11 +133,5 @@ public class UploadServiceThread extends AbstractServiceThread {
 
 	@Override
 	public void cleanUp() {
-	}
-
-	@Override
-	public boolean doStopService() {
-		// TODO Auto-generated method stub
-		return super.doStopService();
 	}
 }

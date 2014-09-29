@@ -11,7 +11,6 @@ import de.msk.mylivetracker.client.android.antplus.AntPlusHeartrateListener;
 import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
 import de.msk.mylivetracker.client.android.auto.AutoService;
 import de.msk.mylivetracker.client.android.battery.BatteryReceiver;
-import de.msk.mylivetracker.client.android.checkpoint.CheckpointService;
 import de.msk.mylivetracker.client.android.localization.LocalizationService;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.mainview.updater.ViewUpdateService;
@@ -78,7 +77,6 @@ public class AppControl {
 			AbstractService.isServiceRunning(ViewUpdateService.class) ||
 			AbstractService.isServiceRunning(UploadService.class) ||
 			AbstractService.isServiceRunning(AutoService.class) ||
-			AbstractService.isServiceRunning(CheckpointService.class) ||
 			AbstractService.isServiceRunning(LocalizationService.class);
 	}
 	
@@ -182,10 +180,6 @@ public class AppControl {
 			if (!AbstractService.isServiceRunning(UploadService.class)) {
 				AbstractService.startService(UploadService.class);
 			}
-			if (TrackingModePrefs.isCheckpoint() &&
-				!AbstractService.isServiceRunning(CheckpointService.class)) {
-				AbstractService.startService(CheckpointService.class);
-			}
 			TrackStatus.get().markAsStarted();
 		}
 	}
@@ -224,9 +218,6 @@ public class AppControl {
 	
 	private static void stopTrackAux() {
 		if (trackIsRunning()) {
-			if (AbstractService.isServiceRunning(CheckpointService.class)) {
-				AbstractService.stopService(CheckpointService.class);
-			}
 			if (AbstractService.isServiceRunning(UploadService.class)) {
 				AbstractService.stopService(UploadService.class);
 			}

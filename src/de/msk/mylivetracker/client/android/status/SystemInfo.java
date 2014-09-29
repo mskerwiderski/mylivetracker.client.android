@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import de.msk.mylivetracker.client.android.auto.AutoService;
 import de.msk.mylivetracker.client.android.battery.BatteryReceiver;
-import de.msk.mylivetracker.client.android.checkpoint.CheckpointService;
 import de.msk.mylivetracker.client.android.localization.LocalizationService;
 import de.msk.mylivetracker.client.android.mainview.updater.ViewUpdateService;
 import de.msk.mylivetracker.client.android.phonestate.PhoneStateReceiver;
@@ -45,7 +44,6 @@ public class SystemInfo extends AbstractInfo implements Serializable {
 	private boolean viewUpdateServiceRunning;
 	private boolean uploadServiceRunning;
 	private boolean autoServiceRunning;
-	private boolean checkpointServiceRunning;
 	private boolean localizationServiceRunning;
 	private boolean batteryReceiverRegistered;
 	private boolean phoneStateReceiverRegistered;
@@ -61,8 +59,6 @@ public class SystemInfo extends AbstractInfo implements Serializable {
 			AbstractService.isServiceRunning(UploadService.class);
 		systemInfo.autoServiceRunning =
 			AbstractService.isServiceRunning(AutoService.class);
-		systemInfo.checkpointServiceRunning =
-			AbstractService.isServiceRunning(CheckpointService.class);
 		systemInfo.localizationServiceRunning =
 			AbstractService.isServiceRunning(LocalizationService.class);
 		systemInfo.batteryReceiverRegistered =
@@ -77,13 +73,12 @@ public class SystemInfo extends AbstractInfo implements Serializable {
 		return "SystemInfo [viewUpdateServiceRunning="
 			+ viewUpdateServiceRunning + ", uploadServiceRunning="
 			+ uploadServiceRunning + ", autoServiceRunning="
-			+ autoServiceRunning + ", checkpointServiceRunning="
-			+ checkpointServiceRunning + ", localizationServiceRunning="
+			+ autoServiceRunning + ", localizationServiceRunning="
 			+ localizationServiceRunning + ", batteryReceiverRegistered="
 			+ batteryReceiverRegistered + ", phoneStateReceiverRegistered="
 			+ phoneStateReceiverRegistered + "]";
 	}
-	
+
 	public boolean isViewUpdateServiceRunning() {
 		return viewUpdateServiceRunning;
 	}
@@ -92,9 +87,6 @@ public class SystemInfo extends AbstractInfo implements Serializable {
 	}
 	public boolean isAutoServiceRunning() {
 		return autoServiceRunning;
-	}
-	public boolean isCheckpointServiceRunning() {
-		return checkpointServiceRunning;
 	}
 	public boolean isLocalizationServiceRunning() {
 		return localizationServiceRunning;

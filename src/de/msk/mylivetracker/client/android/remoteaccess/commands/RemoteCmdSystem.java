@@ -52,8 +52,6 @@ public class RemoteCmdSystem extends ARemoteCmdExecutor {
 			BooleanUtils.toString(systemInfo.isLocalizationServiceRunning(), "1", "0"));
 		res = ResponseCreator.addParamValue(res, "AutSvc", 
 			BooleanUtils.toString(systemInfo.isAutoServiceRunning(), "1", "0"));
-		res = ResponseCreator.addParamValue(res, "ChkSvc", 
-			BooleanUtils.toString(systemInfo.isCheckpointServiceRunning(), "1", "0"));
 		return new Result(true, res);
 	}
 }

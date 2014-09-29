@@ -16,7 +16,6 @@
         android:textColor="@color/colorText"
     />
     <LinearLayout
-        android:paddingTop="10dp" 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
         android:paddingLeft="5dp"
@@ -33,7 +32,6 @@
 		/>	
     </LinearLayout>
     <LinearLayout
-        android:paddingTop="5dp" 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
         android:paddingLeft="5dp"
@@ -74,7 +72,7 @@
 
     </LinearLayout>
     <TextView 
-        android:paddingTop="10dp"
+        android:paddingTop="5dp"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:textSize="16sp"
