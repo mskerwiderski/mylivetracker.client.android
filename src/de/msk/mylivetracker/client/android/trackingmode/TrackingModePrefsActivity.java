@@ -67,6 +67,7 @@ public class TrackingModePrefsActivity extends PrefsActivity {
 		private Spinner spTrackingModePrefs_TrackingMode;
 		private Spinner spTrackingModePrefs_CountdownInSecs;
 		private EditText etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs;
+		private CheckBox cbTrackingModePrefs_SendAnyValidLocationBeforeTimeout;
 		private EditText etTrackingModePrefs_CheckpointMessage;
 		private CheckBox cbTrackingModePrefs_StartAfterReboot;
 		private CheckBox cbTrackingModePrefs_RunOnlyIfBattFullOrCharging;
@@ -77,6 +78,7 @@ public class TrackingModePrefsActivity extends PrefsActivity {
 			Spinner spTrackingModePrefs_TrackingMode,
 			Spinner spTrackingModePrefs_CountdownInSecs,
 			EditText etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs,
+			CheckBox cbTrackingModePrefs_SendAnyValidLocationBeforeTimeout,
 			EditText etTrackingModePrefs_CheckpointMessage,
 			CheckBox cbTrackingModePrefs_StartAfterReboot,
 			CheckBox cbTrackingModePrefs_RunOnlyIfBattFullOrCharging,
@@ -85,6 +87,7 @@ public class TrackingModePrefsActivity extends PrefsActivity {
 			this.spTrackingModePrefs_TrackingMode = spTrackingModePrefs_TrackingMode;
 			this.spTrackingModePrefs_CountdownInSecs = spTrackingModePrefs_CountdownInSecs;
 			this.etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs = etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs;
+			this.cbTrackingModePrefs_SendAnyValidLocationBeforeTimeout = cbTrackingModePrefs_SendAnyValidLocationBeforeTimeout;
 			this.etTrackingModePrefs_CheckpointMessage = etTrackingModePrefs_CheckpointMessage;
 			this.cbTrackingModePrefs_StartAfterReboot = cbTrackingModePrefs_StartAfterReboot;
 			this.cbTrackingModePrefs_RunOnlyIfBattFullOrCharging = cbTrackingModePrefs_RunOnlyIfBattFullOrCharging;
@@ -113,6 +116,8 @@ public class TrackingModePrefsActivity extends PrefsActivity {
 				if (valid) {
 					prefs.setMaxCheckpointPeriodInSecs(Integer.parseInt(
 						etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs.getText().toString()));
+					prefs.setSendAnyValidLocationBeforeTimeout(
+						cbTrackingModePrefs_SendAnyValidLocationBeforeTimeout.isChecked());
 					prefs.setCheckpointMessage(etTrackingModePrefs_CheckpointMessage.getText().toString());
 				}
 			} else if (prefs.getTrackingMode().equals(TrackingMode.Auto)) {
@@ -152,6 +157,7 @@ public class TrackingModePrefsActivity extends PrefsActivity {
     	
 		((LinearLayout)findViewById(R.id.llTrackingModePrefs_OptionsOnlyForTrackingCheckpointMode)).setVisibility(viewCheckpointState);
 		((LinearLayout)findViewById(R.id.llTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs)).setVisibility(viewCheckpointState);
+		((LinearLayout)findViewById(R.id.llTrackingModePrefs_SendAnyValidLocationBeforeTimeout)).setVisibility(viewCheckpointState);
     	((LinearLayout)findViewById(R.id.llTrackingModePrefs_etCheckpointMessage)).setVisibility(viewCheckpointState);
     	((LinearLayout)findViewById(R.id.llTrackingModePrefs_tvCheckpointMessage)).setVisibility(viewCheckpointState);
     	
@@ -196,6 +202,10 @@ public class TrackingModePrefsActivity extends PrefsActivity {
         	(EditText)findViewById(R.id.etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs);
         etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs.setText(
         	String.valueOf(prefs.getMaxCheckpointPeriodInSecs()));
+        CheckBox cbTrackingModePrefs_SendAnyValidLocationBeforeTimeout = 
+        	(CheckBox)findViewById(R.id.cbTrackingModePrefs_SendAnyValidLocationBeforeTimeout);
+        cbTrackingModePrefs_SendAnyValidLocationBeforeTimeout.setChecked(
+        	prefs.isSendAnyValidLocationBeforeTimeout());
         EditText etTrackingModePrefs_CheckpointMessage = 
         	(EditText)findViewById(R.id.etTrackingModePrefs_CheckpointMessage);
         etTrackingModePrefs_CheckpointMessage.setText(prefs.getCheckpointMessage());
@@ -229,6 +239,7 @@ public class TrackingModePrefsActivity extends PrefsActivity {
 				spTrackingModePrefs_TrackingMode,
 				spTrackingModePrefs_CountdownInSecs,
 				etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs,
+				cbTrackingModePrefs_SendAnyValidLocationBeforeTimeout,
 				etTrackingModePrefs_CheckpointMessage,
 				cbTrackingModePrefs_StartAfterReboot,
 				cbTrackingModePrefs_RunOnlyIfBattFullOrCharging,

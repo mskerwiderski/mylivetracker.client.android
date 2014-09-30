@@ -9,6 +9,8 @@
     <string name="txTrackingModePrefs_OptionsOnlyForTrackingCheckpointMode">Folgende Optionen sind nur im Tracking Modus \'Checkpoint\' relevant:</string>
     <string name="fdTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs">Max. Karenzzeit für gültigen Checkpoint</string>
     <string name="lbTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs">Max. Karenzzeit für gültigen Checkpoint (Sek.)</string>
+    <string name="fdTrackingModePrefs_SendAnyValidLocationBeforeTimeout">Jegliche verfügbare Position senden vor Erreichen der max. Karenzzeit</string>
+    <string name="lbTrackingModePrefs_SendAnyValidLocationBeforeTimeout">Jegliche verfügbare Position senden vor Erreichen der max. Karenzzeit</string>
     <string name="fdTrackingModePrefs_CheckpointMessage">Checkpoint Nachricht</string>
 	<string name="lbTrackingModePrefs_CheckpointMessage">Checkpoint Nachricht</string>
     <string name="txTrackingModePrefs_OptionsOnlyForTrackingAutoMode">Folgende Optionen sind nur im Tracking Modus \'Auto\' relevant:</string>

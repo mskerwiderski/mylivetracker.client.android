@@ -7,6 +7,7 @@ import de.msk.mylivetracker.client.android.status.LocationInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
 import de.msk.mylivetracker.client.android.upload.Uploader.LastInfoDsc;
+import de.msk.mylivetracker.client.android.util.LogUtils;
 import de.msk.mylivetracker.client.android.util.TimeUtils;
 import de.msk.mylivetracker.client.android.util.service.AbstractServiceThread;
 
@@ -112,15 +113,26 @@ public class UploadServiceThread extends AbstractServiceThread {
 				PrefsRegistry.get(TrackingModePrefs.class).getTrackingMode().name());
 		}
 		Long lastStartedInMSecs = TrackStatus.get().getLastStartedInMSecs();
-		if (AppControl.trackIsRunning()) {
+		if (AppControl.trackIsRunning() && (this.lastInfoDsc.lastLocationInfo == null)) {
 			TrackingModePrefs prefs = PrefsRegistry.get(TrackingModePrefs.class);
 			LocationInfo locationInfo = LocationInfo.get();
-			if ((locationInfo != null) && locationInfo.isAccurate()) {
+			if ((locationInfo != null) && 
+				locationInfo.hasValidLatLon() && 
+				locationInfo.isAccurate()) {
 				Uploader.upload(this.uploader, this.lastInfoDsc);
+				LogUtils.infoMethodState(UploadServiceThread.class, 
+					"runSinglePassTrackingModeCheckpoint", "status", "accurate location sent");
 				AppControl.stopTrack();
 			} else if ((TimeUtils.getElapsedTimeInMSecs() - 
 				lastStartedInMSecs) > 
 				prefs.getMaxCheckpointPeriodInSecs() * 1000L) {
+				if ((locationInfo != null) && 
+					locationInfo.hasValidLatLon() &&
+					prefs.isSendAnyValidLocationBeforeTimeout()) {
+					Uploader.upload(this.uploader, this.lastInfoDsc);
+					LogUtils.infoMethodState(UploadServiceThread.class, 
+						"runSinglePassTrackingModeCheckpoint", "status", "valid location sent before timeout");
+				}
 				AppControl.stopTrack();
 			}
 		}

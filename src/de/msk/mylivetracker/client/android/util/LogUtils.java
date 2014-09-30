@@ -14,7 +14,6 @@ import de.msk.mylivetracker.client.android.auto.AutoServiceThread;
 import de.msk.mylivetracker.client.android.battery.BatteryReceiver;
 import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParams;
 import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
-import de.msk.mylivetracker.client.android.mainview.PrefsActivity;
 import de.msk.mylivetracker.client.android.phonestate.PhoneStateListener;
 import de.msk.mylivetracker.client.android.phonestate.PhoneStateReceiver;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdReceiver;
@@ -31,6 +30,7 @@ import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdSystem
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdTracking;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdUpload;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdVersion;
+import de.msk.mylivetracker.client.android.upload.UploadServiceThread;
 import de.msk.mylivetracker.client.android.upload.protocol.sms.ProtocolEncoder;
 
 /**
@@ -75,7 +75,7 @@ public class LogUtils {
 		classes.put(RemoteCmdBattery.class, Boolean.TRUE);
 		classes.put(LaunchAppBroadcast.class, Boolean.TRUE);
 		classes.put(AutoServiceThread.class, Boolean.TRUE);
-		classes.put(PrefsActivity.class, Boolean.TRUE);
+		classes.put(UploadServiceThread.class, Boolean.TRUE);
 	}
 
 	private static boolean isLogForClassEnabled(Class<?> clazz) {

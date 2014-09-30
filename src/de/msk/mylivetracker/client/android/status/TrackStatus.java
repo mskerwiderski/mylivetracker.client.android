@@ -213,10 +213,13 @@ public class TrackStatus implements Serializable {
 	public void markAsStarted() {
 		long curr = TimeUtils.getElapsedTimeInMSecs();
 		if (!this.trackIsRunning()) {
-			this.markerLastStarted = 
-				curr + 
-				PrefsRegistry.get(TrackingModePrefs.class).
-				getCountdownInSecs().getVal() * 1000L;
+			Long lastStarted = curr;
+			if (TrackingModePrefs.isStandard()) {
+				lastStarted += 
+					PrefsRegistry.get(TrackingModePrefs.class).
+					getCountdownInSecs().getVal() * 1000L; 
+			}
+			this.markerLastStarted = lastStarted;
 			if (this.markerFirstStarted == null) {
 				this.markerFirstStarted = 
 					this.markerLastStarted;

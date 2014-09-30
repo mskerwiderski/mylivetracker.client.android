@@ -127,152 +127,148 @@ public class AppControl {
 	}
 	
 	private static void resetTrackAux() {
-		AbstractService.stopService(UploadService.class);
-		AbstractService.stopService(LocalizationService.class);
-		stopAntPlusDetection();
-		TrackStatus.reset();
+		lockTrackStartStop.lock();
+		try {
+			AbstractService.stopService(UploadService.class);
+			AbstractService.stopService(LocalizationService.class);
+			stopAntPlusDetection();
+			TrackStatus.reset();
+		} finally {
+			lockTrackStartStop.unlock();
+		}
 	}
 	
-	private final static ReentrantLock lockResetTrack = new ReentrantLock();
-	
 	public static void resetTrack() {
-		lockResetTrack.lock();
-		try {
-			final Activity activity = MainActivity.getActive();
-			if (activity != null) {
-				LogUtils.infoMethodState(AppControl.class, "resetTrack", 
-					"main activity active", (activity != null));
-				final AbstractProgressDialog<Activity> progressDlg = new AbstractProgressDialog<Activity>() {
-					@Override
-					public void doTask(Activity activity) {
-						resetTrackAux();
-					}
-				};
-				progressDlg.runOnUiThread(activity, 
-					R.string.txMain_InfoResettingTracking, 
-					R.string.txMain_InfoResetTrackDone);
-			} else {
-				LogUtils.infoMethodState(AppControl.class, "resetTrack", 
-					"main activity active", (activity != null));
-				resetTrackAux();
-			}
-		} finally {
-			lockResetTrack.unlock();
+		final Activity activity = MainActivity.getActive();
+		if (activity != null) {
+			LogUtils.infoMethodState(AppControl.class, "resetTrack", 
+				"main activity active", (activity != null));
+			final AbstractProgressDialog<Activity> progressDlg = new AbstractProgressDialog<Activity>() {
+				@Override
+				public void doTask(Activity activity) {
+					resetTrackAux();
+				}
+			};
+			progressDlg.runOnUiThread(activity, 
+				R.string.txMain_InfoResettingTracking, 
+				R.string.txMain_InfoResetTrackDone);
+		} else {
+			LogUtils.infoMethodState(AppControl.class, "resetTrack", 
+				"main activity active", (activity != null));
+			resetTrackAux();
 		}
 	}
 	
 	private static void startTrackAux() {
-		if (!trackIsRunning()) {
-			PhoneStateReceiver.register();
-	        BatteryReceiver.register();;
-			TrackingOneTouchMode mode = 
-				PrefsRegistry.get(OtherPrefs.class).
-				getTrackingOneTouchMode();
-			switch (mode) {
-				case TrackingLocalizationHeartrate:
-					startAntPlusDetection();
-				case TrackingLocalization:
-					startLocalization();
-				case TrackingOnly:
-				default:
-					break;
-			}
-			if (!AbstractService.isServiceRunning(UploadService.class)) {
+		lockTrackStartStop.lock();
+		try {
+			if (!TrackStatus.get().trackIsRunning()) {
+				PhoneStateReceiver.register();
+		        BatteryReceiver.register();
+				TrackingOneTouchMode mode = 
+					PrefsRegistry.get(OtherPrefs.class).
+					getTrackingOneTouchMode();
+				switch (mode) {
+					case TrackingLocalizationHeartrate:
+						startAntPlusDetection();
+					case TrackingLocalization:
+						startLocalization();
+					case TrackingOnly:
+					default:
+						break;
+				}
 				AbstractService.startService(UploadService.class);
+				TrackStatus.get().markAsStarted();
 			}
-			TrackStatus.get().markAsStarted();
+		} finally {
+			lockTrackStartStop.unlock();
 		}
 	}
 	
 	public static void startTrack() {
-		lockTrackStartStop.lock();
-		try {
-			if (!trackIsRunning()) {
-				final Activity activity = MainActivity.getActive();
-				if (activity != null) {
-					LogUtils.infoMethodState(AppControl.class, "startTrack", 
-						"main activity active", (activity != null));
-					final AbstractProgressDialog<Activity> progressDlg = new AbstractProgressDialog<Activity>() {
-						@Override
-						public void doTask(Activity activity) {
-							startTrackAux();
-						}
-					};
-					int txIdStarting = R.string.txMain_InfoStartingTracking;
-					int txIdStartingDone = R.string.txMain_InfoStartTrackDone;
-					if (TrackingModePrefs.isCheckpoint()) {
-						txIdStarting = R.string.txMain_InfoStartingCheckpoint;
-						txIdStartingDone = R.string.txMain_InfoStartCheckpointDone;
+		if (!TrackStatus.get().trackIsRunning()) {
+			final Activity activity = MainActivity.getActive();
+			if (activity != null) {
+				LogUtils.infoMethodState(AppControl.class, "startTrack", 
+					"main activity active", (activity != null));
+				final AbstractProgressDialog<Activity> progressDlg = new AbstractProgressDialog<Activity>() {
+					@Override
+					public void doTask(Activity activity) {
+						startTrackAux();
 					}
-					progressDlg.runOnUiThread(activity, txIdStarting, txIdStartingDone);
-				} else {
-					LogUtils.infoMethodState(AppControl.class, "startTrack", 
-						"main activity active", (activity != null));
-					startTrackAux();
+				};
+				int txIdStarting = R.string.txMain_InfoStartingTracking;
+				int txIdStartingDone = R.string.txMain_InfoStartTrackDone;
+				if (TrackingModePrefs.isCheckpoint()) {
+					txIdStarting = R.string.txMain_InfoStartingCheckpoint;
+					txIdStartingDone = R.string.txMain_InfoStartCheckpointDone;
 				}
+				progressDlg.runOnUiThread(activity, txIdStarting, txIdStartingDone);
+			} else {
+				LogUtils.infoMethodState(AppControl.class, "startTrack", 
+					"main activity active", (activity != null));
+				startTrackAux();
 			}
-		} finally {
-			lockTrackStartStop.unlock();
 		}
 	}
 	
 	private static void stopTrackAux() {
-		if (trackIsRunning()) {
-			if (AbstractService.isServiceRunning(UploadService.class)) {
-				AbstractService.stopService(UploadService.class);
-			}
-			TrackStatus.get().markAsStopped();
-			TrackingOneTouchMode mode = 
-				PrefsRegistry.get(OtherPrefs.class).
-				getTrackingOneTouchMode();
-			switch (mode) {
-				case TrackingLocalizationHeartrate:
-					stopAntPlusDetection();
-				case TrackingLocalization:
-					stopLocalization();
-				case TrackingOnly:
-				default:
-					break;
-			}
-			if (!MainActivity.exists()) {
-				TrackingModePrefs prefs = PrefsRegistry.get(TrackingModePrefs.class);
-				if (!TrackingModePrefs.isAuto() || !prefs.isRunOnlyIfBattFullOrCharging()) {
-					BatteryReceiver.unregister();
-				}
-				PhoneStateReceiver.unregister();;
-			}
-		}
-	}
-	
-	public static void stopTrack() {
 		lockTrackStartStop.lock();
 		try {
-			if (trackIsRunning()) {
-				final Activity activity = MainActivity.getActive();
-				if (activity != null) {
-					LogUtils.infoMethodState(AppControl.class, "stopTrack", 
-						"main activity active", (activity != null));
-					final AbstractProgressDialog<Activity> progressDlg = new AbstractProgressDialog<Activity>() {
-						@Override
-						public void doTask(Activity activity) {
-							stopTrackAux();
-						}
-					};
-					int txIdStopping = R.string.txMain_InfoStoppingTracking;
-					int txIdStoppingDone = R.string.txMain_InfoStopTrackDone;
-					if (TrackingModePrefs.isCheckpoint()) {
-						txIdStopping = R.string.txMain_InfoStoppingCheckpoint;
-						txIdStoppingDone = R.string.txMain_InfoStopCheckpointDone;
+			if (TrackStatus.get().trackIsRunning()) {
+				if (AbstractService.isServiceRunning(UploadService.class)) {
+					AbstractService.stopService(UploadService.class);
+				}
+				TrackStatus.get().markAsStopped();
+				TrackingOneTouchMode mode = 
+					PrefsRegistry.get(OtherPrefs.class).
+					getTrackingOneTouchMode();
+				switch (mode) {
+					case TrackingLocalizationHeartrate:
+						stopAntPlusDetection();
+					case TrackingLocalization:
+						stopLocalization();
+					case TrackingOnly:
+					default:
+						break;
+				}
+				if (!MainActivity.exists()) {
+					TrackingModePrefs prefs = PrefsRegistry.get(TrackingModePrefs.class);
+					if (!TrackingModePrefs.isAuto() || !prefs.isRunOnlyIfBattFullOrCharging()) {
+						BatteryReceiver.unregister();
 					}
-					progressDlg.runOnUiThread(activity, txIdStopping, txIdStoppingDone);
-				} else {
-					LogUtils.infoMethodState(AppControl.class, "stopTrack", 
-						"main activity active", (activity != null));
-					stopTrackAux();
+					PhoneStateReceiver.unregister();;
 				}
 			}
 		} finally {
 			lockTrackStartStop.unlock();
+		} 
+	}
+	
+	public static void stopTrack() {
+		if (TrackStatus.get().trackIsRunning()) {
+			final Activity activity = MainActivity.getActive();
+			if (activity != null) {
+				LogUtils.infoMethodState(AppControl.class, "stopTrack", 
+					"main activity active", (activity != null));
+				final AbstractProgressDialog<Activity> progressDlg = new AbstractProgressDialog<Activity>() {
+					@Override
+					public void doTask(Activity activity) {
+						stopTrackAux();
+					}
+				};
+				int txIdStopping = R.string.txMain_InfoStoppingTracking;
+				int txIdStoppingDone = R.string.txMain_InfoStopTrackDone;
+				if (TrackingModePrefs.isCheckpoint()) {
+					txIdStopping = R.string.txMain_InfoStoppingCheckpoint;
+					txIdStoppingDone = R.string.txMain_InfoStopCheckpointDone;
+				}
+				progressDlg.runOnUiThread(activity, txIdStopping, txIdStoppingDone);
+			} else {
+				LogUtils.infoMethodState(AppControl.class, "stopTrack", 
+					"main activity active", (activity != null));
+				stopTrackAux();
+			}
 		}
 	}
 
@@ -289,59 +285,67 @@ public class AppControl {
 		return res;
 	}
 	
-	public static void startLocalization() {
+	private static void startLocalizationAux() {
 		lockLocalizationStartStop.lock();
 		try {
-			if (!localizationIsRunning()) {
-				final Activity activity = MainActivity.getActive();
-				if (activity != null) {
-					LogUtils.infoMethodState(AppControl.class, "startLocalization", 
-						"main activity active", (activity != null));
-					final AbstractProgressDialog<Activity> progressDlg = new AbstractProgressDialog<Activity>() {
-						@Override
-						public void doTask(Activity activity) {
-							AbstractService.startService(LocalizationService.class);
-						}
-					};
-					int txIdStarting = R.string.txMain_InfoStartingLocalization;
-					int txIdStartingDone = R.string.txMain_InfoStartLocalizationDone;
-					progressDlg.runOnUiThread(activity, txIdStarting, txIdStartingDone);
-				} else {
-					LogUtils.infoMethodState(AppControl.class, "startLocalization", 
-						"main activity active", (activity != null));
-					AbstractService.startService(LocalizationService.class);
-				}
+			AbstractService.startService(LocalizationService.class);
+		} finally {
+			lockLocalizationStartStop.unlock();
+		}
+	}
+	
+	public static void startLocalization() {
+		if (!AbstractService.isServiceRunning(LocalizationService.class)) {
+			final Activity activity = MainActivity.getActive();
+			if (activity != null) {
+				LogUtils.infoMethodState(AppControl.class, "startLocalization", 
+					"main activity active", (activity != null));
+				final AbstractProgressDialog<Activity> progressDlg = new AbstractProgressDialog<Activity>() {
+					@Override
+					public void doTask(Activity activity) {
+						startLocalizationAux();
+					}
+				};
+				int txIdStarting = R.string.txMain_InfoStartingLocalization;
+				int txIdStartingDone = R.string.txMain_InfoStartLocalizationDone;
+				progressDlg.runOnUiThread(activity, txIdStarting, txIdStartingDone);
+			} else {
+				LogUtils.infoMethodState(AppControl.class, "startLocalization", 
+					"main activity active", (activity != null));
+				startLocalizationAux();
 			}
+		}
+	}
+	
+	private static void stopLocalizationAux() {
+		lockLocalizationStartStop.lock();
+		try {
+			AbstractService.stopService(LocalizationService.class);
 		} finally {
 			lockLocalizationStartStop.unlock();
 		}
 	}
 	
 	public static void stopLocalization() {
-		lockLocalizationStartStop.lock();
-		try {
-			if (localizationIsRunning()) {
-				final Activity activity = MainActivity.getActive();
-				if (activity != null) {
-					LogUtils.infoMethodState(AppControl.class, "stopLocalization", 
-						"main activity active", (activity != null));
-					final AbstractProgressDialog<Activity> progressDlg = new AbstractProgressDialog<Activity>() {
-						@Override
-						public void doTask(Activity activity) {
-							AbstractService.stopService(LocalizationService.class);
-						}
-					};
-					int txIdStopping = R.string.txMain_InfoStoppingLocalization;
-					int txIdStoppingDone = R.string.txMain_InfoStopLocalizationDone;
-					progressDlg.runOnUiThread(activity, txIdStopping, txIdStoppingDone);
-				} else {
-					LogUtils.infoMethodState(AppControl.class, "stopLocalization", 
-						"main activity active", (activity != null));
-					AbstractService.stopService(LocalizationService.class);
-				}
+		if (AbstractService.isServiceRunning(LocalizationService.class)) {
+			final Activity activity = MainActivity.getActive();
+			if (activity != null) {
+				LogUtils.infoMethodState(AppControl.class, "stopLocalization", 
+					"main activity active", (activity != null));
+				final AbstractProgressDialog<Activity> progressDlg = new AbstractProgressDialog<Activity>() {
+					@Override
+					public void doTask(Activity activity) {
+						stopLocalizationAux();
+					}
+				};
+				int txIdStopping = R.string.txMain_InfoStoppingLocalization;
+				int txIdStoppingDone = R.string.txMain_InfoStopLocalizationDone;
+				progressDlg.runOnUiThread(activity, txIdStopping, txIdStoppingDone);
+			} else {
+				LogUtils.infoMethodState(AppControl.class, "stopLocalization", 
+					"main activity active", (activity != null));
+				stopLocalizationAux();
 			}
-		} finally {
-			lockLocalizationStartStop.unlock();
 		}
 	}
 	
@@ -365,72 +369,76 @@ public class AppControl {
 	}
 	
 	public static void startAntPlusDetectionAux() {
-		if (!antPlusDetectionIsRunning()) {
-			AntPlusManager.get().requestSensorUpdates(
-				AntPlusHeartrateListener.get());
+		lockAntPlusDetectionStartStop.lock();
+		try {
+			if (!(antPlusDetectionIsAvailable() &&
+				AntPlusManager.get().hasSensorListeners())) {
+				AntPlusManager.get().requestSensorUpdates(
+					AntPlusHeartrateListener.get());
+			}
+		} finally {
+			lockAntPlusDetectionStartStop.unlock();
 		}
 	}
 	
 	public static void startAntPlusDetection() {
-		lockAntPlusDetectionStartStop.lock();
-		try {
-			if (!antPlusDetectionIsRunning()) {
-				final Activity activity = MainActivity.getActive();
-				if (activity != null) {
-					LogUtils.infoMethodState(AppControl.class, "startAntPlusDetection", 
-						"main activity active", (activity != null));
-					final AbstractProgressDialog<Activity> progressDlg = new AbstractProgressDialog<Activity>() {
-						@Override
-						public void doTask(Activity activity) {
-							startAntPlusDetectionAux();
-						}
-					};
-					int txIdStarting = R.string.txMain_InfoStartingAntPlus;
-					int txIdStartingDone = R.string.txMain_InfoStartAntPlusDone;
-					progressDlg.runOnUiThread(activity, txIdStarting, txIdStartingDone);
-				} else {
-					LogUtils.infoMethodState(AppControl.class, "startAntPlusDetection", 
-						"main activity active", (activity != null));
-					startAntPlusDetectionAux();
-				}
+		if (!(antPlusDetectionIsAvailable() &&
+			AntPlusManager.get().hasSensorListeners())) {
+			final Activity activity = MainActivity.getActive();
+			if (activity != null) {
+				LogUtils.infoMethodState(AppControl.class, "startAntPlusDetection", 
+					"main activity active", (activity != null));
+				final AbstractProgressDialog<Activity> progressDlg = new AbstractProgressDialog<Activity>() {
+					@Override
+					public void doTask(Activity activity) {
+						startAntPlusDetectionAux();
+					}
+				};
+				int txIdStarting = R.string.txMain_InfoStartingAntPlus;
+				int txIdStartingDone = R.string.txMain_InfoStartAntPlusDone;
+				progressDlg.runOnUiThread(activity, txIdStarting, txIdStartingDone);
+			} else {
+				LogUtils.infoMethodState(AppControl.class, "startAntPlusDetection", 
+					"main activity active", (activity != null));
+				startAntPlusDetectionAux();
 			}
-		} finally {
-			lockAntPlusDetectionStartStop.unlock();
 		}
 	}
 	
 	public static void stopAntPlusDetectionAux() {
-		if (antPlusDetectionIsRunning()) {
-			AntPlusManager.get().removeUpdates(
-				AntPlusHeartrateListener.get());
+		lockAntPlusDetectionStartStop.lock();
+		try {
+			if (antPlusDetectionIsAvailable() &&
+				AntPlusManager.get().hasSensorListeners()) {
+				AntPlusManager.get().removeUpdates(
+					AntPlusHeartrateListener.get());
+			}
+		} finally {
+			lockAntPlusDetectionStartStop.unlock();
 		}
 	}
 	
 	public static void stopAntPlusDetection() {
-		lockAntPlusDetectionStartStop.lock();
-		try {
-			if (antPlusDetectionIsRunning()) {
-				final Activity activity = MainActivity.getActive();
-				if (activity != null) {
-					LogUtils.infoMethodState(AppControl.class, "stopAntPlusDetection", 
-						"main activity active", (activity != null));
-					final AbstractProgressDialog<Activity> progressDlg = new AbstractProgressDialog<Activity>() {
-						@Override
-						public void doTask(Activity activity) {
-							stopAntPlusDetectionAux();
-						}
-					};
-					int txIdStopping = R.string.txMain_InfoStoppingAntPlus;
-					int txIdStoppingDone = R.string.txMain_InfoStopAntPlusDone;
-					progressDlg.runOnUiThread(activity, txIdStopping, txIdStoppingDone);
-				} else {
-					LogUtils.infoMethodState(AppControl.class, "stopAntPlusDetection", 
-						"main activity active", (activity != null));
-					stopAntPlusDetectionAux();
-				}
+		if (antPlusDetectionIsAvailable() &&
+			AntPlusManager.get().hasSensorListeners()) {
+			final Activity activity = MainActivity.getActive();
+			if (activity != null) {
+				LogUtils.infoMethodState(AppControl.class, "stopAntPlusDetection", 
+					"main activity active", (activity != null));
+				final AbstractProgressDialog<Activity> progressDlg = new AbstractProgressDialog<Activity>() {
+					@Override
+					public void doTask(Activity activity) {
+						stopAntPlusDetectionAux();
+					}
+				};
+				int txIdStopping = R.string.txMain_InfoStoppingAntPlus;
+				int txIdStoppingDone = R.string.txMain_InfoStopAntPlusDone;
+				progressDlg.runOnUiThread(activity, txIdStopping, txIdStoppingDone);
+			} else {
+				LogUtils.infoMethodState(AppControl.class, "stopAntPlusDetection", 
+					"main activity active", (activity != null));
+				stopAntPlusDetectionAux();
 			}
-		} finally {
-			lockAntPlusDetectionStartStop.unlock();
 		}
 	}
 }

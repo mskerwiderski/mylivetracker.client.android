@@ -9,6 +9,8 @@
     <string name="txTrackingModePrefs_OptionsOnlyForTrackingCheckpointMode">Following options are only used in tracking mode \'Checkpoint\':</string>
     <string name="fdTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs">Max. waiting period for valid checkpoint</string>
     <string name="lbTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs">Max. waiting period for valid checkpoint (secs)</string>
+    <string name="fdTrackingModePrefs_SendAnyValidLocationBeforeTimeout">Send any available location before timeout</string>
+    <string name="lbTrackingModePrefs_SendAnyValidLocationBeforeTimeout">Send any available location before timeout</string>
     <string name="fdTrackingModePrefs_CheckpointMessage">Checkpoint message</string>
 	<string name="lbTrackingModePrefs_CheckpointMessage">Checkpoint message</string>
     <string name="txTrackingModePrefs_OptionsOnlyForTrackingAutoMode">Following options are only used in tracking mode \'Auto\':</string>

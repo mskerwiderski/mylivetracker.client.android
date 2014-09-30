@@ -2,6 +2,7 @@ package de.msk.mylivetracker.client.android.trackingmode;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import de.msk.mylivetracker.client.android.preferences.APrefs;
@@ -88,6 +89,7 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 	
 	// only for trackingmode checkpoint.
 	private long maxCheckpointPeriodInSecs;
+	private boolean sendAnyValidLocationBeforeTimeout;
 	private String checkpointMessage;
 	
 	// only for trackingmode auto.
@@ -147,6 +149,13 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 	public void setMaxCheckpointPeriodInSecs(long maxCheckpointPeriodInSecs) {
 		this.maxCheckpointPeriodInSecs = maxCheckpointPeriodInSecs;
 	}
+	public boolean isSendAnyValidLocationBeforeTimeout() {
+		return sendAnyValidLocationBeforeTimeout;
+	}
+	public void setSendAnyValidLocationBeforeTimeout(
+		boolean sendAnyValidLocationBeforeTimeout) {
+		this.sendAnyValidLocationBeforeTimeout = sendAnyValidLocationBeforeTimeout;
+	}
 	public String getCheckpointMessage() {
 		return checkpointMessage;
 	}
@@ -183,6 +192,8 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 				new ConfigPair("trackingMode", this.trackingMode.name()),
 				new ConfigPair("maxCheckpointPeriodInSecs", 
 					String.valueOf(this.maxCheckpointPeriodInSecs)),
+				new ConfigPair("sendAnyValidLocationBeforeTimeout", 
+					BooleanUtils.toStringTrueFalse(this.sendAnyValidLocationBeforeTimeout)),
 				new ConfigPair("checkpointMessage", this.checkpointMessage),
 				new ConfigPair("startAfterReboot",
 					String.valueOf(this.startAfterReboot)),
@@ -196,8 +207,9 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 		return "TrackingModePrefs [trackingMode=" + trackingMode
 			+ ", countdownInSecs=" + countdownInSecs
 			+ ", maxCheckpointPeriodInSecs=" + maxCheckpointPeriodInSecs
-			+ ", checkpointMessage=" + checkpointMessage
-			+ ", startAfterReboot=" + startAfterReboot
+			+ ", sendAnyValidLocationBeforeTimeout="
+			+ sendAnyValidLocationBeforeTimeout + ", checkpointMessage="
+			+ checkpointMessage + ", startAfterReboot=" + startAfterReboot
 			+ ", runOnlyIfBattFullOrCharging="
 			+ runOnlyIfBattFullOrCharging + ", autoModeResetTrackMode="
 			+ autoModeResetTrackMode + "]";
