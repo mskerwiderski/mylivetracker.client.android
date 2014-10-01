@@ -193,7 +193,7 @@ public class LocationInfo extends AbstractInfo implements Serializable {
 		return lastPosDetectedInSecs <= periodOfRestInSecs;
 	}
 	
-	public static boolean isAccurate(Float accuracy) {
+	private static boolean isAccurate(Float accuracy) {
 		int accReq = PrefsRegistry.get(LocalizationPrefs.class).
 			getAccuracyRequiredInMeter();
 		if (accReq == 0) {
@@ -206,7 +206,9 @@ public class LocationInfo extends AbstractInfo implements Serializable {
 	}
 	
 	public boolean isAccurate() {
-		return isAccurate(this.accuracyInMtr);
+		return this.hasValidLatLon() &&
+			this.hasValidAccuracy() && 
+			isAccurate(this.accuracyInMtr);
 	}
 	
 	public static String getProviderAbbr(LocationInfo locationInfo) {

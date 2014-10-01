@@ -33,6 +33,7 @@ public class App extends Application {
 	private static Context context = null;
 	private static VersionDsc versionDsc = null;
 	private static String appName = null;
+	private static String appNameAbbr = null;
 	private static String appNameComplete = null;
 	private static String versionStr = null;
 	private static String fileNamePrefix = null;
@@ -126,9 +127,11 @@ public class App extends Application {
 						context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName);
 					versionStr = "v" + versionDsc.name;
 					appName = App.getCtx().getString(R.string.app_name);
+					appNameAbbr = App.getCtx().getString(R.string.app_name_abbr);
 					appNameComplete = appName + " " + versionStr;
 					fileNamePrefix = appName; 
 					LogUtils.always("AppNameComplete: " + appNameComplete);
+					LogUtils.always("appNameAbbr: " + appNameAbbr);
 					LogUtils.always("FileNamePrefix: " + fileNamePrefix);
 				} catch (NameNotFoundException e) {
 					throw new RuntimeException(e);
@@ -251,6 +254,9 @@ public class App extends Application {
     }
 	public static String getAppName() {
 		return appName;
+	}
+	public static String getAppNameAbbr() {
+		return appNameAbbr;
 	}
 	public static String getAppNameComplete() {
 		return appNameComplete;

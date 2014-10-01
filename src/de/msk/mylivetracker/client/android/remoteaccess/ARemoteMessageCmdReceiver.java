@@ -3,6 +3,7 @@ package de.msk.mylivetracker.client.android.remoteaccess;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
@@ -19,11 +20,6 @@ import de.msk.mylivetracker.client.android.util.LogUtils;
  */
 public abstract class ARemoteMessageCmdReceiver extends ARemoteCmdReceiver {
 
-	/*
-	 * common command message format: #mlt <password> <command>
-	 */
-	public static final String CMD_INDICATOR = "#mlt";
-
 	public void onProcessRemoteMessageCmd(String sender, String message) {
 		LogUtils.infoMethodIn(this.getClass(), "onProcessRemoteMessageCmd");
 		if (StringUtils.isEmpty(sender)) {
@@ -32,7 +28,7 @@ public abstract class ARemoteMessageCmdReceiver extends ARemoteCmdReceiver {
 		if (StringUtils.isEmpty(message)) {
 			throw new IllegalArgumentException("message must not be empty.");
 		}
-		if (StringUtils.startsWithIgnoreCase(message, CMD_INDICATOR)) {
+		if (StringUtils.startsWithIgnoreCase(message, "#" + App.getAppNameAbbr())) {
 			RemoteAccessPrefs prefs = PrefsRegistry.get(RemoteAccessPrefs.class);
 			String[] messageParts = StringUtils.split(message, ' ');
 			if (messageParts.length < 3) {

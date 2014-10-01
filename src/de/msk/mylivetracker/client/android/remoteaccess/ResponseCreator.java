@@ -37,7 +37,7 @@ public class ResponseCreator {
 	public static final String BEARING = "bearing";
 	public static final String SPEED = "speed";
 	public static final String ALTITUDE = "altitude";
-	public static final String GOOGLE_LATLON_URL = "googleLatLonUrl";
+	public static final String GOOGLE_LATLON_URL = "googlemaps";
 	public static final String DATE_TIME_FORMAT = "'UTC' yyyy-MM-dd HH:mm:ss.SSS";
 	
 	public static String getResultNotSupported() {
@@ -124,7 +124,7 @@ public class ResponseCreator {
 		String value = UNKNOWN;
 		if ((locationInfo != null) && locationInfo.hasValidLatLon()) {
 			value = 
-				FormatUtils.getDoubleAsSimpleStr(locationInfo.getLatitude(), 6) + ", " +
+				FormatUtils.getDoubleAsSimpleStr(locationInfo.getLatitude(), 6) + "/" +
 				FormatUtils.getDoubleAsSimpleStr(locationInfo.getLongitude(), 6);
 		}
 		return addParamValue(str, LAT_LON, value);

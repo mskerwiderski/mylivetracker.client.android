@@ -104,10 +104,10 @@ public class PinCodeQueryPrefsActivity extends PrefsActivity {
         cbPinCodeQueryPrefs_ProtectSettingsOnly.setChecked(prefs.isProtectSettingsOnly());
         EditText etPinCodeQueryPrefs_PinCode = 
         	(EditText)findViewById(R.id.etPinCodeQueryPrefs_PinCode);
-        etPinCodeQueryPrefs_PinCode.setText("");
+        etPinCodeQueryPrefs_PinCode.setText(prefs.getPinCode());
         EditText etPinCodeQueryPrefs_PinCodeReenter = 
         	(EditText)findViewById(R.id.etPinCodeQueryPrefs_PinCodeReenter);
-        etPinCodeQueryPrefs_PinCodeReenter.setText("");
+        etPinCodeQueryPrefs_PinCodeReenter.setText(prefs.getPinCode());
         etPinCodeQueryPrefs_PinCode.requestFocus();
         
         Button btPinCodeQueryPrefs_Ok = 

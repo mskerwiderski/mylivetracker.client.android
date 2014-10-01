@@ -1,5 +1,8 @@
 package de.msk.mylivetracker.client.android.message;
 
+import org.apache.commons.lang3.StringUtils;
+
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -23,6 +26,7 @@ import de.msk.mylivetracker.client.android.status.MessageInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.upload.Uploader;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
+import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
 import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
 import de.msk.mylivetracker.client.android.util.listener.OnFinishActivityListener;
 import de.msk.mylivetracker.client.android.util.sms.SmsSendUtils;
@@ -76,12 +80,24 @@ public class MessageActivity extends AbstractActivity {
 		@Override
 		public void onClick() {
 			String message = etMsgMessage.getText().toString();
-			boolean valid = 
-				ValidatorUtils.validateEditTextString(
+			boolean valid = true;
+			if (valid) {
+				MessagePrefs messagePrefs = PrefsRegistry.get(MessagePrefs.class);
+				ProtocolPrefs protocolPrefs = PrefsRegistry.get(ProtocolPrefs.class);
+				if ((!protocolPrefs.getTransferProtocol().supportsSendMessage() ||
+					!messagePrefs.isSendMessageModeToServerEnabled()) &&
+					(!App.smsSupported() ||
+					!messagePrefs.isSendMessageModeAsSmsEnabled())) {
+					SimpleInfoDialog.show(this.activity, R.string.txMsg_SendingMessagesNotSupportedEnabled);
+					valid = false;
+				}
+			}
+			if (valid) {
+				valid = ValidatorUtils.validateEditTextString(
 					this.activity, 
 					R.string.fdMsg_Message, 
 					etMsgMessage, 1, 80, true);
-			// TODO check if send message make sense.	
+			}
 			if (valid) {
 				if (PrefsRegistry.get(OtherPrefs.class).getConfirmLevel().isMedium()) {
 					SendMessageDialog dlg = new SendMessageDialog(this.activity, message);
@@ -93,7 +109,13 @@ public class MessageActivity extends AbstractActivity {
 		}		
 	}
 	
-	private static void sendMessage(MessageActivity activity, String message) {
+	private static void sendMessage(Activity activity, String message) {
+		if (activity == null) {
+			throw new IllegalArgumentException("activity must not be null");
+		}
+		if (StringUtils.isEmpty(message)) {
+			throw new IllegalArgumentException("message must not be empty");
+		}
 		MessagePrefs messagePrefs = PrefsRegistry.get(MessagePrefs.class);
 		if (messagePrefs.isSendMessageModeToServerEnabled()) {
 			MessageInfo.update(message);	
@@ -101,12 +123,21 @@ public class MessageActivity extends AbstractActivity {
 				Uploader.uploadOneTime();
 			}
 		}
-		if (messagePrefs.isSendMessageModeAsSmsEnabled()) {
-			SmsSendUtils.sendSms(messagePrefs.getSmsReceiver(), message);
-		}
+		sendMessageAsSmsIfConfigured(message);
 		Toast.makeText(activity.getApplicationContext(), 
 			activity.getString(R.string.txMsg_InfoSendMessageDone),
-			Toast.LENGTH_SHORT).show();	
+			Toast.LENGTH_SHORT).show();
+	}
+	
+	public static void sendMessageAsSmsIfConfigured(String message) {
+		if (StringUtils.isEmpty(message)) {
+			throw new IllegalArgumentException("message must not be empty");
+		}
+		MessagePrefs messagePrefs = PrefsRegistry.get(MessagePrefs.class);
+		if (messagePrefs.isSendMessageModeAsSmsEnabled()) {
+			SmsSendUtils.sendSms(messagePrefs.getSmsReceiver(),
+				App.getAppNameAbbr() + ":[MSG]:" + message);
+		}
 	}
 	
 	private static final class OnClickButtonMessagePrefs extends ASafeOnClickListener {

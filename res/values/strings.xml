@@ -2,6 +2,7 @@
 <resources>
 	<!-- Application name -->
     <string name="app_name">MyLiveTracker</string>
+    <string name="app_name_abbr">MLT</string>
     
     <!-- Welcome message -->
     <string name="welcomeMessage">Welcome to %1$s. If you have questions or need support, please visit our forum at http://forum.mylivetracker.info!</string>

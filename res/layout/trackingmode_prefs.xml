@@ -37,7 +37,7 @@
     <!-- options for trackingmode standard -->
     <LinearLayout
         android:id="@+id/llTrackingModePrefs_OptionsOnlyForTrackingStandardMode"
-        android:paddingTop="10dp" 
+        android:paddingTop="0dp" 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent">
         <TextView
@@ -109,7 +109,7 @@
     </LinearLayout>
     <LinearLayout
         android:id="@+id/llTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs"
-        android:paddingTop="15dp"
+        android:paddingTop="0dp"
         android:paddingLeft="5dp"
        	android:paddingRight="5dp" 
        	android:layout_height="wrap_content" 
@@ -151,7 +151,7 @@
     </LinearLayout>
     <LinearLayout
         android:id="@+id/llTrackingModePrefs_tvCheckpointMessage"
-        android:paddingTop="15dp" 
+        android:paddingTop="0dp" 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent">
         <TextView

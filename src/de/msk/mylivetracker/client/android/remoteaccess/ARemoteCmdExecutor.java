@@ -6,6 +6,7 @@ import java.util.concurrent.ExecutorService;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
 /**
@@ -73,7 +74,7 @@ public abstract class ARemoteCmdExecutor implements Runnable {
 			LogUtils.infoMethodState(this.getClass(), "run", "run failed - stacktrace", ArrayUtils.toString((Object[])e.getStackTrace()));
 		} finally {
 			try {
-				response = "[" + this.getCmdDsc().getName() + "]:" + response;
+				response = App.getAppNameAbbr() + ":[" + this.getCmdDsc().getName() + "]:" + response;
 				this.responseSender.sendResponse(sender, response);
 				LogUtils.infoMethodState(this.getClass(), "run", "sendResponse", response);
 			} catch (Exception e) {

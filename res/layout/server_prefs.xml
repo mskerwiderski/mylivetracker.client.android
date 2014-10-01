@@ -79,7 +79,7 @@
 	    <EditText
 	    	android:id="@+id/etServerPrefs_SmsReceivers"
 	    	android:text=""
-	    	android:inputType="text"
+	    	android:inputType="phone"
 	    	android:layout_height="40dp" 
 	    	android:layout_width="fill_parent" 
 	    />

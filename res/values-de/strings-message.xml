@@ -29,4 +29,5 @@
     <string name="lbMsgPrefs_SendMessageMode">Modus</string>
     <string name="fdMsgPrefs_Receiver">SMS Empfänger</string>
     <string name="lbMsgPrefs_Receiver">Empf.</string>
+    <string name="txMsg_SendingMessagesNotSupportedEnabled">Der Nachrichtenversand wird nicht unterstützt, bzw. ist nicht aktiviert!</string>
 </resources>

@@ -1,9 +1,11 @@
 package de.msk.mylivetracker.client.android.upload;
 
 import de.msk.mylivetracker.client.android.appcontrol.AppControl;
+import de.msk.mylivetracker.client.android.message.MessageActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
+import de.msk.mylivetracker.client.android.status.MessageInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
 import de.msk.mylivetracker.client.android.upload.Uploader.LastInfoDsc;
@@ -107,6 +109,15 @@ public class UploadServiceThread extends AbstractServiceThread {
 		}
 	}
 
+	private void uploadCheckpoint() throws InterruptedException {
+		if (TrackingModePrefs.hasCheckpointMessage()) {
+			String message = PrefsRegistry.get(TrackingModePrefs.class).getCheckpointMessage();
+			MessageInfo.update(message);
+			MessageActivity.sendMessageAsSmsIfConfigured(message);
+		}
+		Uploader.upload(this.uploader, this.lastInfoDsc);
+	}
+	
 	public void runSinglePassTrackingModeCheckpoint() throws InterruptedException {
 		if (!TrackingModePrefs.isCheckpoint()) {
 			throw new IllegalStateException("illegal tracking mode: " + 
@@ -119,7 +130,7 @@ public class UploadServiceThread extends AbstractServiceThread {
 			if ((locationInfo != null) && 
 				locationInfo.hasValidLatLon() && 
 				locationInfo.isAccurate()) {
-				Uploader.upload(this.uploader, this.lastInfoDsc);
+				uploadCheckpoint();
 				LogUtils.infoMethodState(UploadServiceThread.class, 
 					"runSinglePassTrackingModeCheckpoint", "status", "accurate location sent");
 				AppControl.stopTrack();
@@ -129,7 +140,7 @@ public class UploadServiceThread extends AbstractServiceThread {
 				if ((locationInfo != null) && 
 					locationInfo.hasValidLatLon() &&
 					prefs.isSendAnyValidLocationBeforeTimeout()) {
-					Uploader.upload(this.uploader, this.lastInfoDsc);
+					uploadCheckpoint();
 					LogUtils.infoMethodState(UploadServiceThread.class, 
 						"runSinglePassTrackingModeCheckpoint", "status", "valid location sent before timeout");
 				}

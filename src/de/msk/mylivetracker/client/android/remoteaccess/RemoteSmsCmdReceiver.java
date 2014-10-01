@@ -27,11 +27,6 @@ import de.msk.mylivetracker.client.android.util.sms.SmsSendUtils;
  */
 public class RemoteSmsCmdReceiver extends ARemoteMessageCmdReceiver {
 
-	/*
-	 * sms message format: #mlt <password> <command>
-	 */
-	public static final String CMD_INDICATOR = "#mlt";
-
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		RemoteAccessPrefs prefs = PrefsRegistry.get(RemoteAccessPrefs.class);
