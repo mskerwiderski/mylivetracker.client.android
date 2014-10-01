@@ -1,8 +1,8 @@
 package de.msk.mylivetracker.client.android.mainview;
 
 import android.os.Bundle;
-import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.updater.MainDetailsViewUpdater;
+import de.msk.mylivetracker.client.android.ontrackphonetracker.R;
 
 /**
  * classname: MainDetailsActivity

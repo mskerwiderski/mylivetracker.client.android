@@ -1,9 +1,9 @@
 package de.msk.mylivetracker.client.android.remoteaccess.commands;
 
-import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.antplus.AntPlusHardware;
 import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
 import de.msk.mylivetracker.client.android.localization.LocalizationService;
+import de.msk.mylivetracker.client.android.ontrackphonetracker.R;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdDsc;

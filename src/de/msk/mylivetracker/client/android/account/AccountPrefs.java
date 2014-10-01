@@ -3,7 +3,7 @@ package de.msk.mylivetracker.client.android.account;
 import java.io.Serializable;
 
 import de.msk.mylivetracker.client.android.App;
-import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.ontrackphonetracker.R;
 import de.msk.mylivetracker.client.android.preferences.APrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsDumper;
 import de.msk.mylivetracker.client.android.preferences.PrefsDumper.ConfigPair;

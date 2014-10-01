@@ -4,7 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import android.os.SystemClock;
 import de.msk.mylivetracker.client.android.App;
-import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.ontrackphonetracker.R;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.server.ServerPrefs;
 import de.msk.mylivetracker.client.android.upload.protocol.IProtocol;

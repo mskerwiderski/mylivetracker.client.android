@@ -1,9 +1,9 @@
 package de.msk.mylivetracker.client.android.mainview;
 
 import android.widget.ToggleButton;
-import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.antplus.AntPlusManager;
 import de.msk.mylivetracker.client.android.appcontrol.AppControl;
+import de.msk.mylivetracker.client.android.ontrackphonetracker.R;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;

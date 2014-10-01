@@ -8,10 +8,10 @@ import org.apache.commons.lang3.StringUtils;
 
 import android.content.Context;
 import de.msk.mylivetracker.client.android.App;
-import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.dropbox.DropboxPrefs;
 import de.msk.mylivetracker.client.android.dropbox.DropboxUtils;
 import de.msk.mylivetracker.client.android.dropbox.DropboxUtils.UploadFileResult;
+import de.msk.mylivetracker.client.android.ontrackphonetracker.R;
 import de.msk.mylivetracker.client.android.preferences.PrefsDumper;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdDsc;

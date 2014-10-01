@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<!-- Application name -->
-    <string name="app_name">MyLiveTracker</string>
-    <string name="app_name_abbr">MLT</string>
+    <string name="app_name">OnTrack Phone Tracker</string>
+    <string name="app_name_abbr">OPT</string>
         	 
     <!-- Welcome message -->
     <string name="welcomeMessage">Willkommen zu %1$s. Wenn Sie Fragen haben oder Unterstützung benötigen, besuchen Sie uns doch im Forum unter http://forum.mylivetracker.info!</string>
@@ -14,9 +14,9 @@
     <string name="exitProgressMessage">Anwendung wird beendet&#8230;</string>
     
     <!-- preferences -->
-    <string name="prefsImportedFromV144">Bitte überprüfen Sie die Einstellungen! Die Einstellungen wurden von einer alten MyLiveTracker Version importiert!</string>
-    <string name="prefsCreated">Bitte überprüfen Sie die Einstellungen! Da Sie MyLiveTracker das erste Mal benutzen, wurden alle Einstellungen auf Standardwerte gesetzt!</string>  
-    <string name="prefsUpdated">Bitte überprüfen Sie die Einstellungen! Mit der neuen Version von MyLiveTracker sind evtl. neue Einstellungen hinzugekommen oder haben sich geändert!</string> 
+    <string name="prefsImportedFromV144">Bitte überprüfen Sie die Einstellungen! Die Einstellungen wurden von einer alten OnTrack Phone Tracker Version importiert!</string>
+    <string name="prefsCreated">Bitte überprüfen Sie die Einstellungen! Da Sie OnTrack Phone Tracker das erste Mal benutzen, wurden alle Einstellungen auf Standardwerte gesetzt!</string>  
+    <string name="prefsUpdated">Bitte überprüfen Sie die Einstellungen! Mit der neuen Version von OnTrack Phone Tracker sind evtl. neue Einstellungen hinzugekommen oder haben sich geändert!</string> 
         
     <!-- commons -->
     <string name="btSave">Speichern</string>

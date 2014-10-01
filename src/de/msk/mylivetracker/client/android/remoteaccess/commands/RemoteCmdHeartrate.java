@@ -4,8 +4,8 @@ import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
 
-import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.appcontrol.AppControl;
+import de.msk.mylivetracker.client.android.ontrackphonetracker.R;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdDsc;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdExecutor;
 import de.msk.mylivetracker.client.android.remoteaccess.ResponseCreator;

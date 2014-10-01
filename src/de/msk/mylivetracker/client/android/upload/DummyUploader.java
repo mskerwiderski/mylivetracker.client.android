@@ -1,7 +1,7 @@
 package de.msk.mylivetracker.client.android.upload;
 
 import de.msk.mylivetracker.client.android.App;
-import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.ontrackphonetracker.R;
 import de.msk.mylivetracker.client.android.upload.protocol.IProtocol;
 
 /**

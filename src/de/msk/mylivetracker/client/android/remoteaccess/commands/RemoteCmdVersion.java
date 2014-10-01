@@ -1,9 +1,9 @@
 package de.msk.mylivetracker.client.android.remoteaccess.commands;
 
 import de.msk.mylivetracker.client.android.App.VersionDsc;
+import de.msk.mylivetracker.client.android.ontrackphonetracker.R;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdDsc;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdExecutor;
-import de.msk.mylivetracker.client.android.R;
 
 /**
  * classname: RemoteCmdVersion

@@ -1,8 +1,8 @@
 package de.msk.mylivetracker.client.android.mainview;
 
-import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.appcontrol.AppControl;
 import de.msk.mylivetracker.client.android.localization.LocalizationService;
+import de.msk.mylivetracker.client.android.ontrackphonetracker.R;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;

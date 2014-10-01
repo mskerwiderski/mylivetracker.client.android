@@ -2,8 +2,8 @@ package de.msk.mylivetracker.client.android.mainview.updater;
 
 import android.app.Activity;
 import android.widget.TextView;
-import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.MainDetailsActivity;
+import de.msk.mylivetracker.client.android.ontrackphonetracker.R;
 import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
 import de.msk.mylivetracker.client.android.status.EmergencySignalInfo;
 import de.msk.mylivetracker.client.android.status.GpsStateInfo;

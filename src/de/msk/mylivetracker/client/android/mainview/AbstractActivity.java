@@ -6,7 +6,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import android.app.Activity;
 import android.os.Bundle;
-import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.ontrackphonetracker.R;
 import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryActivity;
 import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;

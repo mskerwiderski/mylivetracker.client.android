@@ -2,7 +2,7 @@ package de.msk.mylivetracker.client.android.remoteaccess.commands;
 
 import org.apache.commons.lang3.EnumUtils;
 
-import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.ontrackphonetracker.R;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdDsc;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdExecutor;

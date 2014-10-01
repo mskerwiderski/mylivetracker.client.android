@@ -8,10 +8,10 @@ import com.googlecode.jsonrpc4j.JsonRpcHttpClient;
 
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.App.ConfigDsc;
-import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.account.AccountPrefs;
 import de.msk.mylivetracker.client.android.mainview.MainActivity;
 import de.msk.mylivetracker.client.android.mylivetrackerportal.MyLiveTrackerPortalConnectActivity.ProgressDialogHandler;
+import de.msk.mylivetracker.client.android.ontrackphonetracker.R;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs.BufferSize;

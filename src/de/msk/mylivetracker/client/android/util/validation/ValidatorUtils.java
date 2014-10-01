@@ -5,9 +5,9 @@ import org.apache.commons.lang3.StringUtils;
 import android.content.Context;
 import android.telephony.PhoneNumberUtils;
 import android.widget.EditText;
-import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParams;
 import de.msk.mylivetracker.client.android.localization.LocalizationPrefs.LocalizationMode;
+import de.msk.mylivetracker.client.android.ontrackphonetracker.R;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
  
 /**

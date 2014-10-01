@@ -3,7 +3,7 @@ package de.msk.mylivetracker.client.android.util.dialog;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import de.msk.mylivetracker.client.android.R;
+import de.msk.mylivetracker.client.android.ontrackphonetracker.R;
 
 /**
  * classname: AbstractInfoDialog
