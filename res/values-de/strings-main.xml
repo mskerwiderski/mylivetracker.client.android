@@ -10,8 +10,8 @@
     <string name="btMain_LocationListener">Lok.</string>
     <string name="btMain_Tracking">Tracking</string>   
     <string name="btMain_Checkpoint">Checkpt.</string>
-    <string name="btMain_Auto">Auto</string>
-    <string name="btMain_AutoInterruptible">Auto (i)</string> 
+    <string name="btMain_Auto">Auto\locked</string>
+    <string name="btMain_AutoInterruptible">Auto</string> 
     <string name="btMain_ResetTrack">Reset</string>
     <string name="btMain_AntPlus">ANT+</string>
     <string name="btMain_SendSos">SOS</string>

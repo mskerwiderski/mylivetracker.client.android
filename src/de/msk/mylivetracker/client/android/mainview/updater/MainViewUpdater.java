@@ -20,7 +20,6 @@ import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.status.UploadInfo;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
-import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.TrackingMode;
 import de.msk.mylivetracker.client.android.util.ConnectivityUtils;
 import de.msk.mylivetracker.client.android.util.FormatUtils.Unit;
 import de.msk.mylivetracker.client.android.util.LocationManagerUtils;
@@ -66,9 +65,12 @@ public class MainViewUpdater extends AViewUpdater {
 	}
 	
 	private enum ColorState {
-		IndicatorOk(R.color.colorIndicatorOk), 
-		IndicatorOff(R.color.colorIndicatorOff), 
+		IndicatorOk(R.color.colorIndicatorOk),
+		IndicatorOff(R.color.colorIndicatorOff),
 		IndicatorNotOk(R.color.colorIndicatorNotOk),
+		AutoModeOnTracking(R.color.colorAutoModeOnTracking), 
+		AutoModeOnNotTracking(R.color.colorAutoModeOnNotTracking), 
+		AutoModeInterruptedByUser(R.color.colorAutoModeInterruptedByUser),
 		ChronometerOff(R.color.colorChronometerOff),
 		ChronometerCountdown(R.color.colorChronometerCountdown),
 		ChronometerRunning(R.color.colorChronometerRunning);
@@ -107,20 +109,33 @@ public class MainViewUpdater extends AViewUpdater {
 
 		// auto start indicator
 		TextView tvAutoStartIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_AutoStartIndicator);
+		boolean autoStartEnabled = (TrackingModePrefs.isAuto() && trackingModePrefs.isStartAfterReboot());
 		setTextAndBackgroundColor(tvAutoStartIndicator, 
-			(trackingModePrefs.isStartAfterReboot() ? 
+			autoStartEnabled ? 
 				res.getText(R.string.tvOn).toString() : 
-				res.getText(R.string.tvOff).toString()), 
-			trackingModePrefs.isStartAfterReboot() ? 
+				res.getText(R.string.tvOff).toString(), 
+			autoStartEnabled ? 
 				ColorState.IndicatorOk : ColorState.IndicatorOff);
 				
 		// tracking mode indicator
 		TextView tvAutoModeIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_TrackingModeIndicator);
-		setTextAndBackgroundColor(tvAutoModeIndicator,
-			App.getCtx().getResources().getStringArray(R.array.trackingModeAbbr)
-				[trackingModePrefs.getTrackingMode().ordinal()],	
-			trackingModePrefs.getTrackingMode().equals(TrackingMode.Auto) ? 
+		String trackingModeAbbr = App.getCtx().getResources().
+			getStringArray(R.array.trackingModeAbbr)
+			[trackingModePrefs.getTrackingMode().ordinal()];
+		ColorState trackingModeState = ColorState.IndicatorOff;
+		if (!TrackingModePrefs.isAuto()) {
+			trackingModeState = (AppControl.trackIsRunning() ? 
 				ColorState.IndicatorOk : ColorState.IndicatorOff);
+		} else {
+			if (AppControl.trackIsRunning()) {
+				trackingModeState = ColorState.AutoModeOnTracking;
+			} else if (TrackStatus.get().isTrackInterruptedByUserInTrackingModeAuto()) {
+				trackingModeState = ColorState.AutoModeInterruptedByUser;
+			} else {
+				trackingModeState = ColorState.AutoModeOnNotTracking;
+			}
+		}
+		setTextAndBackgroundColor(tvAutoModeIndicator, trackingModeAbbr, trackingModeState);
 		
 		// gps indicator			
 		TextView tvLocalizationIndicator = UpdaterUtils.tv(mainActivity, R.id.tvMain_LocalizationIndicator);

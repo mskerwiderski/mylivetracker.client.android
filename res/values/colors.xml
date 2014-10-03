@@ -10,10 +10,15 @@
 	<color name="colorText">#ffffff</color>
 	<color name="colorTextSos">#ea1619</color>
     
-    <!-- colors for auto mode indicator -->
-    <color name="colorIndicatorOk">#4bb648</color>
+	<!-- colors for common indicators -->
+	<color name="colorIndicatorOk">#4bb648</color>
     <color name="colorIndicatorOff">#f0f0f0</color>
 	<color name="colorIndicatorNotOk">#e2302f</color>
+	
+    <!-- colors for auto mode indicator -->
+    <color name="colorAutoModeOnTracking">#4bb648</color>
+    <color name="colorAutoModeOnNotTracking">#ffff00</color>
+	<color name="colorAutoModeInterruptedByUser">#e2302f</color>
 
 	<!-- colors for chronometer status -->
 	<color name="colorChronometerOff">#f0f0f0</color>
