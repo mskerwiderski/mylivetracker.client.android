@@ -4,6 +4,7 @@ import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.appcontrol.AppControl;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
+import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.TrackingMode;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
@@ -58,10 +59,17 @@ public class OnClickButtonStartStopListener extends ASafeOnClickListener {
 			StartStopTrackDialog dlg = new StartStopTrackDialog();
 			dlg.show();
 		} else {
-			if (AppControl.trackIsRunning()) {
-				AppControl.stopTrack();
+			if (!TrackingModePrefs.isAuto()) {
+				if (AppControl.trackIsRunning()) {
+					TrackStatus.get().setTrackStoppedByUser(true);
+					AppControl.stopTrack();
+				} else {
+					TrackStatus.get().setTrackStoppedByUser(false);
+					AppControl.startTrack();
+				}
 			} else {
-				AppControl.startTrack();
+				TrackStatus.get().
+					toggleTrackInterruptedByUserInTrackingModeAuto();
 			}
 		}
 	}

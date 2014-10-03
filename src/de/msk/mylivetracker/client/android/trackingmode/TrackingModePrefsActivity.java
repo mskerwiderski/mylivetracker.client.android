@@ -69,6 +69,7 @@ public class TrackingModePrefsActivity extends PrefsActivity {
 		private EditText etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs;
 		private CheckBox cbTrackingModePrefs_SendAnyValidLocationBeforeTimeout;
 		private EditText etTrackingModePrefs_CheckpointMessage;
+		private CheckBox cbTrackingModePrefs_InterruptibleOnMainWindow;
 		private CheckBox cbTrackingModePrefs_StartAfterReboot;
 		private CheckBox cbTrackingModePrefs_RunOnlyIfBattFullOrCharging;
 		private Spinner spTrackingModePrefs_ResetTrackMode;
@@ -80,6 +81,7 @@ public class TrackingModePrefsActivity extends PrefsActivity {
 			EditText etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs,
 			CheckBox cbTrackingModePrefs_SendAnyValidLocationBeforeTimeout,
 			EditText etTrackingModePrefs_CheckpointMessage,
+			CheckBox cbTrackingModePrefs_InterruptibleOnMainWindow,
 			CheckBox cbTrackingModePrefs_StartAfterReboot,
 			CheckBox cbTrackingModePrefs_RunOnlyIfBattFullOrCharging,
 			Spinner spTrackingModePrefs_ResetTrackMode) {
@@ -89,6 +91,7 @@ public class TrackingModePrefsActivity extends PrefsActivity {
 			this.etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs = etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs;
 			this.cbTrackingModePrefs_SendAnyValidLocationBeforeTimeout = cbTrackingModePrefs_SendAnyValidLocationBeforeTimeout;
 			this.etTrackingModePrefs_CheckpointMessage = etTrackingModePrefs_CheckpointMessage;
+			this.cbTrackingModePrefs_InterruptibleOnMainWindow = cbTrackingModePrefs_InterruptibleOnMainWindow;
 			this.cbTrackingModePrefs_StartAfterReboot = cbTrackingModePrefs_StartAfterReboot;
 			this.cbTrackingModePrefs_RunOnlyIfBattFullOrCharging = cbTrackingModePrefs_RunOnlyIfBattFullOrCharging;
 			this.spTrackingModePrefs_ResetTrackMode = spTrackingModePrefs_ResetTrackMode;
@@ -121,6 +124,8 @@ public class TrackingModePrefsActivity extends PrefsActivity {
 					prefs.setCheckpointMessage(etTrackingModePrefs_CheckpointMessage.getText().toString());
 				}
 			} else if (prefs.getTrackingMode().equals(TrackingMode.Auto)) {
+				prefs.setInterruptibleOnMainWindow(
+					cbTrackingModePrefs_InterruptibleOnMainWindow.isChecked());
 				prefs.setStartAfterReboot(
 					cbTrackingModePrefs_StartAfterReboot.isChecked());
 				prefs.setRunOnlyIfBattFullOrCharging(
@@ -162,6 +167,7 @@ public class TrackingModePrefsActivity extends PrefsActivity {
     	((LinearLayout)findViewById(R.id.llTrackingModePrefs_tvCheckpointMessage)).setVisibility(viewCheckpointState);
     	
     	((LinearLayout)findViewById(R.id.llTrackingModePrefs_OptionsOnlyForTrackingAutoMode)).setVisibility(viewAutoState);
+    	((LinearLayout)findViewById(R.id.llTrackingModePrefs_cbInterruptibleOnMainWindow)).setVisibility(viewAutoState);
     	((LinearLayout)findViewById(R.id.llTrackingModePrefs_cbStartAfterReboot)).setVisibility(viewAutoState);
     	((LinearLayout)findViewById(R.id.llTrackingModePrefs_cbRunOnlyIfBattFullOrCharging)).setVisibility(viewAutoState);
     	((LinearLayout)findViewById(R.id.llTrackingModePrefs_tvResetTrackMode)).setVisibility(viewAutoState);
@@ -211,6 +217,9 @@ public class TrackingModePrefsActivity extends PrefsActivity {
         etTrackingModePrefs_CheckpointMessage.setText(prefs.getCheckpointMessage());
 
         // options for trackingmode auto.
+        CheckBox cbTrackingModePrefs_InterruptibleOnMainWindow =
+    		(CheckBox)findViewById(R.id.cbTrackingModePrefs_InterruptibleOnMainWindow);
+        cbTrackingModePrefs_InterruptibleOnMainWindow.setChecked(prefs.isInterruptibleOnMainWindow());
         CheckBox cbTrackingModePrefs_StartAfterReboot =
     		(CheckBox)findViewById(R.id.cbTrackingModePrefs_StartAfterReboot);
         cbTrackingModePrefs_StartAfterReboot.setChecked(prefs.isStartAfterReboot());
@@ -241,6 +250,7 @@ public class TrackingModePrefsActivity extends PrefsActivity {
 				etTrackingModePrefs_MaxWaitingPeriodForCheckpointInSecs,
 				cbTrackingModePrefs_SendAnyValidLocationBeforeTimeout,
 				etTrackingModePrefs_CheckpointMessage,
+				cbTrackingModePrefs_InterruptibleOnMainWindow,
 				cbTrackingModePrefs_StartAfterReboot,
 				cbTrackingModePrefs_RunOnlyIfBattFullOrCharging,
 				spTrackingModePrefs_ResetTrackMode));		

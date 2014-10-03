@@ -52,7 +52,7 @@ public class UploadServiceThread extends AbstractServiceThread {
 	}
 	
 	public void runSinglePassTrackingModeStandardOrAuto() throws InterruptedException {
-		if (!TrackingModePrefs.isStandard()) {
+		if (!TrackingModePrefs.isStandard() && !TrackingModePrefs.isAuto()) {
 			throw new IllegalStateException("illegal tracking mode: " + 
 				PrefsRegistry.get(TrackingModePrefs.class).getTrackingMode().name());
 		}

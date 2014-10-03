@@ -50,6 +50,7 @@ public class LogUtils {
 	private static Map<Class<?>, Boolean> classes = new HashMap<Class<?>, Boolean>();
 	
 	static {
+		classes.put(BatteryReceiver.class, Boolean.TRUE);
 		classes.put(AppControl.class, Boolean.TRUE);
 		classes.put(ProtocolEncoder.class, Boolean.TRUE);
 		classes.put(HttpProtocolParams.class, Boolean.TRUE);

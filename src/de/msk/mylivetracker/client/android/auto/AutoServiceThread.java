@@ -33,6 +33,8 @@ public class AutoServiceThread extends AbstractServiceThread {
 		TrackingModePrefs prefs = PrefsRegistry.get(TrackingModePrefs.class);
 		if (prefs.isRunOnlyIfBattFullOrCharging()) {
 			BatteryReceiver.register();
+			LogUtils.infoMethodState(AutoServiceThread.class, "init",
+				"battery receiver", "registered");
 		}
 	}
 
@@ -47,25 +49,27 @@ public class AutoServiceThread extends AbstractServiceThread {
 			batteryStateInfo.fullOrCharging();
 		LogUtils.infoMethodState(AutoServiceThread.class, "runSinglePass",
 			"battFullOrCharging", battFullOrCharging);
-		boolean runTracking = 
-			!PrefsRegistry.get(TrackingModePrefs.class).isRunOnlyIfBattFullOrCharging() || 
-			battFullOrCharging;
+		boolean runTracking = !status.isTrackInterruptedByUserInTrackingModeAuto() && 
+			(!PrefsRegistry.get(TrackingModePrefs.class).isRunOnlyIfBattFullOrCharging() || 
+			battFullOrCharging);
 		LogUtils.infoMethodState(AutoServiceThread.class, "runSinglePass",
 			"runTracking", runTracking);
+		LogUtils.infoMethodState(AutoServiceThread.class, "runSinglePass",
+			"isTrackingInterrupted", status.isTrackInterruptedByUserInTrackingModeAuto());
+		
+		if (trackIsExpired()) {
+			AppControl.resetTrack();
+			LogUtils.infoMethodState(AutoServiceThread.class, "runSinglePass",
+				"track", "expired and therefore resetted");
+		}
 		if (runTracking &&
 			!AppControl.trackIsRunning()) {
-			if (trackIsExpired()) {
-				AppControl.resetTrack();
-				LogUtils.infoMethodState(AutoServiceThread.class, "runSinglePass",
-					"track", "resetted");
-			}
 			AppControl.startTrack();
 			LogUtils.infoMethodState(AutoServiceThread.class, "runSinglePass",
 				"track", "started");
 		} else if (!runTracking && 
 			AppControl.trackIsRunning()) {
 			AppControl.stopTrack();
-			status.updateLastAutoModeStopSignalReceived();
 			LogUtils.infoMethodState(AutoServiceThread.class, "runSinglePass",
 				"track", "stopped");
 		}
@@ -74,7 +78,7 @@ public class AutoServiceThread extends AbstractServiceThread {
 
 	@Override
 	public long getSleepAfterRunSinglePassInMSecs() {
-		return 5000;
+		return 500;
 	}
 
 	@Override
@@ -88,24 +92,28 @@ public class AutoServiceThread extends AbstractServiceThread {
 	private boolean trackIsExpired() {
 		boolean res = false;
 		TrackingModePrefs prefs = PrefsRegistry.get(TrackingModePrefs.class);
-		Long lastStopSignal = TrackStatus.get().getLastAutoModeStopSignalReceived();
-		if (lastStopSignal == null) return res;
 		int resetTrackMode = prefs.getAutoModeResetTrackMode().getVal();
 		if (resetTrackMode != 0) {
 			if (resetTrackMode == -1) {
-				res = false;
-				String now = (new DateTime()).getAsStr(
-					TimeZone.getDefault(), 
-					DateTime.STD_DATE_FORMAT);
-				String updated = (new DateTime(lastStopSignal)).getAsStr(
-					TimeZone.getDefault(), 
-					DateTime.STD_DATE_FORMAT);	
-				res = !StringUtils.equals(now, updated);
-			} else {
-				DateTime now = new DateTime();
-				if (now.getAsMSecs() - lastStopSignal >= 
-					resetTrackMode * 60 * 60 * 1000) {
-					res = true;
+				Long trackStarted = TrackStatus.get().getStartedInMSecs();
+				if (trackStarted != null) {
+					String now = (new DateTime()).getAsStr(
+						TimeZone.getDefault(), 
+						DateTime.STD_DATE_FORMAT);
+					String updated = (new DateTime(
+						trackStarted)).getAsStr(
+						TimeZone.getDefault(), 
+						DateTime.STD_DATE_FORMAT);	
+					res = !StringUtils.equals(now, updated);
+				}
+			} else if (!AppControl.trackIsRunning()) {
+				Long lastStopped = TrackStatus.get().getLastStoppedInMSecs();
+				if (lastStopped != null) {
+					DateTime now = new DateTime();
+					if (now.getAsMSecs() - lastStopped > 
+						resetTrackMode * 60 * 60 * 1000) {
+						res = true;
+					}
 				}
 			}
 		}

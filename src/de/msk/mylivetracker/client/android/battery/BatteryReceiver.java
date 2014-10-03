@@ -38,6 +38,8 @@ public class BatteryReceiver extends BroadcastReceiver {
 			filter.addAction(Intent.ACTION_POWER_CONNECTED);
 			filter.addAction(Intent.ACTION_POWER_DISCONNECTED);
 	        App.getCtx().registerReceiver(batteryReceiver, filter);
+	        LogUtils.infoMethodState(BatteryReceiver.class,
+				"register", "battery receiver", "registered");
 		}
 	}
 	
@@ -45,6 +47,8 @@ public class BatteryReceiver extends BroadcastReceiver {
 		if (isRegistered()) {
 			App.getCtx().unregisterReceiver(batteryReceiver);
 			batteryReceiver = null;
+			LogUtils.infoMethodState(BatteryReceiver.class,
+				"unregister", "battery receiver", "unregistered");
 		}
 	}
 	

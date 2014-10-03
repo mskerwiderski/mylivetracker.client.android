@@ -90,7 +90,7 @@
     <!-- options for trackingmode checkpoint -->
     <LinearLayout
         android:id="@+id/llTrackingModePrefs_OptionsOnlyForTrackingCheckpointMode"
-        android:paddingTop="10dp" 
+        android:paddingTop="0dp" 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent">
         <TextView
@@ -186,7 +186,7 @@
     <!-- options for trackingmode auto -->
     <LinearLayout
         android:id="@+id/llTrackingModePrefs_OptionsOnlyForTrackingAutoMode"
-        android:paddingTop="10dp" 
+        android:paddingTop="0dp" 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent">
         <TextView
@@ -204,10 +204,25 @@
         />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/llTrackingModePrefs_cbInterruptibleOnMainWindow"
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+   	>   
+	    <CheckBox
+		    android:id="@+id/cbTrackingModePrefs_InterruptibleOnMainWindow"
+		    android:text="@string/lbTrackingModePrefs_InterruptibleOnMainWindow"
+		    android:layout_height="40dp" 
+	    	android:layout_width="wrap_content"
+	    	android:paddingLeft="42dp"
+	       	android:paddingRight="5dp" 
+		/>
+	</LinearLayout>
+    <LinearLayout
         android:id="@+id/llTrackingModePrefs_cbStartAfterReboot"
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent"
-        android:paddingTop="5dp"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
    	>   
@@ -238,7 +253,7 @@
 	</LinearLayout>
     <LinearLayout
         android:id="@+id/llTrackingModePrefs_tvResetTrackMode"
-        android:paddingTop="5dp" 
+        android:paddingTop="0dp" 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent">
         <TextView

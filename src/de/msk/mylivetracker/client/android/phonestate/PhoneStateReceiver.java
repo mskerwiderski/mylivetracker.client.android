@@ -68,7 +68,8 @@ public class PhoneStateReceiver extends BroadcastReceiver {
 	}
 	
 	public static void updatePhoneStateInfo() {
-		IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+		//TODO does not work
+		IntentFilter filter = new IntentFilter(ACTION_PHONE_STATE_CHANGED);
 		Intent intent = App.getCtx().registerReceiver(null, filter);
 		updatePhoneStateInfo(intent);
 	}

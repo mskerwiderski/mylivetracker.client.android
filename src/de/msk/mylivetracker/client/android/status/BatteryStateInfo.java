@@ -125,11 +125,9 @@ public class BatteryStateInfo extends AbstractInfo implements Serializable {
 	
 	public boolean fullOrCharging() {
 		return
-			((state != null) && (	
+			(state != null) && (	
 				state.equals(State.Charging) || 
-				state.equals(State.Full))) ||
-			((usbCharge != null) && usbCharge) ||
-			((acCharge != null) && acCharge);
+				state.equals(State.Full));
 	}
 	
 	public Integer getPercent() {

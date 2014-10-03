@@ -93,6 +93,7 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 	private String checkpointMessage;
 	
 	// only for trackingmode auto.
+	private boolean interruptibleOnMainWindow;
 	private boolean startAfterReboot;
 	private boolean runOnlyIfBattFullOrCharging;
 	private AutoModeResetTrackMode autoModeResetTrackMode;
@@ -107,6 +108,7 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 		this.countdownInSecs = CountdownInSecs.Off;
 		this.maxCheckpointPeriodInSecs = 180;
 		this.checkpointMessage = null;
+		this.interruptibleOnMainWindow = true;
 		this.startAfterReboot = false;
 		this.runOnlyIfBattFullOrCharging = true;
 		this.autoModeResetTrackMode = AutoModeResetTrackMode.NextDay;
@@ -162,6 +164,12 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 	public void setCheckpointMessage(String checkpointMessage) {
 		this.checkpointMessage = checkpointMessage;
 	}
+	public boolean isInterruptibleOnMainWindow() {
+		return interruptibleOnMainWindow;
+	}
+	public void setInterruptibleOnMainWindow(boolean interruptibleOnMainWindow) {
+		this.interruptibleOnMainWindow = interruptibleOnMainWindow;
+	}
 	public boolean isStartAfterReboot() {
 		return startAfterReboot;
 	}
@@ -196,9 +204,11 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 					BooleanUtils.toStringTrueFalse(this.sendAnyValidLocationBeforeTimeout)),
 				new ConfigPair("checkpointMessage", this.checkpointMessage),
 				new ConfigPair("startAfterReboot",
-					String.valueOf(this.startAfterReboot)),
+					BooleanUtils.toStringTrueFalse(this.startAfterReboot)),
+				new ConfigPair("interruptibleOnMainWindow",
+					BooleanUtils.toStringTrueFalse(this.interruptibleOnMainWindow)),
 				new ConfigPair("runOnlyIfBattFullOrCharging",
-					String.valueOf(this.runOnlyIfBattFullOrCharging)),
+					BooleanUtils.toStringTrueFalse(this.runOnlyIfBattFullOrCharging)),
 				new ConfigPair("autoModeResetTrackMode", this.autoModeResetTrackMode.name()),
 		});
 	}
@@ -209,8 +219,9 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 			+ ", maxCheckpointPeriodInSecs=" + maxCheckpointPeriodInSecs
 			+ ", sendAnyValidLocationBeforeTimeout="
 			+ sendAnyValidLocationBeforeTimeout + ", checkpointMessage="
-			+ checkpointMessage + ", startAfterReboot=" + startAfterReboot
-			+ ", runOnlyIfBattFullOrCharging="
+			+ checkpointMessage + ", interruptibleOnMainWindow="
+			+ interruptibleOnMainWindow + ", startAfterReboot="
+			+ startAfterReboot + ", runOnlyIfBattFullOrCharging="
 			+ runOnlyIfBattFullOrCharging + ", autoModeResetTrackMode="
 			+ autoModeResetTrackMode + "]";
 	}

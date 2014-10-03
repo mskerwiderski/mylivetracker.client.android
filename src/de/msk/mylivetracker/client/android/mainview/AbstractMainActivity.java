@@ -29,7 +29,6 @@ import de.msk.mylivetracker.client.android.server.ServerPrefsActivity;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.trackexport.TrackExportActivity;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
-import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.TrackingMode;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefsActivity;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
@@ -120,7 +119,8 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 	}
 	
 	public static boolean showStartStopInfoDialogIfInAutoMode() {
-		if (PrefsRegistry.get(TrackingModePrefs.class).getTrackingMode().equals(TrackingMode.Auto)) {
+		if (TrackingModePrefs.isAuto() && 
+			!PrefsRegistry.get(TrackingModePrefs.class).isInterruptibleOnMainWindow()) {
 			SimpleInfoDialog.show(MainActivity.get(), 
 				R.string.txPrefs_InfoAutoModeEnabled);
 			return true;
