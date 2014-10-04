@@ -1,12 +1,12 @@
 package de.msk.mylivetracker.client.android.preferences;
 
-import de.msk.mylivetracker.client.android.account.AccountPrefs;
-import de.msk.mylivetracker.client.android.localization.LocalizationPrefs;
-import de.msk.mylivetracker.client.android.message.MessagePrefs;
-import de.msk.mylivetracker.client.android.message.MessagePrefs.SendMessageMode;
-import de.msk.mylivetracker.client.android.other.OtherPrefs;
+
+import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryPrefs;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.server.ServerPrefs;
+import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
+import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.AutoModeResetTrackMode;
+import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.TrackingMode;
 
 /**
  * classname: OnTrackPhoneTrackerDefaults
@@ -22,22 +22,10 @@ import de.msk.mylivetracker.client.android.server.ServerPrefs;
 public class OnTrackPhoneTrackerDefaults {
 
 	public static void run() {
-		AccountPrefs accountPrefs = PrefsRegistry.get(AccountPrefs.class);
-		accountPrefs.setUsername(accountPrefs.getDeviceId());
-		
-		LocalizationPrefs localizationPrefs = PrefsRegistry.get(LocalizationPrefs.class);
-		localizationPrefs.setAccuracyRequiredInMeter(100);
-		localizationPrefs.setDistanceTriggerInMeter(0);
-		localizationPrefs.setDistBtwTwoLocsForDistCalcRequiredInCMtr(1650);
-		localizationPrefs.setLocalizationMode(LocalizationPrefs.LocalizationMode.gps);
-		localizationPrefs.setMaxWaitingPeriodForGpsFixInMSecs(180000);
-		localizationPrefs.setTimeTriggerInSeconds(0);
-		
-		OtherPrefs otherPrefs = PrefsRegistry.get(OtherPrefs.class);
-		otherPrefs.setAdaptButtonsForOneTouchMode(true);
-		otherPrefs.setAntPlusEnabledIfAvailable(false);
-		otherPrefs.setConfirmLevel(OtherPrefs.ConfirmLevel.high);
-		otherPrefs.setTrackingOneTouchMode(OtherPrefs.TrackingOneTouchMode.TrackingLocalization);
+		PinCodeQueryPrefs pinCodeQueryPrefs = PrefsRegistry.get(PinCodeQueryPrefs.class);
+		pinCodeQueryPrefs.setPinCodeQueryEnabled(true);
+		pinCodeQueryPrefs.setProtectSettingsOnly(true);
+		pinCodeQueryPrefs.setPinCode("0000");
 		
 		ProtocolPrefs protocolPrefs = PrefsRegistry.get(ProtocolPrefs.class);
 		protocolPrefs.setCloseConnectionAfterEveryUpload(true);
@@ -51,10 +39,14 @@ public class OnTrackPhoneTrackerDefaults {
 		
 		ServerPrefs serverPrefs = PrefsRegistry.get(ServerPrefs.class);
 		serverPrefs.setPath("");
-		serverPrefs.setPort(31272);
-		serverPrefs.setServer("120.146.225.71");
+		serverPrefs.setPort(22022);
+		serverPrefs.setServer("online.ontrackgps.net");
 		
-		MessagePrefs messagePrefs = PrefsRegistry.get(MessagePrefs.class);
-		messagePrefs.setSendMessageMode(SendMessageMode.OnlyAsSms);
+		TrackingModePrefs trackingModePrefs = PrefsRegistry.get(TrackingModePrefs.class);
+		trackingModePrefs.setTrackingMode(TrackingMode.Auto);
+		trackingModePrefs.setAutoModeResetTrackMode(AutoModeResetTrackMode.NextDay);
+		trackingModePrefs.setStartAfterReboot(true);
+		trackingModePrefs.setInterruptibleOnMainWindow(true);
+		trackingModePrefs.setRunOnlyIfBattFullOrCharging(true);
 	}
 }

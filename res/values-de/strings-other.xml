@@ -10,6 +10,6 @@
     <string name="btOtherPrefs_ResetToFactoryDefaults">Werkseinstellungen</string>
     <string name="txOtherPrefs_QuestionResetToFactoryDefaults">Wollen Sie wirklich auf die Werkseinstellungen zurücksetzen?</string>
     <string name="txOtherPrefs_QuestionResetOverallMileage">Wollen Sie den Kilometerzähler wirklich zurücksetzen?</string>
-    <string name="txOtherPrefs_InfoResetToFactoryDefaultsDone">MyLiveTracker wurde auf die Werkseinstellungen zurückgesetzt! Die Anwendung wird nun beendet!</string>
+    <string name="txOtherPrefs_InfoResetToFactoryDefaultsDone">OnTrack Phone Tracker wurde auf die Werkseinstellungen zurückgesetzt! Die Anwendung wird nun beendet!</string>
     <string name="txOtherPrefs_InfoResetOverallMileageDone">Der Kilometerzähler wurde zurückgesetzt!</string>
 </resources>

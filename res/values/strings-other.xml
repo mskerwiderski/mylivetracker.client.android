@@ -10,6 +10,6 @@
     <string name="btOtherPrefs_ResetToFactoryDefaults">Factory defaults</string>
     <string name="txOtherPrefs_QuestionResetToFactoryDefaults">Do you really want to reset to factory defaults?</string>
     <string name="txOtherPrefs_QuestionResetOverallMileage">Do you really want to reset overall mileage?</string>
-    <string name="txOtherPrefs_InfoResetToFactoryDefaultsDone">MyLiveTracker has been reset to factory defaults! The application will now be terminated!</string>
+    <string name="txOtherPrefs_InfoResetToFactoryDefaultsDone">OnTrack Phone Tracker has been reset to factory defaults! The application will now be terminated!</string>
     <string name="txOtherPrefs_InfoResetOverallMileageDone">Reset overall mileage done!</string>
 </resources>
