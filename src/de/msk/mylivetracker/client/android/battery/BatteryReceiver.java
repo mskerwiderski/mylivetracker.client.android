@@ -30,6 +30,13 @@ public class BatteryReceiver extends BroadcastReceiver {
 		return (batteryReceiver != null);
 	}
 		
+	public static void reset() {
+		if (isRegistered()) {
+			unregister();
+			register();
+		}
+	}
+	
 	public static void register() {
 		if (!isRegistered()) {
 			batteryReceiver = new BatteryReceiver();

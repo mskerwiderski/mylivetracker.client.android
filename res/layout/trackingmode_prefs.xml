@@ -6,7 +6,7 @@
     android:background="@color/colorBackground"
 >
  	<LinearLayout
-        android:paddingTop="15dp" 
+        android:paddingTop="5dp" 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent">
         <TextView
@@ -253,7 +253,6 @@
 	</LinearLayout>
     <LinearLayout
         android:id="@+id/llTrackingModePrefs_tvResetTrackMode"
-        android:paddingTop="0dp" 
         android:layout_height="wrap_content" 
         android:layout_width="fill_parent">
         <TextView

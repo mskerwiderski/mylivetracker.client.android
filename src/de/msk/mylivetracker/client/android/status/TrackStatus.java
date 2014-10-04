@@ -15,6 +15,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 
 import de.msk.mylivetracker.client.android.App;
+import de.msk.mylivetracker.client.android.battery.BatteryReceiver;
+import de.msk.mylivetracker.client.android.phonestate.PhoneStateReceiver;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
 import de.msk.mylivetracker.client.android.util.LogUtils;
@@ -167,8 +169,8 @@ public class TrackStatus implements Serializable {
 		trackStatus.trackId = UUID.randomUUID().toString();
 		trackStatus.logFileName = "track_" + trackStatus.trackId + ".log";
 		PositionBufferInfo.reset();
-		//PhoneStateInfo.reset();
-		//BatteryStateInfo.reset();
+		PhoneStateInfo.reset();
+		BatteryStateInfo.reset();
 		LocationInfo.reset();
 		GpsStateInfo.reset();				
 		HeartrateInfo.reset();
@@ -177,6 +179,9 @@ public class TrackStatus implements Serializable {
 		UploadInfo.reset();
 		saveTrackStatus();
 		inResettingState = false;
+		// reset done, now restart receivers
+		PhoneStateReceiver.reset();
+		BatteryReceiver.reset();
 	}		
 
 	public String getTrackId() {

@@ -94,6 +94,7 @@ public class AppControl {
 		}
 		if (!MainActivity.exists()) {
 			stopAllAppsActivities();
+			TrackStatus.saveTrackStatus();
 		} else {
 			Intent intent = new Intent();
 			intent.setAction(AppControlReceiver.ACTION_APP_EXIT);
@@ -235,7 +236,8 @@ public class AppControl {
 					if (!TrackingModePrefs.isAuto() || !prefs.isRunOnlyIfBattFullOrCharging()) {
 						BatteryReceiver.unregister();
 					}
-					PhoneStateReceiver.unregister();;
+					PhoneStateReceiver.unregister();
+					TrackStatus.saveTrackStatus();
 				}
 			}
 		} finally {

@@ -35,22 +35,20 @@ public class PhoneStateReceiver extends BroadcastReceiver {
 		return (phoneStateReceiver != null) && (phoneStateListener != null);
 	}
 	
+	public static void reset() {
+		if (isRegistered()) {
+			unregister();
+			register();
+		}
+	}
+	
 	public static void register() {
 		LogUtils.infoMethodIn(PhoneStateReceiver.class, "register");
 		if (!isRegistered()) {
 			phoneStateReceiver = new PhoneStateReceiver();
 			IntentFilter filter = new IntentFilter(ACTION_PHONE_STATE_CHANGED);
 	        App.getCtx().registerReceiver(phoneStateReceiver, filter);
-        	if (Looper.myLooper() == null) {
-				Looper.prepare();
-			}
-			phoneStateListener = new PhoneStateListener();
-			getTelephonyManager().listen(
-				phoneStateListener, 
-				PhoneStateListener.LISTEN_SERVICE_STATE |
-				PhoneStateListener.LISTEN_CELL_LOCATION |
-				PhoneStateListener.LISTEN_DATA_CONNECTION_STATE |
-				PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
+			phoneStateListener = createPhoneStateListener();
 		}
 		LogUtils.infoMethodOut(PhoneStateReceiver.class, "register");
 	}
@@ -58,8 +56,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
 	public static void unregister() {
 		LogUtils.infoMethodIn(PhoneStateReceiver.class, "unregister");
 		if (isRegistered()) {
-			getTelephonyManager().listen(
-				phoneStateListener, PhoneStateListener.LISTEN_NONE);
+			releasePhoneStateListener(phoneStateListener);
 			phoneStateListener = null;
 			App.getCtx().unregisterReceiver(phoneStateReceiver);
 			phoneStateReceiver = null;
@@ -67,12 +64,26 @@ public class PhoneStateReceiver extends BroadcastReceiver {
 		LogUtils.infoMethodOut(PhoneStateReceiver.class, "unregister");
 	}
 	
-	public static void updatePhoneStateInfo() {
-		//TODO does not work
-		IntentFilter filter = new IntentFilter(ACTION_PHONE_STATE_CHANGED);
-		Intent intent = App.getCtx().registerReceiver(null, filter);
-		updatePhoneStateInfo(intent);
+	private static PhoneStateListener createPhoneStateListener() {
+		if (Looper.myLooper() == null) {
+			Looper.prepare();
+		}
+		PhoneStateListener phoneStateListener = new PhoneStateListener();
+		getTelephonyManager().listen(
+			phoneStateListener, 
+			PhoneStateListener.LISTEN_SERVICE_STATE |
+			PhoneStateListener.LISTEN_CELL_LOCATION |
+			PhoneStateListener.LISTEN_DATA_CONNECTION_STATE |
+			PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
+		return phoneStateListener;
 	}
+	
+	private static void releasePhoneStateListener(PhoneStateListener phoneStateListener) {
+		getTelephonyManager().listen(
+			phoneStateListener, PhoneStateListener.LISTEN_NONE);
+		phoneStateListener = null;
+	}
+	
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		LogUtils.infoMethodIn(PhoneStateReceiver.class, "onReceive");

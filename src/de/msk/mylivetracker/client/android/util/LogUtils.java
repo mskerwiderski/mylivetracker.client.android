@@ -25,6 +25,7 @@ import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdConfig
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdHeartrate;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdHelp;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdLocalization;
+import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdMobNwCell;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdStatus;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdSystem;
 import de.msk.mylivetracker.client.android.remoteaccess.commands.RemoteCmdTracking;
@@ -50,6 +51,7 @@ public class LogUtils {
 	private static Map<Class<?>, Boolean> classes = new HashMap<Class<?>, Boolean>();
 	
 	static {
+		classes.put(RemoteCmdMobNwCell.class, Boolean.TRUE);
 		classes.put(BatteryReceiver.class, Boolean.TRUE);
 		classes.put(AppControl.class, Boolean.TRUE);
 		classes.put(ProtocolEncoder.class, Boolean.TRUE);
