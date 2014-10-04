@@ -35,7 +35,7 @@ public class PhoneStateListener extends android.telephony.PhoneStateListener {
 		App.getCtx().sendBroadcast(intent);
 	}
 	
-	public static PhoneStateData createPhoneStateData(
+	protected static PhoneStateData createPhoneStateData(
 		Integer networkType,
 		GsmCellLocation gsmCellLocation,
 		ServiceState serviceState, 

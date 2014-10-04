@@ -8,7 +8,9 @@
     <string name="tvMain_MobileNetworkIndicator">Data</string>
     <string name="btMain_LocationListener">Loc.</string>
     <string name="btMain_Tracking">Tracking</string>
-    <string name="btMain_Checkpoint">Checkpoint</string>    
+    <string name="btMain_Checkpoint">Checkpt.</string>
+    <string name="btMain_Auto">Auto\locked</string>
+    <string name="btMain_AutoInterruptible">Auto</string>    
     <string name="btMain_ResetTrack">Reset</string>
     <string name="btMain_AntPlus">ANT+</string>
     <string name="btMain_SendSos">SOS</string>

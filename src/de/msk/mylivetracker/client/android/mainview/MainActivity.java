@@ -25,7 +25,6 @@ import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry.InitResult;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
-import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.TrackingMode;
 import de.msk.mylivetracker.client.android.util.LocationManagerUtils;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractInfoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
@@ -238,8 +237,18 @@ public class MainActivity extends AbstractMainActivity {
 		btMain_LocationListenerOnOff.setChecked(
 			AbstractService.isServiceRunning(LocalizationService.class));
 		btMain_ConnectDisconnectAnt.setChecked(AntPlusManager.get().hasSensorListeners());
-		
-    	if (PrefsRegistry.get(TrackingModePrefs.class).getTrackingMode().equals(TrackingMode.Checkpoint)) {
+
+		if (TrackingModePrefs.isAuto()) {
+			if (PrefsRegistry.get(TrackingModePrefs.class).isInterruptibleOnMainWindow()) {
+				btMain_StartStopTrack.setText(R.string.btMain_AutoInterruptible);
+				btMain_StartStopTrack.setTextOn(App.getResStr(R.string.btMain_AutoInterruptible));
+				btMain_StartStopTrack.setTextOff(App.getResStr(R.string.btMain_AutoInterruptible));
+			} else {
+				btMain_StartStopTrack.setText(R.string.btMain_Auto);
+				btMain_StartStopTrack.setTextOn(App.getResStr(R.string.btMain_Auto));
+				btMain_StartStopTrack.setTextOff(App.getResStr(R.string.btMain_Auto));
+			}
+		} else if (TrackingModePrefs.isCheckpoint()) {
     		btMain_StartStopTrack.setText(R.string.btMain_Checkpoint);
     		btMain_StartStopTrack.setTextOn(App.getResStr(R.string.btMain_Checkpoint));
     		btMain_StartStopTrack.setTextOff(App.getResStr(R.string.btMain_Checkpoint));

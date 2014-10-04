@@ -80,7 +80,7 @@
     <string name="txPrefs_Def_TrackName">Mein Track</string>
     
     <!-- preferences commons -->
-    <string name="txPrefs_InfoAutoModeEnabled">Das manuelle Zurücksetzen, Starten/Stoppen des Tracks, der Lokalisierung oder HF-Messung ist im Auto Modus nicht möglich!</string>
+    <string name="txPrefs_InfoAutoModeEnabled">Das Auto-Tracking kann auf dem Dashboard nicht unterbrochen werden (s. Einstellungen)!</string>
     <string name="txPrefs_WarningChangePrefsDuringRunningTrack">Das Verändern der Einstellungen während eines laufenden Tracks kann zu unerwartetem Verhalten führen!</string>
     
     <!-- validators -->

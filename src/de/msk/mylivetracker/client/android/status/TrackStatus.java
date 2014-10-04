@@ -15,6 +15,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 
 import de.msk.mylivetracker.client.android.App;
+import de.msk.mylivetracker.client.android.battery.BatteryReceiver;
+import de.msk.mylivetracker.client.android.phonestate.PhoneStateReceiver;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
 import de.msk.mylivetracker.client.android.util.LogUtils;
@@ -40,14 +42,16 @@ public class TrackStatus implements Serializable {
 	private Float trackDistanceInMtr = 0.0f;
 	private Long markerFirstStarted = null;
 	private Long markerLastStarted = null;
+	private Long markerLastStopped = null;
 	private Long markerFirstPositionReceived = null;
 	private Long markerLastPositionReceived = null;
 	private Long runtimeAfterLastStopInMSecs = 0L;	
 	private String antPlusStatus = null;
 	private String antPlusHeartrateStatus = null;
 	private Float mileageInMtr = 0.0f;		
-	private Long lastAutoModeStopSignalReceived = null;
 	private Long markerCountdownStarted = null;
+	private boolean trackStoppedByUser = false;
+	private boolean trackInterruptedByUserInTrackingModeAuto = false;
 	
 	private static TrackStatus trackStatus;
 		
@@ -175,6 +179,9 @@ public class TrackStatus implements Serializable {
 		UploadInfo.reset();
 		saveTrackStatus();
 		inResettingState = false;
+		// reset done, now restart receivers
+		PhoneStateReceiver.reset();
+		BatteryReceiver.reset();
 	}		
 
 	public String getTrackId() {
@@ -237,6 +244,7 @@ public class TrackStatus implements Serializable {
 					curr - this.markerLastStarted;
 			}
 			this.markerLastStarted = null;
+			this.markerLastStopped = TimeUtils.getElapsedTimeInMSecs();
 		}		
 	}
 
@@ -266,6 +274,10 @@ public class TrackStatus implements Serializable {
 
 	public Long getLastStartedInMSecs() {
 		return this.markerLastStarted;
+	}
+	
+	public Long getLastStoppedInMSecs() {
+		return this.markerLastStopped;
 	}
 	
 	public Long getRuntimeInMSecs(boolean pausesIncluded) {
@@ -333,13 +345,17 @@ public class TrackStatus implements Serializable {
 	public void setMileageInMtr(Float mileageInMtr) {
 		this.mileageInMtr = mileageInMtr;
 	}
-
-	public Long getLastAutoModeStopSignalReceived() {
-		return lastAutoModeStopSignalReceived;
+	public boolean isTrackStoppedByUser() {
+		return trackStoppedByUser;
 	}
-
-	public void updateLastAutoModeStopSignalReceived() {
-		this.lastAutoModeStopSignalReceived = 
-			TimeUtils.getElapsedTimeInMSecs();
+	public void setTrackStoppedByUser(boolean trackStoppedByUser) {
+		this.trackStoppedByUser = trackStoppedByUser;
+	}
+	public boolean isTrackInterruptedByUserInTrackingModeAuto() {
+		return trackInterruptedByUserInTrackingModeAuto;
+	}
+	public void toggleTrackInterruptedByUserInTrackingModeAuto() {
+		this.trackInterruptedByUserInTrackingModeAuto = 
+			!this.trackInterruptedByUserInTrackingModeAuto;
 	}
 }

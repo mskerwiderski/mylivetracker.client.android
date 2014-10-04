@@ -170,6 +170,7 @@ public class LocationInfo extends AbstractInfo implements Serializable {
 	}
 	
 	public static boolean isDistanceUsedForDistCalc(float distanceInMtr) {
+		if (TrackStatus.get().countdownIsActive()) return false;
 		int distReqInCMtr = PrefsRegistry.get(LocalizationPrefs.class).
 			getDistBtwTwoLocsForDistCalcRequiredInCMtr();
 		if (distReqInCMtr == 0) return true;

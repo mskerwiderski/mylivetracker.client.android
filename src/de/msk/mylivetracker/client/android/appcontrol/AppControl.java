@@ -42,8 +42,6 @@ import de.msk.mylivetracker.client.android.util.service.AbstractService;
  *   --> running only if tracking is active
  * o AutoService --> controls tracking mode 'Auto'
  *   --> running only if tracking mode is set to 'Auto'
- * o CheckpointService --> controls tracking mode 'Checkpoint'
- *   --> running if tracking mode is set to 'Checkpoint' if tracking is active
  * o LocalizationService --> controls localization
  *   --> running only if user has started this service
  * 
@@ -96,6 +94,7 @@ public class AppControl {
 		}
 		if (!MainActivity.exists()) {
 			stopAllAppsActivities();
+			TrackStatus.saveTrackStatus();
 		} else {
 			Intent intent = new Intent();
 			intent.setAction(AppControlReceiver.ACTION_APP_EXIT);
@@ -237,7 +236,8 @@ public class AppControl {
 					if (!TrackingModePrefs.isAuto() || !prefs.isRunOnlyIfBattFullOrCharging()) {
 						BatteryReceiver.unregister();
 					}
-					PhoneStateReceiver.unregister();;
+					PhoneStateReceiver.unregister();
+					TrackStatus.saveTrackStatus();
 				}
 			}
 		} finally {

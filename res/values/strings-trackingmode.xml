@@ -14,6 +14,8 @@
     <string name="fdTrackingModePrefs_CheckpointMessage">Checkpoint message</string>
 	<string name="lbTrackingModePrefs_CheckpointMessage">Checkpoint message</string>
     <string name="txTrackingModePrefs_OptionsOnlyForTrackingAutoMode">Following options are only used in tracking mode \'Auto\':</string>
+    <string name="lbTrackingModePrefs_InterruptibleOnMainWindow">Interruptible on dashboard</string>
+	<string name="txTrackingModePrefs_InterruptibleOnMainWindow">Interruptible on dashboard</string>
     <string name="fdTrackingModePrefs_StartAfterReboot">Start after reboot</string>
 	<string name="lbTrackingModePrefs_StartAfterReboot">Start after reboot</string>
     <string name="fdTrackingModePrefs_RunOnlyIfBattFullOrCharging">Tracking only if power supplied</string>

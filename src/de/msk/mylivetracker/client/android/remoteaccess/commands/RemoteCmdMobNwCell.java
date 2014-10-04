@@ -1,11 +1,11 @@
 package de.msk.mylivetracker.client.android.remoteaccess.commands;
 
 import de.msk.mylivetracker.client.android.ontrackphonetracker.R;
-import de.msk.mylivetracker.client.android.phonestate.PhoneStateReceiver;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdDsc;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdExecutor;
 import de.msk.mylivetracker.client.android.remoteaccess.ResponseCreator;
 import de.msk.mylivetracker.client.android.status.PhoneStateInfo;
+import de.msk.mylivetracker.client.android.util.LogUtils;
 
 
 /**
@@ -37,22 +37,31 @@ public class RemoteCmdMobNwCell extends ARemoteCmdExecutor {
 	
 	@Override
 	public Result executeCmdAndCreateResponse(String... params) {
-		PhoneStateReceiver.updatePhoneStateInfo();
+		LogUtils.infoMethodIn(RemoteCmdMobNwCell.class, "executeCmdAndCreateResponse");
 		PhoneStateInfo phoneStateInfo = PhoneStateInfo.get();
-		String res = ResponseCreator.addParamValue("", 
-			"phone", phoneStateInfo.getPhoneType());
-		res = ResponseCreator.addParamValue(res,  
-			"network", phoneStateInfo.getNetworkType());
-		res = ResponseCreator.addParamValue(res, 
-			"mcc", phoneStateInfo.getMobileCountryCode());	
-		res = ResponseCreator.addParamValue(res, 
-			"mnc", phoneStateInfo.getMobileNetworkCode());
-		res = ResponseCreator.addParamValue(res, 
-			"mnn", phoneStateInfo.getMobileNetworkName());
-		res = ResponseCreator.addParamValue(res, 
-			"lac", phoneStateInfo.getLocalAreaCode());
-		res = ResponseCreator.addParamValue(res, 
-			"cellid", phoneStateInfo.getCellId());
-		return new Result(true, res);
+		Result res = null;
+		if (phoneStateInfo != null) { 
+			String resStr = ResponseCreator.addTimestampValue("", 
+				phoneStateInfo.getTimestamp());
+			resStr = ResponseCreator.addParamValue(resStr, 
+				"phone", phoneStateInfo.getPhoneType());
+			resStr = ResponseCreator.addParamValue(resStr,  
+				"network", phoneStateInfo.getNetworkType());
+			resStr = ResponseCreator.addParamValue(resStr, 
+				"mcc", phoneStateInfo.getMobileCountryCode());	
+			resStr = ResponseCreator.addParamValue(resStr, 
+				"mnc", phoneStateInfo.getMobileNetworkCode());
+			resStr = ResponseCreator.addParamValue(resStr, 
+				"mnn", phoneStateInfo.getMobileNetworkName());
+			resStr = ResponseCreator.addParamValue(resStr, 
+				"lac", phoneStateInfo.getLocalAreaCode());
+			resStr = ResponseCreator.addParamValue(resStr, 
+				"cellid", phoneStateInfo.getCellId());
+			res = new Result(true, resStr);
+		} else {
+			res = new Result(false, "no valid cell information found");
+		}
+		LogUtils.infoMethodOut(RemoteCmdMobNwCell.class, res.toString());
+		return res;
 	}
 }

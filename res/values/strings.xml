@@ -80,7 +80,7 @@
     <string name="txPrefs_Def_TrackName">My Track</string>
     
     <!-- preferences commons -->
-    <string name="txPrefs_InfoAutoModeEnabled">Manual resetting, starting/stopping of tracking, localization or hr-measuring is not possible in auto mode!</string>
+    <string name="txPrefs_InfoAutoModeEnabled">Auto-tracking is not interruptable on dashboard (s. preferences)!</string>
     <string name="txPrefs_WarningChangePrefsDuringRunningTrack">Changing the preferences during a running track can lead to an unexpected behavior!</string>
     
     <!-- validators -->

@@ -188,6 +188,7 @@ public class PrefsRegistry {
 			prefsReg.put(prefsDsc.prefsClass, prefs);
 			prefsMap.put(prefs.getShortName(), prefs);
 		}
+		OnTrackPhoneTrackerDefaults.run();
 		saveAllInternal();
 		LogUtils.infoMethodOut(PrefsRegistry.class, "reset");
 	}
