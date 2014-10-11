@@ -52,5 +52,6 @@
     <string name="txMain_InfoSendSosSignalDone">Ein SOS Signal wurde gesendet!</string>    
     <string name="txMain_QuestionExit">Wollen Sie %1$s wirklich beenden?</string>    
     <string name="txMain_SendMessageNotSupportedByTransferProtocol">Der Nachrichtenversand wird vom eingestellten Übertragungsprotokoll (%1$s) nicht unterstützt.</string>
-    <string name="txMain_SendEmergencySignalNotSupportedByTransferProtocol">Der Versand von Notrufsignalen wird vom eingestellten Übertragungsprotokoll (%1$s) nicht unterstützt.</string>    
+    <string name="txMain_SendEmergencySignalNotSupportedByTransferProtocol">Der Versand von Notrufsignalen wird vom eingestellten Übertragungsprotokoll (%1$s) nicht unterstützt.</string>
+    <string name="txMain_EmergencyActivated">Der Notruf wurde aktiviert</string>    
 </resources>

@@ -22,6 +22,8 @@ import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
+import de.msk.mylivetracker.client.android.remoteaccess.ResponseCreator;
+import de.msk.mylivetracker.client.android.status.LocationInfo;
 import de.msk.mylivetracker.client.android.status.MessageInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.upload.Uploader;
@@ -82,13 +84,8 @@ public class MessageActivity extends AbstractActivity {
 			String message = etMsgMessage.getText().toString();
 			boolean valid = true;
 			if (valid) {
-				MessagePrefs messagePrefs = PrefsRegistry.get(MessagePrefs.class);
-				ProtocolPrefs protocolPrefs = PrefsRegistry.get(ProtocolPrefs.class);
-				if ((!protocolPrefs.getTransferProtocol().supportsSendMessage() ||
-					!messagePrefs.isSendMessageModeToServerEnabled()) &&
-					(!App.smsSupported() ||
-					!messagePrefs.isSendMessageModeAsSmsEnabled())) {
-					SimpleInfoDialog.show(this.activity, R.string.txMsg_SendingMessagesNotSupportedEnabled);
+				if (!minimumOneChannelIsSupportedAndEnabled()) {
+					SimpleInfoDialog.show(this.activity, R.string.txMsg_SendingMessagesNotSupported);
 					valid = false;
 				}
 			}
@@ -109,10 +106,18 @@ public class MessageActivity extends AbstractActivity {
 		}		
 	}
 	
-	private static void sendMessage(Activity activity, String message) {
-		if (activity == null) {
-			throw new IllegalArgumentException("activity must not be null");
-		}
+	public static boolean minimumOneChannelIsSupportedAndEnabled() {
+		MessagePrefs messagePrefs = PrefsRegistry.get(MessagePrefs.class);
+		ProtocolPrefs protocolPrefs = PrefsRegistry.get(ProtocolPrefs.class);
+		boolean smsChannelActive = App.smsSupported() &&
+			messagePrefs.isSendMessageModeAsSmsEnabled();
+		boolean protocolChannelActive = 
+			protocolPrefs.getTransferProtocol().supportsSendMessage() && 
+			messagePrefs.isSendMessageModeToServerEnabled();
+		return smsChannelActive || protocolChannelActive;
+	}
+	
+	public static void sendMessage(String message) {
 		if (StringUtils.isEmpty(message)) {
 			throw new IllegalArgumentException("message must not be empty");
 		}
@@ -123,21 +128,36 @@ public class MessageActivity extends AbstractActivity {
 				Uploader.uploadOneTime();
 			}
 		}
-		sendMessageAsSmsIfConfigured(message);
-		Toast.makeText(activity.getApplicationContext(), 
-			activity.getString(R.string.txMsg_InfoSendMessageDone),
-			Toast.LENGTH_SHORT).show();
+		sendMessageAsSms(message);
 	}
 	
-	public static void sendMessageAsSmsIfConfigured(String message) {
+	public static void sendMessageAsSms(String message) {
 		if (StringUtils.isEmpty(message)) {
 			throw new IllegalArgumentException("message must not be empty");
 		}
 		MessagePrefs messagePrefs = PrefsRegistry.get(MessagePrefs.class);
-		if (messagePrefs.isSendMessageModeAsSmsEnabled()) {
-			SmsSendUtils.sendSms(messagePrefs.getSmsReceiver(),
-				App.getAppNameAbbr() + ":[MSG]:" + message);
+		if (App.smsSupported() &&
+			messagePrefs.isSendMessageModeAsSmsEnabled()) {
+			String smsMessage = App.getAppNameAbbr() + 
+				":[MSG]:" + message + ":" + 
+				ResponseCreator.getGoogleLatLonUrl(LocationInfo.get());
+			SmsSendUtils.sendSms(
+				messagePrefs.getSmsReceiver(),
+				smsMessage);
 		}
+	}
+	
+	private static void sendMessage(Activity activity, String message) {
+		if (activity == null) {
+			throw new IllegalArgumentException("activity must not be null");
+		}
+		if (StringUtils.isEmpty(message)) {
+			throw new IllegalArgumentException("message must not be empty");
+		}
+		sendMessage(message);
+		Toast.makeText(activity.getApplicationContext(), 
+			activity.getString(R.string.txMsg_InfoSendMessageDone),
+			Toast.LENGTH_SHORT).show();
 	}
 	
 	private static final class OnClickButtonMessagePrefs extends ASafeOnClickListener {

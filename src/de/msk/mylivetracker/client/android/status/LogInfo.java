@@ -112,7 +112,8 @@ public class LogInfo {
 	
 	public static void addLogItem(LocationInfo locationInfo, 
 		EmergencySignalInfo emergencySignalInfo, MessageInfo messageInfo) {
-		if ((locationInfo == null) || !locationInfo.hasValidLatLon()) return;
+		if (!TrackStatus.get().trackDataExists() || 
+			(locationInfo == null) || !locationInfo.hasValidLatLon()) return;
 		FileOutputStream fos = null;
 		try {
 			String filename = TrackStatus.get().getLogFileName();
@@ -123,6 +124,7 @@ public class LogInfo {
 				String gpxHead = GPX_HEAD_TEMPLATE;
 				gpxHead = StringUtils.replace(gpxHead, "$MLTVERSION", App.getAppNameComplete());
 				gpxHead = StringUtils.replace(gpxHead, "$AUTHOR", PrefsRegistry.get(AccountPrefs.class).getUsername());
+				//TODO check what happens if track is not running?
 				DateTime dateTime = new DateTime(TrackStatus.get().getStartedInMSecs());
 				String timestamp = dateTime.getAsStr(
 					TimeZone.getTimeZone(DateTime.TIME_ZONE_UTC), 

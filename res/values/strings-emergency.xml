@@ -4,4 +4,6 @@
     <string name="txEmergencyPrefs_MessageText">Note: SOS message is not supported by every protocol.</string>
 	<string name="lbEmergencyPrefs_MessageText">SOS message</string>
 	<string name="fdEmergencyPrefs_MessageText">SOS message</string>
+	<string name="lbEmergencyPrefs_SendEmergencyMessageAsSms">Send SOS message also as sms message</string>
+	<string name="fdEmergencyPrefs_SendEmergencyMessageAsSms">Send SMS message</string>
 </resources>

@@ -92,7 +92,7 @@ public class RemoteCmdApp extends ARemoteCmdExecutor {
 				if (AppControl.appRunningFrontend()) {
 					status += "running (frontend)";
 				} else {
-					status += "running (only tracking mode 'auto')";
+					status += "running (without frontend)";
 				}
 			} 
 			result = new Result(true, status);

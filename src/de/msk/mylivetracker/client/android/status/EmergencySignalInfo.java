@@ -18,10 +18,11 @@ public class EmergencySignalInfo extends AbstractInfo implements Serializable {
 
 	private static EmergencySignalInfo emergencySignalInfo = null;
 	
-	public static void update(boolean activated) {
+	public static void update(boolean activated, String message) {
 		if (TrackStatus.isInResettingState()) return;
 		emergencySignalInfo = 
-			EmergencySignalInfo.createNewEmergencySignalInfo(activated);
+			EmergencySignalInfo.createNewEmergencySignalInfo(
+				activated, message);
 	}
 	public static EmergencySignalInfo get() {
 		return emergencySignalInfo;
@@ -34,27 +35,28 @@ public class EmergencySignalInfo extends AbstractInfo implements Serializable {
 	}
 	
 	public boolean activated = false;
+	public String message = null;
 	
 	private EmergencySignalInfo() {
 	}
-	
-	private EmergencySignalInfo(boolean activated) {
+	private EmergencySignalInfo(boolean activated, String message) {
 		this.activated = activated;
+		this.message = message;
 	}
-
 	public static EmergencySignalInfo createNewEmergencySignalInfo(
-		boolean activated) {
-		return new EmergencySignalInfo(activated);			
+		boolean activated, String message) {
+		return new EmergencySignalInfo(activated, message);			
 	}
-
 	public boolean isActivated() {
 		return activated;
 	}
+	public String getMessage() {
+		return message;
+	}
 	@Override
 	public String toString() {
-		return "EmergencySignalInfo [activated=" + activated + ", getId()="
-			+ getId() + ", getTimestamp()=" + getTimestamp() + "]";
+		return "EmergencySignalInfo [activated=" + activated + ", message="
+			+ message + ", getId()=" + getId() + ", getTimestamp()="
+			+ getTimestamp() + "]";
 	}
-	
-	
 }

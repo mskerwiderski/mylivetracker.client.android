@@ -2,6 +2,7 @@ package de.msk.mylivetracker.client.android.emergency;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.PrefsActivity;
@@ -26,12 +27,15 @@ public class EmergencyPrefsActivity extends PrefsActivity {
 	private static final class OnClickButtonSaveListener extends ASafeOnClickListener {
 		private EmergencyPrefsActivity activity;
 		private EditText etEmergencyPrefs_MessageText;
+		private CheckBox lbEmergencyPrefs_SendEmergencyMessageAsSms;
 		
 		public OnClickButtonSaveListener(
 			EmergencyPrefsActivity activity,
-			EditText etEmergencyPrefs_MessageText) {
+			EditText etEmergencyPrefs_MessageText,
+			CheckBox lbEmergencyPrefs_SendEmergencyMessageAsSms) {
 			this.activity = activity;
 			this.etEmergencyPrefs_MessageText = etEmergencyPrefs_MessageText;
+			this.lbEmergencyPrefs_SendEmergencyMessageAsSms = lbEmergencyPrefs_SendEmergencyMessageAsSms;
 		}
 
 		@Override
@@ -45,6 +49,7 @@ public class EmergencyPrefsActivity extends PrefsActivity {
 			if (valid) {
 				EmergencyPrefs prefs = PrefsRegistry.get(EmergencyPrefs.class);
 				prefs.setMessageText(etEmergencyPrefs_MessageText.getText().toString());
+				prefs.setSendAsSms(lbEmergencyPrefs_SendEmergencyMessageAsSms.isChecked());
 				PrefsRegistry.save(EmergencyPrefs.class);
 				this.activity.finish();
 			}
@@ -63,14 +68,17 @@ public class EmergencyPrefsActivity extends PrefsActivity {
         EditText etEmergencyPrefs_MessageText = 
         	(EditText)findViewById(R.id.etEmergencyPrefs_MessageText);
         etEmergencyPrefs_MessageText.setText(prefs.getMessageText());
-        
+        CheckBox lbEmergencyPrefs_SendEmergencyMessageAsSms = 
+        	(CheckBox)findViewById(R.id.cbEmergencyPrefs_SendEmergencyMessageAsSms);
+        lbEmergencyPrefs_SendEmergencyMessageAsSms.setChecked(prefs.isSendAsSms());
         
         Button btnEmergencyPrefs_Save = (Button) findViewById(R.id.btEmergencyPrefs_Save);
         Button btnEmergencyPrefs_Cancel = (Button) findViewById(R.id.btEmergencyPrefs_Cancel);
                 
         btnEmergencyPrefs_Save.setOnClickListener(
 			new OnClickButtonSaveListener(this,
-				etEmergencyPrefs_MessageText));
+				etEmergencyPrefs_MessageText,
+				lbEmergencyPrefs_SendEmergencyMessageAsSms));
 		
         btnEmergencyPrefs_Cancel.setOnClickListener(
 			new OnFinishActivityListener(this));
