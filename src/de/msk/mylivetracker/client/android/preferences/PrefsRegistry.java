@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 
 import de.msk.mylivetracker.client.android.App;
+import de.msk.mylivetracker.client.android.App.VersionDsc;
 import de.msk.mylivetracker.client.android.account.AccountPrefs;
 import de.msk.mylivetracker.client.android.auto.AutoPrefs;
 import de.msk.mylivetracker.client.android.dropbox.DropboxPrefs;
@@ -168,10 +169,12 @@ public class PrefsRegistry {
 				initResult = InitResult.PrefsLoaded;
 			} else if (initResult.equals(InitResult.PrefsUpdatedFromV150)) {
 				PrefsV150Updater.run();
-				TrackStatus.reset();
 			} else if (initResult.equals(InitResult.PrefsUpdatedFromV160)) {
 				PrefsV150Updater.run();
 				PrefsV160Updater.run();
+			}
+			
+			if (mainPrefsVersion < VersionDsc.getCode()) {
 				TrackStatus.reset();
 			}
 		}
