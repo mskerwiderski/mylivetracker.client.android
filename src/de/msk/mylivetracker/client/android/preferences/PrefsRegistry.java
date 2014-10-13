@@ -27,6 +27,7 @@ import de.msk.mylivetracker.client.android.preferences.prefsv160.PrefsV160Update
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.remoteaccess.RemoteAccessPrefs;
 import de.msk.mylivetracker.client.android.server.ServerPrefs;
+import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.trackexport.TrackExportPrefs;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
 import de.msk.mylivetracker.client.android.util.FileUtils;
@@ -167,8 +168,11 @@ public class PrefsRegistry {
 				initResult = InitResult.PrefsLoaded;
 			} else if (initResult.equals(InitResult.PrefsUpdatedFromV150)) {
 				PrefsV150Updater.run();
+				TrackStatus.reset();
 			} else if (initResult.equals(InitResult.PrefsUpdatedFromV160)) {
+				PrefsV150Updater.run();
 				PrefsV160Updater.run();
+				TrackStatus.reset();
 			}
 		}
 		
