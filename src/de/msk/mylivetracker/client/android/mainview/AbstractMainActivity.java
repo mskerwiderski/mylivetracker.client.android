@@ -13,11 +13,9 @@ import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.InfoActivity;
 import de.msk.mylivetracker.client.android.account.AccountPrefsActivity;
 import de.msk.mylivetracker.client.android.appcontrol.AppControl;
-import de.msk.mylivetracker.client.android.dropbox.DropboxConnectActivity;
 import de.msk.mylivetracker.client.android.emergency.EmergencyPrefsActivity;
 import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParamsPrefsActivity;
 import de.msk.mylivetracker.client.android.localization.LocalizationPrefsActivity;
-import de.msk.mylivetracker.client.android.mylivetrackerportal.MyLiveTrackerPortalConnectActivity;
 import de.msk.mylivetracker.client.android.ontrackphonetracker.R;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.other.OtherPrefsActivity;
@@ -182,12 +180,14 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 		case R.id.mnTrackExport:
 			startActivityWithWarningDlgIfTrackRunning(TrackExportActivity.class);
 			return true;	
-		case R.id.mnMyLiveTrackerPortalConnect:
-			startActivityWithWarningDlgIfTrackRunning(MyLiveTrackerPortalConnectActivity.class);
-			return true;
-		case R.id.mnDropboxConnect:
-			startActivityWithWarningDlgIfTrackRunning(DropboxConnectActivity.class);
-			return true;	
+// OPT -->			
+//		case R.id.mnMyLiveTrackerPortalConnect:
+//			startActivityWithWarningDlgIfTrackRunning(MyLiveTrackerPortalConnectActivity.class);
+//			return true;
+//		case R.id.mnDropboxConnect:
+//			startActivityWithWarningDlgIfTrackRunning(DropboxConnectActivity.class);
+//			return true;
+// <-- OPT
 		case R.id.mnPrefsPinCodeQuery:
 			startActivityWithWarningDlgIfTrackRunning(PinCodeQueryPrefsActivity.class);
 			return true;

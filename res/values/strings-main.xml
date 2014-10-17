@@ -52,4 +52,5 @@
     <string name="txMain_QuestionExit">Do you really want to exit %1$s?</string>   
     <string name="txMain_SendMessageNotSupportedByTransferProtocol">Send messages is not supported by selected transfer protocol (%1$s).</string>
     <string name="txMain_SendEmergencySignalNotSupportedByTransferProtocol">Send SOS signals is not supported by selected transfer protocol (%1$s).</string>
+    <string name="txMain_EmergencyActivated">Emergency has been activated</string>
 </resources>

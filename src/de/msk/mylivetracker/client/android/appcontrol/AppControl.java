@@ -128,9 +128,9 @@ public class AppControl {
 	private static void resetTrackAux() {
 		lockTrackStartStop.lock();
 		try {
-			AbstractService.stopService(UploadService.class);
-			AbstractService.stopService(LocalizationService.class);
-			stopAntPlusDetection();
+			stopTrackAux();
+			stopLocalizationAux();
+			stopAntPlusDetectionAux();
 			TrackStatus.reset();
 		} finally {
 			lockTrackStartStop.unlock();
@@ -169,9 +169,9 @@ public class AppControl {
 					getTrackingOneTouchMode();
 				switch (mode) {
 					case TrackingLocalizationHeartrate:
-						startAntPlusDetection();
+						startAntPlusDetectionAux();
 					case TrackingLocalization:
-						startLocalization();
+						startLocalizationAux();
 					case TrackingOnly:
 					default:
 						break;
@@ -224,9 +224,9 @@ public class AppControl {
 					getTrackingOneTouchMode();
 				switch (mode) {
 					case TrackingLocalizationHeartrate:
-						stopAntPlusDetection();
+						stopAntPlusDetectionAux();
 					case TrackingLocalization:
-						stopLocalization();
+						stopLocalizationAux();
 					case TrackingOnly:
 					default:
 						break;

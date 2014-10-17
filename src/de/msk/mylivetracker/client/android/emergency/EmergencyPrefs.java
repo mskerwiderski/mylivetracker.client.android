@@ -2,12 +2,13 @@ package de.msk.mylivetracker.client.android.emergency;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.BooleanUtils;
 
+import de.msk.mylivetracker.client.android.App;
+import de.msk.mylivetracker.client.android.ontrackphonetracker.R;
 import de.msk.mylivetracker.client.android.preferences.APrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsDumper.ConfigPair;
 import de.msk.mylivetracker.client.android.preferences.PrefsDumper.PrefsDump;
-import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 
 /**
  * classname: EmergencyPrefs
@@ -26,17 +27,8 @@ public class EmergencyPrefs extends APrefs implements Serializable {
 
 	public static final int VERSION = 1;
 	
-	private static final String DEF_MESSAGE = "SOS";
-	
 	private String messageText;
-	
-	public static String getEmergencyMessageText() {
-		String msg = PrefsRegistry.get(EmergencyPrefs.class).getMessageText();
-		if (StringUtils.isEmpty(msg)) {
-			msg = DEF_MESSAGE;
-		}
-		return msg;
-	}
+	private boolean sendAsSms;
 	
 	@Override
 	public int getVersion() {
@@ -44,7 +36,9 @@ public class EmergencyPrefs extends APrefs implements Serializable {
 	}	
 	@Override
 	public void initWithDefaults() {
-		this.messageText = DEF_MESSAGE;
+		this.messageText = App.getCtx().getString(
+			R.string.txMain_EmergencyActivated);
+		this.sendAsSms = false;
 	}
 	@Override
 	public void initWithValuesOfOldVersion(int foundVersion, String foundGsonStr) {
@@ -56,6 +50,12 @@ public class EmergencyPrefs extends APrefs implements Serializable {
 	public void setMessageText(String messageText) {
 		this.messageText = messageText;
 	}
+	public boolean isSendAsSms() {
+		return sendAsSms;
+	}
+	public void setSendAsSms(boolean sendAsSms) {
+		this.sendAsSms = sendAsSms;
+	}
 	@Override
 	public String getShortName() {
 		return "emergency";
@@ -65,10 +65,13 @@ public class EmergencyPrefs extends APrefs implements Serializable {
 		return new PrefsDump("EmergencyPrefs", 
 			new ConfigPair[] {
 				new ConfigPair("messageText", this.messageText),
+				new ConfigPair("sendAsSms",
+					BooleanUtils.toStringYesNo(this.sendAsSms)),
 		});
 	}
 	@Override
 	public String toString() {
-		return "EmergencyPrefs [messageText=" + messageText + "]";
+		return "EmergencyPrefs [messageText=" + messageText + ", sendAsSms="
+			+ sendAsSms + "]";
 	}
 }

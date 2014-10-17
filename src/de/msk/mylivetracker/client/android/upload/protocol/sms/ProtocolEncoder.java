@@ -7,7 +7,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.account.AccountPrefs;
-import de.msk.mylivetracker.client.android.emergency.EmergencyPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.remoteaccess.ResponseCreator;
 import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
@@ -52,7 +51,7 @@ public class ProtocolEncoder implements IProtocol {
 			BooleanUtils.toStringYesNo(locationInfo.isAccurate()));
 		if ((emergencySignalInfo != null) && !emergencySignalInfo.isActivated()) {
 			dataStr = ResponseCreator.addParamValue(
-				dataStr, "sos", PrefsRegistry.get(EmergencyPrefs.class).getMessageText());
+				dataStr, "sos", emergencySignalInfo.getMessage());
 		}
 		if ((messageInfo != null) && !StringUtils.isEmpty(messageInfo.getMessage())) {
 			dataStr = ResponseCreator.addParamValue(

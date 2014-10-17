@@ -4,7 +4,6 @@ import java.util.Date;
 
 import de.msk.mylivetracker.client.android.App.VersionDsc;
 import de.msk.mylivetracker.client.android.account.AccountPrefs;
-import de.msk.mylivetracker.client.android.emergency.EmergencyPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.status.BatteryStateInfo;
 import de.msk.mylivetracker.client.android.status.EmergencySignalInfo;
@@ -100,7 +99,6 @@ public class ProtocolEncoder extends EncDecoder implements IProtocol {
 			if (locationInfo.hasValidAccuracy()) {
 				data.setLocationAccuracyInMtr(Double.valueOf(locationInfo.getAccuracyInMtr()));				
 			}
-			// TODO bearing
 			data.setLocationValid(locationInfo.isAccurate());
 			data.setMileageInMtr(Double.valueOf(locationInfo.getMileageInMtr()));
 			data.setTrackDistanceInMtr(Float.valueOf(locationInfo.getTrackDistanceInMtr()));
@@ -124,7 +122,7 @@ public class ProtocolEncoder extends EncDecoder implements IProtocol {
 		if (emergencySignalInfo != null) {
 			data.setSosActivated(emergencySignalInfo.activated);
 			data.setSosId(emergencySignalInfo.getId());
-			data.setMessage(EmergencyPrefs.getEmergencyMessageText());
+			data.setMessage(emergencySignalInfo.getMessage());
 		}
 		if ((messageInfo != null) && (emergencySignalInfo == null)) {
 			data.setMessage(messageInfo.getMessage());

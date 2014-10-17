@@ -63,7 +63,6 @@ public class SmsSendUtils {
 		
 		if (length > maxLength) {
 			ArrayList<String> messages = manager.divideMessage(message);
-			// TODO hack!
 			while (messages.size() > maxCount) {
 				messages.remove(messages.size()-1);
 			}

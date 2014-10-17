@@ -196,6 +196,10 @@ public class TrackStatus implements Serializable {
 		return this.markerLastStarted != null;
 	}
 	
+	public boolean trackDataExists() {
+		return this.markerFirstStarted != null;
+	}
+	
 	public boolean countdownIsActive() {
 		return this.trackIsRunning() && 
 			(getCountdownLeftInSecs() > 0);

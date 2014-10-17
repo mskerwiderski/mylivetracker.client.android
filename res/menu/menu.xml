@@ -12,6 +12,7 @@
 		    <item android:id="@+id/mnTrackExport" android:title="@string/mnTrackExport" />
 	    </menu> 
     </item>
+    <!-- OPT 
     <item 
 	    android:id="@+id/mnCatConnect"
 		android:title="@string/mnCatConnect" >
@@ -20,6 +21,7 @@
             <item android:id="@+id/mnDropboxConnect" android:title="@string/mnDropboxConnect" />  
 	    </menu> 
     </item>
+    OPT -->
     <item 
 	    android:id="@+id/mnCatSystem"
 		android:title="@string/mnCatSystem" >

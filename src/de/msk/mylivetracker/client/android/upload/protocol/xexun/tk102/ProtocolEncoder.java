@@ -59,7 +59,7 @@ public class ProtocolEncoder implements IProtocol {
 		}
 		dataStr += (locValid ? "F" : "L") + SEPERATOR;
 		if ((emergencySignalInfo != null) && emergencySignalInfo.isActivated()) {
-			dataStr += EmergencyPrefs.getEmergencyMessageText() + SEPERATOR;
+			dataStr += PrefsRegistry.get(EmergencyPrefs.class).getMessageText() + SEPERATOR;
 		} else if ((batteryStateInfo != null) && batteryStateInfo.isBatteryLow()) {
 			dataStr += "low battery" + SEPERATOR;
 		} else if (messageInfo != null) {

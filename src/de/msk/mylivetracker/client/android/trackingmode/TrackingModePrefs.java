@@ -107,6 +107,7 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 		this.trackingMode = TrackingMode.Standard;
 		this.countdownInSecs = CountdownInSecs.Off;
 		this.maxCheckpointPeriodInSecs = 180;
+		this.sendAnyValidLocationBeforeTimeout = false;
 		this.checkpointMessage = null;
 		this.interruptibleOnMainWindow = true;
 		this.startAfterReboot = false;

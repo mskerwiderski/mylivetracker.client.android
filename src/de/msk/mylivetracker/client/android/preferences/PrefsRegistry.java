@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 
 import de.msk.mylivetracker.client.android.App;
+import de.msk.mylivetracker.client.android.App.VersionDsc;
 import de.msk.mylivetracker.client.android.account.AccountPrefs;
 import de.msk.mylivetracker.client.android.auto.AutoPrefs;
 import de.msk.mylivetracker.client.android.dropbox.DropboxPrefs;
@@ -27,6 +28,7 @@ import de.msk.mylivetracker.client.android.preferences.prefsv160.PrefsV160Update
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.remoteaccess.RemoteAccessPrefs;
 import de.msk.mylivetracker.client.android.server.ServerPrefs;
+import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.trackexport.TrackExportPrefs;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
 import de.msk.mylivetracker.client.android.util.FileUtils;
@@ -87,6 +89,7 @@ public class PrefsRegistry {
 		PrefsImportedFromV144,
 		PrefsUpdatedFromV150,
 		PrefsUpdatedFromV160,
+		PrefsUpdatedFromV171_V174, //buggy versions --> init of new config values is neccessary.
 		PrefsCreated, 
 		PrefsUpdated, 
 		PrefsLoaded, 
@@ -123,6 +126,8 @@ public class PrefsRegistry {
 				initResult = InitResult.PrefsUpdatedFromV150;
 			} else if (mainPrefsVersion == 160) {
 				initResult = InitResult.PrefsUpdatedFromV160;
+			} else if ((mainPrefsVersion >= 171) && (mainPrefsVersion < 175)) {
+				initResult = InitResult.PrefsUpdatedFromV171_V174;
 			}
 			
 			for (PrefsDsc prefsDsc : prefsDscArr) {
@@ -167,8 +172,14 @@ public class PrefsRegistry {
 				initResult = InitResult.PrefsLoaded;
 			} else if (initResult.equals(InitResult.PrefsUpdatedFromV150)) {
 				PrefsV150Updater.run();
-			} else if (initResult.equals(InitResult.PrefsUpdatedFromV160)) {
+			} else if (initResult.equals(InitResult.PrefsUpdatedFromV160) ||
+				initResult.equals(InitResult.PrefsUpdatedFromV171_V174)) {
+				PrefsV150Updater.run();
 				PrefsV160Updater.run();
+			}
+			
+			if (mainPrefsVersion < VersionDsc.getCode()) {
+				TrackStatus.reset();
 			}
 		}
 		

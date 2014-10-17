@@ -132,7 +132,7 @@ public class ResponseCreator {
 
 	private static final String GOOGLE_MAPS_URL_TEMPLATE = 
 			"https://maps.google.de/maps?q=$LAT,$LON";
-	public static String addGoogleLatLonUrl(String str, LocationInfo locationInfo) {
+	public static String getGoogleLatLonUrl(LocationInfo locationInfo) {
 		String value = UNKNOWN;
 		if ((locationInfo != null) && locationInfo.hasValidLatLon()) {
 			value = GOOGLE_MAPS_URL_TEMPLATE;
@@ -141,6 +141,10 @@ public class ResponseCreator {
 			value = StringUtils.replace(value, "$LON", 
 				FormatUtils.getDoubleAsSimpleStr(locationInfo.getLongitude(), 6));
 		}
+		return value;
+	}
+	public static String addGoogleLatLonUrl(String str, LocationInfo locationInfo) {
+		String value = getGoogleLatLonUrl(locationInfo);
 		return addParamValue(str, GOOGLE_LATLON_URL, value);
 	}
 	
