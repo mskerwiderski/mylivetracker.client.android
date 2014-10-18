@@ -10,8 +10,10 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.telephony.TelephonyManager;
+import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry.InitResult;
+import de.msk.mylivetracker.client.android.status.PinCodeStatus;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.util.FileUtils;
 import de.msk.mylivetracker.client.android.util.FileUtils.PathType;
@@ -299,6 +301,12 @@ public class App extends Application {
 	public static String getStatusFileName(boolean extensionIncl) {
 		return fileNamePrefix + "_status" +
 			(extensionIncl ? ".xml" : "");
+	}
+
+	public static boolean isAdminMode() {
+		return 
+			!PinCodeQueryPrefs.pinCodeQueryEnabledForPrefsViaAdminMode() || 
+			PinCodeStatus.get().isSuccessful();
 	}
 	
 	/*

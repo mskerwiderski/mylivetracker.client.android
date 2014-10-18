@@ -100,7 +100,7 @@ public class PinCodeQueryActivity extends AbstractActivity {
 			new OnClickButtonOkListener(
 				this, etPinCodeQuery_PinCode));
         Button btPinCodeQuery_Cancel = (Button) findViewById(R.id.btPinCodeQuery_Cancel);
-        if (PinCodeQueryPrefs.protectEntireAppConfigured()) {
+        if (PinCodeQueryPrefs.pinCodeQueryEnabledForWholeApp()) {
         	btPinCodeQuery_Cancel.setVisibility(View.GONE);
         } else {
         	btPinCodeQuery_Cancel.setOnClickListener(

@@ -1,4 +1,11 @@
 <resources>
+    <string-array name="pinCodeQueryModes">
+    	<item>Disabled</item>
+		<item>Protect whole app</item>
+		<item>Protect prefs only</item>
+		<item>Protect via admin mode</item>
+	</string-array>
+		
     <string-array name="sendMessageModes">
     	<item>Only to server</item>
         <item>Only as SMS</item>

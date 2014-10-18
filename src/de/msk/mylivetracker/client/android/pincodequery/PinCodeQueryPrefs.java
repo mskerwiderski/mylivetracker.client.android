@@ -2,8 +2,6 @@ package de.msk.mylivetracker.client.android.pincodequery;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang3.BooleanUtils;
-
 import de.msk.mylivetracker.client.android.preferences.APrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsDumper.ConfigPair;
 import de.msk.mylivetracker.client.android.preferences.PrefsDumper.PrefsDump;
@@ -26,9 +24,50 @@ public class PinCodeQueryPrefs extends APrefs implements Serializable {
 
 	public static final int VERSION = 1;
 	
-	private boolean pinCodeQueryEnabled;
-	private boolean protectSettingsOnly;
+	public enum PinCodeQueryMode {
+		Disabled("disabled"),
+		ProtectWholeApp("protect whole app"),
+		ProtectPrefsOnly("protect preferences only"),
+		ProtectPrefsViaAdminMode("protect preferences via admin mode");
+		
+		private String dsc;
+		
+		private PinCodeQueryMode(String dsc) {
+			this.dsc = dsc;
+		}
+		public String getDsc() {
+			return dsc;
+		}
+	};
+	
+	private PinCodeQueryMode pinCodeQueryMode;
+	
+	public static boolean pinCodeQueryEnabled() {
+		return !PrefsRegistry.get(PinCodeQueryPrefs.class).
+			pinCodeQueryMode.equals(PinCodeQueryMode.Disabled);
+	}
+	
+	public static boolean pinCodeQueryEnabledForWholeApp() {
+		return PrefsRegistry.get(PinCodeQueryPrefs.class).
+			pinCodeQueryMode.equals(PinCodeQueryMode.ProtectWholeApp);
+	}
+	
+	public static boolean pinCodeQueryEnabledForPrefsOnly() {
+		return PrefsRegistry.get(PinCodeQueryPrefs.class).
+			pinCodeQueryMode.equals(PinCodeQueryMode.ProtectPrefsOnly);
+	}
+	
+	public static boolean pinCodeQueryEnabledForPrefsViaAdminMode() {
+		return PrefsRegistry.get(PinCodeQueryPrefs.class).
+			pinCodeQueryMode.equals(PinCodeQueryMode.ProtectPrefsViaAdminMode);
+	}
+	
 	private String pinCode;
+	
+	@Deprecated
+	private boolean pinCodeQueryEnabled;
+	@Deprecated
+	private boolean protectSettingsOnly;
 	
 	@Override
 	public int getVersion() {
@@ -38,33 +77,46 @@ public class PinCodeQueryPrefs extends APrefs implements Serializable {
 	public void initWithDefaults() {
 		this.pinCodeQueryEnabled = false;
 		this.protectSettingsOnly = false;
+		this.pinCodeQueryMode = PinCodeQueryMode.Disabled;
 		this.pinCode = "";
 	}
 	@Override
 	public void initWithValuesOfOldVersion(int foundVersion, String foundGsonStr) {
 		// noop.
 	}
+	@Deprecated
 	public static boolean protectEntireAppConfigured() {
 		return 
 			PrefsRegistry.get(PinCodeQueryPrefs.class).isPinCodeQueryEnabled() && 
 			!PrefsRegistry.get(PinCodeQueryPrefs.class).isProtectSettingsOnly();
 	}
+	@Deprecated
 	public static boolean protectSettingsOnlyConfigured() {
 		return 
 			PrefsRegistry.get(PinCodeQueryPrefs.class).isPinCodeQueryEnabled() && 
 			PrefsRegistry.get(PinCodeQueryPrefs.class).isProtectSettingsOnly();
 	}
+	@Deprecated
 	public boolean isPinCodeQueryEnabled() {
 		return pinCodeQueryEnabled;
 	}
-	public void setPinCodeQueryEnabled(boolean pinCodeQueryEnabled) {
-		this.pinCodeQueryEnabled = pinCodeQueryEnabled;
-	}
+	@Deprecated
 	public boolean isProtectSettingsOnly() {
 		return protectSettingsOnly;
 	}
+	@Deprecated
+	public void setPinCodeQueryEnabled(boolean pinCodeQueryEnabled) {
+		this.pinCodeQueryEnabled = pinCodeQueryEnabled;
+	}
+	@Deprecated
 	public void setProtectSettingsOnly(boolean protectSettingsOnly) {
 		this.protectSettingsOnly = protectSettingsOnly;
+	}
+	public PinCodeQueryMode getPinCodeQueryMode() {
+		return pinCodeQueryMode;
+	}
+	public void setPinCodeQueryMode(PinCodeQueryMode pinCodeQueryMode) {
+		this.pinCodeQueryMode = pinCodeQueryMode;
 	}
 	public String getPinCode() {
 		return pinCode;
@@ -80,17 +132,14 @@ public class PinCodeQueryPrefs extends APrefs implements Serializable {
 	public PrefsDump getPrefsDump() {
 		return new PrefsDump("PinCodeQueryPrefs", 
 			new ConfigPair[] {
-				new ConfigPair("pinCodeQueryEnabled", 
-					BooleanUtils.toStringTrueFalse(this.pinCodeQueryEnabled)),
-				new ConfigPair("protectSettingsOnly", 
-					BooleanUtils.toStringTrueFalse(this.protectSettingsOnly)),
+				new ConfigPair("pinCodeQueryMode", 
+					this.pinCodeQueryMode.getDsc()),
 				new ConfigPair("pinCode", this.pinCode),
 		});
 	}
 	@Override
 	public String toString() {
-		return "PinCodeQueryPrefs [pinCodeQueryEnabled=" + pinCodeQueryEnabled
-			+ ", protectSettingsOnly=" + protectSettingsOnly + ", pinCode="
-			+ pinCode + "]";
+		return "PinCodeQueryPrefs [pinCodeQueryMode=" + pinCodeQueryMode
+			+ ", pinCode=" + pinCode + "]";
 	}
 }

@@ -21,31 +21,13 @@
         android:paddingLeft="5dp"
        	android:paddingRight="5dp" 
     >
-    	<CheckBox
-		    android:id="@+id/cbPinCodeQueryPrefs_Enable"
-		    android:layout_width="0dp"
-		    android:layout_height="wrap_content"
-		    android:layout_weight="1"
-		    android:text="@string/lbPinCodeQueryPrefs_Enable"
-		    android:textColor="@color/colorText"
-		    android:paddingLeft="42dp" 
-		/>	
-    </LinearLayout>
-    <LinearLayout
-        android:layout_height="wrap_content" 
-        android:layout_width="fill_parent"
-        android:paddingLeft="5dp"
-       	android:paddingRight="5dp" 
-    >
-    	<CheckBox
-		    android:id="@+id/cbPinCodeQueryPrefs_ProtectSettings"
-		    android:layout_width="0dp"
-		    android:layout_height="wrap_content"
-		    android:layout_weight="1"
-		    android:text="@string/lbPinCodeQueryPrefs_ProtectSettingsOnly"
-		    android:textColor="@color/colorText"
-		    android:paddingLeft="42dp" 
-		/>	
+    	<Spinner
+	        android:id="@+id/spPinCodeQueryPrefs_Mode"
+	        android:layout_height="40dp"
+    		android:layout_weight="1"
+    		android:layout_width="0dp"
+	        android:nextFocusDown="@+id/etPinCodeQueryPrefs_PinCode" 
+	    />
     </LinearLayout>
     <TextView
         android:paddingTop="10dp"

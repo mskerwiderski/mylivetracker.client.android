@@ -3,13 +3,15 @@ package de.msk.mylivetracker.client.android.pincodequery;
 import org.apache.commons.lang3.StringUtils;
 
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.mainview.PrefsActivity;
+import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryPrefs.PinCodeQueryMode;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
 import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
@@ -31,20 +33,17 @@ public class PinCodeQueryPrefsActivity extends PrefsActivity {
 	
 	private static final class OnClickButtonOkListener extends ASafeOnClickListener {
 		private PinCodeQueryPrefsActivity activity;
-		private CheckBox cbPrefsPinCodeQuery_Enable;
-		private CheckBox cbPrefsPinCodeQuery_ProtectSettingsOnly;
+		private Spinner spPinCodeQueryPrefs_Mode;
 		private EditText etPrefsPinCodeQuery_PinCode;
 		private EditText etPrefsPinCodeQuery_PinCodeReenter;
 		
 		public OnClickButtonOkListener(
 			PinCodeQueryPrefsActivity activity,
-			CheckBox cbPrefsPinCodeQuery_Enable,
-			CheckBox cbPrefsPinCodeQuery_ProtectSettingsOnly,
+			Spinner spPinCodeQueryPrefs_Mode,
 			EditText etPrefsPinCodeQuery_PinCode,
 			EditText etPrefsPinCodeQuery_PinCodeReenter) {
 			this.activity = activity;
-			this.cbPrefsPinCodeQuery_Enable = cbPrefsPinCodeQuery_Enable;
-			this.cbPrefsPinCodeQuery_ProtectSettingsOnly = cbPrefsPinCodeQuery_ProtectSettingsOnly;
+			this.spPinCodeQueryPrefs_Mode = spPinCodeQueryPrefs_Mode;
 			this.etPrefsPinCodeQuery_PinCode = etPrefsPinCodeQuery_PinCode;
 			this.etPrefsPinCodeQuery_PinCodeReenter = etPrefsPinCodeQuery_PinCodeReenter;
 		}
@@ -52,7 +51,9 @@ public class PinCodeQueryPrefsActivity extends PrefsActivity {
 		@Override
 		public void onClick() {
 			boolean valid = true;
-			if (cbPrefsPinCodeQuery_Enable.isChecked()) {
+			PinCodeQueryMode pinCodeQueryMode = (PinCodeQueryMode.values()
+				[spPinCodeQueryPrefs_Mode.getSelectedItemPosition()]);
+			if (!pinCodeQueryMode.equals(PinCodeQueryMode.Disabled)) {
 				valid = StringUtils.equals(
 					etPrefsPinCodeQuery_PinCode.getText().toString(), 
 					etPrefsPinCodeQuery_PinCodeReenter.getText().toString());
@@ -71,9 +72,8 @@ public class PinCodeQueryPrefsActivity extends PrefsActivity {
 				etPrefsPinCodeQuery_PinCode.requestFocus();
 			} else {
 				PinCodeQueryPrefs prefs = PrefsRegistry.get(PinCodeQueryPrefs.class);
-				prefs.setPinCodeQueryEnabled(cbPrefsPinCodeQuery_Enable.isChecked());
-				prefs.setProtectSettingsOnly(cbPrefsPinCodeQuery_ProtectSettingsOnly.isChecked());
-				if (cbPrefsPinCodeQuery_Enable.isChecked()) {
+				prefs.setPinCodeQueryMode(pinCodeQueryMode);
+				if (!pinCodeQueryMode.equals(PinCodeQueryMode.Disabled)) {
 					prefs.setPinCode(etPrefsPinCodeQuery_PinCode.getText().toString());
 				}
 				PrefsRegistry.save(PinCodeQueryPrefs.class);
@@ -96,12 +96,13 @@ public class PinCodeQueryPrefsActivity extends PrefsActivity {
         tvPinCodeQueryPrefs_Info.setText(App.getCtx().getString(
         	R.string.lbPinCodeQueryPrefs_Info, App.getAppName()));
         
-        CheckBox cbPinCodeQueryPrefs_Enable = 
-        	(CheckBox)findViewById(R.id.cbPinCodeQueryPrefs_Enable);
-        cbPinCodeQueryPrefs_Enable.setChecked(prefs.isPinCodeQueryEnabled());
-        CheckBox cbPinCodeQueryPrefs_ProtectSettingsOnly = 
-        	(CheckBox)findViewById(R.id.cbPinCodeQueryPrefs_ProtectSettings);
-        cbPinCodeQueryPrefs_ProtectSettingsOnly.setChecked(prefs.isProtectSettingsOnly());
+        Spinner spPinCodeQueryPrefs_Mode = (Spinner) findViewById(R.id.spPinCodeQueryPrefs_Mode);
+        ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(
+            this, R.array.pinCodeQueryModes, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spPinCodeQueryPrefs_Mode.setAdapter(adapter);
+        spPinCodeQueryPrefs_Mode.setSelection(prefs.getPinCodeQueryMode().ordinal());
+        
         EditText etPinCodeQueryPrefs_PinCode = 
         	(EditText)findViewById(R.id.etPinCodeQueryPrefs_PinCode);
         etPinCodeQueryPrefs_PinCode.setText(prefs.getPinCode());
@@ -114,8 +115,7 @@ public class PinCodeQueryPrefsActivity extends PrefsActivity {
         	(Button)findViewById(R.id.btPinCodeQueryPrefs_Ok);
         btPinCodeQueryPrefs_Ok.setOnClickListener(
 			new OnClickButtonOkListener(this,
-				cbPinCodeQueryPrefs_Enable,
-				cbPinCodeQueryPrefs_ProtectSettingsOnly,
+				spPinCodeQueryPrefs_Mode,
 				etPinCodeQueryPrefs_PinCode,
 				etPinCodeQueryPrefs_PinCodeReenter));
 

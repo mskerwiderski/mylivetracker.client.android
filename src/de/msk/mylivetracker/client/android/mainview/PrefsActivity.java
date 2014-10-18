@@ -1,6 +1,5 @@
 package de.msk.mylivetracker.client.android.mainview;
 
-import android.os.Bundle;
 import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryActivity;
 import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryPrefs;
 import de.msk.mylivetracker.client.android.status.PinCodeStatus;
@@ -25,15 +24,9 @@ public class PrefsActivity extends AbstractActivity {
 	}
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		PinCodeStatus.get().reset();
-		super.onCreate(savedInstanceState);
-	}
-
-	@Override
 	protected void onStart() {
 		LogUtils.infoMethodIn(PrefsActivity.class, "onStart", "PrefsActivity");
-		if (PinCodeQueryPrefs.protectSettingsOnlyConfigured()) {
+		if (PinCodeQueryPrefs.pinCodeQueryEnabledForPrefsOnly()) {
 			if (PinCodeStatus.get().isCanceled()) {
 				LogUtils.info(PrefsActivity.class, "finish activity because pin code query failed");
 				this.finish();
@@ -41,7 +34,8 @@ public class PrefsActivity extends AbstractActivity {
 				LogUtils.info(PrefsActivity.class, "run pinCodeQuery");
 				PinCodeQueryActivity.runPinCodeQuery();
 			}
-		} 
+			PinCodeStatus.get().reset();
+		}
 		super.onStart();
 		LogUtils.infoMethodOut(PrefsActivity.class, "onStart", "PrefsActivity");
 	}

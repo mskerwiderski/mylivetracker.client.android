@@ -7,4 +7,6 @@
     <string name="tvInfo_EmailAddress">support@mylivetracker.de</string>
     <string name="tvInfo_ForumUrl">http://forum.mylivetracker.info</string>
     <string name="tvInfo_Separator">* * *</string>
+    <string name="btInfo_EnterAdminMode">Admin-Modus</string>
+    <string name="btInfo_LeaveAdminMode">User-Modus</string>
 </resources>

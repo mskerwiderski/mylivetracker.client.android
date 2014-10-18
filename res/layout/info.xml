@@ -141,5 +141,14 @@
         	android:layout_weight="1" 
         	android:layout_gravity="bottom" 
         />
+        <Button
+        	android:id="@+id/btInfo_EnterLeaveAdminMode" 
+        	android:text="@string/btInfo_EnterAdminMode"
+        	android:layout_height="50dp"
+        	android:layout_width="0dp"  
+        	android:layout_weight="1" 
+        	android:layout_gravity="bottom" 
+        />
     </LinearLayout>   
+    
 </LinearLayout>

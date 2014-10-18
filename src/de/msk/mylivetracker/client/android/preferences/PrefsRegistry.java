@@ -25,12 +25,14 @@ import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryPrefs;
 import de.msk.mylivetracker.client.android.preferences.prefsv144.PrefsV144Updater;
 import de.msk.mylivetracker.client.android.preferences.prefsv150.PrefsV150Updater;
 import de.msk.mylivetracker.client.android.preferences.prefsv160.PrefsV160Updater;
+import de.msk.mylivetracker.client.android.preferences.prefsv170.PrefsV170Updater;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
 import de.msk.mylivetracker.client.android.remoteaccess.RemoteAccessPrefs;
 import de.msk.mylivetracker.client.android.server.ServerPrefs;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.trackexport.TrackExportPrefs;
 import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs;
+import de.msk.mylivetracker.client.android.trackingmode.TrackingModePrefs.CountdownInSecs;
 import de.msk.mylivetracker.client.android.util.FileUtils;
 import de.msk.mylivetracker.client.android.util.FileUtils.PathType;
 import de.msk.mylivetracker.client.android.util.LogUtils;
@@ -90,6 +92,7 @@ public class PrefsRegistry {
 		PrefsUpdatedFromV150,
 		PrefsUpdatedFromV160,
 		PrefsUpdatedFromV171_V174, //buggy versions --> init of new config values is neccessary.
+		PrefsUpdatedFromV175,
 		PrefsCreated, 
 		PrefsUpdated, 
 		PrefsLoaded, 
@@ -128,6 +131,8 @@ public class PrefsRegistry {
 				initResult = InitResult.PrefsUpdatedFromV160;
 			} else if ((mainPrefsVersion >= 171) && (mainPrefsVersion < 175)) {
 				initResult = InitResult.PrefsUpdatedFromV171_V174;
+			} else if (mainPrefsVersion == 175) {
+				initResult = InitResult.PrefsUpdatedFromV175;
 			}
 			
 			for (PrefsDsc prefsDsc : prefsDscArr) {
@@ -172,10 +177,19 @@ public class PrefsRegistry {
 				initResult = InitResult.PrefsLoaded;
 			} else if (initResult.equals(InitResult.PrefsUpdatedFromV150)) {
 				PrefsV150Updater.run();
-			} else if (initResult.equals(InitResult.PrefsUpdatedFromV160) ||
-				initResult.equals(InitResult.PrefsUpdatedFromV171_V174)) {
-				PrefsV150Updater.run();
 				PrefsV160Updater.run();
+				PrefsV170Updater.run();
+			} else if (initResult.equals(InitResult.PrefsUpdatedFromV160)) {
+				PrefsV160Updater.run();
+				PrefsV170Updater.run();
+			} else if (initResult.equals(InitResult.PrefsUpdatedFromV175)  ||
+				initResult.equals(InitResult.PrefsUpdatedFromV171_V174)) {
+				PrefsV170Updater.run();
+				// bugfix because of an error in update routine for prefs in v1.7.x
+				TrackingModePrefs prefs = PrefsRegistry.get(TrackingModePrefs.class);
+				if (prefs.getCountdownInSecs() == null) {
+					prefs.setCountdownInSecs(CountdownInSecs.Off);
+				}
 			}
 			
 			if (mainPrefsVersion < VersionDsc.getCode()) {

@@ -20,7 +20,7 @@ public class MainPrefs extends APrefs implements Serializable {
 
 	private static final long serialVersionUID = 4107742423666510807L;
 
-	public static final int VERSION = 175;
+	public static final int VERSION = 180;
 
 	@Override
 	public int getVersion() {

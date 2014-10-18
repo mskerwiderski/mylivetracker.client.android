@@ -10,13 +10,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import de.msk.mylivetracker.client.android.App;
-import de.msk.mylivetracker.client.android.InfoActivity;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.account.AccountPrefsActivity;
 import de.msk.mylivetracker.client.android.appcontrol.AppControl;
 import de.msk.mylivetracker.client.android.dropbox.DropboxConnectActivity;
 import de.msk.mylivetracker.client.android.emergency.EmergencyPrefsActivity;
 import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParamsPrefsActivity;
+import de.msk.mylivetracker.client.android.info.InfoActivity;
 import de.msk.mylivetracker.client.android.localization.LocalizationPrefsActivity;
 import de.msk.mylivetracker.client.android.mylivetrackerportal.MyLiveTrackerPortalConnectActivity;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
@@ -90,10 +90,28 @@ public abstract class AbstractMainActivity extends AbstractActivity {
         return true;		
 	}
 
+	private Menu menu = null;
+	private int currentMenuStructure = -1;
+	
+	private void updateMenuStructure() {
+		MenuInflater inflater = getMenuInflater();
+		int menuStructure = R.menu.menu_without_settings;
+		if (App.isAdminMode()) {
+			menuStructure = R.menu.menu_complete;
+		} 
+		if ((this.menu != null) && (menuStructure != this.currentMenuStructure)) {
+			menu.clear();
+			inflater.inflate(menuStructure, this.menu);
+			this.currentMenuStructure = menuStructure;
+		}
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.menu, menu);
+		if (this.menu == null) {
+			this.menu = menu;
+		}
+		updateMenuStructure();
 		return true;
 	}
 
@@ -212,5 +230,16 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	@Override
+	protected boolean isPrefsActivity() {
+		return false;
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		updateMenuStructure();
 	}
 }

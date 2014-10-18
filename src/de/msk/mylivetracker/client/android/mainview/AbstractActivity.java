@@ -9,7 +9,6 @@ import android.os.Bundle;
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryActivity;
 import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryPrefs;
-import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.util.LogUtils;
 
 /**
@@ -71,7 +70,7 @@ public abstract class AbstractActivity extends Activity {
 	@Override
 	protected void onStart() {
 		LogUtils.infoMethodIn(AbstractActivity.class, "onStart", this.getClass());
-		if (PinCodeQueryPrefs.protectEntireAppConfigured() && 
+		if (PinCodeQueryPrefs.pinCodeQueryEnabledForWholeApp() && 
 			(visibleActivitiesCounter == 0)) {
 			LogUtils.info(AbstractActivity.class, "start pinCodeQuery");
 			PinCodeQueryActivity.runPinCodeQuery();
@@ -87,7 +86,7 @@ public abstract class AbstractActivity extends Activity {
 	protected void onStop() {
 		LogUtils.infoMethodIn(AbstractActivity.class, "onStop", this.getClass());
 		visibleActivitiesCounter--;
-		if (PrefsRegistry.get(PinCodeQueryPrefs.class).isPinCodeQueryEnabled() && 
+		if (PinCodeQueryPrefs.pinCodeQueryEnabledForWholeApp() && 
 			(visibleActivitiesCounter == 0)) {
 			LogUtils.info(AbstractActivity.class, "pinCode invalidated");
 		}
