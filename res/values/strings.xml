@@ -44,9 +44,10 @@
     <string name="mnPrefsServer">Server</string>
     <string name="mnPrefsAccount">Account</string>
     <string name="mnPrefsProtocol">Protocol</string>
-    <string name="mnTrackExport">Export</string>
     <string name="mnPrefsEmergency">Emergency</string>
-        
+    <string name="mnPrefsMessages">Messages</string>
+    <string name="mnTrackExport">Export</string>
+    
     <!-- menu items for 'connect' -->
     <string name="mnCatConnect">Connect</string>
     <string name="mnMyLiveTrackerPortalConnect">MyLiveTracker</string>

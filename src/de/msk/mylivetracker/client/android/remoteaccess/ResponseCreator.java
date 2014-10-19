@@ -15,6 +15,7 @@ import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.status.UploadInfo;
 import de.msk.mylivetracker.client.android.util.FormatUtils;
 import de.msk.mylivetracker.client.android.util.FormatUtils.Unit;
+import de.msk.mylivetracker.client.android.util.GoogleUrlShortener;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;
 
 /**
@@ -141,6 +142,7 @@ public class ResponseCreator {
 			value = StringUtils.replace(value, "$LON", 
 				FormatUtils.getDoubleAsSimpleStr(locationInfo.getLongitude(), 6));
 		}
+		value = GoogleUrlShortener.getShortUrl(value);
 		return value;
 	}
 	public static String addGoogleLatLonUrl(String str, LocationInfo locationInfo) {

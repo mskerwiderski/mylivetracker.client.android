@@ -18,6 +18,7 @@ import de.msk.mylivetracker.client.android.emergency.EmergencyPrefsActivity;
 import de.msk.mylivetracker.client.android.httpprotocolparams.HttpProtocolParamsPrefsActivity;
 import de.msk.mylivetracker.client.android.info.InfoActivity;
 import de.msk.mylivetracker.client.android.localization.LocalizationPrefsActivity;
+import de.msk.mylivetracker.client.android.message.MessagePrefsActivity;
 import de.msk.mylivetracker.client.android.mylivetrackerportal.MyLiveTrackerPortalConnectActivity;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.other.OtherPrefsActivity;
@@ -193,6 +194,9 @@ public abstract class AbstractMainActivity extends AbstractActivity {
 			return true;	
 		case R.id.mnPrefsLocalization:
 			startActivityWithWarningDlgIfTrackRunning(LocalizationPrefsActivity.class);
+			return true;
+		case R.id.mnPrefsMessages:
+			startActivityWithWarningDlgIfTrackRunning(MessagePrefsActivity.class);
 			return true;
 		case R.id.mnPrefsEmergency:
 			startActivityWithWarningDlgIfTrackRunning(EmergencyPrefsActivity.class);

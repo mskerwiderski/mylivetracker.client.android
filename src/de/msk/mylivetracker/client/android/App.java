@@ -7,8 +7,10 @@ import org.apache.commons.lang3.StringUtils;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
@@ -40,6 +42,9 @@ public class App extends Application {
 	private static String versionStr = null;
 	private static String fileNamePrefix = null;
 	private static InitResult initPrefsResult = null;
+	
+	private static final String PARAM_NAME_GOOGLE_API_KEY = "GOOGLE_API_KEY";
+	private static final String PARAM_NAME_GOOGLE_SHORTENER_URL = "GOOGLE_SHORTENER_URL";
 	
 	public enum VersionStage {
 		Release("R"),
@@ -326,6 +331,35 @@ public class App extends Application {
 	
 	public static String getDeviceBoard() {
 		return android.os.Build.BOARD;
+	}
+	
+	private static String getMetaData(String paramName) {
+		if (StringUtils.isEmpty(paramName)) {
+			throw new IllegalArgumentException("paramName must not be null.");
+		}
+		String value = null;
+		try {
+		    ApplicationInfo appInfo = 
+		    	App.getCtx().getPackageManager().getApplicationInfo(
+	    			App.getCtx().getPackageName(), PackageManager.GET_META_DATA);
+		    Bundle bundle = appInfo.metaData;
+		    value = bundle.getString(paramName);
+		} catch (NameNotFoundException e) {
+			value = null;
+			LogUtils.always("missing metadata '" + paramName + "'");
+		} catch (NullPointerException e) {
+			value = null;
+			LogUtils.always("missing metadata '" + paramName + "'");
+		}
+		return value;
+	}
+	
+	public static String getGoogleApiKey() {
+		return getMetaData(PARAM_NAME_GOOGLE_API_KEY);
+	}
+	
+	public static String getGoogleShortenerUrl() {
+		return getMetaData(PARAM_NAME_GOOGLE_SHORTENER_URL);
 	}
 	
 	public static boolean smsSupported() {

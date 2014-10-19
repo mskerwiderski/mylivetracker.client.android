@@ -108,20 +108,9 @@
 	        android:gravity="top"
 	        android:text="" />
     </LinearLayout>
-    <LinearLayout
-        android:paddingTop="5dp" 
-        android:layout_width="fill_parent" 
-        android:layout_height="wrap_content">
-    	<Button 
-    		android:id="@+id/btMsg_MessagePrefs"
-    		android:text="@string/btMsg_MessagePrefs"
-    		android:layout_gravity="bottom"
-    		android:layout_weight="1"     		 
-    		android:layout_height="50dp"
-    		android:layout_width="0dp"     		     		 
-    	/>  
-   </LinearLayout>
-    <LinearLayout android:layout_height="fill_parent" android:layout_width="fill_parent" >
+    <LinearLayout 
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent" >
         <Button
             android:id="@+id/btMsg_Send" 
             android:text="@string/btSend" 

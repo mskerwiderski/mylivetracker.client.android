@@ -1,9 +1,11 @@
 package de.msk.mylivetracker.client.android.message;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import org.apache.commons.lang3.StringUtils;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Selection;
@@ -131,6 +133,33 @@ public class MessageActivity extends AbstractActivity {
 		sendMessageAsSms(message);
 	}
 	
+	private static ExecutorService sendSmsExecutorService = 
+		Executors.newSingleThreadExecutor();
+	
+	private static class SendSmsExecutor implements Runnable {
+		private String smsReceiver;
+		private String message;
+		
+		public SendSmsExecutor(String smsReceiver, String message) {
+			if (StringUtils.isEmpty(smsReceiver)) {
+				throw new IllegalArgumentException("smsReceiver must not be empty");
+			}
+			if (StringUtils.isEmpty(message)) {
+				throw new IllegalArgumentException("message must not be empty");
+			}
+			this.smsReceiver = smsReceiver;
+			this.message = message;
+		}
+
+		@Override
+		public void run() {
+			String smsMessage = App.getAppNameAbbr() + 
+				":[MSG]:" + message + ":" + 
+				ResponseCreator.getGoogleLatLonUrl(LocationInfo.get());
+			SmsSendUtils.sendSms(smsReceiver, smsMessage);
+		}
+	}
+
 	public static void sendMessageAsSms(String message) {
 		if (StringUtils.isEmpty(message)) {
 			throw new IllegalArgumentException("message must not be empty");
@@ -138,12 +167,9 @@ public class MessageActivity extends AbstractActivity {
 		MessagePrefs messagePrefs = PrefsRegistry.get(MessagePrefs.class);
 		if (App.smsSupported() &&
 			messagePrefs.isSendMessageModeAsSmsEnabled()) {
-			String smsMessage = App.getAppNameAbbr() + 
-				":[MSG]:" + message + ":" + 
-				ResponseCreator.getGoogleLatLonUrl(LocationInfo.get());
-			SmsSendUtils.sendSms(
-				messagePrefs.getSmsReceiver(),
-				smsMessage);
+			sendSmsExecutorService.execute(
+				new SendSmsExecutor(
+					messagePrefs.getSmsReceiver(), message));
 		}
 	}
 	
@@ -158,20 +184,6 @@ public class MessageActivity extends AbstractActivity {
 		Toast.makeText(activity.getApplicationContext(), 
 			activity.getString(R.string.txMsg_InfoSendMessageDone),
 			Toast.LENGTH_SHORT).show();
-	}
-	
-	private static final class OnClickButtonMessagePrefs extends ASafeOnClickListener {
-		private MessageActivity activity;
-		
-		private OnClickButtonMessagePrefs(MessageActivity activity) {
-			this.activity = activity;
-		}
-		
-		@Override
-		public void onClick() {	
-			this.activity.startActivity(
-				new Intent(this.activity, MessagePrefsActivity.class));
-		}		
 	}
 	
 	private static final class OnMessageTemplateItemSelectedListener implements OnItemSelectedListener {
@@ -283,15 +295,12 @@ public class MessageActivity extends AbstractActivity {
 			this.findViewById(R.id.etMsg_Message);
         updateMessageField(etMsgMessage, "");
         
-        Button btMsg_MessagePrefs = (Button)findViewById(R.id.btMsg_MessagePrefs);
         Button btMsg_Send = (Button)findViewById(R.id.btMsg_Send);  
         Button btMsg_Cancel = (Button) findViewById(R.id.btMsg_Cancel);
         
         spMsg_MessageTemplate.setOnItemSelectedListener(
         	new OnMessageTemplateItemSelectedListener(
         		etMsgMessage));
-        btMsg_MessagePrefs.setOnClickListener(
-			new OnClickButtonMessagePrefs(this));
         btMsg_Send.setOnClickListener(
 			new OnClickButtonSendListener(
 				this, etMsgMessage));

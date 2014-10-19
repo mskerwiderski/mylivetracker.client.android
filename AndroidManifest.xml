@@ -2,11 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="de.msk.mylivetracker.client.android"
     android:versionCode="180" 
-    android:versionName="1.8.0 BP" 
+    android:versionName="1.8.0 BP (b4)" 
     >       
     <uses-sdk
        android:minSdkVersion="7" 
-       android:targetSdkVersion="17"
+       android:targetSdkVersion="20"
     />
     <!--  uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" /-->
    	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -123,6 +123,13 @@
 		<service android:name="de.msk.mylivetracker.client.android.localization.LocalizationService"
 		    android:enabled="true"
 		    android:exported="false" />
+		<meta-data 
+		   	android:name="GOOGLE_API_KEY"
+         	android:value="AIzaSyDFlxr7v1ILHCVlbgPGemxTBcjP57Dc-Pg" />
+		<meta-data 
+		   	android:name="GOOGLE_SHORTENER_URL"
+         	android:value="https://www.googleapis.com/urlshortener/v1/url" />
+		
     </application>
    
 </manifest>

@@ -8,6 +8,7 @@
 		    <item android:id="@+id/mnPrefsAccount" android:title="@string/mnPrefsAccount" />
 		    <item android:id="@+id/mnPrefsProtocol" android:title="@string/mnPrefsProtocol" />
 		    <item android:id="@+id/mnPrefsLocalization" android:title="@string/mnPrefsLocalization" />
+		    <item android:id="@+id/mnPrefsMessages" android:title="@string/mnPrefsMessages" />
 		    <item android:id="@+id/mnPrefsEmergency" android:title="@string/mnPrefsEmergency" />
 		    <item android:id="@+id/mnTrackExport" android:title="@string/mnTrackExport" />
 	    </menu> 

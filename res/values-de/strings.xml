@@ -44,8 +44,9 @@
     <string name="mnPrefsServer">Server</string>
     <string name="mnPrefsAccount">Zugang</string>
     <string name="mnPrefsProtocol">Protokoll</string>
-    <string name="mnTrackExport">Export</string>
+    <string name="mnPrefsMessages">Nachrichten</string>
     <string name="mnPrefsEmergency">Notruf</string>
+    <string name="mnTrackExport">Export</string>
         
     <!-- menu items for 'connect' -->
     <string name="mnCatConnect">Koppeln</string>
