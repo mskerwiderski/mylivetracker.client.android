@@ -5,6 +5,7 @@ import java.io.Serializable;
 import org.apache.commons.lang3.BooleanUtils;
 
 import de.msk.mylivetracker.client.android.preferences.APrefs;
+import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.preferences.PrefsDumper.ConfigPair;
 import de.msk.mylivetracker.client.android.preferences.PrefsDumper.PrefsDump;
 
@@ -62,6 +63,8 @@ public class OtherPrefs extends APrefs implements Serializable {
 	private TrackingOneTouchMode trackingOneTouchMode;
 	private boolean adaptButtonsForOneTouchMode;
 	private boolean antPlusEnabledIfAvailable;
+	private boolean useGoogleUrlShortener;
+	
 	@Deprecated
 	private boolean autoStartApp;
 	
@@ -75,10 +78,15 @@ public class OtherPrefs extends APrefs implements Serializable {
 		this.trackingOneTouchMode = TrackingOneTouchMode.TrackingLocalization;
 		this.adaptButtonsForOneTouchMode = false;
 		this.antPlusEnabledIfAvailable = true;
+		this.useGoogleUrlShortener = true;
 	}
 	@Override
 	public void initWithValuesOfOldVersion(int foundVersion, String foundGsonStr) {
 		// noop.
+	}
+	
+	public static boolean useGoogleUrlShortener() {
+		return PrefsRegistry.get(OtherPrefs.class).isUseGoogleUrlShortener();
 	}
 	
 	public ConfirmLevel getConfirmLevel() {
@@ -105,6 +113,12 @@ public class OtherPrefs extends APrefs implements Serializable {
 	public void setAntPlusEnabledIfAvailable(boolean antPlusEnabledIfAvailable) {
 		this.antPlusEnabledIfAvailable = antPlusEnabledIfAvailable;
 	}
+	public boolean isUseGoogleUrlShortener() {
+		return useGoogleUrlShortener;
+	}
+	public void setUseGoogleUrlShortener(boolean useGoogleUrlShortener) {
+		this.useGoogleUrlShortener = useGoogleUrlShortener;
+	}
 	@Deprecated
 	public boolean isAutoStartApp() {
 		return autoStartApp;
@@ -124,11 +138,11 @@ public class OtherPrefs extends APrefs implements Serializable {
 				new ConfigPair("confirmLevel", this.confirmLevel.name()),
 				new ConfigPair("trackingOneTouchMode", this.trackingOneTouchMode.name()),
 				new ConfigPair("adaptButtonsForOneTouchMode", 
-					BooleanUtils.toStringTrueFalse(this.adaptButtonsForOneTouchMode)),
+					BooleanUtils.toStringYesNo(this.adaptButtonsForOneTouchMode)),
 				new ConfigPair("antPlusEnabledIfAvailable", 
-					BooleanUtils.toStringTrueFalse(this.antPlusEnabledIfAvailable)),
-				new ConfigPair("autoStartApp", 
-					BooleanUtils.toStringTrueFalse(this.autoStartApp)),	
+					BooleanUtils.toStringYesNo(this.antPlusEnabledIfAvailable)),
+				new ConfigPair("useGoogleUrlShortener", 
+					BooleanUtils.toStringYesNo(this.useGoogleUrlShortener)),	
 		});
 	}
 	@Override
@@ -137,7 +151,7 @@ public class OtherPrefs extends APrefs implements Serializable {
 			+ ", trackingOneTouchMode=" + trackingOneTouchMode
 			+ ", adaptButtonsForOneTouchMode="
 			+ adaptButtonsForOneTouchMode + ", antPlusEnabledIfAvailable="
-			+ antPlusEnabledIfAvailable + ", autoStartApp=" + autoStartApp
-			+ "]";
+			+ antPlusEnabledIfAvailable + ", useGoogleUrlShortener="
+			+ useGoogleUrlShortener + "]";
 	}
 }

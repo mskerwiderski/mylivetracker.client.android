@@ -1,5 +1,6 @@
 package de.msk.mylivetracker.client.android.preferences.prefsv170;
 
+import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryPrefs;
 import de.msk.mylivetracker.client.android.pincodequery.PinCodeQueryPrefs.PinCodeQueryMode;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
@@ -30,6 +31,8 @@ public class PrefsV170Updater {
 					PinCodeQueryMode.ProtectPrefsOnly);
 			}
 		}
+		OtherPrefs otherPrefs = PrefsRegistry.get(OtherPrefs.class);
+		otherPrefs.setUseGoogleUrlShortener(true);
 		return true;
 	}
 }

@@ -1,4 +1,4 @@
-package de.msk.mylivetracker.client.android.util;
+package de.msk.mylivetracker.client.android.util.google;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -12,10 +12,10 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 
-import de.msk.mylivetracker.client.android.App;
+import de.msk.mylivetracker.client.android.util.LogUtils;
 
 /**
- * classname: UrlShortener
+ * classname: GoogleUrlShortener
  * 
  * @author michael skerwiderski, (c)2014
  * @version 000
@@ -27,6 +27,9 @@ import de.msk.mylivetracker.client.android.App;
  */
 public class GoogleUrlShortener {
 	
+	private GoogleUrlShortener() {
+	}
+	
 	public static String getShortUrl(String longUrl) {
 		LogUtils.infoMethodIn(GoogleUrlShortener.class, "getShortUrl", longUrl);
 		if (StringUtils.isEmpty(longUrl)) {
@@ -36,8 +39,9 @@ public class GoogleUrlShortener {
 		InputStream is = null;
         try {
             DefaultHttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost(App.getGoogleShortenerUrl() + 
-            	"?key=" + App.getGoogleApiKey() + "&fields=id");
+            HttpPost httpPost = new HttpPost(
+            	GoogleUtils.getGoogleShortenerUrl() + "?key=" + 
+    			GoogleUtils.getGoogleApiKey() + "&fields=id");
             httpPost.setEntity(new StringEntity("{\"longUrl\" : \"" + longUrl+ "\"}"));
             httpPost.setHeader("Content-Type", "application/json");
             HttpResponse httpResponse = httpClient.execute(httpPost);

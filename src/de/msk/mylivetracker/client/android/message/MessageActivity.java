@@ -24,13 +24,13 @@ import de.msk.mylivetracker.client.android.mainview.AbstractActivity;
 import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
 import de.msk.mylivetracker.client.android.protocol.ProtocolPrefs;
-import de.msk.mylivetracker.client.android.remoteaccess.ResponseCreator;
 import de.msk.mylivetracker.client.android.status.LocationInfo;
 import de.msk.mylivetracker.client.android.status.MessageInfo;
 import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.upload.Uploader;
 import de.msk.mylivetracker.client.android.util.dialog.AbstractYesNoDialog;
 import de.msk.mylivetracker.client.android.util.dialog.SimpleInfoDialog;
+import de.msk.mylivetracker.client.android.util.google.GoogleUtils;
 import de.msk.mylivetracker.client.android.util.listener.ASafeOnClickListener;
 import de.msk.mylivetracker.client.android.util.listener.OnFinishActivityListener;
 import de.msk.mylivetracker.client.android.util.sms.SmsSendUtils;
@@ -155,7 +155,8 @@ public class MessageActivity extends AbstractActivity {
 		public void run() {
 			String smsMessage = App.getAppNameAbbr() + 
 				":[MSG]:" + message + ":" + 
-				ResponseCreator.getGoogleLatLonUrl(LocationInfo.get());
+				GoogleUtils.getGoogleLatLonUrl(LocationInfo.get(),
+					OtherPrefs.useGoogleUrlShortener());
 			SmsSendUtils.sendSms(smsReceiver, smsMessage);
 		}
 	}

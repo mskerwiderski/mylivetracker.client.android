@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import de.msk.mylivetracker.client.android.R;
 import de.msk.mylivetracker.client.android.appcontrol.AppControl;
+import de.msk.mylivetracker.client.android.other.OtherPrefs;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdDsc;
 import de.msk.mylivetracker.client.android.remoteaccess.ARemoteCmdExecutor;
 import de.msk.mylivetracker.client.android.remoteaccess.ResponseCreator;
@@ -151,7 +152,9 @@ public class RemoteCmdLocalization extends ARemoteCmdExecutor {
 					AppControl.stopLocalization();
 				}			
 			}
-			result = ResponseCreator.getResultOfGetLocation(LocationInfo.get(), accurate);
+			result = ResponseCreator.getResultOfGetLocation(
+				LocationInfo.get(), accurate,
+				OtherPrefs.useGoogleUrlShortener());
 		}
 		return result;
 	}

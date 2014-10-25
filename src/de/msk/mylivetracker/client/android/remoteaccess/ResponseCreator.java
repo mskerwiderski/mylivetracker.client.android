@@ -15,7 +15,7 @@ import de.msk.mylivetracker.client.android.status.TrackStatus;
 import de.msk.mylivetracker.client.android.status.UploadInfo;
 import de.msk.mylivetracker.client.android.util.FormatUtils;
 import de.msk.mylivetracker.client.android.util.FormatUtils.Unit;
-import de.msk.mylivetracker.client.android.util.GoogleUrlShortener;
+import de.msk.mylivetracker.client.android.util.google.GoogleUtils;
 import de.msk.mylivetracker.commons.util.datetime.DateTime;
 
 /**
@@ -99,25 +99,29 @@ public class ResponseCreator {
 		return str;
 	}
 	
-	public static Result getResultOfGetLocation(LocationInfo locationInfo, boolean accurate) {
+	public static Result getResultOfGetLocation(
+		LocationInfo locationInfo, boolean accurate, 
+		boolean shortenUrl) {
 		boolean success = false;
 		String response = "no valid location found";
 		if ((locationInfo != null) && locationInfo.hasValidLatLon() && 
 			(!accurate || locationInfo.isAccurate())) {
 			success = true;
-			response = addLocationInfoValues(null, locationInfo);
+			response = addLocationInfoValues(
+				null, locationInfo, shortenUrl);
 		}
 		return new Result(success, response);
 	}
 	
-	public static String addLocationInfoValues(String str, LocationInfo locationInfo) {
+	public static String addLocationInfoValues(String str, 
+		LocationInfo locationInfo, boolean shortenUrl) {
 		str = ResponseCreator.addTimestampValue(str, locationInfo.getTimestamp());
 		str = ResponseCreator.addLatLonValue(str, locationInfo);
 		str = ResponseCreator.addFloatValue(str, ACCURACY, locationInfo.getAccuracyInMtr(), 0, Unit.Meter);
 		str = ResponseCreator.addFloatValue(str, BEARING, locationInfo.getBearingInDegree(), 0, Unit.DegreeAsTxt);
 		str = ResponseCreator.addFloatValue(str, SPEED, locationInfo.getSpeedInMtrPerSecs(), 0, Unit.MeterPerSec);
 		str = ResponseCreator.addDoubleValue(str, ALTITUDE, locationInfo.getAltitudeInMtr(), 0, Unit.Meter);
-		str = ResponseCreator.addGoogleLatLonUrl(str, locationInfo);
+		str = ResponseCreator.addGoogleLatLonUrl(str, locationInfo, shortenUrl);
 		return str;
 	}
 	
@@ -131,23 +135,11 @@ public class ResponseCreator {
 		return addParamValue(str, LAT_LON, value);
 	}
 
-	private static final String GOOGLE_MAPS_URL_TEMPLATE = 
-			"https://maps.google.de/maps?q=$LAT,$LON";
-	public static String getGoogleLatLonUrl(LocationInfo locationInfo) {
-		String value = UNKNOWN;
-		if ((locationInfo != null) && locationInfo.hasValidLatLon()) {
-			value = GOOGLE_MAPS_URL_TEMPLATE;
-			value = StringUtils.replace(value, "$LAT", 
-				FormatUtils.getDoubleAsSimpleStr(locationInfo.getLatitude(), 6));
-			value = StringUtils.replace(value, "$LON", 
-				FormatUtils.getDoubleAsSimpleStr(locationInfo.getLongitude(), 6));
-		}
-		value = GoogleUrlShortener.getShortUrl(value);
-		return value;
-	}
-	public static String addGoogleLatLonUrl(String str, LocationInfo locationInfo) {
-		String value = getGoogleLatLonUrl(locationInfo);
-		return addParamValue(str, GOOGLE_LATLON_URL, value);
+	public static String addGoogleLatLonUrl(String str, 
+		LocationInfo locationInfo, boolean shortenUrl) {
+		String value = GoogleUtils.getGoogleLatLonUrl(locationInfo, shortenUrl);
+		return addParamValue(str, GOOGLE_LATLON_URL, 
+			StringUtils.isEmpty(value) ? UNKNOWN : value);
 	}
 	
 	/*

@@ -1,6 +1,7 @@
 package de.msk.mylivetracker.client.android;
 
 import java.util.Locale;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -42,9 +43,6 @@ public class App extends Application {
 	private static String versionStr = null;
 	private static String fileNamePrefix = null;
 	private static InitResult initPrefsResult = null;
-	
-	private static final String PARAM_NAME_GOOGLE_API_KEY = "GOOGLE_API_KEY";
-	private static final String PARAM_NAME_GOOGLE_SHORTENER_URL = "GOOGLE_SHORTENER_URL";
 	
 	public enum VersionStage {
 		Release("R"),
@@ -333,33 +331,32 @@ public class App extends Application {
 		return android.os.Build.BOARD;
 	}
 	
-	private static String getMetaData(String paramName) {
+	private static ConcurrentHashMap<String, String> manifestMetaData = 
+		new ConcurrentHashMap<String, String>();
+	public static String getManifestMetaData(String paramName) {
 		if (StringUtils.isEmpty(paramName)) {
 			throw new IllegalArgumentException("paramName must not be null.");
 		}
 		String value = null;
-		try {
-		    ApplicationInfo appInfo = 
-		    	App.getCtx().getPackageManager().getApplicationInfo(
-	    			App.getCtx().getPackageName(), PackageManager.GET_META_DATA);
-		    Bundle bundle = appInfo.metaData;
-		    value = bundle.getString(paramName);
-		} catch (NameNotFoundException e) {
-			value = null;
-			LogUtils.always("missing metadata '" + paramName + "'");
-		} catch (NullPointerException e) {
-			value = null;
-			LogUtils.always("missing metadata '" + paramName + "'");
+		if (manifestMetaData.containsKey(paramName)) {
+			value = manifestMetaData.get(paramName);
+		} else {
+			try {
+			    ApplicationInfo appInfo = 
+			    	App.getCtx().getPackageManager().getApplicationInfo(
+		    			App.getCtx().getPackageName(), PackageManager.GET_META_DATA);
+			    Bundle bundle = appInfo.metaData;
+			    value = bundle.getString(paramName);
+			    manifestMetaData.put(paramName, value);
+			} catch (NameNotFoundException e) {
+				value = null;
+				LogUtils.always("missing metadata '" + paramName + "'");
+			} catch (NullPointerException e) {
+				value = null;
+				LogUtils.always("missing metadata '" + paramName + "'");
+			}
 		}
 		return value;
-	}
-	
-	public static String getGoogleApiKey() {
-		return getMetaData(PARAM_NAME_GOOGLE_API_KEY);
-	}
-	
-	public static String getGoogleShortenerUrl() {
-		return getMetaData(PARAM_NAME_GOOGLE_SHORTENER_URL);
 	}
 	
 	public static boolean smsSupported() {

@@ -57,7 +57,6 @@ public class ProtocolEncoder implements IProtocol {
 			dataStr = ResponseCreator.addParamValue(
 				dataStr, "msg", messageInfo.getMessage());
 		}
-		dataStr = ResponseCreator.addGoogleLatLonUrl(dataStr, locationInfo);
 		LogUtils.infoMethodOut(ProtocolEncoder.class,
 			"createDataStrForDataTransfer", dataStr);
 		return dataStr;

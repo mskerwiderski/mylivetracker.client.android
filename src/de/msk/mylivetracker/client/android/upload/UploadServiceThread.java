@@ -1,5 +1,9 @@
 package de.msk.mylivetracker.client.android.upload;
 
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import de.msk.mylivetracker.client.android.App;
 import de.msk.mylivetracker.client.android.appcontrol.AppControl;
 import de.msk.mylivetracker.client.android.message.MessageActivity;
 import de.msk.mylivetracker.client.android.preferences.PrefsRegistry;
@@ -55,7 +59,16 @@ public class UploadServiceThread extends AbstractServiceThread {
 			throw new IllegalStateException("illegal tracking mode: " + 
 				PrefsRegistry.get(TrackingModePrefs.class).getTrackingMode().name());
 		}
-		if (!TrackStatus.get().countdownIsActive()) {
+		if (TrackStatus.get().countdownIsActive()) {
+			if (TrackStatus.get().getCountdownLeftInSecs() <= 3) {
+				try {
+				    Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+				    Ringtone r = RingtoneManager.getRingtone(App.getCtx(), notification);
+				    r.play();
+				} catch (Exception e) {
+				}
+			}
+		} else {
 			ProtocolPrefs prefs = PrefsRegistry.get(ProtocolPrefs.class);
 			LocationInfo locationInfo = LocationInfo.get();
 			if (!this.doUpload && this.isRunOnlyOnce()) {
