@@ -371,8 +371,8 @@ public class AppControl {
 	public static void startAntPlusDetectionAux() {
 		lockAntPlusDetectionStartStop.lock();
 		try {
-			if (!(antPlusDetectionIsAvailable() &&
-				AntPlusManager.get().hasSensorListeners())) {
+			if (antPlusDetectionIsAvailable() &&
+				!AntPlusManager.get().hasSensorListeners()) {
 				AntPlusManager.get().requestSensorUpdates(
 					AntPlusHeartrateListener.get());
 			}
@@ -382,13 +382,14 @@ public class AppControl {
 	}
 	
 	public static void startAntPlusDetection() {
-		if (!(antPlusDetectionIsAvailable() &&
-			AntPlusManager.get().hasSensorListeners())) {
+		if (antPlusDetectionIsAvailable() &&
+			!AntPlusManager.get().hasSensorListeners()) {
 			final Activity activity = MainActivity.getActive();
 			if (activity != null) {
 				LogUtils.infoMethodState(AppControl.class, "startAntPlusDetection", 
 					"main activity active", (activity != null));
-				final AbstractProgressDialog<Activity> progressDlg = new AbstractProgressDialog<Activity>() {
+				final AbstractProgressDialog<Activity> progressDlg = 
+					new AbstractProgressDialog<Activity>() {
 					@Override
 					public void doTask(Activity activity) {
 						startAntPlusDetectionAux();

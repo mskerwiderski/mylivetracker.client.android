@@ -141,6 +141,10 @@ public class TrackingModePrefs extends APrefs implements Serializable {
 		this.trackingMode = trackingMode;
 	}
 	public CountdownInSecs getCountdownInSecs() {
+		// bugfix due to buggy config update process in v1.7.0 - v1.7.5
+		if (this.countdownInSecs == null) {
+			this.countdownInSecs = CountdownInSecs.Off;
+		}
 		return countdownInSecs;
 	}
 	public void setCountdownInSecs(CountdownInSecs countdownInSecs) {
