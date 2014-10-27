@@ -16,7 +16,8 @@
     <!-- preferences -->
     <string name="prefsImportedFromV144">Please check the preferences! Because preferences have been imported from old MyLiveTracker version!</string>
     <string name="prefsCreated">Please check the preferences! Because you started MyLiveTracker the first time, all preferences have been set to defaults!</string>
-    <string name="prefsUpdated">Please check the preferences! Because of new MyLiveTracker version, maybe some preferences are new or have been changed!</string>  
+    <string name="prefsUpdated">Please check the preferences! Because of new MyLiveTracker version, maybe some preferences are new or have been changed!</string>
+    <string name="prefsUpdatedFromV170_V175">Please check the preferences! Because of an issue in MyLiveTracker versions 1.7.0 to 1.7.5, maybe some preferences have been changed to default values!</string>  
         
     <!-- commons -->
     <string name="btSave">Save</string>

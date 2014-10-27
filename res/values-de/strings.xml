@@ -17,6 +17,7 @@
     <string name="prefsImportedFromV144">Bitte überprüfen Sie die Einstellungen! Die Einstellungen wurden von einer alten MyLiveTracker Version importiert!</string>
     <string name="prefsCreated">Bitte überprüfen Sie die Einstellungen! Da Sie MyLiveTracker das erste Mal benutzen, wurden alle Einstellungen auf Standardwerte gesetzt!</string>  
     <string name="prefsUpdated">Bitte überprüfen Sie die Einstellungen! Mit der neuen Version von MyLiveTracker sind evtl. neue Einstellungen hinzugekommen oder haben sich geändert!</string> 
+    <string name="prefsUpdatedFromV170_V175">Bitte überprüfen Sie die Einstellungen! Auf Grund eines Fehler in den MyLiveTracker Versionen 1.7.0 bis 1.7.5 sind evtl. einige Einstellungen auf Standardwerte zurückgesetzt worden!</string>
         
     <!-- commons -->
     <string name="btSave">Speichern</string>

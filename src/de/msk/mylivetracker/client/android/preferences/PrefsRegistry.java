@@ -91,8 +91,8 @@ public class PrefsRegistry {
 		PrefsImportedFromV144,
 		PrefsUpdatedFromV150,
 		PrefsUpdatedFromV160,
-		PrefsUpdatedFromV171_V174, //buggy versions --> init of new config values is neccessary.
-		PrefsUpdatedFromV175,
+		PrefsUpdatedFromV170_V175, //buggy versions --> init of new config values is neccessary.
+		PrefsUpdatedFromV176,
 		PrefsCreated, 
 		PrefsUpdated, 
 		PrefsLoaded, 
@@ -129,10 +129,10 @@ public class PrefsRegistry {
 				initResult = InitResult.PrefsUpdatedFromV150;
 			} else if (mainPrefsVersion == 160) {
 				initResult = InitResult.PrefsUpdatedFromV160;
-			} else if ((mainPrefsVersion >= 171) && (mainPrefsVersion < 175)) {
-				initResult = InitResult.PrefsUpdatedFromV171_V174;
-			} else if (mainPrefsVersion == 175) {
-				initResult = InitResult.PrefsUpdatedFromV175;
+			} else if ((mainPrefsVersion >= 170) && (mainPrefsVersion <= 175)) {
+				initResult = InitResult.PrefsUpdatedFromV170_V175;
+			} else if (mainPrefsVersion == 176) {
+				initResult = InitResult.PrefsUpdatedFromV176;
 			}
 			
 			for (PrefsDsc prefsDsc : prefsDscArr) {
@@ -182,14 +182,16 @@ public class PrefsRegistry {
 			} else if (initResult.equals(InitResult.PrefsUpdatedFromV160)) {
 				PrefsV160Updater.run();
 				PrefsV170Updater.run();
-			} else if (initResult.equals(InitResult.PrefsUpdatedFromV175)  ||
-				initResult.equals(InitResult.PrefsUpdatedFromV171_V174)) {
+			} else if (initResult.equals(InitResult.PrefsUpdatedFromV170_V175)) {
+				PrefsV160Updater.run();
 				PrefsV170Updater.run();
 				// bugfix because of an error in update routine for prefs in v1.7.x
 				TrackingModePrefs prefs = PrefsRegistry.get(TrackingModePrefs.class);
 				if (prefs.getCountdownInSecs() == null) {
 					prefs.setCountdownInSecs(CountdownInSecs.Off);
 				}
+			} else if (initResult.equals(InitResult.PrefsUpdatedFromV176)) {
+				PrefsV170Updater.run();
 			}
 			
 			if (mainPrefsVersion < VersionDsc.getCode()) {
