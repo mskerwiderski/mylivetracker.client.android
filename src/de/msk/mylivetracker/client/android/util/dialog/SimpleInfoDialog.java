@@ -30,15 +30,15 @@ public class SimpleInfoDialog extends AbstractInfoDialog {
 		dlg.show();
 	}
 	
-	private SimpleInfoDialog(Context ctx, int message) {
+	public SimpleInfoDialog(Context ctx, int message) {
 		super(ctx, message);
 	}
 	
-	private SimpleInfoDialog(Context ctx, int message, Object... args) {
+	public SimpleInfoDialog(Context ctx, int message, Object... args) {
 		super(ctx, ctx.getString(message, args));
 	}
 
-	private SimpleInfoDialog(Context ctx, String message) {
+	public SimpleInfoDialog(Context ctx, String message) {
 		super(ctx, message);
 	}
 

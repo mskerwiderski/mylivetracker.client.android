@@ -59,6 +59,15 @@ public class MainActivity extends AbstractMainActivity {
 		return false;
 	}
 	
+	private static class PrefsInfoDialog extends SimpleInfoDialog {
+		private PrefsInfoDialog(Context ctx, int message) {
+			super(ctx, message);
+		}
+
+		@Override
+		public void onOk() {
+		}
+	}
 	private static class StartInfoDialog extends AbstractInfoDialog {
 
 		private StartInfoDialog(Context ctx, int message, Object[] args) {
@@ -74,15 +83,19 @@ public class MainActivity extends AbstractMainActivity {
 		public void onOk() {
 			Activity activity = MainActivity.get();
 			if (App.getInitPrefsResult().equals(InitResult.PrefsImportedFromV144)) {
-				SimpleInfoDialog.show(activity, R.string.prefsImportedFromV144);
+				PrefsInfoDialog.show(activity, R.string.prefsImportedFromV144);
 			} else if (App.getInitPrefsResult().equals(InitResult.PrefsUpdatedFromV150)) {
-				SimpleInfoDialog.show(activity, R.string.prefsUpdated);
+				PrefsInfoDialog.show(activity, R.string.prefsUpdated);
 			} else if (App.getInitPrefsResult().equals(InitResult.PrefsUpdatedFromV160)) {
-				SimpleInfoDialog.show(activity, R.string.prefsUpdated);
+				PrefsInfoDialog.show(activity, R.string.prefsUpdated);
+			} else if (App.getInitPrefsResult().equals(InitResult.PrefsUpdatedFromV160)) {
+				PrefsInfoDialog.show(activity, R.string.prefsUpdated);
+			} else if (App.getInitPrefsResult().equals(InitResult.PrefsUpdatedFromV170_V175)) {
+				PrefsInfoDialog.show(activity, R.string.prefsUpdatedFromV170_V175);
 			} else if (App.getInitPrefsResult().equals(InitResult.PrefsCreated)) {
-				SimpleInfoDialog.show(activity, R.string.prefsCreated);
+				PrefsInfoDialog.show(activity, R.string.prefsCreated);
 			} else if (App.getInitPrefsResult().equals(InitResult.PrefsUpdated)) {
-				SimpleInfoDialog.show(activity, R.string.prefsUpdated);
+				PrefsInfoDialog.show(activity, R.string.prefsUpdated);
 			}
 		}
 	}

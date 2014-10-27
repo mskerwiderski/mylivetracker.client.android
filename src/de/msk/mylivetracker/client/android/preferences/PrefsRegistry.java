@@ -89,7 +89,7 @@ public class PrefsRegistry {
 		PrefsImportedFromV144,
 		PrefsUpdatedFromV150,
 		PrefsUpdatedFromV160,
-		PrefsUpdatedFromV171_V174, //buggy versions --> init of new config values is neccessary.
+		PrefsUpdatedFromV170_V175, //buggy versions --> init of new config values is neccessary.
 		PrefsCreated, 
 		PrefsUpdated, 
 		PrefsLoaded, 
@@ -126,8 +126,8 @@ public class PrefsRegistry {
 				initResult = InitResult.PrefsUpdatedFromV150;
 			} else if (mainPrefsVersion == 160) {
 				initResult = InitResult.PrefsUpdatedFromV160;
-			} else if ((mainPrefsVersion >= 171) && (mainPrefsVersion < 175)) {
-				initResult = InitResult.PrefsUpdatedFromV171_V174;
+			} else if ((mainPrefsVersion >= 170) && (mainPrefsVersion <= 175)) {
+				initResult = InitResult.PrefsUpdatedFromV170_V175;
 			}
 			
 			for (PrefsDsc prefsDsc : prefsDscArr) {
@@ -172,9 +172,9 @@ public class PrefsRegistry {
 				initResult = InitResult.PrefsLoaded;
 			} else if (initResult.equals(InitResult.PrefsUpdatedFromV150)) {
 				PrefsV150Updater.run();
+				PrefsV160Updater.run();
 			} else if (initResult.equals(InitResult.PrefsUpdatedFromV160) ||
-				initResult.equals(InitResult.PrefsUpdatedFromV171_V174)) {
-				PrefsV150Updater.run();
+				initResult.equals(InitResult.PrefsUpdatedFromV170_V175)) {
 				PrefsV160Updater.run();
 			}
 			
